@@ -1,0 +1,19 @@
+# sbt
+target/
+project/
+
+# node
+node_modules/
+
+# Metals
+.bsp/
+.bloop/
+.metals/
+.scala-build
+metals.sbt
+
+# Jetbrains products
+.idea
+.idea_modules
+/.worksheet/
+*.iml

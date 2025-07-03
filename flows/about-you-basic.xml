@@ -1,0 +1,25 @@
+<FormConfig>
+
+  <section>
+    <question path="/filer/name">
+      <label>What is your full name?</label>
+      <input type="text"/>
+    </question>
+
+    <question path="/filer/citizen/ty25">
+      <label>Were you a US Citizen for all of TY2025?</label>
+      <input type="boolean"/>
+    </question>
+
+    <question path="/filer/citizen/partTy25">
+      <label>Did you become a US Citizen during TY2025?</label>
+      <input type="boolean"/>
+    </question>
+
+    <question path="/filer/primaryResidence">
+      <label>Which state was your primary residence?</label>
+      <select options=""/>
+    </question>
+  </section>
+
+</FormConfig>
