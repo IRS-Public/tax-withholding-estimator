@@ -1,6 +1,7 @@
 package gov.irs.formflow
 
 import gov.irs.formflow.generators.Website
+import org.jsoup.Jsoup
 
 import scala.sys.exit
 
@@ -14,9 +15,22 @@ def main(args: Array[String]): Unit = {
   }
 
   val fileName = args.head
+  System.err.println(s"Loading flow config $fileName")
+
+  // Load config and validate it
   val config = scala.xml.XML.loadFile(fileName)
   val site = Website.fromXmlConfig(config)
 
-  // Print out the first page
-  println(site.pages.head.content)
+  // Delete out/ directory and add files to it
+  val outDir = os.pwd / "out"
+  os.remove.all(outDir)
+
+  for (page <- site.pages) {
+    val content = page.content.toString
+    val document = Jsoup.parse(content)
+    val target = outDir / page.route
+
+    os.write(target, document.html(), null, createFolders = true)
+  }
+
 }

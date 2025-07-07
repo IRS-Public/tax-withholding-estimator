@@ -1,25 +1,30 @@
 <FormConfig>
 
-  <section>
-    <question path="/filer/name">
-      <label>What is your full name?</label>
-      <input type="text"/>
-    </question>
+    <section>
+        <question path="/filingStatus">
+            <label>What filing status will you use for your tax return?</label>
+            <select>
+                <option>Single</option>
+                <option>Married filing jointly</option>
+                <option>Married filing separately</option>
+                <option>Head of Household</option>
+                <option>Qualifying Widow</option>
+            </select>
+        </question>
 
-    <question path="/filer/citizen/ty25">
-      <label>Were you a US Citizen for all of TY2025?</label>
-      <input type="boolean"/>
-    </question>
+        <question path="/hasJob">
+            <label>
+                Do you (or will you) have a job or pension that regularly withholds federal income taxes from your
+                paychecks or pension payments?
+            </label>
+            <input type="boolean"/>
+        </question>
 
-    <question path="/filer/citizen/partTy25">
-      <label>Did you become a US Citizen during TY2025?</label>
-      <input type="boolean"/>
-    </question>
+        <question path="/blind">
+            <label>Are you blind?</label>
+            <input type="boolean"/>
+        </question>
 
-    <question path="/filer/primaryResidence">
-      <label>Which state was your primary residence?</label>
-      <select options=""/>
-    </question>
-  </section>
+    </section>
 
 </FormConfig>

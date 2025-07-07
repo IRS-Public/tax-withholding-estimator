@@ -12,11 +12,8 @@ object Website {
   def generate(flow: Flow): Website = {
     val sectionHtml = flow.sections.map(generateSection)
 
-    val content = <html>
-      <body>{ sectionHtml }</body>
-    </html>
-
-    val page = Page("/index.html", content)
+    val content = <html><body>{ sectionHtml }</body></html>
+    val page = Page("index.html", content)
     Website(List(page))
   }
 

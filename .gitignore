@@ -1,3 +1,6 @@
+# Generated website files
+out/
+
 # sbt
 target/
 project/
