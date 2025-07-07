@@ -4,7 +4,7 @@ Project Scriber is an attempt to deliver a truly declarative data interface for 
 It includes an XML data specification for flow building and two generators that output that specification in different formats:
 a multi-page form application and an all-screens data view.
 
-Project Scribers builds on the experience and learnings of the DF Flow, and is inspired by its JSX interface.
+Project Scriber builds on the experience and learnings of the DF Flow, and is inspired by its JSX interface.
 
 
 ## The DF Flow
@@ -45,7 +45,7 @@ Therefore any tool that wants to understand the flow has to run React---and an e
 
 More importantly, JSX is essentially impossible to edit programatically.
 The tooling does not exist to pass a program some JSX and then have it output new JSX for you.
-This is why it wasn't possible to build an interface for non-engineering owners to view and edit the flow.
+This is why it wasn't possible to build an interface for non-engineering owners to edit the flow, or view the relationships between its nodes.
 
 All-screens—a read-only one-page view of the entire DF application—was a dramatic productivity unlock from the declarative flow, but there's a reason the tooling never evolved beyond that.
 JSX is syntax for building React elements, so all-screens works by introspecting a tree of React elements.
