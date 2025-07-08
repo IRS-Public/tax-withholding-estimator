@@ -23,14 +23,5 @@ def main(args: Array[String]): Unit = {
 
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"
-  os.remove.all(outDir)
-
-  for (page <- site.pages) {
-    val content = page.content.toString
-    val document = Jsoup.parse(content)
-    val target = outDir / page.route
-
-    os.write(target, document.html(), null, createFolders = true)
-  }
-
+  site.save(outDir)
 }

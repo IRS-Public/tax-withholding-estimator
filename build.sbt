@@ -1,7 +1,9 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "3.3.6"
 
-val twe = taskKey[Unit]("Build and output the TWE website")
+// Also re-build on XML changes
+// Doesn't work yet
+// run / watchTriggers += baseDirectory.value.toGlob / "*.xml"
 
 lazy val root = (project in file("."))
   .settings(
@@ -11,9 +13,4 @@ lazy val root = (project in file("."))
     libraryDependencies += "gov.irs" %% "factgraph" % "3.1.0-SNAPSHOT",
     libraryDependencies += "org.jsoup" % "jsoup" % "1.21.1",
     libraryDependencies += "com.lihaoyi" %% "os-lib" % "0.11.4",
-
-    // tasks
-    twe := {
-
-    }
   )
