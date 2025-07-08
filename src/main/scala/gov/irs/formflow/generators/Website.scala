@@ -1,6 +1,6 @@
 package gov.irs.formflow.generators
 
-import gov.irs.formflow.parser.{Flow, Question, Section}
+import gov.irs.formflow.parser.{Flow, Input, Question, Section}
 import org.jsoup.Jsoup
 import os.Path
 
@@ -66,10 +66,28 @@ object Website {
     </section>
   }
 
-  private def convertQuestion(question: Question): xml.Elem = {
+  private def convertQuestion(question: Question): xml.Node = {
+    val questionXml = question.innerXml.map(node => {
+      node.label match {
+        case "input" => convertInput(question)
+        case _ => node
+      }
+    })
+
+
     <fieldset path={question.path}>
-      {question.innerXml}
+      {questionXml}
     </fieldset>
+  }
+
+  private def convertInput(question: Question): xml.Node = {
+    question.input match {
+      case Input.boolean => <div>
+        <label>Yes <input type="radio" value="true" name={question.path} /></label>
+        <label>No <input type="radio" value="false" name={question.path} /></label>
+      </div>
+      case x => <input type={x.toString}></input>
+    }
   }
 
 }
