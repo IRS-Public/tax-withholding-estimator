@@ -2,3 +2,8 @@ body {
     max-width: 1000px;
     margin: 0 auto;
 }
+
+.question {
+  padding: 1rem;
+  margin: 1rem 0;
+}

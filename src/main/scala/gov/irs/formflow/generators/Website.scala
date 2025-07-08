@@ -75,7 +75,7 @@ object Website {
     })
 
 
-    <fieldset path={question.path}>
+    <fieldset path={question.path} class="question">
       {questionXml}
     </fieldset>
   }
