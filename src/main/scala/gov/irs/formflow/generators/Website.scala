@@ -9,7 +9,7 @@ import scala.io.Source
 
 case class Page(route: String, content: xml.Elem)
 
-case class Website(pages: List[Page]) {
+case class Website(pages: List[Page], factDictionary: xml.Elem) {
   def save(directoryPath: Path): Unit = {
     os.remove.all(directoryPath)
 
@@ -38,17 +38,18 @@ case class Website(pages: List[Page]) {
 }
 
 object Website {
-  def fromXmlConfig(config: xml.Elem , factDictionary: FactDictionary): Website = {
-    val flow = Flow.fromXmlConfig(config, factDictionary)
-    generate(flow)
+  def fromXmlConfig(config: xml.Elem , factDictionary: xml.Elem): Website = {
+    val flow = Flow.fromXmlConfig(config)
+    generate(flow, factDictionary)
   }
 
-  def generate(flow: Flow): Website = {
+  def generate(flow: Flow, factDictionary: xml.Elem): Website = {
 
     val content = <html>
       <link rel="stylesheet" href="/resources/stylesheet.css"></link>
       <script type="module" src="/resources/factgraph-3.1.0.js"></script>
       <script type="module" src="/resources/components.js"></script>
+      <script type="text" id="fact-dictionary">{factDictionary}</script>
 
       <body>
         <header>
@@ -59,11 +60,14 @@ object Website {
           </p>
         </header>
         <main>{flow.sections.map(generateSection)}</main>
+
+        <h2>Fact Graph</h2>
+        <fg-display></fg-display>
       </body>
     </html>
 
     val page = Page("index.html", content)
-    Website(List(page))
+    Website(List(page), factDictionary: xml.Elem)
   }
 
 

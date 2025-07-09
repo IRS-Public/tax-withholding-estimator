@@ -20,7 +20,7 @@
             <input type="boolean"/>
         </question>
 
-        <question path="/blind">
+        <question path="/isBlind">
             <label>Are you blind?</label>
             <input type="boolean"/>
         </question>

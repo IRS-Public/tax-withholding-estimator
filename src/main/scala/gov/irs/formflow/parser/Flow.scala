@@ -21,16 +21,16 @@ enum Input {
 
 case class Question(path: String, input: Input, innerXml: xml.NodeSeq)
 case class Section(questions: List[Question])
-case class Flow(sections: List[Section], factDictionary: FactDictionary)
+case class Flow(sections: List[Section])
 
 object Flow {
-  def fromXmlConfig(config: xml.Elem, factDictionary: FactDictionary): Flow = {
+  def fromXmlConfig(config: xml.Elem): Flow = {
     if (config.label != "FormConfig") {
       throw InvalidFormConfig(s"Expected a top-level <FormConfig>, found ${config.label}")
     }
 
     val sections = (config \ "section").map(convertSection).toList
-    Flow(sections, factDictionary)
+    Flow(sections)
   }
 
   private def convertSection(section: xml.Node): Section = {

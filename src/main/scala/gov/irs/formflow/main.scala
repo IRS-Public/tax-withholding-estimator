@@ -22,9 +22,7 @@ def main(args: Array[String]): Unit = {
   val config = scala.xml.XML.loadFile(fileName)
 
   val dictionaryXml = scala.xml.XML.loadFile("./flows/about-you-basic-dict.xml")
-  val dictionary = FactDictionary.fromXml(dictionaryXml)
-
-  val site = Website.fromXmlConfig(config, dictionary)
+  val site = Website.fromXmlConfig(config, dictionaryXml)
 
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"
