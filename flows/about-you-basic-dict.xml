@@ -1,0 +1,41 @@
+<FactDictionaryModule>
+
+  <Facts>
+    <Fact path="/filingStatusOptions">
+      <Name>Filing Status Options</Name>
+      <Description>Options for filing status</Description>
+      <Derived>
+        <EnumOptions>
+          <String>marriedFilingJointly</String>
+           <String>marriedFilingSeparately</String>
+           <String>single</String>
+           <String>headOfHousehold</String>
+           <String>qualifiedSurvivingSpouse</String>
+        </EnumOptions>
+      </Derived>
+    </Fact>
+
+    <Fact path="/filingStatus">
+      <Name>Filing status</Name>
+      <Description>The filing status selected by the taxpayer.</Description>
+      <Writable> <Enum optionsPath="/filingStatusOptions"/> </Writable>
+    </Fact>
+
+    <Fact path="/hasJob">
+      <Description>Does the filer have a job?</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/isBlind">
+      <Description>Is the filer blind?</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+
+  </Facts>
+
+
+</FactDictionaryModule>

@@ -1,5 +1,6 @@
 package gov.irs.formflow.parser
 
+import gov.irs.factgraph.FactDictionary
 import gov.irs.formflow.Log
 import gov.irs.formflow.exceptions.InvalidFormConfig
 
@@ -20,16 +21,16 @@ enum Input {
 
 case class Question(path: String, input: Input, innerXml: xml.NodeSeq)
 case class Section(questions: List[Question])
-case class Flow(sections: List[Section])
+case class Flow(sections: List[Section], factDictionary: FactDictionary)
 
 object Flow {
-  def fromXmlConfig(config: xml.Elem): Flow = {
+  def fromXmlConfig(config: xml.Elem, factDictionary: FactDictionary): Flow = {
     if (config.label != "FormConfig") {
       throw InvalidFormConfig(s"Expected a top-level <FormConfig>, found ${config.label}")
     }
 
     val sections = (config \ "section").map(convertSection).toList
-    Flow(sections)
+    Flow(sections, factDictionary)
   }
 
   private def convertSection(section: xml.Node): Section = {

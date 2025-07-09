@@ -1,5 +1,6 @@
 package gov.irs.formflow.generators
 
+import gov.irs.factgraph.FactDictionary
 import gov.irs.formflow.parser.{Flow, Input, Question, Section}
 import org.jsoup.Jsoup
 import os.Path
@@ -37,8 +38,8 @@ case class Website(pages: List[Page]) {
 }
 
 object Website {
-  def fromXmlConfig(config: xml.Elem): Website = {
-    val flow = Flow.fromXmlConfig(config)
+  def fromXmlConfig(config: xml.Elem , factDictionary: FactDictionary): Website = {
+    val flow = Flow.fromXmlConfig(config, factDictionary)
     generate(flow)
   }
 
@@ -81,7 +82,7 @@ object Website {
     })
 
 
-    <fg-question path={question.path} class="question" input={question.input.toString}>
+    <fg-question path={question.path} class="question" inputType={question.input.toString}>
       {questionXml}
     </fg-question>
   }

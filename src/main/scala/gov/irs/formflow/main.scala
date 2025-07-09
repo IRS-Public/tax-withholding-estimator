@@ -4,6 +4,7 @@ import gov.irs.formflow.generators.Website
 import org.jsoup.Jsoup
 
 import scala.sys.exit
+import gov.irs.factgraph.FactDictionary
 
 val TEST_XML_FP = "./flows/about-you-basic.xml"
 
@@ -19,7 +20,11 @@ def main(args: Array[String]): Unit = {
 
   // Load config and validate it
   val config = scala.xml.XML.loadFile(fileName)
-  val site = Website.fromXmlConfig(config)
+
+  val dictionaryXml = scala.xml.XML.loadFile("./flows/about-you-basic-dict.xml")
+  val dictionary = FactDictionary.fromXml(dictionaryXml)
+
+  val site = Website.fromXmlConfig(config, dictionary)
 
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"
