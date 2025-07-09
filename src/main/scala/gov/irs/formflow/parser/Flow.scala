@@ -9,6 +9,13 @@ enum Input {
   case text
   case boolean
   case select(options: List[Option])
+
+
+  override def toString: String = this match {
+    case Input.text => "text"
+    case Input.boolean => "boolean"
+    case Input.select(options) => "select"
+  }
 }
 
 case class Question(path: String, input: Input, innerXml: xml.NodeSeq)

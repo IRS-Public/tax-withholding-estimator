@@ -21,13 +21,16 @@ case class Website(pages: List[Page]) {
       os.write(target, document.html(), null, createFolders = true)
     }
 
-    // Write the static resources to a "/resources"
+    // This is a hack
     // I think this should eventually be configured *outside* the scala application
+    // It should also automatically introspect the directory
     addStaticResource(directoryPath, "stylesheet.css")
+    addStaticResource(directoryPath, "factgraph-3.1.0.js")
+    addStaticResource(directoryPath, "components.js")
   }
 
   private def addStaticResource(directoryPath: os.Path, filename: String): Unit = {
-    val stylesheet = Source.fromResource(s"website-static/$filename").getLines()
+    val stylesheet = Source.fromResource(s"website-static/$filename").getLines().mkString("\n")
     val stylesheetPath = directoryPath / "resources" / filename
     os.write(stylesheetPath, stylesheet, null, createFolders = true)
   }
@@ -43,6 +46,9 @@ object Website {
 
     val content = <html>
       <link rel="stylesheet" href="/resources/stylesheet.css"></link>
+      <script type="module" src="/resources/factgraph-3.1.0.js"></script>
+      <script type="module" src="/resources/components.js"></script>
+
       <body>
         <header>
           <h1>Tax Witholding Estimator</h1>
@@ -75,9 +81,9 @@ object Website {
     })
 
 
-    <fieldset path={question.path} class="question">
+    <fg-question path={question.path} class="question" input={question.input.toString}>
       {questionXml}
-    </fieldset>
+    </fg-question>
   }
 
   private def convertInput(question: Question): xml.Node = {
