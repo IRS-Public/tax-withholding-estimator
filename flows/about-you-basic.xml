@@ -3,12 +3,12 @@
     <section>
         <question path="/filingStatus">
             <label>What filing status will you use for your tax return?</label>
-            <select>
-                <option>Single</option>
-                <option>Married filing jointly</option>
-                <option>Married filing separately</option>
-                <option>Head of Household</option>
-                <option>Qualifying Widow</option>
+            <select optionsPath="/filingStatusOptions">
+                <option value="single">Single</option>
+                <option value="marriedFilingJointly">Married filing jointly</option>
+                <option value="marriedFilingSeparately">Married filing separately</option>
+                <option value="headOfHousehold">Head of Household</option>
+                <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
             </select>
         </question>
 

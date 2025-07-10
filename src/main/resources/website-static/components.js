@@ -22,7 +22,11 @@ class FgQuestion extends HTMLElement {
       case 'boolean': {
         const input = this.querySelector('input:checked')
         factGraph.set(this.path, input.value)
-        factGraph.save()
+        break
+      }
+      case 'select': {
+        const input = this.querySelector('select')
+        factGraph.set(this.path, input.value)
         break
       }
       default: {
@@ -30,6 +34,7 @@ class FgQuestion extends HTMLElement {
       }
     }
 
+    factGraph.save()
     document.dispatchEvent(new CustomEvent('fg-update'))
   }
 }
@@ -50,5 +55,6 @@ class FgDisplay extends HTMLElement {
 
 }
 
+window.factGraph = factGraph
 customElements.define('fg-question', FgQuestion)
 customElements.define('fg-display', FgDisplay)
