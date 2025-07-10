@@ -11,7 +11,6 @@ enum Input {
   case boolean
   case select(options: List[Option])
 
-
   override def toString: String = this match {
     case Input.text => "text"
     case Input.boolean => "boolean"
@@ -24,22 +23,30 @@ case class Section(questions: List[Question])
 case class Flow(sections: List[Section])
 
 object Flow {
-  def fromXmlConfig(config: xml.Elem): Flow = {
+  def fromXmlConfig(config: xml.Elem, factDictionary: FactDictionary): Flow = {
     if (config.label != "FormConfig") {
       throw InvalidFormConfig(s"Expected a top-level <FormConfig>, found ${config.label}")
     }
 
-    val sections = (config \ "section").map(convertSection).toList
+    val sections = (config \ "section").map(section => convertSection(section, factDictionary)).toList
     Flow(sections)
   }
 
-  private def convertSection(section: xml.Node): Section = {
-    val questions = (section \ "question").map(convertQuestion).toList
+  private def convertSection(section: xml.Node, factDictionary: FactDictionary): Section = {
+    val questions = (section \ "question").map(section => convertQuestion(section, factDictionary)).toList
     Section(questions)
   }
 
-  private def convertQuestion(question: xml.Node): Question = {
+  private def convertQuestion(question: xml.Node, factDictionary: FactDictionary): Question = {
     val path = question \@ "path"
+
+    // Validate that the fact exists
+    val factDefinition = factDictionary.getDefinition(path)
+    if (factDefinition == null) {
+      throw InvalidFormConfig(s"Path $path not found in the fact dictionary")
+    }
+    // TODO validate the fact matches the input
+
     val innerXml = question \ "_"
     val input = getInput(question)
     Question(path, input, innerXml)

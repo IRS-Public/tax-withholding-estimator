@@ -38,18 +38,19 @@ case class Website(pages: List[Page], factDictionary: xml.Elem) {
 }
 
 object Website {
-  def fromXmlConfig(config: xml.Elem , factDictionary: xml.Elem): Website = {
-    val flow = Flow.fromXmlConfig(config)
-    generate(flow, factDictionary)
+  def fromXmlConfig(config: xml.Elem , dictionaryConfig: xml.Elem): Website = {
+    val factDictionary = FactDictionary.fromXml(dictionaryConfig)
+    val flow = Flow.fromXmlConfig(config, factDictionary)
+    generate(flow, dictionaryConfig)
   }
 
-  def generate(flow: Flow, factDictionary: xml.Elem): Website = {
+  def generate(flow: Flow, dictionaryConfig: xml.Elem): Website = {
 
     val content = <html>
       <link rel="stylesheet" href="/resources/stylesheet.css"></link>
       <script type="module" src="/resources/factgraph-3.1.0.js"></script>
       <script type="module" src="/resources/components.js"></script>
-      <script type="text" id="fact-dictionary">{factDictionary}</script>
+      <script type="text" id="fact-dictionary">{dictionaryConfig}</script>
 
       <body>
         <header>
@@ -67,7 +68,7 @@ object Website {
     </html>
 
     val page = Page("index.html", content)
-    Website(List(page), factDictionary: xml.Elem)
+    Website(List(page), dictionaryConfig)
   }
 
 
