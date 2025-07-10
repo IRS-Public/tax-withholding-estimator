@@ -9,11 +9,13 @@ case class HtmlOption(name: String, value: String)
 enum Input {
   case text
   case boolean
+  case dollar
   case select(options: List[HtmlOption], optionsPath: Option[String])
 
   override def toString: String = this match {
     case Input.text => "text"
     case Input.boolean => "boolean"
+    case Input.dollar => "dollar"
     case Input.select(options, optionsPath) => "select"
   }
 }
@@ -83,6 +85,7 @@ object Flow {
     inputNode \@ "type" match {
       case "text" => Input.text
       case "boolean" => Input.boolean
+      case "dollar" => Input.dollar
       case x => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
     }
 

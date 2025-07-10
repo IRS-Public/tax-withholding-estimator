@@ -6,22 +6,20 @@ import org.jsoup.Jsoup
 import scala.sys.exit
 import gov.irs.factgraph.FactDictionary
 
-val TEST_XML_FP = "./flows/about-you-basic.xml"
-
 def main(args: Array[String]): Unit = {
 
-  if (args.length != 1) {
-    System.err.println("Provide a single argument, the path of the config file")
+  if (args.length != 2) {
+    System.err.println("Usage: sbt run [flowPath] [FactDictionaryPath]")
     exit(1)
   }
 
-  val fileName = args.head
-  System.err.println(s"Loading flow config $fileName")
+  val flowFileName = args(0)
+  System.err.println(s"Loading flow config $flowFileName")
+  val config = xml.XML.loadFile(flowFileName)
 
-  // Load config and validate it
-  val config = scala.xml.XML.loadFile(fileName)
-
-  val dictionaryXml = scala.xml.XML.loadFile("./flows/about-you-basic-dict.xml")
+  val dictionaryFileName = args(1)
+  System.err.println(s"Loading dictionary config $dictionaryFileName")
+  val dictionaryXml = xml.XML.loadFile(dictionaryFileName)
   val site = Website.fromXmlConfig(config, dictionaryXml)
 
   // Delete out/ directory and add files to it

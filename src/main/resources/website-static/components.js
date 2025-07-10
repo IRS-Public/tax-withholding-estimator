@@ -24,6 +24,11 @@ class FgQuestion extends HTMLElement {
         factGraph.set(this.path, input.value)
         break
       }
+      case 'dollar': {
+        const input = this.querySelector('input')
+        factGraph.set(this.path, input.value)
+        break
+      }
       case 'select': {
         const input = this.querySelector('select')
         factGraph.set(this.path, input.value)

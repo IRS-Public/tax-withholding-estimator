@@ -98,6 +98,7 @@ object Website {
         <label>Yes <input type="radio" value="true" name={question.path} /></label>
         <label>No <input type="radio" value="false" name={question.path} /></label>
       </div>
+      case Input.dollar => <input type="number" step="0.01"/>
       case x => <input type={x.toString}></input>
     }
   }

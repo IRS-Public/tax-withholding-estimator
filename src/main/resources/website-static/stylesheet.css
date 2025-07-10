@@ -7,6 +7,10 @@ fg-question {
   display: block;
 }
 
+input:not([type=radio]), select {
+  display: block;
+}
+
 .question {
   padding: 1rem;
   margin: 1rem 0;
