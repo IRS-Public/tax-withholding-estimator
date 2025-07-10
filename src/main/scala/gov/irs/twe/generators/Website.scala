@@ -1,7 +1,7 @@
-package gov.irs.formflow.generators
+package gov.irs.twe.generators
 
 import gov.irs.factgraph.FactDictionary
-import gov.irs.formflow.parser.{Flow, Input, Question, Section}
+import gov.irs.twe.parser.{Flow, Input, Question, Section}
 import org.jsoup.Jsoup
 import os.Path
 
@@ -31,9 +31,9 @@ case class Website(pages: List[Page], factDictionary: xml.Elem) {
   }
 
   private def addStaticResource(directoryPath: os.Path, filename: String): Unit = {
-    val stylesheet = Source.fromResource(s"website-static/$filename").getLines().mkString("\n")
-    val stylesheetPath = directoryPath / "resources" / filename
-    os.write(stylesheetPath, stylesheet, null, createFolders = true)
+    val resource = Source.fromResource(s"twe/website-static/$filename").getLines().mkString("\n")
+    val pathInWebsite = directoryPath / "resources" / filename
+    os.write(pathInWebsite, resource, null, createFolders = true)
   }
 }
 

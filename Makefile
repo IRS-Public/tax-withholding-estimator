@@ -1,10 +1,10 @@
 .PHONY: twe
 twe:
-	sbt "run ./flows/sample-twe-flow.xml ./flows/sample-twe-dict.xml"
+	sbt run
 
 .PHONY: run
 dev:
-	sbt "~run ./flows/sample-twe-flow.xml ./flows/sample-twe-dict.xml"
+	sbt ~run
 
 # This uses the NodeJS toolchain to run "serve", a static site server
 .PHONY: site
