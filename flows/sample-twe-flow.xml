@@ -1,6 +1,8 @@
 <FormConfig>
 
     <section>
+        <h2>Income</h2>
+
         <question path="/filingStatus">
             <label>What filing status will you use for your tax return?</label>
             <select optionsPath="/filingStatusOptions">
@@ -21,7 +23,6 @@
             <label>Total taxes paid for the year</label>
             <input type="dollar"/>
         </question>
-
     </section>
 
 </FormConfig>

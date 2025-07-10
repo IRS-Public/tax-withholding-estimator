@@ -36,18 +36,21 @@
         </Dollar>
       </Derived>
     </Fact>
+
     <Fact path="/income">
       <Description>total income for the year</Description>
       <Writable>
         <Dollar />
       </Writable>
     </Fact>
+
     <Fact path="/taxesPaid">
       <Description>total taxes paid for the year</Description>
       <Writable>
         <Dollar />
       </Writable>
     </Fact>
+
     <Fact path="/remainingPayPeriods">
       <Description>remainingPayPeriods</Description>
       <Derived>
