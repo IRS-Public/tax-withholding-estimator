@@ -1,7 +1,9 @@
 package gov.irs.twe.generators
 
 import gov.irs.factgraph.FactDictionary
-import gov.irs.twe.parser.{Flow, Input, Question, Section}
+import gov.irs.twe.parser.QuestionNode.html
+import gov.irs.twe.parser.SectionNode.question
+import gov.irs.twe.parser.{Flow, Input, Question, QuestionNode, Section, SectionNode}
 import org.jsoup.Jsoup
 import os.Path
 
@@ -73,33 +75,38 @@ object Website {
 
 
   private def generateSection(section: Section): xml.Elem = {
+    val sectionXml = section.nodes.map {
+      case SectionNode.question(x) => convertQuestion(x)
+      case SectionNode.html(x) => x
+    }
+
     <section>
-      {section.questions.map(convertQuestion)}
+      {sectionXml}
     </section>
   }
 
   private def convertQuestion(question: Question): xml.Node = {
-    val questionXml = question.innerXml.map(node => {
-      node.label match {
-        case "input" => convertInput(question)
-        case _ => node
-      }
-    })
+    val questionXml = question.nodes.map {
+      case QuestionNode.input(input) => convertInput(input, question.path)
+      case QuestionNode.html(x) => x
+    }
 
-
-    <fg-question path={question.path} class="question" inputType={question.input.toString}>
+    <fg-question path={question.path} class="question" inputType={question.input.typeString}>
       {questionXml}
     </fg-question>
   }
 
-  private def convertInput(question: Question): xml.Node = {
-    question.input match {
+  private def convertInput(input: Input, path: String): xml.Node = {
+    input match {
       case Input.boolean => <div>
-        <label>Yes <input type="radio" value="true" name={question.path} /></label>
-        <label>No <input type="radio" value="false" name={question.path} /></label>
+        <label>Yes <input type="radio" value="true" name={path} /></label>
+        <label>No <input type="radio" value="false" name={path} /></label>
       </div>
+      case Input.select(options, optionsPath) => <select optionsPath={optionsPath.getOrElse("")} name={path}>
+        {options.map(option => <option value={option.value}>{option.name}</option>)}
+      </select>
       case Input.dollar => <input type="number" step="0.01"/>
-      case x => <input type={x.toString}></input>
+      case Input.text => <input type="text" name={path}/>
     }
   }
 
