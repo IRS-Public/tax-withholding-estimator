@@ -30,6 +30,7 @@ case class Website(pages: List[Page], factDictionary: xml.Elem) {
     addStaticResource(directoryPath, "stylesheet.css")
     addStaticResource(directoryPath, "factgraph-3.1.0.js")
     addStaticResource(directoryPath, "components.js")
+    addStaticResource(directoryPath, "irs-logo.svg")
   }
 
   private def addStaticResource(directoryPath: os.Path, filename: String): Unit = {
@@ -56,16 +57,22 @@ object Website {
 
       <body>
         <header>
-          <h1>Tax Witholding Estimator</h1>
-          <p>
-            Use your best estimates for the year ahead to determine how to complete Form W-4 or W-4P so you don't have
-            too much or too little federal income tax withheld.
-          </p>
+          <div class="logo-banner"><img src="/resources/irs-logo.svg" /></div>
         </header>
-        <main>{flow.sections.map(generateSection)}</main>
+
+        <main>
+        <h1>Tax Witholding Estimator</h1>
+        <p>
+          Use your best estimates for the year ahead to determine how to complete Form W-4 or W-4P so you don't have
+          too much or too little federal income tax withheld.
+        </p>
+
+        {flow.sections.map(generateSection)}
 
         <h2>Fact Graph</h2>
         <fg-display></fg-display>
+        </main>
+
       </body>
     </html>
 
