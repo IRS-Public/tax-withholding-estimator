@@ -1,14 +1,21 @@
-# Scriber
+# Tax Witholding Estimator
 
-A static site generator for creating forms that fill out Fact Graphs.
+An online website for a taxpayer to estimate their witholdings.
 
-Right now this is purpose-built for TWE, but I've done what I can to write it as generically as possible.
+Its powered by a static site generator that turns FlowXML into multi-page forms.
+Right now this static site generator purpose-built for TWE, but I've done what I can to write it as generically as possible.
 
 ## Setup
 
-You will need the Fact Graph downloaded and published to a local repository.
+TWE depends on the [Fact Graph](https://github.com/IRSDigitalService/fact-graph), which you will need to have published to a local repository.
+Simply download the Fact Graph and run `sbt compile publishLocal`.
 
-`make dev` - Automatically recompile and run on code changes
+### Development Commands
+
+`make twe` - Output TWE to the `/out` directory
+`make dev` - Same as above, but automatically recompile and re-run on code changes
+`make site` - Serve the static site out of the `/out` directory (requires npm installation)
+`make clean` - Clean all the build artifacts
 
 ## IDE Support
 
