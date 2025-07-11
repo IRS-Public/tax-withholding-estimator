@@ -5,10 +5,10 @@ body {
 main {
   max-width: 1000px;
   margin: 0 auto;
-
+  padding: 0 1rem;
 }
 
-fg-question {
+fg-set {
   display: block;
 }
 

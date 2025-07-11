@@ -1,15 +1,45 @@
 import * as fg from './factgraph-3.1.0.js'
 
-const text = document.getElementById('fact-dictionary').textContent
-const factDictionary = fg.FactDictionaryFactory.importFromXml(text)
-const factGraph = fg.GraphFactory.apply(factDictionary)
+// Small wrapper until I have time to burn down some the FG's sillier interfaces
+class FactGraph {
+  constructor() {
+    const text = document.getElementById('fact-dictionary').textContent
+    this.factDictionary = fg.FactDictionaryFactory.importFromXml(text)
+    this.graph = fg.GraphFactory.apply(this.factDictionary)
+  }
 
-class FgQuestion extends HTMLElement {
+  get(path) {
+    return this.graph.get(path)
+  }
+
+  set(path, value) {
+    this.graph.set(path, value)
+    this.graph.save()
+    document.dispatchEvent(new CustomEvent('fg-update'))
+  }
+
+  toJson() {
+    return this.graph.toJson()
+  }
+
+  update() {
+    document.dispatchEvent(new CustomEvent('fg-update'))
+  }
+
+  reset() {
+    this.graph = fg.GraphFactory.apply(this.factDictionary)
+    this.update()
+  }
+}
+
+const factGraph = new FactGraph()
+window.factGraph = factGraph
+
+class FgSet extends HTMLElement {
   connectedCallback() {
     this.inputType = this.getAttribute('inputtype')
     this.path = this.getAttribute('path')
     this.addEventListener('change', this);
-
     console.log(`Registering path ${this.path} of inputType ${this.inputType}`)
   }
 
@@ -38,12 +68,9 @@ class FgQuestion extends HTMLElement {
         console.warn(`Unknown input type "${this.inputType}" for input with path "${this.path}"`)
       }
     }
-
-    factGraph.save()
-    document.dispatchEvent(new CustomEvent('fg-update'))
   }
 }
-customElements.define('fg-question', FgQuestion)
+customElements.define('fg-set', FgSet)
 
 class FgDisplay extends HTMLElement {
   connectedCallback() {
@@ -70,7 +97,6 @@ class FgShow extends HTMLElement {
 
   update() {
     const value = factGraph.get(this.path)
-    console.log(value.complete)
     if (value.complete === false) {
       this.innerText = '[incomplete]'
     } else {
@@ -80,4 +106,18 @@ class FgShow extends HTMLElement {
 }
 customElements.define('fg-show', FgShow)
 
-window.factGraph = factGraph
+class FgReset extends HTMLElement {
+  connectedCallback() {
+    this.addEventListener('click', this)
+  }
+
+  handleEvent() {
+    const inputs = document.querySelectorAll('fg-set input')
+    for (const input of inputs) {
+      input.value = ""
+    }
+    factGraph.reset()
+  }
+}
+customElements.define('fg-reset', FgReset)
+

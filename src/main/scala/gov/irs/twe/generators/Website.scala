@@ -1,9 +1,9 @@
 package gov.irs.twe.generators
 
 import gov.irs.factgraph.FactDictionary
-import gov.irs.twe.parser.QuestionNode.html
-import gov.irs.twe.parser.SectionNode.question
-import gov.irs.twe.parser.{Flow, Input, Question, QuestionNode, Section, SectionNode}
+import gov.irs.twe.parser.FgSetNode.html
+import gov.irs.twe.parser.SectionNode.fgSet
+import gov.irs.twe.parser.{Flow, Input, FgSet, FgSetNode, Section, SectionNode}
 import org.jsoup.Jsoup
 import os.Path
 
@@ -67,6 +67,8 @@ object Website {
           too much or too little federal income tax withheld.
         </p>
 
+        <fg-reset><button>Reset</button></fg-reset>
+
         {flow.sections.map(generateSection)}
 
         <h2>Fact Graph</h2>
@@ -83,7 +85,7 @@ object Website {
 
   private def generateSection(section: Section): xml.Elem = {
     val sectionXml = section.nodes.map {
-      case SectionNode.question(x) => convertQuestion(x)
+      case SectionNode.fgSet(x) => convertQuestion(x)
       case SectionNode.html(x) => x
     }
 
@@ -92,15 +94,15 @@ object Website {
     </section>
   }
 
-  private def convertQuestion(question: Question): xml.Node = {
+  private def convertQuestion(question: FgSet): xml.Node = {
     val questionXml = question.nodes.map {
-      case QuestionNode.input(input) => convertInput(input, question.path)
-      case QuestionNode.html(x) => x
+      case FgSetNode.input(input) => convertInput(input, question.path)
+      case FgSetNode.html(x) => x
     }
 
-    <fg-question path={question.path} class="question" inputType={question.input.typeString}>
+    <fg-set path={question.path} class="question" inputType={question.input.typeString}>
       {questionXml}
-    </fg-question>
+    </fg-set>
   }
 
   private def convertInput(input: Input, path: String): xml.Node = {

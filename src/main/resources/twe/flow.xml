@@ -1,8 +1,9 @@
 <FormConfig>
 
   <section>
+
     <h2>Income</h2>
-    <question path="/filingStatus">
+    <fg-set path="/filingStatus">
       <label>What filing status will you use for your tax return?</label>
       <select optionsPath="/filingStatusOptions">
         <option value="single">Single</option>
@@ -11,28 +12,30 @@
         <option value="headOfHousehold">Head of Household</option>
         <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
       </select>
-    </question>
+    </fg-set>
 
-    <question path="/income">
+    <fg-set path="/income">
       <label>Total income for the year</label>
       <input type="dollar"/>
-    </question>
+    </fg-set>
 
-    <question path="/taxesPaid">
+    <fg-set path="/taxesPaid">
       <label>Total taxes paid for the year</label>
       <input type="dollar"/>
-    </question>
+    </fg-set>
 
   </section>
 
   <section>
     <h2>Calculations</h2>
     <p>
-      Your <strong>taxable income</strong> is: <fg-show path="/roundedTaxableIncome" />
+      Your <strong>taxable income</strong> is:
+      <fg-show path="/roundedTaxableIncome" />
     </p>
 
     <p>
-      Your <strong>suggested adjustement per pay period</strong> is: <fg-show path="/adjustmentNeededPerPayPeriod" />
+      Your <strong>suggested adjustment per pay period</strong> is:
+      <fg-show path="/adjustmentNeededPerPayPeriod" />
     </p>
   </section>
 
