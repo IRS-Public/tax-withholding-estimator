@@ -28,9 +28,12 @@
   <section>
     <h2>Calculations</h2>
     <p>
-      Your <strong>taxable income</strong> is: <fg-show path="/taxableIncome" />
+      Your <strong>taxable income</strong> is: <fg-show path="/roundedTaxableIncome" />
     </p>
 
+    <p>
+      Your <strong>suggested adjustement per pay period</strong> is: <fg-show path="/adjustmentNeededPerPayPeriod" />
+    </p>
   </section>
 
 </FormConfig>
