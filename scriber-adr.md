@@ -7,7 +7,6 @@ a multi-page form application and an all-screens data view.
 Project Scriber builds on the experience and learnings of the DF Flow, and is inspired by its JSX interface.
 Its first implementation will be for the Tax Witholding Estimator (TWE).
 
-
 ## Background: The DF Flow
 
 The [DF Flow](https://github.com/IRS-Public/direct-file/blob/e0d5c84451cc52b72d20d04652e306bf4af1a43c/direct-file/df-client/df-client-app/src/flow/flow.tsx) was built in React and specified with JSX.
@@ -35,15 +34,17 @@ A couple of its core successes:
 
 ### Limitations
 
-The main shortcoming of the Flow that Scriber seeks to resolve is that it had no data representation.
-The Flow is built in JSX, an [XML-like ECMAScript extension](https://facebook.github.io/jsx/), which is declarative, but not data.
+The main shortcoming of the Flow that Scriber seeks to resolve is that the Flow has no data representation.
+The Flow is built in JSX, an [XML-like ECMAScript extension](https://facebook.github.io/jsx/).
+JSX is is declarative, but it is not data.
 This imposes major limitations on how the flow works.
 
-There aren't really tools that "read" JSX; JSX just gets transpiled to `React.createElement` (or other framework equivalent).
-Therefore any tool that wants to understand the flow has to run React---and an entire browser.
+To start, there aren't really tools that "read" JSX.
+JavaScript build tools transpile JSX to `React.createElement` (or other framework equivalent).
+Therefore any tool that wants to understand the Flow has to run React—and an entire browser.
 
 For example, All Screens was (correctly) hailed as a success story for the Flow's declarative specification, but there's a reason the tooling never evolved beyond that.
-All Screens doesn't introspect JSX, it introspects a tree of React elements.
+All Screens doesn't introspect JSX, [it introspects a tree of React elements](https://github.com/IRS-Public/direct-file/blob/e0d5c84451cc52b72d20d04652e306bf4af1a43c/direct-file/df-client/df-client-app/src/all-screens/AllScreensContent.tsx#L98).
 By the time the flow has been converted into React elements, there's not much you can do with them *besides* render them in unique configurations;
 Most of the "declarative" information has been lost.
 
