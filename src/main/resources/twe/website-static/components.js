@@ -43,6 +43,7 @@ class FgQuestion extends HTMLElement {
     document.dispatchEvent(new CustomEvent('fg-update'))
   }
 }
+customElements.define('fg-question', FgQuestion)
 
 class FgDisplay extends HTMLElement {
   connectedCallback() {
@@ -57,9 +58,26 @@ class FgDisplay extends HTMLElement {
     const prettyJson = JSON.stringify(JSON.parse(json), null, 2)
     this.pre.innerText = prettyJson
   }
-
 }
+customElements.define('fg-display', FgDisplay)
+
+class FgShow extends HTMLElement {
+  connectedCallback() {
+    this.path = this.getAttribute('path')
+    document.addEventListener('fg-update', () => this.update())
+    this.update()
+  }
+
+  update() {
+    const value = factGraph.get(this.path)
+    console.log(value.complete)
+    if (value.complete === false) {
+      this.innerText = '[incomplete]'
+    } else {
+      this.innerText = value.get?.toString()
+    }
+  }
+}
+customElements.define('fg-show', FgShow)
 
 window.factGraph = factGraph
-customElements.define('fg-question', FgQuestion)
-customElements.define('fg-display', FgDisplay)
