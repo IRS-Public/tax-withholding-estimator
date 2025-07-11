@@ -62,7 +62,7 @@ it can be introspected as a graph without loss of any information;
 and it can trivially rendered in a browser.
 That format is XML (or XHTML).
 
-## The XML Flow
+## The Scriber Flow
 
 ### Scriber by example
 
@@ -115,3 +115,26 @@ Note that you can intersperse regular HTML elements within the flow.
 While parsing the config, Scriber checks the facts associated with the paths provided.
 If you misspell `/income` as `/incom`, it will throw an error saying that that no `/incom` fact exists.
 It will also check that you've provided the right type of input for the fact.
+
+
+### Tooling
+
+Scriber configs are valid XML, which will make it easy to take advantage of the very mature XML tooling ecosystem, as well as boostrap new tooling on top of the Scriber flow.
+
+As a trivial example, Scriber configs support XPath.
+Let's say you wanted to know the paths of all the `<fg-set>` elements that have `<input type="Dollar">` children.
+You can do that straight from the MacOS terminal:
+
+```bash
+xpath < src/main/resources/twe/flow.xml -e '//fg-set[input [@type="dollar"]]/@path'
+
+Found 2 nodes in stdin:
+-- NODE --
+ path="/income"
+-- NODE --
+ path="/taxesPaid"
+```
+
+Simplest query language in the world?
+No.
+But it gets the job done.
