@@ -10,6 +10,9 @@ main {
 
 fg-set {
   display: block;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid black;
 }
 
 .logo-banner {
@@ -27,8 +30,6 @@ input:not([type=radio]), select {
   display: block;
 }
 
-.question {
-  padding: 1rem;
-  margin: 1rem 0;
-  border: 1px solid black;
+.incomplete {
+  color: gray;
 }

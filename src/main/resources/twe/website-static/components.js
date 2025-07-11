@@ -1,6 +1,6 @@
 import * as fg from './factgraph-3.1.0.js'
 
-// Small wrapper until I have time to burn down some the FG's sillier interfaces
+// Small wrapper until I have time to burn down some of the FG's sillier interfaces
 class FactGraph {
   constructor() {
     const text = document.getElementById('fact-dictionary').textContent
@@ -32,6 +32,8 @@ class FactGraph {
   }
 }
 
+// Create a new fact graph and attach it to the window
+// This lets you use it in the console
 const factGraph = new FactGraph()
 window.factGraph = factGraph
 
@@ -98,7 +100,7 @@ class FgShow extends HTMLElement {
   update() {
     const value = factGraph.get(this.path)
     if (value.complete === false) {
-      this.innerText = '[incomplete]'
+      this.innerHTML = `<span class="incomplete">[Missing Information]</span>`
     } else {
       this.innerText = value.get?.toString()
     }

@@ -48,7 +48,6 @@ object Website {
   }
 
   def generate(flow: Flow, dictionaryConfig: xml.Elem): Website = {
-
     val content = <html>
       <link rel="stylesheet" href="/resources/stylesheet.css"></link>
       <script type="module" src="/resources/factgraph-3.1.0.js"></script>
@@ -100,7 +99,7 @@ object Website {
       case FgSetNode.html(x) => x
     }
 
-    <fg-set path={question.path} class="question" inputType={question.input.typeString}>
+    <fg-set path={question.path} inputType={question.input.typeString}>
       {questionXml}
     </fg-set>
   }
