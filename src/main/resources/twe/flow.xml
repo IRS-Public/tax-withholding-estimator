@@ -1,7 +1,6 @@
 <FormConfig>
 
   <section>
-
     <h2>Income</h2>
     <fg-set path="/filingStatus">
       <label>What filing status will you use for your tax return?</label>

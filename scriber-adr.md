@@ -35,26 +35,25 @@ A couple of its core successes:
 ### Limitations
 
 The main shortcoming of the Flow that Scriber seeks to resolve is that the Flow has no data representation.
-The Flow is built in JSX, an [XML-like ECMAScript extension](https://facebook.github.io/jsx/).
+The Flow is built in JSX, an [XML-like ECMAScript extension](https://facebook.github.io/jsx/) that lives alongside JavaScript.
 JSX is is declarative, but it is not data.
 This imposes major limitations on how the flow works.
 
 To start, there aren't really tools that "read" JSX.
 JavaScript build tools transpile JSX to `React.createElement` (or other framework equivalent).
-Therefore any tool that wants to understand the Flow has to run React—and an entire browser.
+Not only does this limit you to JavaScript-based tooling, it means that to understand the Flow you have to run React—and an entire web browser.
 
 For example, All Screens was (correctly) hailed as a success story for the Flow's declarative specification, but there's a reason the tooling never evolved beyond that.
 All Screens doesn't introspect JSX, [it introspects a tree of React elements](https://github.com/IRS-Public/direct-file/blob/e0d5c84451cc52b72d20d04652e306bf4af1a43c/direct-file/df-client/df-client-app/src/all-screens/AllScreensContent.tsx#L98).
 By the time the flow has been converted into React elements, there's not much you can do with them *besides* render them in unique configurations;
 Most of the "declarative" information has been lost.
 
-More importantly, JSX is essentially impossible to edit programatically.
-The tooling does not exist to pass a program some JSX and then have it output new JSX for you.
+JSX is likewise impossible to **edit** programatically: the tooling does not exist to pass a program some JSX and then have it output new JSX for you.
 JSX is source code, so flow updates require source code updates, limiting the pool of potential contributors to engineers.
-In theory, it would be possible to teach non-technical stakeholders to make source code updates to a structured data format, but the difficulty of getting such stakeholders to be comfortable with the slew of build tools required to validate and view JSX made that a practical impossibility.
+It is certainly possible for non-technical stakeholders to make source code updates to structured data formats—PMs were able to edit our YAML content files, for instance—but the difficulty of getting such stakeholders to be comfortable with the slew of build tools required to validate and view JSX made that a practical impossibility.
 
 This was the key limitation that prevented the creation of a "Taxpert" interface for DF.
-A taxpert program needs to read the current flow data, display it in an intuitive interface, and then output a new flow *as data*.
+A taxpert program needs to read the current flow data, display it in an intuitive interface, and then output new flow data.
 For that to happen, the flow has to be data.
 
 Fortunately, a JSX-like data format exists that resolves all these problems.
@@ -64,3 +63,55 @@ and it can trivially rendered in a browser.
 That format is XML (or XHTML).
 
 ## The XML Flow
+
+### Scriber by example
+
+Scriber is a static site generator for Fact Graph-based forms.
+Forms are specified in XML that sticks are close to HTML as possible.
+Scriber lightly transforms that XML config into valid HTML, with some supporting web components that apply the inputs to a locally-saved Fact Graph.
+
+Take this basic config, which asks for your income and taxes paid to date.
+
+```xml
+<section>
+  <h2>Income</h2>
+  <fg-set path="/income">
+    <label>Total income for the year</label>
+    <input type="dollar"/>
+  </fg-set>
+
+  <fg-set path="/taxesPaid">
+    <label>Total taxes paid for the year</label>
+    <input type="dollar"/>
+  </fg-set>
+</section>
+
+<section>
+  <h2>Calculations</h2>
+  <p>
+    Your <strong>taxable income</strong> is:
+    <fg-show path="/roundedTaxableIncome" />
+  </p>
+
+  <p>
+    Your <strong>suggested adjustment per pay period</strong> is:
+    <fg-show path="/adjustmentNeededPerPayPeriod" />
+  </p>
+</section>
+```
+
+This will get rendered into [HTML sections](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/section), almost identically to the config.
+The main difference is that scriber will transform `<input type="dollar" />` (which is not a valid [input type](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#input_types)), into an `<input type="number" />` that sets a Dollar fact in the local fact graph.
+
+There are also some custom HTML elements (i.e. web components) that handle Fact Graph functions.
+`<fg-set>` wraps an input and sets the fact at the associated path.
+`<fg-get>` will replace its contents with the current value of the fact at that path.
+
+Note that you can intersperse regular HTML elements within the flow.
+`<h2>` has no special significance to Scriber—it simply passes that onto the final HTML.
+
+### Validation
+
+While parsing the config, Scriber checks the facts associated with the paths provided.
+If you misspell `/income` as `/incom`, it will throw an error saying that that no `/incom` fact exists.
+It will also check that you've provided the right type of input for the fact.
