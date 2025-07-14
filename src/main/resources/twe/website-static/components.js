@@ -15,7 +15,7 @@ class FactGraph {
   set(path, value) {
     this.graph.set(path, value)
     this.graph.save()
-    document.dispatchEvent(new CustomEvent('fg-update'))
+    this.update()
   }
 
   toJson() {
@@ -23,6 +23,19 @@ class FactGraph {
   }
 
   update() {
+    // Show/hide based on conditions
+    const nodesWithConditions = document.querySelectorAll('fg-set[condition]')
+    for (const node of nodesWithConditions) {
+      const conditionPath = node.getAttribute('condition')
+      const value = factGraph.get(conditionPath)
+      const meetsCondition = (value.complete && value.get) === true
+      if (!meetsCondition) {
+        node.classList.add('hidden')
+      } else {
+        node.classList.remove('hidden')
+      }
+    }
+
     document.dispatchEvent(new CustomEvent('fg-update'))
   }
 
@@ -41,15 +54,11 @@ class FgSet extends HTMLElement {
   connectedCallback() {
     this.inputType = this.getAttribute('inputtype')
     this.path = this.getAttribute('path')
-    this.addEventListener('change', this);
+    this.addEventListener('change', () => this.onChange());
     console.log(`Registering path ${this.path} of inputType ${this.inputType}`)
   }
 
-  handleEvent(_event) {
-    this.updateFactGraph()
-  }
-
-  updateFactGraph() {
+  onChange() {
     switch (this.inputType) {
       case 'boolean': {
         const input = this.querySelector('input:checked')
@@ -78,11 +87,11 @@ class FgDisplay extends HTMLElement {
   connectedCallback() {
     this.pre = document.createElement('pre')
     this.appendChild(this.pre)
-    document.addEventListener('fg-update', () => this.update())
-    this.update()
+    document.addEventListener('fg-update', () => this.updateDisplay())
+    this.updateDisplay()
   }
 
-  update() {
+  updateDisplay() {
     const json = factGraph.toJson()
     const prettyJson = JSON.stringify(JSON.parse(json), null, 2)
     this.pre.innerText = prettyJson
@@ -93,11 +102,11 @@ customElements.define('fg-display', FgDisplay)
 class FgShow extends HTMLElement {
   connectedCallback() {
     this.path = this.getAttribute('path')
-    document.addEventListener('fg-update', () => this.update())
-    this.update()
+    document.addEventListener('fg-update', () => this.updateDisplay())
+    this.updateDisplay()
   }
 
-  update() {
+  updateDisplay() {
     const value = factGraph.get(this.path)
     if (value.complete === false) {
       this.innerHTML = `<span class="incomplete">[Missing Information]</span>`
@@ -105,18 +114,6 @@ class FgShow extends HTMLElement {
       this.innerText = value.get?.toString()
     }
 
-    // Show/hide based on conditions
-    const nodesWithConditions = document.querySelectorAll('fg-set[condition]')
-    for (const node of nodesWithConditions) {
-      const conditionPath = node.getAttribute('condition')
-      const value = factGraph.get(conditionPath)
-      const meetsCondition = (value.complete && value.get) === true
-      if (!meetsCondition) {
-        node.classList.add('hidden')
-      } else {
-        node.classList.remove('hidden')
-      }
-    }
   }
 }
 customElements.define('fg-show', FgShow)
