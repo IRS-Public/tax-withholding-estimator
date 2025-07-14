@@ -14,6 +14,7 @@ case class FgSet(path: String, input: Input, nodes: List[FgSetNode]) {
 object FgSet {
   def parse(question: xml.Node, factDictionary: FactDictionary): FgSet = {
     val path = question \@ "path"
+    val condition = question \@ "condition"
 
     // Validate that the fact exists
     val factDefinition = factDictionary.getDefinition(path)
@@ -21,6 +22,12 @@ object FgSet {
       throw InvalidFormConfig(s"Path $path not found in the fact dictionary")
     }
     // TODO validate the fact matches the input
+
+    if (!condition.isEmpty) {
+      if (factDictionary.getDefinition(condition) == null) {
+        throw InvalidFormConfig(s"Condition $condition not found in the fact dictionary")
+      }
+    }
 
     val input = Input.extractFromQuestion(question, factDictionary)
     val nodes = (question \ "_").map(node => node.label match {

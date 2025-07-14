@@ -474,4 +474,17 @@
       </Derived>
     </Fact>
   </Facts>
+
+  <Fact path="/incomeGreaterThan0">
+    <Derived>
+      <GreaterThan>
+        <Left>
+          <Dependency path="/income"/>
+        </Left>
+        <Right>
+          <Dollar>100000</Dollar>
+        </Right>
+      </GreaterThan>
+    </Derived>
+  </Fact>
 </FactDictionaryModule>

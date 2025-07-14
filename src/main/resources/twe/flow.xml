@@ -18,7 +18,7 @@
       <input type="dollar"/>
     </fg-set>
 
-    <fg-set path="/taxesPaid">
+    <fg-set path="/taxesPaid" condition="/incomeGreaterThan0">
       <label>Total taxes paid for the year</label>
       <input type="dollar"/>
     </fg-set>
