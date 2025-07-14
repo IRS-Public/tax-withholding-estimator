@@ -99,7 +99,11 @@ object Website {
       case FgSetNode.html(x) => x
     }
 
-    <fg-set path={question.path} inputType={question.input.typeString}>
+    <fg-set
+      path={question.path}
+      inputType={question.input.typeString}
+      condition={question.condition.getOrElse(null)}
+      >
       {questionXml}
     </fg-set>
   }

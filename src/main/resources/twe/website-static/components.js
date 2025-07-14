@@ -104,6 +104,19 @@ class FgShow extends HTMLElement {
     } else {
       this.innerText = value.get?.toString()
     }
+
+    // Show/hide based on conditions
+    const nodesWithConditions = document.querySelectorAll('fg-set[condition]')
+    for (const node of nodesWithConditions) {
+      const conditionPath = node.getAttribute('condition')
+      const value = factGraph.get(conditionPath)
+      const meetsCondition = (value.complete && value.get) === true
+      if (!meetsCondition) {
+        node.classList.add('hidden')
+      } else {
+        node.classList.remove('hidden')
+      }
+    }
   }
 }
 customElements.define('fg-show', FgShow)
