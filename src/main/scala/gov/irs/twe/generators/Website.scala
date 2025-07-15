@@ -79,7 +79,7 @@ object Website {
           <div class="logo-banner"><img src="/resources/irs-logo.svg" /></div>
         </header>
 
-        <main>
+        <main class="hidden">
         <h1>Tax Witholding Estimator</h1>
         <p>
           Use your best estimates for the year ahead to determine how to complete Form W-4 or W-4P so you don't have

@@ -51,6 +51,9 @@ class FactGraph {
 const factGraph = new FactGraph()
 window.factGraph = factGraph
 
+// Unhide main
+document.querySelector('main').classList.remove('hidden')
+
 /*
  * <fg-set> - An input that sets a fact
  */
@@ -67,7 +70,8 @@ class FgSet extends HTMLElement {
     try {
       this.setFact()
     } catch (error) {
-      const message = error.message
+      // const message = error.message
+      console.error(error)
     }
   }
 
