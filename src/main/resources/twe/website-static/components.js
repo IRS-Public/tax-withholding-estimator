@@ -83,22 +83,9 @@ class FgSet extends HTMLElement {
 }
 customElements.define('fg-set', FgSet)
 
-class FgDisplay extends HTMLElement {
-  connectedCallback() {
-    this.pre = document.createElement('pre')
-    this.appendChild(this.pre)
-    document.addEventListener('fg-update', () => this.updateDisplay())
-    this.updateDisplay()
-  }
-
-  updateDisplay() {
-    const json = factGraph.toJson()
-    const prettyJson = JSON.stringify(JSON.parse(json), null, 2)
-    this.pre.innerText = prettyJson
-  }
-}
-customElements.define('fg-display', FgDisplay)
-
+/*
+ * <fg-show> - Display the current value of a fact.
+ */
 class FgShow extends HTMLElement {
   connectedCallback() {
     this.path = this.getAttribute('path')
@@ -118,6 +105,10 @@ class FgShow extends HTMLElement {
 }
 customElements.define('fg-show', FgShow)
 
+
+/*
+ * <fg-reset> - button to reset the Fact Graph.
+ */
 class FgReset extends HTMLElement {
   connectedCallback() {
     this.addEventListener('click', this)

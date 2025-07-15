@@ -30,6 +30,7 @@ case class Website(pages: List[Page], factDictionary: xml.Elem) {
     addStaticResource(directoryPath, "stylesheet.css")
     addStaticResource(directoryPath, "factgraph-3.1.0.js")
     addStaticResource(directoryPath, "components.js")
+    addStaticResource(directoryPath, "debug-components.js")
     addStaticResource(directoryPath, "irs-logo.svg")
   }
 
@@ -52,6 +53,7 @@ object Website {
       <link rel="stylesheet" href="/resources/stylesheet.css"></link>
       <script type="module" src="/resources/factgraph-3.1.0.js"></script>
       <script type="module" src="/resources/components.js"></script>
+      <script type="module" src="/resources/debug-components.js"></script>
       <script type="text" id="fact-dictionary">{dictionaryConfig}</script>
 
       <body>
@@ -70,8 +72,6 @@ object Website {
 
         {flow.sections.map(generateSection)}
 
-        <h2>Fact Graph</h2>
-        <fg-display></fg-display>
         </main>
 
       </body>
