@@ -72,7 +72,6 @@ object Website {
       <script type="module" src="/resources/factgraph-3.1.0.js"></script>
       <script type="module" src="/resources/fg-components.js"></script>
       <script type="module" src="/resources/debug-components.js"></script>
-      <script type="text" id="fact-dictionary">{dictionaryConfig}</script>
 
       <body>
         <header>
@@ -91,6 +90,8 @@ object Website {
         {flow.sections.map(generateSection)}
 
         </main>
+
+      <script type="text" id="fact-dictionary">{dictionaryConfig}</script>
 
       </body>
     </html>

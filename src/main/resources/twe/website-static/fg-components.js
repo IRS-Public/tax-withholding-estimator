@@ -6,7 +6,7 @@ class FactGraph {
     const text = document.getElementById('fact-dictionary').textContent
     this.factDictionary = fg.FactDictionaryFactory.importFromXml(text)
     this.graph = fg.GraphFactory.apply(this.factDictionary)
-    this.update()
+    this.#update()
   }
 
   get(path) {
@@ -14,16 +14,19 @@ class FactGraph {
   }
 
   set(path, value) {
-    this.graph.set(path, value)
-    this.graph.save()
-    this.update()
+    try {
+      this.graph.set(path, value)
+      this.graph.save()
+    } finally {
+      this.#update()
+    }
   }
 
   toJson() {
     return this.graph.toJson()
   }
 
-  update() {
+  #update() {
     // Show/hide based on conditions
     const nodesWithConditions = document.querySelectorAll('fg-set[condition]')
     for (const node of nodesWithConditions) {
@@ -42,7 +45,7 @@ class FactGraph {
 
   reset() {
     this.graph = fg.GraphFactory.apply(this.factDictionary)
-    this.update()
+    this.#update()
   }
 }
 
@@ -60,18 +63,37 @@ document.querySelector('main').classList.remove('hidden')
 class FgSet extends HTMLElement {
   connectedCallback() {
     this.inputType = this.getAttribute('inputtype')
+    this.input = this.querySelector('input, select')
     this.path = this.getAttribute('path')
+    this.error = null
 
-    this.addEventListener('change', () => this.onChange());
-    console.log(`Registering path ${this.path} of inputType ${this.inputType}`)
+    this.input.addEventListener('blur', () => this.onChange());
+    this.addEventListener('fg-update', () => this.render());
+    this.render()
+
+    console.log(`Registering fact ${this.path} of inputType ${this.inputType}`)
+  }
+
+  render() {
+    if (this.error) {
+      const warnDiv = document.createElement('div')
+      warnDiv.classList.add('warning')
+      warnDiv.innerText = this.error
+      this.insertAdjacentElement('afterbegin', warnDiv)
+    } else {
+      this.querySelector('div.warning')?.remove()
+    }
   }
 
   onChange() {
     try {
       this.setFact()
+      this.error = null
     } catch (error) {
-      // const message = error.message
-      console.error(error)
+      this.error = error.message
+      return
+    } finally {
+      this.render()
     }
   }
 
@@ -106,11 +128,11 @@ customElements.define('fg-set', FgSet)
 class FgShow extends HTMLElement {
   connectedCallback() {
     this.path = this.getAttribute('path')
-    document.addEventListener('fg-update', () => this.updateDisplay())
-    this.updateDisplay()
+    document.addEventListener('fg-update', () => this.render())
+    this.render()
   }
 
-  updateDisplay() {
+  render() {
     const value = factGraph.get(this.path)
     if (value.complete === false) {
       this.innerHTML = `<span class="incomplete">[Missing Information]</span>`

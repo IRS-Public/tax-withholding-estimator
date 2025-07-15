@@ -5,11 +5,11 @@ class FgJson extends HTMLElement {
   connectedCallback() {
     this.pre = document.createElement('pre')
     this.appendChild(this.pre)
-    document.addEventListener('fg-update', () => this.updateDisplay())
-    this.updateDisplay()
+    document.addEventListener('fg-update', () => this.render())
+    this.render()
   }
 
-  updateDisplay() {
+  render() {
     const json = factGraph.toJson()
     const prettyJson = JSON.stringify(JSON.parse(json), null, 2)
     this.pre.innerText = prettyJson
