@@ -3,13 +3,34 @@ package gov.irs.twe.generators
 import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.parser.FgSetNode.html
 import gov.irs.twe.parser.SectionNode.fgSet
-import gov.irs.twe.parser.{Flow, Input, FgSet, FgSetNode, Section, SectionNode}
+import gov.irs.twe.parser.{FgSet, FgSetNode, Flow, Input, Section, SectionNode}
 import org.jsoup.Jsoup
+import org.jsoup.parser.Tag
 import os.Path
 
 import scala.io.Source
 
-case class Page(route: String, content: xml.Elem)
+case class Page(route: String, content: xml.Elem) {
+  def html(): String = {
+    val content = "<!DOCTYPE html>" + this.content.toString
+    val document = Jsoup.parse(content)
+
+    // This is to set certain elements to "block" formatting
+    // So that they look nice in view-source
+    // https://github.com/jhy/jsoup/issues/2141#issuecomment-2795853753
+    val setElement = document.expectFirst("fg-set")
+    val tag = setElement.tag()
+    tag.set(Tag.Block)
+    setElement.children().forEach(child => child.tag().set(Tag.Block))
+
+    // Convert to an HTML string
+    // I added a newline after each <fg-set> block to make them easier to see
+    var html = document.html()
+    html = html.replace("</fg-set>", "</fg-set>\n")
+
+    html
+  }
+}
 
 case class Website(pages: List[Page], factDictionary: xml.Elem) {
   def save(directoryPath: Path): Unit = {
@@ -17,11 +38,8 @@ case class Website(pages: List[Page], factDictionary: xml.Elem) {
 
     // Write the pages
     for (page <- this.pages) {
-      val content = "<!DOCTYPE html>" + page.content.toString
-      val document = Jsoup.parse(content)
       val target = directoryPath / page.route
-
-      os.write(target, document.html(), null, createFolders = true)
+      os.write(target, page.html(), null, createFolders = true)
     }
 
     // This is a hack
@@ -29,7 +47,7 @@ case class Website(pages: List[Page], factDictionary: xml.Elem) {
     // It should also automatically introspect the directory
     addStaticResource(directoryPath, "stylesheet.css")
     addStaticResource(directoryPath, "factgraph-3.1.0.js")
-    addStaticResource(directoryPath, "components.js")
+    addStaticResource(directoryPath, "fg-components.js")
     addStaticResource(directoryPath, "debug-components.js")
     addStaticResource(directoryPath, "irs-logo.svg")
   }
@@ -52,7 +70,7 @@ object Website {
     val content = <html>
       <link rel="stylesheet" href="/resources/stylesheet.css"></link>
       <script type="module" src="/resources/factgraph-3.1.0.js"></script>
-      <script type="module" src="/resources/components.js"></script>
+      <script type="module" src="/resources/fg-components.js"></script>
       <script type="module" src="/resources/debug-components.js"></script>
       <script type="text" id="fact-dictionary">{dictionaryConfig}</script>
 

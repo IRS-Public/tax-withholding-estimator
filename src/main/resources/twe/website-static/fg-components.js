@@ -6,6 +6,7 @@ class FactGraph {
     const text = document.getElementById('fact-dictionary').textContent
     this.factDictionary = fg.FactDictionaryFactory.importFromXml(text)
     this.graph = fg.GraphFactory.apply(this.factDictionary)
+    this.update()
   }
 
   get(path) {
@@ -27,7 +28,7 @@ class FactGraph {
     const nodesWithConditions = document.querySelectorAll('fg-set[condition]')
     for (const node of nodesWithConditions) {
       const conditionPath = node.getAttribute('condition')
-      const value = factGraph.get(conditionPath)
+      const value = this.get(conditionPath)
       const meetsCondition = (value.complete && value.get) === true
       if (!meetsCondition) {
         node.classList.add('hidden')
@@ -50,15 +51,27 @@ class FactGraph {
 const factGraph = new FactGraph()
 window.factGraph = factGraph
 
+/*
+ * <fg-set> - An input that sets a fact
+ */
 class FgSet extends HTMLElement {
   connectedCallback() {
     this.inputType = this.getAttribute('inputtype')
     this.path = this.getAttribute('path')
+
     this.addEventListener('change', () => this.onChange());
     console.log(`Registering path ${this.path} of inputType ${this.inputType}`)
   }
 
   onChange() {
+    try {
+      this.setFact()
+    } catch (error) {
+      const message = error.message
+    }
+  }
+
+  setFact() {
     switch (this.inputType) {
       case 'boolean': {
         const input = this.querySelector('input:checked')

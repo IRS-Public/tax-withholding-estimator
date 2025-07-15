@@ -1,3 +1,7 @@
+:root {
+  --warning-bg-color: rgb(253, 242, 245);
+}
+
 body {
   margin: 0;
 }
