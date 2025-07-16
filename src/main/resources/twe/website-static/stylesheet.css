@@ -1,5 +1,5 @@
 :root {
-  --warning-bg-color: rgb(253, 242, 245);
+  --warning-bg-color: rgb(241, 228, 220);
 }
 
 body {
@@ -40,4 +40,12 @@ input:not([type=radio]), select {
 
 .incomplete {
   color: gray;
+}
+
+.warning {
+  box-sizing: border-box;
+  background-color: var(--warning-bg-color);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
 }
