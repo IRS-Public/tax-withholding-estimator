@@ -2,7 +2,7 @@
 
   <section>
 
-    <h2>Income</h2>
+    <h2>Filing status</h2>
     <fg-set path="/filingStatus">
       <label>What filing status will you use for your tax return?</label>
       <select optionsPath="/filingStatusOptions">
@@ -12,6 +12,11 @@
         <option value="headOfHousehold">Head of Household</option>
         <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
       </select>
+    </fg-set>
+
+    <fg-set path="/hasDependents">
+      <label>Do you have any dependents</label>
+      <input type="boolean"></input>
     </fg-set>
 
     <h2>Jobs</h2>

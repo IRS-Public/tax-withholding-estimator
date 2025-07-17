@@ -37,7 +37,16 @@
       </Derived>
     </Fact>
 
-    <Fact path="/jobs/">
+    <Fact path="/hasDependents">
+      <Name>Jobs</Name>
+      <Description>The taxpayers's jobs</Description>
+
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/jobs">
       <Name>Jobs</Name>
       <Description>The taxpayers's jobs</Description>
 

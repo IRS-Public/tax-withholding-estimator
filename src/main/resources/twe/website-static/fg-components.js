@@ -16,13 +16,15 @@ class FgSet extends HTMLElement {
   connectedCallback() {
     this.condition = this.getAttribute('condition')
     this.inputType = this.getAttribute('inputtype')
-    this.input = this.querySelectorAll('input, select')
+    this.inputs = this.querySelectorAll('input, select')
     this.path = this.getAttribute('path')
     this.error = null
 
-    console.log(`Adding fg-set with path ${this.path} of inputType ${this.inputType}`)
+    console.debug(`Adding fg-set with path ${this.path} of inputType ${this.inputType}`)
 
-    this.input.addEventListener('blur', () => this.onChange());
+    for (const input of this.inputs) {
+      input.addEventListener('blur', () => this.onChange());
+    }
     document.addEventListener('fg-update', () => this.render());
 
     this.render()
@@ -65,7 +67,7 @@ class FgSet extends HTMLElement {
   }
 
   setFact() {
-    console.log(`Setting fact ${this.path}`)
+    console.debug(`Setting fact ${this.path}`)
     switch (this.inputType) {
       case 'boolean': {
         const input = this.querySelector('input:checked')
@@ -88,7 +90,7 @@ class FgSet extends HTMLElement {
     }
 
     factGraph.save()
-    console.log(factGraph.toJson())
+    console.debug(factGraph.toJson())
     document.dispatchEvent(new CustomEvent('fg-update'))
   }
 }
