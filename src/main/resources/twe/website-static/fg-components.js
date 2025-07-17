@@ -16,7 +16,7 @@ class FgSet extends HTMLElement {
   connectedCallback() {
     this.condition = this.getAttribute('condition')
     this.inputType = this.getAttribute('inputtype')
-    this.input = this.querySelector('input, select')
+    this.input = this.querySelectorAll('input, select')
     this.path = this.getAttribute('path')
     this.error = null
 
