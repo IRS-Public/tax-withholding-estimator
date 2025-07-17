@@ -37,12 +37,33 @@
       </Derived>
     </Fact>
 
-    <Fact path="/income">
-      <Description>total income for the year</Description>
+    <Fact path="/jobs/">
+      <Name>Jobs</Name>
+      <Description>The taxpayers's jobs</Description>
+
       <Writable>
-        <Dollar />
+        <Collection/>
       </Writable>
     </Fact>
+
+    <Fact path="/jobs/*/income">
+      <Name>Job income</Name>
+      <Description>The total income from a specific job</Description>
+
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/totalIncome">
+      <Description>Medicare Wages for the primary filer</Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobs/*/income" />
+        </CollectionSum>
+      </Derived>
+    </Fact>
+
 
     <Fact path="/taxesPaid">
       <Description>total taxes paid for the year</Description>
@@ -68,7 +89,7 @@
           <GreaterOf>
             <Subtract>
               <Minuend>
-                <Dependency path="/income" />
+                <Dependency path="/totalIncome" />
               </Minuend>
               <Subtrahends>
                 <Dependency path="/singleOrMFSStandardDeduction" />
@@ -476,16 +497,18 @@
 
   </Facts>
 
+
   <Fact path="/incomeGreaterThan0">
     <Derived>
       <GreaterThan>
         <Left>
-          <Dependency path="/income"/>
+          <Dependency path="/totalIncome"/>
         </Left>
         <Right>
-          <Dollar>60</Dollar>
+          <Dollar>0</Dollar>
         </Right>
       </GreaterThan>
     </Derived>
   </Fact>
+
 </FactDictionaryModule>
