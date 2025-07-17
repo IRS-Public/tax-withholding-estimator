@@ -14,8 +14,8 @@ Simply download the Fact Graph and run `sbt compile publishLocal`.
 
 ### Commands
 
+* `make` (or `make dev`) - Same as above, but automatically recompile and re-run on code changes
 * `make twe` - Output TWE to the `/out` directory
-* `make dev` - Same as above, but automatically recompile and re-run on code changes
 * `make site` - Serve the static site out of the `/out` directory (requires npm installation)
 * `make clean` - Clean all the build artifacts
 

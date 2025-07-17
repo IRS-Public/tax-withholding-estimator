@@ -1,10 +1,10 @@
-.PHONY: twe
-twe:
-	sbt run
-
 .PHONY: run
 dev:
 	sbt ~run
+
+.PHONY: twe
+twe:
+	sbt run
 
 # This uses the NodeJS toolchain to run "serve", a static site server
 .PHONY: site

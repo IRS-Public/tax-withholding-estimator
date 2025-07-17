@@ -17,9 +17,21 @@ fg-set {
   padding: 1rem;
   margin: 1rem 0;
   border: 1px solid black;
+  opacity: 1;
+
+  transition: opacity 1s, display 1s allow-discrete;
+
+  @starting-style {
+    /* Only fade in the facts that have a condition */
+    &[condition] {
+      opacity: 0;
+    }
+  }
+
 }
 
 .hidden {
+  opacity: 0;
   display: none;
 }
 
