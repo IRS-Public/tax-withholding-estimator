@@ -1,4 +1,4 @@
-.PHONY: run
+.PHONY: dev
 dev:
 	sbt ~run
 
@@ -10,6 +10,12 @@ twe:
 .PHONY: site
 site:
 	npx serve out
+
+.PHONY: copy-fg
+copy-fg:
+	cp ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt/main.mjs ./src/main/resources/twe/website-static/factgraph-3.1.0.js
+	# TODO copy the map into /resources as well
+	cp ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt/main.mjs.map ./out/resources/
 
 .PHONY: clean
 clean:
