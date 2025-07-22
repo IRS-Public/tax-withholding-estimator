@@ -16,21 +16,21 @@
 
     <fg-set path="/hasDependents">
       <label>Do you have any dependents</label>
-      <input type="boolean"></input>
+      <input type="boolean" />
     </fg-set>
 
     <h2>Jobs</h2>
     <fg-collection path="/jobs">
-      <fg-set path="/jobs/*/income" inputtype="dollar">
+      <fg-set path="/jobs/*/income">
         <label>Total income for the year</label>
-        <input type="dollar"/>
+        <input type="dollar" />
       </fg-set>
     </fg-collection>
 
     <h2>Taxes Paid</h2>
     <fg-set path="/taxesPaid" condition="/incomeGreaterThan0">
       <label>Total taxes paid for the year</label>
-      <input type="dollar"/>
+      <input type="dollar" />
     </fg-set>
 
   </section>
