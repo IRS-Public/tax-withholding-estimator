@@ -3,7 +3,7 @@ package gov.irs.twe.generators
 import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.parser.FgSetNode.html
 import gov.irs.twe.parser.SectionNode.fgSet
-import gov.irs.twe.parser.{FgSet, FgSetNode, Flow, Input, Section, SectionNode}
+import gov.irs.twe.parser.{FgCollection, FgCollectionNode, FgSet, FgSetNode, Flow, Input, Section, SectionNode}
 import org.jsoup.Jsoup
 import org.jsoup.parser.Tag
 import os.Path
@@ -103,6 +103,7 @@ object Website {
 
   private def generateSection(section: Section): xml.Elem = {
     val sectionXml = section.nodes.map {
+      case SectionNode.fgCollection(x) => convertCollection(x)
       case SectionNode.fgSet(x) => convertQuestion(x)
       case SectionNode.html(x) => x
     }
@@ -110,6 +111,17 @@ object Website {
     <section>
       {sectionXml}
     </section>
+  }
+
+  private def convertCollection(collection: FgCollection): xml.Node = {
+    val collectionFacts = collection.nodes.map {
+      case FgCollectionNode.fgSet(x) => convertQuestion(x)
+      case FgCollectionNode.html(x) => x
+    }
+
+    <fg-collection path={collection.path}>
+      {collectionFacts}
+    </fg-collection>
   }
 
   private def convertQuestion(question: FgSet): xml.Node = {
