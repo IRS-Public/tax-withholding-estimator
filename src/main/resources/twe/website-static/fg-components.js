@@ -1,13 +1,9 @@
 import * as fg from './factgraph-3.1.0.js'
 
-
 const text = document.getElementById('fact-dictionary').textContent
 const factDictionary = fg.FactDictionaryFactory.importFromXml(text)
 let factGraph = fg.GraphFactory.apply(factDictionary)
 window.factGraph = factGraph
-
-// Unhide main
-document.querySelector('main').classList.remove('hidden')
 
 /*
  * <fg-set> - An input that sets a fact
@@ -15,6 +11,7 @@ document.querySelector('main').classList.remove('hidden')
 class FgSet extends HTMLElement {
   connectedCallback() {
     this.condition = this.getAttribute('condition')
+    this.operator = this.getAttribute('operator')
     this.inputType = this.getAttribute('inputtype')
     this.inputs = this.querySelectorAll('input, select')
     this.path = this.getAttribute('path')
@@ -32,17 +29,6 @@ class FgSet extends HTMLElement {
 
   render() {
     this.querySelector('div.warning')?.remove()
-
-    // Show/hide based on conditions
-    if (this.condition) {
-      const value = factGraph.get(this.condition)
-      const meetsCondition = (value.complete && value.get) === true
-      if (!meetsCondition) {
-        this.classList.add('hidden')
-      } else {
-        this.classList.remove('hidden')
-      }
-    }
 
     // Show error if there is one
     if (this.error) {
@@ -166,7 +152,6 @@ class FgShow extends HTMLElement {
 }
 customElements.define('fg-show', FgShow)
 
-
 /*
  * <fg-reset> - button to reset the Fact Graph.
  */
@@ -185,4 +170,46 @@ class FgReset extends HTMLElement {
   }
 }
 customElements.define('fg-reset', FgReset)
+
+/**
+ * Show or hide the elements in the document based on the Fact Graph config.
+ */
+function showOrHideAllElements() {
+  const hideableElements = document.querySelectorAll('[condition][operator]')
+  for (const element of hideableElements) {
+    const condition = element.getAttribute('condition')
+    const operator = element.getAttribute('operator')
+
+    // Show/hide based on conditions
+    if (condition) {
+      const value = factGraph.get(condition)
+
+      let meetsCondition
+      switch (operator) {
+        case 'isTrue': {
+          meetsCondition = (value.complete && value.get) === true
+          break
+        } case 'isFalse': {
+          meetsCondition = (value.complete && value.get) !== true
+          break
+        } default: {
+          console.error(`Unknown condition operator ${operator}`)
+        }
+      }
+
+      if (!meetsCondition) {
+        element.classList.add('hidden')
+      } else {
+        element.classList.remove('hidden')
+      }
+    }
+  }
+}
+
+// Add show/hide functionality to all elements
+document.addEventListener('fg-update', showOrHideAllElements)
+showOrHideAllElements()
+
+// Unhide main
+document.querySelector('main').classList.remove('hidden')
 

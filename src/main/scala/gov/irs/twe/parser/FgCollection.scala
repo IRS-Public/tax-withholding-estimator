@@ -8,11 +8,12 @@ enum FgCollectionNode {
   case html(node: xml.Node)
 }
 
-case class FgCollection(path: String, nodes: List[FgCollectionNode])
+case class FgCollection(path: String, condition: Option[Condition], nodes: List[FgCollectionNode])
 
 object FgCollection {
-  def parse(collectionNode: xml.Node, factDictionary: FactDictionary): FgCollection = {
-    val path = collectionNode \@ "path"
+  def parse(node: xml.Node, factDictionary: FactDictionary): FgCollection = {
+    val path = node \@ "path"
+    val condition = Condition.getCondition(node, factDictionary)
 
     // Validate that the fact exists
     val factDefinition = factDictionary.getDefinition(path)
@@ -20,11 +21,11 @@ object FgCollection {
       throw InvalidFormConfig(s"Path $path not found in the fact dictionary")
     }
 
-    val nodes = (collectionNode \ "_").map(node => node.label match {
+    val nodes = (node \ "_").map(node => node.label match {
       case "fg-set" => FgCollectionNode.fgSet(FgSet.parse(node, factDictionary))
       case _ => FgCollectionNode.html(node)
     }).toList
 
-    FgCollection(path, nodes)
+    FgCollection(path, condition, nodes)
   }
 }

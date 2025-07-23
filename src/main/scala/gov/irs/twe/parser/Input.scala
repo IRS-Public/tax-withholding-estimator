@@ -21,12 +21,12 @@ enum Input {
 }
 
 object Input {
-  def extractFromQuestion(question: xml.Node, factDictionary: FactDictionary): Input = {
-    val path = question \@ "path"
-    val optionsPath = Option(question \@ "optionsPath").filter(_.nonEmpty)
+  def extractFromQuestion(node: xml.Node, factDictionary: FactDictionary): Input = {
+    val path = node \@ "path"
+    val optionsPath = Option(node \@ "optionsPath").filter(_.nonEmpty)
 
     // Handle the <select> as a special case
-    val selectNode = question \ "select"
+    val selectNode = node \ "select"
     if (selectNode.nonEmpty) {
       val options = (selectNode \ "option").map(node => {
         val name = node.text
@@ -38,13 +38,13 @@ object Input {
       // TODO validate that the options match the num path
 
       if (options.isEmpty) {
-        Log.warn(s"Empty options for question $path")
+        Log.warn(s"Empty options for fg-set: $path")
       }
       return Input.select(options, optionsPath)
     }
 
     // Otherwise parse the <input>
-    val inputNode = question \ "input"
+    val inputNode = node \ "input"
     if (inputNode.isEmpty) {
       throw InvalidFormConfig(s"Missing an input for question $path")
     }
