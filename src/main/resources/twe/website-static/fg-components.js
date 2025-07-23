@@ -17,14 +17,25 @@ class FgSet extends HTMLElement {
     this.condition = this.getAttribute('condition')
     this.inputType = this.getAttribute('inputtype')
     this.inputs = this.querySelectorAll('input, select')
+
+    switch (this.inputType) {
+      case 'select':
+      case 'boolean':
+        for (const input of this.inputs) {
+          input.addEventListener('change', () => this.onChange());
+        }
+        break;
+      default:
+        for (const input of this.inputs) {
+          input.addEventListener('blur', () => this.onChange());
+        }
+    }
+    
     this.path = this.getAttribute('path')
     this.error = null
 
     console.debug(`Adding fg-set with path ${this.path} of inputType ${this.inputType}`)
 
-    for (const input of this.inputs) {
-      input.addEventListener('blur', () => this.onChange());
-    }
     document.addEventListener('fg-update', () => this.render());
 
     this.render()
