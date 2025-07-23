@@ -14,6 +14,11 @@
       </select>
     </fg-set>
 
+    <fg-set path="/testDate">
+      <label>Test day</label>
+      <input type="day" />
+    </fg-set>
+
     <fg-set path="/hasDependents">
       <label>Do you have any dependents</label>
       <input type="boolean" />
