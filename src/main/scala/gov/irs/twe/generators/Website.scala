@@ -148,8 +148,9 @@ object Website {
       case Input.select(options, optionsPath) => <select optionsPath={optionsPath.getOrElse("")} name={path}>
         {options.map(option => <option value={option.value}>{option.name}</option>)}
       </select>
-      case Input.dollar => <input type="number" step="0.01"/>
-      case Input.text => <input type="text" name={path}/>
+      case Input.dollar => <input type="number" step="0.01" name={path} />
+      case Input.day => <input type="date" name={path} />
+      case Input.text => <input type="text" name={path} />
     }
   }
 

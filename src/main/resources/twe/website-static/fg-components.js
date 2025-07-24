@@ -19,6 +19,7 @@ class FgSet extends HTMLElement {
     this.inputs = this.querySelectorAll('input, select')
 
     switch (this.inputType) {
+      case 'day':
       case 'select':
       case 'boolean':
         for (const input of this.inputs) {
@@ -85,6 +86,7 @@ class FgSet extends HTMLElement {
         factGraph.set(this.path, input.value)
         break
       }
+      case 'day':
       case 'dollar': {
         const input = this.querySelector('input')
         factGraph.set(this.path, input.value)

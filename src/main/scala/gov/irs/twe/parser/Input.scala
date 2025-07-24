@@ -11,12 +11,14 @@ enum Input {
   case boolean
   case dollar
   case select(options: List[HtmlOption], optionsPath: Option[String])
+  case day
 
   def typeString: String = this match {
     case Input.text => "text"
     case Input.boolean => "boolean"
     case Input.dollar => "dollar"
     case Input.select(_, _) => "select"
+    case Input.day => "day"
   }
 }
 
@@ -53,6 +55,7 @@ object Input {
       case "text" => Input.text
       case "boolean" => Input.boolean
       case "dollar" => Input.dollar
+      case "day" => Input.day
       case x => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
     }
   }

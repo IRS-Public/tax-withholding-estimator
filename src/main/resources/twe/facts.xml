@@ -37,12 +37,19 @@
       </Derived>
     </Fact>
 
+    <Fact path="/testDate">
+      <Description>test date</Description>
+      <Writable>
+        <Day />
+      </Writable>
+    </Fact>
+
     <Fact path="/hasDependents">
       <Name>Jobs</Name>
       <Description>The taxpayers's jobs</Description>
 
       <Writable>
-        <Boolean/>
+        <Boolean />
       </Writable>
     </Fact>
 
@@ -51,7 +58,7 @@
       <Description>The taxpayers's jobs</Description>
 
       <Writable>
-        <Collection/>
+        <Collection />
       </Writable>
     </Fact>
 
@@ -60,7 +67,7 @@
       <Description>The total income from a specific job</Description>
 
       <Writable>
-        <Dollar/>
+        <Dollar />
       </Writable>
     </Fact>
 
@@ -511,7 +518,7 @@
     <Derived>
       <GreaterThan>
         <Left>
-          <Dependency path="/totalIncome"/>
+          <Dependency path="/totalIncome" />
         </Left>
         <Right>
           <Dollar>0</Dollar>
