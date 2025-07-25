@@ -17,7 +17,7 @@ object Condition {
     // Validate that the condition, if it exists, is properly defined
     val path = optionString(node \@ "path")
     val ifCondition = optionString(node \@ "if")
-    val ifNotCondition = optionString(node \@ "ifnot")
+    val ifNotCondition = optionString(node \@ "if-not")
 
     if (ifCondition.isDefined & ifNotCondition.isDefined) {
       throw InvalidFormConfig(s"Path $path has both an if condition and a ifnot condition defined")
@@ -36,6 +36,7 @@ object Condition {
     None
   }
 
+  // TODO roll this together with the other "is this fact real" validations
   private def validateCondition(factDictionary: FactDictionary, conditionPath: Option[String]): Unit = {
     // TODO validate the fact matches the input
     // Right now this just validates that the fact exists

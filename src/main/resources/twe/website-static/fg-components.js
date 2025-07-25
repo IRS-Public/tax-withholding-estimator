@@ -187,10 +187,10 @@ function showOrHideAllElements() {
       let meetsCondition
       switch (operator) {
         case 'isTrue': {
-          meetsCondition = (value.complete && value.get) === true
+          meetsCondition = value.hasValue && (value.get === true)
           break
         } case 'isFalse': {
-          meetsCondition = (value.complete && value.get) !== true
+          meetsCondition = value.hasValue && (value.get !== true)
           break
         } default: {
           console.error(`Unknown condition operator ${operator}`)
