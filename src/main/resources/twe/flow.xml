@@ -33,7 +33,7 @@
     </fg-collection>
 
     <h2>Taxes Paid</h2>
-    <fg-set path="/taxesPaid" condition="/incomeGreaterThan0">
+    <fg-set path="/taxesPaid" if="/incomeGreaterThan0">
       <label>Total taxes paid for the year</label>
       <input type="dollar" />
     </fg-set>

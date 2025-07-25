@@ -104,7 +104,7 @@ object Website {
   private def generateSection(section: Section): xml.Elem = {
     val sectionXml = section.nodes.map {
       case SectionNode.fgCollection(x) => convertCollection(x)
-      case SectionNode.fgSet(x) => convertQuestion(x)
+      case SectionNode.fgSet(x) => convertFgSet(x)
       case SectionNode.html(x) => x
     }
 
@@ -115,25 +115,36 @@ object Website {
 
   private def convertCollection(collection: FgCollection): xml.Node = {
     val collectionFacts = collection.nodes.map {
-      case FgCollectionNode.fgSet(x) => convertQuestion(x)
+      case FgCollectionNode.fgSet(x) => convertFgSet(x)
       case FgCollectionNode.html(x) => x
     }
 
-    <fg-collection path={collection.path}>
+    val condition = collection.condition.map(_.path).orNull
+    val operator = collection.condition.map(_.operator.toString).orNull
+
+    <fg-collection
+      path={collection.path}
+      condition={condition}
+      operator={operator}
+    >
       {collectionFacts}
     </fg-collection>
   }
 
-  private def convertQuestion(question: FgSet): xml.Node = {
-    val questionXml = question.nodes.map {
-      case FgSetNode.input(input) => convertInput(input, question.path)
+  private def convertFgSet(fgSet: FgSet): xml.Node = {
+    val questionXml = fgSet.nodes.map {
+      case FgSetNode.input(input) => convertInput(input, fgSet.path)
       case FgSetNode.html(x) => x
     }
 
+    val condition = fgSet.condition.map(_.path).orNull
+    val operator = fgSet.condition.map(_.operator.toString).orNull
+
     <fg-set
-      path={question.path}
-      inputType={question.input.typeString}
-      condition={question.condition.getOrElse(null)}
+      path={fgSet.path}
+      inputType={fgSet.input.typeString}
+      condition={condition}
+      operator={operator}
       >
       {questionXml}
     </fg-set>
