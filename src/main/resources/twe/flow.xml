@@ -5,7 +5,7 @@
     <h2>Filing status</h2>
     <fg-set path="/filingStatus">
       <label>What filing status will you use for your tax return?</label>
-      <select optionsPath="/filingStatusOptions">
+      <select options-path="/filingStatusOptions">
         <option value="single">Single</option>
         <option value="marriedFilingJointly">Married filing jointly</option>
         <option value="marriedFilingSeparately">Married filing separately</option>
