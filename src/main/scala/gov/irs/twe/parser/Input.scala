@@ -25,11 +25,10 @@ enum Input {
 object Input {
   def extractFromQuestion(node: xml.Node, factDictionary: FactDictionary): Input = {
     val path = node \@ "path"
-    val optionsPath = Option(node \@ "optionsPath").filter(_.nonEmpty)
-
     // Handle the <select> as a special case
     val selectNode = node \ "select"
     if (selectNode.nonEmpty) {
+      val optionsPath = Option(selectNode \@ "options-path").filter(_.nonEmpty)
       val options = (selectNode \ "option").map(node => {
         val name = node.text
         var value = node \@ "value"
