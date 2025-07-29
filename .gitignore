@@ -20,3 +20,9 @@ metals.sbt
 .idea_modules
 /.worksheet/
 *.iml
+
+# vscode
+.vscode
+
+# macOS
+.DS_STORE
