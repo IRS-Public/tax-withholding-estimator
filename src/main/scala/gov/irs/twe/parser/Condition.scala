@@ -16,21 +16,21 @@ object Condition {
   def getCondition(node: xml.Node, factDictionary: FactDictionary): Option[Condition] = {
     // Validate that the condition, if it exists, is properly defined
     val path = optionString(node \@ "path")
-    val ifCondition = optionString(node \@ "if")
-    val ifNotCondition = optionString(node \@ "if-not")
+    val ifTrue = optionString(node \@ "if-true")
+    val ifFalse = optionString(node \@ "if-false")
 
-    if (ifCondition.isDefined & ifNotCondition.isDefined) {
-      throw InvalidFormConfig(s"Path $path has both an if condition and a ifnot condition defined")
+    if (ifTrue.isDefined & ifFalse.isDefined) {
+      throw InvalidFormConfig(s"Path $path has both an if-true condition and a if-false condition defined")
     }
-    validateCondition(factDictionary, ifCondition)
-    validateCondition(factDictionary, ifNotCondition)
+    validateCondition(factDictionary, ifTrue)
+    validateCondition(factDictionary, ifFalse)
 
-    // We break down the friendly "if", "ifnot" config attributes into a more standardized
+    // We break down the friendly "if-true", "if-false" config attributes into a more standardized
     // "condition" and "operator" implementation
-    if (ifCondition.isDefined) {
-      return Option(Condition(ifCondition.get, ConditionOperator.isTrue))
-    } else if (ifNotCondition.isDefined) {
-      return Option(Condition(ifNotCondition.get, ConditionOperator.isFalse))
+    if (ifTrue.isDefined) {
+      return Option(Condition(ifTrue.get, ConditionOperator.isTrue))
+    } else if (ifFalse.isDefined) {
+      return Option(Condition(ifFalse.get, ConditionOperator.isFalse))
     }
 
     None

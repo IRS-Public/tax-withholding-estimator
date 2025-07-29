@@ -1,5 +1,7 @@
 import * as fg from './factgraph-3.1.0.js'
 
+const INFINITE_LOOP_THRESHOLD = 100
+
 const text = document.getElementById('fact-dictionary').textContent
 const factDictionary = fg.FactDictionaryFactory.importFromXml(text)
 let factGraph = fg.GraphFactory.apply(factDictionary)
@@ -28,14 +30,13 @@ class FgSet extends HTMLElement {
           input.addEventListener('blur', () => this.onChange());
         }
     }
-    
+
     this.path = this.getAttribute('path')
     this.error = null
 
     console.debug(`Adding fg-set with path ${this.path} of inputType ${this.inputType}`)
 
     document.addEventListener('fg-update', () => this.render());
-
     this.render()
   }
 
@@ -89,9 +90,44 @@ class FgSet extends HTMLElement {
     }
 
     factGraph.save()
-    console.debug(factGraph.toJson())
     document.dispatchEvent(new CustomEvent('fg-update'))
   }
+
+  /**
+   * Deletes the current fact without sending fg-update.
+   *
+   * This method is used when processing the fg-update event, to delete facts that are no longer
+   * visible. It will get called multiple times per fg-update, because deleting some facts may
+   * trigger other facts to get deleted. It does not itself dispatch fg-update, because that would
+   * throw off a lot of unnecessary events.
+   *
+   * At present, it is impossible for users to delete facts, so deleting a fact should never trigger
+   * a new UI update.
+   */
+  deleteFactNoUpdate() {
+    console.debug(`Deleting fact ${this.path}`)
+
+    switch (this.inputType) {
+      case 'boolean': {
+        const input = this.querySelector('input:checked')
+        if (input) input.checked = false
+        break
+      }
+      case 'day':
+      case 'select':
+      case 'dollar': {
+        const input = this.querySelector('input')
+        input.value = ''
+        break
+      }
+      default: {
+        console.warn(`Unknown input type "${this.inputType}" for input with path "${this.path}"`)
+      }
+    }
+    factGraph.delete(this.path)
+    factGraph.save()
+  }
+
 }
 customElements.define('fg-set', FgSet)
 
@@ -184,37 +220,44 @@ class FgReset extends HTMLElement {
 }
 customElements.define('fg-reset', FgReset)
 
+function checkCondition(condition, operator) {
+  const value = factGraph.get(condition)
+
+  switch (operator) {
+    // We need to expliticly check for true/false to account for incompletes
+    case 'isTrue': {
+      return value.hasValue && (value.get === true)
+    } case 'isFalse': {
+      return value.hasValue && (value.get === false)
+    } default: {
+      console.error(`Unknown condition operator ${operator}`)
+      return false
+    }
+  }
+}
+
 /**
  * Show or hide the elements in the document based on the Fact Graph config.
+ *
+ * This method will delete facts that are hidden, making them incomplete.
  */
 function showOrHideAllElements() {
+  // At present, this navie implementation relies on <fg-set>s not having conditions on facts that
+  // are set after them in the DOM order. This is a deliberate choice to limit complexity at this
+  // stage, but it is not set in stone. If you see bugs related to showing/hiding, this is the place
+  // to start looking.
   const hideableElements = document.querySelectorAll('[condition][operator]')
   for (const element of hideableElements) {
     const condition = element.getAttribute('condition')
     const operator = element.getAttribute('operator')
+    const meetsCondition = checkCondition(condition, operator)
 
     // Show/hide based on conditions
-    if (condition) {
-      const value = factGraph.get(condition)
-
-      let meetsCondition
-      switch (operator) {
-        case 'isTrue': {
-          meetsCondition = value.hasValue && (value.get === true)
-          break
-        } case 'isFalse': {
-          meetsCondition = value.hasValue && (value.get !== true)
-          break
-        } default: {
-          console.error(`Unknown condition operator ${operator}`)
-        }
-      }
-
-      if (!meetsCondition) {
-        element.classList.add('hidden')
-      } else {
-        element.classList.remove('hidden')
-      }
+    if (!meetsCondition && !element.classList.contains('hidden')) {
+      element.classList.add('hidden')
+      element?.deleteFactNoUpdate()
+    } else if (meetsCondition && element.classList.contains('hidden')) {
+      element.classList.remove('hidden')
     }
   }
 }

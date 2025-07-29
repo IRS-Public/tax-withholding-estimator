@@ -100,7 +100,6 @@ object Website {
     Website(List(page), dictionaryConfig)
   }
 
-
   private def generateSection(section: Section): xml.Elem = {
     val sectionXml = section.nodes.map {
       case SectionNode.fgCollection(x) => convertCollection(x)
@@ -153,15 +152,15 @@ object Website {
   private def convertInput(input: Input, path: String): xml.Node = {
     input match {
       case Input.boolean => <div>
-        <label>Yes <input type="radio" value="true" name={path} /></label>
-        <label>No <input type="radio" value="false" name={path} /></label>
+        <label>Yes <input type="radio" value="true" name={path} autocomplete="off"/></label>
+        <label>No <input type="radio" value="false" name={path} autocomplete="off"/></label>
       </div>
       case Input.select(options, optionsPath) => <select optionsPath={optionsPath.getOrElse("")} name={path}>
         {options.map(option => <option value={option.value}>{option.name}</option>)}
       </select>
-      case Input.dollar => <input type="number" step="0.01" name={path} />
-      case Input.day => <input type="date" name={path} />
-      case Input.text => <input type="text" name={path} />
+      case Input.dollar => <input type="number" step="0.01" name={path} autocomplete="off"/>
+      case Input.day => <input type="date" name={path} autocomplete="off"/>
+      case Input.text => <input type="text" name={path} autocomplete="off"/>
     }
   }
 

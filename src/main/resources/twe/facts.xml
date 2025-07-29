@@ -21,6 +21,7 @@
         <Enum optionsPath="/filingStatusOptions" />
       </Writable>
     </Fact>
+
     <Fact path="/singleOrMFSStandardDeduction">
       <Name>Single or Married Filing Separately Standard Deduction</Name>
       <Description>Standard Deduction for filers who are married filing separately or single.
@@ -51,6 +52,54 @@
       <Writable>
         <Boolean />
       </Writable>
+    </Fact>
+
+    <Fact path="/isUsCitizenFullYear">
+      <Name>Citizenship</Name>
+      <Description>Whether the filer was a U.S. Citizen for all of the tax year</Description>
+
+      <Writable>
+        <Boolean />
+      </Writable>
+    </Fact>
+
+    <Fact path="/citizenAtEndOfTaxYear">
+      <Name>Citizenship at end of tax year</Name>
+      <Description>Whether the filer was a U.S. Citizen at the end of the tax year after starting
+        the year as a U.S. resident</Description>
+
+      <Writable>
+        <Boolean />
+      </Writable>
+    </Fact>
+
+    <Fact path="/isNoncitizenResidentFullYear">
+      <Name>Non-citizen residency (full tax year)</Name>
+      <Description>Was the filer a resident for the whole tax year and not a citizen?</Description>
+
+      <Writable>
+        <Boolean />
+      </Writable>
+    </Fact>
+
+    <Fact path="/isNational">
+      <Name>U.S. National</Name>
+      <Description>Whether the filer was a U.S. national</Description>
+
+      <Writable>
+        <Boolean />
+      </Writable>
+    </Fact>
+
+    <Fact path="/isCitizenOrNational">
+      <Description>Was the filer a citizen all year, by the end of the year, or a national</Description>
+      <Derived>
+        <Any>
+          <Dependency path="/isUsCitizenFullYear" />
+          <Dependency path="/isNoncitizenResidentFullYear" />
+          <Dependency path="/isNational" />
+        </Any>
+      </Derived>
     </Fact>
 
     <Fact path="/jobs">
