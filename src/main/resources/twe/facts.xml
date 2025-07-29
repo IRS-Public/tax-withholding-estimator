@@ -16,7 +16,6 @@
     <Fact path="/filingStatus">
       <Name>Filing status</Name>
       <Description>The filing status selected by the taxpayer.</Description>
-      <Export downstreamFacts="true" mef="true" />
       <Writable>
         <Enum optionsPath="/filingStatusOptions" />
       </Writable>
@@ -94,11 +93,35 @@
     <Fact path="/isCitizenOrNational">
       <Description>Was the filer a citizen all year, by the end of the year, or a national</Description>
       <Derived>
-        <Any>
-          <Dependency path="/isUsCitizenFullYear" />
-          <Dependency path="/isNoncitizenResidentFullYear" />
-          <Dependency path="/isNational" />
-        </Any>
+        <Switch>
+          <Case>
+            <When>
+              <!-- You need to check if citizenAtEndOfTaxYear is complete because it might be
+              incomplete which leads to a potential placeholder value -->
+              <All>
+                <IsComplete>
+                  <Dependency path="/citizenAtEndOfTaxYear" />
+                </IsComplete>
+                <Dependency path="/citizenAtEndOfTaxYear" />
+              </All>
+            </When>
+            <Then>
+              <False />
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Any>
+                <Dependency path="/isUsCitizenFullYear" />
+                <Dependency path="/isNoncitizenResidentFullYear" />
+                <Dependency path="/isNational" />
+              </Any>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
 
@@ -147,7 +170,6 @@
     <Fact path="/taxableIncome">
       <Name>Taxable income</Name>
       <Description>Taxable income as reported on line 15 of Form 1040.</Description>
-      <ExportZero />
 
       <Derived>
         <Round>
@@ -313,7 +335,6 @@
       <Description>Tentative tax as reported on line 16 of Form 1040.
         Rev Proc .01 Tax Rate Tables §1(j)(2)(A|B|C|D)
         TODO: Replace Any/Equal with Include</Description>
-      <ExportZero />
       <TaxYear>2024</TaxYear>
 
       <Derived>
@@ -560,20 +581,18 @@
       </Derived>
     </Fact>
 
+    <Fact path="/incomeGreaterThan0">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/totalIncome" />
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+
   </Facts>
-
-
-  <Fact path="/incomeGreaterThan0">
-    <Derived>
-      <GreaterThan>
-        <Left>
-          <Dependency path="/totalIncome" />
-        </Left>
-        <Right>
-          <Dollar>0</Dollar>
-        </Right>
-      </GreaterThan>
-    </Derived>
-  </Fact>
-
 </FactDictionaryModule>
