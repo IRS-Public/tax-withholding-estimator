@@ -143,6 +143,31 @@
       </Writable>
     </Fact>
 
+    <Fact path="/jobs/*/isHighPaying">
+      <Name>high paying job</Name>
+      <Description>pays 100000 or more</Description>
+
+      <Derived>
+        <GreaterThanOrEqual>
+          <Left>
+            <Dependency path="../income" />
+          </Left>
+          <Right>
+            <Dollar>100000</Dollar>
+          </Right>
+        </GreaterThanOrEqual>
+      </Derived>
+    </Fact>
+
+    <Fact path="/jobs/*/occupation">
+      <Name>occupation</Name>
+      <Description>occupation</Description>
+
+      <Writable>
+        <String />
+      </Writable>
+    </Fact>
+
     <Fact path="/totalIncome">
       <Description>Medicare Wages for the primary filer</Description>
       <Derived>

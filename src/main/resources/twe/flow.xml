@@ -51,6 +51,11 @@
         <label>Total income for the year</label>
         <input type="dollar" />
       </fg-set>
+
+      <fg-set path="/jobs/*/occupation" if-true="/jobs/*/isHighPaying">
+        <label>Occupation</label>
+        <input type="text" />
+      </fg-set>
     </fg-collection>
 
     <h2>Taxes Paid</h2>

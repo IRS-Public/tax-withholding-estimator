@@ -73,6 +73,7 @@ class FgSet extends HTMLElement {
         factGraph.set(this.path, input.value)
         break
       }
+      case 'text':
       case 'day':
       case 'dollar': {
         const input = this.querySelector('input')
@@ -113,6 +114,7 @@ class FgSet extends HTMLElement {
         if (input) input.checked = false
         break
       }
+      case 'text':
       case 'day':
       case 'select':
       case 'dollar': {
@@ -160,6 +162,7 @@ class FgCollection extends HTMLElement {
 
       fieldset.appendChild(collectionItem)
       this.appendChild(fieldset)
+      document.dispatchEvent(new CustomEvent('fg-update'))
   }
 
 }
@@ -170,10 +173,16 @@ class FgCollectionItem extends HTMLElement {
     this.collectionId = this.collectionId
 
     const setters = this.querySelectorAll('fg-set')
+    // These are all the attributes that we need to update from collection/*/fact to collection/#id/fact
+    const attributes = ['path', 'condition']
     for (const setter of setters) {
-      const pathWithWildcard = setter.getAttribute('path')
-      const fullPath = pathWithWildcard.replace('*', '#' + this.collectionId)
-      setter.setAttribute('path', fullPath)
+      for (const attribute of attributes) {
+        const attributeWithWildcard= setter.getAttribute(attribute)
+        if (attributeWithWildcard) {
+          const attributeWithId = attributeWithWildcard.replace('*', '#' + this.collectionId)
+          setter.setAttribute(attribute, attributeWithId)
+        }
+      }
     }
   }
 }
