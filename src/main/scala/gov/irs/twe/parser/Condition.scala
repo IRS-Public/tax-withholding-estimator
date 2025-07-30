@@ -3,6 +3,7 @@ package gov.irs.twe.parser
 import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.Utils.optionString
+import gov.irs.twe.parser.Utils.validateFact
 
 // Building this out in anticipation that we will add other types of conditions, such as isComplete
 enum ConditionOperator {
@@ -36,14 +37,13 @@ object Condition {
     None
   }
 
-  // TODO roll this together with the other "is this fact real" validations
   private def validateCondition(factDictionary: FactDictionary, conditionPath: Option[String]): Unit = {
-    // TODO validate the fact matches the input
-    // Right now this just validates that the fact exists
     if (conditionPath.isDefined) {
       val condition = conditionPath.get
-      if (factDictionary.getDefinition(condition) == null) {
-        throw InvalidFormConfig(s"Condition $condition not found in the fact dictionary")
+      validateFact(condition, factDictionary)
+      
+      if (factDictionary.getDefinition(condition).isBoolean == false) {
+        throw InvalidFormConfig(s"Condition $condition must be of type Boolean")
       }
     }
   }
