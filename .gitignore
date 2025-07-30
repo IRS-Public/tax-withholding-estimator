@@ -22,7 +22,8 @@ metals.sbt
 *.iml
 
 # vscode
-.vscode
+.vscode/*
+!.vscode/extensions.json
 
 # macOS
 .DS_STORE
