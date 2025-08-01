@@ -6,7 +6,7 @@ import gov.irs.twe.exceptions.InvalidFormConfig
 
 import scala.xml.{Elem, Group, SpecialNode}
 
-case class Flow(sections: List[Section])
+case class Flow(pages: List[Page])
 
 object Flow {
   def fromXmlConfig(config: xml.Elem, factDictionary: FactDictionary): Flow = {
@@ -14,8 +14,9 @@ object Flow {
       throw InvalidFormConfig(s"Expected a top-level <FormConfig>, found ${config.label}")
     }
 
-    val sections = (config \ "section").map(section => Section.parse(section, factDictionary)).toList
-    Flow(sections)
-  }
+    val pages = (config \ "page").map(page => Page.parse(page, factDictionary)).toList
+    Log.info(s"Generated flow with ${pages.length} pages")
 
+    Flow(pages)
+  }
 }

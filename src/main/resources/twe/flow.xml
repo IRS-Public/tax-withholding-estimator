@@ -1,82 +1,88 @@
 <FormConfig>
+  <page title="About You" route="/">
+    <section>
+      <h2>Filing status</h2>
+      <fg-set path="/filingStatus">
+        <label>What filing status will you use for your tax return?</label>
+        <select options-path="/filingStatusOptions">
+          <option value="single">Single</option>
+          <option value="marriedFilingJointly">Married filing jointly</option>
+          <option value="marriedFilingSeparately">Married filing separately</option>
+          <option value="headOfHousehold">Head of Household</option>
+          <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
+        </select>
+      </fg-set>
 
-  <section>
+      <fg-set path="/testDate">
+        <label>Test day</label>
+        <input type="day" />
+      </fg-set>
 
-    <h2>Filing status</h2>
-    <fg-set path="/filingStatus">
-      <label>What filing status will you use for your tax return?</label>
-      <select options-path="/filingStatusOptions">
-        <option value="single">Single</option>
-        <option value="marriedFilingJointly">Married filing jointly</option>
-        <option value="marriedFilingSeparately">Married filing separately</option>
-        <option value="headOfHousehold">Head of Household</option>
-        <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
-      </select>
-    </fg-set>
+      <fg-set path="/hasDependents">
+        <label>Do you have any dependents</label>
+        <input type="boolean" />
+      </fg-set>
 
-    <fg-set path="/testDate">
-      <label>Test day</label>
-      <input type="day" />
-    </fg-set>
+      <fg-set path="/isUsCitizenFullYear">
+        <label>Were you a U.S. citizen for all of the year?</label>
+        <input type="boolean" />
+      </fg-set>
 
-    <fg-set path="/hasDependents">
-      <label>Do you have any dependents</label>
-      <input type="boolean" />
-    </fg-set>
+      <fg-set path="/citizenAtEndOfTaxYear" if-false="/isUsCitizenFullYear">
+        <label>Did you start the year with U.S. resident status and end the year with U.S. citizen
+          status</label>
+        <input type="boolean" />
+      </fg-set>
 
-    <fg-set path="/isUsCitizenFullYear">
-      <label>Were you a U.S. citizen for all of the year?</label>
-      <input type="boolean" />
-    </fg-set>
+      <fg-set path="/isNoncitizenResidentFullYear" if-false="/citizenAtEndOfTaxYear">
+        <label>For tax purposes, were you a U.S. resident for all of the year?</label>
+        <input type="boolean" />
+      </fg-set>
 
-    <fg-set path="/citizenAtEndOfTaxYear" if-false="/isUsCitizenFullYear">
-      <label>Did you start the year with U.S. resident status and end the year with U.S. citizen
-        status</label>
-      <input type="boolean" />
-    </fg-set>
+      <fg-set path="/isNational" if-true="/isNoncitizenResidentFullYear">
+        <label>Were you a U.S. national for all of the year?</label>
+        <input type="boolean" />
+      </fg-set>
 
-    <fg-set path="/isNoncitizenResidentFullYear" if-false="/citizenAtEndOfTaxYear">
-      <label>For tax purposes, were you a U.S. resident for all of the year?</label>
-      <input type="boolean" />
-    </fg-set>
+      <h2>Jobs</h2>
+      <fg-collection path="/jobs">
+        <fg-set path="/jobs/*/income">
+          <label>Total income for the year</label>
+          <input type="dollar" />
+        </fg-set>
 
-    <fg-set path="/isNational" if-true="/isNoncitizenResidentFullYear">
-      <label>Were you a U.S. national for all of the year?</label>
-      <input type="boolean" />
-    </fg-set>
+        <fg-set path="/jobs/*/occupation" if-true="/jobs/*/isHighPaying">
+          <label>Occupation</label>
+          <input type="text" />
+        </fg-set>
+      </fg-collection>
 
-    <h2>Jobs</h2>
-    <fg-collection path="/jobs">
-      <fg-set path="/jobs/*/income">
-        <label>Total income for the year</label>
+      <h2>Taxes Paid</h2>
+      <fg-set path="/taxesPaid" if-true="/incomeGreaterThan0">
+        <label>Total taxes paid for the year</label>
         <input type="dollar" />
       </fg-set>
 
-      <fg-set path="/jobs/*/occupation" if-true="/jobs/*/isHighPaying">
-        <label>Occupation</label>
-        <input type="text" />
-      </fg-set>
-    </fg-collection>
 
-    <h2>Taxes Paid</h2>
-    <fg-set path="/taxesPaid" if-true="/incomeGreaterThan0">
-      <label>Total taxes paid for the year</label>
-      <input type="dollar" />
-    </fg-set>
+      <h2>Reset</h2>
+      <fg-reset><button>Reset Fact Graph</button></fg-reset>
+    </section>
+  </page>
 
-  </section>
 
-  <section>
-    <h2>Calculations</h2>
-    <p>
-      Your <strong>taxable income</strong> is:
-      <fg-show path="/roundedTaxableIncome" />
-    </p>
+  <page title="Calculations" route="calculations">
+    <section>
+      <h2>Calculations</h2>
+      <p>
+        Your <strong>taxable income</strong> is:
+        <fg-show path="/roundedTaxableIncome" />
+      </p>
 
-    <p>
-      Your <strong>suggested adjustment per pay period</strong> is:
-      <fg-show path="/adjustmentNeededPerPayPeriod" />
-    </p>
-  </section>
+      <p>
+        Your <strong>suggested adjustment per pay period</strong> is:
+        <fg-show path="/adjustmentNeededPerPayPeriod" />
+      </p>
+    </section>
+  </page>
 
 </FormConfig>

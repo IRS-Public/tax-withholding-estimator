@@ -9,7 +9,7 @@ body {
 main {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1rem 1rem 1rem;
 }
 
 fg-set {

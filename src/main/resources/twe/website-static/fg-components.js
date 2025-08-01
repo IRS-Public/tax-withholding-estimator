@@ -1,11 +1,22 @@
 import * as fg from './factgraph-3.1.0.js'
 
-const INFINITE_LOOP_THRESHOLD = 100
-
 const text = document.getElementById('fact-dictionary').textContent
 const factDictionary = fg.FactDictionaryFactory.importFromXml(text)
-let factGraph = fg.GraphFactory.apply(factDictionary)
+
+let factGraph
+const serializedGraphJSON = sessionStorage.getItem('factGraph')
+if (serializedGraphJSON) {
+  factGraph = fg.GraphFactory.fromJSON(factDictionary, serializedGraphJSON)
+} else {
+  factGraph = fg.GraphFactory.apply(factDictionary)
+}
 window.factGraph = factGraph
+
+function saveFactGraph() {
+  factGraph.save()
+  sessionStorage.setItem('factGraph', factGraph.toJSON())
+}
+
 
 /*
  * <fg-set> - An input that sets a fact
@@ -36,8 +47,15 @@ class FgSet extends HTMLElement {
 
     console.debug(`Adding fg-set with path ${this.path} of inputType ${this.inputType}`)
 
-    document.addEventListener('fg-update', () => this.render());
+    // This is done with bind, rather than an arrow function, so that it can be removed later
+    this.render = this.render.bind(this)
+    document.addEventListener('fg-update', this.render);
     this.render()
+  }
+
+  disconnectedCallback() {
+    console.debug(`Removing fg-set with path ${this.path}`)
+    document.removeEventListener('fg-update', this.render)
   }
 
   render() {
@@ -50,6 +68,8 @@ class FgSet extends HTMLElement {
       warnDiv.innerText = this.error
       this.insertAdjacentElement('afterbegin', warnDiv)
     }
+
+    this.setInputValueFromFactValue()
   }
 
   onChange() {
@@ -65,32 +85,85 @@ class FgSet extends HTMLElement {
     }
   }
 
-  setFact() {
-    console.debug(`Setting fact ${this.path}`)
+  clear() {
     switch (this.inputType) {
       case 'boolean': {
-        const input = this.querySelector('input:checked')
-        factGraph.set(this.path, input.value)
+        const checkedRadio = this.querySelector(`input:checked`)
+        if (checkedRadio) checkedRadio.checked = false
         break
       }
       case 'text':
       case 'day':
       case 'dollar': {
-        const input = this.querySelector('input')
-        factGraph.set(this.path, input.value)
+        this.querySelector('input').value = ''
         break
       }
       case 'select': {
-        const input = this.querySelector('select')
-        factGraph.set(this.path, input.value)
+        this.querySelector('select').value = ''
         break
       }
       default: {
         console.warn(`Unknown input type "${this.inputType}" for input with path "${this.path}"`)
       }
     }
+  }
 
-    factGraph.save()
+  setInputValueFromFactValue() {
+    // Don't attempt to set non-normalized wildcard facts
+    if (this.path.includes('*')) return
+
+    let value = factGraph.get(this.path)
+
+    if (value.complete === false) return
+    value = value.get?.toString()
+
+    switch (this.inputType) {
+      case 'boolean': {
+        this.querySelector(`input[value=${value}]`).checked = true
+        break
+      }
+      case 'text':
+      case 'day':
+      case 'dollar': {
+        this.querySelector('input').value = value
+        break
+      }
+      case 'select': {
+        this.querySelector('select').value = value
+        break
+      }
+      default: {
+        console.warn(`Unknown input type "${this.inputType}" for input with path "${this.path}"`)
+      }
+    }
+  }
+
+  getFactValueFromInputValue() {
+    switch (this.inputType) {
+      case 'boolean': {
+        return this.querySelector('input:checked')?.value
+      }
+      case 'text':
+      case 'day':
+      case 'dollar': {
+        return this.querySelector('input')?.value
+      }
+      case 'select': {
+        return this.querySelector('select')?.value
+      }
+      default: {
+        console.warn(`Unknown input type "${this.inputType}" for input with path "${this.path}"`)
+        return undefined
+      }
+    }
+  }
+
+  setFact() {
+    console.debug(`Setting fact ${this.path}`)
+    const value = this.getFactValueFromInputValue()
+    factGraph.set(this.path, value)
+
+    saveFactGraph()
     document.dispatchEvent(new CustomEvent('fg-update'))
   }
 
@@ -114,12 +187,13 @@ class FgSet extends HTMLElement {
         if (input) input.checked = false
         break
       }
+      case 'select': {
+        this.querySelector('select').value = ''
+      }
       case 'text':
       case 'day':
-      case 'select':
       case 'dollar': {
-        const input = this.querySelector('input')
-        input.value = ''
+        this.querySelector('input').value = ''
         break
       }
       default: {
@@ -127,7 +201,7 @@ class FgSet extends HTMLElement {
       }
     }
     factGraph.delete(this.path)
-    factGraph.save()
+    saveFactGraph()
   }
 
 }
@@ -138,7 +212,7 @@ customElements.define('fg-set', FgSet)
  */
 class FgCollection extends HTMLElement {
   connectedCallback() {
-    this.childSetters = this.innerHTML
+    this.itemChildren = this.innerHTML
     this.innerHTML = ""
 
     this.path = this.getAttribute('path')
@@ -147,22 +221,39 @@ class FgCollection extends HTMLElement {
     this.addItemButton.innerText = 'Add Item'
     this.addItemButton.addEventListener(('click'), () => this.addItem())
     this.appendChild(this.addItemButton)
+
+    // Add any items that currently exist in this collection
+    const ids = factGraph.getCollectionIds(this.path)
+    ids.map(id => this.addItem(id))
+
+    document.addEventListener('fg-clear', () => this.onClear())
   }
 
-  addItem() {
-      const fieldset = document.createElement('fieldset')
-      const collectionId = crypto.randomUUID()
+  onClear() {
+    const currentItems = factGraph.getCollectionIds(this.path)
+    if (currentItems.length === 0) {
+      for (const fieldset of this.querySelectorAll('fieldset'))
+        fieldset.remove()
+    }
+  }
 
+  addItem(id) {
+    const fieldset = document.createElement('fieldset')
+
+    let collectionId = id
+    if (!collectionId) {
+      collectionId = crypto.randomUUID()
       factGraph.addToCollection(this.path, collectionId)
-      factGraph.save()
+      saveFactGraph()
+    }
 
-      const collectionItem = document.createElement('fg-collection-item')
-      collectionItem.innerHTML = this.childSetters
-      collectionItem.collectionId = collectionId
+    const collectionItem = document.createElement('fg-collection-item')
+    collectionItem.itemChildren = this.itemChildren
+    collectionItem.collectionId = collectionId
 
-      fieldset.appendChild(collectionItem)
-      this.appendChild(fieldset)
-      document.dispatchEvent(new CustomEvent('fg-update'))
+    fieldset.appendChild(collectionItem)
+    this.appendChild(fieldset)
+    document.dispatchEvent(new CustomEvent('fg-update'))
   }
 
 }
@@ -172,17 +263,28 @@ class FgCollectionItem extends HTMLElement {
   connectedCallback() {
     this.collectionId = this.collectionId
 
-    const setters = this.querySelectorAll('fg-set')
+    // It's important to the lifecycle of these elements that we create them in a template:
+    // template.insertAdjacentHTML parses and creates the children, but they're not in the DOM yet.
+    // This gives FgCollectionItem a chance to update the paths of all <fg-set> children before the
+    // <fg-set> elements run their connectedCallback, which needs the full path, with an ID
+    const template = document.createElement('template')
+    template.insertAdjacentHTML('afterbegin', this.itemChildren)
+
+    const setters = template.querySelectorAll('fg-set')
     // These are all the attributes that we need to update from collection/*/fact to collection/#id/fact
     const attributes = ['path', 'condition']
     for (const setter of setters) {
       for (const attribute of attributes) {
-        const attributeWithWildcard= setter.getAttribute(attribute)
+        const attributeWithWildcard = setter.getAttribute(attribute)
         if (attributeWithWildcard) {
           const attributeWithId = attributeWithWildcard.replace('*', '#' + this.collectionId)
           setter.setAttribute(attribute, attributeWithId)
         }
       }
+    }
+
+    for (const child of template.children) {
+      this.appendChild(child.cloneNode(true))
     }
   }
 }
@@ -219,12 +321,17 @@ class FgReset extends HTMLElement {
   }
 
   handleEvent() {
-    const inputs = document.querySelectorAll('fg-set input')
-    for (const input of inputs) {
-      input.value = ""
-    }
+    const fgSets = document.querySelectorAll('fg-set')
+
     factGraph = fg.GraphFactory.apply(factDictionary)
     window.factGraph = factGraph
+    saveFactGraph()
+
+    for (const fgSet of fgSets) {
+      fgSet.clear()
+    }
+
+    document.dispatchEvent(new CustomEvent('fg-clear'))
   }
 }
 customElements.define('fg-reset', FgReset)
@@ -251,7 +358,7 @@ function checkCondition(condition, operator) {
  * This method will delete facts that are hidden, making them incomplete.
  */
 function showOrHideAllElements() {
-  // At present, this navie implementation relies on <fg-set>s not having conditions on facts that
+  // At present, this naive implementation relies on <fg-set>s not having conditions on facts that
   // are set after them in the DOM order. This is a deliberate choice to limit complexity at this
   // stage, but it is not set in stone. If you see bugs related to showing/hiding, this is the place
   // to start looking.
@@ -273,6 +380,7 @@ function showOrHideAllElements() {
 
 // Add show/hide functionality to all elements
 document.addEventListener('fg-update', showOrHideAllElements)
+document.addEventListener('fg-clear', showOrHideAllElements)
 showOrHideAllElements()
 
 // Unhide main
