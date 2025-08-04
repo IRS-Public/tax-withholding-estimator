@@ -17,6 +17,16 @@ function saveFactGraph() {
   sessionStorage.setItem('factGraph', factGraph.toJSON())
 }
 
+/**
+ * 
+ * @param {string} factGraphAsString - stringified version of a JSON object
+ */
+function loadFactGraph(factGraphAsString) {
+  factGraph = fg.GraphFactory.fromJSON(factDictionary, factGraphAsString)
+  saveFactGraph()
+  window.location.reload()
+}
+window.loadFactGraph = loadFactGraph
 
 /*
  * <fg-set> - An input that sets a fact
