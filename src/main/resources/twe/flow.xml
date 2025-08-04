@@ -14,8 +14,8 @@
       </fg-set>
 
       <fg-set path="/testDate">
-        <label>Test day</label>
-        <input type="day" />
+        <label>Test Date</label>
+        <input type="date" />
       </fg-set>
 
       <fg-set path="/hasDependents">

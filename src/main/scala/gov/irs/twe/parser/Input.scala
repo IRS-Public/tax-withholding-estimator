@@ -7,18 +7,18 @@ import gov.irs.twe.exceptions.InvalidFormConfig
 case class HtmlOption(name: String, value: String)
 
 enum Input {
+  case select(options: List[HtmlOption], optionsPath: Option[String])
   case text
   case boolean
   case dollar
-  case select(options: List[HtmlOption], optionsPath: Option[String])
-  case day
+  case date
 
   def typeString: String = this match {
     case Input.text => "text"
     case Input.boolean => "boolean"
     case Input.dollar => "dollar"
     case Input.select(_, _) => "select"
-    case Input.day => "day"
+    case Input.date => "date"
   }
 }
 
@@ -54,7 +54,7 @@ object Input {
       case "text" => Input.text
       case "boolean" => Input.boolean
       case "dollar" => Input.dollar
-      case "day" => Input.day
+      case "date" => Input.date
       case x => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
     }
   }

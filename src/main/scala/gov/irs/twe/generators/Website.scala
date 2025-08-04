@@ -171,7 +171,7 @@ object Website {
         {options.map(option => <option value={option.value}>{option.name}</option>)}
       </select>
       case Input.dollar => <input type="number" step="0.01" name={path} autocomplete="off"/>
-      case Input.day => <input type="date" name={path} autocomplete="off"/>
+      case Input.date => <input type="date" name={path} autocomplete="off"/>
       case Input.text => <input type="text" name={path} autocomplete="off"/>
     }
   }

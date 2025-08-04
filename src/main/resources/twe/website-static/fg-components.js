@@ -18,7 +18,6 @@ function saveFactGraph() {
 }
 
 /**
- * 
  * @param {string} factGraphAsString - stringified version of a JSON object
  */
 function loadFactGraph(factGraphAsString) {
@@ -39,7 +38,7 @@ class FgSet extends HTMLElement {
     this.inputs = this.querySelectorAll('input, select')
 
     switch (this.inputType) {
-      case 'day':
+      case 'date':
       case 'select':
       case 'boolean':
         for (const input of this.inputs) {
@@ -103,7 +102,7 @@ class FgSet extends HTMLElement {
         break
       }
       case 'text':
-      case 'day':
+      case 'date':
       case 'dollar': {
         this.querySelector('input').value = ''
         break
@@ -133,7 +132,7 @@ class FgSet extends HTMLElement {
         break
       }
       case 'text':
-      case 'day':
+      case 'date':
       case 'dollar': {
         this.querySelector('input').value = value
         break
@@ -154,7 +153,7 @@ class FgSet extends HTMLElement {
         return this.querySelector('input:checked')?.value
       }
       case 'text':
-      case 'day':
+      case 'date':
       case 'dollar': {
         return this.querySelector('input')?.value
       }
@@ -201,7 +200,7 @@ class FgSet extends HTMLElement {
         this.querySelector('select').value = ''
       }
       case 'text':
-      case 'day':
+      case 'date':
       case 'dollar': {
         this.querySelector('input').value = ''
         break
