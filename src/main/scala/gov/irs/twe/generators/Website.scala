@@ -168,7 +168,7 @@ object Website {
         <label>No <input type="radio" value="false" name={path} autocomplete="off"/></label>
       </div>
       case Input.select(options, optionsPath) => <select optionsPath={optionsPath.getOrElse("")} name={path}>
-        <option value={""} disabled="true">{"-- Select one --"}</option>
+        <option value={""} disabled="true" selected="true">{"-- Select one --"}</option>
         {options.map(option => <option value={option.value}>{option.name}</option>)}
       </select>
       case Input.dollar => <input type="number" step="0.01" name={path} autocomplete="off"/>
