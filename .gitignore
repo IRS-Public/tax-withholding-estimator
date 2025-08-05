@@ -3,7 +3,7 @@ out/
 
 # sbt
 target/
-project/
+projects/*/
 
 # node
 node_modules/

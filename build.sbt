@@ -1,6 +1,8 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "3.3.6"
 
+scalafmtConfig := file("project/.scalafmt.conf")
+
 // Also re-build on XML changes
 // Doesn't work yet
 // run / watchTriggers += baseDirectory.value.toGlob / "*.xml"
