@@ -121,14 +121,20 @@ class FgSet extends HTMLElement {
     // Don't attempt to set non-normalized wildcard facts
     if (this.path.includes('*')) return
 
-    let value = factGraph.get(this.path)
+    let fact = factGraph.get(this.path)
 
-    if (value.complete === false) return
-    value = value.get?.toString()
+    let value
+    if (fact.hasValue === false){
+      value = "" 
+    } else {
+      value = fact.get?.toString()
+    }
 
     switch (this.inputType) {
       case 'boolean': {
-        this.querySelector(`input[value=${value}]`).checked = true
+        if (value !== "") {
+          this.querySelector(`input[value=${value}]`).checked = true
+        }
         break
       }
       case 'text':
