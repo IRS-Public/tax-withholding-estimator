@@ -61,3 +61,12 @@ input:not([type=radio]), select {
   margin-bottom: 1rem;
   width: 100%;
 }
+
+ul {
+    display: flex;
+    justify-content: space-evenly
+}
+
+li {
+  display: inline-block;
+}

@@ -1,88 +1,242 @@
 <FormConfig>
-  <page title="About You" route="/">
-    <section>
-      <h2>Filing status</h2>
-      <fg-set path="/filingStatus">
-        <label>What filing status will you use for your tax return?</label>
-        <select options-path="/filingStatusOptions">
-          <option value="single">Single</option>
-          <option value="marriedFilingJointly">Married filing jointly</option>
-          <option value="marriedFilingSeparately">Married filing separately</option>
-          <option value="headOfHousehold">Head of Household</option>
-          <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
-        </select>
-      </fg-set>
+    <page title="About You" route="/">
+        <section>
+            <h2>Filing status</h2>
+            <fg-set path="/filingStatus">
+                <label>What filing status will you use for your tax return?</label>
+                <select options-path="/filingStatusOptions">
+                    <option value="single">Single</option>
+                    <option value="marriedFilingJointly">Married filing jointly</option>
+                    <option value="marriedFilingSeparately">Married filing separately</option>
+                    <option value="headOfHousehold">Head of Household</option>
+                    <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
+                </select>
+            </fg-set>
 
-      <fg-set path="/testDate">
-        <label>Test Date</label>
-        <input type="date" />
-      </fg-set>
+            <fg-set path="/testDate">
+                <label>Test Date</label>
+                <input type="date"/>
+            </fg-set>
 
-      <fg-set path="/hasDependents">
-        <label>Do you have any dependents</label>
-        <input type="boolean" />
-      </fg-set>
+            <fg-set path="/hasDependents">
+                <label>Do you have any dependents</label>
+                <input type="boolean"/>
+            </fg-set>
 
-      <fg-set path="/isUsCitizenFullYear">
-        <label>Were you a U.S. citizen for all of the year?</label>
-        <input type="boolean" />
-      </fg-set>
+            <fg-set path="/isUsCitizenFullYear">
+                <label>Were you a U.S. citizen for all of the year?</label>
+                <input type="boolean"/>
+            </fg-set>
 
-      <fg-set path="/citizenAtEndOfTaxYear" if-false="/isUsCitizenFullYear">
-        <label>Did you start the year with U.S. resident status and end the year with U.S. citizen
-          status</label>
-        <input type="boolean" />
-      </fg-set>
+            <fg-set path="/citizenAtEndOfTaxYear" if-false="/isUsCitizenFullYear">
+                <label>Did you start the year with U.S. resident status and end the year with U.S. citizen
+                    status
+                </label>
+                <input type="boolean"/>
+            </fg-set>
 
-      <fg-set path="/isNoncitizenResidentFullYear" if-false="/citizenAtEndOfTaxYear">
-        <label>For tax purposes, were you a U.S. resident for all of the year?</label>
-        <input type="boolean" />
-      </fg-set>
+            <fg-set path="/isNoncitizenResidentFullYear" if-false="/citizenAtEndOfTaxYear">
+                <label>For tax purposes, were you a U.S. resident for all of the year?</label>
+                <input type="boolean"/>
+            </fg-set>
 
-      <fg-set path="/isNational" if-true="/isNoncitizenResidentFullYear">
-        <label>Were you a U.S. national for all of the year?</label>
-        <input type="boolean" />
-      </fg-set>
+            <fg-set path="/isNational" if-true="/isNoncitizenResidentFullYear">
+                <label>Were you a U.S. national for all of the year?</label>
+                <input type="boolean"/>
+            </fg-set>
 
-      <h2>Jobs</h2>
-      <fg-collection path="/jobs">
-        <fg-set path="/jobs/*/income">
-          <label>Total income for the year</label>
-          <input type="dollar" />
-        </fg-set>
+            <h2>Jobs</h2>
+            <fg-collection path="/jobs">
+                <fg-set path="/jobs/*/income">
+                    <label>Total income for the year</label>
+                    <input type="dollar"/>
+                </fg-set>
 
-        <fg-set path="/jobs/*/occupation" if-true="/jobs/*/isHighPaying">
-          <label>Occupation</label>
-          <input type="text" />
-        </fg-set>
-      </fg-collection>
+                <fg-set path="/jobs/*/occupation" if-true="/jobs/*/isHighPaying">
+                    <label>Occupation</label>
+                    <input type="text"/>
+                </fg-set>
+            </fg-collection>
 
-      <h2>Taxes Paid</h2>
-      <fg-set path="/taxesPaid" if-true="/incomeGreaterThan0">
-        <label>Total taxes paid for the year</label>
-        <input type="dollar" />
-      </fg-set>
-
-
-      <h2>Reset</h2>
-      <fg-reset><button>Reset Fact Graph</button></fg-reset>
-    </section>
-  </page>
+            <h2>Taxes Paid</h2>
+            <fg-set path="/taxesPaid" if-true="/incomeGreaterThan0">
+                <label>Total taxes paid for the year</label>
+                <input type="dollar"/>
+            </fg-set>
 
 
-  <page title="Calculations" route="calculations">
-    <section>
-      <h2>Calculations</h2>
-      <p>
-        Your <strong>taxable income</strong> is:
-        <fg-show path="/roundedTaxableIncome" />
-      </p>
+            <h2>Reset</h2>
+            <fg-reset>
+                <button>Reset Fact Graph</button>
+            </fg-reset>
+        </section>
+    </page>
 
-      <p>
-        Your <strong>suggested adjustment per pay period</strong> is:
-        <fg-show path="/adjustmentNeededPerPayPeriod" />
-      </p>
-    </section>
-  </page>
+
+    <page title="Adjustments and Deductions" route="adjustments">
+        <section>
+            <h2>Adjustments and Deductions</h2>
+
+            <h3>Educator Expense Deduction</h3>
+            <fg-set path="/actualEducatorExpensesAdjustmentAmount">
+                <label>How much educator expenses have you paid so far this tax year?</label>
+                <input type="dollar"/>
+            </fg-set>
+            <h3>Student Loan Interest Deduction</h3>
+            <fg-set path="/actualStudentLoanInterestAdjustmentAmount">
+                <label>How much student loan interest have you paid so far this tax year</label>
+                <input type="dollar"/>
+
+            </fg-set>
+            <h3>HSA Contribution Deduction</h3>
+            <fg-set path="/actualHsaTotalDeductibleAmount">
+                <label>What is the total deductible amount of HSA contributions you have made this year?</label>
+                <input type="dollar"/>
+            </fg-set>
+
+
+            <h3>Personal Vehicle Loan Interest Deduction</h3>
+
+            <fg-set path="/isVehiclePurchasedAfterEffectiveDate">
+                <label>Have you purchased a motor vehicle after 12/31/2024?</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isQVPIndebtednessIncurredAfterEffectiveDate" if-true="/isVehiclePurchasedAfterEffectiveDate">
+                <label>Did you incur a loan when you purchased this vehicle and was this loan originated after
+                    12/31/2024?
+                </label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isVehicleLoanFirstLien" if-true="/isQVPIndebtednessIncurredAfterEffectiveDate">
+                <label>Was the loan secured as the first lien on the vehicle?</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isVehicleForPersonalUse" if-true="/isVehicleLoanFirstLien">
+                <label>Is the vehicle intended for personal use and not commercial or fleet use?</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isVehicleLoanFinancingFleetSale" if-true="/isVehicleForPersonalUse">
+                <label>Was the loan originated for the purposes of financing a fleet sale?</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isVehicleLeaseFinanced" if-false="/isVehicleLoanFinancingFleetSale">
+                <label>Are you leasing the vehicle?</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/hasSalvageTitleOrPurchasedToScrap" if-false="/isVehicleLeaseFinanced">
+                <label>Did you purchase the vehicle with the intend to scrap it for parts or is the title a salvage
+                    title?
+                </label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isTaxpayerOriginalUser" if-false="/hasSalvageTitleOrPurchasedToScrap">
+                <label>Are you the original and primary user of the vehicle</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/doesHaveVIN" if-true="/isTaxpayerOriginalUser">
+                <label>Do you have a Vehicle Identification Number for the Vehicle? You can check on https://www.nhtsa.gov/vin-decoder</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isVehicleManufacturedForStreetsRoadsAndHighways" if-true="/doesHaveVIN">
+                <label>Is the vehicle meant for driving on public streets, roads and highways?</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isVehicleGTETwoWheels" if-true="/isVehicleManufacturedForStreetsRoadsAndHighways">
+                <label>Does the vehicle have at least two wheels?</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isVehicleApplicableType" if-true="/isVehicleGTETwoWheels">
+                <label>Is the vehicle a car, minivan, van, sport utility vehicle, pickup truck, or motorcycle?</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isVehicleUnderGVWRMax" if-true="/isVehicleApplicableType">
+                <label>Is the Gross Vehicle Weight Rating below 14,000 lbs?</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/isVehicleAssembledInUSA" if-true="/isVehicleUnderGVWRMax">
+                <label>Was the final assembly of the vehicle in the United States?</label>
+                <input type="boolean"/>
+            </fg-set>
+
+            <fg-set path="/personalVehicleLoanInterestAmount" if-true="/isVehicleAssembledInUSA">
+                <label>How much interest have you paid on the loan during the current taxable year to-date?</label>
+                <input type="dollar"/>
+            </fg-set>
+
+            <p>
+                Your eligibility for the Qualified Passenger Vehicle Loan Interest Deduction is:
+                <fg-show path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction"/>
+            </p>
+
+        </section>
+    </page>
+
+
+    <page title="Calculations" route="calculations">
+        <section>
+            <h1>Calculations</h1>
+            <br/>
+            <h3>Results</h3>
+            <p>
+                Your <strong>taxable income</strong> is:
+                <fg-show path="/roundedTaxableIncome"/>
+            </p>
+            <p>
+                Your <strong>taxable income</strong> is:
+                <fg-show path="/roundedTaxableIncome"/>
+            </p>
+            <p>
+                Your <strong>suggested adjustment per pay period</strong> is:
+                <fg-show path="/adjustmentNeededPerPayPeriod"/>
+            </p>
+        </section>
+        <br>
+
+        </br>
+
+        <section>
+            <h3>Adjustments and Deductions</h3>
+            <h4>Qualified Personal Vehicle Loan Deduction</h4>
+            <p>
+                Your <strong>personalVehicleLoanInterestAmount</strong> is:
+                <fg-show path="/personalVehicleLoanInterestAmount"/>
+            </p>
+
+            <p>
+                Your <strong>adjustmentsToIncomeExcludingQPVLI</strong> is:
+                <fg-show path="/adjustmentsToIncomeExcludingQPVLID"/>
+            </p>
+
+            <p>
+                Your <strong>phaseOutAmountQPVLID</strong> is:
+                <fg-show path="/phaseOutAmountQPVLID"/>
+            </p>
+
+
+            <p>
+                Your <strong>actualQPVLIDAmount</strong> is:
+                <fg-show path="/actualQPVLIDAdjustmentAmount"/>
+            </p>
+
+            <p>
+                Your <strong>magiExcludingQPVLID</strong> is:
+                <fg-show path="/magiExcludingQPVLID"/>
+            </p>
+
+        </section>
+    </page>
 
 </FormConfig>
