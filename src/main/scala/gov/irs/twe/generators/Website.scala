@@ -86,7 +86,15 @@ object Website {
       case PageNode.rawHTML(x) => x
     }
 
-    val content = <html>
+    val title = s"Tax Withholding Estimator - ${page.title} | Internal Revenue Service"
+
+    val content = <html lang="en">
+      <meta charset="utf-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="HandheldFriendly" content="True" />
+      <meta name="MobileOptimized" content="320" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>{title}</title>
       <link rel="stylesheet" href="/resources/stylesheet.css"></link>
       <script type="module" src="/resources/factgraph-3.1.0.js"></script>
       <script type="module" src="/resources/fg-components.js"></script>
@@ -95,10 +103,10 @@ object Website {
       <body>
 
         <header>
-          <div class="logo-banner"><img src="/resources/irs-logo.svg" /></div>
+          <div class="logo-banner"><img src="/resources/irs-logo.svg" alt="" /></div>
         </header>
 
-        <main class="hidden">
+        <main class="hidden" id="main-content">
           {nav}
           {pageXml}
         </main>
