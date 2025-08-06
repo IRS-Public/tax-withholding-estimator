@@ -6,7 +6,7 @@ import gov.irs.twe.parser.Utils.optionString
 
 enum PageNode {
   case section(section: Section)
-  case html(node: xml.Node)
+  case rawHTML(node: xml.Node)
 }
 
 case class Page(title: String, route: String, nodes: List[PageNode])
@@ -18,7 +18,7 @@ object Page {
 
     val nodes = (page \ "_").map(node => node.label match {
       case "section" => PageNode.section(Section.parse(node, factDictionary))
-      case _ => PageNode.html(node)
+      case _ => PageNode.rawHTML(node)
     }).toList
 
     Page(title, route, nodes)

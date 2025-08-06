@@ -20,6 +20,29 @@ enum Input {
     case Input.select(_, _) => "select"
     case Input.date => "date"
   }
+
+  def html(path: String): xml.Elem = {
+    this match {
+      case Input.boolean => <div>
+        <label>Yes
+          <input type="radio" value="true" name={path} autocomplete="off"/>
+        </label>
+        <label>No
+          <input type="radio" value="false" name={path} autocomplete="off"/>
+        </label>
+      </div>
+      case Input.select(options, optionsPath) => <select optionsPath={optionsPath.getOrElse("")} name={path}>
+        <option value={""} disabled="true" selected="true">
+          {"-- Select one --"}
+        </option>{options.map(option => <option value={option.value}>
+          {option.name}
+        </option>)}
+      </select>
+      case Input.dollar => <input type="number" step="0.01" name={path} autocomplete="off"/>
+      case Input.date => <input type="date" name={path} autocomplete="off"/>
+      case Input.text => <input type="text" name={path} autocomplete="off"/>
+    }
+  }
 }
 
 object Input {

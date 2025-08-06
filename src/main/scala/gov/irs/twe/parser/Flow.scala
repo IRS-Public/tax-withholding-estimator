@@ -4,8 +4,6 @@ import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.Log
 import gov.irs.twe.exceptions.InvalidFormConfig
 
-import scala.xml.{Elem, Group, SpecialNode}
-
 case class Flow(pages: List[Page])
 
 object Flow {

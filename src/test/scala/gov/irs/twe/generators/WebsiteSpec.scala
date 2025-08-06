@@ -5,31 +5,39 @@ import org.scalatest.funspec.AnyFunSpec
 class WebsiteSpec extends AnyFunSpec {
 
   describe("basic form config") {
+    val basicDictionaryConfig = <FactDictionaryModule>
+      <Facts>
+        <Fact path="/filer/name">
+          <Name>Name</Name>
+          <Writable><String/></Writable>
+        </Fact>
+      </Facts>
+
+      <Fact path="/isUsCitizenFullYear">
+        <Name>Citizenship</Name>
+        <Description>Whether the filer was a U.S. Citizen for all of the tax year</Description>
+
+        <Writable><Boolean /></Writable>
+      </Fact>
+    </FactDictionaryModule>
+
     val basicFormConfig = <FormConfig>
-      <section>
-        <question path="/filer/name">
-          <label>What is your full name?</label>
-          <input type="text"/>
-        </question>
+      <page route="/" title="Basic Test Form">
+        <section>
+          <fg-set path="/filer/name">
+            <label>What is your full name?</label>
+            <input type="text"/>
+          </fg-set>
 
-        <question path="/filer/citizen/ty25">
-          <label>Were you a US Citizen for all of TY2025?</label>
-          <input type="boolean"/>
-        </question>
-
-        <question path="/filer/citizen/partTy25">
-          <label>Did you become a US Citizen during TY2025?</label>
-          <input type="boolean"/>
-        </question>
-
-        <question path="/filer/primaryResidence">
-          <label>Which state was your primary residence?</label>
-          <input type="select"/>
-        </question>
-      </section>
+          <fg-set path="/isUsCitizenFullYear">
+            <label>Were you a US Citizen for all of TY2025?</label>
+            <input type="boolean"/>
+          </fg-set>
+        </section>
+      </page>
     </FormConfig>
 
-    val site = Website.fromXmlConfig(basicFormConfig)
+    val site = Website.fromXmlConfig(basicFormConfig, basicDictionaryConfig)
 
     it("contains basic html elements") {
       val page = site.pages.head
@@ -37,9 +45,9 @@ class WebsiteSpec extends AnyFunSpec {
       assert((page.content \\ "body").nonEmpty)
     }
 
-    it("contains 3 fieldsets") {
+    it("contains 2 <fg-set>s") {
       val page = site.pages.head
-      assert((page.content \\ "fieldset").length == 4)
+      assert((page.content \\ "fg-set").length == 2)
     }
   }
 
