@@ -287,7 +287,7 @@
             <Derived>
                 <Subtract>
                     <Minuend>
-                        <Dependency path="/totalIncome" module="about-you"/>
+                        <Dependency path="/totalIncome" module="income"/>
                     </Minuend>
                     <Subtrahends>
                         <Dependency path="/adjustmentsToIncomeExcludingQPVLID" module="adjustments"/>
