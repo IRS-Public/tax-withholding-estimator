@@ -2,5 +2,6 @@
   "recommendations": [
     "redhat.vscode-xml",
     "scalameta.metals",
+    "editorconfig.editorconfig",
   ]
 }
