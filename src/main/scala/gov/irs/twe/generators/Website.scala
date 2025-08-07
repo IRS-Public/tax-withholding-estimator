@@ -44,20 +44,9 @@ case class Website(pages: List[WebsitePage], factDictionary: xml.Elem) {
       os.write(target, page.html(), null, createFolders = true)
     }
 
-    // This is a hack
-    // I think this should eventually be configured *outside* the scala application
-    // It should also automatically introspect the directory
-    addStaticResource(directoryPath, "stylesheet.css")
-    addStaticResource(directoryPath, "factgraph-3.1.0.js")
-    addStaticResource(directoryPath, "fg-components.js")
-    addStaticResource(directoryPath, "debug-components.js")
-    addStaticResource(directoryPath, "irs-logo.svg")
-  }
-
-  private def addStaticResource(directoryPath: os.Path, filename: String): Unit = {
-    val resource = Source.fromResource(s"twe/website-static/$filename").getLines().mkString("\n")
-    val pathInWebsite = directoryPath / "resources" / filename
-    os.write(pathInWebsite, resource, null, createFolders = true)
+    val resourcesSource = os.pwd / "src" / "main"/ "resources" / "twe" / "website-static"
+    val resourcesTarget = directoryPath / "resources"
+    os.copy(resourcesSource, resourcesTarget)
   }
 }
 
