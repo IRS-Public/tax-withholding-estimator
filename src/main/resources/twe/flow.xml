@@ -1,7 +1,7 @@
 <FormConfig>
     <page title="About You" route="/">
         <section>
-            <h2>Filing status</h2>
+            <h2>About You</h2>
             <fg-set path="/filingStatus">
                 <label>What filing status will you use for your tax return?</label>
                 <select options-path="/filingStatusOptions">
@@ -11,6 +11,16 @@
                     <option value="headOfHousehold">Head of Household</option>
                     <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
                 </select>
+            </fg-set>
+
+            <fg-set path="/filers/#11111111-1111-4e09-a9c1-88e40c1a3de2/isBlind">
+                <label>Are you blind?</label>
+                <input type="boolean" />
+            </fg-set>
+
+            <fg-set path="/filers/#11111111-1111-4e09-a9c1-88e40c1a3de2/canBeClaimed">
+                <label>Can anyone else claim you as a dependent on their tax return?</label>
+                <input type="boolean" />
             </fg-set>
 
             <h2>Jobs</h2>

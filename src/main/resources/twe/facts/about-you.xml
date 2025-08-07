@@ -14,6 +14,7 @@
             </Derived>
         </Fact>
 
+
         <Fact path="/filingStatus">
             <Name>Filing status</Name>
             <Description>The filing status selected by the taxpayer.</Description>
@@ -21,6 +22,7 @@
                 <Enum optionsPath="/filingStatusOptions"/>
             </Writable>
         </Fact>
+
 
         <Fact path="/isFilingStatusMFJ">
             <Name>Is taxpayer filing status MFJ</Name>
@@ -35,6 +37,53 @@
                     </Right>
                 </Equal>
             </Derived>
+        </Fact>
+
+        <Fact path="/filers">
+            <Description>This filers collection should be populated by app code to contain exactly two items.</Description>
+            <Writable>
+                <Collection />
+            </Writable>
+        </Fact>
+
+        <Fact path="/primaryFiler">
+            <Description>The first collection item represents the primary filer.</Description>
+            <Derived>
+                <IndexOf>
+                    <Collection>
+                        <Dependency path="/filers" />
+                    </Collection>
+                    <Index>
+                        <Int>0</Int>
+                    </Index>
+                </IndexOf>
+            </Derived>
+        </Fact>
+
+        <Fact path="/secondaryFiler">
+            <Description>The second collection item represents the secondary filer, who may or may not exist in reality.</Description>
+            <Derived>
+                <IndexOf>
+                    <Collection>
+                        <Dependency path="/filers" />
+                    </Collection>
+                    <Index>
+                        <Int>1</Int>
+                    </Index>
+                </IndexOf>
+            </Derived>
+        </Fact>
+
+        <Fact path="/filers/*/isBlind">
+            <Writable>
+                <Boolean />
+            </Writable>
+        </Fact>
+
+        <Fact path="/filers/*/canBeClaimed">
+            <Writable>
+                <Boolean />
+            </Writable>
         </Fact>
     </Facts>
 </FactDictionaryModule>
