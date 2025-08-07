@@ -84,15 +84,17 @@ object Website {
       <meta name="MobileOptimized" content="320" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>{title}</title>
-      <link rel="stylesheet" href="/resources/stylesheet.css"></link>
-      <script type="module" src="/resources/factgraph-3.1.0.js"></script>
-      <script type="module" src="/resources/fg-components.js"></script>
-      <script type="module" src="/resources/debug-components.js"></script>
+      <link rel="stylesheet" href="/resources/styles/stylesheet.css"></link>
+      <script type="module" src="/resources/js/factgraph-3.1.0.js"></script>
+      <script type="module" src="/resources/js/fg-components.js"></script>
+      <script type="module" src="/resources/js/debug-components.js"></script>
+      <script src="/resources/uswds-3.13.0/js/uswds-init.min.js"></script>
+      <link rel="preload" href="/resources/uswds-3.13.0/js/uswds.min.js" as="script" />
 
       <body>
 
         <header>
-          <div class="logo-banner"><img src="/resources/irs-logo.svg" alt="" /></div>
+          <div class="logo-banner"><img src="/resources/img/irs-logo.svg" alt="" /></div>
         </header>
 
         <main class="hidden" id="main-content">
@@ -100,7 +102,7 @@ object Website {
           {pageXml}
         </main>
         <script type="text" id="fact-dictionary">{dictionaryConfig}</script>
-
+        <script src="/resources/uswds-3.13.0/js/uswds.min.js"></script>
       </body>
     </html>
 
