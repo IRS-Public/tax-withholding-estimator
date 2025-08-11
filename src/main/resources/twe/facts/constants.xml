@@ -1,0 +1,13 @@
+
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/taxYear">
+      <Description>The tax year of the return.</Description>
+      <TaxYear>2024</TaxYear>
+      <Derived>
+        <Int>2024</Int>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

@@ -1,0 +1,96 @@
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/filingStatusOptions">
+      <Name>Filing Status Options</Name>
+      <Description>Options for filing status</Description>
+      <Derived>
+        <EnumOptions>
+          <String>marriedFilingJointly</String>
+          <String>marriedFilingSeparately</String>
+          <String>single</String>
+          <String>headOfHousehold</String>
+          <String>qualifiedSurvivingSpouse</String>
+        </EnumOptions>
+      </Derived>
+    </Fact>
+
+    <Fact path="/filingStatus">
+      <Name>Filing status</Name>
+      <Description>The filing status selected by the taxpayer.</Description>
+      <Writable>
+        <Enum optionsPath="/filingStatusOptions" />
+      </Writable>
+    </Fact>
+
+    <Fact path="/isFilingStatusSingle">
+      <Description>Is taxpayer filing status single</Description>
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="/filingStatus" />
+          </Left>
+          <Right>
+            <Enum optionsPath="/filingStatusOptions">single</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+
+    <Fact path="/isFilingStatusMFS">
+      <Description>Is taxpayer filing status MFS</Description>
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="/filingStatus" />
+          </Left>
+          <Right>
+            <Enum optionsPath="/filingStatusOptions">marriedFilingSeparately</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+
+    <Fact path="/isFilingStatusMFJ">
+      <Description>Is taxpayer filing status MFJ</Description>
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="/filingStatus" />
+          </Left>
+          <Right>
+            <Enum optionsPath="/filingStatusOptions">marriedFilingJointly</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+
+    <Fact path="/isFilingStatusHOH">
+      <Description>Is taxpayer filing status HOH</Description>
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="/filingStatus" />
+          </Left>
+          <Right>
+            <Enum optionsPath="/filingStatusOptions">headOfHousehold</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+
+    <Fact path="/isFilingStatusQSS">
+      <Description>Is taxpayer filing status QSS</Description>
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="/filingStatus" />
+          </Left>
+          <Right>
+            <Enum optionsPath="/filingStatusOptions">qualifiedSurvivingSpouse</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

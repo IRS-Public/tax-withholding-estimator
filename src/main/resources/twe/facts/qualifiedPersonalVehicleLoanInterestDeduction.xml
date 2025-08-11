@@ -244,7 +244,7 @@
                 <Switch>
                     <Case>
                         <When>
-                            <Dependency path="/isFilingStatusMFJ" module="about-you"/>
+                            <Dependency path="/isFilingStatusMFJ" module="filers"/>
                         </When>
                         <Then>
                             <Dependency path="/excessAmountQPVLIDForMFJFiler"/>

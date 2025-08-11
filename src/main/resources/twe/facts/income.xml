@@ -1,53 +1,53 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
-    <Facts>
-        <Fact path="/jobs">
-            <Description>The taxpayers's jobs</Description>
-            <Writable>
-                <Collection />
-            </Writable>
-        </Fact>
+  <Facts>
+    <Fact path="/jobs">
+      <Description>The taxpayers's jobs</Description>
+      <Writable>
+        <Collection />
+      </Writable>
+    </Fact>
 
-        <Fact path="/jobs/*/income">
-            <Description>The total income from a specific job</Description>
-            <Writable>
-                <Dollar />
-            </Writable>
-        </Fact>
+    <Fact path="/jobs/*/income">
+      <Description>The total income from a specific job</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
 
-        <Fact path="/jobs/*/withholding">
-            <Description>The total withholding from a specific job</Description>
-            <Writable>
-                <Dollar />
-            </Writable>
-        </Fact>
+    <Fact path="/jobs/*/withholding">
+      <Description>The total withholding from a specific job</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
 
-        <Fact path="/totalJobsIncome">
-            <Description>Total income for all jobs</Description>
-            <Derived>
-                <CollectionSum>
-                    <Dependency path="/jobs/*/income"/>
-                </CollectionSum>
-            </Derived>
-        </Fact>
+    <Fact path="/totalJobsIncome">
+      <Description>Total income for all jobs</Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobs/*/income" />
+        </CollectionSum>
+      </Derived>
+    </Fact>
 
-        <Fact path="/totalJobsWithholding">
-            <Description>Total withholding for all jobs</Description>
-            <Derived>
-                <CollectionSum>
-                    <Dependency path="/jobs/*/withholding"/>
-                </CollectionSum>
-            </Derived>
-        </Fact>
+    <Fact path="/totalJobsWithholding">
+      <Description>Total withholding for all jobs</Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobs/*/withholding" />
+        </CollectionSum>
+      </Derived>
+    </Fact>
 
-        <Fact path="/totalIncome">
-            <Derived>
-                <Round>
-                    <Add>
-                        <Dependency path="/totalJobsIncome" />
-                    </Add>
-                </Round>
-            </Derived>
-        </Fact>
-    </Facts>
+    <Fact path="/totalIncome">
+      <Derived>
+        <Round>
+          <Add>
+            <Dependency path="/totalJobsIncome" />
+          </Add>
+        </Round>
+      </Derived>
+    </Fact>
+  </Facts>
 </FactDictionaryModule>
