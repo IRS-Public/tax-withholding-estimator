@@ -1,9 +1,8 @@
 package gov.irs.twe
 
 import gov.irs.twe.generators.Website
-
-import scala.io.Source
 import java.io.File
+import scala.io.Source
 import scala.xml.NodeBuffer
 
 def main(args: Array[String]): Unit = {

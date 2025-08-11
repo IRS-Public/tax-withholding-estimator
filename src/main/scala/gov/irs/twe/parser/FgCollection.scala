@@ -12,7 +12,7 @@ enum FgCollectionNode {
 case class FgCollection(path: String, condition: Option[Condition], nodes: List[FgCollectionNode]) {
   def html(): xml.Elem = {
     val collectionFacts = this.nodes.map {
-      case FgCollectionNode.fgSet(x) => x.html()
+      case FgCollectionNode.fgSet(x)   => x.html()
       case FgCollectionNode.rawHTML(x) => x
     }
 
@@ -32,16 +32,21 @@ object FgCollection {
 
     validateFgCollection(path, factDictionary)
 
-    val nodes = (node \ "_").map(node => node.label match {
-      case "fg-set" => FgCollectionNode.fgSet(FgSet.parse(node, factDictionary))
-      case _ => FgCollectionNode.rawHTML(node)
-    }).toList
+    val nodes = (node \ "_")
+      .map(node =>
+        node.label match {
+          case "fg-set" => FgCollectionNode.fgSet(FgSet.parse(node, factDictionary))
+          case _        => FgCollectionNode.rawHTML(node)
+        },
+      )
+      .toList
 
     FgCollection(path, condition, nodes)
   }
 
   private def validateFgCollection(path: String, factDictionary: FactDictionary): Unit = {
     validateFact(path, factDictionary)
-    if (factDictionary.getDefinition(path).typeNode != "CollectionNode") throw InvalidFormConfig(s"Path $path must be of type CollectionNode")
+    if (factDictionary.getDefinition(path).typeNode != "CollectionNode")
+      throw InvalidFormConfig(s"Path $path must be of type CollectionNode")
   }
 }

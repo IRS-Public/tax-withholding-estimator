@@ -37,14 +37,13 @@ object Condition {
     None
   }
 
-  private def validateCondition(factDictionary: FactDictionary, conditionPath: Option[String]): Unit = {
+  private def validateCondition(factDictionary: FactDictionary, conditionPath: Option[String]): Unit =
     if (conditionPath.isDefined) {
       val condition = conditionPath.get
       validateFact(condition, factDictionary)
-      
+
       if (factDictionary.getDefinition(condition).isBoolean == false) {
         throw InvalidFormConfig(s"Condition $condition must be of type Boolean")
       }
     }
-  }
 }

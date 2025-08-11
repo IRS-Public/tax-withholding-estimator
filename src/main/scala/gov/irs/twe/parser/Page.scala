@@ -16,10 +16,14 @@ object Page {
     val route = optionString(page \@ "route").getOrElse(throw InvalidFormConfig("<page> is missing a route attribute"))
     val title = optionString(page \@ "title").getOrElse(throw InvalidFormConfig("<page> is missing a title attribute"))
 
-    val nodes = (page \ "_").map(node => node.label match {
-      case "section" => PageNode.section(Section.parse(node, factDictionary))
-      case _ => PageNode.rawHTML(node)
-    }).toList
+    val nodes = (page \ "_")
+      .map(node =>
+        node.label match {
+          case "section" => PageNode.section(Section.parse(node, factDictionary))
+          case _         => PageNode.rawHTML(node)
+        },
+      )
+      .toList
 
     Page(title, route, nodes)
   }

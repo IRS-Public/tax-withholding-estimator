@@ -1,11 +1,10 @@
 package gov.irs.twe.generators
 
 import gov.irs.factgraph.FactDictionary
-import gov.irs.twe.parser.{Flow, Page, PageNode}
-import org.jsoup.Jsoup
+import gov.irs.twe.parser.{ Flow, Page, PageNode }
 import org.jsoup.parser.Tag
+import org.jsoup.Jsoup
 import os.Path
-
 import scala.io.Source
 
 case class WebsitePage(route: String, content: xml.Elem) {
@@ -23,7 +22,6 @@ case class WebsitePage(route: String, content: xml.Elem) {
       tag.set(Tag.Block)
       setElement.children().forEach(child => child.tag().set(Tag.Block))
     }
-
 
     // Convert to an HTML string
     var html = document.html()
@@ -44,14 +42,14 @@ case class Website(pages: List[WebsitePage], factDictionary: xml.Elem) {
       os.write(target, page.html(), null, createFolders = true)
     }
 
-    val resourcesSource = os.pwd / "src" / "main"/ "resources" / "twe" / "website-static"
+    val resourcesSource = os.pwd / "src" / "main" / "resources" / "twe" / "website-static"
     val resourcesTarget = directoryPath / "resources"
     os.copy(resourcesSource, resourcesTarget)
   }
 }
 
 object Website {
-  def fromXmlConfig(config: xml.Elem , dictionaryConfig: xml.Elem): Website = {
+  def fromXmlConfig(config: xml.Elem, dictionaryConfig: xml.Elem): Website = {
     val factDictionary = FactDictionary.fromXml(dictionaryConfig)
     val flow = Flow.fromXmlConfig(config, factDictionary)
     generate(flow, dictionaryConfig)

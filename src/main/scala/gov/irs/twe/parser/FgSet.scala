@@ -13,7 +13,7 @@ case class FgSet(path: String, condition: Option[Condition], input: Input, nodes
   def html(): xml.Elem = {
     val questionXml = this.nodes.map {
       case FgSetNode.input(input) => input.html(path)
-      case FgSetNode.rawHTML(x) => x
+      case FgSetNode.rawHTML(x)   => x
     }
 
     val condition = this.condition.map(_.path).orNull
@@ -36,10 +36,14 @@ object FgSet {
     val input = Input.extractFromQuestion(node, factDictionary)
 
     validateFgSet(path, input, factDictionary)
-    val nodes = (node \ "_").map(node => node.label match {
-      case "input" | "select" => FgSetNode.input(input)
-      case _ => FgSetNode.rawHTML(node)
-    }).toList
+    val nodes = (node \ "_")
+      .map(node =>
+        node.label match {
+          case "input" | "select" => FgSetNode.input(input)
+          case _                  => FgSetNode.rawHTML(node)
+        },
+      )
+      .toList
 
     FgSet(path, condition, input, nodes)
   }
@@ -48,10 +52,10 @@ object FgSet {
     validateFact(path, factDictionary)
     val typeNode = factDictionary.getDefinition(path).typeNode
     val inputAndNodeTypeMismatch = input match {
-      case Input.text => typeNode != "StringNode"
+      case Input.text    => typeNode != "StringNode"
       case Input.boolean => typeNode != "BooleanNode"
-      case Input.dollar => typeNode != "DollarNode"
-      case Input.date => typeNode != "DayNode"
+      case Input.dollar  => typeNode != "DollarNode"
+      case Input.date    => typeNode != "DayNode"
       // We could make this more strict
       case Input.select(_, _) => typeNode != "EnumNode"
     }

@@ -12,8 +12,8 @@ case class Section(nodes: List[SectionNode]) {
   def html(): xml.Elem = {
     val sectionXml = this.nodes.map {
       case SectionNode.fgCollection(x) => x.html()
-      case SectionNode.fgSet(x) => x.html()
-      case SectionNode.rawHTML(x) => x
+      case SectionNode.fgSet(x)        => x.html()
+      case SectionNode.rawHTML(x)      => x
     }
 
     <section>{sectionXml}</section>
@@ -22,11 +22,15 @@ case class Section(nodes: List[SectionNode]) {
 
 object Section {
   def parse(section: xml.Node, factDictionary: FactDictionary): Section = {
-    val nodes = (section \ "_").map(node => node.label match {
-      case "fg-collection" => SectionNode.fgCollection(FgCollection.parse(node, factDictionary))
-      case "fg-set" => SectionNode.fgSet(FgSet.parse(node, factDictionary))
-      case _ => SectionNode.rawHTML(node)
-    }).toList
+    val nodes = (section \ "_")
+      .map(node =>
+        node.label match {
+          case "fg-collection" => SectionNode.fgCollection(FgCollection.parse(node, factDictionary))
+          case "fg-set"        => SectionNode.fgSet(FgSet.parse(node, factDictionary))
+          case _               => SectionNode.rawHTML(node)
+        },
+      )
+      .toList
 
     Section(nodes)
   }

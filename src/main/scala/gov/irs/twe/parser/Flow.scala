@@ -1,8 +1,8 @@
 package gov.irs.twe.parser
 
 import gov.irs.factgraph.FactDictionary
-import gov.irs.twe.Log
 import gov.irs.twe.exceptions.InvalidFormConfig
+import gov.irs.twe.Log
 
 case class Flow(pages: List[Page])
 

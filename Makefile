@@ -17,6 +17,10 @@ copy-fg:
 	# TODO copy the map into /resources as well
 	cp ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt/main.mjs.map ./out/resources/
 
+.PHONY: format
+format:
+	sbt scalafmt
+
 .PHONY: clean
 clean:
 	rm -rf ./target/

@@ -1,8 +1,8 @@
 package gov.irs.twe.parser
 
 import gov.irs.factgraph.FactDictionary
-import gov.irs.twe.Log
 import gov.irs.twe.exceptions.InvalidFormConfig
+import gov.irs.twe.Log
 
 case class HtmlOption(name: String, value: String)
 
@@ -14,14 +14,14 @@ enum Input {
   case date
 
   def typeString: String = this match {
-    case Input.text => "text"
-    case Input.boolean => "boolean"
-    case Input.dollar => "dollar"
+    case Input.text         => "text"
+    case Input.boolean      => "boolean"
+    case Input.dollar       => "dollar"
     case Input.select(_, _) => "select"
-    case Input.date => "date"
+    case Input.date         => "date"
   }
 
-  def html(path: String): xml.Elem = {
+  def html(path: String): xml.Elem =
     this match {
       case Input.boolean => <div>
         <div class="usa-radio">
@@ -33,18 +33,20 @@ enum Input {
           <label for={s"${path}-no"} class="usa-radio__label">No</label>
         </div>
         </div>
-      case Input.select(options, optionsPath) => <select class="usa-select" optionsPath={optionsPath.getOrElse("")}>
+      case Input.select(options, optionsPath) =>
+        <select class="usa-select" optionsPath={optionsPath.getOrElse("")}>
         <option value={""} disabled="true" selected="true">
           {"-- Select one --"}
-        </option>{options.map(option => <option value={option.value}>
+        </option>{
+          options.map(option => <option value={option.value}>
           {option.name}
-        </option>)}
+        </option>)
+        }
       </select>
       case Input.dollar => <input class="usa-input" type="number" step="0.01" name={path} autocomplete="off"/>
-      case Input.date => <input class="usa-input" type="date" name={path} autocomplete="off"/>
-      case Input.text => <input class="usa-input" type="text" name={path} autocomplete="off"/>
+      case Input.date   => <input class="usa-input" type="date" name={path} autocomplete="off"/>
+      case Input.text   => <input class="usa-input" type="text" name={path} autocomplete="off"/>
     }
-  }
 }
 
 object Input {
@@ -54,13 +56,13 @@ object Input {
     val selectNode = node \ "select"
     if (selectNode.nonEmpty) {
       val optionsPath = Option(selectNode \@ "options-path").filter(_.nonEmpty)
-      val options = (selectNode \ "option").map(node => {
+      val options = (selectNode \ "option").map { node =>
         val name = node.text
         var value = node \@ "value"
         if (value == "") value = name
 
         HtmlOption(name, value)
-      }).toList
+      }.toList
       // TODO validate that the options match the num path
 
       if (options.isEmpty) {
@@ -76,11 +78,11 @@ object Input {
     }
 
     inputNode \@ "type" match {
-      case "text" => Input.text
+      case "text"    => Input.text
       case "boolean" => Input.boolean
-      case "dollar" => Input.dollar
-      case "date" => Input.date
-      case x => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
+      case "dollar"  => Input.dollar
+      case "date"    => Input.date
+      case x         => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
     }
   }
 }
