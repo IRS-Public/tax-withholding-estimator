@@ -1,0 +1,17 @@
+fg-set {
+  display: block;
+  padding: var(--units-2);
+  margin: var(--units-2) 0;
+  border: 1px solid black;
+  opacity: 1;
+
+  transition: opacity 1s, display 1s allow-discrete;
+
+  @starting-style {
+    /* Only fade in the facts that have a condition */
+    &[condition] {
+      opacity: 0;
+    }
+  }
+
+}

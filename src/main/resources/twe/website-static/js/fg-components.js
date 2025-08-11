@@ -16,7 +16,7 @@ window.factGraph = factGraph
 function initializeFactGraph() {
   factGraph.addToCollection('/filers', '11111111-1111-4e09-a9c1-88e40c1a3de2')
   saveFactGraph()
-  factGraph.addToCollection('/filers', '22222222-2222-4794-9daa-a60c34b3500b') 
+  factGraph.addToCollection('/filers', '22222222-2222-4794-9daa-a60c34b3500b')
   saveFactGraph()
 }
 
@@ -76,12 +76,12 @@ class FgSet extends HTMLElement {
   }
 
   render() {
-    this.querySelector('div.warning')?.remove()
+    this.querySelector('div.alert--warning')?.remove()
 
     // Show error if there is one
     if (this.error) {
       const warnDiv = document.createElement('div')
-      warnDiv.classList.add('warning')
+      warnDiv.classList.add('alert--warning')
       warnDiv.innerText = this.error
       this.insertAdjacentElement('afterbegin', warnDiv)
     }
@@ -133,7 +133,7 @@ class FgSet extends HTMLElement {
 
     let value
     if (fact.hasValue === false){
-      value = "" 
+      value = ""
     } else {
       value = fact.get?.toString()
     }
@@ -326,7 +326,7 @@ class FgShow extends HTMLElement {
   render() {
     const value = factGraph.get(this.path)
     if (value.complete === false) {
-      this.innerHTML = `<span class="incomplete">[Missing Information]</span>`
+      this.innerHTML = `<span class="text-base-light">[Missing Information]</span>`
     } else {
       this.innerText = value.get?.toString()
     }

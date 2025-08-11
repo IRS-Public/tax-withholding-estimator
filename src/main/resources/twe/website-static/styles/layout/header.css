@@ -1,0 +1,10 @@
+.logo-banner {
+  width: 100%;
+  background-color: var(--primary);
+}
+
+.logo-banner img {
+  height: 100%;
+  width: 6.25rem;
+  margin: var(--units-2);
+}

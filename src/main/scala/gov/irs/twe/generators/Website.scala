@@ -58,9 +58,9 @@ object Website {
   }
 
   def generate(flow: Flow, dictionaryConfig: xml.Elem): Website = {
-    val navElements = flow.pages.map(page => <li><a href={page.route}>{page.title}</a></li>)
-    val nav = <nav>
-      <ul>
+    val navElements = flow.pages.map(page => <li class="steps-nav__item"><a href={page.route}>{page.title}</a></li>)
+    val nav = <nav class="steps-nav">
+      <ul class="steps-nav__list">
         {navElements}
       </ul>
     </nav>
@@ -84,7 +84,7 @@ object Website {
       <meta name="MobileOptimized" content="320" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>{title}</title>
-      <link rel="stylesheet" href="/resources/styles/stylesheet.css"></link>
+      <link rel="stylesheet" href="/resources/styles/main.css"></link>
       <script type="module" src="/resources/js/factgraph-3.1.0.js"></script>
       <script type="module" src="/resources/js/fg-components.js"></script>
       <script type="module" src="/resources/js/debug-components.js"></script>

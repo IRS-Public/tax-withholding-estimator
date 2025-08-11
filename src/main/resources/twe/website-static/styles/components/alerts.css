@@ -1,0 +1,7 @@
+.alert--warning {
+  box-sizing: border-box;
+  background-color: var(--error-lighter);
+  padding: var(--units-2);
+  margin-bottom: var(--units-2);
+  width: 100%;
+}

@@ -24,23 +24,25 @@ enum Input {
   def html(path: String): xml.Elem = {
     this match {
       case Input.boolean => <div>
-        <label>Yes
-          <input type="radio" value="true" name={path} autocomplete="off"/>
-        </label>
-        <label>No
-          <input type="radio" value="false" name={path} autocomplete="off"/>
-        </label>
-      </div>
-      case Input.select(options, optionsPath) => <select optionsPath={optionsPath.getOrElse("")} name={path}>
+        <div class="usa-radio">
+          <input id={s"${path}-yes"} class="usa-radio__input" type="radio" value="true" name={path}/>
+          <label for={s"${path}-yes"} class="usa-radio__label">Yes</label>
+        </div>
+        <div class="usa-radio">
+          <input id={s"${path}-no"} class="usa-radio__input" type="radio" value="false" name={path} />
+          <label for={s"${path}-no"} class="usa-radio__label">No</label>
+        </div>
+        </div>
+      case Input.select(options, optionsPath) => <select class="usa-select" optionsPath={optionsPath.getOrElse("")}>
         <option value={""} disabled="true" selected="true">
           {"-- Select one --"}
         </option>{options.map(option => <option value={option.value}>
           {option.name}
         </option>)}
       </select>
-      case Input.dollar => <input type="number" step="0.01" name={path} autocomplete="off"/>
-      case Input.date => <input type="date" name={path} autocomplete="off"/>
-      case Input.text => <input type="text" name={path} autocomplete="off"/>
+      case Input.dollar => <input class="usa-input" type="number" step="0.01" name={path} autocomplete="off"/>
+      case Input.date => <input class="usa-input" type="date" name={path} autocomplete="off"/>
+      case Input.text => <input class="usa-input" type="text" name={path} autocomplete="off"/>
     }
   }
 }

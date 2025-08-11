@@ -1,0 +1,125 @@
+:root {
+  /*
+    Theme colors
+    - Based off https://designsystem.digital.gov/design-tokens/color/theme-tokens/
+  */
+  /* Base Colors */
+  --base-lightest: #f0f0f0;
+  --base-lighter: #dfe1e2;
+  --base-light: #a9aeb1;
+  --base: #71767a;
+  --base-dark: #565c65;
+  --base-darker: #3d4551;
+  --base-darkest: #1b1b1b;
+  --ink: #1b1b1b;
+
+  /* Primary Colors */
+  --primary-lighter: #d9e8f6;
+  --primary-light: #73b3e7;
+  --primary: #005ea2;
+  --primary-vivid: #0050d8;
+  --primary-dark: #1a4480;
+  --primary-darker: #162e51;
+
+  /* Secondary Colors */
+  --secondary-lighter: #f3e1e4;
+  --secondary-light: #f2938c;
+  --secondary: #d83933;
+  --secondary-vivid: #e41d3d;
+  --secondary-dark: #b50909;
+  --secondary-darker: #8b0a03;
+
+  /* Accent Cool Colors */
+  --accent-cool-lighter: #e1f3f8;
+  --accent-cool-light: #97d4ea;
+  --accent-cool: #00bde3;
+  --accent-cool-dark: #28a0cb;
+  --accent-cool-darker: #07648d;
+
+  /* Accent Warm Colors */
+  --accent-warm-lighter: #f2e4d4;
+  --accent-warm-light: #ffbc78;
+  --accent-warm: #fa9441;
+  --accent-warm-dark: #c05600;
+  --accent-warm-darker: #775540;
+
+  /*
+    State Colors
+    - Based off: https://designsystem.digital.gov/design-tokens/color/state-tokens/
+  */
+  /* Info Colors */
+  --info-lighter: #e7f6f8;
+  --info-light: #99deea;
+  --info: var(--accent-cool); /* #00bde3 */
+  --info-dark: #009ec1;
+  --info-darker: #2e6276;
+
+  /* Error Colors */
+  --error-lighter: #f4e3db;
+  --error-light: #f39268;
+  --error: #d54309;
+  --error-dark: var(--secondary-dark); /* #b50909 */
+  --error-darker: #6f3331;
+
+  /* Warning Colors */
+  --warning-lighter: #faf3d1;
+  --warning-light: #fee685;
+  --warning: #ffbe2e;
+  --warning-dark: #e5a000;
+  --warning-darker: #936f38;
+
+  /* Success Colors */
+  --success-lighter: #ecf3ec;
+  --success-light: #70e17b;
+  --success: #00a91c;
+  --success-dark: #008817;
+  --success-darker: #216e1f;
+
+  /* Disabled Colors */
+  --disabled-lighter: #c9c9c9;
+  --disabled-light: #919191;
+  --disabled: #757575;
+  --disabled-dark: #454545;
+  --disabled-darker: var(--base-darkest); /* #1b1b1b */
+
+  /* Emergency Colors */
+  --emergency: #9c3d10;
+  --emergency-dark: #332d29;
+
+  /* Spacing
+  - Based https://designsystem.digital.gov/design-tokens/spacing-units/
+  - Uses rem for consistency with font sizes and to allow for easy scaling
+  - These are mostly used for padding and margins
+
+  */
+  --1px: 0.0625rem;     /* 1px */
+  --2px: 0.125rem;      /* 2px */
+  --units-05: 0.25rem;  /* 4px */
+  --units-1: 0.5rem;    /* 8px */
+  --units-105: 0.75rem; /* 12px */
+  --units-2: 1rem;      /* 16px */
+  --units-205: 1.25rem; /* 20px */
+  --units-3: 1.5rem;    /* 24px */
+  --units-4: 2rem;      /* 32px */
+  --units-5: 2.5rem;    /* 40px */
+  --units-6: 3rem;      /* 48px */
+  --units-7: 3.5rem;    /* 56px */
+  --units-8: 4rem;      /* 64px */
+  --units-9: 4.5rem;    /* 72px */
+  --units-10: 5rem;     /* 80px */
+  --units-15: 7.5rem;  /* 120px */
+
+  /*
+    Theme Font Size Tokens (converted from px to rem, base 16px)
+    - Based on https://designsystem.digital.gov/design-tokens/typesetting/font-size/
+  */
+  --font-size-3xs: 0.8125rem; /* 13px */
+  --font-size-2xs: 0.875rem;  /* 14px */
+  --font-size-xs: 0.9375rem;  /* 15px */
+  --font-size-sm: 1rem;       /* 16px */
+  --font-size-md: 1.0625rem;  /* 17px */
+  --font-size-lg: 1.375rem;   /* 22px */
+  --font-size-xl: 2rem;       /* 32px */
+  --font-size-2xl: 2.5rem;    /* 40px */
+  --font-size-3xl: 3rem;      /* 48px */
+}
