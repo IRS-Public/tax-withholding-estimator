@@ -22,6 +22,157 @@
       </Writable>
     </Fact>
 
+        <!-- Note that the limits on dates may be more restrictive in the future based on component
+        implementation -->
+        <!-- E.g., a future job cannot start before tomorrow -->
+        <Fact path="/jobs/*/startDate">
+            <Description>The first date the job was held in the current calendar year.</Description>
+            <TaxYear>2025</TaxYear>
+            <Writable>
+                <Day />
+                <Limit type="Max">
+                    <Day>2025-12-31</Day>
+                </Limit>
+            </Writable>
+        </Fact>
+
+        <Fact path="/jobs/*/endDate">
+            <Description>The last date the job was held in the current calendar year.</Description>
+            <TaxYear>2025</TaxYear>
+            <Writable>
+                <Day />
+                <Limit type="Max">
+                    <Day>2025-12-31</Day>
+                </Limit>
+            </Writable>
+        </Fact>
+
+
+        <Fact path="/payFrequencyOptions">
+            <Name>Pay Frequency Options</Name>
+            <Description>Options for pay frequency</Description>
+            <TaxYear>2025</TaxYear>
+            <Derived>
+                <EnumOptions>
+                    <String>weekly</String>
+                    <String>biWeekly</String>
+                    <String>twiceMonthly</String>
+                    <String>monthly</String>
+                </EnumOptions>
+            </Derived>
+        </Fact>
+
+        <Fact path="/jobs/*/payFrequency">
+            <Name>Pay Frequency</Name>
+            <Description>The frequency that the job pays the user. And the length of pay periods.</Description>
+            <TaxYear>2025</TaxYear>
+            <Writable>
+                <Enum optionsPath="/payFrequencyOptions" />
+            </Writable>
+        </Fact>
+
+        <Fact path="/jobs/*/averagePayPerPayPeriod">
+            <Writable>
+                <Dollar />
+            </Writable>
+        </Fact>
+
+        <Fact path="/jobs/*/isPayFrequencyWeekly">
+            <TaxYear>2025</TaxYear>
+            <Derived>
+                <Equal>
+                    <Left>
+                        <Dependency path="../payFrequency" />
+                    </Left>
+                    <Right>
+                        <Enum optionsPath="/payFrequencyOptions">weekly</Enum>
+                    </Right>
+                </Equal>
+            </Derived>
+        </Fact>
+
+        <Fact path="/jobs/*/isPayFrequencyBiWeekly">
+            <TaxYear>2025</TaxYear>
+            <Derived>
+                <Equal>
+                    <Left>
+                        <Dependency path="../payFrequency" />
+                    </Left>
+                    <Right>
+                        <Enum optionsPath="/payFrequencyOptions">biWeekly</Enum>
+                    </Right>
+                </Equal>
+            </Derived>
+        </Fact>
+
+
+        <Fact path="/jobs/*/isPayFrequencyTwiceMonthly">
+            <TaxYear>2025</TaxYear>
+            <Derived>
+                <Equal>
+                    <Left>
+                        <Dependency path="../payFrequency" />
+                    </Left>
+                    <Right>
+                        <Enum optionsPath="/payFrequencyOptions">twiceMonthly</Enum>
+                    </Right>
+                </Equal>
+            </Derived>
+        </Fact>
+
+        <Fact path="/jobs/*/isPayFrequencyMonthly">
+            <TaxYear>2025</TaxYear>
+            <Derived>
+                <Equal>
+                    <Left>
+                        <Dependency path="../payFrequency" />
+                    </Left>
+                    <Right>
+                        <Enum optionsPath="/payFrequencyOptions">monthly</Enum>
+                    </Right>
+                </Equal>
+            </Derived>
+        </Fact>
+
+   <Fact path="/jobs/*/payPeriodsPerMonth">
+        <TaxYear>2025</TaxYear>
+        <Derived>
+            <Switch>
+                <Case>
+                    <When>
+                        <Dependency path="../isPayFrequencyWeekly" />
+                    </When>
+                    <Then>
+                        <Int>4</Int>
+                    </Then>
+                </Case>
+                <Case>
+                    <When>
+                        <Dependency path="../isPayFrequencyBiWeekly" />
+                    </When>
+                    <Then>
+                        <Int>2</Int>
+                    </Then>
+                </Case>
+                <Case>
+                    <When>
+                        <Dependency path="../isPayFrequencyTwiceMonthly" />
+                    </When>
+                    <Then>
+                        <Int>2</Int>
+                    </Then>
+                </Case>
+                <Case>
+                    <When>
+                        <Dependency path="../isPayFrequencyMonthly" />
+                    </When>
+                    <Then>
+                        <Int>1</Int>
+                    </Then>
+                </Case>
+            </Switch>
+        </Derived>
+    </Fact>
     <Fact path="/totalJobsIncome">
       <Description>Total income for all jobs</Description>
       <Derived>
