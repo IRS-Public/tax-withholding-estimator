@@ -6,10 +6,10 @@
       <Derived>
         <Add>
           <Count>
-            <Dependency module="filers" path="/primaryFiler/isBlind" />
+            <Dependency module="filers" path="/primaryFilerIsBlind" />
           </Count>
           <Count>
-            <Dependency module="filers" path="/primaryFiler/age65OrOlder" />
+            <Dependency module="filers" path="/primaryFilerAge65OrOlder" />
           </Count>
           <Dependency path="/secondaryFilerAdditionalStandardDeductionItems" />
         </Add>
@@ -28,10 +28,10 @@
             <Then>
               <Add>
                 <Count>
-                  <Dependency module="filers" path="/secondaryFiler/isBlind" />
+                  <Dependency module="filers" path="/secondaryFilerIsBlind" />
                 </Count>
                 <Count>
-                  <Dependency module="filers" path="/secondaryFiler/age65OrOlder" />
+                  <Dependency module="filers" path="/secondaryFilerAge65OrOlder" />
                 </Count>
               </Add>
             </Then>

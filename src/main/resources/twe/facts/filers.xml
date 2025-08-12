@@ -1,50 +1,25 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/filers">
-      <Description>This filers collection should be populated by app code to contain exactly
-        two items.</Description>
-      <Writable>
-        <Collection />
-      </Writable>
-    </Fact>
-
-    <Fact path="/primaryFiler">
-      <Description>The first collection item represents the primary filer.</Description>
-      <Derived>
-        <IndexOf>
-          <Collection>
-            <Dependency path="/filers" />
-          </Collection>
-          <Index>
-            <Int>0</Int>
-          </Index>
-        </IndexOf>
-      </Derived>
-    </Fact>
-
-    <Fact path="/secondaryFiler">
-      <Description>The second collection item represents the secondary filer, who may or may
-        not exist in reality.</Description>
-      <Derived>
-        <IndexOf>
-          <Collection>
-            <Dependency path="/filers" />
-          </Collection>
-          <Index>
-            <Int>1</Int>
-          </Index>
-        </IndexOf>
-      </Derived>
-    </Fact>
-
-    <Fact path="/filers/*/isBlind">
+    <Fact path="/primaryFilerIsBlind">
       <Writable>
         <Boolean />
       </Writable>
     </Fact>
 
-    <Fact path="/filers/*/isClaimedOnAnotherReturn">
+    <Fact path="/secondaryFilerIsBlind">
+      <Writable>
+        <Boolean />
+      </Writable>
+    </Fact>
+
+    <Fact path="/primaryFilerIsClaimedOnAnotherReturn">
+      <Writable>
+        <Boolean />
+      </Writable>
+    </Fact>
+
+    <Fact path="/secondaryFilerIsClaimedOnAnotherReturn">
       <Writable>
         <Boolean />
       </Writable>
@@ -59,8 +34,8 @@
             </When>
             <Then>
               <Any>
-                <Dependency path="/primaryFiler/isClaimedOnAnotherReturn" />
-                <Dependency path="/secondaryFiler/isClaimedOnAnotherReturn" />
+                <Dependency path="/primaryFilerIsClaimedOnAnotherReturn" />
+                <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn" />
               </Any>
             </Then>
           </Case>
@@ -69,15 +44,14 @@
               <True />
             </When>
             <Then>
-              <Dependency path="/primaryFiler/isClaimedOnAnotherReturn" />
+              <Dependency path="/primaryFilerIsClaimedOnAnotherReturn" />
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
 
-    <Fact path="/filers/*/dateOfBirth">
-      <Name>Date of birth</Name>
+    <Fact path="/primaryFilerDateOfBirth">
       <Description>The date of birth of the filer.</Description>
       <Writable>
         <Day />
@@ -87,12 +61,22 @@
       </Writable>
     </Fact>
 
-    <Fact path="/filers/*/dayBeforeDateOfBirth">
+    <Fact path="/secondaryFilerDateOfBirth">
+      <Description>The date of birth of the filer.</Description>
+      <Writable>
+        <Day />
+        <Limit type="Max">
+          <Day>2024-01-01</Day>
+        </Limit>
+      </Writable>
+    </Fact>
+
+    <Fact path="/primaryFilerDayBeforeDateOfBirth">
       <Description>The day before the filer's birthday</Description>
       <Derived>
         <Subtract>
           <Minuend>
-            <Dependency path="../dateOfBirth" />
+            <Dependency path="/primaryFilerDateOfBirth" />
           </Minuend>
           <Subtrahends>
             <Days>1</Days>
@@ -101,7 +85,21 @@
       </Derived>
     </Fact>
 
-    <Fact path="/filers/*/ageCalculatedDayBeforeDOB">
+    <Fact path="/secondaryFilerDayBeforeDateOfBirth">
+      <Description>The day before the filer's birthday</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/secondaryFilerDateOfBirth" />
+          </Minuend>
+          <Subtrahends>
+            <Days>1</Days>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+
+    <Fact path="/primaryFilerAgeCalculatedDayBeforeDOB">
       <Description>The age of the filer, calculated using their birthday as the day before
         their date of birth.</Description>
       <Derived>
@@ -110,14 +108,28 @@
             <Dependency module="constants" path="/taxYear" />
           </Minuend>
           <Subtrahends>
-            <Dependency path="../dayBeforeDateOfBirth/year" />
+            <Dependency path="/primaryFilerDayBeforeDateOfBirth/year" />
           </Subtrahends>
         </Subtract>
       </Derived>
     </Fact>
 
-    <Fact path="/filers/*/age65OrOlder">
-      <Name>Age 65 or older</Name>
+    <Fact path="/secondaryFilerAgeCalculatedDayBeforeDOB">
+      <Description>The age of the filer, calculated using their birthday as the day before
+        their date of birth.</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency module="constants" path="/taxYear" />
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/secondaryFilerDayBeforeDateOfBirth/year" />
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+
+    <Fact path="/primaryFilerAge65OrOlder">
       <Description>
         Whether the filer is 65 or older. Pub 554 states "You are considered age 65 at the
         end of the year if your 65th birthday is on or before January 1 of the following
@@ -125,11 +137,30 @@
         Do NOT use this fact for EITC calculations -- That age 65 requirement does _not_
         have the January 1 exception.
       </Description>
-
       <Derived>
         <GreaterThanOrEqual>
           <Left>
-            <Dependency path="../ageCalculatedDayBeforeDOB" />
+            <Dependency path="/primaryFilerAgeCalculatedDayBeforeDOB" />
+          </Left>
+          <Right>
+            <Int>65</Int>
+          </Right>
+        </GreaterThanOrEqual>
+      </Derived>
+    </Fact>
+
+    <Fact path="/secondaryFilerAge65OrOlder">
+      <Description>
+        Whether the filer is 65 or older. Pub 554 states "You are considered age 65 at the
+        end of the year if your 65th birthday is on or before January 1 of the following
+        year" so we include the January 1 exception here.
+        Do NOT use this fact for EITC calculations -- That age 65 requirement does _not_
+        have the January 1 exception.
+      </Description>
+      <Derived>
+        <GreaterThanOrEqual>
+          <Left>
+            <Dependency path="/secondaryFilerAgeCalculatedDayBeforeDOB" />
           </Left>
           <Right>
             <Int>65</Int>

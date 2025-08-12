@@ -13,32 +13,32 @@
         </select>
       </fg-set>
 
-      <fg-set path="/filers/#11111111-1111-4e09-a9c1-88e40c1a3de2/dateOfBirth">
+      <fg-set path="/primaryFilerDateOfBirth">
         <label>What is your date of birth?</label>
         <input type="date" />
       </fg-set>
 
-      <fg-set path="/filers/#11111111-1111-4e09-a9c1-88e40c1a3de2/isBlind">
+      <fg-set path="/primaryFilerIsBlind">
         <label>Are you blind?</label>
         <input type="boolean" />
       </fg-set>
 
-      <fg-set path="/filers/#11111111-1111-4e09-a9c1-88e40c1a3de2/isClaimedOnAnotherReturn">
+      <fg-set path="/primaryFilerIsClaimedOnAnotherReturn">
         <label>Can anyone else claim you as a dependent on their tax return?</label>
         <input type="boolean" />
       </fg-set>
 
-      <fg-set path="/filers/#22222222-2222-4794-9daa-a60c34b3500b/dateOfBirth" if-true="/isFilingStatusMFJ">
+      <fg-set path="/secondaryFilerDateOfBirth" if-true="/isFilingStatusMFJ">
         <label>What is your spouse's date of birth?</label>
         <input type="date" />
       </fg-set>
 
-      <fg-set path="/filers/#22222222-2222-4794-9daa-a60c34b3500b/isBlind" if-true="/isFilingStatusMFJ">
+      <fg-set path="/secondaryFilerIsBlind" if-true="/isFilingStatusMFJ">
         <label>Is your spouse blind?</label>
         <input type="boolean" />
       </fg-set>
 
-      <fg-set path="/filers/#22222222-2222-4794-9daa-a60c34b3500b/isClaimedOnAnotherReturn" if-true="/isFilingStatusMFJ">
+      <fg-set path="/secondaryFilerIsClaimedOnAnotherReturn" if-true="/isFilingStatusMFJ">
         <label>Can anyone else claim your spouse as a dependent on their tax return?</label>
         <input type="boolean" />
       </fg-set>

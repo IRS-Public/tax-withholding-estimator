@@ -9,16 +9,8 @@ if (serializedGraphJSON) {
   factGraph = fg.GraphFactory.fromJSON(factDictionary, serializedGraphJSON)
 } else {
   factGraph = fg.GraphFactory.apply(factDictionary)
-  initializeFactGraph()
 }
 window.factGraph = factGraph
-
-function initializeFactGraph() {
-  factGraph.addToCollection('/filers', '11111111-1111-4e09-a9c1-88e40c1a3de2')
-  saveFactGraph()
-  factGraph.addToCollection('/filers', '22222222-2222-4794-9daa-a60c34b3500b')
-  saveFactGraph()
-}
 
 function saveFactGraph() {
   factGraph.save()
@@ -347,7 +339,6 @@ class FgReset extends HTMLElement {
     const fgSets = document.querySelectorAll('fg-set')
 
     factGraph = fg.GraphFactory.apply(factDictionary)
-    initializeFactGraph()
     window.factGraph = factGraph
 
     for (const fgSet of fgSets) {
