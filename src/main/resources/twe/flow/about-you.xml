@@ -1,0 +1,64 @@
+<FlowConfigModule>
+  <page title="About You" route="/">
+    <section>
+      <h2>About You</h2>
+      <fg-set path="/filingStatus">
+        <label>What filing status will you use for your tax return?</label>
+        <select options-path="/filingStatusOptions">
+          <option value="single">Single</option>
+          <option value="marriedFilingJointly">Married filing jointly</option>
+          <option value="marriedFilingSeparately">Married filing separately</option>
+          <option value="headOfHousehold">Head of Household</option>
+          <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
+        </select>
+      </fg-set>
+
+      <fg-set path="/filers/#11111111-1111-4e09-a9c1-88e40c1a3de2/dateOfBirth">
+        <label>What is your date of birth?</label>
+        <input type="date" />
+      </fg-set>
+
+      <fg-set path="/filers/#11111111-1111-4e09-a9c1-88e40c1a3de2/isBlind">
+        <label>Are you blind?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/filers/#11111111-1111-4e09-a9c1-88e40c1a3de2/isClaimedOnAnotherReturn">
+        <label>Can anyone else claim you as a dependent on their tax return?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/filers/#22222222-2222-4794-9daa-a60c34b3500b/dateOfBirth" if-true="/isFilingStatusMFJ">
+        <label>What is your spouse's date of birth?</label>
+        <input type="date" />
+      </fg-set>
+
+      <fg-set path="/filers/#22222222-2222-4794-9daa-a60c34b3500b/isBlind" if-true="/isFilingStatusMFJ">
+        <label>Is your spouse blind?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/filers/#22222222-2222-4794-9daa-a60c34b3500b/isClaimedOnAnotherReturn" if-true="/isFilingStatusMFJ">
+        <label>Can anyone else claim your spouse as a dependent on their tax return?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <h2>Jobs</h2>
+      <fg-collection path="/jobs">
+        <fg-set path="/jobs/*/income">
+          <label>Job's total income for the year</label>
+          <input type="dollar" />
+        </fg-set>
+        <fg-set path="/jobs/*/withholding">
+          <label>Job's total withholding for the year</label>
+          <input type="dollar" />
+        </fg-set>
+      </fg-collection>
+
+      <h2>Reset</h2>
+      <fg-reset>
+        <button>Reset Fact Graph</button>
+      </fg-reset>
+    </section>
+  </page>
+</FlowConfigModule>

@@ -1,11 +1,16 @@
 package gov.irs.twe
 
 import gov.irs.twe.generators.Website
+import gov.irs.twe.exceptions.InvalidFormConfig
 import java.io.File
 import scala.io.Source
 import scala.xml.NodeBuffer
 
+
+val FlowResourceRoot = "twe/flow"
+
 def main(args: Array[String]): Unit = {
+
   // Processing for handling multiple xml files for facts
   val factDirectoryPath = os.pwd / "src" / "main" / "resources" / "twe" / "facts"
   val factsDirectory = new File(factDirectoryPath.toString)
@@ -25,11 +30,37 @@ def main(args: Array[String]): Unit = {
   }
   val allFacts = <FactDictionaryModule><Facts>{facts}</Facts></FactDictionaryModule>
 
-  val flowFile = Source.fromResource("twe/flow.xml").getLines().mkString("\n")
-  val flow = xml.XML.loadString(flowFile)
-  val site = Website.fromXmlConfig(flow, allFacts)
+  // Get flow root
+  val flowFile = Source.fromResource(s"$FlowResourceRoot/index.xml").getLines().mkString("\n")
+  val flowConfig = xml.XML.loadString(flowFile)
+  val children = flowConfig \\ "FlowConfig" \ "_"
+
+  // Resolve modules
+  val resolvedChildren = children.map(child => child.label match {
+    case "module" => resolveModule(child)
+    case _ => child
+  })
+  val resolvedConfig = <FlowConfig>{resolvedChildren}</FlowConfig>
+
+  val site = Website.fromXmlConfig(resolvedConfig, allFacts)
 
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"
   site.save(outDir)
+}
+
+def resolveModule(node: xml.Node): xml.NodeSeq = {
+  val src = node \@ "src"
+  // Remove the ./ prefix in the src attribute
+  // We support this so that people can use local file path resolution in their text editors
+  val resolvedSrc = src.replaceAll("^\\./" , "")
+
+  val moduleFile = Source.fromResource(s"$FlowResourceRoot/$resolvedSrc").getLines().mkString("\n")
+
+  val flowConfigModule = xml.XML.loadString(moduleFile)
+  if (flowConfigModule.label != "FlowConfigModule") {
+    throw InvalidFormConfig(s"Module file $src does not have a top-level FlowConfigModule")
+  }
+
+  flowConfigModule \ "_"
 }

@@ -1,0 +1,13 @@
+<FlowConfigModule>
+  <page title="Results" route="results">
+    <section>
+      <h1>Results</h1>
+      <p>Adjusted gross income: <fg-show path="/agi" /></p>
+      <p>Standard deduction: <fg-show path="/standardDeduction" /></p>
+      <p>Taxable income: <fg-show path="/taxableIncome" /></p>
+      <p>Total taxes owed: <fg-show path="/tentativeTaxFromTaxableIncome" /></p>
+      <p>Total jobs withholding: <fg-show path="/totalJobsWithholding" /></p>
+      <p>Balance due or refund: <fg-show path="/totalOwed" /></p>
+    </section>
+  </page>
+</FlowConfigModule>
