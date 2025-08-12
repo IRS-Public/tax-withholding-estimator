@@ -114,6 +114,10 @@ class FgSet extends HTMLElement {
         console.warn(`Unknown input type "${this.inputType}" for input with path "${this.path}"`)
       }
     }
+
+    // Clear all errors and re-render
+    this.error = null;
+    this.render();
   }
 
   setInputValueFromFactValue() {
