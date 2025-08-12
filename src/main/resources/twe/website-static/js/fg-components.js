@@ -57,13 +57,17 @@ class FgSet extends HTMLElement {
 
     // This is done with bind, rather than an arrow function, so that it can be removed later
     this.render = this.render.bind(this)
+    this.clear = this.clear.bind(this)
+
     document.addEventListener('fg-update', this.render);
+    document.addEventListener('fg-clear', this.clear);
     this.render()
   }
 
   disconnectedCallback() {
     console.debug(`Removing fg-set with path ${this.path}`)
     document.removeEventListener('fg-update', this.render)
+    document.removeEventListener('fg-clear', this.clear);
   }
 
   render() {
@@ -339,15 +343,11 @@ class FgReset extends HTMLElement {
   }
 
   handleEvent() {
-    const fgSets = document.querySelectorAll('fg-set')
-
     factGraph = fg.GraphFactory.apply(factDictionary)
     window.factGraph = factGraph
+    saveFactGraph()
 
-    for (const fgSet of fgSets) {
-      fgSet.clear()
-    }
-
+    showOrHideAllElements()
     document.dispatchEvent(new CustomEvent('fg-clear'))
   }
 }
@@ -397,7 +397,6 @@ function showOrHideAllElements() {
 
 // Add show/hide functionality to all elements
 document.addEventListener('fg-update', showOrHideAllElements)
-document.addEventListener('fg-clear', showOrHideAllElements)
 showOrHideAllElements()
 
 // Unhide main
