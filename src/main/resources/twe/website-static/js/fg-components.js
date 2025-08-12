@@ -13,7 +13,6 @@ if (serializedGraphJSON) {
 window.factGraph = factGraph
 
 function saveFactGraph() {
-  factGraph.save()
   sessionStorage.setItem('factGraph', factGraph.toJSON())
 }
 

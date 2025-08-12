@@ -13,9 +13,8 @@ site:
 
 .PHONY: copy-fg
 copy-fg:
-	cp ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt/main.mjs ./src/main/resources/twe/website-static/factgraph-3.1.0.js
-	# TODO copy the map into /resources as well
-	cp ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt/main.mjs.map ./out/resources/
+	cp ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt/main.mjs ./src/main/resources/twe/website-static/js/factgraph-3.1.0.js
+	cp ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt/main.mjs.map ./src/main/resources/twe/website-static/js
 
 .PHONY: format
 format:
