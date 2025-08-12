@@ -25,16 +25,16 @@ enum Input {
     this match {
       case Input.boolean => <div>
         <div class="usa-radio">
-          <input id={s"${path}-yes"} class="usa-radio__input" type="radio" value="true" name={path}/>
+          <input id={s"${path}-yes"} class="usa-radio__input" type="radio" value="true" name={path} required="true"/>
           <label for={s"${path}-yes"} class="usa-radio__label">Yes</label>
         </div>
         <div class="usa-radio">
-          <input id={s"${path}-no"} class="usa-radio__input" type="radio" value="false" name={path} />
+          <input id={s"${path}-no"} class="usa-radio__input" type="radio" value="false" name={path} required="true"/>
           <label for={s"${path}-no"} class="usa-radio__label">No</label>
         </div>
         </div>
       case Input.select(options, optionsPath) =>
-        <select class="usa-select" optionsPath={optionsPath.getOrElse("")}>
+        <select class="usa-select" optionsPath={optionsPath.getOrElse("")} required="true">
         <option value={""} disabled="true" selected="true">
           {"-- Select one --"}
         </option>{
@@ -43,9 +43,9 @@ enum Input {
         </option>)
         }
       </select>
-      case Input.dollar => <input class="usa-input" type="number" step="0.01" name={path} autocomplete="off"/>
-      case Input.date   => <input class="usa-input" type="date" name={path} autocomplete="off"/>
-      case Input.text   => <input class="usa-input" type="text" name={path} autocomplete="off"/>
+      case Input.dollar => <input class="usa-input" type="number" step="0.01" name={path} autocomplete="off" required="true"/>
+      case Input.date   => <input class="usa-input" type="date" name={path} autocomplete="off" required="true"/>
+      case Input.text   => <input class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
     }
 }
 
