@@ -1,0 +1,135 @@
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  
+  <start>
+    <ref name="Flow"/>
+  </start>
+
+  <define name="Flow">
+    <element name="FlowConfigModule">
+      <ref name="flowPageStructure"/>
+    </element>
+  </define>
+
+  <define name="FlowConfigModule">
+    <interleave>
+      <ref name="flowPageStructure"/>
+    </interleave>
+  </define>
+
+  <!-- This structure is enforced for now -->
+  <define name="flowPageStructure">
+    <oneOrMore>
+      <element name="page">
+        <attribute name="title">
+          <text/>
+        </attribute>
+        <attribute name="route">
+          <data type="token"/>
+        </attribute>
+          <element name="section">
+            <ref name="FlowConfigModuleContent"/>
+          </element>
+      </element>
+    </oneOrMore>
+  </define>
+
+  <define name="fg-set-module">
+    <element name="fg-set">
+      <attribute name="path">
+          <data type="anyURI"/>
+      </attribute>
+      <optional>
+        <choice>
+          <attribute name="if-false">
+              <data type="anyURI"/>
+          </attribute>
+          <attribute name="if-true">
+              <data type="anyURI"/>
+          </attribute>
+        </choice>
+      </optional>
+      <ref name="fg-set-content"/>
+    </element>
+  </define>
+
+  <define name="fg-set-content">
+    <element name="label">
+      <text/>
+    </element>
+    <choice>
+        <element name="input">
+          <attribute name="type">
+            <choice>
+              <value>boolean</value>
+              <value>dollar</value>
+              <value>text</value>
+              <value>date</value>
+            </choice>
+          </attribute>
+        </element>
+      <element name="select"> 
+        <attribute name="options-path">
+          <data type="anyURI"/>
+        </attribute>
+        <oneOrMore>
+          <element name="option">
+            <attribute name="value">
+              <data type="token"/>
+            </attribute>
+            <text/>
+          </element>
+        </oneOrMore> 
+      </element>
+    </choice>
+  </define>
+
+  <define name="fg-collection-module">
+    <element name="fg-collection">
+      <attribute name="path">
+          <data type="anyURI"/>
+      </attribute>
+      <oneOrMore>
+        <ref name="fg-set-module"></ref>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="fg-reset-module">
+    <element name="fg-reset">
+      <element name="button">
+        <text/>
+      </element>
+    </element>
+  </define>
+
+  <define name="fg-show-module">
+    <element name="fg-show">
+      <attribute name="path">
+          <data type="anyURI"/>
+      </attribute>
+    </element>
+  </define>
+
+  <define name="FlowConfigModuleContent">
+    <mixed>
+      <zeroOrMore>
+        <choice>
+          <!-- 
+            These 4 FlowConfigModule XML elements are directly translated to their HTML equivalents by the flow code.
+            If we add more of the same in the future, those elements would go here.
+            These rules essentially say these can appear in any order and can be nested within each other.
+           -->
+          <element name="h1"><ref name="FlowConfigModuleContent"/></element>
+          <element name="h2"><ref name="FlowConfigModuleContent"/></element>
+          <element name="p"><ref name="FlowConfigModuleContent"/></element>
+          <element name="strong"><ref name="FlowConfigModuleContent"/></element>
+          <ref name="fg-show-module"/>
+          <ref name="fg-set-module"/>
+          <ref name="fg-collection-module"/>
+          <ref name="fg-reset-module"/>
+        </choice>
+      </zeroOrMore>
+    </mixed>
+  </define>
+
+</grammar>

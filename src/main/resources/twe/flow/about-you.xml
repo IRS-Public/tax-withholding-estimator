@@ -1,3 +1,4 @@
+<?xml-model href="./FlowConfigModule.rng"?>
 <FlowConfigModule>
   <page title="About You" route="/">
     <section>

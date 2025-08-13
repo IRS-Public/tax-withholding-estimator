@@ -1,3 +1,4 @@
+<?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
   <module src="./about-you.xml" />
   <module src="./adjustments.xml" />
