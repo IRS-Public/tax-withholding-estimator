@@ -183,7 +183,13 @@ class FgSet extends HTMLElement {
   setFact() {
     console.debug(`Setting fact ${this.path}`)
     const value = this.getFactValueFromInputValue()
-    factGraph.set(this.path, value)
+
+    if (value === "") {
+      console.debug(`Value was blank, deleting fact`);
+      factGraph.delete(this.path);
+    } else {
+      factGraph.set(this.path, value);
+    }
 
     saveFactGraph()
     document.dispatchEvent(new CustomEvent('fg-update'))
