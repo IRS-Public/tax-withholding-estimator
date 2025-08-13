@@ -1,5 +1,5 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "3.3.6"
+ThisBuild / scalaVersion := "3.7.2"
 
 scalafmtConfig := file("project/.scalafmt.conf")
 
