@@ -1,0 +1,12 @@
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/qualifiedTipDeduction">
+      <Name>Qualified tip deduction</Name>
+      <Description>OB3 Section 70201: Qualified tip deductions</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

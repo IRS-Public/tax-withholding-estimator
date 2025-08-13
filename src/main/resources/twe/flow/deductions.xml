@@ -1,0 +1,7 @@
+<FlowConfigModule>
+  <page title="Deductions" route="deductions">
+    <section>
+      <h1>Deductions</h1>
+    </section>
+  </page>
+</FlowConfigModule>

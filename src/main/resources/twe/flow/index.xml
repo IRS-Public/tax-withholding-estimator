@@ -1,4 +1,6 @@
 <FlowConfig>
   <module src="./about-you.xml" />
+  <module src="./adjustments.xml" />
+  <module src="./deductions.xml" />
   <module src="./results.xml" />
 </FlowConfig>

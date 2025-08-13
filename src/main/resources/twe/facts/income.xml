@@ -200,5 +200,36 @@
         </Round>
       </Derived>
     </Fact>
+    
+    <!-- Sections 911, 931, and 933 are carved out for OB3 MAGI calculations for senior deduction and car loan interest deduction
+          Default to 0 for right now-->
+    <Fact path="/foreignEarnedIncome">
+      <Name>§ 911 Foreign Earned Income Exclusion- Foreign Earned Income</Name>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/overseasTerritoryIncome">
+      <Name>§ 931 - Income from sources within Guam, American Samoa, or the Northern Mariana Islands
+      </Name>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/puertoRicoEarnedIncome">
+      <Name>§ 933. Income from sources within Puerto Rico</Name>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/incomeToIncludeForOB3MAGI">
+      <Derived>
+        <Add>
+          <Dependency path="/foreignEarnedIncome"/>
+          <Dependency path="/overseasTerritoryIncome"/>
+          <Dependency path="/puertoRicoEarnedIncome"/>
+        </Add>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>

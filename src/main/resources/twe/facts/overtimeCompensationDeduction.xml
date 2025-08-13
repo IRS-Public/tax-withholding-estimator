@@ -1,0 +1,12 @@
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/overtimeCompensationDeduction">
+      <Name>Overtime Compensation deduction</Name>
+      <Description>OB3 Section 70202: overtime compensation deduction</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

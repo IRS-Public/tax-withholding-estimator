@@ -1,0 +1,15 @@
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+    <Facts>
+        <Fact path="/seniorDeduction">
+            <Name>Actual Amount of Senior Deduction</Name>
+            <Description>Actual amount of senior deduction that can be applied against MAGI. amount = (max amount based
+                on
+                eligibility)- (excess * 0.06)
+            </Description>
+            <Derived>
+                <Dollar>0</Dollar>
+            </Derived>
+        </Fact>
+    </Facts>
+</FactDictionaryModule>

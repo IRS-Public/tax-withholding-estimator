@@ -1,0 +1,72 @@
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/totalDeductions">
+      <Name>Total deductions</Name>
+      <Description>Total deductions as reported on line 14 of Form 1040. Includes three categories of below the line deductions:
+      1) Standard or itemized deduction; 2) Section 199A (QBI); and 3) OB3 deductions
+      </Description>
+      <Derived>
+        <Round>
+          <Add>
+            <Dependency path="/standardOrItemizedDeduction"/>
+            <Dependency path="/qualifiedBusinessIncomeDeduction" module="qualifiedBusinessIncomeDeduction"/>
+            <Dependency path="/qualifiedPersonalVehicleLoanInterestDeduction"
+                        module="qualifiedPersonalVehicleLoanInterestDeduction"/>
+            <Dependency path="/seniorDeduction" module="seniorDeduction"/>
+            <Dependency path="/qualifiedTipDeduction" module="qualifiedTipDeduction"/>
+            <Dependency path="/overtimeCompensationDeduction" module="overtimeCompensationDeduction"/>
+          </Add>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/wantsStandardDeduction">
+      <Name>Wants standard deduction</Name>
+      <Description>Will the taxpayer take the standard deduction?</Description>
+
+      <Derived>
+        <True/>
+      </Derived>
+    </Fact>
+    <Fact path="/wantsItemizedDeduction">
+      <Name>Wants itemized deduction</Name>
+      <Description>Will the taxpayer take the itemized deduction?</Description>
+
+      <Derived>
+        <False/>
+      </Derived>
+    </Fact>
+
+    <Fact path="/standardOrItemizedDeduction">
+      <Name>Standard or itemized deductions</Name>
+      <Description>The taxpayer's choice of standard or itemized deductions as reported on line 12
+        of Form 1040.
+        Currently only the standard deduction is supported.
+      </Description>
+      <!--      TODO: Add in logic for supporting itemized deductions and the full standard deduction-->
+
+      <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <Dependency path="/wantsStandardDeduction"/>
+              </When>
+              <Then>
+                <Dependency path="/standardDeduction" module="standardDeduction"/>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <Dependency path="/wantsItemizedDeduction"/>
+              </When>
+              <Then>
+                <Dependency path="/itemizedDeduction" module="itemizedDeduction"/>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

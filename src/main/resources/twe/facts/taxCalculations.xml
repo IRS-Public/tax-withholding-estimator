@@ -68,6 +68,21 @@
       </Derived>
     </Fact>
 
+    <Fact path="/magiForOB3BelowLineDeductions">
+      <Name>Modified Adjusted Gross Income for OB3 Below Line Deductions</Name>
+      <Description>Adjusted gross income of the taxpayer for the taxable year increased by any amount excluded
+        from gross income under section 911, 931, or 933.
+      </Description>
+      <Derived>
+        <Round>
+          <Add>
+            <Dependency path="/agi"/>
+            <Dependency path="/incomeToIncludeForOB3MAGI" module="income"/>
+          </Add>
+        </Round>
+      </Derived>
+    </Fact>
+
     <Fact path="/roundedTaxableIncome">
       <Name>Rounded taxable income</Name>
       <Description>Income less than $100,000 uses the tax tables from the Instructions for

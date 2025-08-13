@@ -1,64 +1,38 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
-    <Facts>
-        <Fact path="/actualEducatorExpensesAdjustmentAmount">
-            <Name>Non Educator expense adjustments, no logic in place for actually calculating the applicable amount
-            </Name>
-            <Writable>
-                <Dollar/>
-            </Writable>
-        </Fact>
-        <Fact path="/actualStudentLoanInterestAdjustmentAmount">
-            <Name>Student loan interest adjustments, no logic in place for actually calculating the applicable amount
-            </Name>
-            <Writable>
-                <Dollar/>
-            </Writable>
-        </Fact>
-        <Fact path="/actualHsaTotalDeductibleAmount">
-            <Name>HSA total deductible amount, no logic in place for actually calculating the applicable amount</Name>
-            <Writable>
-                <Dollar/>
-            </Writable>
-        </Fact>
-        <Fact path="/adjustmentsToIncomeExcludingQPVLID">
-            <Name>Non QPVLID adjustments, placeholder 0 for time being</Name>
-            <Description>The adjustments to income used in the calculation of non-IRA deduction MAGIs to determine
-                deducible
-                amounts. Used in the Student Loan Interest Deduction and Social Security Benefits Worksheets.
-            </Description>
-            <Derived>
-                <Add>
-                    <Dependency path="/actualEducatorExpensesAdjustmentAmount"/>
-                    <Dependency path="/actualStudentLoanInterestAdjustmentAmount"/>
-                    <Dependency path="/actualHsaTotalDeductibleAmount"/>
-                    <!-- Certain business expenses of reservists, performing artists, and fee-basis government officials. -->
-                    <!-- Moving expenses for members of the Armed Forces. Attach Form 3903  -->
-                    <!-- Deductible part of self-employment tax. Attach Schedule SE -->
-                    <!-- Self-employed SEP, SIMPLE, and qualified plans -->
-                    <!-- Self-employed health insurance deduction -->
-                    <!-- Penalty on early withdrawal of savings -->
-                    <!-- Alimony paid -->
-                    <!-- IRA deduction -->
-                    <!-- Archer MSA deduction  -->
-                    <!-- Total other adjustments -->
-                </Add>
-            </Derived>
-        </Fact>
-        <Fact path="/adjustmentsToIncome">
-            <Name>Adjustments to income</Name>
-            <Description>Adjustments to income to report on line 10 of Form 1040 and line 26 of Schedule.</Description>
-
-            <Derived>
-                <Round>
-                    <Add>
-                        <!-- <Dependency path="/adjustmentsToIncomeExcludingQPVLID"/> -->
-                        <!-- <Dependency path="/actualQPVLIDAdjustmentAmount"
-                                    module="qualifiedPersonalVehicleLoanInterestDeduction"/> -->
-                        <Dollar>0</Dollar>
-                    </Add>
-                </Round>
-            </Derived>
-        </Fact>
-    </Facts>
+  <Facts>
+    <Fact path="/actualEducatorExpensesAdjustmentAmount">
+      <Name>Non Educator expense adjustments, no logic in place for actually calculating the applicable amount
+      </Name>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/actualStudentLoanInterestAdjustmentAmount">
+      <Name>Student loan interest adjustments, no logic in place for actually calculating the applicable amount
+      </Name>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/actualHsaTotalDeductibleAmount">
+      <Name>HSA total deductible amount, no logic in place for actually calculating the applicable amount</Name>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/adjustmentsToIncome">
+      <Name>Adjustments to income</Name>
+      <Description>Adjustments to income to report on line 10 of Form 1040 and line 26 of Schedule.</Description>
+      <Derived>
+        <Round>
+          <Add>
+            <Dependency path="/actualEducatorExpensesAdjustmentAmount"/>
+            <Dependency path="/actualStudentLoanInterestAdjustmentAmount"/>
+            <Dependency path="/actualHsaTotalDeductibleAmount"/>
+          </Add>
+        </Round>
+      </Derived>
+    </Fact>
+  </Facts>
 </FactDictionaryModule>
