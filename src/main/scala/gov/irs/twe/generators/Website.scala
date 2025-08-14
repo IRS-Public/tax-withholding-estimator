@@ -81,7 +81,9 @@ object Website {
       <meta name="HandheldFriendly" content="True" />
       <meta name="MobileOptimized" content="320" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
       <title>{title}</title>
+      <link rel="icon" href="/resources/img/favicon.ico" type="image/x-icon" />
       <link rel="stylesheet" href="/resources/styles/main.css"></link>
       <script type="module" src="/resources/js/factgraph-3.1.0.js"></script>
       <script type="module" src="/resources/js/fg-components.js"></script>
