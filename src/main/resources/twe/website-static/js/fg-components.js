@@ -37,6 +37,7 @@ class FgSet extends HTMLElement {
     this.inputs = this.querySelectorAll('input, select')
 
     switch (this.inputType) {
+      // This switch statement is intentionally not exhaustive
       case 'date':
       case 'select':
       case 'boolean':
@@ -104,14 +105,15 @@ class FgSet extends HTMLElement {
         if (checkedRadio) checkedRadio.checked = false
         break
       }
-      case 'text':
-      case 'date':
-      case 'dollar': {
-        this.querySelector('input').value = ''
-        break
-      }
       case 'select': {
         this.querySelector('select').value = ''
+        break
+      }
+      case 'text':
+      case 'date':
+      case 'int':
+      case 'dollar': {
+        this.querySelector('input').value = ''
         break
       }
       default: {
@@ -144,14 +146,15 @@ class FgSet extends HTMLElement {
         }
         break
       }
+      case 'select': {
+        this.querySelector('select').value = value
+        break
+      }
       case 'text':
+      case 'int':
       case 'date':
       case 'dollar': {
         this.querySelector('input').value = value
-        break
-      }
-      case 'select': {
-        this.querySelector('select').value = value
         break
       }
       default: {
@@ -165,13 +168,14 @@ class FgSet extends HTMLElement {
       case 'boolean': {
         return this.querySelector('input:checked')?.value
       }
-      case 'text':
-      case 'date':
-      case 'dollar': {
-        return this.querySelector('input')?.value
-      }
       case 'select': {
         return this.querySelector('select')?.value
+      }
+      case 'text':
+      case 'date':
+      case 'int':
+      case 'dollar': {
+        return this.querySelector('input')?.value
       }
       default: {
         console.warn(`Unknown input type "${this.inputType}" for input with path "${this.path}"`)

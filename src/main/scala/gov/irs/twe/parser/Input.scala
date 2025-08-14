@@ -9,12 +9,14 @@ case class HtmlOption(name: String, value: String)
 enum Input {
   case select(options: List[HtmlOption], optionsPath: Option[String])
   case text
+  case int
   case boolean
   case dollar
   case date
 
   def typeString: String = this match {
     case Input.text         => "text"
+    case Input.int          => "int"
     case Input.boolean      => "boolean"
     case Input.dollar       => "dollar"
     case Input.select(_, _) => "select"
@@ -43,9 +45,11 @@ enum Input {
         </option>)
         }
       </select>
-      case Input.dollar => <input class="usa-input" type="number" step="0.01" name={path} autocomplete="off" required="true"/>
-      case Input.date   => <input class="usa-input" type="date" name={path} autocomplete="off" required="true"/>
-      case Input.text   => <input class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
+      case Input.dollar =>
+        <input class="usa-input" type="number" step="0.01" name={path} autocomplete="off" required="true"/>
+      case Input.date => <input class="usa-input" type="date" name={path} autocomplete="off" required="true"/>
+      case Input.text => <input class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
+      case Input.int  => <input class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
     }
 }
 
@@ -79,6 +83,7 @@ object Input {
 
     inputNode \@ "type" match {
       case "text"    => Input.text
+      case "int"     => Input.int
       case "boolean" => Input.boolean
       case "dollar"  => Input.dollar
       case "date"    => Input.date

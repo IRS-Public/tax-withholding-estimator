@@ -53,6 +53,7 @@ object FgSet {
     val typeNode = factDictionary.getDefinition(path).typeNode
     val inputAndNodeTypeMismatch = input match {
       case Input.text    => typeNode != "StringNode"
+      case Input.int     => typeNode != "IntNode"
       case Input.boolean => typeNode != "BooleanNode"
       case Input.dollar  => typeNode != "DollarNode"
       case Input.date    => typeNode != "DayNode"
