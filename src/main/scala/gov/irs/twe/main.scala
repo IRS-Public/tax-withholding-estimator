@@ -5,6 +5,7 @@ import gov.irs.twe.exceptions.InvalidFormConfig
 import java.io.File
 import scala.io.Source
 import scala.xml.NodeBuffer
+import scala.xml.Elem
 
 
 val FlowResourceRoot = "twe/flow"
@@ -12,23 +13,7 @@ val FlowResourceRoot = "twe/flow"
 def main(args: Array[String]): Unit = {
 
   // Processing for handling multiple xml files for facts
-  val factDirectoryPath = os.pwd / "src" / "main" / "resources" / "twe" / "facts"
-  val factsDirectory = new File(factDirectoryPath.toString)
-  val listOfFiles = if (factsDirectory.exists && factsDirectory.isDirectory) {
-    factsDirectory.listFiles.filter(_.isFile).filter(_.getName.endsWith(".xml")).toList
-  } else {
-    List.empty[File]
-  }
-
-  val facts = new NodeBuffer()
-  for (file <- listOfFiles) {
-    val fileName = file.getName()
-    val factsFile = Source.fromResource(s"twe/facts/$fileName").getLines().mkString("\n")
-    val factDictionary = xml.XML.loadString(factsFile)
-    val factNodes = factDictionary \ "Facts" \ "_"
-    facts ++= factNodes
-  }
-  val allFacts = <FactDictionaryModule><Facts>{facts}</Facts></FactDictionaryModule>
+  val allFacts = FileLoaderHelper.getAllFacts()
 
   // Get flow root
   val flowFile = Source.fromResource(s"$FlowResourceRoot/index.xml").getLines().mkString("\n")
@@ -48,6 +33,27 @@ def main(args: Array[String]): Unit = {
   val outDir = os.pwd / "out"
   site.save(outDir)
 }
+
+object FileLoaderHelper:
+  def getAllFacts(): Elem = {
+    val factDirectoryPath = os.pwd / "src" / "main" / "resources" / "twe" / "facts"
+    val factsDirectory = new File(factDirectoryPath.toString)
+    val listOfFiles = if (factsDirectory.exists && factsDirectory.isDirectory) {
+      factsDirectory.listFiles.filter(_.isFile).filter(_.getName.endsWith(".xml")).toList
+    } else {
+      List.empty[File]
+    }
+
+    val facts = new NodeBuffer()
+    for (file <- listOfFiles) {
+      val fileName = file.getName()
+      val factsFile = Source.fromResource(s"twe/facts/$fileName").getLines().mkString("\n")
+      val factDictionary = xml.XML.loadString(factsFile)
+      val factNodes = factDictionary \ "Facts" \ "_"
+      facts ++= factNodes
+    }
+    <FactDictionaryModule><Facts>{facts}</Facts></FactDictionaryModule>
+  }
 
 def resolveModule(node: xml.Node): xml.NodeSeq = {
   val src = node \@ "src"
