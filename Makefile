@@ -18,7 +18,11 @@ copy-fg:
 
 .PHONY: format
 format:
-	sbt scalafmt
+	sbt scalafmtAll
+
+.PHONY: format_check
+format_check:
+	sbt scalafmtCheckAll
 
 .PHONY: clean
 clean:

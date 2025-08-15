@@ -1,7 +1,7 @@
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "3.7.2"
 
-scalafmtConfig := file("project/.scalafmt.conf")
+scalafmtConfig := file(".scalafmt.conf")
 
 // Also re-build on XML changes
 // Doesn't work yet
