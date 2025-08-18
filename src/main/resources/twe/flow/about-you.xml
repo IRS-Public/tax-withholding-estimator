@@ -50,8 +50,8 @@
           <label>Job's total income for the year</label>
           <input type="dollar" />
         </fg-set>
-        <fg-set path="/jobs/*/withholding">
-          <label>Job's total withholding for the year</label>
+        <fg-set path="/jobs/*/yearToDateWithholding">
+          <label>Job's year-to-date withholding</label>
           <input type="dollar" />
         </fg-set>
       </fg-collection>

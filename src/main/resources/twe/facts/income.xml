@@ -14,9 +14,9 @@
         <Dollar />
       </Writable>
     </Fact>
-
-    <Fact path="/jobs/*/withholding">
-      <Description>The total withholding from a specific job</Description>
+    
+    <Fact path="/jobs/*/yearToDateWithholding">
+      <Description>The year-to-date withholding from a specific job</Description>
       <Writable>
         <Dollar />
       </Writable>
@@ -182,11 +182,11 @@
       </Derived>
     </Fact>
 
-    <Fact path="/totalJobsWithholding">
+    <Fact path="/totalYearToDateJobsWithholding">
       <Description>Total withholding for all jobs</Description>
       <Derived>
         <CollectionSum>
-          <Dependency path="/jobs/*/withholding" />
+          <Dependency path="/jobs/*/yearToDateWithholding" />
         </CollectionSum>
       </Derived>
     </Fact>
