@@ -1,12 +1,63 @@
-# Tax Witholding Estimator
+# Tax Withholding Estimator
 
-An online website for a taxpayer to estimate their witholdings.
+An online website for a taxpayer to estimate their withholdings.
 
-Its powered by a static site generator that turns FlowXML into multi-page forms.
-Right now this static site generator purpose-built for TWE, but I've done what I can to write it as generically as
+It is powered by a static site generator that turns FlowXML into multi-page forms.
+Right now this static site generator is purpose-built for TWE, but I've done what I can to write it as generically as
 possible.
 
+> ## Legal Disclaimer: Public Repository Access
+>
+> This repository contains draft and under-development source code for the IRS Tax Withholding Estimator. It is made available to the public solely for transparency, collaboration, and research purposes. The source code and associated content are not official IRS tools, and must not be used by taxpayers to estimate federal income tax withholding from their paychecks.
+>
+> **No Endorsement or Warranty**
+>
+> The Internal Revenue Service (IRS) does not endorse, maintain, or guarantee the accuracy, completeness, or functionality of the code in this repository. The IRS assumes no responsibility or liability for any use of the code by external parties, including individuals, developers, or organizations. This includes—but is not limited to—any tax consequences, computation errors, data loss, or other outcomes resulting from the use or modification of this code.
+>
+> **Official Tool for Tax Withholding Estimation**
+>
+> If you are a taxpayer seeking to estimate the federal income tax you want your employer to withhold from your paycheck, please use the official IRS Tax Withholding Estimator available at:
+> 👉 https://www.irs.gov/individuals/tax-withholding-estimator
+>
+> Use of the code in this repository is at your own risk. This repository is not intended for production use or public consumption as a finalized product.
+
 ## Setup
+
+### Configure commit email address
+
+All commits from IRS staff on this project must be authored using your GitHub-provided `noreply` email address.
+
+To achieve this, you'll need to make sure that commits authored via the GitHub web UI as well as local `git` use the GitHub-provided `noreply` email address:
+
+1. Enable private email address
+   1. Go to [your GitHub email settings](https://github.com/settings/emails)
+   2. Enable `Keep my email address private`
+   3. Note and copy the GitHub email address that is displayed. It looks like `{ID}+{USERNAME}@users.noreply.github.com` ([reference](https://docs.github.com/en/account-and-profile/reference/email-addresses-reference#your-noreply-email-address))
+   4. Enable `Block command line pushes that expose my email` (Optional)
+2. Set your local `git` email address for authoring commits
+   1. Configure your local `git` `user.email` setting
+      * If you would like to use your no-reply email address for _all_ local development, run
+         ```shell
+         git config --global user.email "YOUR_NO_REPLY_EMAIL"
+         ```
+      * If you prefer to only use the no-reply email address for development in your Tax Withholding Estimator working copy, run
+        ```shell
+        # Ensure you're in the directory for this git project
+        cd ./path/to/tax-withholding-estimator/
+        # Set your git email config for this repository only
+        git config user.email "YOUR_NO_REPLY_EMAIL"
+        ```
+   2. Verify the configuration by having `git` echo the `user.email` configuration
+      ```shell
+      $ git config --global user.email
+      YOUR_ID+YOUR_USERNAME@users.noreply.github.com
+      ```
+
+For more details, see:
+* [Setting your commit email address](https://docs.github.com/en/account-and-profile/how-tos/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address#setting-your-email-address-for-a-single-repository).
+* [Your no-reply email address](https://docs.github.com/en/account-and-profile/reference/email-addresses-reference#your-noreply-email-address)
+
+### Dependencies
 
 TWE depends on the [Fact Graph](https://github.com/IRSDigitalService/fact-graph), which you will need to have published
 to a local repository.
@@ -53,7 +104,7 @@ latest features.
 You should do this.
 
 If you run into issues, running `sbt compile` from "Run Anything" and then clicking "Sync all sbt Projects" typically
-resovles things.
+resolves things.
 
 To enable format on save:
 1. Open Preferences and search for `scalafmt`. Go to `Editor` -> `Code Style` -> `Scala`.
