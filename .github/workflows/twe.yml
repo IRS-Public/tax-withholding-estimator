@@ -1,0 +1,58 @@
+name: TWE
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Cancel redundant builds on same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # do not cancel redundant builds on main or release branches
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/heads/release/') }}
+
+env:
+  JAVA_VERSION: 21
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Install sbt via Coursier v2.1.24
+      run: |
+        curl -fL "https://github.com/coursier/coursier/releases/download/v2.1.24/cs-x86_64-pc-linux.gz" | gzip -d > cs
+        chmod +x cs
+        ./cs --version  # verify that we're using v2.1.24
+        ./cs install sbt
+        echo "$HOME/.local/share/coursier/bin" >> $GITHUB_PATH
+
+    - name: Checkout TWE
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        path: tax_withholding_estimator
+
+    - name: Setup Java
+      uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4
+      with:
+        distribution: 'temurin'
+        java-version: ${{ env.JAVA_VERSION }}
+
+    - name: Checkout Fact Graph
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        repository: IRSDigitalService/fact-graph
+        path: fact-graph
+        token: ${{ secrets.SVC_ACCOUNT_PAT }}
+
+    - name: Compile and publish Fact Graph locally
+      working-directory: fact-graph
+      run: sbt compile publishLocal
+
+    - name: Run Tests
+      working-directory: tax_withholding_estimator
+      run: make test

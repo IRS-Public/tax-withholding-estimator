@@ -21,7 +21,7 @@ class WebsiteSpec extends AnyFunSpec {
       </Fact>
     </FactDictionaryModule>
 
-    val basicFormConfig = <FormConfig>
+    val basicFormConfig = <FlowConfig>
       <page route="/" title="Basic Test Form">
         <section>
           <fg-set path="/filer/name">
@@ -35,7 +35,7 @@ class WebsiteSpec extends AnyFunSpec {
           </fg-set>
         </section>
       </page>
-    </FormConfig>
+    </FlowConfig>
 
     val site = Website.fromXmlConfig(basicFormConfig, basicDictionaryConfig)
 

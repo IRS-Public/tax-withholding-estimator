@@ -24,6 +24,10 @@ format:
 format_check:
 	sbt scalafmtCheckAll
 
+.PHONY: test
+test:
+	sbt test
+
 .PHONY: clean
 clean:
 	rm -rf ./target/

@@ -200,7 +200,7 @@
         </Round>
       </Derived>
     </Fact>
-    
+
     <!-- Sections 911, 931, and 933 are carved out for OB3 MAGI calculations for senior deduction and car loan interest deduction
           Default to 0 for right now-->
     <Fact path="/foreignEarnedIncome">

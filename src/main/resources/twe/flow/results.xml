@@ -7,7 +7,7 @@
       <p>Standard deduction: <fg-show path="/standardDeduction" /></p>
       <p>Taxable income: <fg-show path="/taxableIncome" /></p>
       <p>Total taxes owed: <fg-show path="/tentativeTaxFromTaxableIncome" /></p>
-      <p>Total jobs withholding: <fg-show path="/totalJobsWithholding" /></p>
+      <p>Total jobs withholding: <fg-show path="/totalYearToDateJobsWithholding" /></p>
       <p>Balance due or refund: <fg-show path="/totalOwed" /></p>
     </section>
   </page>
