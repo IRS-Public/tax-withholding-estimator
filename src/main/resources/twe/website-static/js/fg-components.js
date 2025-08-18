@@ -98,6 +98,10 @@ class FgSet extends HTMLElement {
     }
   }
 
+  isComplete() {
+    return factGraph.get(this.path).complete
+  }
+
   clear() {
     switch (this.inputType) {
       case 'boolean': {
@@ -404,6 +408,60 @@ function showOrHideAllElements() {
     }
   }
 }
+
+function handleSectionContinue(event) {
+  if (!validateSectionForNavigation()) {
+    event.preventDefault();
+    return false;
+  }
+  return true;
+}
+
+function handleSectionComplete(event) {
+  event.preventDefault();
+  if (validateSectionForNavigation()) {
+    alert("You've completed filling out the Tax Withholding Estimator");
+  }
+  return false;
+}
+
+function validateSectionForNavigation() {
+  const fgSets = document.querySelectorAll('fg-set:not(.hidden)');
+  const missingFields = [];
+
+  // Loop through fields and mark incomplete if empty
+  for(const fgSet of fgSets) {
+    if (!fgSet.isComplete()) {
+      const fieldName = fgSet.path;
+      missingFields.push(fieldName);
+    }
+  }
+  // Display validation error if there are missing fields/incomplete
+  if (missingFields.length > 0) {
+    showValidationError();
+    return false;
+  }
+
+  return true;
+}
+
+function showValidationError() {
+  // Target custom class validate-alert
+  const existingAlert = document.querySelector('.validate-alert');
+  if (existingAlert) {
+    existingAlert.remove();
+  }
+  // Clone the alert
+  const template = document.getElementById('validate-alert-template');
+  const alertElement = template.content.cloneNode(true);
+  const mainContent = document.getElementById('main-content');
+  // Place the alert at the top of the main content
+  mainContent.insertBefore(alertElement, mainContent.firstChild);
+
+}
+
+window.handleSectionContinue = handleSectionContinue;
+window.handleSectionComplete = handleSectionComplete;
 
 // Add show/hide functionality to all elements
 document.addEventListener('fg-update', showOrHideAllElements)

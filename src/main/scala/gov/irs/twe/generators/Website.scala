@@ -63,11 +63,19 @@ object Website {
       </ul>
     </nav>
 
-    val pages = flow.pages.map(generatePage(_, dictionaryConfig, nav))
+    val pages = flow.pages.zipWithIndex.map { case (page, index) =>
+      val nextPageHref = if (index < flow.pages.length - 1) {
+        Some(flow.pages(index + 1).route + ".html")
+      } else {
+        None
+      }
+      generatePage(page, dictionaryConfig, nav, nextPageHref)
+    }
+
     Website(pages, dictionaryConfig)
   }
 
-  private def generatePage(page: Page, dictionaryConfig: xml.Elem, nav: xml.Elem): WebsitePage = {
+  private def generatePage(page: Page, dictionaryConfig: xml.Elem, nav: xml.Elem, nextPageHref: Option[String]): WebsitePage = {
     val pageXml = page.nodes.map {
       case PageNode.section(x) => x.html()
       case PageNode.rawHTML(x) => x
@@ -75,21 +83,31 @@ object Website {
 
     val title = s"Tax Withholding Estimator - ${page.title} | Internal Revenue Service"
 
-    val content = <html lang="en">
-      <meta charset="utf-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="HandheldFriendly" content="True" />
-      <meta name="MobileOptimized" content="320" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    val continueButton = nextPageHref match {
+      case Some(href) =>
+        <a class="usa-button margin-top-3 continue-button" href={href} onclick="return handleSectionContinue(event)">Continue</a>
+      case None =>
+        <a class="usa-button margin-top-3 continue-button" href="#" onclick="return handleSectionComplete(event)">Submit</a>
+    }
 
-      <title>{title}</title>
-      <link rel="icon" href="/resources/img/favicon.ico" type="image/x-icon" />
-      <link rel="stylesheet" href="/resources/styles/main.css"></link>
-      <script type="module" src="/resources/js/factgraph-3.1.0.js"></script>
-      <script type="module" src="/resources/js/fg-components.js"></script>
-      <script type="module" src="/resources/js/debug-components.js"></script>
-      <script src="/resources/uswds-3.13.0/js/uswds-init.min.js"></script>
-      <link rel="preload" href="/resources/uswds-3.13.0/js/uswds.min.js" as="script" />
+    val content = <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title}</title>
+        <link rel="icon" href="/resources/img/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="/resources/uswds-3.13.0/styles/uswds.min.css"></link>
+        <link rel="stylesheet" href="/resources/styles/main.css"></link>
+        <link rel="stylesheet" href="/resources/styles/buttons.css"></link>
+        <script type="module" src="/resources/js/factgraph-3.1.0.js"></script>
+        <script type="module" src="/resources/js/fg-components.js"></script>
+        <script type="module" src="/resources/js/debug-components.js"></script>
+        <script src="/resources/uswds-3.13.0/js/uswds-init.min.js"></script>
+        <link rel="preload" href="/resources/uswds-3.13.0/js/uswds.min.js" as="script" />
+      </head>
 
       <body>
         <a class="usa-skipnav" href='#main-content'>Skip to main content</a>
@@ -193,7 +211,16 @@ object Website {
         <main class="hidden" id="main-content">
           {nav}
           {pageXml}
+          {continueButton}
         </main>
+        <template id="validate-alert-template">
+           <div class="usa-alert usa-alert--error validate-alert" role="alert">
+             <div class="usa-alert__body">
+               <h4 class="usa-alert__heading">Warning status</h4>
+                   <p class="usa-alert__text" id="alert-message">Please complete the required fields</p>
+             </div>
+           </div>
+        </template>
         <script type="text" id="fact-dictionary">{dictionaryConfig}</script>
         <script src="/resources/uswds-3.13.0/js/uswds.min.js"></script>
       </body>
