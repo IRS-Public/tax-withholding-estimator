@@ -54,6 +54,21 @@
           <label>Job's year-to-date withholding</label>
           <input type="dollar" />
         </fg-set>
+
+        <fg-set path="/jobs/*/payFrequency">
+          <label>Job's pay frequency</label>
+          <select options-path="/jobs/*/payFrequency">
+            <option value="weekly">Weekly</option>
+            <option value="biWeekly">Biweekly</option>
+            <option value="twiceMonthly">Semimonthly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </fg-set>
+
+        <fg-set path="/jobs/*/remainingPayPeriods">
+          <label>Job's pay periods remaining for the year</label>
+          <input type="int" />
+        </fg-set>
       </fg-collection>
 
       <h2>Reset</h2>

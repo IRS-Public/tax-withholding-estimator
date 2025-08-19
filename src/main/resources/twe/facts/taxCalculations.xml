@@ -32,25 +32,6 @@
       </Derived>
     </Fact>
 
-    <Fact path="/remainingPayPeriods">
-      <Derived>
-        <Int>10</Int>
-      </Derived>
-    </Fact>
-
-    <Fact path="/withholdingPerPayPeriod">
-      <Derived>
-        <Divide>
-          <Dividend>
-            <Dependency path="/totalOwed" />
-          </Dividend>
-          <Divisors>
-            <Dependency path="/remainingPayPeriods" />
-          </Divisors>
-        </Divide>
-      </Derived>
-    </Fact>
-
     <Fact path="/agi">
       <Name>Adjusted Gross Income</Name>
       <Description>Total income to report on line 11 of Form 1040.</Description>
