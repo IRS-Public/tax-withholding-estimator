@@ -75,7 +75,12 @@ object Website {
     Website(pages, dictionaryConfig)
   }
 
-  private def generatePage(page: Page, dictionaryConfig: xml.Elem, nav: xml.Elem, nextPageHref: Option[String]): WebsitePage = {
+  private def generatePage(
+      page: Page,
+      dictionaryConfig: xml.Elem,
+      nav: xml.Elem,
+      nextPageHref: Option[String],
+  ): WebsitePage = {
     val pageXml = page.nodes.map {
       case PageNode.section(x) => x.html()
       case PageNode.rawHTML(x) => x
@@ -85,7 +90,9 @@ object Website {
 
     val continueButton = nextPageHref match {
       case Some(href) =>
-        <a class="usa-button margin-top-3 continue-button" href={href} onclick="return handleSectionContinue(event)">Continue</a>
+        <a class="usa-button margin-top-3 continue-button" href={
+          href
+        } onclick="return handleSectionContinue(event)">Continue</a>
       case None =>
         <a class="usa-button margin-top-3 continue-button" href="#" onclick="return handleSectionComplete(event)">Submit</a>
     }

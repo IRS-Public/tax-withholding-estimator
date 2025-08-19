@@ -1,12 +1,11 @@
 package gov.irs.twe
 
-import gov.irs.twe.generators.Website
 import gov.irs.twe.exceptions.InvalidFormConfig
+import gov.irs.twe.generators.Website
 import java.io.File
 import scala.io.Source
-import scala.xml.NodeBuffer
 import scala.xml.Elem
-
+import scala.xml.NodeBuffer
 
 val FlowResourceRoot = "twe/flow"
 
@@ -21,10 +20,12 @@ def main(args: Array[String]): Unit = {
   val children = flowConfig \\ "FlowConfig" \ "_"
 
   // Resolve modules
-  val resolvedChildren = children.map(child => child.label match {
-    case "module" => resolveModule(child)
-    case _ => child
-  })
+  val resolvedChildren = children.map(child =>
+    child.label match {
+      case "module" => resolveModule(child)
+      case _        => child
+    },
+  )
   val resolvedConfig = <FlowConfig>{resolvedChildren}</FlowConfig>
 
   val site = Website.fromXmlConfig(resolvedConfig, allFacts)
@@ -59,7 +60,7 @@ def resolveModule(node: xml.Node): xml.NodeSeq = {
   val src = node \@ "src"
   // Remove the ./ prefix in the src attribute
   // We support this so that people can use local file path resolution in their text editors
-  val resolvedSrc = src.replaceAll("^\\./" , "")
+  val resolvedSrc = src.replaceAll("^\\./", "")
 
   val moduleFile = Source.fromResource(s"$FlowResourceRoot/$resolvedSrc").getLines().mkString("\n")
 

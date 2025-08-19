@@ -15,6 +15,7 @@ concurrency:
 
 env:
   JAVA_VERSION: 21
+  TWE_PATH: tax_withholding_estimator
 
 jobs:
   build:
@@ -53,6 +54,10 @@ jobs:
       working-directory: fact-graph
       run: sbt compile publishLocal
 
+    - name: Format Scala code
+      working-directory: ${{ env.TWE_PATH }}
+      run: make format_check
+
     - name: Run Tests
-      working-directory: tax_withholding_estimator
+      working-directory: ${{ env.TWE_PATH }}
       run: make test

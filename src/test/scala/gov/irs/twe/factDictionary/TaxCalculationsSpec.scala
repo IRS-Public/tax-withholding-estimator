@@ -1,10 +1,10 @@
 package gov.irs.twe.factDictionary
 
-import gov.irs.factgraph.FactDictionaryForTests
-import gov.irs.twe.FileLoaderHelper
-import gov.irs.factgraph.Path
 import gov.irs.factgraph.types.Dollar
 import gov.irs.factgraph.types.Enum
+import gov.irs.factgraph.FactDictionaryForTests
+import gov.irs.factgraph.Path
+import gov.irs.twe.FileLoaderHelper
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.TableDrivenPropertyChecks
 
@@ -55,7 +55,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     (single, "250000.0", "250000.0", "57875.0"),
 
     // Over $609,350
-    (single, "700000.0", "700000.0", "217188.0")
+    (single, "700000.0", "700000.0", "217188.0"),
   )
 
   test("test roundedTaxableIncome and tentativeTaxFromTaxableIncome") {
@@ -63,7 +63,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       val graph = makeGraphWith(
         factDictionary,
         filingStatus -> status,
-        taxableIncome -> Dollar(income)
+        taxableIncome -> Dollar(income),
       )
 
       val roundedIncome = graph.get(roundedTaxableIncome)
