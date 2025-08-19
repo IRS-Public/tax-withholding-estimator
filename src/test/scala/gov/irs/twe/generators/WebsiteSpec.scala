@@ -1,5 +1,6 @@
 package gov.irs.twe.generators
 
+import org.jsoup.Jsoup
 import org.scalatest.funspec.AnyFunSpec
 
 class WebsiteSpec extends AnyFunSpec {
@@ -38,16 +39,15 @@ class WebsiteSpec extends AnyFunSpec {
     </FlowConfig>
 
     val site = Website.fromXmlConfig(basicFormConfig, basicDictionaryConfig)
+    val document = Jsoup.parse(site.pages.head.content)
 
     it("contains basic html elements") {
-      val page = site.pages.head
-      assert((page.content \\ "html").nonEmpty)
-      assert((page.content \\ "body").nonEmpty)
+      assert(document.body() != null)
     }
 
     it("contains 2 <fg-set>s") {
-      val page = site.pages.head
-      assert((page.content \\ "fg-set").length == 2)
+      val fgSets = document.body().select("fg-set")
+      assert(fgSets.size() == 2)
     }
   }
 
