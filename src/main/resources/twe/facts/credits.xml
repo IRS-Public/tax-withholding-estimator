@@ -1,0 +1,109 @@
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/actualChildTaxCreditAmount">
+      <Name>Child tax credit</Name>
+      <Description>Child tax credit, no logic in place for actually calculating the applicable
+        amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/actualEarnedIncomeTaxCreditAmount">
+      <Name>Earned Income tax credit</Name>
+      <Description>Earned Income tax credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/actualChildAndDependentCareTaxCreditAmount">
+      <Name>Child and Dependent Care tax credit</Name>
+      <Description>Child and Dependent Care tax credit, no logic in place for actually calculating
+        the applicable amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/actualSaversTaxCreditAmount">
+      <Name>Savers Credit</Name>
+      <Description>Savers credit, no logic in place for actually calculating the applicable amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/actualElderlyAndDisabledTaxCreditAmount">
+      <Name>Elderly and Disabled tax credit</Name>
+      <Description>Elderly and Disabled tax credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/actualLifetimeLeariningTaxCreditAmount">
+      <Name>Lifetime Learning tax credit</Name>
+      <Description>Lifetime Learning Tax credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/actualAmericanOpportunityTaxCreditAmount">
+      <Name>American opportunity tax credit</Name>
+      <Description>American opportunity tax credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/totalCredits">
+      <Name>Total sum of applicable credits</Name>
+      <Description>Total sum of applicable credits.</Description>
+      <Derived>
+        <Round>
+          <Add>
+            <Dependency path="/actualChildTaxCreditAmount" />
+            <Dependency path="/actualChildTaxCreditAmount" />
+            <Dependency path="/actualEarnedIncomeTaxCreditAmount" />
+            <Dependency path="/actualChildAndDependentCareTaxCreditAmount" />
+            <Dependency path="/actualSaversTaxCreditAmount" />
+            <Dependency path="/actualElderlyAndDisabledTaxCreditAmount" />
+            <Dependency path="/actualLifetimeLeariningTaxCreditAmount" />
+            <Dependency path="/actualAmericanOpportunityTaxCreditAmount" />
+          </Add>
+        </Round>
+      </Derived>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

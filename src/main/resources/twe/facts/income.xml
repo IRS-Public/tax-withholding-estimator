@@ -470,12 +470,12 @@
       </Derived>
     </Fact>
 
-    <Fact path="/totalCredits">
+    <!-- <Fact path="/totalCredits">
       <Derived>
-        <!-- TODO hardcoded for now, to be refined later -->
+
         <Dollar>0</Dollar>
       </Derived>
-    </Fact>
+    </Fact> -->
 
     <Fact path="/jobs/*/useTwoJobLogic">
       <Description>The checkbox in Form W-4 Step 2.</Description>

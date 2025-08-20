@@ -9,6 +9,7 @@
       <p>Total taxes owed: <fg-show path="/tentativeTaxFromTaxableIncome" /></p>
       <p>Total year to date jobs withholding: <fg-show path="/totalYearToDateJobsWithholding" /></p>
       <p>Balance due or refund: <fg-show path="/totalOwed" /></p>
+      <p>Total Credits: <fg-show path="/totalCredits"/></p>
     </section>
   </page>
 </FlowConfigModule>

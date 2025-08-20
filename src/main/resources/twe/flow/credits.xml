@@ -1,0 +1,50 @@
+<FlowConfigModule>
+  <page title="Credits" route="credits">
+    <section>
+      <h1>Credits</h1>
+
+      <h2>Child Tax Credit</h2>
+      <fg-set path="/actualChildTaxCreditAmount">
+        <label>How much child tax credit you are claiming in this tax year?</label>
+        <input type="dollar" />
+      </fg-set>
+
+      <h2>Earned Income Tax Credit</h2>
+      <fg-set path="/actualEarnedIncomeTaxCreditAmount">
+        <label>How much earned income tax credit you are claiming in this tax year?</label>
+        <input type="dollar" />
+
+      </fg-set>
+
+      <h2>Child and Dependent Care Tax Credit</h2>
+      <fg-set path="/actualChildAndDependentCareTaxCreditAmount">
+        <label>How much child and dependent care tax credit you are claiming in this tax year?</label>
+        <input type="dollar" />
+      </fg-set>
+
+      <h2>Savers Credit</h2>
+      <fg-set path="/actualSaversTaxCreditAmount">
+        <label>How much savers credit you are claiming in this tax year?</label>
+        <input type="dollar" />
+      </fg-set>
+
+      <h2>Elderly and Disabled Credit</h2>
+      <fg-set path="/actualElderlyAndDisabledTaxCreditAmount">
+        <label>How much elderly and disabled tax credit you are claiming in this tax year?</label>
+        <input type="dollar" />
+      </fg-set>
+
+      <h2>Lifetime Learning Credit</h2>
+      <fg-set path="/actualLifetimeLeariningTaxCreditAmount">
+        <label>How much lifetime learning tax credit you are claiming in this tax year?</label>
+        <input type="dollar" />
+      </fg-set>
+
+      <h2>American opportunity Tax Credit</h2>
+      <fg-set path="/actualAmericanOpportunityTaxCreditAmount">
+        <label>How much American opportunity tax credit you are claiming in this tax year?</label>
+        <input type="dollar" />
+      </fg-set>
+    </section>
+  </page>
+</FlowConfigModule>
