@@ -137,7 +137,7 @@ class FgSet extends HTMLElement {
     let fact = factGraph.get(this.path)
 
     let value
-    if (fact.hasValue === false){
+    if (fact.hasValue === false) {
       value = ""
     } else {
       value = fact.get?.toString()
@@ -327,7 +327,7 @@ class FgCollectionItem extends HTMLElement {
 customElements.define('fg-collection-item', FgCollectionItem)
 
 /*
- * <fg-show> - Display the current value of a fact.
+ * <fg-show> - Display the current value and/or status of a fact.
  */
 class FgShow extends HTMLElement {
   connectedCallback() {
@@ -337,13 +337,18 @@ class FgShow extends HTMLElement {
   }
 
   render() {
-    const value = factGraph.get(this.path)
-    if (value.complete === false) {
-      this.innerHTML = `<span class="text-base-light">[Missing Information]</span>`
-    } else {
-      this.innerText = value.get?.toString()
-    }
+    const result = factGraph.get(this.path)
 
+    if (result.hasValue) {
+      const value = result.get.toString()
+      if (result.complete === false) {
+        this.innerHTML = `${value}&nbsp;<span class="text-base-light">[Placeholder value]</span>`
+      } else {
+        this.innerText = value
+      }
+    } else {
+      this.innerHTML = `<span class="text-base-light">[Fact has no value]</span>`
+    }
   }
 }
 customElements.define('fg-show', FgShow)
@@ -430,7 +435,7 @@ function validateSectionForNavigation() {
   const missingFields = [];
 
   // Loop through fields and mark incomplete if empty
-  for(const fgSet of fgSets) {
+  for (const fgSet of fgSets) {
     if (!fgSet.isComplete()) {
       const fieldName = fgSet.path;
       missingFields.push(fieldName);
