@@ -4,7 +4,7 @@
     <section>
       <h2>About You</h2>
       <fg-set path="/filingStatus">
-        <label>What filing status will you use for your tax return?</label>
+        <question>What filing status will you use for your tax return?</question>
         <select options-path="/filingStatusOptions">
           <option value="single">Single</option>
           <option value="marriedFilingJointly">Married filing jointly</option>
@@ -15,7 +15,7 @@
       </fg-set>
 
       <fg-set path="/primaryFilerDateOfBirth">
-        <label>What is your date of birth?</label>
+        <question>What is your date of birth?</question>
         <input type="date" />
       </fg-set>
 

@@ -1,5 +1,5 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-  
+
   <start>
     <ref name="Flow"/>
   </start>
@@ -53,9 +53,14 @@
   </define>
 
   <define name="fg-set-content">
-    <element name="label">
-      <text/>
-    </element>
+    <choice>
+      <element name="label">
+        <text/>
+      </element>
+      <element name="question">
+        <text/>
+      </element>
+    </choice>
     <choice>
         <element name="input">
           <attribute name="type">
@@ -67,7 +72,7 @@
             </choice>
           </attribute>
         </element>
-      <element name="select"> 
+      <element name="select">
         <attribute name="options-path">
           <data type="anyURI"/>
         </attribute>
@@ -78,7 +83,7 @@
             </attribute>
             <text/>
           </element>
-        </oneOrMore> 
+        </oneOrMore>
       </element>
     </choice>
   </define>
@@ -114,7 +119,7 @@
     <mixed>
       <zeroOrMore>
         <choice>
-          <!-- 
+          <!--
             These 4 FlowConfigModule XML elements are directly translated to their HTML equivalents by the flow code.
             If we add more of the same in the future, those elements would go here.
             These rules essentially say these can appear in any order and can be nested within each other.

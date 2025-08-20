@@ -6,14 +6,16 @@ import gov.irs.twe.parser.Utils.validateFact
 
 enum FgSetNode {
   case input(input: Input)
+  case question(question: String)
   case rawHTML(node: xml.Node)
 }
 
 case class FgSet(path: String, condition: Option[Condition], input: Input, nodes: List[FgSetNode]) {
   def html(): xml.Elem = {
     val questionXml = this.nodes.map {
-      case FgSetNode.input(input) => input.html(path)
-      case FgSetNode.rawHTML(x)   => x
+      case FgSetNode.input(input)       => input.html(path)
+      case FgSetNode.question(question) => <label for={path}>{question}</label>
+      case FgSetNode.rawHTML(x)         => x
     }
 
     val condition = this.condition.map(_.path).orNull
@@ -40,6 +42,7 @@ object FgSet {
       .map(node =>
         node.label match {
           case "input" | "select" => FgSetNode.input(input)
+          case "question"         => FgSetNode.question(node.text)
           case _                  => FgSetNode.rawHTML(node)
         },
       )

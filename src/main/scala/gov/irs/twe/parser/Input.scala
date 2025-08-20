@@ -36,7 +36,7 @@ enum Input {
         </div>
         </div>
       case Input.select(options, optionsPath) =>
-        <select class="usa-select" optionsPath={optionsPath.getOrElse("")} required="true">
+        <select id={path} class="usa-select" optionsPath={optionsPath.getOrElse("")} required="true">
         <option value={""} disabled="true" selected="true">
           {"-- Select one --"}
         </option>{
@@ -46,10 +46,10 @@ enum Input {
         }
       </select>
       case Input.dollar =>
-        <input class="usa-input" type="number" step="0.01" name={path} autocomplete="off" required="true"/>
-      case Input.date => <input class="usa-input" type="date" name={path} autocomplete="off" required="true"/>
-      case Input.text => <input class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
-      case Input.int  => <input class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
+        <input class="usa-input" id={path} type="number" step="0.01" name={path} autocomplete="off" required="true"/>
+      case Input.date => <input id={path} class="usa-input" type="date" name={path} autocomplete="off" required="true"/>
+      case Input.text => <input id={path} class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
+      case Input.int  => <input id={path} class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
     }
 }
 
