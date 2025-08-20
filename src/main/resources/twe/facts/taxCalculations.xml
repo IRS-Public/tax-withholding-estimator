@@ -10,7 +10,7 @@
               <Dependency path="/agi" />
             </Minuend>
             <Subtrahends>
-              <Dependency module="standardDeduction" path="/standardDeduction" />
+              <Dependency path="/totalDeductions" />
             </Subtrahends>
           </Subtract>
         </Round>
@@ -51,14 +51,15 @@
 
     <Fact path="/magiForOB3BelowLineDeductions">
       <Name>Modified Adjusted Gross Income for OB3 Below Line Deductions</Name>
-      <Description>Adjusted gross income of the taxpayer for the taxable year increased by any amount excluded
+      <Description>Adjusted gross income of the taxpayer for the taxable year increased by any
+        amount excluded
         from gross income under section 911, 931, or 933.
       </Description>
       <Derived>
         <Round>
           <Add>
-            <Dependency path="/agi"/>
-            <Dependency path="/incomeToIncludeForOB3MAGI" module="income"/>
+            <Dependency path="/agi" />
+            <Dependency path="/incomeToIncludeForOB3MAGI" module="income" />
           </Add>
         </Round>
       </Derived>
@@ -68,7 +69,8 @@
       <Name>Rounded taxable income</Name>
       <Description>Income less than $100,000 uses the tax tables from the Instructions for
         Form 1040. This fact selects the "midpoint" that corresponds to each entry in the
-        tax tables, for use in calculating tenative tax. </Description>
+        tax tables, for use in calculating tenative tax.
+      </Description>
       <Derived>
         <Switch>
           <!-- No tax if you've got no taxable income -->
@@ -211,7 +213,8 @@
 
     <Fact path="/tentativeTaxFromTaxableIncome">
       <Description>Tentative tax as reported on line 16 of Form 1040. Rev Proc .01 Tax Rate Tables
-        §1(j)(2)(A|B|C|D)</Description>
+        §1(j)(2)(A|B|C|D)
+      </Description>
       <TaxYear>2024</TaxYear>
       <Derived>
         <Round>

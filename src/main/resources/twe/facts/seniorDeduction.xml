@@ -1,15 +1,251 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
-    <Facts>
-        <Fact path="/seniorDeduction">
-            <Name>Actual Amount of Senior Deduction</Name>
-            <Description>Actual amount of senior deduction that can be applied against MAGI. amount = (max amount based
-                on
-                eligibility)- (excess * 0.06)
-            </Description>
-            <Derived>
-                <Dollar>0</Dollar>
-            </Derived>
-        </Fact>
-    </Facts>
+  <Facts>
+    <Fact path="/eligibleTaxpayersForSeniorDeduction">
+      <Name>Senior Deduction Secondary Filer Eligibility</Name>
+      <Description>OB3 Section 70103 temporarily amending 151(d)(5)(3)(c)(ii)(II) taxpayer's spouse,
+        if such
+        spouse has
+        attained age 65
+        before the close of the taxable year.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFJ" />
+                <Dependency path="/primaryFilerAge65OrOlder" />
+                <Dependency path="/secondaryFilerAge65OrOlder" />
+              </All>
+            </When>
+            <Then>
+              <Int>2</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFJ" />
+                <Any>
+                  <Dependency path="/primaryFilerAge65OrOlder" />
+                  <Dependency path="/secondaryFilerAge65OrOlder" />
+                </Any>
+              </All>
+            </When>
+            <Then>
+              <Int>1</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFJ" />
+                <Not>
+                  <Dependency path="/primaryFilerAge65OrOlder" />
+                </Not>
+                <Not>
+                  <Dependency path="/secondaryFilerAge65OrOlder" />
+                </Not>
+              </All>
+            </When>
+            <Then>
+              <Int>0</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="/primaryFilerAge65OrOlder" />
+            </When>
+            <Then>
+              <Int>1</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Int>0</Int>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/phaseOutAmountSeniorDeduction">
+      <Name>Senior Deduction Amount Phase Out</Name>
+      <Description>Phaseout amount for the senior deduction. phaseOutAmount = excess * 0.06
+      </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Multiply>
+          <Dollar>0.06</Dollar>
+          <Dependency path="/excessOverThresholdSeniorDeduction" />
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/excessOverThresholdSeniorDeduction">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/eligibleTaxpayersForSeniorDeduction" />
+                </Left>
+                <Right>
+                  <Int>2</Int>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dependency path="/excessAmountSeniorDeductionForMFJFilerBothTaxpayersEligible" />
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/eligibleTaxpayersForSeniorDeduction" />
+                </Left>
+                <Right>
+                  <Int>1</Int>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dependency path="/excessAmountSeniorDeductionOneTaxpayerEligible" />
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/applicableMaxSeniorDeductionAmount">
+      <Name>Maximum senior deduction amount</Name>
+      <Description>The maximum amount a single taxpayer can deduct. Doubled for MFJ if both
+        taxpayers are eligible
+      </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/eligibleTaxpayersForSeniorDeduction" />
+                </Left>
+                <Right>
+                  <Int>2</Int>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dependency path="/maxSeniorDeductionAmountForTwoEligibleTaxpayers" />
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/eligibleTaxpayersForSeniorDeduction" />
+                </Left>
+                <Right>
+                  <Int>1</Int>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dependency path="/maxSeniorDeductionAmountForOneEligibleTaxpayer" />
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/maxSeniorDeductionAmountForOneEligibleTaxpayer">
+      <Name>Maximum senior deduction amount</Name>
+      <Description>The maximum amount a single taxpayer can deduct. Doubled for MFJ if both
+        taxpayers are eligible
+      </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>6000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/maxSeniorDeductionAmountForTwoEligibleTaxpayers">
+      <Name>Maximum senior deduction amount</Name>
+      <Description>The maximum amount both filers can deduct when they are eligible for senior
+        deduction. Must be
+        MFJ
+      </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>12000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/excessAmountSeniorDeductionForMFJFilerBothTaxpayersEligible">
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/magiForOB3BelowLineDeductions" />
+            </Minuend>
+            <Subtrahends>
+              <Dollar>150000</Dollar>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/excessAmountSeniorDeductionOneTaxpayerEligible">
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/magiForOB3BelowLineDeductions" />
+            </Minuend>
+            <Subtrahends>
+              <Dollar>75000</Dollar>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/seniorDeduction">
+      <Name>Actual Amount of Senior Deduction</Name>
+      <Description>Actual amount of senior deduction that can be applied against MAGI. amount = (max
+        amount based
+        on
+        eligibility)- (excess * 0.06)
+      </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/applicableMaxSeniorDeductionAmount" />
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/phaseOutAmountSeniorDeduction" />
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+  </Facts>
 </FactDictionaryModule>

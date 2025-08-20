@@ -30,7 +30,7 @@
         <Switch>
           <Case>
             <When>
-              <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
+              <Dependency path="/isFilingStatusMFJ" />
             </When>
             <Then>
               <Any>
@@ -105,7 +105,7 @@
       <Derived>
         <Subtract>
           <Minuend>
-            <Dependency module="constants" path="/taxYear" />
+            <Dependency path="/taxYear" />
           </Minuend>
           <Subtrahends>
             <Dependency path="/primaryFilerDayBeforeDateOfBirth/year" />
@@ -120,7 +120,7 @@
       <Derived>
         <Subtract>
           <Minuend>
-            <Dependency module="constants" path="/taxYear" />
+            <Dependency path="/taxYear" />
           </Minuend>
           <Subtrahends>
             <Dependency path="/secondaryFilerDayBeforeDateOfBirth/year" />

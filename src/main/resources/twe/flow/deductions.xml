@@ -1,7 +1,114 @@
 <FlowConfigModule>
   <page title="Deductions" route="deductions">
     <section>
+      <h1>Qualified Personal Vehicle Loan Interest Deduction</h1>
+      <fg-set path="/isVehiclePurchasedAfterEffectiveDate">
+        <label>Have you purchased a motor vehicle after 12/31/2024?</label>
+        <input type="boolean" />
+      </fg-set>
+      <fg-set path="/isQpvIndebtednessIncurredAfterEffectiveDate"
+        if-true="/isVehiclePurchasedAfterEffectiveDate">
+        <label>Did you incur a loan when you purchased this vehicle and was this loan
+          originated after
+          12/31/2024?
+        </label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleLoanFirstLien"
+        if-true="/isQpvIndebtednessIncurredAfterEffectiveDate">
+        <label>Was the loan secured as the first lien on the vehicle?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleForPersonalUse" if-true="/isVehicleLoanFirstLien">
+        <label>Is the vehicle intended for personal use and not commercial or fleet use?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleLoanFinancingFleetSale" if-true="/isVehicleForPersonalUse">
+        <label>Was the loan originated for the purposes of financing a fleet sale?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleLeaseFinanced" if-false="/isVehicleLoanFinancingFleetSale">
+        <label>Are you leasing the vehicle?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/hasSalvageTitleOrPurchasedToScrap" if-false="/isVehicleLeaseFinanced">
+        <label>Did you purchase the vehicle with the intend to scrap it for parts or is the
+          title a salvage
+          title?
+        </label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isTaxpayerOriginalUser" if-false="/hasSalvageTitleOrPurchasedToScrap">
+        <label>Are you the original and primary user of the vehicle</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/doesHaveVIN" if-true="/isTaxpayerOriginalUser">
+        <label>Do you have a Vehicle Identification Number for the Vehicle? You can check on
+          https://www.nhtsa.gov/vin-decoder
+        </label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleManufacturedForStreetsRoadsAndHighways" if-true="/doesHaveVIN">
+        <label>Is the vehicle meant for driving on public streets, roads and highways?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleGTETwoWheels"
+        if-true="/isVehicleManufacturedForStreetsRoadsAndHighways">
+        <label>Does the vehicle have at least two wheels?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleApplicableType" if-true="/isVehicleGTETwoWheels">
+        <label>Is the vehicle a car, minivan, van, sport utility vehicle, pickup truck, or
+          motorcycle?
+        </label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleUnderGVWRMax" if-true="/isVehicleApplicableType">
+        <label>Is the Gross Vehicle Weight Rating below 14,000 lbs?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleAssembledInUSA" if-true="/isVehicleUnderGVWRMax">
+        <label>Was the final assembly of the vehicle in the United States?</label>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/personalVehicleLoanInterestAmount" if-true="/isVehicleAssembledInUSA">
+        <label>How much interest have you paid on the loan during the current taxable year
+          to-date?
+        </label>
+        <input type="dollar" />
+      </fg-set>
+
+      <p>Your eligibility for the Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show
+          path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction" />
+      </p>
+
       <h1>Deductions</h1>
+
+      <p>Your total below the line deductions are: <fg-show path="/totalDeductions" />
+      </p>
+      <p>Your Qualified Personal Vehicle Loan Interest Deduction amount is: <fg-show
+          path="/qualifiedPersonalVehicleLoanInterestDeduction" />
+      </p>
+      <p>Your Senior Deduction amount is: <fg-show path="/seniorDeduction" />
+      </p>
+      <p>Your Qualified Tips Deduction amount is: <fg-show path="/qualifiedTipDeduction" />
+      </p>
+      <p>Your Overtime Compensation Deduction amount is: <fg-show
+          path="/overtimeCompensationDeduction" />
+      </p>
     </section>
   </page>
 </FlowConfigModule>
