@@ -64,11 +64,6 @@
             <option value="monthly">Monthly</option>
           </select>
         </fg-set>
-
-        <fg-set path="/jobs/*/remainingPayPeriods">
-          <label>Job's pay periods remaining for the year</label>
-          <input type="int" />
-        </fg-set>
       </fg-collection>
 
       <h2>Reset</h2>
