@@ -26,6 +26,10 @@ function loadFactGraph(factGraphAsString) {
 }
 window.loadFactGraph = loadFactGraph
 
+function makeCollectionIdPath(abstractPath, id) {
+  return abstractPath.replace('*', `#${id}`);
+}
+
 /*
  * <fg-set> - An input that sets a fact
  */
@@ -261,16 +265,6 @@ class FgCollection extends HTMLElement {
     // Add any items that currently exist in this collection
     const ids = factGraph.getCollectionIds(this.path)
     ids.map(id => this.addItem(id))
-
-    document.addEventListener('fg-clear', () => this.onClear())
-  }
-
-  onClear() {
-    const currentItems = factGraph.getCollectionIds(this.path)
-    if (currentItems.length === 0) {
-      for (const fieldset of this.querySelectorAll('fieldset'))
-        fieldset.remove()
-    }
   }
 
   addItem(id) {
@@ -285,6 +279,7 @@ class FgCollection extends HTMLElement {
 
     const collectionItem = document.createElement('fg-collection-item')
     collectionItem.itemChildren = this.itemChildren
+    collectionItem.path = makeCollectionIdPath(`${this.path}/*`, collectionId);
     collectionItem.collectionId = collectionId
 
     fieldset.appendChild(collectionItem)
@@ -306,6 +301,9 @@ class FgCollectionItem extends HTMLElement {
     const template = document.createElement('template')
     template.insertAdjacentHTML('afterbegin', this.itemChildren)
 
+    this.clearListener = () => this.clear();
+    document.addEventListener(`fg-clear`, this.clearListener);
+
     const setters = template.querySelectorAll('fg-set')
     // These are all the attributes that we need to update from collection/*/fact to collection/#id/fact
     const attributes = ['path', 'condition']
@@ -322,6 +320,29 @@ class FgCollectionItem extends HTMLElement {
     for (const child of template.children) {
       this.appendChild(child.cloneNode(true))
     }
+
+    this.removeItemListener = () => {
+      this.clear();
+      this.dispatchEvent(new CustomEvent(`fg-update`));
+    }
+
+    const removeButton = document.createElement(`button`);
+    removeButton.innerText = `Remove item`;
+    removeButton.addEventListener(`click`, this.removeItemListener);
+
+    this.prepend(removeButton)
+  }
+
+  clear() {
+    for(const fgSet of this.querySelectorAll(customElements.getName(FgSet))) {
+      fgSet.remove();
+    }
+
+    factGraph.delete(this.path);
+    saveFactGraph()
+
+    // Remove this element and its parent fieldset from the DOM after removing the item from the fact graph
+    this.parentElement.remove();
   }
 }
 customElements.define('fg-collection-item', FgCollectionItem)
