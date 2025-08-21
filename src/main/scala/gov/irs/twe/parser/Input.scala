@@ -10,14 +10,14 @@ enum Input {
   case select(options: List[HtmlOption], optionsPath: Option[String])
   case text
   case int
-  case boolean
+  case boolean(question: String)
   case dollar
   case date
 
   def typeString: String = this match {
     case Input.text         => "text"
     case Input.int          => "int"
-    case Input.boolean      => "boolean"
+    case Input.boolean(_)   => "boolean"
     case Input.dollar       => "dollar"
     case Input.select(_, _) => "select"
     case Input.date         => "date"
@@ -25,16 +25,18 @@ enum Input {
 
   def html(path: String): xml.Elem =
     this match {
-      case Input.boolean => <div>
-        <div class="usa-radio">
-          <input id={s"${path}-yes"} class="usa-radio__input" type="radio" value="true" name={path} required="true"/>
-          <label for={s"${path}-yes"} class="usa-radio__label">Yes</label>
-        </div>
-        <div class="usa-radio">
-          <input id={s"${path}-no"} class="usa-radio__input" type="radio" value="false" name={path} required="true"/>
-          <label for={s"${path}-no"} class="usa-radio__label">No</label>
-        </div>
-        </div>
+      case Input.boolean(question) =>
+        <fieldset class="usa-fieldset">
+          <legend class="usa-legend">{question}</legend>
+          <div class="usa-radio">
+            <input id={s"${path}-yes"} class="usa-radio__input" type="radio" value="true" name={path} required="true"/>
+            <label for={s"${path}-yes"} class="usa-radio__label">Yes</label>
+          </div>
+          <div class="usa-radio">
+            <input id={s"${path}-no"} class="usa-radio__input" type="radio" value="false" name={path} required="true"/>
+            <label for={s"${path}-no"} class="usa-radio__label">No</label>
+          </div>
+        </fieldset>
       case Input.select(options, optionsPath) =>
         <select id={path} class="usa-select" optionsPath={optionsPath.getOrElse("")} required="true">
         <option value={""} disabled="true" selected="true">
@@ -54,8 +56,9 @@ enum Input {
 }
 
 object Input {
-  def extractFromQuestion(node: xml.Node, factDictionary: FactDictionary): Input = {
+  def extractFromFgSet(node: xml.Node, factDictionary: FactDictionary): Input = {
     val path = node \@ "path"
+    val question = node \ "question"
     // Handle the <select> as a special case
     val selectNode = node \ "select"
     if (selectNode.nonEmpty) {
@@ -84,7 +87,7 @@ object Input {
     inputNode \@ "type" match {
       case "text"    => Input.text
       case "int"     => Input.int
-      case "boolean" => Input.boolean
+      case "boolean" => Input.boolean(question.text.trim)
       case "dollar"  => Input.dollar
       case "date"    => Input.date
       case x         => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")

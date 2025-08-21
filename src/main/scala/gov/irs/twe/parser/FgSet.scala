@@ -12,10 +12,12 @@ enum FgSetNode {
 
 case class FgSet(path: String, condition: Option[Condition], input: Input, nodes: List[FgSetNode]) {
   def html(): xml.Elem = {
+
     val questionXml = this.nodes.map {
       case FgSetNode.input(input)       => input.html(path)
-      case FgSetNode.question(question) => <label for={path}>{question}</label>
-      case FgSetNode.rawHTML(x)         => x
+      case FgSetNode.question(question) =>
+        if (input.typeString == "boolean") "" else <label for={path}>{question}</label>
+      case FgSetNode.rawHTML(x) => x
     }
 
     val condition = this.condition.map(_.path).orNull
@@ -35,7 +37,7 @@ object FgSet {
   def parse(node: xml.Node, factDictionary: FactDictionary): FgSet = {
     val path = node \@ "path"
     val condition = Condition.getCondition(node, factDictionary)
-    val input = Input.extractFromQuestion(node, factDictionary)
+    val input = Input.extractFromFgSet(node, factDictionary)
 
     validateFgSet(path, input, factDictionary)
     val nodes = (node \ "_")
@@ -55,11 +57,11 @@ object FgSet {
     validateFact(path, factDictionary)
     val typeNode = factDictionary.getDefinition(path).typeNode
     val inputAndNodeTypeMismatch = input match {
-      case Input.text    => typeNode != "StringNode"
-      case Input.int     => typeNode != "IntNode"
-      case Input.boolean => typeNode != "BooleanNode"
-      case Input.dollar  => typeNode != "DollarNode"
-      case Input.date    => typeNode != "DayNode"
+      case Input.text       => typeNode != "StringNode"
+      case Input.int        => typeNode != "IntNode"
+      case Input.boolean(_) => typeNode != "BooleanNode"
+      case Input.dollar     => typeNode != "DollarNode"
+      case Input.date       => typeNode != "DayNode"
       // We could make this more strict
       case Input.select(_, _) => typeNode != "EnumNode"
     }

@@ -20,12 +20,12 @@
       </fg-set>
 
       <fg-set path="/primaryFilerIsBlind">
-        <label>Are you blind?</label>
+        <question>Are you blind?</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/primaryFilerIsClaimedOnAnotherReturn">
-        <label>Can anyone else claim you as a dependent on their tax return?</label>
+        <question>Can anyone else claim you as a dependent on their tax return?</question>
         <input type="boolean" />
       </fg-set>
 
