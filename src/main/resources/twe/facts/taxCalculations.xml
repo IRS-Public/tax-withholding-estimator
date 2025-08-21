@@ -17,21 +17,6 @@
       </Derived>
     </Fact>
 
-    <Fact path="/totalOwed">
-      <Derived>
-        <Round>
-          <Subtract>
-            <Minuend>
-              <Dependency path="/tentativeTaxFromTaxableIncome" />
-            </Minuend>
-            <Subtrahends>
-              <Dependency module="income" path="/totalYearToDateJobsWithholding" />
-            </Subtrahends>
-          </Subtract>
-        </Round>
-      </Derived>
-    </Fact>
-
     <Fact path="/agi">
       <Name>Adjusted Gross Income</Name>
       <Description>Total income to report on line 11 of Form 1040.</Description>

@@ -91,7 +91,6 @@
         <Round>
           <Add>
             <Dependency path="/actualChildTaxCreditAmount" />
-            <Dependency path="/actualChildTaxCreditAmount" />
             <Dependency path="/actualEarnedIncomeTaxCreditAmount" />
             <Dependency path="/actualChildAndDependentCareTaxCreditAmount" />
             <Dependency path="/actualSaversTaxCreditAmount" />

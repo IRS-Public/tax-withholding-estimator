@@ -46,15 +46,34 @@
 
       <h2>Jobs</h2>
       <fg-collection path="/jobs">
-        <fg-set path="/jobs/*/income">
-          <question>Job's total income for the year</question>
+        <fg-set path="/jobs/*/startDate">
+          <question>Job's start date</question>
+          <input type="date" />
+        </fg-set>
+        <fg-set path="/jobs/*/endDate">
+          <question>Job's end date</question>
+          <input type="date" />
+        </fg-set>
+        <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
+          <question>Job's most recent pay period end</question>
+          <input type="date" />
+        </fg-set>
+        <fg-set path="/jobs/*/mostRecentPayDate">
+          <question>Job's most recent pay date</question>
+          <input type="date" />
+        </fg-set>
+        <fg-set path="/jobs/*/yearToDateIncome">
+          <question>Job's year-to-date income</question>
           <input type="dollar" />
         </fg-set>
         <fg-set path="/jobs/*/yearToDateWithholding">
           <question>Job's year-to-date withholding</question>
           <input type="dollar" />
         </fg-set>
-
+        <fg-set path="/jobs/*/averagePayPerPayPeriod">
+          <question>Job's average pay per pay period</question>
+          <input type="dollar" />
+        </fg-set>
         <fg-set path="/jobs/*/payFrequency">
           <question>Job's pay frequency</question>
           <select options-path="/jobs/*/payFrequency">

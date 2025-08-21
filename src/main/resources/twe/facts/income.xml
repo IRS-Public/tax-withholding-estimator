@@ -8,11 +8,23 @@
       </Writable>
     </Fact>
 
-    <Fact path="/jobs/*/income">
-      <Description>The total income from a specific job</Description>
+    <Fact path="/jobs/*/yearToDateIncome">
       <Writable>
         <Dollar />
       </Writable>
+    </Fact>
+
+    <Fact path="/jobs/*/income">
+      <Description>The total income from a specific job</Description>
+      <Derived>
+        <Add>
+          <Multiply>
+            <Dependency path="../averagePayPerPayPeriod" />
+            <Dependency path="../remainingPayPeriods" />
+          </Multiply>
+          <Dependency path="../yearToDateIncome" />
+        </Add>
+      </Derived>
     </Fact>
 
     <Fact path="/jobs/*/yearToDateWithholding">
@@ -501,14 +513,7 @@
               </Equal>
             </When>
             <Then>
-              <Subtract>
-                <Minuend>
-                  <Dependency path="/totalIncome" />
-                </Minuend>
-                <Subtrahends>
-                  <Dependency path="/totalJobsIncome" />
-                </Subtrahends>
-              </Subtract>
+              <Dependency path="/totalNonjobsIncome" />
             </Then>
           </Case>
           <Case>
@@ -539,7 +544,44 @@
               </Equal>
             </When>
             <Then>
-              <Dependency path="/totalDeductions" />
+              <Dependency path="/adjustmentsToIncome" />
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/jobs/*/w4Line4c">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path=".." />
+                </Left>
+                <Right>
+                  <Dependency path="/highestIncomeJob" />
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Dependency path="/withholdingGap" />
+                </Dividend>
+                <Divisors>
+                  <Dependency path="../remainingPayPeriods" />
+                </Divisors>
+              </Divide>
             </Then>
           </Case>
           <Case>
@@ -1433,11 +1475,55 @@
     </Fact>
 
     <Fact path="/totalYearToDateJobsWithholding">
-      <Description>Total withholding for all jobs</Description>
+      <Description>Total actual withholding for all jobs</Description>
       <Derived>
         <CollectionSum>
           <Dependency path="/jobs/*/yearToDateWithholding" />
         </CollectionSum>
+      </Derived>
+    </Fact>
+
+    <Fact path="/totalRestOfYearBaseWithholding">
+      <Description>Total forecast base withholding for all jobs (excludes any additional elected on
+        W-4 Line 4(c)</Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobs/*/restOfYearBaseWithholding" />
+        </CollectionSum>
+      </Derived>
+    </Fact>
+
+    <Fact path="/withholdingGap">
+      <Description>The rest-of-year withholding gap: remaining taxes owed after actual year-to-date
+        withholdings and forecast base withholdings. Similar to Form W-4 Line 4(c), but that is per
+        pay period.</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/tentativeTaxFromTaxableIncome" />
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/totalYearToDateJobsWithholding" />
+            <Dependency path="/totalRestOfYearBaseWithholding" />
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+
+    <!-- This is a temporary definition, kind of circular with other facts. -->
+    <Fact path="/totalNonjobsIncome">
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/totalIncome" />
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/totalJobsIncome" />
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
       </Derived>
     </Fact>
 

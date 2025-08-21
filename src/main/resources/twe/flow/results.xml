@@ -8,8 +8,17 @@
       <p>Taxable income: <fg-show path="/taxableIncome" /></p>
       <p>Total taxes owed: <fg-show path="/tentativeTaxFromTaxableIncome" /></p>
       <p>Total year to date jobs withholding: <fg-show path="/totalYearToDateJobsWithholding" /></p>
-      <p>Balance due or refund: <fg-show path="/totalOwed" /></p>
-      <p>Total Credits: <fg-show path="/totalCredits"/></p>
+      <p>Total rest of year base withholding: <fg-show path="/totalRestOfYearBaseWithholding" /></p>
+      <p>Rest of year withholding gap: <fg-show path="/withholdingGap" /></p>
+
+      <h1>Form W-4 for highest paying job</h1>
+      <p>Line 1 filing status: <fg-show path="/filingStatus" /></p>
+      <p>Line 2(c) checkbox: <fg-show path="/highestIncomeJob/useTwoJobLogic" /></p>
+      <p>Line 3 total credits: <fg-show path="/totalCredits" /></p>
+      <p>Line 4(a) other income (not from jobs): <fg-show path="/totalNonjobsIncome" /></p>
+      <p>Line 4(b) deductions: <fg-show path="/highestIncomeJob/w4Line4b" /></p>
+      <p>Line 4(c) extra withholding: <fg-show path="/highestIncomeJob/w4Line4c" /></p>
+      <p>Remaining pay periods: <fg-show path="/highestIncomeJob/remainingPayPeriods" /></p>
     </section>
   </page>
 </FlowConfigModule>
