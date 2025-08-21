@@ -17,6 +17,7 @@ function saveFactGraph() {
 }
 
 /**
+ * Debug utility to load a fact graph from the console
  * @param {string} factGraphAsString - stringified version of a JSON object
  */
 function loadFactGraph(factGraphAsString) {
@@ -75,8 +76,12 @@ class FgSet extends HTMLElement {
     document.removeEventListener('fg-clear', this.clear);
   }
 
-  render() {
+  clearAlerts() {
     this.querySelector('div.alert--warning')?.remove()
+  }
+
+  render() {
+    this.clearAlerts()
 
     // Show error if there is one
     if (this.error) {
@@ -129,15 +134,12 @@ class FgSet extends HTMLElement {
       }
     }
 
-    // Clear all errors and re-render
+    // Clear error and alerts
     this.error = null;
-    this.render();
+    this.clearAlerts()
   }
 
   setInputValueFromFactValue() {
-    // Don't attempt to set non-normalized wildcard facts
-    if (this.path.includes('*')) return
-
     let fact = factGraph.get(this.path)
 
     let value
@@ -251,39 +253,40 @@ customElements.define('fg-set', FgSet)
  * <fg-collection> - Expandable collection list
  */
 class FgCollection extends HTMLElement {
+  constructor() {
+    super()
+
+    // Make listener a persistent function so we can remove it later
+    this.addItemListener = () => this.addItem();
+  }
+
   connectedCallback() {
-    this.itemChildren = this.innerHTML
-    this.innerHTML = ""
-
     this.path = this.getAttribute('path')
-
-    this.addItemButton = document.createElement('button')
-    this.addItemButton.innerText = 'Add Item'
-    this.addItemButton.addEventListener(('click'), () => this.addItem())
-    this.appendChild(this.addItemButton)
+    this.addItemButton = this.querySelector('.fg-collection__add-item')
+    this.addItemButton.addEventListener('click', this.addItemListener)
 
     // Add any items that currently exist in this collection
     const ids = factGraph.getCollectionIds(this.path)
     ids.map(id => this.addItem(id))
   }
 
-  addItem(id) {
-    const fieldset = document.createElement('fieldset')
+  disconnectedCallback() {
+    this.addItemButton.removeEventListener('click', this.addItemListener)
+  }
 
-    let collectionId = id
-    if (!collectionId) {
-      collectionId = crypto.randomUUID()
+  addItem(id) {
+    const collectionId = id ?? crypto.randomUUID()
+
+    if(!id) {
       factGraph.addToCollection(this.path, collectionId)
       saveFactGraph()
     }
 
     const collectionItem = document.createElement('fg-collection-item')
-    collectionItem.itemChildren = this.itemChildren
-    collectionItem.path = makeCollectionIdPath(`${this.path}/*`, collectionId);
-    collectionItem.collectionId = collectionId
+    collectionItem.setAttribute(`collectionPath`, this.path)
+    collectionItem.setAttribute(`collectionId`, collectionId)
 
-    fieldset.appendChild(collectionItem)
-    this.appendChild(fieldset)
+    this.appendChild(collectionItem)
     document.dispatchEvent(new CustomEvent('fg-update'))
   }
 
@@ -291,46 +294,55 @@ class FgCollection extends HTMLElement {
 customElements.define('fg-collection', FgCollection)
 
 class FgCollectionItem extends HTMLElement {
+  constructor() {
+    super()
+
+    // Make listener a persistent function so we can remove it later
+    this.clearListener = () => this.clear()
+    this.removeItemListener = () => {
+      this.clear();
+      this.dispatchEvent(new CustomEvent('fg-update'));
+    }
+  }
+
   connectedCallback() {
-    this.collectionId = this.collectionId
+    console.debug('Connecting', this)
 
-    // It's important to the lifecycle of these elements that we create them in a template:
-    // template.insertAdjacentHTML parses and creates the children, but they're not in the DOM yet.
-    // This gives FgCollectionItem a chance to update the paths of all <fg-set> children before the
-    // <fg-set> elements run their connectedCallback, which needs the full path, with an ID
-    const template = document.createElement('template')
-    template.insertAdjacentHTML('afterbegin', this.itemChildren)
+    // Get our template from the parent fg-collection
+    const fgCollection = this.closest('fg-collection')
+    const templateContent = fgCollection.querySelector('.fg-collection__item-template').content.cloneNode(true)
 
-    this.clearListener = () => this.clear();
-    document.addEventListener(`fg-clear`, this.clearListener);
+    // Update all abstract paths in the template to include the collection id
+    const collectionId = this.getAttribute('collectionId');
 
-    const setters = template.querySelectorAll('fg-set')
-    // These are all the attributes that we need to update from collection/*/fact to collection/#id/fact
+    const setters = templateContent.querySelectorAll('fg-set')
     const attributes = ['path', 'condition']
     for (const setter of setters) {
       for (const attribute of attributes) {
         const attributeWithWildcard = setter.getAttribute(attribute)
         if (attributeWithWildcard) {
-          const attributeWithId = attributeWithWildcard.replace('*', '#' + this.collectionId)
+          const attributeWithId = attributeWithWildcard.replace('*', '#' + collectionId)
           setter.setAttribute(attribute, attributeWithId)
         }
       }
     }
 
-    for (const child of template.children) {
-      this.appendChild(child.cloneNode(true))
-    }
+    this.append(templateContent);
 
-    this.removeItemListener = () => {
-      this.clear();
-      this.dispatchEvent(new CustomEvent(`fg-update`));
-    }
+    this.removeButton = this.querySelector('.fg-collection-item__remove-item')
+    this.removeButton.addEventListener('click', this.removeItemListener)
 
-    const removeButton = document.createElement(`button`);
-    removeButton.innerText = `Remove item`;
-    removeButton.addEventListener(`click`, this.removeItemListener);
+    document.addEventListener('fg-clear', this.clearListener)
+  }
 
-    this.prepend(removeButton)
+  disconnectedCallback() {
+    console.debug('Disconnecting', this)
+
+    this.removeButton.removeEventListener('click', this.removeItemListener)
+    document.removeEventListener('fg-clear', this.clearListener)
+
+    // Reset content
+    this.innerHTML = ''
   }
 
   clear() {
@@ -338,11 +350,13 @@ class FgCollectionItem extends HTMLElement {
       fgSet.remove();
     }
 
-    factGraph.delete(this.path);
+    const collectionPath = this.getAttribute(`collectionPath`)
+    const collectionId = this.getAttribute(`collectionId`)
+    factGraph.delete(makeCollectionIdPath(`${collectionPath}/*`, collectionId));
     saveFactGraph()
 
     // Remove this element and its parent fieldset from the DOM after removing the item from the fact graph
-    this.parentElement.remove();
+    this.remove();
   }
 }
 customElements.define('fg-collection-item', FgCollectionItem)

@@ -19,8 +19,20 @@ case class FgCollection(path: String, condition: Option[Condition], nodes: List[
     val condition = this.condition.map(_.path).orNull
     val operator = this.condition.map(_.operator.toString).orNull
 
+    // TODO: integrate localization instead of inlining text
+    // TODO: Change return type https://github.com/IRSDigitalService/tax_withholding_estimator/issues/195
     <fg-collection path={this.path} condition={condition} operator={operator}>
-      {collectionFacts}
+      <template class="fg-collection__item-template">
+        <fieldset>
+          <div class="fg-collection-item__controls">
+            <button type="button" class="fg-collection-item__remove-item">Remove Item</button>
+          </div>
+          <div class="fg-collection-item__fields">
+            {collectionFacts}
+          </div>
+        </fieldset>
+      </template>
+      <button type="button" class="fg-collection__add-item">Add Item</button>
     </fg-collection>
   }
 }
