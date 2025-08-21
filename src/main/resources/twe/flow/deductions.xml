@@ -3,91 +3,91 @@
     <section>
       <h1>Qualified Personal Vehicle Loan Interest Deduction</h1>
       <fg-set path="/isVehiclePurchasedAfterEffectiveDate">
-        <label>Have you purchased a motor vehicle after 12/31/2024?</label>
+        <question>Have you purchased a motor vehicle after 12/31/2024?</question>
         <input type="boolean" />
       </fg-set>
       <fg-set path="/isQpvIndebtednessIncurredAfterEffectiveDate"
         if-true="/isVehiclePurchasedAfterEffectiveDate">
-        <label>Did you incur a loan when you purchased this vehicle and was this loan
+        <question>Did you incur a loan when you purchased this vehicle and was this loan
           originated after
           12/31/2024?
-        </label>
+        </question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/isVehicleLoanFirstLien"
         if-true="/isQpvIndebtednessIncurredAfterEffectiveDate">
-        <label>Was the loan secured as the first lien on the vehicle?</label>
+        <question>Was the loan secured as the first lien on the vehicle?</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/isVehicleForPersonalUse" if-true="/isVehicleLoanFirstLien">
-        <label>Is the vehicle intended for personal use and not commercial or fleet use?</label>
+        <question>Is the vehicle intended for personal use and not commercial or fleet use?</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/isVehicleLoanFinancingFleetSale" if-true="/isVehicleForPersonalUse">
-        <label>Was the loan originated for the purposes of financing a fleet sale?</label>
+        <question>Was the loan originated for the purposes of financing a fleet sale?</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/isVehicleLeaseFinanced" if-false="/isVehicleLoanFinancingFleetSale">
-        <label>Are you leasing the vehicle?</label>
+        <question>Are you leasing the vehicle?</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/hasSalvageTitleOrPurchasedToScrap" if-false="/isVehicleLeaseFinanced">
-        <label>Did you purchase the vehicle with the intend to scrap it for parts or is the
+        <question>Did you purchase the vehicle with the intend to scrap it for parts or is the
           title a salvage
           title?
-        </label>
+        </question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/isTaxpayerOriginalUser" if-false="/hasSalvageTitleOrPurchasedToScrap">
-        <label>Are you the original and primary user of the vehicle</label>
+        <question>Are you the original and primary user of the vehicle</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/doesHaveVIN" if-true="/isTaxpayerOriginalUser">
-        <label>Do you have a Vehicle Identification Number for the Vehicle? You can check on
+        <question>Do you have a Vehicle Identification Number for the Vehicle? You can check on
           https://www.nhtsa.gov/vin-decoder
-        </label>
+        </question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/isVehicleManufacturedForStreetsRoadsAndHighways" if-true="/doesHaveVIN">
-        <label>Is the vehicle meant for driving on public streets, roads and highways?</label>
+        <question>Is the vehicle meant for driving on public streets, roads and highways?</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/isVehicleGTETwoWheels"
         if-true="/isVehicleManufacturedForStreetsRoadsAndHighways">
-        <label>Does the vehicle have at least two wheels?</label>
+        <question>Does the vehicle have at least two wheels?</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/isVehicleApplicableType" if-true="/isVehicleGTETwoWheels">
-        <label>Is the vehicle a car, minivan, van, sport utility vehicle, pickup truck, or
+        <question>Is the vehicle a car, minivan, van, sport utility vehicle, pickup truck, or
           motorcycle?
-        </label>
+        </question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/isVehicleUnderGVWRMax" if-true="/isVehicleApplicableType">
-        <label>Is the Gross Vehicle Weight Rating below 14,000 lbs?</label>
+        <question>Is the Gross Vehicle Weight Rating below 14,000 lbs?</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/isVehicleAssembledInUSA" if-true="/isVehicleUnderGVWRMax">
-        <label>Was the final assembly of the vehicle in the United States?</label>
+        <question>Was the final assembly of the vehicle in the United States?</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/personalVehicleLoanInterestAmount" if-true="/isVehicleAssembledInUSA">
-        <label>How much interest have you paid on the loan during the current taxable year
+        <question>How much interest have you paid on the loan during the current taxable year
           to-date?
-        </label>
+        </question>
         <input type="dollar" />
       </fg-set>
 

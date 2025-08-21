@@ -26,12 +26,12 @@ class WebsiteSpec extends AnyFunSpec {
       <page route="/" title="Basic Test Form">
         <section>
           <fg-set path="/filer/name">
-            <label>What is your full name?</label>
+            <question>What is your full name?</question>
             <input type="text"/>
           </fg-set>
 
           <fg-set path="/isUsCitizenFullYear">
-            <label>Were you a US Citizen for all of TY2025?</label>
+            <question>Were you a US Citizen for all of TY2025?</question>
             <input type="boolean"/>
           </fg-set>
         </section>

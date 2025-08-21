@@ -5,22 +5,22 @@
 
       <h2>Educator Expense Adjustment</h2>
       <fg-set path="/actualEducatorExpensesAdjustmentAmount">
-        <label>How much educator expenses have you paid so far this tax year?</label>
+        <question>How much educator expenses have you paid so far this tax year?</question>
         <input type="dollar"/>
       </fg-set>
 
       <h2>Student Loan Interest Adjustment</h2>
       <fg-set path="/actualStudentLoanInterestAdjustmentAmount">
-        <label>How much student loan interest have you paid so far this tax year</label>
+        <question>How much student loan interest have you paid so far this tax year</question>
         <input type="dollar"/>
 
       </fg-set>
 
       <h2>HSA Contribution Adjustment</h2>
       <fg-set path="/actualHsaTotalDeductibleAmount">
-        <label>What is the total deductible amount of HSA contributions you have made this
+        <question>What is the total deductible amount of HSA contributions you have made this
           year?
-        </label>
+        </question>
         <input type="dollar"/>
       </fg-set>
 

@@ -53,14 +53,9 @@
   </define>
 
   <define name="fg-set-content">
-    <choice>
-      <element name="label">
-        <text/>
-      </element>
-      <element name="question">
-        <text/>
-      </element>
-    </choice>
+    <element name="question">
+      <text/>
+    </element>
     <choice>
         <element name="input">
           <attribute name="type">

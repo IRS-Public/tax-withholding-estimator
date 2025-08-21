@@ -30,33 +30,33 @@
       </fg-set>
 
       <fg-set path="/secondaryFilerDateOfBirth" if-true="/isFilingStatusMFJ">
-        <label>What is your spouse's date of birth?</label>
+        <question>What is your spouse's date of birth?</question>
         <input type="date" />
       </fg-set>
 
       <fg-set path="/secondaryFilerIsBlind" if-true="/isFilingStatusMFJ">
-        <label>Is your spouse blind?</label>
+        <question>Is your spouse blind?</question>
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/secondaryFilerIsClaimedOnAnotherReturn" if-true="/isFilingStatusMFJ">
-        <label>Can anyone else claim your spouse as a dependent on their tax return?</label>
+        <question>Can anyone else claim your spouse as a dependent on their tax return?</question>
         <input type="boolean" />
       </fg-set>
 
       <h2>Jobs</h2>
       <fg-collection path="/jobs">
         <fg-set path="/jobs/*/income">
-          <label>Job's total income for the year</label>
+          <question>Job's total income for the year</question>
           <input type="dollar" />
         </fg-set>
         <fg-set path="/jobs/*/yearToDateWithholding">
-          <label>Job's year-to-date withholding</label>
+          <question>Job's year-to-date withholding</question>
           <input type="dollar" />
         </fg-set>
 
         <fg-set path="/jobs/*/payFrequency">
-          <label>Job's pay frequency</label>
+          <question>Job's pay frequency</question>
           <select options-path="/jobs/*/payFrequency">
             <option value="weekly">Weekly</option>
             <option value="biWeekly">Biweekly</option>
