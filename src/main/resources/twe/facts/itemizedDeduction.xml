@@ -6,13 +6,13 @@
       <Name>Itemized Deduction</Name>
       <Derived>
         <Add>
-          <Dependency path="/qualifiedMortgageInterest"/>
-          <Dependency path="/qualifiedInvestmentInterestExpenses"/>
-          <Dependency path="/stateAndLocalTaxes"/>
-          <Dependency path="/medicalAndDentalExpenses"/>
-          <Dependency path="/charitableContributions"/>
-          <Dependency path="/casualtyLosses"/>
-          <Dependency path="/otherDeductions"/>
+          <Dependency path="/qualifiedMortgageInterestTotal" />
+          <Dependency path="/qualifiedInvestmentInterestExpensesTotal" />
+          <Dependency path="/stateAndLocalTaxPaymentsTotal" />
+          <Dependency path="/medicalAndDentalExpensesTotal" />
+          <Dependency path="/charitableContributionsTotal" />
+          <Dependency path="/casualtyLossesTotal" />
+          <Dependency path="/otherDeductionsTotal" />
         </Add>
       </Derived>
     </Fact>
@@ -21,55 +21,229 @@
       <Name>Qualified mortgage interest </Name>
       <Description>Qualified mortgage interest including points (if you're the buyer)
       </Description>
-      <Derived>
-        <CollectionSum><Dollar>0</Dollar></CollectionSum>
-      </Derived>
+      <Writable>
+        <Collection />
+      </Writable>
+    </Fact>
+
+    <Fact path="/qualifiedMortgageInterest/*/interest">
+      <Description>Total mortgage interest from a mortgage loan</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
     </Fact>
 
     <Fact path="/qualifiedInvestmentInterestExpenses">
       <Name>Investment interest</Name>
       <Description>Investment interest (limited to your net investment income)</Description>
-      <Derived>
-        <CollectionSum><Dollar>0</Dollar></CollectionSum>
-      </Derived>
+      <Writable>
+        <Collection />
+      </Writable>
     </Fact>
-    <Fact path="/stateAndLocalTaxes">
+
+
+    <Fact path="/qualifiedInvestmentInterestExpenses/*/expense">
+      <Description>Total mortgage interest from a mortgage loan</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+
+    <Fact path="/stateAndLocalTaxPayments">
       <Name>State and Local Taxes</Name>
-      <Description>Capped at $10,000. There are four types of deductible nonbusiness taxes: 1) State, local, and foreign income taxes; 2) State and local general sales taxes; 3) State and local real estate taxes; 4) State and local personal property taxes</Description>
-      <!--      TODO: update this to 40k cap under OB3-->
-      <Derived>
-        <CollectionSum><Dollar>0</Dollar></CollectionSum>
-      </Derived>
+      <Description>There are four types of deductible nonbusiness SALT taxes: 1)
+        State, local, and foreign income taxes; 2) State and local general sales taxes; 3) State and
+        local real estate taxes; 4) State and local personal property taxes</Description>
+      <Writable>
+        <Collection />
+      </Writable>
     </Fact>
+
+
+    <Fact path="/stateAndLocalTaxPayments/*/taxPayment">
+      <Description>Total mortgage interest from a mortgage loan</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+
     <Fact path="/medicalAndDentalExpenses">
       <Name>Estimated medical and dental expenses</Name>
-      <Description>Total expenses that exceed 7.5% of your adjusted gross income. Can include the total estimated amount paid for health insurance premiums, not including any amount the employer pays</Description>
-      <Derived>
-        <CollectionSum><Dollar>0</Dollar></CollectionSum>
-      </Derived>
+      <Description>Total expenses that exceed 7.5% of your adjusted gross income. Can include the
+        total estimated amount paid for health insurance premiums, not including any amount the
+        employer pays</Description>
+      <Writable>
+        <Collection />
+      </Writable>
     </Fact>
+
+
+    <Fact path="/medicalAndDentalExpenses/*/expense">
+      <Description>Total amount for a single medical or dental expense category</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+
     <Fact path="/charitableContributions">
       <Name>Charitable Contributions</Name>
       <Description>Charitable contributions to qualified organizations</Description>
-      <Derived>
-        <CollectionSum><Dollar>0</Dollar></CollectionSum>
-      </Derived>
+      <Writable>
+        <Collection />
+      </Writable>
     </Fact>
+
+
+    <Fact path="/charitableContributions/*/contribution">
+      <Description>Total contribution amount from a specific charitable contribution</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+
     <Fact path="/casualtyLosses">
       <Name>Casualty Losses</Name>
-      <Description>Casualty and theft losses relating to your home, household items, and vehicles if the loss took place in a federally declared disaster area</Description>
+      <Description>Casualty and theft losses relating to your home, household items, and vehicles if
+        the loss took place in a federally declared disaster area</Description>
+      <Writable>
+        <Collection />
+      </Writable>
+    </Fact>
+
+
+    <Fact path="/casualtyLosses/*/loss">
+      <Description>Total casualty loss from a specific loss event</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+
+    <Fact path="/otherDeductions">
+      <Name>Other Deductions</Name>
+      <Writable>
+        <Collection />
+      </Writable>
+    </Fact>
+
+
+    <Fact path="/otherDeductions/*/payment">
+      <Description>Total other expenses for a single deductible item</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+
+    <Fact path="/qualifiedMortgageInterestTotal">
+      <Description>Total of all /qualifiedMortgageInterest</Description>
       <Derived>
         <CollectionSum>
-          <Dollar>0</Dollar>
+          <Dependency path="/qualifiedMortgageInterest/*/interest" />
         </CollectionSum>
       </Derived>
     </Fact>
-    <Fact path="/otherDeductions">
-      <Name>Other Deductions</Name>
+
+    <Fact path="/qualifiedInvestmentInterestExpensesTotal">
+      <Description>Total of all /qualifiedInvestmentInterestExpenses items </Description>
       <Derived>
-        <CollectionSum><Dollar>0</Dollar></CollectionSum>
+        <CollectionSum>
+          <Dependency path="/qualifiedInvestmentInterestExpenses/*/expense" />
+        </CollectionSum>
       </Derived>
     </Fact>
+
+
+    <Fact path="/stateAndLocalTaxPaymentsApplicableLimitationAmount">
+      <Name>SALT tax payment applicable limitation amount</Name>
+      <Description>Maximum ammount that can be itemized for SALT</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>40000</Dollar>
+      </Derived>
+    </Fact>
+
+    <Fact path="/stateAndLocalTaxPaymentsTotal">
+      <Name>Total of all SALT payments </Name>
+      <Description>Total of all SALT payment items, up to $40,000 limit </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <CollectionSum>
+                    <Dependency path="/stateAndLocalTaxPayments/*/taxPayment" />
+                  </CollectionSum>
+                </Left>
+                <Right>
+                  <Dependency path="/stateAndLocalTaxPaymentsApplicableLimitationAmount" />
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Dependency path="/stateAndLocalTaxPaymentsApplicableLimitationAmount" />
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <CollectionSum>
+                <Dependency path="/stateAndLocalTaxPayments/*/taxPayment" />
+              </CollectionSum>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/medicalAndDentalExpensesTotal">
+      <Name>Total of all medical and dental expenses </Name>
+      <Description>Aggregated total of all medical and dental expense items </Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/medicalAndDentalExpenses/*/expense" />
+        </CollectionSum>
+      </Derived>
+    </Fact>
+
+    <Fact path="/charitableContributionsTotal">
+      <Name>Total of all charitable contributions </Name>
+      <Description>Total of all /charitableContributions items </Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/charitableContributions/*/contribution" />
+        </CollectionSum>
+      </Derived>
+    </Fact>
+
+    <Fact path="/casualtyLossesTotal">
+      <Name>Total of all casualty loss items </Name>
+      <Description>Total of all /casualtyLosses items </Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/casualtyLosses/*/loss" />
+        </CollectionSum>
+      </Derived>
+    </Fact>
+
+    <Fact path="/otherDeductionsTotal">
+      <Name> Total of all other itemized deductions </Name>
+      <Description>Total of all /otherDeductions items </Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/otherDeductions/*/payment" />
+        </CollectionSum>
+      </Derived>
+    </Fact>
+
 
   </Facts>
 </FactDictionaryModule>
