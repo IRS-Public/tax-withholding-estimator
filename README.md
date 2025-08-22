@@ -192,6 +192,14 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 ```
 
+## Pre-commit
+
+Install  and initialize pre-commit with
+
+```bash
+brew install pre-commit
+pre-commit install
+```
 
 ## How to follow the code
 
