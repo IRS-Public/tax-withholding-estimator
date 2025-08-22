@@ -48,7 +48,16 @@ enum Input {
         }
       </select>
       case Input.dollar =>
-        <input class="usa-input" id={path} type="number" step="0.01" name={path} autocomplete="off" required="true"/>
+        <div class="usa-input-group">
+          <div class="usa-input-prefix" aria-hidden="true">
+            <svg aria-hidden="true" role="img" focusable="false" class="usa-icon">
+              <use href="/resources/uswds-3.13.0/img/sprite.svg#attach_money"></use>
+            </svg>
+          </div>
+          <input class="usa-input" id={path} type="text" inputmode="numeric" name={
+          path
+        } autocomplete="off" required="true"/>
+        </div>
       case Input.date => <input id={path} class="usa-input" type="date" name={path} autocomplete="off" required="true"/>
       case Input.text => <input id={path} class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
       case Input.int  => <input id={path} class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
