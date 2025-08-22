@@ -54,7 +54,7 @@
 
   <define name="fg-set-content">
     <element name="question">
-      <text/>
+      <ref name="FlowConfigModuleInlineContent"/>
     </element>
     <choice>
         <element name="input">
@@ -88,9 +88,14 @@
       <attribute name="path">
           <data type="anyURI"/>
       </attribute>
-      <oneOrMore>
-        <ref name="fg-set-module"></ref>
-      </oneOrMore>
+      <interleave>
+        <oneOrMore>
+          <ref name="fg-set-module"></ref>
+        </oneOrMore>
+        <zeroOrMore>
+          <ref name="HtmlBlockContent"/>
+        </zeroOrMore>
+      </interleave>
     </element>
   </define>
 
@@ -110,6 +115,25 @@
     </element>
   </define>
 
+  <define name="HtmlBlockContent">
+    <choice>
+      <element name="h1"><ref name="FlowConfigModuleInlineContent"/></element>
+      <element name="h2"><ref name="FlowConfigModuleInlineContent"/></element>
+      <element name="p"><ref name="FlowConfigModuleInlineContent"/></element>
+    </choice>
+  </define>
+
+  <define name="FlowConfigModuleInlineContent">
+    <mixed>
+      <zeroOrMore>
+        <choice>
+          <element name="strong"><ref name="FlowConfigModuleInlineContent"/></element>
+          <ref name="fg-show-module"/>
+        </choice>
+      </zeroOrMore>
+    </mixed>
+  </define>
+
   <define name="FlowConfigModuleContent">
     <mixed>
       <zeroOrMore>
@@ -119,11 +143,7 @@
             If we add more of the same in the future, those elements would go here.
             These rules essentially say these can appear in any order and can be nested within each other.
            -->
-          <element name="h1"><ref name="FlowConfigModuleContent"/></element>
-          <element name="h2"><ref name="FlowConfigModuleContent"/></element>
-          <element name="p"><ref name="FlowConfigModuleContent"/></element>
-          <element name="strong"><ref name="FlowConfigModuleContent"/></element>
-          <ref name="fg-show-module"/>
+          <ref name="HtmlBlockContent"/>
           <ref name="fg-set-module"/>
           <ref name="fg-collection-module"/>
           <ref name="fg-reset-module"/>

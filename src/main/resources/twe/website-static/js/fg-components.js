@@ -315,14 +315,13 @@ class FgCollectionItem extends HTMLElement {
     // Update all abstract paths in the template to include the collection id
     const collectionId = this.getAttribute('collectionId');
 
-    const setters = templateContent.querySelectorAll('fg-set')
-    const attributes = ['path', 'condition']
-    for (const setter of setters) {
+    const attributes = ['path', 'condition', 'id', 'for', 'name']
+    const nodesWithAbstractPaths = templateContent.querySelectorAll(attributes.map(attr => `[${attr}*="/*/"]`).join(','))
+    for (const node of nodesWithAbstractPaths) {
       for (const attribute of attributes) {
-        const attributeWithWildcard = setter.getAttribute(attribute)
-        if (attributeWithWildcard) {
-          const attributeWithId = attributeWithWildcard.replace('*', '#' + collectionId)
-          setter.setAttribute(attribute, attributeWithId)
+        const path = node.getAttribute(attribute)
+        if (path) {
+          node.setAttribute(attribute, makeCollectionIdPath(path, collectionId))
         }
       }
     }
@@ -365,10 +364,20 @@ customElements.define('fg-collection-item', FgCollectionItem)
  * <fg-show> - Display the current value and/or status of a fact.
  */
 class FgShow extends HTMLElement {
+  constructor() {
+    super()
+
+    this.updateListener = () => this.render()
+  }
+
   connectedCallback() {
     this.path = this.getAttribute('path')
-    document.addEventListener('fg-update', () => this.render())
+    document.addEventListener('fg-update', this.updateListener)
     this.render()
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('fg-update', this.updateListener)
   }
 
   render() {
