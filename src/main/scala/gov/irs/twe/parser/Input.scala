@@ -12,7 +12,7 @@ enum Input {
   case int
   case boolean(question: String)
   case dollar
-  case date
+  case date(question: String)
 
   def typeString: String = this match {
     case Input.text         => "text"
@@ -20,7 +20,7 @@ enum Input {
     case Input.boolean(_)   => "boolean"
     case Input.dollar       => "dollar"
     case Input.select(_, _) => "select"
-    case Input.date         => "date"
+    case Input.date(_)      => "date"
   }
 
   def html(path: String): xml.Elem =
@@ -58,7 +58,58 @@ enum Input {
           path
         } autocomplete="off" required="true"/>
         </div>
-      case Input.date => <input id={path} class="usa-input" type="date" name={path} autocomplete="off" required="true"/>
+      case Input.date(question) =>
+        <fieldset class="usa-fieldset">
+          <legend class="usa-legend">{question}</legend>
+          <div class="usa-memorable-date">
+            <div class="usa-form-group usa-form-group--month usa-form-group--select">
+              <label class="usa-label" for={s"${path}-month"}>Month</label>
+              <select
+                class="usa-select"
+                id={s"${path}-month"}
+                name={s"${path}-month"}>
+                <option value="">- Select -</option>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+            </div>
+            <div class="usa-form-group usa-form-group--day">
+              <label class="usa-label" for={s"${path}-day"}>Day</label>
+              <input
+                class="usa-input"
+                id={s"${path}-day"}
+                name={s"${path}-day"}
+                maxlength="2"
+                pattern="[0-9]*"
+                inputmode="numeric"
+                value=""
+              />
+            </div>
+            <div class="usa-form-group usa-form-group--year">
+              <label class="usa-label" for={s"${path}-year"}>Year</label>
+              <input
+                class="usa-input"
+                id={s"${path}-year"}
+                name={s"${path}-year"}
+                minlength="4"
+                maxlength="4"
+                pattern="[0-9]*"
+                inputmode="numeric"
+                value=""
+              />
+            </div>
+          </div>
+        </fieldset>
       case Input.text => <input id={path} class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
       case Input.int  => <input id={path} class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
     }
@@ -98,7 +149,7 @@ object Input {
       case "int"     => Input.int
       case "boolean" => Input.boolean(question.text.trim)
       case "dollar"  => Input.dollar
-      case "date"    => Input.date
+      case "date"    => Input.date(question.text.trim)
       case x         => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
     }
   }

@@ -43,7 +43,18 @@ class FgSet extends HTMLElement {
 
     switch (this.inputType) {
       // This switch statement is intentionally not exhaustive
-      case 'date':
+      case 'date': {
+        this.addEventListener('change', () => {
+            const allFilled = Array.from(this.inputs).every(input => {
+                return input.value.trim() !== '' && input.value !== '- Select -';
+            });
+
+            if (allFilled) {
+                this.onChange()
+            }
+        });
+        break
+      }
       case 'select':
       case 'boolean':
         for (const input of this.inputs) {
@@ -123,7 +134,11 @@ class FgSet extends HTMLElement {
         break
       }
       case 'text':
-      case 'date':
+      case 'date': {
+        this.querySelector('select[name*="-month"]').value = '';
+        this.querySelector('input[name*="-day"]').value = '';
+        this.querySelector('input[name*="-year"]').value = '';
+      }
       case 'int':
       case 'dollar': {
         this.querySelector('input').value = ''
@@ -140,6 +155,7 @@ class FgSet extends HTMLElement {
   }
 
   setInputValueFromFactValue() {
+    console.debug(`Setting input value for ${this.path} of type ${this.inputType}`)
     let fact = factGraph.get(this.path)
 
     let value
@@ -162,7 +178,14 @@ class FgSet extends HTMLElement {
       }
       case 'text':
       case 'int':
-      case 'date':
+      case 'date': {
+        const dateString = value;
+        const [year, month, day] = dateString ? dateString.split('-') : ["", "", ""];
+        this.querySelector('select[name*="-month"]').value = month;
+        this.querySelector('input[name*="-day"]').value = day;
+        this.querySelector('input[name*="-year"]').value = year;
+        break
+      }
       case 'dollar': {
         this.querySelector('input').value = value
         break
@@ -174,6 +197,7 @@ class FgSet extends HTMLElement {
   }
 
   getFactValueFromInputValue() {
+    console.debug(`Getting input value for ${this.path} of type ${this.inputType}`);
     switch (this.inputType) {
       case 'boolean': {
         return this.querySelector('input:checked')?.value
@@ -182,7 +206,14 @@ class FgSet extends HTMLElement {
         return this.querySelector('select')?.value
       }
       case 'text':
-      case 'date':
+      case 'date': {
+        const month = this.querySelector('select[name*="-month"]')?.value;
+        const day= this.querySelector('input[name*="-day"]')?.value;
+        const year= this.querySelector('input[name*="-year"]')?.value;
+        // Adding padStart to day changes user's input from 1 to 01
+        const dateString = `${year}-${month}-${day.padStart(2, '0')}`;
+        return dateString;
+      }
       case 'int':
       case 'dollar': {
         return this.querySelector('input')?.value

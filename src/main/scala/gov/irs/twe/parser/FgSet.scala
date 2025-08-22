@@ -13,10 +13,11 @@ enum FgSetNode {
 case class FgSet(path: String, condition: Option[Condition], input: Input, nodes: List[FgSetNode]) {
   def html(): xml.Elem = {
 
+    val usesFieldset = input.typeString == "boolean" || input.typeString == "date"
     val questionXml = this.nodes.map {
       case FgSetNode.input(input)       => input.html(path)
       case FgSetNode.question(question) =>
-        if (input.typeString == "boolean") "" else <label for={path}>{question}</label>
+        if (usesFieldset) "" else <label for={path}>{question}</label>
       case FgSetNode.rawHTML(x) => x
     }
 
@@ -61,7 +62,7 @@ object FgSet {
       case Input.int        => typeNode != "IntNode"
       case Input.boolean(_) => typeNode != "BooleanNode"
       case Input.dollar     => typeNode != "DollarNode"
-      case Input.date       => typeNode != "DayNode"
+      case Input.date(_)    => typeNode != "DayNode"
       // We could make this more strict
       case Input.select(_, _) => typeNode != "EnumNode"
     }
