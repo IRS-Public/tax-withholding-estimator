@@ -1,12 +1,213 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/overtimeCompensationDeduction">
-      <Name>Overtime Compensation deduction</Name>
-      <Description>OB3 Section 70202: overtime compensation deduction</Description>
+    <Fact path="/maxOvertimeCompensationDeductionAmountNonMFJ">
+      <Name>Maximum overtime compensation deduction for non MFJ filers</Name>
+      <TaxYear>2025</TaxYear>
       <Derived>
-        <Dollar>0</Dollar>
+        <Dollar>12500</Dollar>
       </Derived>
     </Fact>
+
+    <Fact path="/maxOvertimeCompensationDeductionAmountMFJ">
+      <Name>Maximum overtime compensation deduction for MFJ filers</Name>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>25000</Dollar>
+      </Derived>
+    </Fact>
+
+    <Fact path="/applicableMaxOvertimeCompensationDeductionAmount">
+      <Name>Maximum overtime compensation deduction </Name>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ" />
+            </When>
+            <Then>
+              <Dependency path="/maxOvertimeCompensationDeductionAmountMFJ" />
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Dependency path="/maxOvertimeCompensationDeductionAmountNonMFJ" />
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+
+    <!--        Overtime Compensation Eligibility
+    This is largely based on FLSA Section 7 which determines the definition of 'qualified overtime'
+    -->
+    <Fact path="/hasOvertimeCompThisTaxYear">
+      <Name>Has the taxpayer received overtime comp this tax years?</Name>
+      <Description>OB3 Section 70202 temporarily creating §225(c)(1): overtime comp received after
+        1/1/25 that is "that is in excess of the regular rate (as used in such section) at which
+        such individual is employed."</Description>
+      <Writable>
+        <Boolean />
+      </Writable>
+    </Fact>
+
+    <Fact path="/isFlsaNonExempt">
+      <!-- This fact is writable today to allow content to handle eligibility. Given the complexity
+      of FLSA Section 7, in future iterations to create a better taxpayer experience-->
+      <Name>Is the taxpayer non-exempt and eligible for qualified overtime comp under FLSA Section
+        7?</Name>
+      <Description>OB3 Section 70202 temporarily creating §225(c)(1): For purposes of this section,
+        the term ‘qualified overtime compensation’ means overtime compensation paid to an individual
+        required under section 7 of the Fair Labor Standards Act of 1938</Description>
+      <Writable>
+        <Boolean />
+      </Writable>
+    </Fact>
+
+    <Fact path="/isEligibleForOvertimeCompensationDeduction">
+      <Name>Taxpayer eligible for overtime compensation deduction</Name>
+      <Description>Is the taxpayer eligible for the overtime compensation deduction?</Description>
+      <Derived>
+        <All>
+          <Any>
+            <Dependency path="/hasOvertimeCompThisTaxYear" />
+            <Dependency path="/isFlsaNonExempt" />
+            <Dependency path="/primaryFilerHasSSN" />
+            <Dependency path="/secondaryFilerHasSSN" />
+          </Any>
+          <GreaterThan>
+            <Left>
+              <Dependency path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" />
+            </Left>
+            <Right>
+              <Dollar>0</Dollar>
+            </Right>
+          </GreaterThan>
+        </All>
+      </Derived>
+    </Fact>
+
+
+    <Fact path="/excessAmountOvertimeCompensationDeductionForMFJFiler">
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/magiForOB3BelowLineDeductions" />
+            </Minuend>
+            <Subtrahends>
+              <Dollar>300000</Dollar>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+
+    <Fact path="/excessAmountOvertimeCompensationDeductionForNonMFJFiler">
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/magiForOB3BelowLineDeductions" />
+            </Minuend>
+            <Subtrahends>
+              <Dollar>150000</Dollar>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+
+    <Fact path="/excessOverThresholdOvertimeCompensationDeduction">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ" />
+            </When>
+            <Then>
+              <Dependency path="/excessAmountOvertimeCompensationDeductionForMFJFiler" />
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Dependency path="/excessAmountOvertimeCompensationDeductionForNonMFJFiler" />
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/phaseOutAmountOvertimeCompensationDeduction">
+      <Name>Qualified Tip Deduction Phase Out</Name>
+      <Description>The amount allowable as a deduction under shall be reduced (but not
+        below zero) by $100 for each $1,000 by which the
+        taxpayer’s MAGI exceeds $150,000 ($300,000 in the case of a joint return).
+      </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Multiply>
+          <Divide>
+            <Dividend>
+              <Dependency path="/excessOverThresholdOvertimeCompensationDeduction" />
+            </Dividend>
+            <Divisors>
+              <Dollar>1000</Dollar>
+            </Divisors>
+          </Divide>
+          <Dollar>100</Dollar>
+        </Multiply>
+      </Derived>
+    </Fact>
+
+    <Fact path="/overtimeCompensationDeduction">
+      <Name>Overtime Compensation Deduction</Name>
+      <Description>OB3 Section 70202: Qualified tip deductions
+        Example:
+        Single filer with 160k MAGI and 10k overtime compensations. 150k applicable overtime
+        compensation
+        threshold
+        (20,000 excess/1000)*100 = 2,000 phase out
+        10,000 overtime comp - 2,000 phase out = 8,000 applicable deduction
+
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isEligibleForOvertimeCompensationDeduction" />
+            </When>
+            <Then>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" />
+                </Minuend>
+                <Subtrahends>
+                  <Dependency path="/phaseOutAmountOvertimeCompensationDeduction" />
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+
   </Facts>
 </FactDictionaryModule>

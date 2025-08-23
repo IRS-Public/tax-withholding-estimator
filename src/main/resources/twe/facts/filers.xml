@@ -168,5 +168,22 @@
         </GreaterThanOrEqual>
       </Derived>
     </Fact>
+
+    <Fact path="/primaryFilerHasSSN">
+      <Name>Does the primary Taxpayer have a Social Security Number as defined in IRC 24(h)(7)?</Name>
+      <Writable>
+        <Boolean />
+      </Writable>
+    </Fact>
+
+    <Fact path="/secondaryFilerHasSSN">
+      <Name>Does the secondary Taxpayer have a Social Security Number as defined in IRC 24(h)(7)?</Name>
+      <Writable>
+        <Boolean />
+      </Writable>
+    </Fact>
+
   </Facts>
+
+
 </FactDictionaryModule>

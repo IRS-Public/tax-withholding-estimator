@@ -1545,6 +1545,7 @@
         <Dollar>0</Dollar>
       </Derived>
     </Fact>
+
     <Fact path="/overseasTerritoryIncome">
       <Name>§ 931 - Income from sources within Guam, American Samoa, or the Northern Mariana Islands
       </Name>
@@ -1552,12 +1553,48 @@
         <Dollar>0</Dollar>
       </Derived>
     </Fact>
+
     <Fact path="/puertoRicoEarnedIncome">
       <Name>§ 933. Income from sources within Puerto Rico</Name>
       <Derived>
         <Dollar>0</Dollar>
       </Derived>
     </Fact>
+
+    <Fact path="/qualifiedTipIncome">
+      <Name>Qualified Tip Income</Name>
+      <Description>OB3 §70201; IRC §224. Qualified tip income</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp">
+      <Name>Overtime Compensation Excluding Qualified Tip Overtime Comp</Name>
+      <Description>OB3 §70202 IRC §225(c)(2). Overtime compensation excluding all qualified tips
+        defined
+        in IRC §224 that were received as part of qualified overtime compensation</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/selfEmploymentIncome">
+      <Name>Self Employment Income</Name>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
     <Fact path="/incomeToIncludeForOB3MAGI">
       <Derived>
         <Add>
