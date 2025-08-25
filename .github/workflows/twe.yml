@@ -16,6 +16,7 @@ concurrency:
 env:
   JAVA_VERSION: 21
   TWE_PATH: tax_withholding_estimator
+  TWE_RESOURCES_PATH: src/main/resources/twe
 
 jobs:
   build:
@@ -61,3 +62,29 @@ jobs:
     - name: Run Tests
       working-directory: ${{ env.TWE_PATH }}
       run: make test
+
+    - name: Download jing for XML schema validation
+      working-directory: ${{ env.TWE_PATH }}
+      run: |
+        cp "$(.././cs fetch --intransitive org.relaxng:jing:20241231)" jing.jar #V20241231
+        chmod +x jing.jar
+
+    - name: Validate fact XML files
+      working-directory: ${{ env.TWE_PATH }}
+      run: |
+        for xml in ${{ env.TWE_RESOURCES_PATH }}/facts/*.xml; do
+          echo "Processing $xml"
+          java -jar jing.jar ${{ env.TWE_RESOURCES_PATH }}/facts/FactDictionaryModule.rng "$xml"
+        done
+
+    - name: Validate flow XML files
+      working-directory: ${{ env.TWE_PATH }}
+      run: |
+        for xml in ${{ env.TWE_RESOURCES_PATH }}/flow/*.xml; do
+          echo "Processing $xml"
+          if [[ "$xml" == "${{ env.TWE_RESOURCES_PATH }}/flow/index.xml" ]]; then
+            java -jar jing.jar ${{ env.TWE_RESOURCES_PATH }}/flow/FlowConfig.rng "$xml"
+            continue
+          fi
+          java -jar jing.jar ${{ env.TWE_RESOURCES_PATH }}/flow/FlowConfigModule.rng "$xml"
+        done

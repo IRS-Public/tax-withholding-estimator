@@ -137,6 +137,12 @@
     <optional>
       <ref name="CountContent" />
     </optional>
+    <optional>
+      <ref name="CeilingContent"></ref>
+    </optional>
+    <optional>
+      <ref name="FloorContent"></ref>
+    </optional>
   </define>
   <define name="LogicalContent">
     <optional>
@@ -332,6 +338,12 @@
     </optional>
     <optional>
       <ref name="EinContent" />
+    </optional>
+    <optional>
+      <ref name="CeilingContent"></ref>
+    </optional>
+    <optional>
+      <ref name="FloorContent"></ref>
     </optional>
   </define>
   <define name="DerivedContent">
@@ -1109,6 +1121,36 @@
         </optional>
         <optional>
           <ref name="LogicalContent" />
+        </optional>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="CeilingContent">
+    <element name="Ceiling">
+      <oneOrMore>
+        <optional>
+          <ref name="NumericContent" />
+        </optional>
+        <optional>
+          <ref name="DollarContent" />
+        </optional>
+        <optional>
+          <ref name="DependencyContent" />
+        </optional>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="FloorContent">
+    <element name="Floor">
+      <oneOrMore>
+        <optional>
+          <ref name="NumericContent" />
+        </optional>
+        <optional>
+          <ref name="DollarContent" />
+        </optional>
+        <optional>
+          <ref name="DependencyContent" />
         </optional>
       </oneOrMore>
     </element>

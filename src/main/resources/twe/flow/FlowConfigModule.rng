@@ -64,6 +64,7 @@
               <value>dollar</value>
               <value>text</value>
               <value>date</value>
+              <value>int</value>
             </choice>
           </attribute>
         </element>
@@ -102,6 +103,9 @@
   <define name="fg-reset-module">
     <element name="fg-reset">
       <element name="button">
+        <attribute name="class">
+         <text/>
+        </attribute>
         <text/>
       </element>
     </element>
