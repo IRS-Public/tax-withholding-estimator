@@ -1,5 +1,25 @@
-main {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 var(--units-2) var(--units-2) var(--units-2);
+body {
+
+  @media (min-width: 880px) {
+    background-color: var(--base-lightest);
+  }
 }
+
+main {
+  background-color: white;
+  margin: 0 auto var(--units-6);
+  padding: 0 var(--units-2) var(--units-2) var(--units-2);
+
+  @media (min-width: 880px) {
+    box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: var(--units-4);
+    max-width: 800px;
+    padding: var(--units-6) var(--units-8) var(--units-8) var(--units-8);
+  }
+
+   @media (min-width: 1024px) {
+    max-width: 1000px;
+   }
+}
+

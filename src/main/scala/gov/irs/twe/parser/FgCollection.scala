@@ -23,16 +23,16 @@ case class FgCollection(path: String, condition: Option[Condition], nodes: List[
     // TODO: Change return type https://github.com/IRSDigitalService/tax_withholding_estimator/issues/195
     <fg-collection path={this.path} condition={condition} operator={operator}>
       <template class="fg-collection__item-template">
-        <fieldset>
+        <fieldset class="margin-top-3 padding-3">
           <div class="fg-collection-item__controls">
-            <button type="button" class="fg-collection-item__remove-item">Remove Item</button>
+            <button type="button" class="fg-collection-item__remove-item usa-button usa-button--outline">Remove Item</button>
           </div>
           <div class="fg-collection-item__fields">
             {collectionFacts}
           </div>
         </fieldset>
       </template>
-      <button type="button" class="fg-collection__add-item">Add Item</button>
+      <button type="button" class="fg-collection__add-item usa-button usa-button--outline">Add Item</button>
     </fg-collection>
   }
 }

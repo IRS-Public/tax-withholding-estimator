@@ -29,11 +29,15 @@ enum Input {
         <fieldset class="usa-fieldset">
           <legend class="usa-legend">{question}</legend>
           <div class="usa-radio">
-            <input id={s"${path}-yes"} class="usa-radio__input" type="radio" value="true" name={path} required="true"/>
+            <input id={s"${path}-yes"} class="usa-radio__input usa-radio__input--tile" type="radio" value="true" name={
+          path
+        } required="true"/>
             <label for={s"${path}-yes"} class="usa-radio__label">Yes</label>
           </div>
           <div class="usa-radio">
-            <input id={s"${path}-no"} class="usa-radio__input" type="radio" value="false" name={path} required="true"/>
+            <input id={s"${path}-no"} class="usa-radio__input usa-radio__input--tile" type="radio" value="false" name={
+          path
+        } required="true"/>
             <label for={s"${path}-no"} class="usa-radio__label">No</label>
           </div>
         </fieldset>

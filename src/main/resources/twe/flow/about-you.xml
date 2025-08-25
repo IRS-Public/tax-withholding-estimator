@@ -87,7 +87,7 @@
 
       <h2>Reset</h2>
       <fg-reset>
-        <button>Reset Fact Graph</button>
+        <button class="usa-button usa-button--outline">Reset Fact Graph</button>
       </fg-reset>
     </section>
   </page>

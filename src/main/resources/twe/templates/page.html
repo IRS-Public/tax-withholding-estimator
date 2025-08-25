@@ -26,6 +26,9 @@
   </header>
 
   <main class="hidden" id="main-content">
+
+    <h1>Tax Withholding Estimator</h1>
+    <!--
     <nav class="steps-nav">
       <ul class="steps-nav__list">
         <li class="steps-nav__item" th:each="page: ${pages}">
@@ -33,8 +36,42 @@
         </li>
       </ul>
     </nav>
+  -->
 
-    <div th:utext="${pageXml}" th:remove="tag"></div>
+    <!-- Step indicator todo
+      1. Indicate completed steps vs incomplete steps
+      2. Indicate current step
+      3. Style the links
+      4. Enable step x of y text and counter
+    -->
+    <div class="usa-step-indicator margin-top-3">
+      <ol class="usa-step-indicator__segments">
+        <li
+          class="usa-step-indicator__segment usa-step-indicator__segment--complete"
+          th:each="page: ${pages}"
+        >
+          <span class="usa-step-indicator__segment-label"
+            ><a class="usa-step-indicator__link" th:href="${page.route}" th:text="${page.title}">Personal information <span class="usa-sr-only">completed</span></a></span
+          >
+        </li>
+
+      </ol>
+      <!--
+      <div class="usa-step-indicator__header">
+        <h4 class="usa-step-indicator__heading">
+          <span class="usa-step-indicator__heading-counter"
+            ><span class="usa-sr-only">Step</span>
+            <span class="usa-step-indicator__current-step">3</span>
+            <span class="usa-step-indicator__total-steps">of 5</span> </span
+          ><span class="usa-step-indicator__heading-text"
+            >Supporting documents</span
+          >
+        </h4>
+      </div>
+      -->
+    </div>
+
+    <div th:utext="${pageXml}" th:remove="tag" class=""></div>
 
     <a class="usa-button margin-top-3 continue-button"
        th:if="${nextPageHref}"
@@ -59,6 +96,34 @@
       </div>
     </div>
   </template>
+
+  <footer aria-label="direct file" class="footer">
+    <div data-testid="identifier" class="usa-identifier">
+      <section data-testid="identifierMasthead" class="usa-identifier__section usa-identifier__section--masthead" aria-label="Agency identifier">
+        <div class="usa-identifier__container"><div data-testid="identifierLogos" class="usa-identifier__logos">
+          <a class="usa-identifier__logo" href="https://irs.gov">
+            <img src="/resources/img/irs_logo_bk.svg" class="usa-identifier__logo-img" alt="IRS logo" height="1em" width="1em">
+          </a>
+        </div>
+        <div data-testid="identifierIdentity" class="usa-identifier__identity">
+          <p class="usa-identifier__identity-domain">IRS.gov</p>
+          <p class="usa-identifier__identity-disclaimer">An official website of the <a class="usa-link" href="https://irs.gov">IRS</a></p></div></div></section><nav class="usa-identifier__section usa-identifier__section--required-links" aria-label="Important links">
+            <div class="usa-identifier__container">
+              <ul class="usa-identifier__required-links-list">
+                <li class="usa-identifier__required-links-item">
+                  <a class="usa-link usa-identifier__required-link" href="/about/">About</a>
+                </li>
+                <li class="usa-identifier__required-links-item">
+                  <a class="usa-link usa-identifier__required-link" href="https://www.irs.gov/accessibility">Accessibility</a>
+                </li>
+                <li class="usa-identifier__required-links-item">
+                  <a class="usa-link usa-identifier__required-link" href="https://www.irs.gov/privacy-disclosure/irs-privacy-policy">Privacy policy</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </footer>
 
   <script type="text" id="fact-dictionary" th:utext="${dictionaryConfig}"></script>
 </html>
