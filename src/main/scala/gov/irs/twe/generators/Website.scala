@@ -10,6 +10,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver
 import org.thymeleaf.TemplateEngine
 import os.Path
 import scala.jdk.CollectionConverters.*
+import scala.util.matching.Regex
 
 case class WebsitePage(route: String, content: String) {
   def html(): String = {
@@ -87,7 +88,13 @@ object Website {
         case PageNode.section(x) => x.html()
         case PageNode.rawHTML(x) => x
       }
-      val pageXml = pageNodes.mkString("")
+      // Coerce all fg-show nodes into open, empty tags because HTML doesn't allow custom, self-closing tags
+      val regex = new Regex("""<(fg-show) ([^>]*)>""", "nodeName", "attributes")
+      var pageXml = regex.replaceAllIn(
+        pageNodes.mkString(""),
+        m => s"<\\${m group "nodeName"} \\${m group "attributes"}></\\${m group "nodeName"}>",
+      )
+
       context.setVariable("pageXml", pageXml)
 
       val content = templateEngine.process("page", context)
