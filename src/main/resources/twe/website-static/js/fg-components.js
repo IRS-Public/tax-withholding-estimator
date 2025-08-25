@@ -35,6 +35,20 @@ function makeCollectionIdPath(abstractPath, id) {
  * <fg-set> - An input that sets a fact
  */
 class FgSet extends HTMLElement {
+  constructor() {
+    super()
+
+    this.tabListener = (event) => {
+      // Conditions must be re-evaluated before the keydown event resolves, so that focusable elements are updated
+      // before the focus moves. The `blur` and `change` events don't fire until *after* the focus has already moved.
+      if(event.key === 'Tab') {
+        // TODO: Prevent these from being called twice (once here, once through onChange)
+        this.setFact()
+        showOrHideAllElements()
+      }
+    }
+  }
+
   connectedCallback() {
     this.condition = this.getAttribute('condition')
     this.operator = this.getAttribute('operator')
@@ -64,6 +78,7 @@ class FgSet extends HTMLElement {
       default:
         for (const input of this.inputs) {
           input.addEventListener('blur', () => this.onChange());
+          input.addEventListener(`keydown`, this.tabListener)
         }
     }
 
