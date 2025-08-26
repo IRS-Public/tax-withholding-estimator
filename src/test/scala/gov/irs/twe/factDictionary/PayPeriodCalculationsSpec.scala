@@ -33,6 +33,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
 
   val weekly = Enum("weekly", "/payFrequencyOptions");
   val biWeekly = Enum("biWeekly", "/payFrequencyOptions");
+  val monthly = Enum("monthly", "/payFrequencyOptions");
   val dataTable = Table(
     (
       "frequencyValue",
@@ -119,6 +120,31 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Rational(140, 14),
       347,
       "working for the whole year with eoy overlap on biweekly pay",
+    ),
+    // Monthly Pay Periods
+    (
+      monthly,
+      "2025-01-01",
+      "2025-12-31",
+      "2025-08-05",
+      "2025-08-15",
+      5,
+      4,
+      Rational(120, 30),
+      337,
+      "working for example when they have three remaining monthly pay periods",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-12-31",
+      "2025-11-10",
+      "2025-11-12",
+      2,
+      1,
+      Rational(30, 30),
+      344,
+      "working for a portion of the year with eoy overlap on monthly pay",
     ),
   )
 

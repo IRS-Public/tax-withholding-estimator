@@ -247,7 +247,25 @@
               </Ceiling>
             </Then>
           </Case>
-          <!-- TODO: Add cases for monthly and semi monthly pay frequencies -->
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly" />
+            </When>
+            <Then>
+              <Add>
+                <Subtract>
+                  <Minuend>
+                    <Dependency path="../endDate/month" />
+                  </Minuend>
+                  <Subtrahends>
+                    <Dependency path="../mostRecentPayPeriodEnd/month" />
+                  </Subtrahends>
+                </Subtract>
+                <Int>1</Int>
+              </Add>
+            </Then>
+          </Case>
+          <!-- TODO: Add cases for semi monthly pay frequencies -->
         </Switch>
       </Derived>
     </Fact>
