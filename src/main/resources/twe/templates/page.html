@@ -74,16 +74,16 @@
     <div th:utext="${pageXml}" th:remove="tag" class=""></div>
 
     <a class="usa-button margin-top-3 continue-button"
-       th:if="${nextPageHref}"
-       th:href="${nextPageHref}"
-       onclick="return handleSectionContinue(event)">
+      th:if="${nextPageHref}"
+      th:href="${nextPageHref}"
+      onclick="return handleSectionContinue(event)">
       Continue
     </a>
 
     <a class="usa-button margin-top-3 continue-button"
-       th:unless="${nextPageHref}"
-       href="#"
-       onclick="return handleSectionComplete(event)">
+      th:unless="${nextPageHref}"
+      href="#"
+      onclick="return handleSectionComplete(event)">
       Submit
     </a>
   </main>
