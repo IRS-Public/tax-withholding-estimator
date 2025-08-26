@@ -76,12 +76,12 @@ Take this basic config, which asks for your income and taxes paid to date.
 <section>
   <h2>Income</h2>
   <fg-set path="/income">
-    <label>Total income for the year</label>
+    <question>Total income for the year</question>
     <input type="dollar"/>
   </fg-set>
 
   <fg-set path="/taxesPaid">
-    <label>Total taxes paid for the year</label>
+    <question>Total taxes paid for the year</question>
     <input type="dollar"/>
   </fg-set>
 </section>
