@@ -31,18 +31,20 @@ enum Input {
           <div class="usa-radio">
             <input id={s"${path}-yes"} class="usa-radio__input usa-radio__input--tile" type="radio" value="true" name={
           path
-        } required="true"/>
+        } required="true" aria-invalid="false"/>
             <label for={s"${path}-yes"} class="usa-radio__label">Yes</label>
           </div>
           <div class="usa-radio">
             <input id={s"${path}-no"} class="usa-radio__input usa-radio__input--tile" type="radio" value="false" name={
           path
-        } required="true"/>
+        } required="true" aria-invalid="false"/>
             <label for={s"${path}-no"} class="usa-radio__label">No</label>
           </div>
         </fieldset>
       case Input.select(options, optionsPath) =>
-        <select id={path} class="usa-select" optionsPath={optionsPath.getOrElse("")} required="true">
+        <select id={path} class="usa-select" optionsPath={
+          optionsPath.getOrElse("")
+        } required="true" aria-invalid="false">
         <option value={""} disabled="true" selected="true">
           {"-- Select one --"}
         </option>{
@@ -71,7 +73,10 @@ enum Input {
               <select
                 class="usa-select"
                 id={s"${path}-month"}
-                name={s"${path}-month"}>
+                name={s"${path}-month"}
+                aria-invalid="false"
+                required="true"
+                >
                 <option value="">- Select -</option>
                 <option value="01">January</option>
                 <option value="02">February</option>
@@ -97,6 +102,8 @@ enum Input {
                 pattern="[0-9]*"
                 inputmode="numeric"
                 value=""
+                required="true"
+                aria-invalid="false"
               />
             </div>
             <div class="usa-form-group usa-form-group--year">
@@ -110,12 +117,20 @@ enum Input {
                 pattern="[0-9]*"
                 inputmode="numeric"
                 value=""
+                required="true"
+                aria-invalid="false"
               />
             </div>
           </div>
         </fieldset>
-      case Input.text => <input id={path} class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
-      case Input.int  => <input id={path} class="usa-input" type="text" name={path} autocomplete="off" required="true"/>
+      case Input.text =>
+        <input id={path} class="usa-input" type="text" name={
+          path
+        } autocomplete="off" required="true" aria-invalid="false"/>
+      case Input.int =>
+        <input id={path} class="usa-input" type="text" name={
+          path
+        } autocomplete="off" required="true" aria-invalid="false"/>
     }
 }
 
