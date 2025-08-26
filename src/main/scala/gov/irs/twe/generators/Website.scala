@@ -71,11 +71,15 @@ object Website {
     val pages = flow.pages.zipWithIndex.map { (page, index) =>
       val route = if (page.route == "/") "index.html" else s"${page.route}.html"
       val title = s"Tax Withholding Estimator - ${page.title} | Internal Revenue Service"
+      val stepTitle = page.title
 
       val context = new Context()
       context.setVariable("pages", flow.pages.asJava) // th:each requires Java Iterables
       context.setVariable("dictionaryConfig", dictionaryConfig.toString)
       context.setVariable("title", title)
+      context.setVariable("stepTitle", stepTitle)
+      context.setVariable("stepNumber", index + 1)
+      context.setVariable("stepTotal", flow.pages.length)
 
       // Add a link for the next page if it's not the last one
       if (index + 1 < flow.pages.length) {

@@ -55,19 +55,17 @@
         </li>
 
       </ol>
-      <!--
+
       <div class="usa-step-indicator__header">
         <h4 class="usa-step-indicator__heading">
           <span class="usa-step-indicator__heading-counter"
             ><span class="usa-sr-only">Step</span>
-            <span class="usa-step-indicator__current-step">3</span>
-            <span class="usa-step-indicator__total-steps">of 5</span> </span
-          ><span class="usa-step-indicator__heading-text"
-            >Supporting documents</span
+            <span class="usa-step-indicator__current-step" th:text="${stepNumber}">3</span>
+            <span class="usa-step-indicator__total-steps">of <span th:text="${stepTotal}">5</span> </span
+          ><span class="usa-step-indicator__heading-text" th:text="${stepTitle}"></span
           >
         </h4>
       </div>
-      -->
     </div>
 
     <div th:utext="${pageXml}" th:remove="tag" class=""></div>
