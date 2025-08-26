@@ -24,9 +24,17 @@ format:
 format_check:
 	sbt scalafmtCheckAll
 
+.PHONY: ci_format_check
+ci_format_check:
+	sbt -error scalafmtCheckAll
+
 .PHONY: test
 test:
 	sbt test
+
+.PHONY: ci_test
+ci_test:
+	 sbt -info 'set Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oC")' test
 
 .PHONY: clean
 clean:

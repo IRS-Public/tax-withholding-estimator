@@ -53,15 +53,15 @@ jobs:
 
     - name: Compile and publish Fact Graph locally
       working-directory: fact-graph
-      run: sbt compile publishLocal
+      run: make ci_publish
 
     - name: Format Scala code
       working-directory: ${{ env.TWE_PATH }}
-      run: make format_check
+      run: make ci_format_check
 
     - name: Run Tests
       working-directory: ${{ env.TWE_PATH }}
-      run: make test
+      run: make ci_test
 
     - name: Download jing for XML schema validation
       working-directory: ${{ env.TWE_PATH }}
