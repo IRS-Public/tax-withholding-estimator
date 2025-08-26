@@ -1,0 +1,20 @@
+.usa-table {
+  margin-top: var(--units-6);
+}
+
+.usa-table--flush th,
+.usa-table--flush td {
+  border-color: var(--base-lighter);
+  padding-left: 0;
+}
+
+.usa-table tbody th {
+  font-weight: normal;
+
+}
+
+.usa-table caption {
+  font-size: var(--font-size-lg);
+}
+
+

@@ -3,22 +3,90 @@
   <page title="Results" route="results">
     <section>
       <h1>Results</h1>
-      <p>Adjusted gross income: <fg-show path="/agi" /></p>
-      <p>Standard deduction: <fg-show path="/standardDeduction" /></p>
-      <p>Taxable income: <fg-show path="/taxableIncome" /></p>
-      <p>Total taxes owed: <fg-show path="/tentativeTaxFromTaxableIncome" /></p>
-      <p>Total year to date jobs withholding: <fg-show path="/totalYearToDateJobsWithholding" /></p>
-      <p>Total rest of year base withholding: <fg-show path="/totalRestOfYearBaseWithholding" /></p>
-      <p>Rest of year withholding gap: <fg-show path="/withholdingGap" /></p>
 
-      <h1>Form W-4 for highest paying job</h1>
-      <p>Line 1 filing status: <fg-show path="/filingStatus" /></p>
-      <p>Line 2(c) checkbox: <fg-show path="/highestIncomeJob/useTwoJobLogic" /></p>
-      <p>Line 3 total credits: <fg-show path="/totalCredits" /></p>
-      <p>Line 4(a) other income (not from jobs): <fg-show path="/totalNonjobsIncome" /></p>
-      <p>Line 4(b) deductions: <fg-show path="/highestIncomeJob/w4Line4b" /></p>
-      <p>Line 4(c) extra withholding: <fg-show path="/highestIncomeJob/w4Line4c" /></p>
-      <p>Remaining pay periods: <fg-show path="/highestIncomeJob/remainingPayPeriods" /></p>
+      <table class="usa-table width-full usa-table--borderless usa-table--flush">
+        <caption>Income and taxes</caption>
+        <thead>
+          <tr>
+            <th scope="col">Description</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Adjusted gross income:</th>
+            <td><fg-show path="/agi" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Standard deduction:</th>
+            <td><fg-show path="/standardDeduction" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Taxable income:</th>
+            <td><fg-show path="/standardDeduction" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Total taxes owed:</th>
+            <td><fg-show path="/tentativeTaxFromTaxableIncome" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Total year to date jobs withholding:</th>
+            <td><fg-show path="/totalYearToDateJobsWithholding" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Total year to date jobs withholding: </th>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">Total rest of year base withholding:</th>
+            <td><fg-show path="/totalRestOfYearBaseWithholding" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Rest of year withholding gap:</th>
+            <td><fg-show path="/withholdingGap" /></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="usa-table width-full usa-table--borderless usa-table--flush">
+        <caption>Form W-4 for highest paying job</caption>
+        <thead>
+          <tr>
+            <th scope="col">Description</th>
+            <th scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Line 1 filing status: </th>
+            <td><fg-show path="/filingStatus" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Line 2(c) checkbox: </th>
+            <td><fg-show path="/highestIncomeJob/useTwoJobLogic" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Line 3 total credits:</th>
+            <td><fg-show path="/totalCredits" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Line 4(a) other income (not from jobs):</th>
+            <td><fg-show path="/totalNonjobsIncome" /></td>
+          </tr>
+           <tr>
+            <th scope="row">Line 4(b) deductions:</th>
+            <td><fg-show path="/highestIncomeJob/w4Line4b" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Line 4(c) extra withholding:</th>
+            <td><fg-show path="/highestIncomeJob/w4Line4c" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Remaining pay periods:</th>
+            <td><fg-show path="/highestIncomeJob/remainingPayPeriods" /></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </page>
 </FlowConfigModule>

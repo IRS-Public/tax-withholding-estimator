@@ -12,6 +12,7 @@
 @import "components/alerts.css";
 @import "components/forms.css";
 @import "components/steps.css";
+@import "components/tables.css";
 
 /* Utilities */
 @import "utilities/utilities.css";

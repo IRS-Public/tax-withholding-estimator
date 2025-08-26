@@ -127,6 +127,12 @@
       <element name="h1"><ref name="FlowConfigModuleInlineContent"/></element>
       <element name="h2"><ref name="FlowConfigModuleInlineContent"/></element>
       <element name="p"><ref name="FlowConfigModuleInlineContent"/></element>
+      <element name="table">
+        <attribute name="class">
+         <text/>
+        </attribute>
+        <ref name="TableContent"/>
+      </element>
     </choice>
   </define>
 
@@ -139,6 +145,69 @@
         </choice>
       </zeroOrMore>
     </mixed>
+  </define>
+
+  <define name="TableContent">
+    <optional>
+      <element name="caption"><ref name="FlowConfigModuleInlineContent"/></element>
+    </optional>
+    <choice>
+      <!-- Table with explicit sections -->
+      <group>
+        <optional>
+          <element name="thead"><ref name="TableRowGroup"/></element>
+        </optional>
+        <optional>
+          <element name="tfoot"><ref name="TableRowGroup"/></element>
+        </optional>
+        <zeroOrMore>
+          <element name="tbody"><ref name="TableRowGroup"/></element>
+        </zeroOrMore>
+      </group>
+      <!-- Table with direct rows (implicit tbody) -->
+      <oneOrMore>
+        <element name="tr"><ref name="TableRow"/></element>
+      </oneOrMore>
+    </choice>
+  </define>
+
+  <define name="TableRowGroup">
+    <oneOrMore>
+      <element name="tr"><ref name="TableRow"/></element>
+    </oneOrMore>
+  </define>
+
+  <define name="TableRow">
+  <oneOrMore>
+    <choice>
+      <element name="th">
+        <optional>
+          <attribute name="scope">
+            <choice>
+              <value>row</value>
+              <value>col</value>
+            </choice>
+          </attribute>
+        </optional>
+        <ref name="TableCellContent"/>
+      </element>
+      <element name="td">
+        <optional>
+          <attribute name="scope">
+            <choice>
+              <value>row</value>
+              <value>col</value>
+            </choice>
+          </attribute>
+        </optional>
+        <ref name="TableCellContent"/>
+      </element>
+    </choice>
+  </oneOrMore>
+</define>
+
+  <define name="TableCellContent">
+    <ref name="FlowConfigModuleInlineContent"/>
   </define>
 
   <define name="FlowConfigModuleContent">

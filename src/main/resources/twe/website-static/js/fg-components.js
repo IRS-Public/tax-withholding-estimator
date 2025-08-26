@@ -437,7 +437,7 @@ class FgShow extends HTMLElement {
         this.innerText = value
       }
     } else {
-      this.innerHTML = `<span class="text-base-light">[Fact has no value]</span>`
+      this.innerHTML = `<span class="text-base">-</span>`
     }
   }
 }
