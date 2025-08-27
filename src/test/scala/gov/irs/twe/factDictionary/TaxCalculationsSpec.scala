@@ -20,7 +20,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
   val dataTable = Table(
     ("status", "taxableIncome", "expectedRoundedIncome", "expectedTax"),
-    // Not over $11,600: 10% of the taxable income
+    // Not over $11,925: 10% of the taxable income
     (single, "0.0", "0.0", "0.0"),
     (single, "4.49", "2.5", "0.0"),
     (single, "5.0", "10.0", "1.0"),
@@ -37,25 +37,25 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     (single, "3025.0", "3025.0", "303.0"),
     (single, "3049.49", "3025.0", "303.0"),
 
-    // Over $11,600 but not over $47,150
-    (single, "20000.0", "20025.0", "2171.0"),
+    // Over $11,925 but not over $48,475: $1,192.50 plus 12% of the excess over $11,925
+    (single, "20000.0", "20025.0", "2165.0"),
 
-    // Over $47,150 but not over $100,525
-    (single, "57050.0", "57075.0", "7610.0"),
-    (single, "57075.0", "57075.0", "7610.0"),
-    (single, "57099.49", "57075.0", "7610.0"),
+    // Over $48,475 but not over $103,350: $5,578.50 plus 22% of the excess over $48,475
+    (single, "57050.0", "57075.0", "7471.0"),
+    (single, "57075.0", "57075.0", "7471.0"),
+    (single, "57099.49", "57075.0", "7471.0"),
 
-    // Over $100,525 but not over $191,950
-    (single, "100950.0", "100950.0", "17271.0"),
+    // Over $103,350 but not over $197,300: $17,651 plus 24% of the excess over $103,350
+    (single, "105351.0", "105351.0", "18131.0"),
 
-    // Over $191,950 but not over $243,725
-    (single, "200000.0", "200000.0", "41687.0"),
+    // Over $197,300 but not over $250,525: $40,199 plus 32% of the excess over $197,300
+    (single, "200000.0", "200000.0", "41063.0"),
 
-    // Over $243,725 but not over $609,350
-    (single, "250000.0", "250000.0", "57875.0"),
+    // Over $250,525 but not over $626,350: $57,231 plus 35% of the excess over $250,525
+    (single, "260000.0", "260000.0", "60547.0"),
 
-    // Over $609,350
-    (single, "700000.0", "700000.0", "217188.0"),
+    // Over $626,350: $188,769.75 plus 37% of the excess over $626,350
+    (single, "700000.0", "700000.0", "216020.0"),
   )
 
   test("test roundedTaxableIncome and tentativeTaxFromTaxableIncome") {

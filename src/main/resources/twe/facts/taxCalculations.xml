@@ -200,7 +200,7 @@
       <Description>Tentative tax as reported on line 16 of Form 1040. Rev Proc .01 Tax Rate Tables
         §1(j)(2)(A|B|C|D)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2025</TaxYear>
       <Derived>
         <Round>
           <Switch>
@@ -214,7 +214,7 @@
               </When>
               <Then>
                 <Switch>
-                  <!-- Not over $23,200: 10% of the taxable income -->
+                  <!-- Not over $23,850: 10% of the taxable income -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -222,7 +222,7 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>23200</Dollar>
+                          <Dollar>23850</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
@@ -234,8 +234,8 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $23,200 but not over $94,300:
-                $2,320 plus 12% of the excess over $23,200 -->
+                  <!-- Over $23,850 but not over $96,950:
+                $2,385 plus 12% of the excess over $23,850 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -243,13 +243,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>94300</Dollar>
+                          <Dollar>96950</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>2320</Dollar>
+                        <Dollar>2385</Dollar>
                         <Multiply>
                           <Rational>12/100</Rational>
                           <Subtract>
@@ -257,7 +257,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>23200</Dollar>
+                              <Dollar>23850</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -265,8 +265,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $94,300 but not over $201,050:
-                $10,852 plus 22% of the excess over $94,300 -->
+                  <!-- Over $96,950 but not over $206,700: $11,157 plus 22% of the excess over $96,950 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -274,13 +273,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>201050</Dollar>
+                          <Dollar>206700</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>10852</Dollar>
+                        <Dollar>11157</Dollar>
                         <Multiply>
                           <Rational>22/100</Rational>
                           <Subtract>
@@ -288,7 +287,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>94300</Dollar>
+                              <Dollar>96950</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -296,8 +295,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $201,050 but not over $383,900:
-                $34,337 plus 24% of the excess over $201,050 -->
+<!-- Over $206,700 but not over $394,600: $35,302 plus 24% of the excess over $206,700  -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -305,13 +303,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>383900</Dollar>
+                          <Dollar>394600</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>34337</Dollar>
+                        <Dollar>35302</Dollar>
                         <Multiply>
                           <Rational>24/100</Rational>
                           <Subtract>
@@ -319,7 +317,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>201050</Dollar>
+                              <Dollar>206700</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -327,8 +325,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $383,900 but not over $487,450:
-                $78,221 plus 32% of the excess over $383,900 -->
+<!-- Over $394,600 but not over $501,050: $80,398 plus 32% of the excess over $394,600  -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -336,13 +333,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>487450</Dollar>
+                          <Dollar>501050</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>78221</Dollar>
+                        <Dollar>80398</Dollar>
                         <Multiply>
                           <Rational>32/100</Rational>
                           <Subtract>
@@ -350,7 +347,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>383900</Dollar>
+                              <Dollar>394600</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -358,8 +355,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $487,450 but not over $731,200:
-                $111,357 plus 35% of the excess over $487,450 -->
+                  <!-- Over $501,050 but not over $751,600: $114,462 plus 35% of the excess over $501,050  -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -367,13 +363,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>731200</Dollar>
+                          <Dollar>751600</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>111357</Dollar>
+                        <Dollar>114462</Dollar>
                         <Multiply>
                           <Rational>35/100</Rational>
                           <Subtract>
@@ -381,7 +377,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>487450</Dollar>
+                              <Dollar>501050</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -389,8 +385,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $731,200:
-                $196,669.50 plus 37% of the excess over $731,200 -->
+                  <!-- Over $751,600: $202,154.50 plus 37% of the excess over $751,600 -->
                   <Case>
                     <When>
                       <GreaterThan>
@@ -398,13 +393,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>731200</Dollar>
+                          <Dollar>751600</Dollar>
                         </Right>
                       </GreaterThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>196669.50</Dollar>
+                        <Dollar>202154.50</Dollar>
                         <Multiply>
                           <Rational>37/100</Rational>
                           <Subtract>
@@ -412,7 +407,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>731200</Dollar>
+                              <Dollar>751600</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -430,7 +425,7 @@
               </When>
               <Then>
                 <Switch>
-                  <!-- Not over $16,550: 10% of the taxable income -->
+                  <!-- Not over $17,000: 10% of the taxable income -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -438,7 +433,7 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>16550</Dollar>
+                          <Dollar>17000</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
@@ -450,8 +445,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $16,550 but not over $63,100:
-                $1,655 plus 12% of the excess over $16,550 -->
+                  <!-- Over $17,000 but not over $64,850: $1,700 plus 12% of the excess over $17,000 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -459,13 +453,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>63100</Dollar>
+                          <Dollar>64850</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>1655</Dollar>
+                        <Dollar>1700</Dollar>
                         <Multiply>
                           <Rational>12/100</Rational>
                           <Subtract>
@@ -473,7 +467,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>16550</Dollar>
+                              <Dollar>17000</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -481,8 +475,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $63,100 but not over $100,500:
-                $7,241 plus 22% of the excess over $63,100 -->
+                  <!-- Over $64,850 but not over $103,350: $7,442 plus 22% of the excess over $64,850  -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -490,13 +483,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>100500</Dollar>
+                          <Dollar>103350</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>7241</Dollar>
+                        <Dollar>7442</Dollar>
                         <Multiply>
                           <Rational>22/100</Rational>
                           <Subtract>
@@ -504,7 +497,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>63100</Dollar>
+                              <Dollar>64850</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -512,8 +505,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $100,500 but not over $191,950:
-                   $15,469 plus 24% of the excess over $100,500 -->
+                  <!-- Over $103,350 but not over $197,300: $15,912 plus 24% of the excess over $103,350 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -521,13 +513,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>191950</Dollar>
+                          <Dollar>197300</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>15469</Dollar>
+                        <Dollar>15912</Dollar>
                         <Multiply>
                           <Rational>24/100</Rational>
                           <Subtract>
@@ -535,7 +527,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>100500</Dollar>
+                              <Dollar>103350</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -543,8 +535,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $191,950 but not over $243,700:
-                   $37,417 plus 32% of the excess over $191,950 -->
+                  <!-- Over $197,300 but not over $250,500: $38,460 plus 32% of the excess over $197,300 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -552,13 +543,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>243700</Dollar>
+                          <Dollar>250500</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>37417</Dollar>
+                        <Dollar>38460</Dollar>
                         <Multiply>
                           <Rational>32/100</Rational>
                           <Subtract>
@@ -566,7 +557,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>191950</Dollar>
+                              <Dollar>197300</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -574,8 +565,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $243,700 but not over $609,350:
-                   $53,977 plus 35% of the excess over $243,700 -->
+                  <!-- Over $250,500 but not over $626,350: $55,484 plus 35% of the excess over $250,500 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -583,13 +573,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>609350</Dollar>
+                          <Dollar>626350</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>53977</Dollar>
+                        <Dollar>55484</Dollar>
                         <Multiply>
                           <Rational>35/100</Rational>
                           <Subtract>
@@ -597,7 +587,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>243700</Dollar>
+                              <Dollar>250500</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -605,8 +595,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $609,350:
-                   $181,954.50 plus 37% of the excess over $609,350 -->
+                  <!-- Over $626,350: $187,031.50 plus 37% of the excess over $626,350 -->
                   <Case>
                     <When>
                       <GreaterThan>
@@ -614,13 +603,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>609350</Dollar>
+                          <Dollar>626350</Dollar>
                         </Right>
                       </GreaterThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>181954.50</Dollar>
+                        <Dollar>187031.50</Dollar>
                         <Multiply>
                           <Rational>37/100</Rational>
                           <Subtract>
@@ -628,7 +617,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>609350</Dollar>
+                              <Dollar>626350</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -646,7 +635,7 @@
               </When>
               <Then>
                 <Switch>
-                  <!-- Not over $11,600: 10% of the taxable income -->
+                  <!-- Not over $11,925: 10% of the taxable income -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -654,7 +643,7 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>11600</Dollar>
+                          <Dollar>11925</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
@@ -665,8 +654,8 @@
                       </Multiply>
                     </Then>
                   </Case>
-                  <!-- Over $11,600 but not over $47,150: $1,160 plus 12% of the
-                                    excess over $11,600 -->
+
+                  <!-- Over $11,925 but not over $48,475: $1,192.50 plus 12% of the excess over $11,925 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -674,13 +663,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>47150</Dollar>
+                          <Dollar>48475</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>1160</Dollar>
+                        <Dollar>1192.50</Dollar>
                         <Multiply>
                           <Rational>12/100</Rational>
                           <Subtract>
@@ -688,15 +677,15 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>11600</Dollar>
+                              <Dollar>11925</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $47,150 but not over $100,525: $5,426 plus 22% of the
-                                    excess over $47,150 -->
+
+                  <!-- Over $48,475 but not over $103,350: $5,578.50 plus 22% of the excess over $48,475 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -704,13 +693,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>100525</Dollar>
+                          <Dollar>103350</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>5426</Dollar>
+                        <Dollar>5578.50</Dollar>
                         <Multiply>
                           <Rational>22/100</Rational>
                           <Subtract>
@@ -718,15 +707,15 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>47150</Dollar>
+                              <Dollar>48475</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $100,525 but not over $191,950: $17,168.50 plus 24% of
-                                    the excess over $100,525 -->
+
+                  <!-- Over $103,350 but not over $197,300: $17,651 plus 24% of the excess over $103,350 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -734,13 +723,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>191950</Dollar>
+                          <Dollar>197300</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>17168.50</Dollar>
+                        <Dollar>17651</Dollar>
                         <Multiply>
                           <Rational>24/100</Rational>
                           <Subtract>
@@ -748,15 +737,15 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>100525</Dollar>
+                              <Dollar>103350</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $191,950 but not over $243,725: $39,110.50 plus 32% of
-                                    the excess over $191,950 -->
+
+                  <!-- Over $197,300 but not over $250,525: $40,199 plus 32% of the excess over $197,300 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -764,13 +753,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>243725</Dollar>
+                          <Dollar>250525</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>39110.50</Dollar>
+                        <Dollar>40199</Dollar>
                         <Multiply>
                           <Rational>32/100</Rational>
                           <Subtract>
@@ -778,15 +767,15 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>191950</Dollar>
+                              <Dollar>197300</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $243,725 but not over $609,350: $55,678.50 plus 35% of
-                                    the excess over $243,725 -->
+
+                  <!-- Over $250,525 but not over $626,350: $57,231 plus 35% of the excess over $250,525 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -794,13 +783,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>609350</Dollar>
+                          <Dollar>626350</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>55678.50</Dollar>
+                        <Dollar>57231</Dollar>
                         <Multiply>
                           <Rational>35/100</Rational>
                           <Subtract>
@@ -808,15 +797,15 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>243725</Dollar>
+                              <Dollar>250525</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $609,350: $183,647.25 plus 37% of the excess over
-                                    $609,350 -->
+
+                  <!-- Over $626,350: $188,769.75 plus 37% of the excess over $626,350 -->
                   <Case>
                     <When>
                       <GreaterThan>
@@ -824,13 +813,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>609350</Dollar>
+                          <Dollar>626350</Dollar>
                         </Right>
                       </GreaterThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>183647.25</Dollar>
+                        <Dollar>188769.75</Dollar>
                         <Multiply>
                           <Rational>37/100</Rational>
                           <Subtract>
@@ -838,7 +827,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>609350</Dollar>
+                              <Dollar>626350</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -848,6 +837,7 @@
                 </Switch>
               </Then>
             </Case>
+
             <!-- MARRIED FILING SEPARATELY -->
             <Case>
               <When>
@@ -855,7 +845,7 @@
               </When>
               <Then>
                 <Switch>
-                  <!-- Not over $11,600: 10% of the taxable income -->
+                  <!-- Not over $11,925: 10% of the taxable income -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -863,7 +853,7 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>11600</Dollar>
+                          <Dollar>11925</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
@@ -875,8 +865,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $11,600 but not over $47,150:
-                   $1,160 plus 12% of the excess over $11,600 -->
+                  <!-- Over $11,925 but not over $48,475: $1,192.50 plus 12% of the excess over $11,925 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -884,13 +873,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>47150</Dollar>
+                          <Dollar>48475</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>1160</Dollar>
+                        <Dollar>1192.50</Dollar>
                         <Multiply>
                           <Rational>12/100</Rational>
                           <Subtract>
@@ -898,7 +887,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>11600</Dollar>
+                              <Dollar>11925</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -906,8 +895,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $47,150 but not over $100,525:
-                   $5,426 plus 22% of the excess over $47,150 -->
+                  <!-- Over $48,475 but not over $103,350: $5,578.50 plus 22% of the excess over $48,475 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -915,13 +903,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>100525</Dollar>
+                          <Dollar>103350</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>5426</Dollar>
+                        <Dollar>5578.50</Dollar>
                         <Multiply>
                           <Rational>22/100</Rational>
                           <Subtract>
@@ -929,7 +917,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>47150</Dollar>
+                              <Dollar>48475</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -937,8 +925,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $100,525 but not over $191,950:
-                   $17,168.50 plus 24% of the excess over $100,525 -->
+                  <!-- Over $103,350 but not over $197,300: $17,651 plus 24% of the excess over $103,350 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -946,13 +933,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>191950</Dollar>
+                          <Dollar>197300</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>17168.50</Dollar>
+                        <Dollar>17651</Dollar>
                         <Multiply>
                           <Rational>24/100</Rational>
                           <Subtract>
@@ -960,7 +947,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>100525</Dollar>
+                              <Dollar>103350</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -968,8 +955,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $191,950 but not over $243,725:
-                   $39,110.50 plus 32% of the excess over $191,950 -->
+                  <!-- Over $197,300 but not over $250,525: $40,199 plus 32% of the excess over $197,300 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -977,13 +963,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>243725</Dollar>
+                          <Dollar>250525</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>39110.50</Dollar>
+                        <Dollar>40199</Dollar>
                         <Multiply>
                           <Rational>32/100</Rational>
                           <Subtract>
@@ -991,7 +977,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>191950</Dollar>
+                              <Dollar>197300</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -999,8 +985,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $243,725 but not over $365,600:
-                   $55,678.50 plus 35% of the excess over $243,725 -->
+                  <!-- Over $250,525 but not over $375,800: $57,231 plus 35% of the excess over $250,525 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -1008,13 +993,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>365600</Dollar>
+                          <Dollar>375800</Dollar>
                         </Right>
                       </LessThanOrEqual>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>55678.50</Dollar>
+                        <Dollar>57231</Dollar>
                         <Multiply>
                           <Rational>35/100</Rational>
                           <Subtract>
@@ -1022,7 +1007,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>243725</Dollar>
+                              <Dollar>250525</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -1030,8 +1015,7 @@
                     </Then>
                   </Case>
 
-                  <!-- Over $365,600:
-                   $98,334.75 plus 37% of the excess over $365,600 -->
+                  <!-- Over $375,800: $101,077.25 plus 37% of the excess over $375,800 -->
                   <Case>
                     <When>
                       <GreaterThan>
@@ -1039,13 +1023,13 @@
                           <Dependency path="/roundedTaxableIncome" />
                         </Left>
                         <Right>
-                          <Dollar>365600</Dollar>
+                          <Dollar>375800</Dollar>
                         </Right>
                       </GreaterThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>98334.75</Dollar>
+                        <Dollar>101077.25</Dollar>
                         <Multiply>
                           <Rational>37/100</Rational>
                           <Subtract>
@@ -1053,7 +1037,7 @@
                               <Dependency path="/roundedTaxableIncome" />
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>365600</Dollar>
+                              <Dollar>375800</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>

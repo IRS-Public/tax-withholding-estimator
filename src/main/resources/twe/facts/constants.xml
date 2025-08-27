@@ -4,9 +4,9 @@
   <Facts>
     <Fact path="/taxYear">
       <Description>The tax year of the return.</Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2025</TaxYear>
       <Derived>
-        <Int>2024</Int>
+        <Int>2025</Int>
       </Derived>
     </Fact>
   </Facts>
