@@ -237,14 +237,17 @@
       </Description>
       <TaxYear>2025</TaxYear>
       <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/applicableMaxSeniorDeductionAmount" />
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="/phaseOutAmountSeniorDeduction" />
-          </Subtrahends>
-        </Subtract>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/applicableMaxSeniorDeductionAmount" />
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/phaseOutAmountSeniorDeduction" />
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
       </Derived>
     </Fact>
   </Facts>

@@ -234,31 +234,34 @@
 
       </Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/isEligibleForQualifiedTipDeduction" />
-            </When>
-            <Then>
-              <Subtract>
-                <Minuend>
-                  <Dependency path="/qualifiedTipIncome" />
-                </Minuend>
-                <Subtrahends>
-                  <Dependency path="/phaseOutAmountQualifiedTipDeduction" />
-                </Subtrahends>
-              </Subtract>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True />
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <GreaterOf>
+          <Switch>
+            <Case>
+              <When>
+                <Dependency path="/isEligibleForQualifiedTipDeduction" />
+              </When>
+              <Then>
+                <Subtract>
+                  <Minuend>
+                    <Dependency path="/qualifiedTipIncome" />
+                  </Minuend>
+                  <Subtrahends>
+                    <Dependency path="/phaseOutAmountQualifiedTipDeduction" />
+                  </Subtrahends>
+                </Subtract>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True />
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+          </Switch>
+          <Dollar>0</Dollar>
+        </GreaterOf>
       </Derived>
     </Fact>
   </Facts>

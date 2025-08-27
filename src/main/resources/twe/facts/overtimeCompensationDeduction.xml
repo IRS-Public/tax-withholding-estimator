@@ -181,31 +181,34 @@
 
       </Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/isEligibleForOvertimeCompensationDeduction" />
-            </When>
-            <Then>
-              <Subtract>
-                <Minuend>
-                  <Dependency path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" />
-                </Minuend>
-                <Subtrahends>
-                  <Dependency path="/phaseOutAmountOvertimeCompensationDeduction" />
-                </Subtrahends>
-              </Subtract>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True />
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <GreaterOf>
+          <Switch>
+            <Case>
+              <When>
+                <Dependency path="/isEligibleForOvertimeCompensationDeduction" />
+              </When>
+              <Then>
+                <Subtract>
+                  <Minuend>
+                    <Dependency path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" />
+                  </Minuend>
+                  <Subtrahends>
+                    <Dependency path="/phaseOutAmountOvertimeCompensationDeduction" />
+                  </Subtrahends>
+                </Subtract>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True />
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+          </Switch>
+          <Dollar>0</Dollar>
+        </GreaterOf>
       </Derived>
     </Fact>
 
