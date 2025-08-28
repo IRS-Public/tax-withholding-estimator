@@ -82,6 +82,10 @@
             <option value="monthly">Monthly</option>
           </select>
         </fg-set>
+        <fg-set path="/jobs/*/totalBonusReceived">
+          <question>Job's bouns amount received</question>
+          <input type="dollar" />
+        </fg-set>
       </fg-collection>
 
       <h2>Start over</h2>

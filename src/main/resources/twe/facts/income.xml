@@ -23,6 +23,7 @@
             <Dependency path="../remainingPayPeriods" />
           </Multiply>
           <Dependency path="../yearToDateIncome" />
+          <Dependency path="../totalBonusReceived" />
         </Add>
       </Derived>
     </Fact>
@@ -500,12 +501,12 @@
       </Derived>
     </Fact>
 
-    <!-- <Fact path="/totalCredits">
-      <Derived>
-
-        <Dollar>0</Dollar>
-      </Derived>
-    </Fact> -->
+    <Fact path="/jobs/*/totalBonusReceived">
+      <Description>The total amount of bonus per year for a specific job</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
 
     <Fact path="/jobs/*/useTwoJobLogic">
       <Description>The checkbox in Form W-4 Step 2.</Description>
