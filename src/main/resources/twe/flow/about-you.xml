@@ -1,8 +1,7 @@
 <?xml-model href="./FlowConfigModule.rng"?>
 <FlowConfigModule>
-  <page title="About You" route="/">
+  <page title="About you" route="/">
     <section>
-      <h2>About You</h2>
       <fg-set path="/filingStatus">
         <question>What filing status will you use for your tax return?</question>
         <select options-path="/filingStatusOptions">
@@ -15,7 +14,7 @@
       </fg-set>
 
       <fg-set path="/primaryFilerDateOfBirth">
-        <question>What is your date of birth?</question>
+        <question>What’s your date of birth?</question>
         <input type="date" />
       </fg-set>
 
@@ -30,7 +29,7 @@
       </fg-set>
 
       <fg-set path="/secondaryFilerDateOfBirth" if-true="/isFilingStatusMFJ">
-        <question>What is your spouse's date of birth?</question>
+        <question>What’s your spouse’s date of birth?</question>
         <input type="date" />
       </fg-set>
 
@@ -47,35 +46,35 @@
       <h2>Jobs</h2>
       <fg-collection path="/jobs">
         <fg-set path="/jobs/*/startDate">
-          <question>Job's start date</question>
+          <question>What’s the start date?</question>
           <input type="date" />
         </fg-set>
         <fg-set path="/jobs/*/endDate">
-          <question>Job's end date</question>
+          <question>What’s the end date?</question>
           <input type="date" />
         </fg-set>
         <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
-          <question>Job's most recent pay period end</question>
+          <question>When did your most recent pay period end?</question>
           <input type="date" />
         </fg-set>
         <fg-set path="/jobs/*/mostRecentPayDate">
-          <question>Job's most recent pay date</question>
+          <question>When was your most recent pay date?</question>
           <input type="date" />
         </fg-set>
         <fg-set path="/jobs/*/yearToDateIncome">
-          <question>Job's year-to-date income</question>
+          <question>What’s your year-to-date income for this job?</question>
           <input type="dollar" />
         </fg-set>
         <fg-set path="/jobs/*/yearToDateWithholding">
-          <question>Job's year-to-date withholding</question>
+          <question>What’s your year-to-date withholding for this job?</question>
           <input type="dollar" />
         </fg-set>
         <fg-set path="/jobs/*/averagePayPerPayPeriod">
-          <question>Job's average pay per pay period</question>
+          <question>What’s the the average amount you get paid each pay period?</question>
           <input type="dollar" />
         </fg-set>
         <fg-set path="/jobs/*/payFrequency">
-          <question>Job's pay frequency</question>
+          <question>How frequently are you paid?</question>
           <select options-path="/jobs/*/payFrequency">
             <option value="weekly">Weekly</option>
             <option value="biWeekly">Biweekly</option>
@@ -85,9 +84,9 @@
         </fg-set>
       </fg-collection>
 
-      <h2>Reset</h2>
+      <h2>Start over</h2>
       <fg-reset>
-        <button class="usa-button usa-button--outline" type="reset">Reset Fact Graph</button>
+        <button class="usa-button usa-button--outline" type="reset">Start over</button>
       </fg-reset>
     </section>
   </page>

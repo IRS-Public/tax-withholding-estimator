@@ -1,30 +1,30 @@
 <FlowConfigModule>
   <page title="Adjustments" route="adjustments">
     <section>
-      <h1>Adjustments</h1>
 
-      <h2>Educator Expense Adjustment</h2>
+      <h2>Educator expenses</h2>
       <fg-set path="/actualEducatorExpensesAdjustmentAmount">
-        <question>How much educator expenses have you paid so far this tax year?</question>
+        <question>How much have you paid this year in educator expenses?</question>
         <input type="dollar"/>
       </fg-set>
 
-      <h2>Student Loan Interest Adjustment</h2>
+      <h2>Student loan interest</h2>
       <fg-set path="/actualStudentLoanInterestAdjustmentAmount">
-        <question>How much student loan interest have you paid so far this tax year</question>
+        <question>How much have you paid this year in student loan interest?</question>
         <input type="dollar"/>
 
       </fg-set>
 
-      <h2>HSA Contribution Adjustment</h2>
+      <h2>Health Savings Account Contributions</h2>
       <fg-set path="/actualHsaTotalDeductibleAmount">
-        <question>What is the total deductible amount of HSA contributions you have made this
-          year?
+        <!-- TODO: move parenthesis text to hint -->
+        <question>What’s the total amount of deductible Health Savings Account contributions you made this year?
         </question>
         <input type="dollar"/>
       </fg-set>
 
-      <p>Your adjusted gross income:
+      <h2>Your adjusted gross income:</h2>
+      <p>
       <fg-show path="/agi"/>
       </p>
     </section>

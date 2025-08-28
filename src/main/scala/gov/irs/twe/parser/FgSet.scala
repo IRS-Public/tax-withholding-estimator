@@ -17,7 +17,7 @@ case class FgSet(path: String, condition: Option[Condition], input: Input, nodes
     val questionXml = this.nodes.map {
       case FgSetNode.input(input)       => input.html(path)
       case FgSetNode.question(question) =>
-        if (usesFieldset) "" else <label for={path}>{question}</label>
+        if (usesFieldset) "" else <label class="usa-label twe-question" for={path}>{question}</label>
       case FgSetNode.rawHTML(x) => x
     }
 

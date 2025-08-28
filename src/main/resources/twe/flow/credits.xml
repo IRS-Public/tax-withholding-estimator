@@ -1,47 +1,45 @@
 <FlowConfigModule>
   <page title="Credits" route="credits">
     <section>
-      <h1>Credits</h1>
-
       <h2>Child Tax Credit</h2>
       <fg-set path="/actualChildTaxCreditAmount">
-        <question>How much child tax credit are you claiming in this tax year?</question>
+        <question>How much Child Tax Credit do you expect to claim this year?</question>
         <input type="dollar" />
       </fg-set>
 
       <h2>Earned Income Tax Credit</h2>
       <fg-set path="/actualEarnedIncomeTaxCreditAmount">
-        <question>How much earned income tax credit are you claiming in this tax year?</question>
+        <question>How much Earned Income Tax Credit do you expect to claim this year?</question>
         <input type="dollar" />
       </fg-set>
 
-      <h2>Child and Dependent Care Tax Credit</h2>
+      <h2>Child and Dependent Care Credit</h2>
       <fg-set path="/actualChildAndDependentCareTaxCreditAmount">
-        <question>How much child and dependent care tax credit are you claiming in this tax year?</question>
+        <question>How much Child and Dependent Care Credit do you expect to claim this year?</question>
         <input type="dollar" />
       </fg-set>
 
-      <h2>Savers Credit</h2>
+      <h2>Saver’s Credit</h2>
       <fg-set path="/actualSaversTaxCreditAmount">
-        <question>How much savers credit are you claiming in this tax year?</question>
+        <question>How much Saver’s Credit do you expect to claim this year?</question>
         <input type="dollar" />
       </fg-set>
 
-      <h2>Elderly and Disabled Credit</h2>
+      <h2>Credit for the Elderly or the Disabled</h2>
       <fg-set path="/actualElderlyAndDisabledTaxCreditAmount">
-        <question>How much elderly and disabled tax credit are you claiming in this tax year?</question>
+        <question>How much Credit for the Elderly or the Disabled do you expect to claim this year?</question>
         <input type="dollar" />
       </fg-set>
 
       <h2>Lifetime Learning Credit</h2>
       <fg-set path="/actualLifetimeLeariningTaxCreditAmount">
-        <question>How much lifetime learning tax credit are you claiming in this tax year?</question>
+        <question>How much Lifetime Learning Credit do you expect to claim this year?</question>
         <input type="dollar" />
       </fg-set>
 
-      <h2>American opportunity Tax Credit</h2>
+      <h2>American Opportunity Tax Credit</h2>
       <fg-set path="/actualAmericanOpportunityTaxCreditAmount">
-        <question>How much American opportunity tax credit are you claiming in this tax year?</question>
+        <question>How much American Opportunity Tax Credit do you expect to claim this year?</question>
         <input type="dollar" />
       </fg-set>
     </section>

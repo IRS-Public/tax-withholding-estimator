@@ -57,32 +57,39 @@
       </ol>
 
       <div class="usa-step-indicator__header">
-        <h4 class="usa-step-indicator__heading">
+        <h2 class="usa-step-indicator__heading">
           <span class="usa-step-indicator__heading-counter"
             ><span class="usa-sr-only">Step</span>
             <span class="usa-step-indicator__current-step" th:text="${stepNumber}">3</span>
             <span class="usa-step-indicator__total-steps">of <span th:text="${stepTotal}">5</span> </span
           ><span class="usa-step-indicator__heading-text" th:text="${stepTitle}"></span
           >
-        </h4>
+        </h2>
       </div>
     </div>
 
     <div th:utext="${pageXml}" th:remove="tag" class=""></div>
 
-    <a class="usa-button margin-top-3 continue-button"
-      th:if="${nextPageHref}"
-      th:href="${nextPageHref}"
-      onclick="return handleSectionContinue(event)">
-      Continue
-    </a>
+    <div class="form-actions" th:if="${nextPageHref}">
+      <a class="usa-button"
+        th:href="${nextPageHref}"
+        onclick="return handleSectionContinue(event)">
+        Continue
+        <svg aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
+          <use href="/resources/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
+        </svg>
+      </a>
 
-    <a class="usa-button margin-top-3 continue-button"
-      th:unless="${nextPageHref}"
-      href="#"
-      onclick="return handleSectionComplete(event)">
-      Submit
-    </a>
+      <!--
+      Commenting out submit button for now since we don't have a form submission
+      <a class="usa-button"
+        th:unless="${nextPageHref}"
+        href="#"
+        onclick="return handleSectionComplete(event)">
+        Submit
+      </a>
+      -->
+    </div>
   </main>
 
   <template id="validate-alert-template">
@@ -94,7 +101,7 @@
     </div>
   </template>
 
-  <footer aria-label="direct file" class="footer">
+  <footer aria-label="Tax Withholding Estimator" class="footer">
     <div data-testid="identifier" class="usa-identifier">
       <section data-testid="identifierMasthead" class="usa-identifier__section usa-identifier__section--masthead" aria-label="Agency identifier">
         <div class="usa-identifier__container"><div data-testid="identifierLogos" class="usa-identifier__logos">

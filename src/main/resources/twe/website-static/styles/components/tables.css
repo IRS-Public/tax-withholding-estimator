@@ -8,9 +8,16 @@
   padding-left: 0;
 }
 
+.usa-table thead th:last-child {
+  text-align: right;
+}
+
 .usa-table tbody th {
   font-weight: normal;
+}
 
+.usa-table tbody td {
+  text-align: right;
 }
 
 .usa-table caption {

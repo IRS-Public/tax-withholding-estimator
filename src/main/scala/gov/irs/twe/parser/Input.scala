@@ -27,7 +27,7 @@ enum Input {
     this match {
       case Input.boolean(question) =>
         <fieldset class="usa-fieldset">
-          <legend class="usa-legend">{question}</legend>
+          <legend class="usa-legend twe-question">{question}</legend>
           <div class="usa-radio">
             <input id={s"${path}-yes"} class="usa-radio__input usa-radio__input--tile" type="radio" value="true" name={
           path
@@ -66,7 +66,7 @@ enum Input {
         </div>
       case Input.date(question) =>
         <fieldset class="usa-fieldset">
-          <legend class="usa-legend">{question}</legend>
+          <legend class="usa-legend twe-question">{question}</legend>
           <div class="usa-memorable-date">
             <div class="usa-form-group usa-form-group--month usa-form-group--select">
               <label class="usa-label" for={s"${path}-month"}>Month</label>
@@ -77,7 +77,7 @@ enum Input {
                 aria-invalid="false"
                 required="true"
                 >
-                <option value="">- Select -</option>
+                <option value="" disabled="true" selected="true">- Select -</option>
                 <option value="01">January</option>
                 <option value="02">February</option>
                 <option value="03">March</option>
