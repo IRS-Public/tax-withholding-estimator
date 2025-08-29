@@ -181,6 +181,9 @@
       <Writable>
         <Boolean />
       </Writable>
+      <Placeholder>
+        <False />
+      </Placeholder>
     </Fact>
 
   </Facts>

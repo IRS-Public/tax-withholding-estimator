@@ -23,6 +23,11 @@
         <input type="boolean" />
       </fg-set>
 
+      <fg-set path="/primaryFilerHasSSN">
+        <question>Do you have an SSN?</question>
+        <input type="boolean" />
+      </fg-set>
+
       <fg-set path="/primaryFilerIsClaimedOnAnotherReturn">
         <question>Can anyone else claim you as a dependent on their tax return?</question>
         <input type="boolean" />
@@ -35,6 +40,11 @@
 
       <fg-set path="/secondaryFilerIsBlind" if-true="/isFilingStatusMFJ">
         <question>Is your spouse blind?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/secondaryFilerHasSSN" if-true="/isFilingStatusMFJ">
+        <question>Does your spouse have an SSN?</question>
         <input type="boolean" />
       </fg-set>
 

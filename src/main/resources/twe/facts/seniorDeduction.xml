@@ -190,8 +190,7 @@
     <Fact path="/maxSeniorDeductionAmountForTwoEligibleTaxpayers">
       <Name>Maximum senior deduction amount</Name>
       <Description>The maximum amount both filers can deduct when they are eligible for senior
-        deduction. Must be
-        MFJ
+        deduction. Must be MFJ
       </Description>
       <TaxYear>2025</TaxYear>
       <Derived>

@@ -59,13 +59,13 @@ class FgSet extends HTMLElement {
       // This switch statement is intentionally not exhaustive
       case 'date': {
         this.addEventListener('change', () => {
-            const allFilled = Array.from(this.inputs).every(input => {
-                return input.value.trim() !== '' && input.value !== '- Select -';
-            });
+          const allFilled = Array.from(this.inputs).every(input => {
+            return input.value.trim() !== '' && input.value !== '- Select -';
+          });
 
-            if (allFilled) {
-                this.onChange()
-            }
+          if (allFilled) {
+            this.onChange()
+          }
         });
         break
       }
@@ -223,8 +223,8 @@ class FgSet extends HTMLElement {
       case 'text':
       case 'date': {
         const month = this.querySelector('select[name*="-month"]')?.value;
-        const day= this.querySelector('input[name*="-day"]')?.value;
-        const year= this.querySelector('input[name*="-year"]')?.value;
+        const day = this.querySelector('input[name*="-day"]')?.value;
+        const year = this.querySelector('input[name*="-year"]')?.value;
         // Adding padStart to day changes user's input from 1 to 01
         const dateString = `${year}-${month}-${day.padStart(2, '0')}`;
         return dateString;
@@ -323,7 +323,7 @@ class FgCollection extends HTMLElement {
   addItem(id) {
     const collectionId = id ?? crypto.randomUUID()
 
-    if(!id) {
+    if (!id) {
       factGraph.addToCollection(this.path, collectionId)
       saveFactGraph()
     }
@@ -391,7 +391,7 @@ class FgCollectionItem extends HTMLElement {
   }
 
   clear() {
-    for(const fgSet of this.querySelectorAll(customElements.getName(FgSet))) {
+    for (const fgSet of this.querySelectorAll(customElements.getName(FgSet))) {
       fgSet.remove();
     }
 

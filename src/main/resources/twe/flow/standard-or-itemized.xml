@@ -1,0 +1,106 @@
+<FlowConfigModule>
+  <page title="Standard or Itemized Deductions" route="standard-or-itemized">
+    <section>
+      <h1>Standard or Itemized Deductions</h1>
+      <p>Standard or itemized deductions reduce the amount of your income subject to tax.</p>
+      <p>Your maximum standard deduction amount is: <fg-show path="/standardDeduction" /></p>
+      <p>Your maximum itemized deduction amount is: <fg-show path="/itemizedDeduction" /></p>
+
+      <fg-set
+        path="/wantsItemizedDeduction">
+        <question>Do you want to itemize your deductions? The standard deduction is higher for most
+          taxpayers, but you may want to itemize your deductions if you have a mortgage, large
+          gifts to charity, or large medical expenses</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <h1>Itemized Deductions</h1>
+      <h2>Qualified mortgage interest</h2>
+      <p>Your total deductible State and Qualified mortgage interest is: <fg-show
+          path="/qualifiedMortgageInterestTotal" /></p>
+      <fg-collection
+        path="/qualifiedMortgageInterest">
+        <fg-set path="/qualifiedMortgageInterest/*/interest">
+          <question>Total mortgage interest from a mortgage loan</question>
+          <input type="dollar" />
+        </fg-set>
+      </fg-collection>
+
+      <h2>Investment interest (limited to your net investment income)</h2>
+      <p>Investment interest (limited to your net investment income)</p>
+      <p>Your total deductible State and Local Taxes is: <fg-show
+          path="/qualifiedInvestmentInterestExpensesTotal" /></p>
+      <fg-collection
+        path="/qualifiedInvestmentInterestExpenses"
+      >
+        <fg-set path="/qualifiedInvestmentInterestExpenses/*/expense">
+          <question>Total investment interest expenses for a single investment interest</question>
+          <input type="dollar" />
+        </fg-set>
+      </fg-collection>
+
+      <h2>State and Local Taxes</h2>
+      <p>There are four types of State and Local Taxes: 1) State, local, and foreign income taxes;
+        2) State and local general sales taxes; 3) State and local real estate taxes; 4) State and
+        local personal property taxes</p>
+      <p>There is a $40,000 deduction cap on SALT payments</p>
+      <p>Your total deductible State and Local Taxes is: <fg-show
+          path="/stateAndLocalTaxPaymentsTotal" /></p>
+      <fg-collection
+        path="/stateAndLocalTaxPayments">
+        <fg-set path="/stateAndLocalTaxPayments/*/taxPayment">
+          <question>Total state or local tax payments by recipient</question>
+          <input type="dollar" />
+        </fg-set>
+      </fg-collection>
+
+      <h2>Estimated medical and dental expenses</h2>
+      <p>Total expenses that exceed 7.5% of your Estimated medical and dental expenses Can include
+        the total estimated amount paid for health insurance premiums, not including any amount the
+        employer pays</p>
+      <p>Your total deductible State and Local Taxes is: <fg-show
+          path="/medicalAndDentalExpensesTotal" /></p>
+      <fg-collection
+        path="/medicalAndDentalExpenses">
+        <fg-set path="/medicalAndDentalExpenses/*/expense">
+          <question>Total amount for a single medical or dental expense category</question>
+          <input type="dollar" />
+        </fg-set>
+      </fg-collection>
+
+      <h2>Charitable Contributions to Qualified Organizations</h2>
+      <p>Your total deductible Charitable Contributions to Qualified Organizations is: <fg-show
+          path="/charitableContributionsTotal" /></p>
+      <fg-collection
+        path="/charitableContributions">
+        <fg-set path="/charitableContributions/*/contribution">
+          <question>Total contribution amount from a specific charitable contribution</question>
+          <input type="dollar" />
+        </fg-set>
+      </fg-collection>
+
+      <h2>Casualty Losses</h2>
+      <p>Your total deductible Casualty Losses is: <fg-show path="/casualtyLossesTotal" /></p>
+      <p>Casualty and theft losses relating to your home, household items, and vehicles if
+        the loss took place in a federally declared disaster area</p>
+      <fg-collection
+        path="/casualtyLosses">
+        <fg-set path="/casualtyLosses/*/loss">
+          <question>Total casualty loss from a specific loss event</question>
+          <input type="dollar" />
+        </fg-set>
+      </fg-collection>
+
+      <h2>Other Deductions</h2>
+      <p>Your total deductible Other Deductions is: <fg-show path="/otherDeductionsTotal" /></p>
+      <fg-collection
+        path="/otherDeductions">
+        <fg-set path="/otherDeductions/*/payment">
+          <question>Any other deductible expenses</question>
+          <input type="dollar" />
+        </fg-set>
+      </fg-collection>
+
+    </section>
+  </page>
+</FlowConfigModule>

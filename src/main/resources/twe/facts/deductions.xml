@@ -33,16 +33,22 @@
     <Fact path="/wantsStandardDeduction">
       <Name>Wants standard deduction</Name>
       <Description>Will the taxpayer take the standard deduction?</Description>
-      <Derived>
+      <Writable>
+        <Boolean />
+      </Writable>
+      <Placeholder>
         <True />
-      </Derived>
+      </Placeholder>
     </Fact>
     <Fact path="/wantsItemizedDeduction">
       <Name>Wants itemized deduction</Name>
       <Description>Will the taxpayer take the itemized deduction?</Description>
-      <Derived>
+      <Writable>
+        <Boolean />
+      </Writable>
+      <Placeholder>
         <False />
-      </Derived>
+      </Placeholder>
     </Fact>
 
     <Fact path="/standardOrItemizedDeduction">
@@ -51,25 +57,34 @@
         of Form 1040.
         Currently only the standard deduction is supported.
       </Description>
-      <!--      TODO: Add in logic for supporting itemized deductions-->
 
       <Derived>
         <Round>
           <Switch>
             <Case>
               <When>
-                <Dependency path="/wantsStandardDeduction" />
+                <All>
+                  <Dependency path="/wantsItemizedDeduction" />
+                  <GreaterThan>
+                    <Left>
+                      <Dependency path="/itemizedDeduction" />
+                    </Left>
+                    <Right>
+                      <Dependency path="/standardDeduction" />
+                    </Right>
+                  </GreaterThan>
+                </All>
               </When>
               <Then>
-                <Dependency path="/standardDeduction" />
+                <Dependency path="/itemizedDeduction" />
               </Then>
             </Case>
             <Case>
               <When>
-                <Dependency path="/wantsItemizedDeduction" />
+                <Dependency path="/wantsStandardDeduction" />
               </When>
               <Then>
-                <Dependency path="/itemizedDeduction" />
+                <Dependency path="/standardDeduction" />
               </Then>
             </Case>
           </Switch>

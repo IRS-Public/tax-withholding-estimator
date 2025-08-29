@@ -1,0 +1,238 @@
+<FlowConfigModule>
+  <page title="Other Deductions" route="other-deductions">
+    <section>
+      <p>These deductions were introduced in the One Big Beautiful Bill Act of 2025. These
+        deductions are in addition to regardless to the Standard Deduction and Itemized Deductions
+        and can be claimed by eligible taxpayers regardless of which deduction they choose</p>
+      <h1>Senior Deduction</h1>
+
+      <p>Number of taxpayers eligible for Senior Deduction: <fg-show
+          path="/eligibleTaxpayersForSeniorDeduction" />
+      </p>
+      <p> Total Senior Deduction amount: <fg-show
+          path="/seniorDeduction" /></p>
+
+
+      <h1>Qualified Tips Income Deduction</h1>
+      <fg-set
+        path="/hasTipsThisTaxYear">
+        <question>Do you expect to receive any tips this year?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set
+        path="/doesOccupationTraditionallyReceiveTips"
+        if-true="/hasTipsThisTaxYear">
+        <question>Do you work in an occupation that traditionally receives tips?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set
+        path="/areTipsCash" if-true="/hasTipsThisTaxYear">
+        <question>Will those tips be paid in cash or charged, or received under a tip-sharing
+          arrangement?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set
+        path="/areTipsVoluntary" if-true="/hasTipsThisTaxYear">
+        <question>Will those tips be paid voluntarily without consequence of nonpayment to the
+          payor?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set
+        path="/isTaxpayerSelfEmployedInSSTB" if-true="/areTipsVoluntary">
+        <question>Are you self employed in a Section 199A Specified Service Trade or Business? </question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set
+        path="/isTaxpayerEmployeeInSSTB" if-true="/areTipsVoluntary">
+        <question>Are you an employee in a Section 199A Specified Service Trade or Business? </question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set
+        path="/isOccupationSpecifiedServiceTradeOrBusiness" if-true="/areTipsVoluntary">
+        <question>Are the tips provided to you provided in the course of business for a §199A
+          specified service trades or businesses</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set
+        path="/qualifiedTipIncome" if-false="/isOccupationSpecifiedServiceTradeOrBusiness">
+        <question>How much tip income do you expect to make this year?</question>
+        <input type="dollar" />
+      </fg-set>
+
+      <fg-set
+        path="/selfEmploymentIncome" if-false="/isOccupationSpecifiedServiceTradeOrBusiness">
+        <question>How much self-employment income do you expect to make this year?</question>
+        <input type="dollar" />
+      </fg-set>
+
+      <p>Your eligibility for the Qualified Tip Deduction is: <fg-show
+          path="/isEligibleForQualifiedTipDeduction" />
+      </p>
+      <p>Total Qualified Tip Deduction is: <fg-show
+          path="/qualifiedTipDeduction" /></p>
+
+
+      <h1>Overtime
+        Compensation Deduction</h1>
+      <fg-set
+        path="/hasOvertimeCompThisTaxYear">
+        <question>Have you received or do you expect to receive overtime compensation (such as
+          time-and-a-half) do you expect to this year?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set
+        path="/isFlsaNonExempt" if-true="/hasOvertimeCompThisTaxYear">
+        <question>Are you considered FLSA non-exempt under Section 7 of the Fair Labor Standards Act
+          of 1938</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set
+        path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" if-true="/isFlsaNonExempt">
+        <question>How much overtime compensation have you received, excluding any tips?</question>
+        <input type="dollar" />
+      </fg-set>
+
+
+      <p>Your overtime compensation deduction is <fg-show
+          path="/overtimeCompensationDeduction" /></p>
+
+      <h1>Qualified
+        Personal Vehicle Loan Interest Deduction</h1>
+      <fg-set
+        path="/isVehiclePurchasedAfterEffectiveDate">
+        <question>Have you purchased a motor vehicle after 12/31/2024?</question>
+        <input type="boolean" />
+      </fg-set>
+      <fg-set
+        path="/isQpvIndebtednessIncurredAfterEffectiveDate"
+        if-true="/isVehiclePurchasedAfterEffectiveDate">
+        <question>Did you incur a loan when you purchased this vehicle and was this loan
+          originated after
+          12/31/2024?
+        </question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleLoanFirstLien"
+        if-true="/isQpvIndebtednessIncurredAfterEffectiveDate">
+        <question>Was the loan secured as the first lien on the vehicle?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleForPersonalUse"
+        if-true="/isVehicleLoanFirstLien">
+        <question>Is the vehicle intended for personal use and not commercial or fleet use?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleLoanFinancingFleetSale"
+        if-true="/isVehicleForPersonalUse">
+        <question>Was the loan originated for the purposes of financing a fleet sale?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleLeaseFinanced"
+        if-false="/isVehicleLoanFinancingFleetSale">
+        <question>Are you leasing the vehicle?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/hasSalvageTitleOrPurchasedToScrap"
+        if-false="/isVehicleLeaseFinanced">
+        <question>Did you purchase the vehicle with the intend to scrap it for parts or is the
+          title a salvage
+          title?
+        </question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isTaxpayerOriginalUser"
+        if-false="/hasSalvageTitleOrPurchasedToScrap">
+        <question>Are you the original and primary user of the vehicle</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/doesHaveVIN"
+        if-true="/isTaxpayerOriginalUser">
+        <question>Do you have a Vehicle Identification Number for the Vehicle? You can check on
+          https://www.nhtsa.gov/vin-decoder
+        </question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set
+        path="/isVehicleManufacturedForStreetsRoadsAndHighways" if-true="/doesHaveVIN">
+        <question>Is the vehicle meant for driving on public streets, roads and highways?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleGTETwoWheels"
+        if-true="/isVehicleManufacturedForStreetsRoadsAndHighways">
+        <question>Does the vehicle have at least two wheels?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleApplicableType"
+        if-true="/isVehicleGTETwoWheels">
+        <question>Is the vehicle a car, minivan, van, sport utility vehicle, pickup truck, or
+          motorcycle?
+        </question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleUnderGVWRMax"
+        if-true="/isVehicleApplicableType">
+        <question>Is the Gross Vehicle Weight Rating below 14,000 lbs?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/isVehicleAssembledInUSA"
+        if-true="/isVehicleUnderGVWRMax">
+        <question>Was the final assembly of the vehicle in the United States?</question>
+        <input type="boolean" />
+      </fg-set>
+
+      <fg-set path="/personalVehicleLoanInterestAmount"
+        if-true="/isVehicleAssembledInUSA">
+        <question>How much interest have you paid on the loan during the current taxable year
+          to-date?
+        </question>
+        <input type="dollar" />
+      </fg-set>
+
+      <p>Your eligibility for the Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show
+          path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction" />
+      </p>
+      <p>Your Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show
+          path="/qualifiedPersonalVehicleLoanInterestDeduction" />
+      </p>
+
+      <h1>
+        Deductions</h1>
+
+      <p>Your total below the line deductions are: <fg-show path="/totalDeductions" />
+      </p>
+      <p>Your total OB3 deductions are: <fg-show path="/oB3Deductions" />
+      </p>
+      <p>Your Qualified Personal Vehicle Loan Interest Deduction amount is: <fg-show
+          path="/qualifiedPersonalVehicleLoanInterestDeduction" />
+      </p>
+      <p>Your Senior Deduction amount is: <fg-show path="/seniorDeduction" />
+      </p>
+      <p>Your Qualified Tips Deduction amount is: <fg-show path="/qualifiedTipDeduction" />
+      </p>
+      <p>Your Overtime Compensation Deduction amount is: <fg-show
+          path="/overtimeCompensationDeduction" />
+      </p>
+    </section>
+  </page>
+</FlowConfigModule>

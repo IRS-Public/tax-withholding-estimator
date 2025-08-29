@@ -31,6 +31,9 @@
       <Writable>
         <Dollar />
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
 
     <Fact path="/qualifiedInvestmentInterestExpenses">
@@ -43,10 +46,13 @@
 
 
     <Fact path="/qualifiedInvestmentInterestExpenses/*/expense">
-      <Description>Total mortgage interest from a mortgage loan</Description>
+      <Description>Total investment interest expenses for a single investment interest</Description>
       <Writable>
         <Dollar />
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
 
 
@@ -62,10 +68,13 @@
 
 
     <Fact path="/stateAndLocalTaxPayments/*/taxPayment">
-      <Description>Total mortgage interest from a mortgage loan</Description>
+      <Description>Total state or local tax payments by recipient</Description>
       <Writable>
         <Dollar />
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
 
 
@@ -85,6 +94,9 @@
       <Writable>
         <Dollar />
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
 
 
@@ -102,6 +114,9 @@
       <Writable>
         <Dollar />
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
 
 
@@ -120,6 +135,9 @@
       <Writable>
         <Dollar />
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
 
 
@@ -136,6 +154,9 @@
       <Writable>
         <Dollar />
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
 
 
