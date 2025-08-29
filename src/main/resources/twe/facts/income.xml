@@ -17,15 +17,29 @@
     <Fact path="/jobs/*/income">
       <Description>The total income from a specific job</Description>
       <Derived>
-        <Add>
-          <Multiply>
-            <Dependency path="../averagePayPerPayPeriod" />
-            <Dependency path="../remainingPayPeriods" />
-          </Multiply>
-          <Dependency path="../yearToDateIncome" />
-          <Dependency path="../totalBonusReceived" />
-        </Add>
+        <Subtract>
+          <Minuend>
+            <Add>
+              <Multiply>
+                <Dependency path="../averagePayPerPayPeriod" />
+                <Dependency path="../remainingPayPeriods" />
+              </Multiply>
+              <Dependency path="../yearToDateIncome" />
+              <Dependency path="../totalBonusReceived" />
+            </Add>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="../preTaxDeductions" />
+          </Subtrahends>
+        </Subtract>
       </Derived>
+    </Fact>
+
+    <Fact path="/jobs/*/preTaxDeductions">
+      <Description>Pre-tax deductions from a specific job</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
     </Fact>
 
     <Fact path="/jobs/*/yearToDateWithholding">
