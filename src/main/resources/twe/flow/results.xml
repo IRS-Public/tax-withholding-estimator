@@ -2,7 +2,6 @@
 <FlowConfigModule>
   <page title="Results" route="results">
     <section>
-
       <table class="usa-table width-full usa-table--borderless usa-table--flush">
         <caption>Income and taxes</caption>
         <thead>
@@ -82,7 +81,6 @@
           </tr>
         </tbody>
       </table>
-
     </section>
   </page>
 </FlowConfigModule>

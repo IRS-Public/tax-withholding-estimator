@@ -546,7 +546,7 @@
               </Equal>
             </When>
             <Then>
-              <Dependency path="/totalNonjobsIncome" />
+              <Dependency path="/totalNonJobsIncome" />
             </Then>
           </Case>
           <Case>
@@ -1501,9 +1501,9 @@
     <Fact path="/totalJobsIncome">
       <Description>Total income for all jobs</Description>
       <Derived>
-        <CollectionSum>
+	<CollectionSum>
           <Dependency path="/jobs/*/income" />
-        </CollectionSum>
+	</CollectionSum>
       </Derived>
     </Fact>
 
@@ -1544,7 +1544,7 @@
     </Fact>
 
     <!-- This is a temporary definition, kind of circular with other facts. -->
-    <Fact path="/totalNonjobsIncome">
+    <Fact path="/totalNonJobsIncome">
       <Derived>
         <GreaterOf>
           <Dollar>0</Dollar>
@@ -1560,22 +1560,60 @@
       </Derived>
     </Fact>
 
+    <Fact path="/netSelfEmploymentIncome">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/ordinaryDividendsIncome">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    
+    <Fact path="/unemploymentInsuranceIncome">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/miscIncome">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/totalOtherIncome">
+      <Derived>
+        <Add>
+          <Dependency path="/netSelfEmploymentIncome"/>
+          <Dependency path="/ordinaryDividendsIncome"/>
+          <Dependency path="/unemploymentInsuranceIncome"/>
+          <Dependency path="/miscIncome"/>
+        </Add>
+      </Derived>
+    </Fact>
+    
     <Fact path="/totalIncome">
       <Derived>
         <Round>
           <Add>
             <Dependency path="/totalJobsIncome" />
+            <Dependency path="/totalOtherIncome"/>
           </Add>
         </Round>
       </Derived>
     </Fact>
 
-    <!-- Sections 911, 931, and 933 are carved out for OB3 MAGI calculations for senior deduction
-    and car loan interest deduction. Default to 0 for right now-->
+    
+    
+    <!-- Sections 911, 931, and 933 are carved out for OB3 MAGI calculations for senior deduction and car loan interest deduction
+         Default to 0 for right now-->
     <Fact path="/foreignEarnedIncome">
       <Name>§ 911 Foreign Earned Income Exclusion- Foreign Earned Income</Name>
       <Derived>
-        <Dollar>0</Dollar>
+	<Dollar>0</Dollar>
       </Derived>
     </Fact>
 
@@ -1583,14 +1621,14 @@
       <Name>§ 931 - Income from sources within Guam, American Samoa, or the Northern Mariana Islands
       </Name>
       <Derived>
-        <Dollar>0</Dollar>
+	<Dollar>0</Dollar>
       </Derived>
     </Fact>
 
     <Fact path="/puertoRicoEarnedIncome">
       <Name>§ 933. Income from sources within Puerto Rico</Name>
       <Derived>
-        <Dollar>0</Dollar>
+	<Dollar>0</Dollar>
       </Derived>
     </Fact>
 

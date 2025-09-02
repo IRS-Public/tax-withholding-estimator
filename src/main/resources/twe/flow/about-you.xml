@@ -101,7 +101,7 @@
         </fg-set>
 
         <fg-set path="/jobs/*/totalBonusReceived">
-          <question>Job's bouns amount received</question>
+          <question>Job's bonus amount received</question>
           <input type="dollar" />
         </fg-set>
 

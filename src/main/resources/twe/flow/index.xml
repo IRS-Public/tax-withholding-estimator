@@ -1,6 +1,7 @@
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
   <module src="./about-you.xml" />
+  <module src="./other-income.xml" />
   <module src="./adjustments.xml" />
   <module src="./standard-or-itemized.xml" />
   <module src="./other-deductions.xml" />
