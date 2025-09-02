@@ -16,3 +16,7 @@
 
 /* Utilities */
 @import "utilities/utilities.css";
+
+@view-transition {
+  navigation: auto;
+}

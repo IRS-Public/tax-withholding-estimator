@@ -1,5 +1,4 @@
 body {
-
   @media (min-width: 880px) {
     background-color: var(--base-lightest);
   }
@@ -7,6 +6,7 @@ body {
 
 main {
   background-color: white;
+
   margin: 0 auto var(--units-6);
   padding: 0 var(--units-2) var(--units-2) var(--units-2);
 

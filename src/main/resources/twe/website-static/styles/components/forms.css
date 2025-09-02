@@ -1,8 +1,8 @@
 fg-set {
   border-bottom: 1px solid var(--base-lighter);
   display: block;
-  margin: var(--units-6) 0;
-  padding-bottom: var(--units-6);
+  margin: var(--units-3) 0;
+  padding-bottom: var(--units-3);
   opacity: 1;
 
   transition: opacity 1s, display 1s allow-discrete;
@@ -25,7 +25,7 @@ h2 + fg-set {
 }
 
 .twe-question {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md-lg);
 }
 
 .usa-radio {

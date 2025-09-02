@@ -561,6 +561,3 @@ window.handleSectionComplete = handleSectionComplete;
 // Add show/hide functionality to all elements
 document.addEventListener('fg-update', showOrHideAllElements)
 showOrHideAllElements()
-
-// Unhide main
-document.querySelector('main').classList.remove('hidden')
