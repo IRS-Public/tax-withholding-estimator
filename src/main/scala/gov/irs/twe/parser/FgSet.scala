@@ -7,6 +7,7 @@ import gov.irs.twe.parser.Utils.validateFact
 enum FgSetNode {
   case input(input: Input)
   case question(question: String)
+  case hint(hint: String)
   case rawHTML(node: xml.Node)
 }
 
@@ -18,6 +19,8 @@ case class FgSet(path: String, condition: Option[Condition], input: Input, nodes
       case FgSetNode.input(input)       => input.html(path)
       case FgSetNode.question(question) =>
         if (usesFieldset) "" else <label class="usa-label twe-question" for={path}>{question}</label>
+      case FgSetNode.hint(hint) =>
+        if (usesFieldset) "" else <div class="usa-hint" id={s"${path}-hint"}>{hint}</div>
       case FgSetNode.rawHTML(x) => x
     }
 
@@ -46,6 +49,7 @@ object FgSet {
         node.label match {
           case "input" | "select" => FgSetNode.input(input)
           case "question"         => FgSetNode.question(node.text)
+          case "hint"             => FgSetNode.hint(node.text)
           case _                  => FgSetNode.rawHTML(node)
         },
       )
@@ -58,13 +62,13 @@ object FgSet {
     validateFact(path, factDictionary)
     val typeNode = factDictionary.getDefinition(path).typeNode
     val inputAndNodeTypeMismatch = input match {
-      case Input.text       => typeNode != "StringNode"
-      case Input.int        => typeNode != "IntNode"
-      case Input.boolean(_) => typeNode != "BooleanNode"
-      case Input.dollar     => typeNode != "DollarNode"
-      case Input.date(_)    => typeNode != "DayNode"
+      case Input.text(_)       => typeNode != "StringNode"
+      case Input.int(_)        => typeNode != "IntNode"
+      case Input.boolean(_, _) => typeNode != "BooleanNode"
+      case Input.dollar(_)     => typeNode != "DollarNode"
+      case Input.date(_, _)    => typeNode != "DayNode"
       // We could make this more strict
-      case Input.select(_, _) => typeNode != "EnumNode"
+      case Input.select(_, _, _) => typeNode != "EnumNode"
     }
     if (inputAndNodeTypeMismatch) throw InvalidFormConfig(s"Path $path must be of type $input")
   }

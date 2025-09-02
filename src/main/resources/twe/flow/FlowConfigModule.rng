@@ -56,6 +56,11 @@
     <element name="question">
       <ref name="FlowConfigModuleInlineContent"/>
     </element>
+    <optional>
+      <element name="hint">
+        <ref name="FlowConfigModuleInlineContent"/>
+      </element>
+    </optional>
     <choice>
         <element name="input">
           <attribute name="type">

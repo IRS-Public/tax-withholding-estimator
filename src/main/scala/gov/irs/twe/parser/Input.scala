@@ -7,27 +7,33 @@ import gov.irs.twe.Log
 case class HtmlOption(name: String, value: String)
 
 enum Input {
-  case select(options: List[HtmlOption], optionsPath: Option[String])
-  case text
-  case int
-  case boolean(question: String)
-  case dollar
-  case date(question: String)
+  case select(options: List[HtmlOption], optionsPath: Option[String], hint: String)
+  case text(hint: String)
+  case int(hint: String)
+  case boolean(question: String, hint: String)
+  case dollar(hint: String)
+  case date(question: String, hint: String)
 
   def typeString: String = this match {
-    case Input.text         => "text"
-    case Input.int          => "int"
-    case Input.boolean(_)   => "boolean"
-    case Input.dollar       => "dollar"
-    case Input.select(_, _) => "select"
-    case Input.date(_)      => "date"
+    case Input.text(_)         => "text"
+    case Input.int(_)          => "int"
+    case Input.boolean(_, _)   => "boolean"
+    case Input.dollar(_)       => "dollar"
+    case Input.select(_, _, _) => "select"
+    case Input.date(_, _)      => "date"
   }
 
-  def html(path: String): xml.Elem =
+  def html(path: String): xml.Elem = {
+    def hasHint(hint: String): Boolean = hint != null && hint.nonEmpty
+    def hintId(hint: String): String = if (hasHint(hint)) s"${path}-hint" else null
+    def renderHint(hint: String): xml.NodeSeq =
+      if (hasHint(hint)) <div class="usa-hint" id={s"${path}-hint"}>{hint}</div> else xml.NodeSeq.Empty
+
     this match {
-      case Input.boolean(question) =>
-        <fieldset class="usa-fieldset">
+      case Input.boolean(question, hint) =>
+        <fieldset class="usa-fieldset" aria-describedby={hintId(hint)}>
           <legend class="usa-legend twe-question">{question}</legend>
+          {renderHint(hint)}
           <div class="usa-radio">
             <input id={s"${path}-yes"} class="usa-radio__input usa-radio__input--tile" type="radio" value="true" name={
           path
@@ -41,19 +47,16 @@ enum Input {
             <label for={s"${path}-no"} class="usa-radio__label">No</label>
           </div>
         </fieldset>
-      case Input.select(options, optionsPath) =>
+
+      case Input.select(options, optionsPath, hint) =>
         <select id={path} class="usa-select" optionsPath={
           optionsPath.getOrElse("")
-        } required="true" aria-invalid="false">
-        <option value={""} disabled="true" selected="true">
-          {"-- Select one --"}
-        </option>{
-          options.map(option => <option value={option.value}>
-          {option.name}
-        </option>)
-        }
-      </select>
-      case Input.dollar =>
+        } required="true" aria-invalid="false" aria-describedby={hintId(hint)}>
+          <option value={""} disabled="true" selected="true">-- Select one --</option>
+          {options.map(option => <option value={option.value}>{option.name}</option>)}
+        </select>
+
+      case Input.dollar(hint) =>
         <div class="usa-input-group">
           <div class="usa-input-prefix" aria-hidden="true">
             <svg aria-hidden="true" role="img" focusable="false" class="usa-icon">
@@ -62,21 +65,19 @@ enum Input {
           </div>
           <input class="usa-input" id={path} type="text" inputmode="numeric" name={
           path
-        } autocomplete="off" required="true"/>
+        } autocomplete="off" required="true" aria-describedby={hintId(hint)}/>
         </div>
-      case Input.date(question) =>
-        <fieldset class="usa-fieldset">
+
+      case Input.date(question, hint) =>
+        <fieldset class="usa-fieldset" aria-describedby={hintId(hint)}>
           <legend class="usa-legend twe-question">{question}</legend>
+          {renderHint(hint)}
           <div class="usa-memorable-date">
             <div class="usa-form-group usa-form-group--month usa-form-group--select">
               <label class="usa-label" for={s"${path}-month"}>Month</label>
-              <select
-                class="usa-select"
-                id={s"${path}-month"}
-                name={s"${path}-month"}
-                aria-invalid="false"
-                required="true"
-                >
+              <select class="usa-select" id={s"${path}-month"} name={
+          s"${path}-month"
+        } aria-invalid="false" required="true">
                 <option value="" disabled="true" selected="true">- Select -</option>
                 <option value="01">January</option>
                 <option value="02">February</option>
@@ -94,50 +95,37 @@ enum Input {
             </div>
             <div class="usa-form-group usa-form-group--day">
               <label class="usa-label" for={s"${path}-day"}>Day</label>
-              <input
-                class="usa-input"
-                id={s"${path}-day"}
-                name={s"${path}-day"}
-                maxlength="2"
-                pattern="[0-9]*"
-                inputmode="numeric"
-                value=""
-                required="true"
-                aria-invalid="false"
-              />
+              <input class="usa-input" id={s"${path}-day"} name={
+          s"${path}-day"
+        } maxlength="2" pattern="[0-9]*" inputmode="numeric" value="" required="true" aria-invalid="false"/>
             </div>
             <div class="usa-form-group usa-form-group--year">
               <label class="usa-label" for={s"${path}-year"}>Year</label>
-              <input
-                class="usa-input"
-                id={s"${path}-year"}
-                name={s"${path}-year"}
-                minlength="4"
-                maxlength="4"
-                pattern="[0-9]*"
-                inputmode="numeric"
-                value=""
-                required="true"
-                aria-invalid="false"
-              />
+              <input class="usa-input" id={s"${path}-year"} name={
+          s"${path}-year"
+        } minlength="4" maxlength="4" pattern="[0-9]*" inputmode="numeric" value="" required="true" aria-invalid="false"/>
             </div>
           </div>
         </fieldset>
-      case Input.text =>
+
+      case Input.text(hint) =>
         <input id={path} class="usa-input" type="text" name={
           path
-        } autocomplete="off" required="true" aria-invalid="false"/>
-      case Input.int =>
+        } autocomplete="off" required="true" aria-invalid="false" aria-describedby={hintId(hint)}/>
+
+      case Input.int(hint) =>
         <input id={path} class="usa-input" type="text" name={
           path
-        } autocomplete="off" required="true" aria-invalid="false"/>
+        } autocomplete="off" required="true" aria-invalid="false" aria-describedby={hintId(hint)}/>
     }
+  }
 }
 
 object Input {
   def extractFromFgSet(node: xml.Node, factDictionary: FactDictionary): Input = {
     val path = node \@ "path"
-    val question = node \ "question"
+    val question = (node \ "question").text.trim
+    val hint = (node \ "hint").text.trim
     // Handle the <select> as a special case
     val selectNode = node \ "select"
     if (selectNode.nonEmpty) {
@@ -154,7 +142,7 @@ object Input {
       if (options.isEmpty) {
         Log.warn(s"Empty options for fg-set: $path")
       }
-      return Input.select(options, optionsPath)
+      return Input.select(options, optionsPath, hint)
     }
 
     // Otherwise parse the <input>
@@ -164,11 +152,11 @@ object Input {
     }
 
     inputNode \@ "type" match {
-      case "text"    => Input.text
-      case "int"     => Input.int
-      case "boolean" => Input.boolean(question.text.trim)
-      case "dollar"  => Input.dollar
-      case "date"    => Input.date(question.text.trim)
+      case "text"    => Input.text(hint)
+      case "int"     => Input.int(hint)
+      case "boolean" => Input.boolean(question, hint)
+      case "dollar"  => Input.dollar(hint)
+      case "date"    => Input.date(question, hint)
       case x         => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
     }
   }

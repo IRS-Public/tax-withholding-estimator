@@ -17,9 +17,9 @@
 
       <h2>Health Savings Account Contributions</h2>
       <fg-set path="/actualHsaTotalDeductibleAmount">
-        <!-- TODO: move parenthesis text to hint -->
         <question>What’s the total amount of deductible Health Savings Account contributions you made this year?
         </question>
+        <hint>Do not include amounts already deducted from your paycheck</hint>
         <input type="dollar"/>
       </fg-set>
 

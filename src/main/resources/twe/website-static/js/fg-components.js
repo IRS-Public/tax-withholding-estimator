@@ -361,7 +361,7 @@ class FgCollectionItem extends HTMLElement {
     // Update all abstract paths in the template to include the collection id
     const collectionId = this.getAttribute('collectionId');
 
-    const attributes = ['path', 'condition', 'id', 'for', 'name']
+    const attributes = ['path', 'condition', 'id', 'for', 'name', 'aria-describedby']
     const nodesWithAbstractPaths = templateContent.querySelectorAll(attributes.map(attr => `[${attr}*="/*/"]`).join(','))
     for (const node of nodesWithAbstractPaths) {
       for (const attribute of attributes) {
