@@ -27,46 +27,8 @@
   <main class="hidden" id="main-content">
 
     <h1>Tax Withholding Estimator</h1>
-    <!--
-    <nav class="steps-nav">
-      <ul class="steps-nav__list">
-        <li class="steps-nav__item" th:each="page: ${pages}">
-          <a th:href="${page.route}" th:text="${page.title}"></a>
-        </li>
-      </ul>
-    </nav>
-  -->
 
-    <!-- Step indicator todo
-      1. Indicate completed steps vs incomplete steps
-      2. Indicate current step
-      3. Style the links
-      4. Enable step x of y text and counter
-    -->
-    <div class="usa-step-indicator margin-top-3">
-      <ol class="usa-step-indicator__segments">
-        <li
-          class="usa-step-indicator__segment usa-step-indicator__segment--complete"
-          th:each="page: ${pages}"
-        >
-          <span class="usa-step-indicator__segment-label"
-            ><a class="usa-step-indicator__link" th:href="${page.route}" th:text="${page.title}">Personal information <span class="usa-sr-only">completed</span></a></span
-          >
-        </li>
-
-      </ol>
-
-      <div class="usa-step-indicator__header">
-        <h2 class="usa-step-indicator__heading">
-          <span class="usa-step-indicator__heading-counter"
-            ><span class="usa-sr-only">Step</span>
-            <span class="usa-step-indicator__current-step" th:text="${stepNumber}">3</span>
-            <span class="usa-step-indicator__total-steps">of <span th:text="${stepTotal}">5</span> </span
-          ><span class="usa-step-indicator__heading-text" th:text="${stepTitle}"></span
-          >
-        </h2>
-      </div>
-    </div>
+    <div th:replace="fragments/usa-step-indicator"></div>
 
     <div th:utext="${pageXml}" th:remove="tag" class=""></div>
 

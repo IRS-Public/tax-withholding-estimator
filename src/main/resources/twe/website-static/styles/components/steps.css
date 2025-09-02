@@ -1,8 +1,0 @@
-.steps-nav__list {
-    display: flex;
-    justify-content: space-evenly
-}
-
-.steps-nav__item {
-  display: inline-block;
-}

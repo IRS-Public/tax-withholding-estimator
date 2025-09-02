@@ -78,7 +78,7 @@ object Website {
       context.setVariable("dictionaryConfig", dictionaryConfig.toString)
       context.setVariable("title", title)
       context.setVariable("stepTitle", stepTitle)
-      context.setVariable("stepNumber", index + 1)
+      context.setVariable("stepIndex", index)
       context.setVariable("stepTotal", flow.pages.length)
 
       // Add a link for the next page if it's not the last one

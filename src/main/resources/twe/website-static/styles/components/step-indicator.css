@@ -1,0 +1,24 @@
+.usa-step-indicator__segment .usa-step-indicator__link:link,
+.usa-step-indicator__segment .usa-step-indicator__link:visited{
+  color: var(--color-base);
+  text-decoration: none;
+}
+
+.usa-step-indicator__segment .usa-step-indicator__link:hover {
+  text-decoration: underline;
+}
+
+.usa-step-indicator__segment--current .usa-step-indicator__link:link,
+.usa-step-indicator__segment--current .usa-step-indicator__link:visited{
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+
+
+.usa-step-indicator__segment--complete .usa-step-indicator__link:link,
+.usa-step-indicator__segment--complete .usa-step-indicator__link:visited{
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
