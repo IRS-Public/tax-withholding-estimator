@@ -1560,6 +1560,176 @@
       </Derived>
     </Fact>
 
+    <Fact path="/pensions">
+      <Writable>
+	<Collection />
+      </Writable>
+    </Fact>
+
+    <Fact path="/pensions/*/startDate">
+      <Description>
+	The start date of the pension this year
+      </Description>
+      <Writable>
+	<Day />
+      </Writable>
+    </Fact>
+    
+    <Fact path="/pensions/*/endDate">
+      <Description>
+	The end date of the pension this year
+      </Description>
+      <Writable>
+	<Day />
+      </Writable>
+    </Fact>
+
+    <Fact path="/pensions/*/averagePayPerPayPeriod">
+      <Writable>
+	<Dollar/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/pensions/*/yearToDateWithholding">
+      <Writable>
+	<Dollar/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/pensions/*/mostRecentPayDate">
+      <Writable>
+	<Day/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/pensions/*/payFrequency">
+      <Writable>
+	<Enum optionsPath="/payFrequencyOptions"/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/pensions/*/payPeriodLength">
+      <Description>Length of pay periods matching the Floor of Publication 15-T values.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyWeekly" />
+            </When>
+            <Then>
+              <Int>7</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyBiWeekly" />
+            </When>
+            <Then>
+              <Int>14</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly" />
+            </When>
+            <Then>
+              <Int>15</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly" />
+            </When>
+            <Then>
+              <Int>30</Int>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+
+
+    <Fact path="/pensions/*/isPayFrequencyWeekly">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../payFrequency" />
+          </Left>
+          <Right>
+            <Enum optionsPath="/payFrequencyOptions">weekly</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/isPayFrequencyBiWeekly">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../payFrequency" />
+          </Left>
+          <Right>
+            <Enum optionsPath="/payFrequencyOptions">biWeekly</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+
+
+    <Fact path="/pensions/*/isPayFrequencySemiMonthly">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../payFrequency" />
+          </Left>
+          <Right>
+            <Enum optionsPath="/payFrequencyOptions">semiMonthly</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/isPayFrequencyMonthly">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../payFrequency" />
+          </Left>
+          <Right>
+            <Enum optionsPath="/payFrequencyOptions">monthly</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+    
+    <Fact path="/pensions/*/remainingPayDates">
+      <Description>
+	Rough initial calculation for the number of remaining pay dates.
+	Works as-is for week-based pay frequencies. Needs further testing and
+	modification for month-based.
+      </Description>
+      
+      <Derived>
+	<Floor>
+	  <Divide>
+	    <Dividend>
+	      <Subtract>
+		<Minuend>
+		  <Dependency path="../endDate/ordinal"/>
+		</Minuend>
+		<Subtrahends>
+		  <Dependency path="../mostRecentPayDate/ordinal"/>
+		</Subtrahends>
+	      </Subtract>
+	    </Dividend>
+	    <Divisors>
+	      <Dependency path="../payPeriodLength"/>
+	    </Divisors>
+	  </Divide>
+	</Floor>
+      </Derived>
+    </Fact>
+        
     <Fact path="/netSelfEmploymentIncome">
       <Writable>
         <Dollar/>
