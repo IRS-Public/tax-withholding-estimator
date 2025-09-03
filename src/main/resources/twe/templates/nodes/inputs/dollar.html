@@ -1,0 +1,10 @@
+<div class="usa-input-group">
+    <div class="usa-input-prefix" aria-hidden="true">
+        <svg aria-hidden="true" role="img" focusable="false" class="usa-icon">
+            <use href="/resources/uswds-3.13.0/img/sprite.svg#attach_money"></use>
+        </svg>
+    </div>
+    <input class="usa-input" th:id="${path}" type="text" inputmode="numeric"
+           th:name="${path}" autocomplete="off" required
+           th:attr="aria-describedby=${hintId}">
+</div>

@@ -1,20 +1,18 @@
 package gov.irs.twe.generators
 
 import gov.irs.factgraph.FactDictionary
-import gov.irs.twe.parser.{ Flow, Page, PageNode }
+import gov.irs.twe.parser.{ Flow, PageNode }
+import gov.irs.twe.TweTemplateEngine
 import org.jsoup.parser.Tag
 import org.jsoup.Jsoup
 import org.thymeleaf.context.Context
-import org.thymeleaf.templatemode.TemplateMode
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver
-import org.thymeleaf.TemplateEngine
 import os.Path
 import scala.jdk.CollectionConverters.*
 import scala.util.matching.Regex
 
 case class WebsitePage(route: String, content: String) {
   def html(): String = {
-    // Many of the changes here are tweaks to make the output easy to read in view-source
+    // This step largely serves to make the output easy to read in view-source
     val document = Jsoup.parse(content)
 
     // Set certain elements to "block" formatting
@@ -59,14 +57,7 @@ object Website {
   }
 
   def generate(flow: Flow, dictionaryConfig: xml.Elem): Website = {
-    val resolver = new ClassLoaderTemplateResolver()
-    resolver.setTemplateMode(TemplateMode.HTML)
-    resolver.setCharacterEncoding("UTF-8")
-    resolver.setPrefix("/twe/templates/")
-    resolver.setSuffix(".html")
-
-    val templateEngine = new TemplateEngine()
-    templateEngine.setTemplateResolver(resolver)
+    val templateEngine = new TweTemplateEngine()
 
     val pages = flow.pages.zipWithIndex.map { (page, index) =>
       val route = if (page.route == "/") "index.html" else s"${page.route}.html"
@@ -89,12 +80,12 @@ object Website {
 
       // Turn all the pages into HTML representations and join them together
       val pageNodes = page.nodes.map {
-        case PageNode.section(x) => x.html()
+        case PageNode.section(x) => x.html(templateEngine)
         case PageNode.rawHTML(x) => x
       }
       // Coerce all fg-show nodes into open, empty tags because HTML doesn't allow custom, self-closing tags
       val regex = new Regex("""<(fg-show) ([^>]*)>""", "nodeName", "attributes")
-      var pageXml = regex.replaceAllIn(
+      val pageXml = regex.replaceAllIn(
         pageNodes.mkString(""),
         m => s"<\\${m group "nodeName"} \\${m group "attributes"}></\\${m group "nodeName"}>",
       )

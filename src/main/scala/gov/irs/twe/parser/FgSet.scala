@@ -3,6 +3,8 @@ package gov.irs.twe.parser
 import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.Utils.validateFact
+import gov.irs.twe.TweTemplateEngine
+import org.thymeleaf.context.Context
 
 enum FgSetNode {
   case input(input: Input)
@@ -12,28 +14,40 @@ enum FgSetNode {
 }
 
 case class FgSet(path: String, condition: Option[Condition], input: Input, nodes: List[FgSetNode]) {
-  def html(): xml.Elem = {
-
+  def html(templateEngine: TweTemplateEngine): String = {
     val usesFieldset = input.typeString == "boolean" || input.typeString == "date"
-    val questionXml = this.nodes.map {
-      case FgSetNode.input(input)       => input.html(path)
-      case FgSetNode.question(question) =>
-        if (usesFieldset) "" else <label class="usa-label twe-question" for={path}>{question}</label>
-      case FgSetNode.hint(hint) =>
-        if (usesFieldset) "" else <div class="usa-hint" id={s"${path}-hint"}>{hint}</div>
-      case FgSetNode.rawHTML(x) => x
+
+    def renderQuestion(question: String): String = {
+      val context = new Context()
+      context.setVariable("path", this.path)
+      context.setVariable("question", question)
+      if (!usesFieldset) templateEngine.process("nodes/question-label", context) else ""
     }
 
-    val condition = this.condition.map(_.path).orNull
-    val operator = this.condition.map(_.operator.toString).orNull
+    def renderHint(hint: String): String = {
+      val context = new Context()
+      context.setVariable("path", this.path)
+      context.setVariable("hint", hint)
+      if (!usesFieldset) templateEngine.process("nodes/hint", context) else ""
+    }
 
-    <fg-set
-      path={this.path}
-      inputType={this.input.typeString}
-      condition={condition}
-      operator={operator}>
-      {questionXml}
-    </fg-set>
+    val context = new Context()
+    context.setVariable("path", this.path)
+    context.setVariable("condition", this.condition.map(_.path).orNull)
+    context.setVariable("operator", this.condition.map(_.operator.toString).orNull)
+    context.setVariable("typeString", input.typeString)
+
+    val questionHtml = this.nodes
+      .map {
+        case FgSetNode.input(input)       => input.html(templateEngine, path)
+        case FgSetNode.question(question) => renderQuestion(question)
+        case FgSetNode.hint(hint)         => renderHint(hint)
+        case FgSetNode.rawHTML(x)         => x
+      }
+      .mkString("\n")
+
+    context.setVariable("questionHtml", questionHtml)
+    templateEngine.process("nodes/fg-set", context)
   }
 }
 
@@ -72,4 +86,5 @@ object FgSet {
     }
     if (inputAndNodeTypeMismatch) throw InvalidFormConfig(s"Path $path must be of type $input")
   }
+
 }

@@ -1,0 +1,14 @@
+<fieldset class="usa-fieldset" th:attr="aria-describedby=${hintId}">
+    <legend class="usa-legend twe-question" th:text="${question}"></legend>
+    <div th:replace="nodes/hint"></div>
+    <div class="usa-radio">
+        <input th:id="${path}+'-yes'" class="usa-radio__input usa-radio__input--tile"
+               type="radio" value="true" th:name="${path}" required="true" aria-invalid="false"/>
+        <label th:for="${path}+'-yes'" class="usa-radio__label">Yes</label>
+    </div>
+    <div class="usa-radio">
+        <input th:id="${path}+'-no'" class="usa-radio__input usa-radio__input--tile"
+               type="radio" value="false" th:name="${path}" required="true" aria-invalid="false"/>
+        <label th:for="${path}+'-no'" class="usa-radio__label">No</label>
+    </div>
+</fieldset>

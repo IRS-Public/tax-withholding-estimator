@@ -1,8 +1,10 @@
 package gov.irs.twe.parser
 
 import gov.irs.factgraph.FactDictionary
+import gov.irs.twe.{ Log, TweTemplateEngine }
 import gov.irs.twe.exceptions.InvalidFormConfig
-import gov.irs.twe.Log
+import org.thymeleaf.context.Context
+import scala.collection.JavaConverters.asJavaIterableConverter
 
 case class HtmlOption(name: String, value: String)
 
@@ -23,100 +25,39 @@ enum Input {
     case Input.date(_, _)      => "date"
   }
 
-  def html(path: String): xml.Elem = {
+  def html(templateEngine: TweTemplateEngine, path: String): String = {
     def hasHint(hint: String): Boolean = hint != null && hint.nonEmpty
     def hintId(hint: String): String = if (hasHint(hint)) s"${path}-hint" else null
-    def renderHint(hint: String): xml.NodeSeq =
-      if (hasHint(hint)) <div class="usa-hint" id={s"${path}-hint"}>{hint}</div> else xml.NodeSeq.Empty
+
+    val context = new Context()
+    context.setVariable("path", path)
 
     this match {
       case Input.boolean(question, hint) =>
-        <fieldset class="usa-fieldset" aria-describedby={hintId(hint)}>
-          <legend class="usa-legend twe-question">{question}</legend>
-          {renderHint(hint)}
-          <div class="usa-radio">
-            <input id={s"${path}-yes"} class="usa-radio__input usa-radio__input--tile" type="radio" value="true" name={
-          path
-        } required="true" aria-invalid="false"/>
-            <label for={s"${path}-yes"} class="usa-radio__label">Yes</label>
-          </div>
-          <div class="usa-radio">
-            <input id={s"${path}-no"} class="usa-radio__input usa-radio__input--tile" type="radio" value="false" name={
-          path
-        } required="true" aria-invalid="false"/>
-            <label for={s"${path}-no"} class="usa-radio__label">No</label>
-          </div>
-        </fieldset>
-
+        context.setVariable("question", question)
+        context.setVariable("hintId", hintId(hint))
+        context.setVariable("hint", hint)
+        templateEngine.process("nodes/inputs/boolean", context)
       case Input.select(options, optionsPath, hint) =>
-        <select id={path} class="usa-select" optionsPath={
-          optionsPath.getOrElse("")
-        } required="true" aria-invalid="false" aria-describedby={hintId(hint)}>
-          <option value={""} disabled="true" selected="true">-- Select one --</option>
-          {options.map(option => <option value={option.value}>{option.name}</option>)}
-        </select>
-
+        context.setVariable("hintId", hintId(hint))
+        context.setVariable("options", options.asJava)
+        context.setVariable("optionsPath", optionsPath)
+        templateEngine.process("nodes/inputs/select", context)
       case Input.dollar(hint) =>
-        <div class="usa-input-group">
-          <div class="usa-input-prefix" aria-hidden="true">
-            <svg aria-hidden="true" role="img" focusable="false" class="usa-icon">
-              <use href="/resources/uswds-3.13.0/img/sprite.svg#attach_money"></use>
-            </svg>
-          </div>
-          <input class="usa-input" id={path} type="text" inputmode="numeric" name={
-          path
-        } autocomplete="off" required="true" aria-describedby={hintId(hint)}/>
-        </div>
-
+        context.setVariable("hint", hint)
+        context.setVariable("hintId", hintId(hint))
+        templateEngine.process("nodes/inputs/dollar", context)
       case Input.date(question, hint) =>
-        <fieldset class="usa-fieldset" aria-describedby={hintId(hint)}>
-          <legend class="usa-legend twe-question">{question}</legend>
-          {renderHint(hint)}
-          <div class="usa-memorable-date">
-            <div class="usa-form-group usa-form-group--month usa-form-group--select">
-              <label class="usa-label" for={s"${path}-month"}>Month</label>
-              <select class="usa-select" id={s"${path}-month"} name={
-          s"${path}-month"
-        } aria-invalid="false" required="true">
-                <option value="" disabled="true" selected="true">- Select -</option>
-                <option value="01">January</option>
-                <option value="02">February</option>
-                <option value="03">March</option>
-                <option value="04">April</option>
-                <option value="05">May</option>
-                <option value="06">June</option>
-                <option value="07">July</option>
-                <option value="08">August</option>
-                <option value="09">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-              </select>
-            </div>
-            <div class="usa-form-group usa-form-group--day">
-              <label class="usa-label" for={s"${path}-day"}>Day</label>
-              <input class="usa-input" id={s"${path}-day"} name={
-          s"${path}-day"
-        } maxlength="2" pattern="[0-9]*" inputmode="numeric" value="" required="true" aria-invalid="false"/>
-            </div>
-            <div class="usa-form-group usa-form-group--year">
-              <label class="usa-label" for={s"${path}-year"}>Year</label>
-              <input class="usa-input" id={s"${path}-year"} name={
-          s"${path}-year"
-        } minlength="4" maxlength="4" pattern="[0-9]*" inputmode="numeric" value="" required="true" aria-invalid="false"/>
-            </div>
-          </div>
-        </fieldset>
-
+        context.setVariable("hint", hint)
+        context.setVariable("question", question)
+        context.setVariable("hintId", hintId(hint))
+        templateEngine.process("nodes/inputs/date", context)
       case Input.text(hint) =>
-        <input id={path} class="usa-input" type="text" name={
-          path
-        } autocomplete="off" required="true" aria-invalid="false" aria-describedby={hintId(hint)}/>
-
+        context.setVariable("hintId", hintId(hint))
+        templateEngine.process("nodes/inputs/text", context)
       case Input.int(hint) =>
-        <input id={path} class="usa-input" type="text" name={
-          path
-        } autocomplete="off" required="true" aria-invalid="false" aria-describedby={hintId(hint)}/>
+        context.setVariable("hintId", hintId(hint))
+        templateEngine.process("nodes/inputs/text", context)
     }
   }
 }

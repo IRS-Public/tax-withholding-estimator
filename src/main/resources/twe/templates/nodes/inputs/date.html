@@ -1,0 +1,38 @@
+<fieldset class="usa-fieldset" th:attr="aria-describedby=${hintId}">
+    <legend class="usa-legend twe-question" th:text="${question}"></legend>
+    <div th:replace="nodes/hint"></div>
+    <div class="usa-memorable-date">
+        <div class="usa-form-group usa-form-group--month usa-form-group--select">
+            <label class="usa-label" th:for="${path} +'-month'">Month</label>
+            <select class="usa-select" th:id="${path} +'-month'" th:name="${path} +'-month'"
+                    aria-invalid="false" required="true"
+            >
+            <option value="" disabled="true" selected="true">- Select -</option>
+            <option value="01">January</option>
+            <option value="02">February</option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+            </select>
+        </div>
+        <div class="usa-form-group usa-form-group--day">
+            <label class="usa-label" th:for="${path} +'-day'">Day</label>
+            <input class="usa-input" th:id="${path} +'-day'" th:name="${path} + '-day'"
+                maxlength="2" pattern="[0-9]*" inputmode="numeric" value="" required
+                   aria-invalid="false"/>
+        </div>
+        <div class="usa-form-group usa-form-group--year">
+            <label class="usa-label" th:for="${path} +'-year'">Year</label>
+            <input class="usa-input" th:id="${path} +'-year'" th:name="${path} +'-year'"
+                   minlength="4" maxlength="4" pattern="[0-9]*" inputmode="numeric"
+                   value="" required aria-invalid="false"/>
+        </div>
+    </div>
+</fieldset>
