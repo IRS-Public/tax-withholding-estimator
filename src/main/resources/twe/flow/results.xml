@@ -24,8 +24,12 @@
             <td><fg-show path="/standardDeduction" /></td>
           </tr>
           <tr>
-            <th scope="row">Total taxes owed:</th>
+            <th scope="row">Tentative Tax from Taxable Income:</th>
             <td><fg-show path="/tentativeTaxFromTaxableIncome" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Total taxes owed:</th>
+            <td><fg-show path="/totalOwed" /></td>
           </tr>
           <tr>
             <th scope="row">Total year-to-date jobs withholding</th>
@@ -65,7 +69,7 @@
           </tr>
           <tr>
             <th scope="row">Line 4(a) other income (not from jobs)</th>
-            <td><fg-show path="/totalNonjobsIncome" /></td>
+            <td><fg-show path="/totalNonJobsIncome" /></td>
           </tr>
            <tr>
             <th scope="row">Line 4(b) deductions</th>

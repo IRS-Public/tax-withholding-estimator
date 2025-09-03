@@ -1051,5 +1051,21 @@
         </Round>
       </Derived>
     </Fact>
+
+    <Fact path="/totalOwed">
+      <Description>Estimated total taxes owed. The tax liability minus the total credits and total advance payments made during the tax year.
+      </Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/tentativeTaxFromTaxableIncome" />
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/totalCredits" module="credits" />
+            <Dependency path="/totalAdvancedPayments" module="payments" />
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>
