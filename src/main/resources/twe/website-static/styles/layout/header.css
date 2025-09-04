@@ -7,4 +7,5 @@
   height: 100%;
   width: 6.25rem;
   margin: var(--units-2);
+  vertical-align: middle;
 }
