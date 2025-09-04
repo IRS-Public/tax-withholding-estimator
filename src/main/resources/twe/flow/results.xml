@@ -21,7 +21,7 @@
           </tr>
           <tr>
             <th scope="row">Taxable income</th>
-            <td><fg-show path="/standardDeduction" /></td>
+            <td><fg-show path="/taxableIncome" /></td>
           </tr>
           <tr>
             <th scope="row">Tentative Tax from Taxable Income:</th>
@@ -36,10 +36,6 @@
             <td><fg-show path="/totalYearToDateJobsWithholding" /></td>
           </tr>
           <tr>
-            <th scope="row">Total base withholding for the rest of the year</th>
-            <td><fg-show path="/totalRestOfYearBaseWithholding" /></td>
-          </tr>
-          <tr>
             <th scope="row">Gap in withholding for the rest of the year</th>
             <td><fg-show path="/withholdingGap" /></td>
           </tr>
@@ -47,7 +43,7 @@
       </table>
 
       <table class="usa-table width-full usa-table--borderless usa-table--flush">
-        <caption>Form W-4 for highest paying job</caption>
+        <caption>New Form W-4 for job with extra withholding</caption>
         <thead>
           <tr>
             <th scope="col">Description</th>
@@ -61,7 +57,7 @@
           </tr>
           <tr>
             <th scope="row">Line 2(c) checkbox</th>
-            <td><fg-show path="/highestIncomeJob/useTwoJobLogic" /></td>
+            <td><fg-show path="/jobSelectedForExtraWithholding/useTwoJobLogic" /></td>
           </tr>
           <tr>
             <th scope="row">Line 3 total credits</th>
@@ -73,15 +69,15 @@
           </tr>
            <tr>
             <th scope="row">Line 4(b) deductions</th>
-            <td><fg-show path="/highestIncomeJob/w4Line4b" /></td>
+            <td><fg-show path="/jobSelectedForExtraWithholding/w4Line4b" /></td>
           </tr>
           <tr>
             <th scope="row">Line 4(c) extra withholding</th>
-            <td><fg-show path="/highestIncomeJob/w4Line4c" /></td>
+            <td><fg-show path="/jobSelectedForExtraWithholding/w4Line4c" /></td>
           </tr>
           <tr>
             <th scope="row">Remaining pay periods</th>
-            <td><fg-show path="/highestIncomeJob/remainingPayPeriods" /></td>
+            <td><fg-show path="/jobSelectedForExtraWithholding/remainingPayPeriods" /></td>
           </tr>
         </tbody>
       </table>

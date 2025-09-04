@@ -22,7 +22,7 @@
             <Add>
               <Multiply>
                 <Dependency path="../averagePayPerPayPeriod" />
-                <Dependency path="../remainingPayPeriods" />
+                <Dependency path="../fractionalRemainingPayPeriods" />
               </Multiply>
               <Dependency path="../yearToDateIncome" />
               <Dependency path="../totalBonusReceived" />
@@ -44,6 +44,13 @@
 
     <Fact path="/jobs/*/yearToDateWithholding">
       <Description>The year-to-date withholding from a specific job</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/jobs/*/averageWithholdingPerPayPeriod">
+      <Description>The avearge withholding from a specific job per pay period</Description>
       <Writable>
         <Dollar />
       </Writable>
@@ -151,7 +158,6 @@
         </Equal>
       </Derived>
     </Fact>
-
 
     <Fact path="/jobs/*/isPayFrequencySemiMonthly">
       <Derived>
@@ -451,11 +457,8 @@
     </Fact>
 
     <Fact path="/jobs/*/fractionalRemainingPayPeriods">
-      <Description>
-        The fractional amount of remaining pay periods, for use in calculating resulting eoy total
-        income.
-      </Description>
-
+      <Description>The fractional amount of remaining pay periods, for use in calculating resulting
+        eoy total income.</Description>
       <Derived>
         <Switch>
           <!-- When the user hasn't been paid for this job yet, but it is currently held -->
@@ -533,59 +536,99 @@
     <Fact path="/jobs/*/w4Line4a">
       <Description>Form W-4 Line 4(a); also Pub 15-T Worksheet 1A Line 1d.</Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Equal>
-                <Left>
-                  <Dependency path=".." />
-                </Left>
-                <Right>
-                  <Dependency path="/highestIncomeJob" />
-                </Right>
-              </Equal>
-            </When>
-            <Then>
-              <Dependency path="/totalNonJobsIncome" />
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True />
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <Equal>
+                  <Left>
+                    <Dependency path=".." />
+                  </Left>
+                  <Right>
+                    <Dependency path="/jobSelectedForExtraWithholding" />
+                  </Right>
+                </Equal>
+              </When>
+              <Then>
+                <Dependency path="/totalNonJobsIncome" />
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True />
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
       </Derived>
     </Fact>
 
     <Fact path="/jobs/*/w4Line4b">
       <Description>Form W-4 Line 4(b); also Pub 15-T Worksheet 1A Line 1f.</Description>
       <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <Equal>
+                  <Left>
+                    <Dependency path=".." />
+                  </Left>
+                  <Right>
+                    <Dependency path="/jobSelectedForExtraWithholding" />
+                  </Right>
+                </Equal>
+              </When>
+              <Then>
+                <Dependency path="/adjustmentsToIncome" />
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True />
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+
+    <Fact path="/jobs/*/payPeriodsBeforeW4ChangesAppear">
+      <Description>This is derived from the "2197 Scenarios checks" worksheet of the
+        "TWESprint1_2025_UAT_WHC2197_2200" spreadsheet.</Description>
+      <Derived>
         <Switch>
           <Case>
             <When>
-              <Equal>
-                <Left>
-                  <Dependency path=".." />
-                </Left>
-                <Right>
-                  <Dependency path="/highestIncomeJob" />
-                </Right>
-              </Equal>
+              <Dependency path="../isPayFrequencyWeekly" />
             </When>
             <Then>
-              <Dependency path="/adjustmentsToIncome" />
+              <Int>2</Int>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <Any>
+                <Dependency path="../isPayFrequencyBiWeekly" />
+                <Dependency path="../isPayFrequencySemiMonthly" />
+              </Any>
             </When>
             <Then>
-              <Dollar>0</Dollar>
+              <Int>1</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly" />
+            </When>
+            <Then>
+              <Int>0</Int>
             </Then>
           </Case>
         </Switch>
@@ -602,19 +645,41 @@
                   <Dependency path=".." />
                 </Left>
                 <Right>
-                  <Dependency path="/highestIncomeJob" />
+                  <Dependency path="/jobSelectedForExtraWithholding" />
                 </Right>
               </Equal>
             </When>
             <Then>
-              <Divide>
-                <Dividend>
-                  <Dependency path="/withholdingGap" />
-                </Dividend>
-                <Divisors>
-                  <Dependency path="../remainingPayPeriods" />
-                </Divisors>
-              </Divide>
+              <Round>
+                <Subtract>
+                  <Minuend>
+                    <Add>
+                      <!-- Divide the gap by the number of pay periods impacted by a new W4. -->
+                      <Divide>
+                        <Dividend>
+                          <Dependency path="/withholdingGap" />
+                        </Dividend>
+                        <Divisors>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../remainingPayPeriods" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
+                            </Subtrahends>
+                          </Subtract>
+                        </Divisors>
+                      </Divide>
+                      <!-- Add it to their existing rate of withholding. -->
+                      <Dependency path="../averageWithholdingPerPayPeriod" />
+                    </Add>
+                  </Minuend>
+                  <Subtrahends>
+                    <!-- Subtract the base withholding from Pub 15-T so we're left with the extra. -->
+                    <Dependency path="../tentativeWithholdingAmount" />
+                  </Subtrahends>
+                </Subtract>
+              </Round>
             </Then>
           </Case>
           <Case>
@@ -1423,13 +1488,28 @@
       </Derived>
     </Fact>
 
-    <Fact path="/jobs/*/restOfYearBaseWithholding">
-      <Description>The predicted base withholding for the rest of the year. Excludes any extra
-        elected on Form W-4 Line 4(c).</Description>
+    <Fact path="/jobs/*/endOfYearProjectedWithholding">
+      <Description>The end of year amount withheld for this job if nothing is changed.</Description>
+      <Derived>
+        <Add>
+          <Dependency path="../yearToDateWithholding" />
+          <Multiply>
+            <!-- Floor is used here to match QA spreadsheet calculation -->
+            <Floor>
+              <Dependency path="../fractionalRemainingPayPeriods" />
+            </Floor>
+            <Dependency path="../averageWithholdingPerPayPeriod" />
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
+
+    <Fact path="/jobs/*/restOfYearIncome">
+      <Description>This amount this job will pay for the rest of the year.</Description>
       <Derived>
         <Multiply>
-          <Dependency path="../baseWithholding" />
-          <Dependency path="../remainingPayPeriods" />
+          <Dependency path="../averagePayPerPayPeriod" />
+          <Dependency path="../fractionalRemainingPayPeriods" />
         </Multiply>
       </Derived>
     </Fact>
@@ -1473,20 +1553,39 @@
       </Derived>
     </Fact>
 
-    <Fact path="/highestIncomeJob">
-      <Description>The highest paying job or, if multiple jobs tie for the max, the first of them.</Description>
+    <Fact path="/jobsAvailableForExtraWithholding">
+      <Description>Jobs that are ended or end too soon are not candidates for extra withholding on a
+        new W4.</Description>
+      <Derived>
+        <!-- TODO: what should we do if no jobs meet this filter? -->
+        <Filter path="/jobs">
+          <GreaterThan>
+            <Left>
+              <Dependency path="/jobs/*/remainingPayPeriods" />
+            </Left>
+            <Right>
+              <Dependency path="/jobs/*/payPeriodsBeforeW4ChangesAppear" />
+            </Right>
+          </GreaterThan>
+        </Filter>
+      </Derived>
+    </Fact>
+
+    <Fact path="/jobSelectedForExtraWithholding">
+      <Description>The job selected for extra withholding on a new W4. The W4 refers to this as the
+        "highest paying job".</Description>
       <Derived>
         <IndexOf>
           <Collection>
-            <Filter path="/jobs">
+            <Filter path="/jobsAvailableForExtraWithholding">
               <Equal>
                 <Left>
                   <Maximum>
-                    <Dependency path="/jobs/*/income" />
+                    <Dependency path="/jobsAvailableForExtraWithholding/*/restOfYearIncome" />
                   </Maximum>
                 </Left>
                 <Right>
-                  <Dependency path="income" />
+                  <Dependency path="restOfYearIncome" />
                 </Right>
               </Equal>
             </Filter>
@@ -1516,30 +1615,29 @@
       </Derived>
     </Fact>
 
-    <Fact path="/totalRestOfYearBaseWithholding">
-      <Description>Total forecast base withholding for all jobs (excludes any additional elected on
-        W-4 Line 4(c)</Description>
+    <Fact path="/totalEndOfYearProjectedWithholding">
+      <Description>The amount withheld for all jobs if nothing is changed.</Description>
       <Derived>
         <CollectionSum>
-          <Dependency path="/jobs/*/restOfYearBaseWithholding" />
+          <Dependency path="/jobs/*/endOfYearProjectedWithholding" />
         </CollectionSum>
       </Derived>
     </Fact>
 
     <Fact path="/withholdingGap">
-      <Description>The rest-of-year withholding gap: remaining taxes owed after actual year-to-date
-        withholdings and forecast base withholdings. Similar to Form W-4 Line 4(c), but that is per
-        pay period.</Description>
+      <Description>The rest-of-year withholding gap: taxes owed if nothing is changed.</Description>
       <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/tentativeTaxFromTaxableIncome" />
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="/totalYearToDateJobsWithholding" />
-            <Dependency path="/totalRestOfYearBaseWithholding" />
-          </Subtrahends>
-        </Subtract>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/totalTax" />
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/totalEndOfYearProjectedWithholding" />
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
       </Derived>
     </Fact>
 
@@ -1554,6 +1652,7 @@
             </Minuend>
             <Subtrahends>
               <Dependency path="/totalJobsIncome" />
+              <Dependency path="/selfEmploymentIncome" />
             </Subtrahends>
           </Subtract>
         </GreaterOf>
@@ -1647,7 +1746,6 @@
         </Switch>
       </Derived>
     </Fact>
-
 
     <Fact path="/pensions/*/isPayFrequencyWeekly">
       <Derived>

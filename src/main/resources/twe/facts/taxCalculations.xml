@@ -1067,5 +1067,18 @@
         </Subtract>
       </Derived>
     </Fact>
+
+    <Fact path="/totalTax">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/tentativeTaxFromTaxableIncome" />
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/totalCredits" />
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>

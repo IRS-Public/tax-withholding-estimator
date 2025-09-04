@@ -75,18 +75,23 @@
           <input type="date" />
         </fg-set>
 
+        <fg-set path="/jobs/*/averagePayPerPayPeriod">
+          <question>What’s the average amount you get paid each pay period?</question>
+          <input type="dollar" />
+        </fg-set>
+
         <fg-set path="/jobs/*/yearToDateIncome">
           <question>What’s your year-to-date income for this job?</question>
           <input type="dollar" />
         </fg-set>
 
-        <fg-set path="/jobs/*/yearToDateWithholding">
-          <question>What’s your year-to-date withholding for this job?</question>
+        <fg-set path="/jobs/*/averageWithholdingPerPayPeriod">
+          <question>What’s the average amount of federal withholding each pay period?</question>
           <input type="dollar" />
         </fg-set>
 
-        <fg-set path="/jobs/*/averagePayPerPayPeriod">
-          <question>What’s the the average amount you get paid each pay period?</question>
+        <fg-set path="/jobs/*/yearToDateWithholding">
+          <question>What’s your year-to-date federal withholding for this job?</question>
           <input type="dollar" />
         </fg-set>
 
@@ -95,13 +100,13 @@
           <select options-path="/jobs/*/payFrequency">
             <option value="weekly">Weekly</option>
             <option value="biWeekly">Biweekly</option>
-            <option value="twiceMonthly">Semimonthly</option>
+            <option value="semiMonthly">Semimonthly</option>
             <option value="monthly">Monthly</option>
           </select>
         </fg-set>
 
         <fg-set path="/jobs/*/totalBonusReceived">
-          <question>Job's bonus amount received</question>
+          <question>What bonus amount were you paid for this job?</question>
           <input type="dollar" />
         </fg-set>
 
