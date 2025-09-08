@@ -497,7 +497,10 @@ function showOrHideAllElements() {
     // Show/hide based on conditions
     if (!meetsCondition && !element.classList.contains('hidden')) {
       element.classList.add('hidden')
-      element?.deleteFactNoUpdate()
+      // Only delete facts for <fg-set>, not other elements that might have conditions
+      if (element.tagName === 'FG-SET'){
+        element?.deleteFactNoUpdate()
+      }
     } else if (meetsCondition && element.classList.contains('hidden')) {
       element.classList.remove('hidden')
     }

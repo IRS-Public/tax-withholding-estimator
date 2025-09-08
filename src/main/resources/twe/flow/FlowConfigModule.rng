@@ -130,8 +130,54 @@
   <define name="HtmlBlockContent">
     <choice>
       <element name="h1"><ref name="FlowConfigModuleInlineContent"/></element>
-      <element name="h2"><ref name="FlowConfigModuleInlineContent"/></element>
-      <element name="p"><ref name="FlowConfigModuleInlineContent"/></element>
+      <element name="h2">
+        <optional>
+          <group>
+            <attribute name="condition">
+                <data type="anyURI"/>
+            </attribute>
+            <attribute name="operator">
+              <choice>
+                <value>isTrue</value>
+                <value>isFalse</value>
+              </choice>
+            </attribute>
+          </group>
+        </optional>
+        <ref name="FlowConfigModuleInlineContent"/>
+      </element>
+      <element name="h3">
+        <optional>
+          <group>
+            <attribute name="condition">
+                <data type="anyURI"/>
+            </attribute>
+            <attribute name="operator">
+              <choice>
+                <value>isTrue</value>
+                <value>isFalse</value>
+              </choice>
+            </attribute>
+          </group>
+        </optional>
+        <ref name="FlowConfigModuleInlineContent"/>
+      </element>
+      <element name="p">
+        <optional>
+          <group>
+            <attribute name="condition">
+                <data type="anyURI"/>
+            </attribute>
+            <attribute name="operator">
+              <choice>
+                <value>isTrue</value>
+                <value>isFalse</value>
+              </choice>
+            </attribute>
+          </group>
+        </optional>
+        <ref name="FlowConfigModuleInlineContent"/>
+      </element>
       <element name="table">
         <attribute name="class">
          <text/>
