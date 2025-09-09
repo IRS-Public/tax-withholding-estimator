@@ -275,20 +275,18 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("80000")))
-    // TODO apparently semimonthly date logic is causing the next number to be incorrect.
-    // That impacts all the commented assertions that follow; those values should be approximately correct.
-    // assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("48000")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("48000")))
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("6000")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("9600")))
     assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("15600")))
 
-    // assert(graph.get(Path("/agi")).value.contains(Dollar("128000")))
-    // assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("19967")))
-    // assert(graph.get(Path("/totalTax")).value.contains(Dollar("15967")))
+    assert(graph.get(Path("/agi")).value.contains(Dollar("128000")))
+    assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("19967")))
+    assert(graph.get(Path("/totalTax")).value.contains(Dollar("15967")))
 
-    // assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("367")))
-    // assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("318")))
+    assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("367")))
+    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("318")))
   }
 
   test("2197 Scenarios spreadsheet Column N") {

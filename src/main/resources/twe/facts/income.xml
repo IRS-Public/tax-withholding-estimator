@@ -238,6 +238,18 @@
       </Derived>
     </Fact>
 
+    <Fact path="/jobs/*/endDayForSemiMonthlyCalculations">
+      <Description>For calculating number of pay periods for semimonthly jobs, substitute 31 with
+        30 to compensate for 16 days length of the second pay period in the 31 day months
+      </Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="../endDate/day" />
+          <Int>30</Int>
+        </LesserOf>
+      </Derived>
+    </Fact>
+
     <Fact path="/jobs/*/tentativeRemainingPayPeriods">
       <Derived>
         <Switch>
@@ -286,7 +298,62 @@
               </Add>
             </Then>
           </Case>
-          <!-- TODO: Add cases for semi monthly pay frequencies -->
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly" />
+            </When>
+            <Then>
+              <Add>
+                <!-- 2 * Max(EndMonth-StartMonth-1, 0) -->
+                <Multiply>
+                  <GreaterOf>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../endDate/month" />
+                      </Minuend>
+                      <Subtrahends>
+                        <Add>
+                          <Dependency path="../mostRecentPayPeriodEnd/month" />
+                          <Int>1</Int>
+                        </Add>
+                      </Subtrahends>
+                    </Subtract>
+                    <Int>0</Int>
+                  </GreaterOf>
+                  <Int>2</Int>
+                </Multiply>
+                <!-- Ceil((30-StartDay)/15) -->
+                <Ceiling>
+                  <Divide>
+                    <Dividend>
+                      <Subtract>
+                        <Minuend>
+                          <Int>30</Int>
+                        </Minuend>
+                        <Subtrahends>
+                          <Dependency path="../mostRecentPayPeriodEnd/day" />
+                        </Subtrahends>
+                      </Subtract>
+                    </Dividend>
+                    <Divisors>
+                      <Dependency path="../payPeriodLength" />
+                    </Divisors>
+                  </Divide>
+                </Ceiling>
+                <!-- Ceil(EndDay/15)-->
+                <Ceiling>
+                  <Divide>
+                    <Dividend>
+                      <Dependency path="../endDayForSemiMonthlyCalculations" />
+                    </Dividend>
+                    <Divisors>
+                      <Dependency path="../payPeriodLength" />
+                    </Divisors>
+                  </Divide>
+                </Ceiling>
+              </Add>
+            </Then>
+          </Case>
         </Switch>
       </Derived>
     </Fact>
@@ -484,6 +551,29 @@
                       <Dependency path="../startDate/ordinal" />
                     </Subtrahends>
                   </Subtract>
+                </Dividend>
+                <Divisors>
+                  <Dependency path="../payPeriodLength" />
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <!-- Semimonthly payments -->
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly" />
+            </When>
+            <Then>
+              <!-- Use diff between the last pay period and end day -->
+              <Divide>
+                <Dividend>
+                  <Add>
+                    <Dependency path="../diffBetweenLastPayDateAndEndDate"></Dependency>
+                    <Multiply>
+                      <Dependency path="../remainingPayPeriods"></Dependency>
+                      <Dependency path="../payPeriodLength"></Dependency>
+                    </Multiply>
+                  </Add>
                 </Dividend>
                 <Divisors>
                   <Dependency path="../payPeriodLength" />
@@ -1941,6 +2031,152 @@
           <Dependency path="/overseasTerritoryIncome" />
           <Dependency path="/puertoRicoEarnedIncome" />
         </Add>
+      </Derived>
+    </Fact>
+
+    <Fact path="/jobs/*/nextPayDayForSemiMonthlyCalculations">
+      <Description>For semimonthly pay calculate the second pay date, based on the provided day when
+        the most recent pay period ended. Example: last pay day is 18th, then the other pay day of
+        the month will fall on 3rd.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="../mostRecentPayPeriodEnd/day" />
+                </Left>
+                <Right>
+                  <Int>15</Int>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="../mostRecentPayPeriodEnd/day" />
+                </Minuend>
+                <Subtrahends>
+                  <Int>15</Int>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="../mostRecentPayPeriodEnd/day" />
+                <Int>15</Int>
+              </Add>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/jobs/*/latestPayDateForSemimonthlyCalculations">
+      <Description>For semimonthly pay determine which one of two monthly pay days is later.
+        Example: pay days are 5 and 20. Use 20 for diff calculation</Description>
+      <Derived>
+        <GreaterOf>
+          <Dependency path="../mostRecentPayPeriodEnd/day" />
+          <Dependency path="../nextPayDayForSemiMonthlyCalculations" />
+        </GreaterOf>
+      </Derived>
+    </Fact>
+
+    <Fact path="/jobs/*/closestPayDateForSemimonthlyCalculations">
+      <Description>For semimonthly pay determine which one of two monthly pay days is earlier than a
+        end date. Example: pay days are 5 and 20. End day is 15. Use 5 for diff calculation.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="../endDayForSemiMonthlyCalculations" />
+                </Left>
+                <Right>
+                  <Dependency path="../nextPayDayForSemiMonthlyCalculations" />
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Dependency path="../mostRecentPayPeriodEnd/day" />
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Dependency path="../nextPayDayForSemiMonthlyCalculations" />
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/jobs/*/diffBetweenLastPayDateAndEndDate">
+      <Description>For semimonthly pay calculate diff between the last pay date and the end date</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <!-- End day is after both pay days. Example: pay days are 5, 20. End day is 30.
+              Use 20 for diff calc -->
+              <All>
+                <GreaterThanOrEqual>
+                  <Left>
+                    <Dependency path="../endDayForSemiMonthlyCalculations" />
+                  </Left>
+                  <Right>
+                    <Dependency path="../mostRecentPayPeriodEnd/day" />
+                  </Right>
+                </GreaterThanOrEqual>
+                <GreaterThanOrEqual>
+                  <Left>
+                    <Dependency path="../endDayForSemiMonthlyCalculations" />
+                  </Left>
+                  <Right>
+                    <Dependency path="../nextPayDayForSemiMonthlyCalculations" />
+                  </Right>
+                </GreaterThanOrEqual>
+              </All>
+            </When>
+            <Then>
+              <!-- Use latest pay date for diff calculation -->
+              <Subtract>
+                <Minuend>
+                  <Dependency path="../endDayForSemiMonthlyCalculations" />
+                </Minuend>
+                <Subtrahends>
+                  <Dependency path="../latestPayDateForSemimonthlyCalculations" />
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <!-- Use pay date before the end date. Example: pay days are 5, 20. End day is 15. Use
+              5 for diff calc -->
+              <Subtract>
+                <Minuend>
+                  <Dependency path="../endDayForSemiMonthlyCalculations" />
+                </Minuend>
+                <Subtrahends>
+                  <Dependency path="../closestPayDateForSemimonthlyCalculations" />
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
 
