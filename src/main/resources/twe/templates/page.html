@@ -18,7 +18,7 @@
   <script defer src="/resources/uswds-3.13.0/js/uswds.min.js"></script>
   <link rel="preload" href="/resources/uswds-3.13.0/js/uswds.min.js" as="script">
 
-  <a class="usa-skipnav" href='#main-content'>Skip to main content</a>
+  <a class="usa-skipnav" href='#main-content' th:text="#{layout.skip-to-main}"></a>
   <header>
     <div th:replace="fragments/usa-banner"></div>
     <div class="logo-banner"><img src="/resources/img/irs-logo.svg" alt=""/></div>
@@ -26,7 +26,7 @@
 
   <main id="main-content">
 
-    <h1>Tax Withholding Estimator</h1>
+    <h1 th:text="#{layout.title}"></h1>
 
     <div th:replace="fragments/usa-step-indicator"></div>
 
@@ -36,7 +36,7 @@
       <a class="usa-button"
         th:href="${nextPageHref}"
         onclick="return handleSectionContinue(event)">
-        Continue
+        [[#{buttons.continue}]]
         <svg aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
           <use href="/resources/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
         </svg>
@@ -46,9 +46,9 @@
       Commenting out submit button for now since we don't have a form submission
       <a class="usa-button"
         th:unless="${nextPageHref}"
+        th:text="#{buttons.submit}"
         href="#"
         onclick="return handleSectionComplete(event)">
-        Submit
       </a>
       -->
     </div>
@@ -57,39 +57,44 @@
   <template id="validate-alert-template">
     <div class="usa-alert usa-alert--error validate-alert" role="alert">
       <div class="usa-alert__body">
-        <h4 class="usa-alert__heading">Warning status</h4>
-        <p class="usa-alert__text" id="alert-message">Please complete the required fields</p>
+        <h4 class="usa-alert__heading" th:text="#{alerts.warning.heading}"></h4>
+        <p class="usa-alert__text" id="alert-message" th:text="#{alerts.warning.complete-required}"></p>
       </div>
     </div>
   </template>
 
-  <footer aria-label="Tax Withholding Estimator" class="footer">
+  <footer th:aria-label="#{layout.title}" class="footer">
     <div data-testid="identifier" class="usa-identifier">
-      <section data-testid="identifierMasthead" class="usa-identifier__section usa-identifier__section--masthead" aria-label="Agency identifier">
-        <div class="usa-identifier__container"><div data-testid="identifierLogos" class="usa-identifier__logos">
-          <a class="usa-identifier__logo" href="https://irs.gov">
-            <img src="/resources/img/irs_logo_bk.svg" class="usa-identifier__logo-img" alt="IRS logo" height="1em" width="1em">
-          </a>
+      <section data-testid="identifierMasthead" class="usa-identifier__section usa-identifier__section--masthead" th:aria-label="#{layout.identifier.agency-identifier}">
+        <div class="usa-identifier__container">
+          <div data-testid="identifierLogos" class="usa-identifier__logos">
+            <a class="usa-identifier__logo" href="https://irs.gov">
+              <img src="/resources/img/irs_logo_bk.svg" class="usa-identifier__logo-img" th:alt="#{layout.irs.logo-alt-text}" height="1em" width="1em">
+            </a>
+          </div>
+          <div data-testid="identifierIdentity" class="usa-identifier__identity">
+            <p class="usa-identifier__identity-domain" th:text="#{layout.irs.domain}"></p>
+            <p class="usa-identifier__identity-disclaimer" th:utext="#{layout.identifier.disclaimer}"></p>
+          </div>
         </div>
-        <div data-testid="identifierIdentity" class="usa-identifier__identity">
-          <p class="usa-identifier__identity-domain">IRS.gov</p>
-          <p class="usa-identifier__identity-disclaimer">An official website of the <a class="usa-link" href="https://irs.gov">IRS</a></p></div></div></section><nav class="usa-identifier__section usa-identifier__section--required-links" aria-label="Important links">
-            <div class="usa-identifier__container">
-              <ul class="usa-identifier__required-links-list">
-                <li class="usa-identifier__required-links-item">
-                  <a class="usa-link usa-identifier__required-link" href="/about/">About</a>
-                </li>
-                <li class="usa-identifier__required-links-item">
-                  <a class="usa-link usa-identifier__required-link" href="https://www.irs.gov/accessibility">Accessibility</a>
-                </li>
-                <li class="usa-identifier__required-links-item">
-                  <a class="usa-link usa-identifier__required-link" href="https://www.irs.gov/privacy-disclosure/irs-privacy-policy">Privacy policy</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+      </section>
+      <nav class="usa-identifier__section usa-identifier__section--required-links" th:aria-label="#{layout.identifier.important-link}">
+        <div class="usa-identifier__container">
+          <ul class="usa-identifier__required-links-list">
+            <li class="usa-identifier__required-links-item">
+              <a class="usa-link usa-identifier__required-link" href="/about/" th:text="#{layout.identifier.about}"></a>
+            </li>
+            <li class="usa-identifier__required-links-item">
+              <a class="usa-link usa-identifier__required-link" href="https://www.irs.gov/accessibility" th:text="#{layout.identifier.accessibility}"></a>
+            </li>
+            <li class="usa-identifier__required-links-item">
+              <a class="usa-link usa-identifier__required-link" href="https://www.irs.gov/privacy-disclosure/irs-privacy-policy" th:text="#{layout.identifier.privacy-policy}"></a>
+            </li>
+          </ul>
         </div>
-      </footer>
+      </nav>
+    </div>
+  </footer>
 
   <script type="text" id="fact-dictionary" th:utext="${dictionaryConfig}"></script>
 </html>

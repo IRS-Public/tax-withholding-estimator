@@ -6,7 +6,7 @@
         <span class="usa-step-indicator__segment-label">
           <a class="usa-step-indicator__link" th:href="${page.route}">
             <span th:text="${page.title}"></span>
-            <span class="usa-sr-only">completed</span>
+            <span class="usa-sr-only" th:text="#{step-indicator.completed}"></span>
           </a>
         </span>
     </li>
@@ -23,7 +23,7 @@
         <span class="usa-step-indicator__segment-label">
           <a class="usa-step-indicator__link" th:href="${page.route}">
             <span th:text="${page.title}"></span>
-            <span class="usa-sr-only">not completed</span>
+            <span class="usa-sr-only" th:text="#{step-indicator.not-completed}"></span>
           </a>
         </span>
       </li>
@@ -31,11 +31,11 @@
 
   <div class="usa-step-indicator__header">
     <h2 class="usa-step-indicator__heading">
-      <span class="usa-sr-only" th:text="'Step ' + ${stepIndex + 1} + ' of ' + ${stepTotal} + ': ' + ${stepTitle}"></span>
+      <span class="usa-sr-only" th:text="#{step-indicator.step-of(${stepIndex + 1}, ${stepTotal}, ${stepTitle})}"></span>
       <span class="usa-step-indicator__heading-counter" aria-hidden="true">
         <span class="usa-step-indicator__current-step" th:text="${stepIndex + 1}"></span>
-        <span class="usa-step-indicator__total-steps">of <span th:text="${stepTotal}"></span> </span
-      ><span class="usa-step-indicator__heading-text" th:text="${stepTitle}"></span
+        <span class="usa-step-indicator__total-steps">[[#{step-indicator.of}]] <span th:text="${stepTotal}"></span>
+        </span><span class="usa-step-indicator__heading-text" th:text="${stepTitle}"></span
       >
     </h2>
   </div>
