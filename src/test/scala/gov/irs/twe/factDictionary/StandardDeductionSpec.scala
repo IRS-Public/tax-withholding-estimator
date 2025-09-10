@@ -17,11 +17,11 @@ class StandardDeductionSpec extends AnyFunSpec {
     // Hopefully you will only need to update these values for a change in tax year.
     // <TaxYear>2025</TaxYear> TY25 TY2025
     object standardDeduction:
-      val single = 15000
-      val mfs = 15000
-      val qss = 30000
-      val hoh = 22500
-      val mfj = 30000
+      val single = 15750
+      val mfs = 15750
+      val qss = 31500
+      val hoh = 23625
+      val mfj = 31500
     object additionalStandardDeduction:
       val single = 2000
       val mfs = 1600
@@ -95,6 +95,19 @@ class StandardDeductionSpec extends AnyFunSpec {
         testTitle = s"${testTitle}, income: ${totalIncome}"
 
         it(testTitle) {
+          val graph = makeGraphWith(
+            factDictionary,
+            Path("/filingStatus") -> filingStatus,
+            Path("/primaryFilerIsClaimedOnAnotherReturn") -> filerIsClaimed,
+            Path("/primaryFilerIsBlind") -> filerIsBlind,
+            Path("/primaryFilerAge65OrOlder") -> filerIsSenior,
+            Path("/totalIncome") -> totalIncome,
+          )
+
+          if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
+            cancel("Skipping test based on OB3 standard deduction numbers because you are using pre-OB3 facts")
+          }
+
           val baseAmount = if (filerIsClaimed || (isMfj && spouseIsClaimed)) {
             Dollar(
               scala.math
@@ -115,14 +128,6 @@ class StandardDeductionSpec extends AnyFunSpec {
             if (spouseIsSenior) multiplier = multiplier + 1
           }
 
-          val graph = makeGraphWith(
-            factDictionary,
-            Path("/filingStatus") -> filingStatus,
-            Path("/primaryFilerIsClaimedOnAnotherReturn") -> filerIsClaimed,
-            Path("/primaryFilerIsBlind") -> filerIsBlind,
-            Path("/primaryFilerAge65OrOlder") -> filerIsSenior,
-            Path("/totalIncome") -> totalIncome,
-          )
           if (isMfj) {
             graph.set(Path("/secondaryFilerIsClaimedOnAnotherReturn"), spouseIsClaimed)
             graph.set(Path("/secondaryFilerIsBlind"), spouseIsBlind)
