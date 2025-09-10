@@ -99,7 +99,7 @@
         TY2025 numbers IRS announced. Useful when comparing to historical outcomes like the QA
         spreadsheet.</Description>
       <Derived>
-        <True />
+        <False />
       </Derived>
     </Fact>
 
