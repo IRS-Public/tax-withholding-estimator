@@ -94,6 +94,11 @@
       <attribute name="path">
           <data type="anyURI"/>
       </attribute>
+      <optional>
+        <attribute name="item-name">
+          <text />
+        </attribute>
+      </optional>
       <interleave>
         <oneOrMore>
           <ref name="fg-set-module"></ref>

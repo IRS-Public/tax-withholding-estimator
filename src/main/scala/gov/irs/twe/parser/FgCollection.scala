@@ -11,7 +11,7 @@ enum FgCollectionNode {
   case rawHTML(node: xml.Node)
 }
 
-case class FgCollection(path: String, condition: Option[Condition], nodes: List[FgCollectionNode]) {
+case class FgCollection(path: String, itemName: String, condition: Option[Condition], nodes: List[FgCollectionNode]) {
   def html(templateEngine: TweTemplateEngine): String = {
     val collectionFacts = this.nodes
       .map {
@@ -22,6 +22,7 @@ case class FgCollection(path: String, condition: Option[Condition], nodes: List[
 
     val context = new Context()
     context.setVariable("path", path)
+    context.setVariable("itemName", itemName)
     context.setVariable("collectionFacts", collectionFacts)
     context.setVariable("condition", this.condition.map(_.path).orNull)
     context.setVariable("operator", this.condition.map(_.operator.toString).orNull)
@@ -33,6 +34,7 @@ case class FgCollection(path: String, condition: Option[Condition], nodes: List[
 object FgCollection {
   def parse(node: xml.Node, factDictionary: FactDictionary): FgCollection = {
     val path = node \@ "path"
+    val itemName = node \@ "item-name"
     val condition = Condition.getCondition(node, factDictionary)
 
     validateFgCollection(path, factDictionary)
@@ -46,7 +48,7 @@ object FgCollection {
       )
       .toList
 
-    FgCollection(path, condition, nodes)
+    FgCollection(path, itemName, condition, nodes)
   }
 
   private def validateFgCollection(path: String, factDictionary: FactDictionary): Unit = {

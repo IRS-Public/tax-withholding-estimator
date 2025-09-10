@@ -1,0 +1,14 @@
+fg-collection-item {
+  display: block;
+  margin: var(--units-1) 0;
+}
+
+.fg-collection__add-item {
+  margin-bottom: var(--units-3);
+}
+
+.fg-collection-item__controls {
+  border-top: 2px solid var(--base-lightest);
+  padding-top: var(--units-3);
+  padding-left: var(--units-05)
+}

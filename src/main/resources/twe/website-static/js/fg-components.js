@@ -304,6 +304,21 @@ class FgCollection extends HTMLElement {
 
     // Make listener a persistent function so we can remove it later
     this.addItemListener = () => this.addItem();
+
+    /*
+    * Set item numbers for items in `<fg-collection>`
+    * Changes headings to Item 1, Item 2, etc.
+    */
+
+    this.setCollectionItemNumbers = () => {
+      const collectionItems = this.querySelectorAll('fg-collection-item');
+      collectionItems.forEach((item, index) => {
+        const itemNumberSlot = item.querySelector('.usa-accordion__button .item-number');
+        if (itemNumberSlot) {
+          itemNumberSlot.textContent = ` ${index + 1}`;
+        }
+      });
+    };
   }
 
   connectedCallback() {
@@ -331,8 +346,10 @@ class FgCollection extends HTMLElement {
     const collectionItem = document.createElement('fg-collection-item')
     collectionItem.setAttribute(`collectionPath`, this.path)
     collectionItem.setAttribute(`collectionId`, collectionId)
-
-    this.appendChild(collectionItem)
+    const collectionItemsContainer = this.querySelector('.usa-accordion')
+    collectionItemsContainer.appendChild(collectionItem)
+    const collectionAccordionButton = collectionItem.querySelector('.usa-accordion__button');
+    collectionAccordionButton?.focus();
     document.dispatchEvent(new CustomEvent('fg-update'))
   }
 
@@ -346,7 +363,10 @@ class FgCollectionItem extends HTMLElement {
     // Make listener a persistent function so we can remove it later
     this.clearListener = () => this.clear()
     this.removeItemListener = () => {
+      const fgCollection = this.closest('fg-collection')
+      const addButton = fgCollection.querySelector('.fg-collection__add-item')
       this.clear();
+      addButton.focus();
       this.dispatchEvent(new CustomEvent('fg-update'));
     }
   }
@@ -356,6 +376,7 @@ class FgCollectionItem extends HTMLElement {
 
     // Get our template from the parent fg-collection
     const fgCollection = this.closest('fg-collection')
+    const addButton = fgCollection.querySelector('.fg-collection__add-item')
     const templateContent = fgCollection.querySelector('.fg-collection__item-template').content.cloneNode(true)
 
     // Update all abstract paths in the template to include the collection id
@@ -374,10 +395,19 @@ class FgCollectionItem extends HTMLElement {
 
     this.append(templateContent);
 
+    // Set up accordion ids to enable interactions
+    const collectionAccordionButton = this.querySelector('.usa-accordion__button');
+    const collectionItemContent = this.querySelector('.usa-accordion__content');
+    collectionAccordionButton.setAttribute('aria-controls', `collection-item-${collectionId}`);
+    collectionItemContent.setAttribute('id', `collection-item-${collectionId}`);
+
     this.removeButton = this.querySelector('.fg-collection-item__remove-item')
     this.removeButton.addEventListener('click', this.removeItemListener)
 
     document.addEventListener('fg-clear', this.clearListener)
+
+    // Set collection item numbers
+    fgCollection.setCollectionItemNumbers()
   }
 
   disconnectedCallback() {
@@ -395,6 +425,7 @@ class FgCollectionItem extends HTMLElement {
       fgSet.remove();
     }
 
+    const fgCollection = this.closest('fg-collection')
     const collectionPath = this.getAttribute(`collectionPath`)
     const collectionId = this.getAttribute(`collectionId`)
     factGraph.delete(makeCollectionIdPath(`${collectionPath}/*`, collectionId));
@@ -402,6 +433,7 @@ class FgCollectionItem extends HTMLElement {
 
     // Remove this element and its parent fieldset from the DOM after removing the item from the fact graph
     this.remove();
+    fgCollection.setCollectionItemNumbers()
   }
 }
 customElements.define('fg-collection-item', FgCollectionItem)

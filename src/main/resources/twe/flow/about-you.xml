@@ -56,7 +56,7 @@
       </fg-set>
 
       <h2>Jobs</h2>
-      <fg-collection path="/jobs">
+      <fg-collection path="/jobs" item-name="Income source">
         <fg-set path="/jobs/*/startDate">
           <question>What’s the start date?</question>
           <input type="date" />

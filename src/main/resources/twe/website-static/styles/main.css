@@ -9,7 +9,9 @@
 @import "layout/main-content.css";
 
 /* Components */
+@import "components/accordions.css";
 @import "components/alerts.css";
+@import "components/fg-collections.css";
 @import "components/forms.css";
 @import "components/step-indicator.css";
 @import "components/tables.css";

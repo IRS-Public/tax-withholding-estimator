@@ -1,19 +1,28 @@
-<fg-collection th:attr="path=${path}, condition=${condition}, operator=${operator}">
-    <template class="fg-collection__item-template">
-        <fieldset class="usa-fieldset margin-top-3 padding-3 border-1px border-base-lighter">
-            <div class="fg-collection-item__controls">
-                <button type="button" class="fg-collection-item__remove-item usa-button usa-button--unstyled">
-                    Remove item
-                </button>
+<fg-collection th:attr="path=${path}, condition=${condition}, operator=${operator}, itemName=${itemName}">
+    <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable margin-bottom-3" data-allow-multiple>
+        <template class="fg-collection__item-template">
+            <h3 class="usa-accordion__heading">
+            <button class="usa-accordion__button usa-accordion__button--highlight" type="button" aria-expanded="true">[[${itemName != '' ? itemName : 'Item'}]] <span class="item-number"></span></button>
+            </h3>
+            <div class="usa-accordion__content">
+                <div class="fg-collection-item__fields" th:utext="${collectionFacts}"></div>
+                <div class="fg-collection-item__controls">
+                    <button type="button" class="fg-collection-item__remove-item usa-button usa-button--unstyled">
+                        <svg aria-hidden="true" role="img" focusable="false"
+                            class="usa-icon usa-icon--size-3 margin-left-neg-1 margin-y-neg-05">
+                            <use href="/resources/uswds-3.13.0/img/sprite.svg#delete"></use>
+                        </svg>
+                        Remove [[${itemName != '' ? #strings.toLowerCase(itemName) : 'item'}]]
+                    </button>
+                </div>
             </div>
-            <div class="fg-collection-item__fields" th:utext="${collectionFacts}"></div>
-        </fieldset>
-    </template>
+        </template>
+    </div>
     <button type="button" class="fg-collection__add-item usa-button usa-button--outline">
         <svg aria-hidden="true" role="img" focusable="false"
              class="usa-icon usa-icon--size-3 margin-left-neg-1 margin-y-neg-05">
             <use href="/resources/uswds-3.13.0/img/sprite.svg#add"></use>
         </svg>
-        Add item
+        Add [[${itemName != '' ? #strings.toLowerCase(itemName) : 'item'}]]
     </button>
 </fg-collection>
