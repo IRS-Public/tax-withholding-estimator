@@ -195,10 +195,31 @@ class FgSet extends HTMLElement {
       case 'int':
       case 'date': {
         const dateString = value;
-        const [year, month, day] = dateString ? dateString.split('-') : ["", "", ""];
-        this.querySelector('select[name*="-month"]').value = month;
-        this.querySelector('input[name*="-day"]').value = day;
-        this.querySelector('input[name*="-year"]').value = year;
+        if (dateString) {
+          // Fact has a complete date value - set all fields
+          const [year, month, day] = dateString.split('-');
+          this.querySelector('select[name*="-month"]').value = month;
+          this.querySelector('input[name*="-day"]').value = day;
+          this.querySelector('input[name*="-year"]').value = year;
+        } else if (this.inputType === 'date') {
+          // For incomplete date facts, preserve existing input values
+          // Only clear if the inputs are truly empty (not just fact incomplete)
+          const monthSelect = this.querySelector('select[name*="-month"]');
+          const dayInput = this.querySelector('input[name*="-day"]');
+          const yearInput = this.querySelector('input[name*="-year"]');
+          
+          // Only reset to empty if there are no current values
+          // This preserves partial user input during fg-update events
+          if (!monthSelect.value && !dayInput.value && !yearInput.value) {
+            monthSelect.value = '';
+            dayInput.value = '';
+            yearInput.value = '';
+          }
+          // If there are existing values, leave them alone
+        } else {
+          // For non-date inputs, clear when fact has no value
+          this.querySelector('input').value = '';
+        }
         break
       }
       case 'dollar': {
