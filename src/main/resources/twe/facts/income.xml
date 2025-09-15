@@ -1919,24 +1919,70 @@
     </Fact>
 
     <Fact path="/netSelfEmploymentIncome">
+      <Description>Net self-employment income</Description>
       <Writable>
         <Dollar />
       </Writable>
     </Fact>
 
     <Fact path="/ordinaryDividendsIncome">
+      <Description>Ordinary dividends income</Description>
       <Writable>
         <Dollar />
       </Writable>
     </Fact>
 
     <Fact path="/unemploymentInsuranceIncome">
+      <Description>Unemployment insurance income</Description>
       <Writable>
         <Dollar />
       </Writable>
     </Fact>
 
-    <Fact path="/miscIncome">
+    <Fact path="/interestExcludingNonTaxableIncome">
+      <Description>Interest income excluding non-taxable interest</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/shortTermCapitalGainsIncome">
+      <Description>Short term capital gains income</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/taxableScholarshipIncome">
+      <Description>Taxable income from scholarships</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/alimonyReceivedIncome">
+      <Description>Alimony received income</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/sCorpNonPassiveIncome">
+      <Description>S-corp non-passive income (Schedule K1)</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/netScheduleEIncome">
+      <Description>Net Schedule E income</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/nonSpecificOtherIncome">
+      <Description>Non-specific other income</Description>
       <Writable>
         <Dollar />
       </Writable>
@@ -1948,7 +1994,13 @@
           <Dependency path="/netSelfEmploymentIncome" />
           <Dependency path="/ordinaryDividendsIncome" />
           <Dependency path="/unemploymentInsuranceIncome" />
-          <Dependency path="/miscIncome" />
+          <Dependency path="/interestExcludingNonTaxableIncome" />
+          <Dependency path="/shortTermCapitalGainsIncome" />
+          <Dependency path="/taxableScholarshipIncome" />
+          <Dependency path="/alimonyReceivedIncome" />
+          <Dependency path="/sCorpNonPassiveIncome" />
+          <Dependency path="/netScheduleEIncome" />
+          <Dependency path="/nonSpecificOtherIncome" />
         </Add>
       </Derived>
     </Fact>
