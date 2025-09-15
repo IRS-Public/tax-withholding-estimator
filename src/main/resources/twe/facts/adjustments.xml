@@ -2,34 +2,81 @@
 <FactDictionaryModule>
   <Facts>
     <Fact path="/actualEducatorExpensesAdjustmentAmount">
-      <Name>Non Educator expense adjustments, no logic in place for actually calculating the applicable amount
-      </Name>
+      <Description>Non Educator expense adjustments, no logic in place for actually calculating the
+        applicable amount
+      </Description>
       <Writable>
-        <Dollar/>
+        <Dollar />
       </Writable>
     </Fact>
+
     <Fact path="/actualStudentLoanInterestAdjustmentAmount">
-      <Name>Student loan interest adjustments, no logic in place for actually calculating the applicable amount
-      </Name>
+      <Description>Student loan interest adjustments, no logic in place for actually calculating the
+        applicable amount
+      </Description>
       <Writable>
-        <Dollar/>
+        <Dollar />
       </Writable>
     </Fact>
+
     <Fact path="/actualHsaTotalDeductibleAmount">
-      <Name>HSA total deductible amount, no logic in place for actually calculating the applicable amount</Name>
+      <Description>HSA total deductible amount, no logic in place for actually calculating the
+        applicable
+        amount</Description>
       <Writable>
-        <Dollar/>
+        <Dollar />
       </Writable>
     </Fact>
+
+    <Fact path="/actualDeductionForTraditionalIRAContribution">
+      <Description>Deduction for contributions to traditional IRAs (excluding payroll deductions)</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/actualMovingExpensesForArmedServicesMembers">
+      <Description>Moving expenses for members of armed services</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/actualAlimonyPaid">
+      <Description>Alimony paid (pre 2019 divorce)</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/actualPenaltyForEarlySavingsWithdrawal">
+      <Description>Penalty for early withdrawal of savings</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
+    <Fact path="/actualBusinessCreditsForEligible">
+      <Description>Business credits for reservists, performing artists, and fee-based government
+        officials</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>
+
     <Fact path="/adjustmentsToIncome">
-      <Name>Adjustments to income</Name>
       <Description>Adjustments to income to report on line 10 of Form 1040 and line 26 of Schedule.</Description>
       <Derived>
         <Round>
           <Add>
-            <Dependency path="/actualEducatorExpensesAdjustmentAmount"/>
-            <Dependency path="/actualStudentLoanInterestAdjustmentAmount"/>
-            <Dependency path="/actualHsaTotalDeductibleAmount"/>
+            <Dependency path="/actualEducatorExpensesAdjustmentAmount" />
+            <Dependency path="/actualStudentLoanInterestAdjustmentAmount" />
+            <Dependency path="/actualHsaTotalDeductibleAmount" />
+            <Dependency path="/actualDeductionForTraditionalIRAContribution" />
+            <Dependency path="/actualMovingExpensesForArmedServicesMembers" />
+            <Dependency path="/actualAlimonyPaid" />
+            <Dependency path="/actualPenaltyForEarlySavingsWithdrawal" />
+            <Dependency path="/actualBusinessCreditsForEligible" />
           </Add>
         </Round>
       </Derived>

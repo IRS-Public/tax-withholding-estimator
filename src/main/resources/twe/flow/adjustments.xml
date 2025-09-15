@@ -5,27 +5,69 @@
       <h2>Educator expenses</h2>
       <fg-set path="/actualEducatorExpensesAdjustmentAmount">
         <question>How much have you paid this year in educator expenses?</question>
-        <input type="dollar"/>
+        <input type="dollar" />
       </fg-set>
 
       <h2>Student loan interest</h2>
       <fg-set path="/actualStudentLoanInterestAdjustmentAmount">
         <question>How much have you paid this year in student loan interest?</question>
-        <input type="dollar"/>
-
+        <input type="dollar" />
       </fg-set>
 
       <h2>Health Savings Account Contributions</h2>
       <fg-set path="/actualHsaTotalDeductibleAmount">
-        <question>What’s the total amount of deductible Health Savings Account contributions you made this year?
+        <question>What’s the total amount of deductible Health Savings Account contributions you
+          made this year?
         </question>
         <hint>Do not include amounts already deducted from your paycheck</hint>
-        <input type="dollar"/>
+        <input type="dollar" />
+      </fg-set>
+
+      <h2>Deduction for contributions to Traditional IRAs</h2>
+      <fg-set path="/actualDeductionForTraditionalIRAContribution">
+        <question>What’s the total amount of deductible contributions to Traditional IRAs (excluding
+          payroll deductions) you
+          made this year?
+        </question>
+        <hint>Do not include amounts already deducted from your paycheck</hint>
+        <input type="dollar" />
+      </fg-set>
+
+      <h2>Moving expenses for members of armed services</h2>
+      <fg-set path="/actualMovingExpensesForArmedServicesMembers">
+        <question>What’s the total amount of moving expenses (for members of armed services) you
+          incurred this year?
+        </question>
+        <input type="dollar" />
+      </fg-set>
+
+      <h2>Alimony paid</h2>
+      <fg-set path="/actualAlimonyPaid">
+        <question>What’s the total amount of alimony (pre 2019 divorce) you
+          paid this year?
+        </question>
+        <input type="dollar" />
+      </fg-set>
+
+      <h2>Penalty for early withdrawal of savings</h2>
+      <fg-set path="/actualPenaltyForEarlySavingsWithdrawal">
+        <question>What’s the total amount of penalties for early withdrawal of savings you
+          paid this year?
+        </question>
+        <input type="dollar" />
+      </fg-set>
+
+      <h2>Business credits</h2>
+      <fg-set path="/actualBusinessCreditsForEligible">
+        <question>What’s the total amount of eligible business credits (for reservists, performing
+          artists, and fee-based government officials) you are claiming this year?
+        </question>
+        <input type="dollar" />
       </fg-set>
 
       <h2>Your adjusted gross income:</h2>
       <p>
-      <fg-show path="/agi"/>
+        <fg-show path="/agi" />
       </p>
     </section>
   </page>
