@@ -2,7 +2,6 @@
 <FactDictionaryModule>
   <Facts>
     <Fact path="/actualChildTaxCreditAmount">
-      <Name>Child tax credit</Name>
       <Description>Child tax credit, no logic in place for actually calculating the applicable
         amount.</Description>
       <Writable>
@@ -14,7 +13,6 @@
     </Fact>
 
     <Fact path="/actualEarnedIncomeTaxCreditAmount">
-      <Name>Earned Income tax credit</Name>
       <Description>Earned Income tax credit, no logic in place for actually calculating the
         applicable amount.</Description>
       <Writable>
@@ -26,7 +24,6 @@
     </Fact>
 
     <Fact path="/actualChildAndDependentCareTaxCreditAmount">
-      <Name>Child and Dependent Care tax credit</Name>
       <Description>Child and Dependent Care tax credit, no logic in place for actually calculating
         the applicable amount.</Description>
       <Writable>
@@ -38,7 +35,6 @@
     </Fact>
 
     <Fact path="/actualSaversTaxCreditAmount">
-      <Name>Savers Credit</Name>
       <Description>Savers credit, no logic in place for actually calculating the applicable amount.</Description>
       <Writable>
         <Dollar />
@@ -49,7 +45,6 @@
     </Fact>
 
     <Fact path="/actualElderlyAndDisabledTaxCreditAmount">
-      <Name>Elderly and Disabled tax credit</Name>
       <Description>Elderly and Disabled tax credit, no logic in place for actually calculating the
         applicable amount.</Description>
       <Writable>
@@ -61,7 +56,6 @@
     </Fact>
 
     <Fact path="/actualLifetimeLeariningTaxCreditAmount">
-      <Name>Lifetime Learning tax credit</Name>
       <Description>Lifetime Learning Tax credit, no logic in place for actually calculating the
         applicable amount.</Description>
       <Writable>
@@ -73,7 +67,6 @@
     </Fact>
 
     <Fact path="/actualAmericanOpportunityTaxCreditAmount">
-      <Name>American opportunity tax credit</Name>
       <Description>American opportunity tax credit, no logic in place for actually calculating the
         applicable amount.</Description>
       <Writable>
@@ -84,8 +77,62 @@
       </Placeholder>
     </Fact>
 
+    <Fact path="/actualAdoptionTaxCreditAmount">
+      <Description>Adoption tax credit, no logic in place for actually calculating the
+        applicable amount</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/actualForeignTaxCreditAmount">
+      <Description>Foreign tax credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/actualMortgageInterestTaxCreditAmount">
+      <Description>Mortgage interest credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/actualGeneralBusinessTaxCreditAmount">
+      <Description>General business credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
+    <Fact path="/actualAlternativeMinimumTaxCreditAmount">
+      <Description>Alternative minimum tax credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+
     <Fact path="/totalCredits">
-      <Name>Total sum of applicable credits</Name>
       <Description>Total sum of applicable credits.</Description>
       <Derived>
         <Round>
@@ -97,6 +144,11 @@
             <Dependency path="/actualElderlyAndDisabledTaxCreditAmount" />
             <Dependency path="/actualLifetimeLeariningTaxCreditAmount" />
             <Dependency path="/actualAmericanOpportunityTaxCreditAmount" />
+            <Dependency path="/actualAdoptionTaxCreditAmount" />
+            <Dependency path="/actualForeignTaxCreditAmount" />
+            <Dependency path="/actualMortgageInterestTaxCreditAmount" />
+            <Dependency path="/actualGeneralBusinessTaxCreditAmount" />
+            <Dependency path="/actualAlternativeMinimumTaxCreditAmount" />
           </Add>
         </Round>
       </Derived>
