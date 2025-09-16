@@ -20,10 +20,7 @@
         <Subtract>
           <Minuend>
             <Add>
-              <Multiply>
-                <Dependency path="../averagePayPerPayPeriod" />
-                <Dependency path="../fractionalRemainingPayPeriods" />
-              </Multiply>
+              <Dependency path="../restOfYearIncome" />
               <Dependency path="../yearToDateIncome" />
               <Dependency path="../totalBonusReceived" />
             </Add>
@@ -222,19 +219,6 @@
             </Then>
           </Case>
         </Switch>
-      </Derived>
-    </Fact>
-
-    <Fact path="/jobs/*/deltaPayDatePayPeriod">
-      <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="../mostRecentPayDate/ordinal" />
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="../mostRecentPayPeriodEnd/ordinal" />
-          </Subtrahends>
-        </Subtract>
       </Derived>
     </Fact>
 
@@ -1636,7 +1620,8 @@
       </Derived>
     </Fact>
 
-    <Fact path="/jobs/*/baseWithholding">
+    <!-- TODO: Eventually implement -->
+    <!-- <Fact path="/jobs/*/baseWithholding">
       <Description>Line 3c of Pub. 15-T Worksheet 1A. The per-period withholding amount, excluding
         any extra elected on Form W-4 Line 4(c).</Description>
       <Derived>
@@ -1659,7 +1644,7 @@
           </Subtract>
         </GreaterOf>
       </Derived>
-    </Fact>
+    </Fact> -->
 
     <Fact path="/jobs/*/endOfYearProjectedWithholding">
       <Description>The end of year amount withheld for this job if nothing is changed.</Description>
