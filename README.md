@@ -23,6 +23,7 @@ possible.
 
 # Setup
 See [ONBOARDING.md](ONBOARDING.md) for environment/developer setup.
+See [NON-DEV-ONBOARDING.md](NON-DEV-ONBOARDING.md) for non-developer local setup
 
 # Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
