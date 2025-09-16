@@ -303,54 +303,134 @@
               <Dependency path="../isPayFrequencySemiMonthly" />
             </When>
             <Then>
+              <!-- Add three numbers:
+               remaining pay periods "this" month (if it is not the final month)
+               + pay periods for whole months intervening
+               + remaining pay periods for final month -->
               <Add>
-                <!-- 2 * Max(EndMonth-StartMonth-1, 0) -->
-                <Multiply>
-                  <GreaterOf>
+                <!-- For "this" month (of most recent pay date) ...  -->
+                <Switch>
+                  <Case>
+                    <When>
+                      <All>
+                        <!-- ... when it's not the final month ...  -->
+                        <NotEqual>
+                          <Left>
+                            <Dependency path="../mostRecentPayDate/month" />
+                          </Left>
+                          <Right>
+                            <Dependency path="../endDate/month" />
+                          </Right>
+                        </NotEqual>
+                        <!-- ... and we were last paid in the first half of the month ...  -->
+                        <LessThanOrEqual>
+                          <Left>
+                            <Dependency path="../mostRecentPayDate/day" />
+                          </Left>
+                          <Right>
+                            <Dependency path="../payPeriodLength" />
+                          </Right>
+                        </LessThanOrEqual>
+                      </All>
+                    </When>
+                    <Then>
+                      <!-- ... then we'll get paid once more this month ...  -->
+                      <Int>1</Int>
+                    </Then>
+                  </Case>
+                  <Case>
+                    <When>
+                      <True />
+                    </When>
+                    <Then>
+                      <!-- ... otherwise no more this month.  -->
+                      <Int>0</Int>
+                    </Then>
+                  </Case>
+                </Switch>
+                <!-- For full months between now and end date ...  -->
+                <GreaterOf>
+                  <Int>0</Int>
+                  <Multiply>
+                    <!-- ... we get paid twice each.  -->
+                    <Int>2</Int>
                     <Subtract>
                       <Minuend>
                         <Dependency path="../endDate/month" />
                       </Minuend>
                       <Subtrahends>
-                        <Add>
-                          <Dependency path="../mostRecentPayPeriodEnd/month" />
-                          <Int>1</Int>
-                        </Add>
+                        <Dependency path="../mostRecentPayDate/month" />
+                        <Int>1</Int>
                       </Subtrahends>
                     </Subtract>
-                    <Int>0</Int>
-                  </GreaterOf>
-                  <Int>2</Int>
-                </Multiply>
-                <!-- Ceil((30-StartDay)/15) -->
-                <Ceiling>
-                  <Divide>
-                    <Dividend>
-                      <Subtract>
-                        <Minuend>
-                          <Int>30</Int>
-                        </Minuend>
-                        <Subtrahends>
-                          <Dependency path="../mostRecentPayPeriodEnd/day" />
-                        </Subtrahends>
-                      </Subtract>
-                    </Dividend>
-                    <Divisors>
-                      <Dependency path="../payPeriodLength" />
-                    </Divisors>
-                  </Divide>
-                </Ceiling>
-                <!-- Ceil(EndDay/15)-->
-                <Ceiling>
-                  <Divide>
-                    <Dividend>
-                      <Dependency path="../endDayForSemiMonthlyCalculations" />
-                    </Dividend>
-                    <Divisors>
-                      <Dependency path="../payPeriodLength" />
-                    </Divisors>
-                  </Divide>
-                </Ceiling>
+                  </Multiply>
+                </GreaterOf>
+                <!-- For the final month ...  -->
+                <Switch>
+                  <Case>
+                    <When>
+                      <!-- ... when we were most recently paid in the final month ... -->
+                      <Equal>
+                        <Left>
+                          <Dependency path="../mostRecentPayDate/month" />
+                        </Left>
+                        <Right>
+                          <Dependency path="../endDate/month" />
+                        </Right>
+                      </Equal>
+                    </When>
+                    <Then>
+                      <Switch>
+                        <Case>
+                          <When>
+                            <All>
+                              <!-- ... and it was for the first half ...  -->
+                              <LessThanOrEqual>
+                                <Left>
+                                  <Dependency path="../mostRecentPayDate/day" />
+                                </Left>
+                                <Right>
+                                  <Dependency path="../payPeriodLength" />
+                                </Right>
+                              </LessThanOrEqual>
+                              <!-- ... and we have not been paid through the end date ... -->
+                              <GreaterThan>
+                                <Left>
+                                  <Dependency path="../endDate/ordinal" />
+                                </Left>
+                                <Right>
+                                  <Dependency path="../mostRecentPayPeriodEnd/ordinal" />
+                                </Right>
+                              </GreaterThan>
+                            </All>
+                          </When>
+                          <Then>
+                            <!-- ... then one payment still remains; ... -->
+                            <Int>1</Int>
+                          </Then>
+                        </Case>
+                        <Case>
+                          <When>
+                            <True />
+                          </When>
+                          <Then>
+                            <!-- ... otherwise, no payments remain.  -->
+                            <Int>0</Int>
+                          </Then>
+                        </Case>
+                      </Switch>
+                    </Then>
+                  </Case>
+                  <Case>
+                    <!-- ... otherwise we're paid twice in the month.  -->
+                    <When>
+                      <True />
+                    </When>
+                    <Then>
+                      <Int>2</Int>
+                    </Then>
+                  </Case>
+                </Switch>
               </Add>
             </Then>
           </Case>
@@ -567,13 +647,16 @@
               <!-- Use diff between the last pay period and end day -->
               <Divide>
                 <Dividend>
-                  <Add>
-                    <Dependency path="../diffBetweenLastPayDateAndEndDate"></Dependency>
-                    <Multiply>
-                      <Dependency path="../remainingPayPeriods"></Dependency>
-                      <Dependency path="../payPeriodLength"></Dependency>
-                    </Multiply>
-                  </Add>
+                  <GreaterOf>
+                    <Int>0</Int>
+                    <Add>
+                      <Dependency path="../diffBetweenLastPayDateAndEndDate" />
+                      <Multiply>
+                        <Dependency path="../remainingPayPeriods" />
+                        <Dependency path="../payPeriodLength" />
+                      </Multiply>
+                    </Add>
+                  </GreaterOf>
                 </Dividend>
                 <Divisors>
                   <Dependency path="../payPeriodLength" />
