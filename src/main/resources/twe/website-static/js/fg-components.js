@@ -480,18 +480,28 @@ class FgShow extends HTMLElement {
   }
 
   render() {
-    const result = factGraph.get(this.path)
+    // TODO: Eventually remove
+    // This is a temporary enhancement to allow showing all values of a fact without knowing the collection id
+    const results = (this.path.indexOf('*') !== -1)
+      ? factGraph.getVect(this.path).Lgov_irs_factgraph_monads_MaybeVector$Multiple__f_vect.sci_Vector__f_prefix1.u
+      : [factGraph.get(this.path)]
 
-    if (result.hasValue) {
-      const value = result.get.toString()
-      if (result.complete === false) {
-        this.innerHTML = `${value}&nbsp;<span class="text-base-light">[Placeholder value]</span>`
+    let outputHtml = ''
+    for (const result of results) {
+      if (outputHtml !== '') outputHtml += ', '
+      console.log(result.hasValue)
+      if (result.hasValue) {
+        const value = result.get.toString()
+        if (result.complete === false) {
+          outputHtml += `${value}&nbsp;<span class="text-base-light">[Placeholder value]</span>`
+        } else {
+          outputHtml += `${value}`
+        }
       } else {
-        this.innerText = value
+        outputHtml += `<span class="text-base">-</span>`
       }
-    } else {
-      this.innerHTML = `<span class="text-base">-</span>`
     }
+    this.innerHTML = outputHtml
   }
 }
 customElements.define('fg-show', FgShow)
