@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta th:replace="fragments/head" />
+  <link rel="stylesheet" href="/resources/styles/all-screens.css">
+</head>
+
+<body>
+  <a class="usa-skipnav" href='#main-content'>Skip to main content</a>
+  <header>
+    <div th:replace="fragments/usa-banner"></div>
+    <div class="logo-banner"><img src="/resources/img/irs-logo.svg" alt="" /></div>
+  </header>
+
+  <div class="usa-in-page-nav-container">
+    <!-- Because we're rendering all the pages at once, we need the navigation to include h1 -->
+    <aside class="usa-in-page-nav" data-heading-elements="h1 h2"></aside>
+
+    <main id="main-content" class="main-content usa-prose">
+      <article
+        th:each="page: ${pages}"
+        class="screen" data-route="${page.route}"
+      >
+        <h1 class="screen__title" th:text="${page.title}">Page Title</h1>
+        <div class="screen__content" th:utext="${page.content}">Lorem Ipsum</div>
+      </article>
+    </main>
+  </div>
+
+  <template th:replace="fragments/js-templates"></template>
+  <script type="text" id="fact-dictionary" th:utext="${dictionaryConfig}"></script>
+</body>
+
+</html>

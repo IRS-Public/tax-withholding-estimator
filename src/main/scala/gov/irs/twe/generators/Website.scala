@@ -8,7 +8,6 @@ import org.jsoup.Jsoup
 import org.thymeleaf.context.Context
 import os.Path
 import scala.jdk.CollectionConverters.*
-import scala.util.matching.Regex
 
 case class WebsitePage(route: String, content: String) {
   def html(): String = {
@@ -79,16 +78,7 @@ object Website {
       }
 
       // Turn all the pages into HTML representations and join them together
-      val pageNodes = page.nodes.map {
-        case PageNode.section(x) => x.html(templateEngine)
-        case PageNode.rawHTML(x) => x
-      }
-      // Coerce all fg-show nodes into open, empty tags because HTML doesn't allow custom, self-closing tags
-      val regex = new Regex("""<(fg-show) ([^>]*)>""", "nodeName", "attributes")
-      val pageXml = regex.replaceAllIn(
-        pageNodes.mkString(""),
-        m => s"<\\${m group "nodeName"} \\${m group "attributes"}></\\${m group "nodeName"}>",
-      )
+      val pageXml = page.content
 
       context.setVariable("pageXml", pageXml)
 
@@ -96,6 +86,9 @@ object Website {
       WebsitePage(route, content)
     }
 
-    Website(pages, dictionaryConfig)
+    Website(
+      AllScreens.generate(flow, dictionaryConfig) +: pages,
+      dictionaryConfig,
+    )
   }
 }

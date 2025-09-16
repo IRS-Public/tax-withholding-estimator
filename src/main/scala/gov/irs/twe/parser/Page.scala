@@ -3,13 +3,33 @@ package gov.irs.twe.parser
 import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.Utils.optionString
+import gov.irs.twe.TweTemplateEngine
+import scala.util.matching.Regex
 
 enum PageNode {
   case section(section: Section)
   case rawHTML(node: xml.Node)
 }
 
-case class Page(title: String, route: String, nodes: List[PageNode])
+case class Page(title: String, route: String, nodes: List[PageNode]):
+  def content = {
+    val templateEngine = new TweTemplateEngine()
+    val pageContent = nodes
+      .map {
+        case PageNode.section(x) => x.html(templateEngine)
+        case PageNode.rawHTML(x) => x
+      }
+      .mkString("")
+
+    // Coerce all fg-show nodes into open, empty tags because HTML doesn't allow custom, self-closing tags
+    val regex = new Regex("""<(fg-show) ([^>]*)>""", "nodeName", "attributes")
+    var pageXml = regex.replaceAllIn(
+      pageContent,
+      m => s"<\\${m group "nodeName"} \\${m group "attributes"}></\\${m group "nodeName"}>",
+    )
+
+    pageXml
+  }
 
 object Page {
   def parse(page: xml.Node, factDictionary: FactDictionary): Page = {
@@ -27,5 +47,4 @@ object Page {
 
     Page(title, route, nodes)
   }
-
 }

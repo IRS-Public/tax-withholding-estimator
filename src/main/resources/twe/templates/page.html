@@ -1,22 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="HandheldFriendly" content="True"/>
-  <meta name="MobileOptimized" content="320"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title th:text="${title}"></title>
-  <link rel="icon" href="/resources/img/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="/resources/uswds-3.13.0/styles/uswds.min.css"></link>
-  <link rel="stylesheet" href="/resources/styles/main.css">
-
-  <script type="module" src="/resources/js/factgraph-3.1.0.js"></script>
-  <script type="module" src="/resources/js/fg-components.js"></script>
-  <script type="module" src="/resources/js/debug-components.js"></script>
-  <script src="/resources/uswds-3.13.0/js/uswds-init.min.js"></script>
-  <script defer src="/resources/uswds-3.13.0/js/uswds.min.js"></script>
-  <link rel="preload" href="/resources/uswds-3.13.0/js/uswds.min.js" as="script">
+  <head>
+    <meta th:replace="fragments/head" />
+  </head>
 
   <a class="usa-skipnav" href='#main-content' th:text="#{layout.skip-to-main}"></a>
   <header>
@@ -54,14 +41,7 @@
     </div>
   </main>
 
-  <template id="validate-alert-template">
-    <div class="usa-alert usa-alert--error validate-alert" role="alert">
-      <div class="usa-alert__body">
-        <h4 class="usa-alert__heading" th:text="#{alerts.warning.heading}"></h4>
-        <p class="usa-alert__text" id="alert-message" th:text="#{alerts.warning.complete-required}"></p>
-      </div>
-    </div>
-  </template>
+  <template th:replace="fragments/js-templates"></template>
 
   <footer th:aria-label="#{layout.title}" class="footer">
     <div data-testid="identifier" class="usa-identifier">
