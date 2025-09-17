@@ -57,7 +57,7 @@
           </tr>
           <tr>
             <th scope="row">Line 2(c) checkbox</th>
-            <td><fg-show path="/jobSelectedForExtraWithholding/useTwoJobLogic" /></td>
+            <td>false</td>
           </tr>
           <tr>
             <th scope="row">Line 3 total credits</th>

@@ -1,10 +1,14 @@
 package gov.irs.twe.factDictionary
 
+import gov.irs.factgraph.persisters.InMemoryPersister
+import gov.irs.factgraph.types.intValue
 import gov.irs.factgraph.types.Collection
 import gov.irs.factgraph.types.Day
 import gov.irs.factgraph.types.Dollar
 import gov.irs.factgraph.types.Enum
+import gov.irs.factgraph.types.Rational
 import gov.irs.factgraph.FactDictionaryForTests
+import gov.irs.factgraph.Graph
 import gov.irs.factgraph.Path
 import gov.irs.twe.FileLoaderHelper
 import org.scalatest.funsuite.AnyFunSuite
@@ -391,6 +395,635 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2453")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("262")))
     }
+  }
+
+  test("Scenario with three jobs") {
+    val json = """ {
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/endDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-12-31"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/startDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-01"
+    }
+  },
+  "/actualAmericanOpportunityTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/actualEarnedIncomeTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/actualChildAndDependentCareTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/payFrequency": {
+    "$type": "EnumWrapper",
+    "item": {
+      "value": "monthly",
+      "enumOptionsPath": "/payFrequencyOptions"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/totalBonusReceived": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs": {
+    "$type": "CollectionWrapper",
+    "item": {
+      "items": [
+        "968b66ab-a22f-469b-93e7-d5f3e78cc36a",
+        "b961fe59-0caf-4463-b8f6-e7955be1ae89",
+        "697b03f6-2f2b-4fe0-be56-356e7695a677"
+      ]
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/payFrequency": {
+    "$type": "EnumWrapper",
+    "item": {
+      "value": "monthly",
+      "enumOptionsPath": "/payFrequencyOptions"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/averageWithholdingPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "91.00"
+  },
+  "/miscIncome": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/actualElderlyAndDisabledTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/yearToDateWithholding": {
+    "$type": "DollarWrapper",
+    "item": "182.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/mostRecentPayDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2020-02-01"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/yearToDateIncome": {
+    "$type": "DollarWrapper",
+    "item": "4000.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/yearToDateIncome": {
+    "$type": "DollarWrapper",
+    "item": "10000.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/averageWithholdingPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "430.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/preTaxDeductions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/primaryFilerHasSSN": {
+    "$type": "BooleanWrapper",
+    "item": true
+  },
+  "/primaryFilerIsBlind": {
+    "$type": "BooleanWrapper",
+    "item": false
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/mostRecentPayPeriodEnd": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-31"
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/startDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-01"
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/totalBonusReceived": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/mostRecentPayDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-02-01"
+    }
+  },
+  "/primaryFilerIsClaimedOnAnotherReturn": {
+    "$type": "BooleanWrapper",
+    "item": false
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/mostRecentPayPeriodEnd": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-31"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/endDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-12-31"
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/yearToDateWithholding": {
+    "$type": "DollarWrapper",
+    "item": "860.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/averagePayPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "5000.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/averagePayPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "2000.00"
+  },
+  "/filingStatus": {
+    "$type": "EnumWrapper",
+    "item": {
+      "value": "single",
+      "enumOptionsPath": "/filingStatusOptions"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/preTaxDeductions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/primaryFilerDateOfBirth": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "1990-01-01"
+    }
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/mostRecentPayPeriodEnd": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-31"
+    }
+  },
+   "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/mostRecentPayDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-02-11"
+    }
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/totalBonusReceived": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/preTaxDeductions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/startDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-01"
+    }
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/endDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-12-31"
+    }
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/payFrequency": {
+    "$type": "EnumWrapper",
+    "item": {
+      "value": "monthly",
+      "enumOptionsPath": "/payFrequencyOptions"
+    }
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/averagePayPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "2000.00"
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/averageWithholdingPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "100.00"
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/yearToDateIncome": {
+    "$type": "DollarWrapper",
+    "item": "4000.00"
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/yearToDateWithholding": {
+    "$type": "DollarWrapper",
+    "item": "200.00"
+  }
+}
+    """
+    val graph = Graph.apply(factDictionary, InMemoryPersister.apply(json))
+    val _job1Id = "968b66ab-a22f-469b-93e7-d5f3e78cc36a"
+    val _job2Id = "b961fe59-0caf-4463-b8f6-e7955be1ae89"
+    val _job3Id = "697b03f6-2f2b-4fe0-be56-356e7695a677"
+    // Derived overrides
+    graph.set(Path("/adjustmentsToIncome"), Dollar(0))
+    graph.set(Path("/totalOtherIncome"), Dollar(0))
+    graph.set(Path("/totalCredits"), Dollar(0))
+
+    // TODO the following six statements are to work around bug #291.
+    // Remove them when it is fixed.
+    graph.set(Path(s"/jobs/#${_job1Id}/remainingPayPeriods"), 10)
+    graph.set(Path(s"/jobs/#${_job1Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
+    graph.set(Path(s"/jobs/#${_job2Id}/remainingPayPeriods"), 10)
+    graph.set(Path(s"/jobs/#${_job2Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
+    graph.set(Path(s"/jobs/#${_job3Id}/remainingPayPeriods"), 10)
+    graph.set(Path(s"/jobs/#${_job3Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
+
+    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(817)))
+
+    // Other job(s) should have zero on line 4c
+    assert(graph.get(Path(s"/jobs/#${_job2Id}/w4Line4c")).value.contains(Dollar(0)))
+    assert(graph.get(Path(s"/jobs/#${_job3Id}/w4Line4c")).value.contains(Dollar(0)))
+  }
+
+  test("Scenario where Form W4 Step 2 checkbox could apply") {
+    // Using JSON here for ease of moving data in/out of the app, which has two benefits:
+    // 1. ease of data entry using the app
+    // 2. access to `factGraph.debugFact` to investigate test calculations.
+    val json = """ {
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/endDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-12-31"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/startDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-01"
+    }
+  },
+  "/actualAmericanOpportunityTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/actualEarnedIncomeTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/actualChildAndDependentCareTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/payFrequency": {
+    "$type": "EnumWrapper",
+    "item": {
+      "value": "weekly",
+      "enumOptionsPath": "/payFrequencyOptions"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/totalBonusReceived": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs": {
+    "$type": "CollectionWrapper",
+    "item": {
+      "items": [
+        "968b66ab-a22f-469b-93e7-d5f3e78cc36a",
+        "b961fe59-0caf-4463-b8f6-e7955be1ae89"
+      ]
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/payFrequency": {
+    "$type": "EnumWrapper",
+    "item": {
+      "value": "monthly",
+      "enumOptionsPath": "/payFrequencyOptions"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/averageWithholdingPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "93.00"
+  },
+  "/miscIncome": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/actualElderlyAndDisabledTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/yearToDateWithholding": {
+    "$type": "DollarWrapper",
+    "item": "465.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/mostRecentPayDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2020-02-01"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/yearToDateIncome": {
+    "$type": "DollarWrapper",
+    "item": "5000.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/yearToDateIncome": {
+    "$type": "DollarWrapper",
+    "item": "10000.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/averageWithholdingPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "430.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/preTaxDeductions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/primaryFilerHasSSN": {
+    "$type": "BooleanWrapper",
+    "item": true
+  },
+  "/primaryFilerIsBlind": {
+    "$type": "BooleanWrapper",
+    "item": false
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/mostRecentPayPeriodEnd": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-31"
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/startDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-01"
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/totalBonusReceived": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/mostRecentPayDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-02-01"
+    }
+  },
+  "/primaryFilerIsClaimedOnAnotherReturn": {
+    "$type": "BooleanWrapper",
+    "item": false
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/mostRecentPayPeriodEnd": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-31"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/endDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-12-31"
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/yearToDateWithholding": {
+    "$type": "DollarWrapper",
+    "item": "860.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/averagePayPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "5000.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/averagePayPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "1000.00"
+  },
+  "/filingStatus": {
+    "$type": "EnumWrapper",
+    "item": {
+      "value": "single",
+      "enumOptionsPath": "/filingStatusOptions"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/preTaxDeductions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/primaryFilerDateOfBirth": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "1990-01-01"
+    }
+  }
+}
+    """
+    val graph = Graph.apply(factDictionary, InMemoryPersister.apply(json))
+    val _job1Id = "968b66ab-a22f-469b-93e7-d5f3e78cc36a"
+    val _job2Id = "b961fe59-0caf-4463-b8f6-e7955be1ae89"
+
+    // Derived overrides
+    graph.set(Path("/adjustmentsToIncome"), Dollar(0))
+    graph.set(Path("/totalOtherIncome"), Dollar(0))
+    graph.set(Path("/totalCredits"), Dollar(0))
+
+    // TODO the following two statements are to work around bug #291.
+    // Remove them when it is fixed.
+    graph.set(Path(s"/jobs/#${_job1Id}/remainingPayPeriods"), 10)
+    graph.set(Path(s"/jobs/#${_job1Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
+
+    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(664)))
+
+    // Other job(s) should have zero on line 4c
+    assert(graph.get(Path(s"/jobs/#${_job2Id}/w4Line4c")).value.contains(Dollar(0)))
+  }
+
+  test("Scenario where Form W4 Multiple Jobs Worksheet could apply") {
+    val json = """ {
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/endDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-12-31"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/startDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-01"
+    }
+  },
+  "/actualAmericanOpportunityTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/actualEarnedIncomeTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/actualChildAndDependentCareTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/payFrequency": {
+    "$type": "EnumWrapper",
+    "item": {
+      "value": "monthly",
+      "enumOptionsPath": "/payFrequencyOptions"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/totalBonusReceived": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs": {
+    "$type": "CollectionWrapper",
+    "item": {
+      "items": [
+        "968b66ab-a22f-469b-93e7-d5f3e78cc36a",
+        "b961fe59-0caf-4463-b8f6-e7955be1ae89"
+      ]
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/payFrequency": {
+    "$type": "EnumWrapper",
+    "item": {
+      "value": "monthly",
+      "enumOptionsPath": "/payFrequencyOptions"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/averageWithholdingPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "91.00"
+  },
+  "/miscIncome": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/actualElderlyAndDisabledTaxCreditAmount": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/yearToDateWithholding": {
+    "$type": "DollarWrapper",
+    "item": "182.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/mostRecentPayDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2020-02-01"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/yearToDateIncome": {
+    "$type": "DollarWrapper",
+    "item": "4000.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/yearToDateIncome": {
+    "$type": "DollarWrapper",
+    "item": "10000.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/averageWithholdingPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "430.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/preTaxDeductions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/primaryFilerHasSSN": {
+    "$type": "BooleanWrapper",
+    "item": true
+  },
+  "/primaryFilerIsBlind": {
+    "$type": "BooleanWrapper",
+    "item": false
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/mostRecentPayPeriodEnd": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-31"
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/startDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-01"
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/totalBonusReceived": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/mostRecentPayDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-02-01"
+    }
+  },
+  "/primaryFilerIsClaimedOnAnotherReturn": {
+    "$type": "BooleanWrapper",
+    "item": false
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/mostRecentPayPeriodEnd": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-01-31"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/endDate": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "2025-12-31"
+    }
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/yearToDateWithholding": {
+    "$type": "DollarWrapper",
+    "item": "860.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/averagePayPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "5000.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/averagePayPerPayPeriod": {
+    "$type": "DollarWrapper",
+    "item": "2000.00"
+  },
+  "/filingStatus": {
+    "$type": "EnumWrapper",
+    "item": {
+      "value": "single",
+      "enumOptionsPath": "/filingStatusOptions"
+    }
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/preTaxDeductions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/primaryFilerDateOfBirth": {
+    "$type": "DayWrapper",
+    "item": {
+      "date": "1990-01-01"
+    }
+  }
+}
+    """
+    val graph = Graph.apply(factDictionary, InMemoryPersister.apply(json))
+    val _job1Id = "968b66ab-a22f-469b-93e7-d5f3e78cc36a"
+    val _job2Id = "b961fe59-0caf-4463-b8f6-e7955be1ae89"
+    // Derived overrides
+    graph.set(Path("/adjustmentsToIncome"), Dollar(0))
+    graph.set(Path("/totalOtherIncome"), Dollar(0))
+    graph.set(Path("/totalCredits"), Dollar(0))
+
+    // TODO the following four statements are to work around bug #291.
+    // Remove them when it is fixed.
+    graph.set(Path(s"/jobs/#${_job1Id}/remainingPayPeriods"), 10)
+    graph.set(Path(s"/jobs/#${_job1Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
+    graph.set(Path(s"/jobs/#${_job2Id}/remainingPayPeriods"), 10)
+    graph.set(Path(s"/jobs/#${_job2Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
+
+    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(384)))
+
+    // Other job(s) should have zero on line 4c
+    assert(graph.get(Path(s"/jobs/#${_job2Id}/w4Line4c")).value.contains(Dollar(0)))
   }
 
   // test("2197 Scenarios spreadsheet Column N with a pension") {

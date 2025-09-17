@@ -682,14 +682,6 @@
       </Writable>
     </Fact>
 
-    <Fact path="/jobs/*/useTwoJobLogic">
-      <Description>The checkbox in Form W-4 Step 2.</Description>
-      <Derived>
-        <!-- TODO hardcoded for now, to be writable later -->
-        <False />
-      </Derived>
-    </Fact>
-
     <Fact path="/jobs/*/w4Line4a">
       <Description>Form W-4 Line 4(a); also Pub 15-T Worksheet 1A Line 1d.</Description>
       <Derived>
@@ -808,34 +800,28 @@
             </When>
             <Then>
               <Round>
-                <Subtract>
-                  <Minuend>
-                    <Add>
-                      <!-- Divide the gap by the number of pay periods impacted by a new W4. -->
-                      <Divide>
-                        <Dividend>
-                          <Dependency path="/withholdingGap" />
-                        </Dividend>
-                        <Divisors>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../remainingPayPeriods" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
-                            </Subtrahends>
-                          </Subtract>
-                        </Divisors>
-                      </Divide>
-                      <!-- Add it to their existing rate of withholding. -->
-                      <Dependency path="../averageWithholdingPerPayPeriod" />
-                    </Add>
-                  </Minuend>
-                  <Subtrahends>
-                    <!-- Subtract the base withholding from Pub 15-T so we're left with the extra. -->
-                    <Dependency path="../tentativeWithholdingAmount" />
-                  </Subtrahends>
-                </Subtract>
+                <Divide>
+                  <Dividend>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="/totalTax" />
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="/totalCommittedWithholding" />
+                      </Subtrahends>
+                    </Subtract>
+                  </Dividend>
+                  <Divisors>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../remainingPayPeriods" />
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
+                      </Subtrahends>
+                    </Subtract>
+                  </Divisors>
+                </Divide>
               </Round>
             </Then>
           </Case>
@@ -857,10 +843,10 @@
         <Switch>
           <Case>
             <When>
-              <Dependency path="../useTwoJobLogic" />
+              <Dependency path="/isFilingStatusMFJ" />
             </When>
             <Then>
-              <Dollar>0</Dollar>
+              <Dollar>12900</Dollar>
             </Then>
           </Case>
           <Case>
@@ -868,24 +854,7 @@
               <True />
             </When>
             <Then>
-              <Switch>
-                <Case>
-                  <When>
-                    <Dependency path="/isFilingStatusMFJ" />
-                  </When>
-                  <Then>
-                    <Dollar>12900</Dollar>
-                  </Then>
-                </Case>
-                <Case>
-                  <When>
-                    <True />
-                  </When>
-                  <Then>
-                    <Dollar>8600</Dollar>
-                  </Then>
-                </Case>
-              </Switch>
+              <Dollar>8600</Dollar>
             </Then>
           </Case>
         </Switch>
@@ -1710,7 +1679,45 @@
         </Switch>
       </Derived>
     </Fact>
-    
+
+    <Fact path="/jobs/*/committedWithholding">
+      <Description>This job's withholding that cannot change because it's past or within the time
+        lag before W4 changes kick in.</Description>
+      <Derived>
+        <Add>
+          <!-- past withholding -->
+          <Dependency path="../yearToDateWithholding" />
+          <!-- future withholding, too soon to be changed -->
+          <Multiply>
+            <Dependency path="../averageWithholdingPerPayPeriod" />
+            <LesserOf>
+              <Dependency path="../remainingPayPeriods" />
+              <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
+            </LesserOf>
+          </Multiply>
+          <!-- future tentative withholding: result from Pub 15-T Worksheet 1A  -->
+          <!-- For now, we treat this as a "given" that won't change. Probably will need to revisit
+          this when we get to reducing below tentative withholding. -->
+          <Multiply>
+            <Round>
+              <Dependency path="../tentativeWithholdingAmount" />
+            </Round>
+            <Subtract>
+              <Minuend>
+                <!-- Floor is used here to match QA spreadsheet calculation -->
+                <Floor>
+                  <Dependency path="../fractionalRemainingPayPeriods" />
+                </Floor>
+              </Minuend>
+              <Subtrahends>
+                <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
+              </Subtrahends>
+            </Subtract>
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
+
     <Fact path="/pensions/*/w4pLine2bi">
       <Description>
         Total income from jobs + any W-4 Line 4a incomes (non-job, non-pension/annuity).
@@ -1738,7 +1745,7 @@
                 <Right>
                   <Dependency path="/pensionSelectedForExtraWithholding"/>
                 </Right>
-              </Equal>          
+              </Equal>
             </When>
             <Then>
               <Subtract>
@@ -1762,7 +1769,7 @@
         </Switch>
       </Derived>
     </Fact>
-    
+
     <Fact path="/pensions/*/w4pLine2biii">
       <Description> Sum of Line 2bi and 2bii, may be negative.</Description>
       <Derived>
@@ -1839,7 +1846,7 @@
                     <Dollar>0</Dollar>
                   </Right>
                 </Equal>
-              </All>          
+              </All>
             </When>
             <Then>
               <Dependency path="/adjustmentsToIncome"/>
@@ -1851,7 +1858,7 @@
             </When>
             <Then>
               <Dollar>0</Dollar>
-            </Then>         
+            </Then>
           </Case>
         </Switch>
       </Derived>
@@ -1879,7 +1886,7 @@
         </Switch>
       </Derived>
     </Fact>
-    
+
     <Fact path="/pensions/*/adjustedAnnualPaymentAmount">
       <Description>Projected yearly pay with deductions removed.</Description>
       <Derived>
@@ -2645,8 +2652,8 @@
           <Dollar>0</Dollar>
         </GreaterOf>
       </Derived>
-    </Fact>    
-    
+    </Fact>
+
     <Fact path="/pensions/*/pub15Worksheet1bLine2s">
       <Description>Standard withholding rate schedules for use when Form W-4P Step 2(b)iii box is filled.
         Line 2s of Pub. 15-T Worksheet 1b. These amounts are generally a base withholding
@@ -3355,7 +3362,7 @@
         </GreaterOf>
       </Derived>
     </Fact>
-    
+
     <Fact path="/pensions/*/baseAnnualWithholding">
       <Description>
         The tentative annual withholding amount. Pub. 15T Worksheet 1B Line 2u.
@@ -3522,6 +3529,32 @@
       </Derived>
     </Fact>
 
+    <Fact path="/totalCommittedWithholding">
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobs/*/committedWithholding" />
+        </CollectionSum>
+      </Derived>
+    </Fact>
+
+    <!-- This is a temporary definition, kind of circular with other facts. -->
+    <Fact path="/totalNonJobsIncome">
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/totalIncome" />
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/totalJobsIncome" />
+              <Dependency path="/selfEmploymentIncome" />
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+
     <Fact path="/pensions">
       <Writable>
         <Collection />
@@ -3557,7 +3590,7 @@
       <Writable>
         <Dollar />
       </Writable>
-    </Fact>    
+    </Fact>
 
     <Fact path="/pensions/*/yearToDateIncome">
       <Writable>
@@ -3708,8 +3741,8 @@
           </Case>
         </Switch>
       </Derived>
-    </Fact>    
-    
+    </Fact>
+
     <Fact path="/pensions/*/isPayFrequencyWeekly">
       <Derived>
         <Equal>
@@ -3899,7 +3932,7 @@
         </Filter>
       </Derived>
     </Fact>
-    
+
     <Fact path="/pensionSelectedForExtraWithholding">
       <Derived>
         <IndexOf>
@@ -3923,7 +3956,7 @@
         </IndexOf>
       </Derived>
     </Fact>
-    
+
     <Fact path="/totalPensionsIncome">
       <Description> Total income from all pensions. </Description>
       <Derived>
@@ -3932,7 +3965,7 @@
         </CollectionSum>
       </Derived>
     </Fact>
-    
+
     <Fact path="/pensionsTotalEndOfYearProjectedWithholding">
       <Derived>
         <CollectionSum>
@@ -3940,7 +3973,7 @@
         </CollectionSum>
       </Derived>
     </Fact>
-    
+
     <Fact path="/netSelfEmploymentIncome">
       <Description>Net self-employment income</Description>
       <Writable>
