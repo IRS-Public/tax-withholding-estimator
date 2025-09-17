@@ -1728,225 +1728,225 @@
     <Fact path="/pensions/*/w4pLine2bii">
       <Description>The sum of all other taxable pension income, excluding the income from the single highest paying pension.</Description>
       <Derived>
-	<Switch>
-	  <Case>
-	    <When>
-	      <Equal>
-		<Left>
-		  <Dependency path=".."/>
-		</Left>
-		<Right>
-		  <Dependency path="/pensionSelectedForExtraWithholding"/>
-		</Right>
-	      </Equal>		
-	    </When>
-	    <Then>
-	      <Subtract>
-		<Minuend>
-		  <Dependency path="/totalPensionsIncome"/>
-		</Minuend>
-		<Subtrahends>
-		  <Dependency path="/pensionSelectedForExtraWithholding/income"/>
-		</Subtrahends>
-	      </Subtract>
-	    </Then>
-	  </Case>
-	  <Case>
-	    <When>
-	      <True/>
-	    </When>
-	    <Then>
-	      <Dollar>0</Dollar>
-	    </Then>
-	  </Case>
-	</Switch>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path=".."/>
+                </Left>
+                <Right>
+                  <Dependency path="/pensionSelectedForExtraWithholding"/>
+                </Right>
+              </Equal>          
+            </When>
+            <Then>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="/totalPensionsIncome"/>
+                </Minuend>
+                <Subtrahends>
+                  <Dependency path="/pensionSelectedForExtraWithholding/income"/>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     
     <Fact path="/pensions/*/w4pLine2biii">
       <Description> Sum of Line 2bi and 2bii, may be negative.</Description>
       <Derived>
-	<Add>
-	  <Dependency path="../w4pLine2bi"/>
-	  <Dependency path="../w4pLine2bii"/>
-	</Add>
+        <Add>
+          <Dependency path="../w4pLine2bi"/>
+          <Dependency path="../w4pLine2bii"/>
+        </Add>
       </Derived>
     </Fact>
 
     <Fact path="/pensions/*/w4pLine4a">
       <Description>Total non-job or pension/annuity income.</Description>
       <Derived>
-	<Switch>
-	  <Case>
-	    <When>
-	      <All>
-		<Equal>
-		  <Left>
-		    <Dependency path=".."/>
-		  </Left>
-		  <Right>
-		    <Dependency path="/pensionSelectedForExtraWithholding"/>
-		  </Right>
-		</Equal>
-		<Equal>
-		  <Left>
-		    <Dependency path="../w4pLine2bi"/>
-		  </Left>
-		  <Right>
-		    <Dollar>0</Dollar>
-		  </Right>
-		</Equal>
-	      </All>
-	    </When>
-	    <Then>
-	      <Round>
-		<Dependency path="/totalOtherIncome"/>
-	      </Round>
-	    </Then>
-	  </Case>
-	  <Case>
-	    <When>
-	      <True/>
-	    </When>
-	    <Then>
-	      <Dollar>0</Dollar>
-	    </Then>
-	  </Case>
-	</Switch>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <Equal>
+                  <Left>
+                    <Dependency path=".."/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/pensionSelectedForExtraWithholding"/>
+                  </Right>
+                </Equal>
+                <Equal>
+                  <Left>
+                    <Dependency path="../w4pLine2bi"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </Equal>
+              </All>
+            </When>
+            <Then>
+              <Round>
+                <Dependency path="/totalOtherIncome"/>
+              </Round>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
 
     <Fact path="/pensions/*/w4pLine4b">
       <Description>Other deductions to income.</Description>
       <Derived>
-	<Switch>
-	  <Case>
-	    <When>
-	      <All>
-		<Equal>
-		  <Left>
-		    <Dependency path=".."/>
-		  </Left>
-		  <Right>
-		    <Dependency path="/pensionSelectedForExtraWithholding"/>
-		  </Right>
-		</Equal>
-		<Equal>
-		  <Left>
-		    <Dependency path="../w4pLine2bi"/>
-		  </Left>
-		  <Right>
-		    <Dollar>0</Dollar>
-		  </Right>
-		</Equal>
-	      </All>	      
-	    </When>
-	    <Then>
-	      <Dependency path="/adjustmentsToIncome"/>
-	    </Then>
-	  </Case>
-	  <Case>
-	    <When>
-	      <True/>
-	    </When>
-	    <Then>
-	      <Dollar>0</Dollar>
-	    </Then>	    
-	  </Case>
-	</Switch>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <Equal>
+                  <Left>
+                    <Dependency path=".."/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/pensionSelectedForExtraWithholding"/>
+                  </Right>
+                </Equal>
+                <Equal>
+                  <Left>
+                    <Dependency path="../w4pLine2bi"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </Equal>
+              </All>          
+            </When>
+            <Then>
+              <Dependency path="/adjustmentsToIncome"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>         
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
 
     <Fact path="/pensions/*/pub15Worksheet1bLine1g">
       <Derived>
-	<Switch>
-	  <Case>
-	    <When>
-	      <Dependency path="/isFilingStatusMFJ"/>
-	    </When>
-	    <Then>
-	      <Dollar>12900</Dollar>
-	    </Then>
-	  </Case>
-	  <Case>
-	    <When>
-	      <True/>
-	    </When>
-	    <Then>
-	      <Dollar>8600</Dollar>
-	    </Then>
-	  </Case>
-	</Switch>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>12900</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>8600</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     
     <Fact path="/pensions/*/adjustedAnnualPaymentAmount">
       <Description>Projected yearly pay with deductions removed.</Description>
       <Derived>
-	<Subtract>
-	  <Minuend>
-	    <Add>
-	      <Dependency path="../income"/>
-	      <Dependency path="../w4pLine4a"/>
-	    </Add>
-	  </Minuend>
-	  <Subtrahends>
-	    <Dependency path="../w4pLine4b"/>
-	    <Dependency path="../pub15Worksheet1bLine1g"/>
-	  </Subtrahends>
-	</Subtract>
+        <Subtract>
+          <Minuend>
+            <Add>
+              <Dependency path="../income"/>
+              <Dependency path="../w4pLine4a"/>
+            </Add>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="../w4pLine4b"/>
+            <Dependency path="../pub15Worksheet1bLine1g"/>
+          </Subtrahends>
+        </Subtract>
       </Derived>
     </Fact>
 
     <Fact path="/pensions/*/pub15Worksheet1bLine2cOr2d">
       <Description>Adjusted total other income (2c), or adjusted annual payment amount (2d).</Description>
       <Derived>
-	<Switch>
-	  <Case>
-	    <When>
-	      <Not>
-		<Equal>
-		  <Left>
-		    <Dependency path="../w4pLine2biii"/>
-		  </Left>
-		  <Right>
-		    <Dollar>0</Dollar>
-		  </Right>
-		</Equal>
-	      </Not>
-	    </When>
-	    <Then>
-	      <GreaterOf>
-		<Dollar>0</Dollar>
-		<Subtract>
-		  <Minuend>
-		    <Dependency path="../w4pLine2biii"/>
-		  </Minuend>
-		  <Subtrahends>
-		    <Dependency path="../pub15Worksheet1bLine1g"/>
-		  </Subtrahends>
-		</Subtract>
-	      </GreaterOf>
-	    </Then>
-	  </Case>
-	  <Case>
-	    <When>
-	      <True/>
-	    </When>
-	    <Then>
-	      <Dependency path="../adjustedAnnualPaymentAmount"/>
-	    </Then>
-	  </Case>
-	</Switch>
+        <Switch>
+          <Case>
+            <When>
+              <Not>
+                <Equal>
+                  <Left>
+                    <Dependency path="../w4pLine2biii"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </Equal>
+              </Not>
+            </When>
+            <Then>
+              <GreaterOf>
+                <Dollar>0</Dollar>
+                <Subtract>
+                  <Minuend>
+                    <Dependency path="../w4pLine2biii"/>
+                  </Minuend>
+                  <Subtrahends>
+                    <Dependency path="../pub15Worksheet1bLine1g"/>
+                  </Subtrahends>
+                </Subtract>
+              </GreaterOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../adjustedAnnualPaymentAmount"/>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
 
     <Fact path="/pensions/*/pub15Worksheet1bLine2j">
       <Description>
-	Standard withholding rate schedules for the form W-4P. Line 2j of Pub. 15-T Worksheet 1B.
-	These amounts are generally a base withholding amount plus a percentage of the excess of
-	Annual Adjusted Wages Amount. The base withholding captures the total withholding for all
-	the brackets below the one that the AAWA falls into.
+        Standard withholding rate schedules for the form W-4P. Line 2j of Pub. 15-T Worksheet 1B.
+        These amounts are generally a base withholding amount plus a percentage of the excess of
+        Annual Adjusted Wages Amount. The base withholding captures the total withholding for all
+        the brackets below the one that the AAWA falls into.
       </Description>
       <TaxYear>2025</TaxYear>
       <Derived>
@@ -2637,13 +2637,13 @@
 
     <Fact path="/pensions/*/pub15Worksheet1bLine2m">
       <Derived>
-	<GreaterOf>
-	  <Add>
-	    <Dependency path="../w4pLine2biii"/>
-	    <Dependency path="../adjustedAnnualPaymentAmount"/>
-	  </Add>
-	  <Dollar>0</Dollar>
-	</GreaterOf>
+        <GreaterOf>
+          <Add>
+            <Dependency path="../w4pLine2biii"/>
+            <Dependency path="../adjustedAnnualPaymentAmount"/>
+          </Add>
+          <Dollar>0</Dollar>
+        </GreaterOf>
       </Derived>
     </Fact>    
     
@@ -3342,92 +3342,92 @@
 
     <Fact path="/pensions/*/pub15Worksheet1bLine2t">
       <Derived>
-	<GreaterOf>
-	  <Dollar>0</Dollar>
-	  <Subtract>
-	    <Minuend>
-	      <Dependency path="../pub15Worksheet1bLine2s"/>
-	    </Minuend>
-	    <Subtrahends>
-	      <Dependency path="../pub15Worksheet1bLine2j"/>
-	    </Subtrahends>
-	  </Subtract>
-	</GreaterOf>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="../pub15Worksheet1bLine2s"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="../pub15Worksheet1bLine2j"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
       </Derived>
     </Fact>
     
     <Fact path="/pensions/*/baseAnnualWithholding">
       <Description>
-	The tentative annual withholding amount. Pub. 15T Worksheet 1B Line 2u.
+        The tentative annual withholding amount. Pub. 15T Worksheet 1B Line 2u.
       </Description>
       <Derived>
-	<Switch>
-	  <Case>
-	    <When>
-	      <Not>
-		<Equal>
-		  <Left>
-		    <Dependency path="../w4pLine2biii"/>
-		  </Left>
-		  <Right>
-		    <Dollar>0</Dollar>
-		  </Right>
-		</Equal>
-	      </Not>
-	    </When>
-	    <Then>
-	      <Dependency path="../pub15Worksheet1bLine2t"/>
-	    </Then>
-	  </Case>
-	  <Case>
-	    <When>
-	      <True/>
-	    </When>
-	    <Then>
-	      <Dependency path="../pub15Worksheet1bLine2j"/>
-	    </Then>
-	  </Case>
-	</Switch>
+        <Switch>
+          <Case>
+            <When>
+              <Not>
+                <Equal>
+                  <Left>
+                    <Dependency path="../w4pLine2biii"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </Equal>
+              </Not>
+            </When>
+            <Then>
+              <Dependency path="../pub15Worksheet1bLine2t"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../pub15Worksheet1bLine2j"/>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
 
     <Fact path="/pensions/*/basePerPayPeriodWithholding">
       <Derived>
-	<Divide>
-	  <Dividend>
-	    <Dependency path="../baseAnnualWithholding"/>
-	  </Dividend>
-	  <Divisors>
-	    <Dependency path="../payPeriodsPerYear"/>
-	  </Divisors>
-	</Divide>
+        <Divide>
+          <Dividend>
+            <Dependency path="../baseAnnualWithholding"/>
+          </Dividend>
+          <Divisors>
+            <Dependency path="../payPeriodsPerYear"/>
+          </Divisors>
+        </Divide>
       </Derived>
     </Fact>
 
     <Fact path="/pensions/*/pub15FinalWithholding">
       <Description>
-	Line 4c of Pub. 15-T Worksheet 1B. The per-period withholding amount sub credits, excluding
-	any extra elected on Form W-4P Line 4(c).
+        Line 4c of Pub. 15-T Worksheet 1B. The per-period withholding amount sub credits, excluding
+        any extra elected on Form W-4P Line 4(c).
       </Description>
       <Derived>
-	<Divide>
-	  <Dividend>
-	    <GreaterOf>
-	      <Subtract>
-		<Minuend>
-		  <Dependency path="../baseAnnualWithholding"/>
-		</Minuend>
-		<Subtrahends>
-		  <Dependency path="/totalCredits"/>
-		</Subtrahends>
-	      </Subtract>
-	      <Dollar>0</Dollar>
-	    </GreaterOf>
-	  </Dividend>
-	  <Divisors>
-	    <Dependency path="../payPeriodsPerYear"/>
-	  </Divisors>
-	</Divide>
+        <Divide>
+          <Dividend>
+            <GreaterOf>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="../baseAnnualWithholding"/>
+                </Minuend>
+                <Subtrahends>
+                  <Dependency path="/totalCredits"/>
+                </Subtrahends>
+              </Subtract>
+              <Dollar>0</Dollar>
+            </GreaterOf>
+          </Dividend>
+          <Divisors>
+            <Dependency path="../payPeriodsPerYear"/>
+          </Divisors>
+        </Divide>
       </Derived>
     </Fact>
 
@@ -3496,12 +3496,12 @@
     <Fact path="/totalEndOfYearProjectedWithholding">
       <Description>The amount withheld for all jobs if nothing is changed.</Description>
       <Derived>
-	<Add>
+        <Add>
           <CollectionSum>
             <Dependency path="/jobs/*/endOfYearProjectedWithholding" />
           </CollectionSum>
-	  <Dependency path="/pensionsTotalEndOfYearProjectedWithholding"/>
-	</Add>
+          <Dependency path="/pensionsTotalEndOfYearProjectedWithholding"/>
+        </Add>
       </Derived>
     </Fact>
 
@@ -3561,19 +3561,19 @@
 
     <Fact path="/pensions/*/yearToDateIncome">
       <Writable>
-	<Dollar/>
+        <Dollar/>
       </Writable>
     </Fact>
 
     <Fact path="/pensions/*/income">
       <Derived>
-	<Add>
+        <Add>
           <Multiply>
             <Dependency path="../averagePayPerPayPeriod" />
             <Dependency path="../remainingPayDates" />
           </Multiply>
           <Dependency path="../yearToDateIncome" />
-	</Add>
+        </Add>
       </Derived>
     </Fact>
 
@@ -3793,54 +3793,54 @@
 
     <Fact path="/pensions/*/restOfYearIncome">
       <Derived>
-	<Multiply>
-	  <Dependency path="../averagePayPerPayPeriod"/>
-	  <Dependency path="../remainingPayDates"/>
-	</Multiply>
+        <Multiply>
+          <Dependency path="../averagePayPerPayPeriod"/>
+          <Dependency path="../remainingPayDates"/>
+        </Multiply>
       </Derived>
     </Fact>
 
     <Fact path="/pensions/*/endOfYearProjectedWithholding">
       <Derived>
-	<Add>
-	  <Dependency path="../yearToDateWithholding"/>
-	  <Multiply>
+        <Add>
+          <Dependency path="../yearToDateWithholding"/>
+          <Multiply>
             <!-- Floor is used here to match QA spreadsheet calculation -->
-	    <Floor>
-	      <Dependency path="../remainingPayDates"/>
-	    </Floor>
-	    <Dependency path="../averageWithholdingPerPayPeriod"/>
-	  </Multiply>
-	</Add>
+            <Floor>
+              <Dependency path="../remainingPayDates"/>
+            </Floor>
+            <Dependency path="../averageWithholdingPerPayPeriod"/>
+          </Multiply>
+        </Add>
       </Derived>
     </Fact>
 
     <Fact path="/pensions/*/w4pLine4cRecommendation">
       <Derived>
-	<Switch>
-	  <Case>
-	    <When>
-	      <All>
-		<Equal>
-		  <Left>
-		    <Dependency path="../w4pLine2bi"/>
-		  </Left>
-		  <Right>
-		    <Dollar>0</Dollar>
-		  </Right>
-		</Equal>
-		<!-- And this is the pension selected for highest income -->
-		<Equal>
-		  <Left>
-		    <Dependency path=".."/>
-		  </Left>
-		  <Right>
-		    <Dependency path="/pensionSelectedForExtraWithholding"/>
-		  </Right>
-		</Equal>
-	      </All>
-	    </When>
-	    <Then>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <Equal>
+                  <Left>
+                    <Dependency path="../w4pLine2bi"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </Equal>
+                <!-- And this is the pension selected for highest income -->
+                <Equal>
+                  <Left>
+                    <Dependency path=".."/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/pensionSelectedForExtraWithholding"/>
+                  </Right>
+                </Equal>
+              </All>
+            </When>
+            <Then>
               <Round>
                 <Subtract>
                   <Minuend>
@@ -3871,73 +3871,73 @@
                   </Subtrahends>
                 </Subtract>
               </Round>
-	    </Then>
-	  </Case>
-	  <Case>
-	    <When>
-	      <True />
-	    </When>
-	    <Then>
-	      <Dollar>0</Dollar>
-	    </Then>
-	  </Case>
-	</Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True />
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
 
     <Fact path="/pensionsAvailableForExtraWithholding">
       <Derived>
-	<Filter path="/pensions">
-	  <GreaterThan>
-	    <Left>
-	      <Dependency path="/pensions/*/remainingPayDates"/>
-	    </Left>
-	    <Right>
-	      <Dependency path="/pensions/*/payPeriodsBeforeW4ChangesAppear"/>
-	    </Right>
-	  </GreaterThan>
-	</Filter>
+        <Filter path="/pensions">
+          <GreaterThan>
+            <Left>
+              <Dependency path="/pensions/*/remainingPayDates"/>
+            </Left>
+            <Right>
+              <Dependency path="/pensions/*/payPeriodsBeforeW4ChangesAppear"/>
+            </Right>
+          </GreaterThan>
+        </Filter>
       </Derived>
     </Fact>
     
     <Fact path="/pensionSelectedForExtraWithholding">
       <Derived>
-	<IndexOf>
-	  <Collection>
-	    <Filter path="/pensionsAvailableForExtraWithholding">
-	      <Equal>
-		<Left>
-		  <Maximum>
-		    <Dependency path="/pensionsAvailableForExtraWithholding/*/restOfYearIncome"/>
-		  </Maximum>
-		</Left>
-		<Right>
-		  <Dependency path="restOfYearIncome"/>
-		</Right>
-	      </Equal>
-	    </Filter>
-	  </Collection>
-	  <Index>
-	    <Int>0</Int>
-	  </Index>
-	</IndexOf>
+        <IndexOf>
+          <Collection>
+            <Filter path="/pensionsAvailableForExtraWithholding">
+              <Equal>
+                <Left>
+                  <Maximum>
+                    <Dependency path="/pensionsAvailableForExtraWithholding/*/restOfYearIncome"/>
+                  </Maximum>
+                </Left>
+                <Right>
+                  <Dependency path="restOfYearIncome"/>
+                </Right>
+              </Equal>
+            </Filter>
+          </Collection>
+          <Index>
+            <Int>0</Int>
+          </Index>
+        </IndexOf>
       </Derived>
     </Fact>
     
     <Fact path="/totalPensionsIncome">
       <Description> Total income from all pensions. </Description>
       <Derived>
-	<CollectionSum>
-	  <Dependency path="/pensions/*/income"/>
-	</CollectionSum>
+        <CollectionSum>
+          <Dependency path="/pensions/*/income"/>
+        </CollectionSum>
       </Derived>
     </Fact>
     
     <Fact path="/pensionsTotalEndOfYearProjectedWithholding">
       <Derived>
-	<CollectionSum>
-	  <Dependency path="/pensions/*/endOfYearProjectedWithholding"/>
-	</CollectionSum>
+        <CollectionSum>
+          <Dependency path="/pensions/*/endOfYearProjectedWithholding"/>
+        </CollectionSum>
       </Derived>
     </Fact>
     
@@ -4033,7 +4033,7 @@
         <Round>
           <Add>
             <Dependency path="/totalJobsIncome" />
-	    <Dependency path="/totalPensionsIncome" />
+            <Dependency path="/totalPensionsIncome" />
             <Dependency path="/totalOtherIncome" />
           </Add>
         </Round>
