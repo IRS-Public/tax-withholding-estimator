@@ -47,7 +47,7 @@
     </Fact>
 
     <Fact path="/jobs/*/averageWithholdingPerPayPeriod">
-      <Description>The avearge withholding from a specific job per pay period</Description>
+      <Description>The average withholding from a specific job per pay period</Description>
       <Writable>
         <Dollar />
       </Writable>
@@ -707,7 +707,7 @@
                 </Equal>
               </When>
               <Then>
-                <Dependency path="/totalNonJobsIncome" />
+                <Dependency path="/totalOtherIncome" />
               </Then>
             </Case>
             <Case>
@@ -1710,6 +1710,1726 @@
         </Switch>
       </Derived>
     </Fact>
+    
+    <Fact path="/pensions/*/w4pLine2bi">
+      <Description>
+        Total income from jobs + any W-4 Line 4a incomes (non-job, non-pension/annuity).
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="/totalJobsIncome"/>
+          <CollectionSum>
+            <Dependency path="/jobs/*/w4Line4a"/>
+          </CollectionSum>
+        </Add>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/w4pLine2bii">
+      <Description>The sum of all other taxable pension income, excluding the income from the single highest paying pension.</Description>
+      <Derived>
+	<Switch>
+	  <Case>
+	    <When>
+	      <Equal>
+		<Left>
+		  <Dependency path=".."/>
+		</Left>
+		<Right>
+		  <Dependency path="/pensionSelectedForExtraWithholding"/>
+		</Right>
+	      </Equal>		
+	    </When>
+	    <Then>
+	      <Subtract>
+		<Minuend>
+		  <Dependency path="/totalPensionsIncome"/>
+		</Minuend>
+		<Subtrahends>
+		  <Dependency path="/pensionSelectedForExtraWithholding/income"/>
+		</Subtrahends>
+	      </Subtract>
+	    </Then>
+	  </Case>
+	  <Case>
+	    <When>
+	      <True/>
+	    </When>
+	    <Then>
+	      <Dollar>0</Dollar>
+	    </Then>
+	  </Case>
+	</Switch>
+      </Derived>
+    </Fact>
+    
+    <Fact path="/pensions/*/w4pLine2biii">
+      <Description> Sum of Line 2bi and 2bii, may be negative.</Description>
+      <Derived>
+	<Add>
+	  <Dependency path="../w4pLine2bi"/>
+	  <Dependency path="../w4pLine2bii"/>
+	</Add>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/w4pLine4a">
+      <Description>Total non-job or pension/annuity income.</Description>
+      <Derived>
+	<Switch>
+	  <Case>
+	    <When>
+	      <All>
+		<Equal>
+		  <Left>
+		    <Dependency path=".."/>
+		  </Left>
+		  <Right>
+		    <Dependency path="/pensionSelectedForExtraWithholding"/>
+		  </Right>
+		</Equal>
+		<Equal>
+		  <Left>
+		    <Dependency path="../w4pLine2bi"/>
+		  </Left>
+		  <Right>
+		    <Dollar>0</Dollar>
+		  </Right>
+		</Equal>
+	      </All>
+	    </When>
+	    <Then>
+	      <Round>
+		<Dependency path="/totalOtherIncome"/>
+	      </Round>
+	    </Then>
+	  </Case>
+	  <Case>
+	    <When>
+	      <True/>
+	    </When>
+	    <Then>
+	      <Dollar>0</Dollar>
+	    </Then>
+	  </Case>
+	</Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/w4pLine4b">
+      <Description>Other deductions to income.</Description>
+      <Derived>
+	<Switch>
+	  <Case>
+	    <When>
+	      <All>
+		<Equal>
+		  <Left>
+		    <Dependency path=".."/>
+		  </Left>
+		  <Right>
+		    <Dependency path="/pensionSelectedForExtraWithholding"/>
+		  </Right>
+		</Equal>
+		<Equal>
+		  <Left>
+		    <Dependency path="../w4pLine2bi"/>
+		  </Left>
+		  <Right>
+		    <Dollar>0</Dollar>
+		  </Right>
+		</Equal>
+	      </All>	      
+	    </When>
+	    <Then>
+	      <Dependency path="/adjustmentsToIncome"/>
+	    </Then>
+	  </Case>
+	  <Case>
+	    <When>
+	      <True/>
+	    </When>
+	    <Then>
+	      <Dollar>0</Dollar>
+	    </Then>	    
+	  </Case>
+	</Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/pub15Worksheet1bLine1g">
+      <Derived>
+	<Switch>
+	  <Case>
+	    <When>
+	      <Dependency path="/isFilingStatusMFJ"/>
+	    </When>
+	    <Then>
+	      <Dollar>12900</Dollar>
+	    </Then>
+	  </Case>
+	  <Case>
+	    <When>
+	      <True/>
+	    </When>
+	    <Then>
+	      <Dollar>8600</Dollar>
+	    </Then>
+	  </Case>
+	</Switch>
+      </Derived>
+    </Fact>
+    
+    <Fact path="/pensions/*/adjustedAnnualPaymentAmount">
+      <Description>Projected yearly pay with deductions removed.</Description>
+      <Derived>
+	<Subtract>
+	  <Minuend>
+	    <Add>
+	      <Dependency path="../income"/>
+	      <Dependency path="../w4pLine4a"/>
+	    </Add>
+	  </Minuend>
+	  <Subtrahends>
+	    <Dependency path="../w4pLine4b"/>
+	    <Dependency path="../pub15Worksheet1bLine1g"/>
+	  </Subtrahends>
+	</Subtract>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/pub15Worksheet1bLine2cOr2d">
+      <Description>Adjusted total other income (2c), or adjusted annual payment amount (2d).</Description>
+      <Derived>
+	<Switch>
+	  <Case>
+	    <When>
+	      <Not>
+		<Equal>
+		  <Left>
+		    <Dependency path="../w4pLine2biii"/>
+		  </Left>
+		  <Right>
+		    <Dollar>0</Dollar>
+		  </Right>
+		</Equal>
+	      </Not>
+	    </When>
+	    <Then>
+	      <GreaterOf>
+		<Dollar>0</Dollar>
+		<Subtract>
+		  <Minuend>
+		    <Dependency path="../w4pLine2biii"/>
+		  </Minuend>
+		  <Subtrahends>
+		    <Dependency path="../pub15Worksheet1bLine1g"/>
+		  </Subtrahends>
+		</Subtract>
+	      </GreaterOf>
+	    </Then>
+	  </Case>
+	  <Case>
+	    <When>
+	      <True/>
+	    </When>
+	    <Then>
+	      <Dependency path="../adjustedAnnualPaymentAmount"/>
+	    </Then>
+	  </Case>
+	</Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/pub15Worksheet1bLine2j">
+      <Description>
+	Standard withholding rate schedules for the form W-4P. Line 2j of Pub. 15-T Worksheet 1B.
+	These amounts are generally a base withholding amount plus a percentage of the excess of
+	Annual Adjusted Wages Amount. The base withholding captures the total withholding for all
+	the brackets below the one that the AAWA falls into.
+      </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Round>
+          <Switch>
+            <!-- SINGLE OR MARRIED FILING SEPARATELY -->
+            <Case>
+              <When>
+                <Any>
+                  <Dependency module="filingStatus" path="/isFilingStatusSingle" />
+                  <Dependency module="filingStatus" path="/isFilingStatusMFS" />
+                </Any>
+              </When>
+              <Then>
+                <Switch>
+                  <!-- Less than $6,400: no withholding -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>6400</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Dollar>0</Dollar>
+                    </Then>
+                  </Case>
+                  <!-- At least $6,400 but less than $18,325: $0 plus 10% of the excess over $6,400 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>18325</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Multiply>
+                        <Rational>10/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>6400</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Then>
+                  </Case>
+                  <!-- At least $18,325 but less than $54,875: $1,192.50 plus 12% of the excess over
+            $18,325 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>54875</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>1192.50</Dollar>
+                        <Multiply>
+                          <Rational>12/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>18325</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $54,875 but less than $109,750: $5,578.50 plus 22% of the excess
+                  over $54,875 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>109750</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>5578.50</Dollar>
+                        <Multiply>
+                          <Rational>22/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>54875</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $109,750 but less than $203,700: $17,651 plus 24% of the excess over
+                  $109,750 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>203700</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>17651</Dollar>
+                        <Multiply>
+                          <Rational>24/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>109750</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $203,700 but less than $256,925: $40,199 plus 32% of the excess over
+                  $203,700 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>256925</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>40199</Dollar>
+                        <Multiply>
+                          <Rational>32/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>203700</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $256,925 but less than $632,750: $57,231 plus 35% of the excess over
+                  $256,925 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>632750</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>57231</Dollar>
+                        <Multiply>
+                          <Rational>35/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>256925</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- $632,750 and above: $188,769.75 plus 37% of the excess over $632,750 -->
+                  <Case>
+                    <When>
+                      <True />
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>188769.75</Dollar>
+                        <Multiply>
+                          <Rational>37/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>632750</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                </Switch>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <Any>
+                  <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
+                  <Dependency module="filingStatus" path="/isFilingStatusQSS" />
+                </Any>
+              </When>
+              <Then>
+                <Switch>
+                  <!-- Less than $17,100: no withholding -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>17100</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Dollar>0</Dollar>
+                    </Then>
+                  </Case>
+                  <!-- At least $17,100 but less than $40,950: $0 plus 10% of the excess over
+                  $17,100 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>40950</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Multiply>
+                        <Rational>10/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>17100</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Then>
+                  </Case>
+                  <!-- At least $40,950 but less than $114,050: $2,385 plus 12% of the excess over
+                  $40,950 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>114050</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>2385</Dollar>
+                        <Multiply>
+                          <Rational>12/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>40950</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $114,050 but less than $223,800: $11,157 plus 22% of the excess over
+                  $114,050 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>223800</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>11157</Dollar>
+                        <Multiply>
+                          <Rational>22/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>114050</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $223,800 but less than $411,700: $35,302 plus 24% of the excess over
+                  $223,800 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>411700</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>35302</Dollar>
+                        <Multiply>
+                          <Rational>24/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>223800</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $411,700 but less than $518,150: $80,398 plus 32% of the excess over
+                  $411,700 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>518150</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>80398</Dollar>
+                        <Multiply>
+                          <Rational>32/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>411700</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $518,150 but less than $768,700: $114,462 plus 35% of the excess
+                  over $518,150 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>768700</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>114462</Dollar>
+                        <Multiply>
+                          <Rational>35/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>518150</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- $768,700 and above: $202,154.50 plus 37% of the excess over $768,700 -->
+                  <Case>
+                    <When>
+                      <True />
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>202154.50</Dollar>
+                        <Multiply>
+                          <Rational>37/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>768700</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                </Switch>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <Dependency module="filingStatus" path="/isFilingStatusHOH" />
+              </When>
+              <Then>
+                <Switch>
+                  <!-- Less than $13,900: no withholding -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>13900</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Dollar>0</Dollar>
+                    </Then>
+                  </Case>
+                  <!-- At least $13,900 but less than $30,900: $0 plus 10% of the excess over
+                  $13,900 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>30900</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Multiply>
+                        <Rational>10/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>13900</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Then>
+                  </Case>
+                  <!-- At least $30,900 but less than $78,750: $1,700 plus 12% of the excess over
+                  $30,900 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>78750</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>1700</Dollar>
+                        <Multiply>
+                          <Rational>12/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>30900</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $78,750 but less than $117,250: $7,442 plus 22% of the excess over
+                  $78,750 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>117250</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>7442</Dollar>
+                        <Multiply>
+                          <Rational>22/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>78750</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $117,250 but less than $211,200: $15,912 plus 24% of the excess over
+                  $117,250 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>211200</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>15912</Dollar>
+                        <Multiply>
+                          <Rational>24/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>117250</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $211,200 but less than $264,400: $38,460 plus 32% of the excess over
+                  $211,200 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>264400</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>38460</Dollar>
+                        <Multiply>
+                          <Rational>32/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>211200</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $264,400 but less than $640,250: $55,484 plus 35% of the excess over
+                  $264,400 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                        </Left>
+                        <Right>
+                          <Dollar>640250</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>55484</Dollar>
+                        <Multiply>
+                          <Rational>35/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>264400</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- $640,250 and above: $187,031.50 plus 37% of the excess over $640,250 -->
+                  <Case>
+                    <When>
+                      <True />
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>187031.50</Dollar>
+                        <Multiply>
+                          <Rational>37/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>640250</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                </Switch>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/pub15Worksheet1bLine2m">
+      <Derived>
+	<GreaterOf>
+	  <Add>
+	    <Dependency path="../w4pLine2biii"/>
+	    <Dependency path="../adjustedAnnualPaymentAmount"/>
+	  </Add>
+	  <Dollar>0</Dollar>
+	</GreaterOf>
+      </Derived>
+    </Fact>    
+    
+    <Fact path="/pensions/*/pub15Worksheet1bLine2s">
+      <Description>Standard withholding rate schedules for use when Form W-4P Step 2(b)iii box is filled.
+        Line 2s of Pub. 15-T Worksheet 1b. These amounts are generally a base withholding
+        amount plus a percentage of the excess of Annual Adjusted Wages Amount. The base withholding
+        captures the total withholding for all the brackets below the one that the AAWA falls into.
+      </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Round>
+          <Switch>
+            <!-- SINGLE OR MARRIED FILING SEPARATELY -->
+            <Case>
+              <When>
+                <Any>
+                  <Dependency module="filingStatus" path="/isFilingStatusSingle" />
+                  <Dependency module="filingStatus" path="/isFilingStatusMFS" />
+                </Any>
+              </When>
+              <Then>
+                <Switch>
+                  <!-- Less than $6,400: no withholding -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>6400</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Dollar>0</Dollar>
+                    </Then>
+                  </Case>
+                  <!-- At least $6,400 but less than $18,325: $0 plus 10% of the excess over $6,400 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>18325</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Multiply>
+                        <Rational>10/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../pub15Worksheet1bLine2m" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>6400</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Then>
+                  </Case>
+                  <!-- At least $18,325 but less than $54,875: $1,192.50 plus 12% of the excess over
+            $18,325 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>54875</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>1192.50</Dollar>
+                        <Multiply>
+                          <Rational>12/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>18325</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $54,875 but less than $109,750: $5,578.50 plus 22% of the excess
+                  over $54,875 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>109750</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>5578.50</Dollar>
+                        <Multiply>
+                          <Rational>22/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>54875</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $109,750 but less than $203,700: $17,651 plus 24% of the excess over
+                  $109,750 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>203700</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>17651</Dollar>
+                        <Multiply>
+                          <Rational>24/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>109750</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $203,700 but less than $256,925: $40,199 plus 32% of the excess over
+                  $203,700 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>256925</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>40199</Dollar>
+                        <Multiply>
+                          <Rational>32/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>203700</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $256,925 but less than $632,750: $57,231 plus 35% of the excess over
+                  $256,925 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>632750</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>57231</Dollar>
+                        <Multiply>
+                          <Rational>35/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>256925</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- $632,750 and above: $188,769.75 plus 37% of the excess over $632,750 -->
+                  <Case>
+                    <When>
+                      <True />
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>188769.75</Dollar>
+                        <Multiply>
+                          <Rational>37/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>632750</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                </Switch>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <Any>
+                  <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
+                  <Dependency module="filingStatus" path="/isFilingStatusQSS" />
+                </Any>
+              </When>
+              <Then>
+                <Switch>
+                  <!-- Less than $17,100: no withholding -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>17100</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Dollar>0</Dollar>
+                    </Then>
+                  </Case>
+                  <!-- At least $17,100 but less than $40,950: $0 plus 10% of the excess over
+                  $17,100 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>40950</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Multiply>
+                        <Rational>10/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../pub15Worksheet1bLine2m" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>17100</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Then>
+                  </Case>
+                  <!-- At least $40,950 but less than $114,050: $2,385 plus 12% of the excess over
+                  $40,950 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>114050</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>2385</Dollar>
+                        <Multiply>
+                          <Rational>12/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>40950</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $114,050 but less than $223,800: $11,157 plus 22% of the excess over
+                  $114,050 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>223800</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>11157</Dollar>
+                        <Multiply>
+                          <Rational>22/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>114050</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $223,800 but less than $411,700: $35,302 plus 24% of the excess over
+                  $223,800 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>411700</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>35302</Dollar>
+                        <Multiply>
+                          <Rational>24/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>223800</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $411,700 but less than $518,150: $80,398 plus 32% of the excess over
+                  $411,700 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>518150</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>80398</Dollar>
+                        <Multiply>
+                          <Rational>32/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>411700</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $518,150 but less than $768,700: $114,462 plus 35% of the excess
+                  over $518,150 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>768700</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>114462</Dollar>
+                        <Multiply>
+                          <Rational>35/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>518150</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- $768,700 and above: $202,154.50 plus 37% of the excess over $768,700 -->
+                  <Case>
+                    <When>
+                      <True />
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>202154.50</Dollar>
+                        <Multiply>
+                          <Rational>37/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>768700</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                </Switch>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <Dependency module="filingStatus" path="/isFilingStatusHOH" />
+              </When>
+              <Then>
+                <Switch>
+                  <!-- Less than $13,900: no withholding -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>13900</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Dollar>0</Dollar>
+                    </Then>
+                  </Case>
+                  <!-- At least $13,900 but less than $30,900: $0 plus 10% of the excess over
+                  $13,900 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>30900</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Multiply>
+                        <Rational>10/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../pub15Worksheet1bLine2m" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>13900</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Then>
+                  </Case>
+                  <!-- At least $30,900 but less than $78,750: $1,700 plus 12% of the excess over
+                  $30,900 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>78750</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>1700</Dollar>
+                        <Multiply>
+                          <Rational>12/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>30900</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $78,750 but less than $117,250: $7,442 plus 22% of the excess over
+                  $78,750 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>117250</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>7442</Dollar>
+                        <Multiply>
+                          <Rational>22/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>78750</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $117,250 but less than $211,200: $15,912 plus 24% of the excess over
+                  $117,250 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>211200</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>15912</Dollar>
+                        <Multiply>
+                          <Rational>24/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>117250</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $211,200 but less than $264,400: $38,460 plus 32% of the excess over
+                  $211,200 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>264400</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>38460</Dollar>
+                        <Multiply>
+                          <Rational>32/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>211200</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- At least $264,400 but less than $640,250: $55,484 plus 35% of the excess over
+                  $264,400 -->
+                  <Case>
+                    <When>
+                      <LessThan>
+                        <Left>
+                          <Dependency path="../pub15Worksheet1bLine2m" />
+                        </Left>
+                        <Right>
+                          <Dollar>640250</Dollar>
+                        </Right>
+                      </LessThan>
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>55484</Dollar>
+                        <Multiply>
+                          <Rational>35/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>264400</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                  <!-- $640,250 and above: $187,031.50 plus 37% of the excess over $640,250 -->
+                  <Case>
+                    <When>
+                      <True />
+                    </When>
+                    <Then>
+                      <Add>
+                        <Dollar>187031.50</Dollar>
+                        <Multiply>
+                          <Rational>37/100</Rational>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../pub15Worksheet1bLine2m" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dollar>640250</Dollar>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiply>
+                      </Add>
+                    </Then>
+                  </Case>
+                </Switch>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/pub15Worksheet1bLine2t">
+      <Derived>
+	<GreaterOf>
+	  <Dollar>0</Dollar>
+	  <Subtract>
+	    <Minuend>
+	      <Dependency path="../pub15Worksheet1bLine2s"/>
+	    </Minuend>
+	    <Subtrahends>
+	      <Dependency path="../pub15Worksheet1bLine2j"/>
+	    </Subtrahends>
+	  </Subtract>
+	</GreaterOf>
+      </Derived>
+    </Fact>
+    
+    <Fact path="/pensions/*/baseAnnualWithholding">
+      <Description>
+	The tentative annual withholding amount. Pub. 15T Worksheet 1B Line 2u.
+      </Description>
+      <Derived>
+	<Switch>
+	  <Case>
+	    <When>
+	      <Not>
+		<Equal>
+		  <Left>
+		    <Dependency path="../w4pLine2biii"/>
+		  </Left>
+		  <Right>
+		    <Dollar>0</Dollar>
+		  </Right>
+		</Equal>
+	      </Not>
+	    </When>
+	    <Then>
+	      <Dependency path="../pub15Worksheet1bLine2t"/>
+	    </Then>
+	  </Case>
+	  <Case>
+	    <When>
+	      <True/>
+	    </When>
+	    <Then>
+	      <Dependency path="../pub15Worksheet1bLine2j"/>
+	    </Then>
+	  </Case>
+	</Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/basePerPayPeriodWithholding">
+      <Derived>
+	<Divide>
+	  <Dividend>
+	    <Dependency path="../baseAnnualWithholding"/>
+	  </Dividend>
+	  <Divisors>
+	    <Dependency path="../payPeriodsPerYear"/>
+	  </Divisors>
+	</Divide>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/pub15FinalWithholding">
+      <Description>
+	Line 4c of Pub. 15-T Worksheet 1B. The per-period withholding amount sub credits, excluding
+	any extra elected on Form W-4P Line 4(c).
+      </Description>
+      <Derived>
+	<Divide>
+	  <Dividend>
+	    <GreaterOf>
+	      <Subtract>
+		<Minuend>
+		  <Dependency path="../baseAnnualWithholding"/>
+		</Minuend>
+		<Subtrahends>
+		  <Dependency path="/totalCredits"/>
+		</Subtrahends>
+	      </Subtract>
+	      <Dollar>0</Dollar>
+	    </GreaterOf>
+	  </Dividend>
+	  <Divisors>
+	    <Dependency path="../payPeriodsPerYear"/>
+	  </Divisors>
+	</Divide>
+      </Derived>
+    </Fact>
 
     <Fact path="/jobsAvailableForExtraWithholding">
       <Description>Jobs that are ended or end too soon are not candidates for extra withholding on a
@@ -1776,9 +3496,12 @@
     <Fact path="/totalEndOfYearProjectedWithholding">
       <Description>The amount withheld for all jobs if nothing is changed.</Description>
       <Derived>
-        <CollectionSum>
-          <Dependency path="/jobs/*/endOfYearProjectedWithholding" />
-        </CollectionSum>
+	<Add>
+          <CollectionSum>
+            <Dependency path="/jobs/*/endOfYearProjectedWithholding" />
+          </CollectionSum>
+	  <Dependency path="/pensionsTotalEndOfYearProjectedWithholding"/>
+	</Add>
       </Derived>
     </Fact>
 
@@ -1793,24 +3516,6 @@
             </Minuend>
             <Subtrahends>
               <Dependency path="/totalEndOfYearProjectedWithholding" />
-            </Subtrahends>
-          </Subtract>
-        </GreaterOf>
-      </Derived>
-    </Fact>
-
-    <!-- This is a temporary definition, kind of circular with other facts. -->
-    <Fact path="/totalNonJobsIncome">
-      <Derived>
-        <GreaterOf>
-          <Dollar>0</Dollar>
-          <Subtract>
-            <Minuend>
-              <Dependency path="/totalIncome" />
-            </Minuend>
-            <Subtrahends>
-              <Dependency path="/totalJobsIncome" />
-              <Dependency path="/selfEmploymentIncome" />
             </Subtrahends>
           </Subtract>
         </GreaterOf>
@@ -1845,6 +3550,31 @@
       <Writable>
         <Dollar />
       </Writable>
+    </Fact>
+
+    <Fact path="/pensions/*/averageWithholdingPerPayPeriod">
+      <Description> Average withholding from a specific pension per pay-period. </Description>
+      <Writable>
+        <Dollar />
+      </Writable>
+    </Fact>    
+
+    <Fact path="/pensions/*/yearToDateIncome">
+      <Writable>
+	<Dollar/>
+      </Writable>
+    </Fact>
+
+    <Fact path="/pensions/*/income">
+      <Derived>
+	<Add>
+          <Multiply>
+            <Dependency path="../averagePayPerPayPeriod" />
+            <Dependency path="../remainingPayDates" />
+          </Multiply>
+          <Dependency path="../yearToDateIncome" />
+	</Add>
+      </Derived>
     </Fact>
 
     <Fact path="/pensions/*/yearToDateWithholding">
@@ -1905,6 +3635,81 @@
       </Derived>
     </Fact>
 
+    <Fact path="/pensions/*/payPeriodsPerYear">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyWeekly" />
+            </When>
+            <Then>
+              <Int>52</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyBiWeekly" />
+            </When>
+            <Then>
+              <Int>26</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly" />
+            </When>
+            <Then>
+              <Int>24</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly" />
+            </When>
+            <Then>
+              <Int>12</Int>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/payPeriodsBeforeW4ChangesAppear">
+      <Description>This is derived from the "2197 Scenarios checks" worksheet of the
+        "TWESprint1_2025_UAT_WHC2197_2200" spreadsheet.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyWeekly" />
+            </When>
+            <Then>
+              <Int>2</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPayFrequencyBiWeekly" />
+                <Dependency path="../isPayFrequencySemiMonthly" />
+              </Any>
+            </When>
+            <Then>
+              <Int>1</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly" />
+            </When>
+            <Then>
+              <Int>0</Int>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>    
+    
     <Fact path="/pensions/*/isPayFrequencyWeekly">
       <Derived>
         <Equal>
@@ -1986,6 +3791,156 @@
       </Derived>
     </Fact>
 
+    <Fact path="/pensions/*/restOfYearIncome">
+      <Derived>
+	<Multiply>
+	  <Dependency path="../averagePayPerPayPeriod"/>
+	  <Dependency path="../remainingPayDates"/>
+	</Multiply>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/endOfYearProjectedWithholding">
+      <Derived>
+	<Add>
+	  <Dependency path="../yearToDateWithholding"/>
+	  <Multiply>
+            <!-- Floor is used here to match QA spreadsheet calculation -->
+	    <Floor>
+	      <Dependency path="../remainingPayDates"/>
+	    </Floor>
+	    <Dependency path="../averageWithholdingPerPayPeriod"/>
+	  </Multiply>
+	</Add>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensions/*/w4pLine4cRecommendation">
+      <Derived>
+	<Switch>
+	  <Case>
+	    <When>
+	      <All>
+		<Equal>
+		  <Left>
+		    <Dependency path="../w4pLine2bi"/>
+		  </Left>
+		  <Right>
+		    <Dollar>0</Dollar>
+		  </Right>
+		</Equal>
+		<!-- And this is the pension selected for highest income -->
+		<Equal>
+		  <Left>
+		    <Dependency path=".."/>
+		  </Left>
+		  <Right>
+		    <Dependency path="/pensionSelectedForExtraWithholding"/>
+		  </Right>
+		</Equal>
+	      </All>
+	    </When>
+	    <Then>
+              <Round>
+                <Subtract>
+                  <Minuend>
+                    <Add>
+                      <!-- Divide the gap by the number of pay periods impacted by a new W4. -->
+                      <Divide>
+                        <Dividend>
+                          <Dependency path="/withholdingGap" />
+                        </Dividend>
+                        <Divisors>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../remainingPayDates" />
+                            </Minuend>
+                            <Subtrahends>
+                              <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
+                            </Subtrahends>
+                          </Subtract>
+                        </Divisors>
+                      </Divide>
+                      <!-- Add it to their existing rate of withholding. -->
+                      <Dependency path="../averageWithholdingPerPayPeriod" />
+                    </Add>
+                  </Minuend>
+                  <Subtrahends>
+                    <!-- Subtract the base withholding from Pub 15-T so we're left with the extra. -->
+                    <Dependency path="../basePerPayPeriodWithholding" />
+                  </Subtrahends>
+                </Subtract>
+              </Round>
+	    </Then>
+	  </Case>
+	  <Case>
+	    <When>
+	      <True />
+	    </When>
+	    <Then>
+	      <Dollar>0</Dollar>
+	    </Then>
+	  </Case>
+	</Switch>
+      </Derived>
+    </Fact>
+
+    <Fact path="/pensionsAvailableForExtraWithholding">
+      <Derived>
+	<Filter path="/pensions">
+	  <GreaterThan>
+	    <Left>
+	      <Dependency path="/pensions/*/remainingPayDates"/>
+	    </Left>
+	    <Right>
+	      <Dependency path="/pensions/*/payPeriodsBeforeW4ChangesAppear"/>
+	    </Right>
+	  </GreaterThan>
+	</Filter>
+      </Derived>
+    </Fact>
+    
+    <Fact path="/pensionSelectedForExtraWithholding">
+      <Derived>
+	<IndexOf>
+	  <Collection>
+	    <Filter path="/pensionsAvailableForExtraWithholding">
+	      <Equal>
+		<Left>
+		  <Maximum>
+		    <Dependency path="/pensionsAvailableForExtraWithholding/*/restOfYearIncome"/>
+		  </Maximum>
+		</Left>
+		<Right>
+		  <Dependency path="restOfYearIncome"/>
+		</Right>
+	      </Equal>
+	    </Filter>
+	  </Collection>
+	  <Index>
+	    <Int>0</Int>
+	  </Index>
+	</IndexOf>
+      </Derived>
+    </Fact>
+    
+    <Fact path="/totalPensionsIncome">
+      <Description> Total income from all pensions. </Description>
+      <Derived>
+	<CollectionSum>
+	  <Dependency path="/pensions/*/income"/>
+	</CollectionSum>
+      </Derived>
+    </Fact>
+    
+    <Fact path="/pensionsTotalEndOfYearProjectedWithholding">
+      <Derived>
+	<CollectionSum>
+	  <Dependency path="/pensions/*/endOfYearProjectedWithholding"/>
+	</CollectionSum>
+      </Derived>
+    </Fact>
+    
     <Fact path="/netSelfEmploymentIncome">
       <Description>Net self-employment income</Description>
       <Writable>
@@ -2078,6 +4033,7 @@
         <Round>
           <Add>
             <Dependency path="/totalJobsIncome" />
+	    <Dependency path="/totalPensionsIncome" />
             <Dependency path="/totalOtherIncome" />
           </Add>
         </Round>

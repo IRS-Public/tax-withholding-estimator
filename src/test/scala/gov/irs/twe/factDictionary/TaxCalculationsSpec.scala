@@ -81,6 +81,14 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   val jobs = Path("/jobs")
   val jobsCollection = Collection(Vector(java.util.UUID.fromString(job1Id), java.util.UUID.fromString(job2Id)))
 
+  val pension1Id = "8679f611-851e-44e8-9a31-d4ced931d1ed"
+  val pension2Id = "30bb164e-feed-40f9-b800-4178a98ae79a"
+  val pensions = Path("/pensions")
+  val pensionsCollection = Collection(Vector(java.util.UUID.fromString(pension1Id)))
+  val twoPensionsCollection = Collection(
+    Vector(java.util.UUID.fromString(pension1Id), java.util.UUID.fromString(pension2Id)),
+  )
+
   // These tests are based on the "2197 Scenarios checks" worksheet of the "TWESprint1_2025_UAT_WHC2197_2200" spreadsheet.
   test("2197 Scenarios spreadsheet Column C") {
     val graph = makeGraphWith(
@@ -383,6 +391,210 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2453")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("262")))
     }
+  }
+
+  // test("2197 Scenarios spreadsheet Column N with a pension") {
+  //   val graph = makeGraphWith(
+  //     factDictionary,
+  //     filingStatus -> single,
+  //     Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+  //     Path("/primaryFilerIsBlind") -> false,
+  //     Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+  //     jobs -> jobsCollection,
+  //     pensions -> pensionsCollection,
+  //     Path(s"/jobs/#${job1Id}/startDate") -> Day("2025-01-01"),
+  //     Path(s"/jobs/#${job1Id}/endDate") -> Day("2025-10-15"),
+  //     Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-10-05"),
+  //     Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-10-08"),
+  //     Path(s"/jobs/#${job1Id}/averagePayPerPayPeriod") -> Dollar("2000"),
+  //     Path(s"/jobs/#${job1Id}/yearToDateIncome") -> Dollar("82000"),
+  //     Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("weekly", "/payFrequencyOptions"),
+  //     Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("200"),
+  //     Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("8200"),
+  //     Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
+  //     Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+  //     Path(s"/jobs/#${job2Id}/startDate") -> Day("2025-01-01"),
+  //     Path(s"/jobs/#${job2Id}/endDate") -> Day("2025-12-31"),
+  //     Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-10-08"),
+  //     Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-10-08"),
+  //     Path(s"/jobs/#${job2Id}/averagePayPerPayPeriod") -> Dollar("1000"),
+  //     Path(s"/jobs/#${job2Id}/yearToDateIncome") -> Dollar("41000"),
+  //     Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("weekly", "/payFrequencyOptions"),
+  //     Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("100"),
+  //     Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("4100"),
+  //     Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
+  //     Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
+  //     Path("/actualChildTaxCreditAmount") -> Dollar("6000"),
+
+  //     Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+  //     Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("400"),
+  //     Path(s"/pensions/#${pension1Id}/yearToDateIncome") -> Dollar("5000"),
+  //     Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("3200"),
+  //     Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+
+  //     // Derived overrides
+  //     Path("/adjustmentsToIncome") -> Dollar("0"),
+  //     Path("/totalOtherIncome") -> Dollar("0"),
+  //   )
+
+  //   assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("84857.14")))
+  //   assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("53000")))
+
+  //   assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("8400")))
+  //   assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("5300")))
+  //   assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("13700")))
+
+  //   assert(graph.get(Path("/agi")).value.contains(Dollar("137857")))
+  //   assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("22333")))
+  //   assert(graph.get(Path("/totalTax")).value.contains(Dollar("16333")))
+
+  //   assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2633")))
+  //   assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("280")))
+  // }
+
+  test("Verifying single pension manual calculations from Pub 15T Worksheet 1B") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> single,
+      pensions -> pensionsCollection,
+      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("400"),
+      Path(s"/pensions/#${pension1Id}/yearToDateIncome") -> Dollar("40000"),
+      Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("3200"),
+      Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path("/wantsItemizedDeduction") -> false,
+      Path("/wantsStandardDeduction") -> true,
+
+      // Derived overrides
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/totalCredits") -> Dollar("0"),
+      Path(s"/pensions/#${pension1Id}/remainingPayDates") -> 4,
+
+      // Don't matters
+      Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-10-15"),
+    )
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/income")).value.contains(Dollar("60000")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4a")).value.contains(Dollar("0")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4b")).value.contains(Dollar("0")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine1g")).value.contains(Dollar("8600")))
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/adjustedAnnualPaymentAmount")).value.contains(Dollar("51400")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2cOr2d")).value.contains(Dollar("51400")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2j")).value.contains(Dollar("5162")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2t")).value.contains(Dollar("0")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/baseAnnualWithholding")).value.contains(Dollar("5162")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/basePerPayPeriodWithholding")).value.contains(Dollar("430.17")))
+
+    assert(graph.get(Path("/totalPensionsIncome")).value.contains(Dollar("60000")))
+    assert(graph.get(Path("/taxableIncome")).value.contains(Dollar("44250")))
+    assert(graph.get(Path("/roundedTaxableIncome")).value.contains(Dollar("44275")))
+    assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("5075")))
+    assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("275")))
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4cRecommendation")).value.contains(Dollar("39")))
+
+  }
+
+  test("Verifying two pension manual calculations from Pub 15T Worksheet 1B") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> single,
+      pensions -> twoPensionsCollection,
+      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("400"),
+      Path(s"/pensions/#${pension1Id}/yearToDateIncome") -> Dollar("40000"),
+      Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("3200"),
+      Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/pensions/#${pension2Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension2Id}/averageWithholdingPerPayPeriod") -> Dollar("400"),
+      Path(s"/pensions/#${pension2Id}/yearToDateIncome") -> Dollar("40000"),
+      Path(s"/pensions/#${pension2Id}/yearToDateWithholding") -> Dollar("3200"),
+      Path(s"/pensions/#${pension2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path("/wantsItemizedDeduction") -> false,
+      Path("/wantsStandardDeduction") -> true,
+
+      // Derived overrides
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/totalCredits") -> Dollar("0"),
+      Path(s"/pensions/#${pension1Id}/remainingPayDates") -> 4,
+      Path(s"/pensions/#${pension2Id}/remainingPayDates") -> 4,
+
+      // Don't matters
+      Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-10-15"),
+      Path(s"/pensions/#${pension2Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension2Id}/endDate") -> Day("2025-10-15"),
+    )
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/income")).value.contains(Dollar("60000")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine2bii")).value.contains(Dollar("60000")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4a")).value.contains(Dollar("0")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4b")).value.contains(Dollar("0")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine1g")).value.contains(Dollar("8600")))
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/adjustedAnnualPaymentAmount")).value.contains(Dollar("51400")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2cOr2d")).value.contains(Dollar("51400")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2j")).value.contains(Dollar("5162")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2s")).value.contains(Dollar("18047")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2t")).value.contains(Dollar("12885")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/baseAnnualWithholding")).value.contains(Dollar("12885")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/basePerPayPeriodWithholding")).value.contains(Dollar("1073.75")))
+
+    assert(graph.get(Path("/totalPensionsIncome")).value.contains(Dollar("120000")))
+    assert(graph.get(Path("/taxableIncome")).value.contains(Dollar("104250")))
+    assert(graph.get(Path("/roundedTaxableIncome")).value.contains(Dollar("104250")))
+    assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("17867")))
+    assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("8267")))
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4cRecommendation")).value.contains(Dollar("1393")))
+
+  }
+
+  test("Verifying single pension with job income manual calculations from Pub 15T Worksheet 1B") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> single,
+      pensions -> pensionsCollection,
+      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
+      Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
+      Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/pensions/#${pension1Id}/income") -> Dollar("60000"),
+
+      // Derived overrides
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/totalCredits") -> Dollar("0"),
+      Path(s"/pensions/#${pension1Id}/remainingPayDates") -> 8,
+
+      // Don't matters
+      Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-10-15"),
+    )
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/adjustedAnnualPaymentAmount")).value.contains(Dollar("51400")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2cOr2d")).value.contains(Dollar("41400")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2j")).value.contains(Dollar("3962")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2m")).value.contains(Dollar("101400")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2s")).value.contains(Dollar("15814")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2t")).value.contains(Dollar("11852")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/baseAnnualWithholding")).value.contains(Dollar("11852")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/basePerPayPeriodWithholding")).value.contains(Dollar("987.67")))
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4cRecommendation")).value.contains(Dollar("0")))
   }
 
   // This test validates some outputs.
