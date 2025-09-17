@@ -118,10 +118,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/totalOtherIncome") -> Dollar("0"),
     )
 
-    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
-      cancel("Skipping test based on OB3 standard deduction numbers because you are using pre-OB3 facts")
-    }
-
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("42000")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("24000")))
 
@@ -131,11 +127,19 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path("/agi")).value.contains(Dollar("66000")))
 
-    // The following values now differ from the QA spreadsheet due to standard deduction changes.
-    assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("5975")))
-    assert(graph.get(Path("/totalTax")).value.contains(Dollar("3975")))
-    assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("775")))
-    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("283")))
+    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
+      // These are the original values from the QA spreadsheet.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("6140")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("4140")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("940")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("338")))
+    } else {
+      // The following values now differ from the QA spreadsheet due to standard deduction changes.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("5975")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("3975")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("775")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("283")))
+    }
   }
 
   test("2197 Scenarios spreadsheet Column D") {
@@ -177,10 +181,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/totalOtherIncome") -> Dollar("0"),
     )
 
-    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
-      cancel("Skipping test based on OB3 standard deduction numbers because you are using pre-OB3 facts")
-    }
-
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("42000")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("48000")))
 
@@ -190,11 +190,19 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path("/agi")).value.contains(Dollar("90000")))
 
-    // The following values now differ from the QA spreadsheet due to standard deduction changes.
-    assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("6546")))
-    assert(graph.get(Path("/totalTax")).value.contains(Dollar("4546")))
-    assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("346")))
-    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("65")))
+    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
+      // These are the original values from the QA spreadsheet.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("6726")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("4726")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("526")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("125")))
+    } else {
+      // The following values now differ from the QA spreadsheet due to standard deduction changes.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("6546")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("4546")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("346")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("65")))
+    }
   }
 
   test("2197 Scenarios spreadsheet Column E") {
@@ -233,10 +241,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/totalOtherIncome") -> Dollar("0"),
     )
 
-    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
-      cancel("Skipping test based on OB3 standard deduction numbers because you are using pre-OB3 facts")
-    }
-
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("42000")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("24000")))
 
@@ -246,11 +250,19 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path("/agi")).value.contains(Dollar("66000")))
 
-    // The following values now differ from the QA spreadsheet due to standard deduction changes.
-    assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("4745")))
-    assert(graph.get(Path("/totalTax")).value.contains(Dollar("2745")))
-    assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("545")))
-    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("269")))
+    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
+      // These are the original values from the QA spreadsheet.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("4883")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("2883")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("683")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("315")))
+    } else {
+      // The following values now differ from the QA spreadsheet due to standard deduction changes.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("4745")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("2745")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("545")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("269")))
+    }
   }
 
   test("2197 Scenarios spreadsheet Column G") {
@@ -289,10 +301,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/totalOtherIncome") -> Dollar("0"),
     )
 
-    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
-      cancel("Skipping test based on OB3 standard deduction numbers because you are using pre-OB3 facts")
-    }
-
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("80000")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("48000")))
 
@@ -302,11 +310,19 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path("/agi")).value.contains(Dollar("128000")))
 
-    // The following values now differ from the QA spreadsheet due to standard deduction changes.
-    assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("19787")))
-    assert(graph.get(Path("/totalTax")).value.contains(Dollar("15787")))
-    assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("187")))
-    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("282")))
+    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
+      // These are the original values from the QA spreadsheet.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("19967")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("15967")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("367")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("318")))
+    } else {
+      // The following values now differ from the QA spreadsheet due to standard deduction changes.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("19787")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("15787")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("187")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("282")))
+    }
   }
 
   test("2197 Scenarios spreadsheet Column N") {
@@ -345,10 +361,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/totalOtherIncome") -> Dollar("0"),
     )
 
-    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
-      cancel("Skipping test based on OB3 standard deduction numbers because you are using pre-OB3 facts")
-    }
-
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("84857.14")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("53000")))
 
@@ -358,11 +370,19 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path("/agi")).value.contains(Dollar("137857")))
 
-    // The following values now differ from the QA spreadsheet due to standard deduction changes.
-    assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("22153")))
-    assert(graph.get(Path("/totalTax")).value.contains(Dollar("16153")))
-    assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2453")))
-    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("262")))
+    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
+      // These are the original values from the QA spreadsheet.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("22333")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("16333")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2633")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("280")))
+    } else {
+      // The following values now differ from the QA spreadsheet due to standard deduction changes.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("22153")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("16153")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2453")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("262")))
+    }
   }
 
   // This test validates some outputs.
