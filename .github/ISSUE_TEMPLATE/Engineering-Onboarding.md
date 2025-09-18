@@ -10,7 +10,7 @@
 
 - [ ] Read through the [factgraph tutorial](https://github.com/IRSDigitalService/fact-graph/blob/main/shared/src/main/scala/_tutorial/01_introduction.worksheet.sc)
   - [ ] (optional) Additional [factgraph slidedeck](https://github.com/IRSDigitalService/internal-assets/blob/main/gitlab-wiki/uploads/c4cf92ad5c32ae6fa8a7f2d066e802e7/Tax_Code_to_Factgraph.pdf)
-    - [ ] corresponding [video of the walkthrough](https://github.com/IRSDigitalService/internal-assets/blob/main/gitlab-wiki/uploads/c4cf92ad5c32ae6fa8a7f2d066e802e7/Tax_Code_to_Factgraph.pdf) of that deck (only the first 30 minutes are relevant)
+    - [ ] corresponding [video of the walkthrough](https://github.com/IRSDigitalService/internal-assets/blob/main/gitlab-wiki/uploads/6a29a0cc713dd6a8cb0f458854767313/FactGraph101ByShimona.mp4) of that deck (only the first 30 minutes are relevant)
 - [ ] [Guide to placeholders](https://github.com/IRSDigitalService/internal-assets/blob/main/twe/fact-graph/guide-to-placeholders.md)
 - [ ] [Debugging in the fact graph](https://github.com/IRSDigitalService/internal-assets/blob/main/twe/fact-graph/debugging.md)
 - [ ] Review how we do testing

@@ -1,17 +1,17 @@
 # TRUST General Onboarding Checklist
 
 ## Day 1 (Led by New Team Member)
-- [ ] Accept Slack invite and join relevant project channels  
-    - [ ] [#shared-irs-general](https://slack.com/archives/C08TTH9MW6M) (shared-irs-general)
-    - [ ] [#shared-irs-pub-17](https://slack.com/archives/C08TUFZ3EKB) (shared-irs-pub-17)
-    - [ ] [#shared-irs-design](https://slack.com/archives/C08TTHLJDS5)  (shared-irs-design)
-    - [ ] [#shared-irs-engineering](https://slack.com/archives/C08T6HDUWRZ) (shared-irs-engineering)
-    - [ ] [#shared-irs-product](https://slack.com/archives/C08THT8CJVA) (shared-irs-product)
-    - [ ] [#tax-witholding-estimator](https://slack.com/archives/C08V3R4HSRJ) (tax-withholding-estimator) - if applicable
-    - [ ] [#shared-irs-tax-logic-standup8266](https://slack.com/archives/C08UWGW7HPS)  (shared-irs-tax-logicstandup8266) - if applicable
-    - [ ] [#twe-design](https://slack.com/archives/C09EYBS9LGJ) (twe-design) - if applicable
-    - [ ] [#twe_flow ](https://slack.com/archives/C09A48XDRNC)(twe_flow) - if applicable
-    - [ ] [#twe_logic](https://slack.com/archives/C099ANCQMLN) (twe_logic) - if applicable
+- [ ] Accept Slack invite and join relevant project channels
+    - [ ] [#shared-irs-general](https://slack.com/archives/C08TTH9MW6M) (shared-irs-general) — For things that might be applicable to the broader team
+    - [ ] [#shared-irs-pub-17](https://slack.com/archives/C08TUFZ3EKB) (shared-irs-pub-17) — Basically a random channel, mainly things outside of work
+    - [ ] [#shared-irs-design](https://slack.com/archives/C08TTHLJDS5)  (shared-irs-design) — General design channel, that impacts designers across projects
+    - [ ] [#shared-irs-engineering](https://slack.com/archives/C08T6HDUWRZ) (shared-irs-engineering) — General engineering channel, that impacts engineers across projects
+    - [ ] [#shared-irs-product](https://slack.com/archives/C08THT8CJVA) (shared-irs-product) — General product channel, for all things product
+    - [ ] [#tax-witholding-estimator](https://slack.com/archives/C08V3R4HSRJ) (tax-withholding-estimator) - [if applicable] — General TWE channel
+    - [ ] [#shared-irs-tax-logic-standup8266](https://slack.com/archives/C08UWGW7HPS)  (shared-irs-tax-logicstandup8266) - [if applicable] — TWE specific channel for standup updates
+    - [ ] [#twe-design](https://slack.com/archives/C09EYBS9LGJ) (twe-design) - [if applicable] — TWE specific design channel
+    - [ ] [#twe_flow ](https://slack.com/archives/C09A48XDRNC)(twe_flow) - [if applicable] — TWE specific channel for Platform UI/UX
+    - [ ] [#twe_logic](https://slack.com/archives/C099ANCQMLN) (twe_logic) - [if applicable] — TWE specific channel for the tax logic team (business rules)
 - [ ] Accept GitHub and Figma team invites and verify you have access
     - [ ] Access to the IRSDigitalService project
     - [ ] Access to the following repositories:
@@ -20,7 +20,7 @@
         - [ ] fact-graph
         - [ ] internal-assets
         - [ ] twe-prototype
-        - [ ] mef-sdk  
+        - [ ] mef-sdk
 
 ## Team Context (Led by Team Lead / Product Manager)
 
