@@ -480,7 +480,7 @@ class FgShow extends HTMLElement {
   }
 
   render() {
-    // TODO: Eventually remove
+    // TODO: Eventually remove as part of https://github.com/IRSDigitalService/tax-withholding-estimator/issues/414
     // This is a temporary enhancement to allow showing all values of a fact without knowing the collection id
     const results = (this.path.indexOf('*') !== -1)
       ? factGraph.getVect(this.path).Lgov_irs_factgraph_monads_MaybeVector$Multiple__f_vect.sci_Vector__f_prefix1.u
