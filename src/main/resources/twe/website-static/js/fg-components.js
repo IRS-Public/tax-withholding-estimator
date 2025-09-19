@@ -142,13 +142,6 @@ class FgSet extends HTMLElement {
     this.querySelector('.validate-alert')?.remove()
     this.querySelector('.usa-form-group')?.classList.remove('usa-form-group--error')
     this.querySelector('.usa-label--error')?.classList.remove('usa-label--error')
-
-    // Remove error class from wrapper
-    const formGroup =  this.querySelector('.usa-form-group');
-    if (formGroup) {
-
-    }
-
     this.querySelector('.usa-input[aria-invalid="true"]')?.setAttribute('aria-invalid', 'false');
     this.querySelector('.usa-input-group')?.classList.remove('usa-input--error');
   }
