@@ -54,7 +54,7 @@ class FgSet extends HTMLElement {
     this.operator = this.getAttribute('operator')
     this.inputType = this.getAttribute('inputtype')
     this.inputs = this.querySelectorAll('input, select')
-    this.required = this.querySelector('input[required]') !== null
+    this.optional = this.getAttribute('optional') === 'true'
 
     switch (this.inputType) {
       // This switch statement is intentionally not exhaustive
@@ -680,14 +680,14 @@ function validateSectionForNavigation() {
   const missingFields = [];
   let hasValidationErrors = false;
 
-  // Loop through fields and mark incomplete if empty
+  // Loop through fields and mark incomplete if empty and required
   for (const fgSet of fgSets) {
-    if (!fgSet.isComplete()) {
+    if (!(fgSet.isComplete() || fgSet.optional)) {
       const fieldName = fgSet.path;
       missingFields.push(fieldName);
-    }
-    if (!fgSet.validateRequiredFields()) {
-      hasValidationErrors = false;
+      if (!fgSet.validateRequiredFields()) {
+        hasValidationErrors = false;
+      }
     }
   }
   // Display validation error if there are missing fields/incomplete

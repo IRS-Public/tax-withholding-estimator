@@ -1,11 +1,11 @@
 <fieldset class="usa-fieldset" th:attr="aria-describedby=${hintId}">
-    <legend class="usa-legend twe-question" th:text="#{${question}}"></legend>
+    <legend class="usa-legend twe-question">[[#{${question}}]] [(${optional}? ~{} : ~{nodes/required-indicator})]</legend>
     <div th:replace="nodes/hint"></div>
     <div class="usa-memorable-date">
         <div class="usa-form-group usa-form-group--month usa-form-group--select">
             <label class="usa-label" th:for="${path} +'-month'" th:text="#{components.date.month}"></label>
             <select class="usa-select" th:id="${path} +'-month'" th:name="${path} +'-month'"
-                    aria-invalid="false" required="true"
+                    aria-invalid="false" th:required="${not optional}"
             >
             <option value="" disabled="true" selected="true" th:text="#{components.date.select}"></option>
             <option value="01" th:text="#{components.date.january}"></option>
@@ -25,14 +25,14 @@
         <div class="usa-form-group usa-form-group--day">
             <label class="usa-label" th:for="${path} +'-day'" th:text="#{components.date.day}"></label>
             <input class="usa-input" th:id="${path} +'-day'" th:name="${path} + '-day'"
-                maxlength="2" pattern="[0-9]*" inputmode="numeric" value="" required
+                maxlength="2" pattern="[0-9]*" inputmode="numeric" value="" th:required="${not optional}"
                    aria-invalid="false"/>
         </div>
         <div class="usa-form-group usa-form-group--year">
             <label class="usa-label" th:for="${path} +'-year'" th:text="#{components.date.year}"></label>
             <input class="usa-input" th:id="${path} +'-year'" th:name="${path} +'-year'"
                    minlength="4" maxlength="4" pattern="[0-9]*" inputmode="numeric"
-                   value="" required aria-invalid="false"/>
+                   value="" th:required="${not optional}" aria-invalid="false"/>
         </div>
     </div>
 </fieldset>

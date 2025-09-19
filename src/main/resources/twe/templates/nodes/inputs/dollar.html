@@ -5,6 +5,6 @@
         </svg>
     </div>
     <input class="usa-input" th:id="${path}" type="text" inputmode="numeric"
-           th:name="${path}" autocomplete="off" required
+           th:name="${path}" autocomplete="off" th:required="${not optional}"
            th:attr="aria-describedby=${hintId}" aria-invalid="false">
 </div>

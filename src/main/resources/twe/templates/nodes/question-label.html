@@ -1,1 +1,1 @@
-<label th:if="${question}" class="usa-label twe-question" th:for="${path}" th:text="#{${question}}"> </label>
+<label th:if="${question}" class="usa-label twe-question" th:for="${path}">[[#{${question}}]] [(${optional}? ~{} : ~{nodes/required-indicator})]</label>

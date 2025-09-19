@@ -9,25 +9,24 @@ import scala.collection.JavaConverters.asJavaIterableConverter
 case class HtmlOption(name: String, value: String)
 
 enum Input {
-  case select(options: List[HtmlOption], optionsPath: Option[String], hint: String)
-  case text(hint: String)
-  case int(hint: String)
-  case boolean(question: String, hint: String)
-  case dollar(hint: String)
-  case date(question: String, hint: String)
+  case select(options: List[HtmlOption], optionsPath: Option[String], hint: String, optional: Boolean = false)
+  case text(hint: String, optional: Boolean = false)
+  case int(hint: String, optional: Boolean = false)
+  case boolean(question: String, hint: String, optional: Boolean = false)
+  case dollar(hint: String, optional: Boolean = false)
+  case date(question: String, hint: String, optional: Boolean = false)
 
   def typeString: String = this match {
-    case Input.text(_)         => "text"
-    case Input.int(_)          => "int"
-    case Input.boolean(_, _)   => "boolean"
-    case Input.dollar(_)       => "dollar"
-    case Input.select(_, _, _) => "select"
-    case Input.date(_, _)      => "date"
+    case Input.text(_, _)         => "text"
+    case Input.int(_, _)          => "int"
+    case Input.boolean(_, _, _)   => "boolean"
+    case Input.dollar(_, _)       => "dollar"
+    case Input.select(_, _, _, _) => "select"
+    case Input.date(_, _, _)      => "date"
   }
 }
-
 object Input {
-  def extractFromFgSet(node: xml.Node, factDictionary: FactDictionary): Input = {
+  def extractFromFgSet(node: xml.Node, isOptional: Boolean, factDictionary: FactDictionary): Input = {
     val path = node \@ "path"
     val question = (node \ "question").text.trim
     val hint = (node \ "hint").text.trim
@@ -47,7 +46,7 @@ object Input {
       if (options.isEmpty) {
         Log.warn(s"Empty options for fg-set: $path")
       }
-      return Input.select(options, optionsPath, hint)
+      return Input.select(options, optionsPath, hint, isOptional)
     }
 
     // Otherwise parse the <input>
@@ -57,11 +56,11 @@ object Input {
     }
 
     inputNode \@ "type" match {
-      case "text"    => Input.text(hint)
-      case "int"     => Input.int(hint)
-      case "boolean" => Input.boolean(question, hint)
-      case "dollar"  => Input.dollar(hint)
-      case "date"    => Input.date(question, hint)
+      case "text"    => Input.text(hint, isOptional)
+      case "int"     => Input.int(hint, isOptional)
+      case "boolean" => Input.boolean(question, hint, isOptional)
+      case "dollar"  => Input.dollar(hint, isOptional)
+      case "date"    => Input.date(question, hint, isOptional)
       case x         => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
     }
   }

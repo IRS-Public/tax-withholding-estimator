@@ -1,10 +1,10 @@
 <select th:id="${path}"
         class="usa-select"
-        required
+        th:required="${not optional}"
         th:attr="optionsPath=${optionsPath}, aria-describedby=${hintId}"
         aria-invalid="false"
     >
 
-    <option value="" disabled="true" selected="true" th:text="#{components.select.select}"></option>
+    <option value="" th:disabled="${not optional}" th:selected="${not optional}" th:text="#{components.select.select}"></option>
     <option th:each="option: ${options}" th:value="${option.value}" th:text="${option.name}"></option>
 </select>
