@@ -70,6 +70,13 @@ class FgSet extends HTMLElement {
         });
         break
       }
+      case 'dollar':
+        this.addEventListener('change', () => {
+            this.onChange()
+            // Clear validation error once user provides valid input
+            this.validateRequiredFields();
+          });
+        break;
       case 'select':
       case 'boolean':
         for (const input of this.inputs) {
@@ -142,9 +149,8 @@ class FgSet extends HTMLElement {
 
     }
 
-    // TODO:
-    // Remove aria-invalid to true on non-radio form controls (possibly all inputs on memorable dates on first pass)
-    // Remove the error modifier class to inputs (usa-input--error). Can probably follow what we're doing for errorLocation, but might need to get a little funky with the selectors so we're truly selecting the right things
+    this.querySelector('.usa-input[aria-invalid="true"]')?.setAttribute('aria-invalid', 'false');
+    this.querySelector('.usa-input-group')?.classList.remove('usa-input--error');
   }
 
   setValidationError() {
@@ -171,13 +177,13 @@ class FgSet extends HTMLElement {
     this.querySelector('.usa-form-group')?.classList.add('usa-form-group--error');
     this.querySelector('.usa-legend, .usa-label')?.classList.add('usa-label--error');
 
-    // TODO:
-    // Set aria-invalid to true on non-radio form controls (possibly all inputs on memorable dates on first pass)
-    // Set the error modifier class to inputs (usa-input--error). Can probably follow what we're doing for errorLocation, but might need to get a little funky with the selectors so we're truly selecting the right things
+    // Set aria-invalid to true on non-radio form controls (possibly all inputs on memorable dates on first pass) & update input error class
+    this.querySelector('.usa-input[aria-invalid="false"]')?.setAttribute('aria-invalid', 'true');
+    this.querySelector('.usa-input-group')?.classList.add('usa-input--error');
   }
 
   validateRequiredFields() {
-    const tempScopedTypes = this.inputType === 'boolean';
+    const tempScopedTypes = this.inputType === 'boolean' || this.inputType === 'dollar';
 
     // Ultimately we can unwrap this when the inline validation work is done.
     // This isComplete handling actually applies the error messages properly with the exception of the TODOs in setValidationError and clearValidationError
@@ -230,7 +236,7 @@ class FgSet extends HTMLElement {
         const checkedRadio = this.querySelector(`input:checked`)
         if (checkedRadio) {
           checkedRadio.checked = false;
-        }
+        };
         break
       }
       case 'select': {
