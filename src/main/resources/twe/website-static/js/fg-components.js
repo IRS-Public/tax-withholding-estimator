@@ -54,6 +54,7 @@ class FgSet extends HTMLElement {
     this.operator = this.getAttribute('operator')
     this.inputType = this.getAttribute('inputtype')
     this.inputs = this.querySelectorAll('input, select')
+    this.required = this.querySelector('input[required]') !== null
 
     switch (this.inputType) {
       // This switch statement is intentionally not exhaustive
@@ -72,7 +73,11 @@ class FgSet extends HTMLElement {
       case 'select':
       case 'boolean':
         for (const input of this.inputs) {
-          input.addEventListener('change', () => this.onChange());
+          input.addEventListener('change', () => {
+            this.onChange()
+            // Clear validation error once user makes a selection
+            this.clearValidationError();
+          });
         }
         break;
       default:
@@ -104,6 +109,88 @@ class FgSet extends HTMLElement {
 
   clearAlerts() {
     this.querySelector('div.alert--warning')?.remove()
+  }
+
+  clearValidationError() {
+    const errorElement = this.querySelector('.usa-error-message');
+    const errorId = errorElement?.id;
+
+    // Remove errorId from aria-describedby
+    const elementWithDescription = this.querySelector('[aria-describedby]');
+    const ariaDescription = elementWithDescription?.getAttribute('aria-describedby');
+
+    if (elementWithDescription) {
+    const updatedIds = ariaDescription
+      .split(' ')
+      .filter(id => id.trim() && id !== errorId)
+      .join(' ');
+
+    updatedIds
+      ? elementWithDescription.setAttribute('aria-describedby', updatedIds)
+      : elementWithDescription.removeAttribute('aria-describedby');
+    }
+
+    //Remove the error treatment
+    errorElement?.remove()
+    this.querySelector('.validate-alert')?.remove()
+    this.querySelector('.usa-form-group')?.classList.remove('usa-form-group--error')
+    this.querySelector('.usa-label--error')?.classList.remove('usa-label--error')
+
+    // Remove error class from wrapper
+    const formGroup =  this.querySelector('.usa-form-group');
+    if (formGroup) {
+
+    }
+
+    // TODO:
+    // Remove aria-invalid to true on non-radio form controls (possibly all inputs on memorable dates on first pass)
+    // Remove the error modifier class to inputs (usa-input--error). Can probably follow what we're doing for errorLocation, but might need to get a little funky with the selectors so we're truly selecting the right things
+  }
+
+  setValidationError() {
+    this.clearValidationError();
+    const errorId = `${this.path}-error`; // Keep the slash for primary filer
+
+    // Set up the error div
+    const errorDiv = document.createElement('div');
+    errorDiv.classList.add('usa-error-message');
+    errorDiv.setAttribute('id', errorId);
+    errorDiv.textContent = "this field is required";
+
+    const elementWithDescription = this.querySelector('.usa-fieldset, .usa-select, .usa-input');
+    const errorLocation = this.querySelector('.usa-radio, .usa-memorable-date, .usa-checkbox, .usa-select, .usa-input-group, .usa-input');
+
+    // Place the error div just before the invalid field location
+    errorLocation.insertAdjacentElement('beforebegin', errorDiv);
+
+    // Set aria-description
+    const existingAriaDescribedby = elementWithDescription.getAttribute('aria-describedby');
+    elementWithDescription.setAttribute('aria-describedby', `${existingAriaDescribedby || ''} ${errorId}`.trim());
+
+    // Set the modifier classes for errors
+    this.querySelector('.usa-form-group')?.classList.add('usa-form-group--error');
+    this.querySelector('.usa-legend, .usa-label')?.classList.add('usa-label--error');
+
+    // TODO:
+    // Set aria-invalid to true on non-radio form controls (possibly all inputs on memorable dates on first pass)
+    // Set the error modifier class to inputs (usa-input--error). Can probably follow what we're doing for errorLocation, but might need to get a little funky with the selectors so we're truly selecting the right things
+  }
+
+  validateRequiredFields() {
+    const tempScopedTypes = this.inputType === 'boolean';
+
+    // Ultimately we can unwrap this when the inline validation work is done.
+    // This isComplete handling actually applies the error messages properly with the exception of the TODOs in setValidationError and clearValidationError
+    // I just have this if statement to limit where the error show up because of the additional work outlined to make them correct
+    if (tempScopedTypes) {
+      const isMissing = !this.isComplete();
+      if (isMissing) {
+          this.setValidationError();
+      } else {
+          this.clearValidationError();
+      }
+      return isMissing;
+    }
   }
 
   render() {
@@ -141,7 +228,9 @@ class FgSet extends HTMLElement {
     switch (this.inputType) {
       case 'boolean': {
         const checkedRadio = this.querySelector(`input:checked`)
-        if (checkedRadio) checkedRadio.checked = false
+        if (checkedRadio) {
+          checkedRadio.checked = false;
+        }
         break
       }
       case 'select': {
@@ -167,6 +256,7 @@ class FgSet extends HTMLElement {
     // Clear error and alerts
     this.error = null;
     this.clearAlerts()
+    this.clearValidationError()
   }
 
   setInputValueFromFactValue() {
@@ -207,7 +297,7 @@ class FgSet extends HTMLElement {
           const monthSelect = this.querySelector('select[name*="-month"]');
           const dayInput = this.querySelector('input[name*="-day"]');
           const yearInput = this.querySelector('input[name*="-year"]');
-          
+
           // Only reset to empty if there are no current values
           // This preserves partial user input during fg-update events
           if (!monthSelect.value && !dayInput.value && !yearInput.value) {
@@ -589,6 +679,7 @@ function handleSectionComplete(event) {
 function validateSectionForNavigation() {
   const fgSets = document.querySelectorAll('fg-set:not(.hidden)');
   const missingFields = [];
+  let hasValidationErrors = false;
 
   // Loop through fields and mark incomplete if empty
   for (const fgSet of fgSets) {
@@ -596,9 +687,12 @@ function validateSectionForNavigation() {
       const fieldName = fgSet.path;
       missingFields.push(fieldName);
     }
+    if (!fgSet.validateRequiredFields()) {
+      hasValidationErrors = false;
+    }
   }
   // Display validation error if there are missing fields/incomplete
-  if (missingFields.length > 0) {
+  if (missingFields.length > 0 || hasValidationErrors) {
     showValidationError();
     return false;
   }
