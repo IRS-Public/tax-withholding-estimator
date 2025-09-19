@@ -24,42 +24,6 @@ enum Input {
     case Input.select(_, _, _) => "select"
     case Input.date(_, _)      => "date"
   }
-
-  def html(templateEngine: TweTemplateEngine, path: String): String = {
-    def hasHint(hint: String): Boolean = hint != null && hint.nonEmpty
-    def hintId(hint: String): String = if (hasHint(hint)) s"${path}-hint" else null
-
-    val context = new Context()
-    context.setVariable("path", path)
-
-    this match {
-      case Input.boolean(question, hint) =>
-        context.setVariable("question", question)
-        context.setVariable("hintId", hintId(hint))
-        context.setVariable("hint", hint)
-        templateEngine.process("nodes/inputs/boolean", context)
-      case Input.select(options, optionsPath, hint) =>
-        context.setVariable("hintId", hintId(hint))
-        context.setVariable("options", options.asJava)
-        context.setVariable("optionsPath", optionsPath)
-        templateEngine.process("nodes/inputs/select", context)
-      case Input.dollar(hint) =>
-        context.setVariable("hint", hint)
-        context.setVariable("hintId", hintId(hint))
-        templateEngine.process("nodes/inputs/dollar", context)
-      case Input.date(question, hint) =>
-        context.setVariable("hint", hint)
-        context.setVariable("question", question)
-        context.setVariable("hintId", hintId(hint))
-        templateEngine.process("nodes/inputs/date", context)
-      case Input.text(hint) =>
-        context.setVariable("hintId", hintId(hint))
-        templateEngine.process("nodes/inputs/text", context)
-      case Input.int(hint) =>
-        context.setVariable("hintId", hintId(hint))
-        templateEngine.process("nodes/inputs/text", context)
-    }
-  }
 }
 
 object Input {

@@ -5,6 +5,6 @@
         aria-invalid="false"
     >
 
-    <option value="" disabled="true" selected="true">-- Select one --</option>
+    <option value="" disabled="true" selected="true" th:text="#{components.select.select}"></option>
     <option th:each="option: ${options}" th:value="${option.value}" th:text="${option.name}"></option>
 </select>

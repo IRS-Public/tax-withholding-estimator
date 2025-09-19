@@ -1,5 +1,11 @@
 <fg-set
     th:attr="path=${path}, inputType=${typeString}, condition=${condition}, operator=${operator}"
 >
-    <div class="usa-form-group" th:utext="${questionHtml}"></div>
+  <div class="usa-form-group">
+    <th th:unless="${usesFieldset}">
+      <span th:replace="~{nodes/question-label}"></span>
+      <span th:replace="~{nodes/hint}"></span>
+    </th>
+    <th th:replace="~{'nodes/inputs/' + ${typeString}}"></th>
+  </div>
 </fg-set>

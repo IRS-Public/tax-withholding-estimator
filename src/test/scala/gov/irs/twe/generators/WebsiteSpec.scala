@@ -26,12 +26,12 @@ class WebsiteSpec extends AnyFunSpec {
       <page route="/" title="Basic Test Form">
         <section>
           <fg-set path="/filer/name">
-            <question>What is your full name?</question>
+            <question content-key="flow.test./filer/name.question" />
             <input type="text"/>
           </fg-set>
 
           <fg-set path="/isUsCitizenFullYear">
-            <question>Were you a US Citizen for all of TY2025?</question>
+            <question content-key="flow.test./isUsCitizenFullYear.question" />
             <input type="boolean"/>
           </fg-set>
         </section>

@@ -3,7 +3,7 @@
   <page title="About you" route="/">
     <section>
       <fg-set path="/filingStatus">
-        <question>What filing status will you use for your tax return?</question>
+        <question content-key="flow.about-you.fields./filingStatus.question" />
         <select options-path="/filingStatusOptions">
           <option value="single">Single</option>
           <option value="marriedFilingJointly">Married filing jointly</option>
@@ -14,91 +14,91 @@
       </fg-set>
 
       <fg-set path="/primaryFilerDateOfBirth">
-        <question>What’s your date of birth?</question>
+        <question content-key="flow.about-you.fields./primaryFilerDateOfBirth.question" />
         <input type="date" />
       </fg-set>
 
       <fg-set path="/primaryFilerIsBlind">
-        <question>Are you blind?</question>
+        <question content-key="flow.about-you.fields./primaryFilerIsBlind.question" />
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/primaryFilerHasSSN">
-        <question>Do you have an SSN?</question>
+        <question content-key="flow.about-you.fields./primaryFilerHasSSN.question" />
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/primaryFilerIsClaimedOnAnotherReturn">
-        <question>Can anyone else claim you as a dependent on their tax return?</question>
+        <question content-key="flow.about-you.fields./primaryFilerIsClaimedOnAnotherReturn.question" />
         <input type="boolean" />
       </fg-set>
 
       <h2 condition="/isFilingStatusMFJ" operator="isTrue">Spouse</h2>
 
       <fg-set path="/secondaryFilerDateOfBirth" if-true="/isFilingStatusMFJ">
-        <question>What’s your spouse’s date of birth?</question>
+        <question content-key="flow.about-you.fields./secondaryFilerDateOfBirth.question" />
         <input type="date" />
       </fg-set>
 
       <fg-set path="/secondaryFilerIsBlind" if-true="/isFilingStatusMFJ">
-        <question>Is your spouse blind?</question>
+        <question content-key="flow.about-you.fields./secondaryFilerIsBlind.question" />
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/secondaryFilerHasSSN" if-true="/isFilingStatusMFJ">
-        <question>Does your spouse have an SSN?</question>
+        <question content-key="flow.about-you.fields./secondaryFilerHasSSN.question" />
         <input type="boolean" />
       </fg-set>
 
       <fg-set path="/secondaryFilerIsClaimedOnAnotherReturn" if-true="/isFilingStatusMFJ">
-        <question>Can anyone else claim your spouse as a dependent on their tax return?</question>
+        <question content-key="flow.about-you.fields./secondaryFilerIsClaimedOnAnotherReturn.question" />
         <input type="boolean" />
       </fg-set>
 
       <h2>Jobs</h2>
       <fg-collection path="/jobs" item-name="Income source">
         <fg-set path="/jobs/*/startDate">
-          <question>What’s the start date?</question>
+          <question content-key="flow.about-you.fields./jobs/*/startDate.question" />
           <input type="date" />
         </fg-set>
 
         <fg-set path="/jobs/*/endDate">
-          <question>What’s the end date?</question>
+          <question content-key="flow.about-you.fields./jobs/*/endDate.question" />
           <input type="date" />
         </fg-set>
 
         <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
-          <question>When did your most recent pay period end?</question>
+          <question content-key="flow.about-you.fields./jobs/*/mostRecentPayPeriodEnd.question" />
           <input type="date" />
         </fg-set>
 
         <fg-set path="/jobs/*/mostRecentPayDate">
-          <question>When was your most recent pay date?</question>
+          <question content-key="flow.about-you.fields./jobs/*/mostRecentPayDate.question" />
           <input type="date" />
         </fg-set>
 
         <fg-set path="/jobs/*/averagePayPerPayPeriod">
-          <question>What’s the average amount you get paid each pay period?</question>
+          <question content-key="flow.about-you.fields./jobs/*/averagePayPerPayPeriod.question" />
           <input type="dollar" />
         </fg-set>
 
         <fg-set path="/jobs/*/yearToDateIncome">
-          <question>What’s your year-to-date income for this job?</question>
+          <question content-key="flow.about-you.fields./jobs/*/yearToDateIncome.question" />
           <input type="dollar" />
         </fg-set>
 
         <fg-set path="/jobs/*/averageWithholdingPerPayPeriod">
-          <question>What’s the average amount of federal withholding each pay period?</question>
+          <question content-key="flow.about-you.fields./jobs/*/averageWithholdingPerPayPeriod.question" />
           <input type="dollar" />
         </fg-set>
 
         <fg-set path="/jobs/*/yearToDateWithholding">
-          <question>What’s your year-to-date federal withholding for this job?</question>
+          <question content-key="flow.about-you.fields./jobs/*/yearToDateWithholding.question" />
           <input type="dollar" />
         </fg-set>
 
         <fg-set path="/jobs/*/payFrequency">
-          <question>How frequently are you paid?</question>
+          <question content-key="flow.about-you.fields./jobs/*/payFrequency.question" />
           <select options-path="/jobs/*/payFrequency">
             <option value="weekly">Weekly</option>
             <option value="biWeekly">Biweekly</option>
@@ -108,18 +108,18 @@
         </fg-set>
 
         <fg-set path="/jobs/*/totalBonusReceived">
-          <question>What bonus amount were you paid for this job?</question>
+          <question content-key="flow.about-you.fields./jobs/*/totalBonusReceived.question" />
           <input type="dollar" />
         </fg-set>
 
         <fg-set path="/jobs/*/preTaxDeductions">
-          <question>Job's pre-tax deductions</question>
+          <question content-key="flow.about-you.fields./jobs/*/preTaxDeductions.question" />
           <input type="dollar" />
         </fg-set>
       </fg-collection>
 
       <fg-set path="/totalAdvancedPayments">
-        <question>What is the total amount of advanced tax payments you made to date?</question>
+        <question content-key="flow.about-you.fields./totalAdvancedPayments.question" />
         <input type="dollar" />
       </fg-set>
 

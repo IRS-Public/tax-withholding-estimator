@@ -6,47 +6,19 @@ import gov.irs.twe.parser.Utils.validateFact
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
 
-enum FgSetNode {
-  case input(input: Input)
-  case question(question: String)
-  case hint(hint: String)
-  case rawHTML(node: xml.Node)
-}
-
-case class FgSet(path: String, condition: Option[Condition], input: Input, nodes: List[FgSetNode]) {
+case class FgSet(path: String, condition: Option[Condition], input: Input, question: String, hint: String) {
   def html(templateEngine: TweTemplateEngine): String = {
     val usesFieldset = input.typeString == "boolean" || input.typeString == "date"
-
-    def renderQuestion(question: String): String = {
-      val context = new Context()
-      context.setVariable("path", this.path)
-      context.setVariable("question", question)
-      if (!usesFieldset) templateEngine.process("nodes/question-label", context) else ""
-    }
-
-    def renderHint(hint: String): String = {
-      val context = new Context()
-      context.setVariable("path", this.path)
-      context.setVariable("hint", hint)
-      if (!usesFieldset) templateEngine.process("nodes/hint", context) else ""
-    }
 
     val context = new Context()
     context.setVariable("path", this.path)
     context.setVariable("condition", this.condition.map(_.path).orNull)
     context.setVariable("operator", this.condition.map(_.operator.toString).orNull)
     context.setVariable("typeString", input.typeString)
+    context.setVariable("usesFieldset", usesFieldset)
+    context.setVariable("question", question)
+    context.setVariable("hint", hint)
 
-    val questionHtml = this.nodes
-      .map {
-        case FgSetNode.input(input)       => input.html(templateEngine, path)
-        case FgSetNode.question(question) => renderQuestion(question)
-        case FgSetNode.hint(hint)         => renderHint(hint)
-        case FgSetNode.rawHTML(x)         => x
-      }
-      .mkString("\n")
-
-    context.setVariable("questionHtml", questionHtml)
     templateEngine.process("nodes/fg-set", context)
   }
 }
@@ -57,19 +29,10 @@ object FgSet {
     val condition = Condition.getCondition(node, factDictionary)
     val input = Input.extractFromFgSet(node, factDictionary)
 
-    validateFgSet(path, input, factDictionary)
-    val nodes = (node \ "_")
-      .map(node =>
-        node.label match {
-          case "input" | "select" => FgSetNode.input(input)
-          case "question"         => FgSetNode.question(node.text)
-          case "hint"             => FgSetNode.hint(node.text)
-          case _                  => FgSetNode.rawHTML(node)
-        },
-      )
-      .toList
+    val questionKey = node \ "question" \@ "content-key"
+    val hint = (node \ "hint").text
 
-    FgSet(path, condition, input, nodes)
+    FgSet(path, condition, input, questionKey, hint)
   }
 
   private def validateFgSet(path: String, input: Input, factDictionary: FactDictionary): Unit = {

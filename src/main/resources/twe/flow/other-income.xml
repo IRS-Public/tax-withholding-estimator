@@ -5,61 +5,61 @@
 
       <h2>Net Self-Employment Income</h2>
       <fg-set path="/netSelfEmploymentIncome">
-        <question>How much was your net self-employment income this year?</question>
+        <question content-key="flow.other-income.fields./netSelfEmploymentIncome.question" />
         <input type="dollar"/>
       </fg-set>
 
       <h2>Ordinary Dividends Income</h2>
       <fg-set path="/ordinaryDividendsIncome">
-        <question>How much have you made in ordinary dividends income so far this year?</question>
+        <question content-key="flow.other-income.fields./ordinaryDividendsIncome.question" />
         <input type="dollar"/>
       </fg-set>
 
       <h2>Unemployment Insurance Income</h2>
       <fg-set path="/unemploymentInsuranceIncome">
-        <question>How much have you received in employment insurance income so far this year?</question>
+        <question content-key="flow.other-income.fields./unemploymentInsuranceIncome.question" />
         <input type="dollar"/>
       </fg-set>
 
       <h2>Interest Income (excluding non-taxable interest)</h2>
       <fg-set path="/interestExcludingNonTaxableIncome">
-        <question>How much interest income (excluding non-taxable interest) have you received this year?</question>
+        <question content-key="flow.other-income.fields./miscIncome.question" />
         <input type="dollar"/>
       </fg-set>
 
       <h2>Short term capital gains</h2>
       <fg-set path="/shortTermCapitalGainsIncome">
-        <question>How much short term capital gains have you received this year?</question>
+        <question content-key="flow.other-income.fields./shortTermCapitalGainsIncome.question" />
         <input type="dollar"/>
       </fg-set>
 
       <h2>Taxable Scholarship Income</h2>
       <fg-set path="/taxableScholarshipIncome">
-        <question>How much taxable scholarship income have you received this year?</question>
+        <question content-key="flow.other-income.fields./taxableScholarshipIncome.question" />
         <input type="dollar"/>
       </fg-set>
 
       <h2>Alimony Received</h2>
       <fg-set path="/alimonyReceivedIncome">
-        <question>How much alimony (pre-2019 divorce) have you received this year?</question>
+        <question content-key="flow.other-income.fields./alimonyReceivedIncome.question" />
         <input type="dollar"/>
       </fg-set>
 
       <h2>S-corp non-passive Income (Schedule K1)</h2>
       <fg-set path="/sCorpNonPassiveIncome">
-        <question>How much S-corp non-passive income (Schedule K1) have you made this year?</question>
+        <question content-key="flow.other-income.fields./sCorpNonPassiveIncome.question" />
         <input type="dollar"/>
       </fg-set>
 
       <h2>Net Schedule E Income</h2>
       <fg-set path="/netScheduleEIncome">
-        <question>How much Net Schedule E income from passive activities have you received this year?</question>
+        <question content-key="flow.other-income.fields./netScheduleEIncome.question" />
         <input type="dollar"/>
       </fg-set>
 
       <h2>Non-specific Other Income</h2>
       <fg-set path="/nonSpecificOtherIncome">
-        <question>How much non-specific other income have you made this year?</question>
+        <question content-key="flow.other-income.fields./nonSpecificOtherIncome.question" />
         <input type="dollar"/>
       </fg-set>
 

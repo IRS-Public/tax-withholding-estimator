@@ -3,73 +3,73 @@
     <section>
       <h2>Child Tax Credit</h2>
       <fg-set path="/actualChildTaxCreditAmount">
-        <question>How much Child Tax credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualChildTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>Earned Income Tax Credit</h2>
       <fg-set path="/actualEarnedIncomeTaxCreditAmount">
-        <question>How much Earned Income Tax credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualEarnedIncomeTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>Child and Dependent Care Credit</h2>
       <fg-set path="/actualChildAndDependentCareTaxCreditAmount">
-        <question>How much Child and Dependent Care credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualChildAndDependentCareTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>Saver’s Credit</h2>
       <fg-set path="/actualSaversTaxCreditAmount">
-        <question>How much Saver’s  credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualSaversTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>Credit for the Elderly or the Disabled</h2>
       <fg-set path="/actualElderlyAndDisabledTaxCreditAmount">
-        <question>How much credit for the Elderly or the Disabled do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualElderlyAndDisabledTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>Lifetime Learning Credit</h2>
       <fg-set path="/actualLifetimeLeariningTaxCreditAmount">
-        <question>How much Lifetime Learning credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualLifetimeLeariningTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>American Opportunity Tax Credit</h2>
       <fg-set path="/actualAmericanOpportunityTaxCreditAmount">
-        <question>How much American Opportunity tax credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualAmericanOpportunityTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>Adoption Tax Credit</h2>
       <fg-set path="/actualAdoptionTaxCreditAmount">
-        <question>How much Adoption tax Credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualAdoptionTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>Foreign Tax Credit</h2>
       <fg-set path="/actualForeignTaxCreditAmount">
-        <question>How much Foreign tax credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualForeignTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>Mortgage Interest Credit</h2>
       <fg-set path="/actualMortgageInterestTaxCreditAmount">
-        <question>How much Mortgage Interest credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualMortgageInterestTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>General Business Credit</h2>
       <fg-set path="/actualGeneralBusinessTaxCreditAmount">
-        <question>How much General business credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualGeneralBusinessTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 
       <h2>Alternative Minimum Tax Credit</h2>
       <fg-set path="/actualAlternativeMinimumTaxCreditAmount">
-        <question>How much Alternative minimum tax credit do you expect to claim this year?</question>
+        <question content-key="flow.other-deductions.fields./actualAlternativeMinimumTaxCreditAmount.question" />
         <input type="dollar" />
       </fg-set>
 

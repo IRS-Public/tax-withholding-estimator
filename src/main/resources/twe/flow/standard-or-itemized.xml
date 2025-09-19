@@ -8,9 +8,7 @@
 
       <fg-set
         path="/wantsItemizedDeduction">
-        <question>Do you want to itemize your deductions? The standard deduction is higher for most
-          taxpayers, but you may want to itemize your deductions if you have a mortgage, large
-          gifts to charity, or large medical expenses</question>
+        <question content-key="flow.standardized-or-itemized.fields./wantsItemizedDeduction.question" />
         <input type="boolean" />
       </fg-set>
 
@@ -21,7 +19,7 @@
       <fg-collection
         path="/qualifiedMortgageInterest">
         <fg-set path="/qualifiedMortgageInterest/*/interest">
-          <question>Total mortgage interest from a mortgage loan</question>
+          <question content-key="flow.standardized-or-itemized.fields./qualifiedMortgageInterest/*/interest.question" />
           <input type="dollar" />
         </fg-set>
       </fg-collection>
@@ -34,7 +32,7 @@
         path="/qualifiedInvestmentInterestExpenses"
       >
         <fg-set path="/qualifiedInvestmentInterestExpenses/*/expense">
-          <question>Total investment interest expenses for a single investment interest</question>
+          <question content-key="flow.standardized-or-itemized.fields./qualifiedInvestmentInterestExpenses/*/expense" />
           <input type="dollar" />
         </fg-set>
       </fg-collection>
@@ -49,7 +47,7 @@
       <fg-collection
         path="/stateAndLocalTaxPayments">
         <fg-set path="/stateAndLocalTaxPayments/*/taxPayment">
-          <question>Total state or local tax payments by recipient</question>
+          <question content-key="flow.standardized-or-itemized.fields./stateAndLocalTaxPayments/*/taxPayment.question" />
           <input type="dollar" />
         </fg-set>
       </fg-collection>
@@ -63,7 +61,7 @@
       <fg-collection
         path="/medicalAndDentalExpenses">
         <fg-set path="/medicalAndDentalExpenses/*/expense">
-          <question>Total amount for a single medical or dental expense category</question>
+          <question content-key="flow.standardized-or-itemized.fields./medicalAndDentalExpenses/*/expense.question" />
           <input type="dollar" />
         </fg-set>
       </fg-collection>
@@ -74,7 +72,7 @@
       <fg-collection
         path="/charitableContributions">
         <fg-set path="/charitableContributions/*/contribution">
-          <question>Total contribution amount from a specific charitable contribution</question>
+          <question content-key="flow.standardized-or-itemized.fields./charitableContributions/*/contribution.question" />
           <input type="dollar" />
         </fg-set>
       </fg-collection>
@@ -86,7 +84,7 @@
       <fg-collection
         path="/casualtyLosses">
         <fg-set path="/casualtyLosses/*/loss">
-          <question>Total casualty loss from a specific loss event</question>
+          <question content-key="flow.standardized-or-itemized.fields./casualtyLosses/*/loss.question" />
           <input type="dollar" />
         </fg-set>
       </fg-collection>
@@ -96,7 +94,7 @@
       <fg-collection
         path="/otherDeductions">
         <fg-set path="/otherDeductions/*/payment">
-          <question>Any other deductible expenses</question>
+          <question content-key="flow.standardized-or-itemized.fields./otherDeductions/*/payment.question" />
           <input type="dollar" />
         </fg-set>
       </fg-collection>

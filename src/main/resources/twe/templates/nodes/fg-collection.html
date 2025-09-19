@@ -2,7 +2,10 @@
     <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable margin-bottom-3" data-allow-multiple>
         <template class="fg-collection__item-template">
             <h3 class="usa-accordion__heading">
-            <button class="usa-accordion__button usa-accordion__button--highlight" type="button" aria-expanded="true">[[${itemName != '' ? itemName : 'Item'}]] <span class="item-number"></span></button>
+            <button class="usa-accordion__button usa-accordion__button--highlight" type="button" aria-expanded="true">
+              <th th:if="${itemName == ''}" th:utext="#{components.fg-collection.item-name-default('<span class=\'item-number\'></span>')}"></th>
+              <th th:if="${itemName != ''}" th:utext="#{components.fg-collection.item-name('<span class=\'item-number\'></span>', ${itemName})}"></th>
+            </button>
             </h3>
             <div class="usa-accordion__content">
                 <div class="fg-collection-item__fields" th:utext="${collectionFacts}"></div>
@@ -12,7 +15,8 @@
                             class="usa-icon usa-icon--size-3 margin-left-neg-1 margin-y-neg-05">
                             <use href="/resources/uswds-3.13.0/img/sprite.svg#delete"></use>
                         </svg>
-                        Remove [[${itemName != '' ? #strings.toLowerCase(itemName) : 'item'}]]
+                        <th th:if="${itemName == ''}" th:text="#{components.fg-collection.buttons.remove-item}"></th>
+                        <th th:if="${itemName != ''}" th:text="#{components.fg-collection.buttons.remove(${itemName})}"></th>
                     </button>
                 </div>
             </div>
@@ -23,6 +27,7 @@
              class="usa-icon usa-icon--size-3 margin-left-neg-1 margin-y-neg-05">
             <use href="/resources/uswds-3.13.0/img/sprite.svg#add"></use>
         </svg>
-        Add [[${itemName != '' ? #strings.toLowerCase(itemName) : 'item'}]]
+        <th th:if="${itemName == ''}">[[#{components.fg-collection.buttons.add-item}]]</th>
+        <th th:if="${itemName != ''}">[[#{components.fg-collection.buttons.add(${itemName})}]]</th>
     </button>
 </fg-collection>
