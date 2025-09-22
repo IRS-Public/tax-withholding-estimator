@@ -135,8 +135,12 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("2000")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("1200")))
-    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("3200")))
 
+    // In the spreadsheet this is actually 310.13 but since we use banker's rounding we round 310.125 down
+    assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("310.12")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("75")))
+
+    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("3200")))
     assert(graph.get(Path("/agi")).value.contains(Dollar("66000")))
 
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
@@ -198,8 +202,11 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("3000")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("1200")))
-    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("4200")))
 
+    assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("150")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("150")))
+
+    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("4200")))
     assert(graph.get(Path("/agi")).value.contains(Dollar("90000")))
 
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
@@ -258,8 +265,11 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("1000")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("1200")))
-    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("2200")))
 
+    assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("226.67")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("12.50")))
+
+    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("2200")))
     assert(graph.get(Path("/agi")).value.contains(Dollar("66000")))
 
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
@@ -318,8 +328,11 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("6000")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("9600")))
-    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("15600")))
 
+    assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("530.58")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("155.06")))
+
+    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("15600")))
     assert(graph.get(Path("/agi")).value.contains(Dollar("128000")))
 
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
@@ -378,8 +391,11 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("8400")))
     assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("5300")))
-    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("13700")))
 
+    assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("278.73")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("80.80")))
+
+    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("13700")))
     assert(graph.get(Path("/agi")).value.contains(Dollar("137857")))
 
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
@@ -387,13 +403,14 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("22333")))
       assert(graph.get(Path("/totalTax")).value.contains(Dollar("16333")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2633")))
-      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("280")))
+      // This is actually 280 in the spreadsheet but when calculating it manually we get 283
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("283")))
     } else {
       // The following values now differ from the QA spreadsheet due to standard deduction changes.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("22153")))
       assert(graph.get(Path("/totalTax")).value.contains(Dollar("16153")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2453")))
-      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("262")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("265")))
     }
   }
 
@@ -470,7 +487,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/mostRecentPayDate": {
     "$type": "DayWrapper",
     "item": {
-      "date": "2020-02-01"
+      "date": "2025-02-01"
     }
   },
   "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/yearToDateIncome": {
@@ -721,7 +738,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/mostRecentPayDate": {
     "$type": "DayWrapper",
     "item": {
-      "date": "2020-02-01"
+      "date": "2025-02-01"
     }
   },
   "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/yearToDateIncome": {
@@ -831,7 +848,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     graph.set(Path(s"/jobs/#${_job1Id}/remainingPayPeriods"), 10)
     graph.set(Path(s"/jobs/#${_job1Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
 
-    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(664)))
+    assert(graph.get(Path(s"/jobs/#${_job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.12")))
+    assert(graph.get(Path(s"/jobs/#${_job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("80.80")))
+    assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(665)))
 
     // Other job(s) should have zero on line 4c
     assert(graph.get(Path(s"/jobs/#${_job2Id}/w4Line4c")).value.contains(Dollar(0)))
@@ -909,7 +928,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/mostRecentPayDate": {
     "$type": "DayWrapper",
     "item": {
-      "date": "2020-02-01"
+      "date": "2025-02-01"
     }
   },
   "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/yearToDateIncome": {
@@ -1075,6 +1094,8 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
   //   assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("8400")))
   //   assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("5300")))
+  //   assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("278.73")))
+  //   assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("80.80")))
   //   assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("13700")))
 
   //   assert(graph.get(Path("/agi")).value.contains(Dollar("137857")))
@@ -1286,6 +1307,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
   //   assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("4100")))
   //   assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("5200")))
+  //   assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("161.60")))
+  //   // TODO: Investigate if we should use this value or 53.61, maybe both?
+  //   assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("42.31")))
   //   assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("9300")))
 
   //   assert(graph.get(Path("/agi")).value.contains(Dollar("141362")))

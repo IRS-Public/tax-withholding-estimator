@@ -869,7 +869,10 @@
           <Subtract>
             <Minuend>
               <Add>
-                <Dependency path="../income" />
+                <Multiply>
+                  <Dependency path="../averagePayPerPayPeriod" />
+                  <Dependency path="../payPeriodsPerYear" />
+                </Multiply>
                 <Dependency path="../w4Line4a" />
               </Add>
             </Minuend>
@@ -889,688 +892,686 @@
         captures the total withholding for all the brackets below the one that the AAWA falls into. </Description>
       <TaxYear>2025</TaxYear>
       <Derived>
-        <Round>
-          <Switch>
-            <!-- SINGLE OR MARRIED FILING SEPARATELY -->
-            <Case>
-              <When>
-                <Any>
-                  <Dependency module="filingStatus" path="/isFilingStatusSingle" />
-                  <Dependency module="filingStatus" path="/isFilingStatusMFS" />
-                </Any>
-              </When>
-              <Then>
-                <Switch>
-                  <!-- Less than $6,400: no withholding -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
+        <Switch>
+          <!-- SINGLE OR MARRIED FILING SEPARATELY -->
+          <Case>
+            <When>
+              <Any>
+                <Dependency module="filingStatus" path="/isFilingStatusSingle" />
+                <Dependency module="filingStatus" path="/isFilingStatusMFS" />
+              </Any>
+            </When>
+            <Then>
+              <Switch>
+                <!-- Less than $6,400: no withholding -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>6400</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Dollar>0</Dollar>
+                  </Then>
+                </Case>
+                <!-- At least $6,400 but less than $18,325: $0 plus 10% of the excess over $6,400 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>18325</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Multiply>
+                      <Rational>10/100</Rational>
+                      <Subtract>
+                        <Minuend>
                           <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
+                        </Minuend>
+                        <Subtrahends>
                           <Dollar>6400</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Dollar>0</Dollar>
-                    </Then>
-                  </Case>
-                  <!-- At least $6,400 but less than $18,325: $0 plus 10% of the excess over $6,400 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>18325</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Multiply>
-                        <Rational>10/100</Rational>
-                        <Subtract>
-                          <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
-                          </Minuend>
-                          <Subtrahends>
-                            <Dollar>6400</Dollar>
-                          </Subtrahends>
-                        </Subtract>
-                      </Multiply>
-                    </Then>
-                  </Case>
-                  <!-- At least $18,325 but less than $54,875: $1,192.50 plus 12% of the excess over
+                        </Subtrahends>
+                      </Subtract>
+                    </Multiply>
+                  </Then>
+                </Case>
+                <!-- At least $18,325 but less than $54,875: $1,192.50 plus 12% of the excess over
             $18,325 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>54875</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>1192.50</Dollar>
-                        <Multiply>
-                          <Rational>12/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>18325</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $54,875 but less than $109,750: $5,578.50 plus 22% of the excess
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>54875</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>1192.50</Dollar>
+                      <Multiply>
+                        <Rational>12/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>18325</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $54,875 but less than $109,750: $5,578.50 plus 22% of the excess
                   over $54,875 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>109750</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>5578.50</Dollar>
-                        <Multiply>
-                          <Rational>22/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>54875</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $109,750 but less than $203,700: $17,651 plus 24% of the excess over
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>109750</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>5578.50</Dollar>
+                      <Multiply>
+                        <Rational>22/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>54875</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $109,750 but less than $203,700: $17,651 plus 24% of the excess over
                   $109,750 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>203700</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>17651</Dollar>
-                        <Multiply>
-                          <Rational>24/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>109750</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $203,700 but less than $256,925: $40,199 plus 32% of the excess over
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>203700</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>17651</Dollar>
+                      <Multiply>
+                        <Rational>24/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>109750</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $203,700 but less than $256,925: $40,199 plus 32% of the excess over
                   $203,700 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>256925</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>40199</Dollar>
-                        <Multiply>
-                          <Rational>32/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>203700</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $256,925 but less than $632,750: $57,231 plus 35% of the excess over
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>256925</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>40199</Dollar>
+                      <Multiply>
+                        <Rational>32/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>203700</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $256,925 but less than $632,750: $57,231 plus 35% of the excess over
                   $256,925 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>632750</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>57231</Dollar>
-                        <Multiply>
-                          <Rational>35/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>256925</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- $632,750 and above: $188,769.75 plus 37% of the excess over $632,750 -->
-                  <Case>
-                    <When>
-                      <True />
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>188769.75</Dollar>
-                        <Multiply>
-                          <Rational>37/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>632750</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                </Switch>
-              </Then>
-            </Case>
-            <Case>
-              <When>
-                <Any>
-                  <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
-                  <Dependency module="filingStatus" path="/isFilingStatusQSS" />
-                </Any>
-              </When>
-              <Then>
-                <Switch>
-                  <!-- Less than $17,100: no withholding -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>17100</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Dollar>0</Dollar>
-                    </Then>
-                  </Case>
-                  <!-- At least $17,100 but less than $40,950: $0 plus 10% of the excess over
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>632750</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>57231</Dollar>
+                      <Multiply>
+                        <Rational>35/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>256925</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- $632,750 and above: $188,769.75 plus 37% of the excess over $632,750 -->
+                <Case>
+                  <When>
+                    <True />
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>188769.75</Dollar>
+                      <Multiply>
+                        <Rational>37/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>632750</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Any>
+                <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
+                <Dependency module="filingStatus" path="/isFilingStatusQSS" />
+              </Any>
+            </When>
+            <Then>
+              <Switch>
+                <!-- Less than $17,100: no withholding -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>17100</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Dollar>0</Dollar>
+                  </Then>
+                </Case>
+                <!-- At least $17,100 but less than $40,950: $0 plus 10% of the excess over
                   $17,100 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>40950</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Multiply>
+                      <Rational>10/100</Rational>
+                      <Subtract>
+                        <Minuend>
                           <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>40950</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Multiply>
-                        <Rational>10/100</Rational>
-                        <Subtract>
-                          <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
-                          </Minuend>
-                          <Subtrahends>
-                            <Dollar>17100</Dollar>
-                          </Subtrahends>
-                        </Subtract>
-                      </Multiply>
-                    </Then>
-                  </Case>
-                  <!-- At least $40,950 but less than $114,050: $2,385 plus 12% of the excess over
+                        </Minuend>
+                        <Subtrahends>
+                          <Dollar>17100</Dollar>
+                        </Subtrahends>
+                      </Subtract>
+                    </Multiply>
+                  </Then>
+                </Case>
+                <!-- At least $40,950 but less than $114,050: $2,385 plus 12% of the excess over
                   $40,950 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>114050</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>2385</Dollar>
-                        <Multiply>
-                          <Rational>12/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>40950</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $114,050 but less than $223,800: $11,157 plus 22% of the excess over
-                  $114,050 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>223800</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>11157</Dollar>
-                        <Multiply>
-                          <Rational>22/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>114050</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $223,800 but less than $411,700: $35,302 plus 24% of the excess over
-                  $223,800 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>411700</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>35302</Dollar>
-                        <Multiply>
-                          <Rational>24/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>223800</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $411,700 but less than $518,150: $80,398 plus 32% of the excess over
-                  $411,700 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>518150</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>80398</Dollar>
-                        <Multiply>
-                          <Rational>32/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>411700</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $518,150 but less than $768,700: $114,462 plus 35% of the excess
-                  over $518,150 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>768700</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>114462</Dollar>
-                        <Multiply>
-                          <Rational>35/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>518150</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- $768,700 and above: $202,154.50 plus 37% of the excess over $768,700 -->
-                  <Case>
-                    <When>
-                      <True />
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>202154.50</Dollar>
-                        <Multiply>
-                          <Rational>37/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>768700</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                </Switch>
-              </Then>
-            </Case>
-            <Case>
-              <When>
-                <Dependency module="filingStatus" path="/isFilingStatusHOH" />
-              </When>
-              <Then>
-                <Switch>
-                  <!-- Less than $13,900: no withholding -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>13900</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Dollar>0</Dollar>
-                    </Then>
-                  </Case>
-                  <!-- At least $13,900 but less than $30,900: $0 plus 10% of the excess over
-                  $13,900 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>30900</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>114050</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>2385</Dollar>
                       <Multiply>
-                        <Rational>10/100</Rational>
+                        <Rational>12/100</Rational>
                         <Subtract>
                           <Minuend>
                             <Dependency path="../adjustedAnnualWageAmount" />
                           </Minuend>
                           <Subtrahends>
-                            <Dollar>13900</Dollar>
+                            <Dollar>40950</Dollar>
                           </Subtrahends>
                         </Subtract>
                       </Multiply>
-                    </Then>
-                  </Case>
-                  <!-- At least $30,900 but less than $78,750: $1,700 plus 12% of the excess over
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $114,050 but less than $223,800: $11,157 plus 22% of the excess over
+                  $114,050 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>223800</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>11157</Dollar>
+                      <Multiply>
+                        <Rational>22/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>114050</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $223,800 but less than $411,700: $35,302 plus 24% of the excess over
+                  $223,800 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>411700</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>35302</Dollar>
+                      <Multiply>
+                        <Rational>24/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>223800</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $411,700 but less than $518,150: $80,398 plus 32% of the excess over
+                  $411,700 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>518150</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>80398</Dollar>
+                      <Multiply>
+                        <Rational>32/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>411700</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $518,150 but less than $768,700: $114,462 plus 35% of the excess
+                  over $518,150 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>768700</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>114462</Dollar>
+                      <Multiply>
+                        <Rational>35/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>518150</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- $768,700 and above: $202,154.50 plus 37% of the excess over $768,700 -->
+                <Case>
+                  <When>
+                    <True />
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>202154.50</Dollar>
+                      <Multiply>
+                        <Rational>37/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>768700</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency module="filingStatus" path="/isFilingStatusHOH" />
+            </When>
+            <Then>
+              <Switch>
+                <!-- Less than $13,900: no withholding -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>13900</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Dollar>0</Dollar>
+                  </Then>
+                </Case>
+                <!-- At least $13,900 but less than $30,900: $0 plus 10% of the excess over
+                  $13,900 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>30900</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Multiply>
+                      <Rational>10/100</Rational>
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="../adjustedAnnualWageAmount" />
+                        </Minuend>
+                        <Subtrahends>
+                          <Dollar>13900</Dollar>
+                        </Subtrahends>
+                      </Subtract>
+                    </Multiply>
+                  </Then>
+                </Case>
+                <!-- At least $30,900 but less than $78,750: $1,700 plus 12% of the excess over
                   $30,900 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>78750</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>1700</Dollar>
-                        <Multiply>
-                          <Rational>12/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>30900</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $78,750 but less than $117,250: $7,442 plus 22% of the excess over
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>78750</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>1700</Dollar>
+                      <Multiply>
+                        <Rational>12/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>30900</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $78,750 but less than $117,250: $7,442 plus 22% of the excess over
                   $78,750 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>117250</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>7442</Dollar>
-                        <Multiply>
-                          <Rational>22/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>78750</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $117,250 but less than $211,200: $15,912 plus 24% of the excess over
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>117250</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>7442</Dollar>
+                      <Multiply>
+                        <Rational>22/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>78750</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $117,250 but less than $211,200: $15,912 plus 24% of the excess over
                   $117,250 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>211200</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>15912</Dollar>
-                        <Multiply>
-                          <Rational>24/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>117250</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $211,200 but less than $264,400: $38,460 plus 32% of the excess over
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>211200</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>15912</Dollar>
+                      <Multiply>
+                        <Rational>24/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>117250</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $211,200 but less than $264,400: $38,460 plus 32% of the excess over
                   $211,200 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>264400</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>38460</Dollar>
-                        <Multiply>
-                          <Rational>32/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>211200</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- At least $264,400 but less than $640,250: $55,484 plus 35% of the excess over
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>264400</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>38460</Dollar>
+                      <Multiply>
+                        <Rational>32/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>211200</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $264,400 but less than $640,250: $55,484 plus 35% of the excess over
                   $264,400 -->
-                  <Case>
-                    <When>
-                      <LessThan>
-                        <Left>
-                          <Dependency path="../adjustedAnnualWageAmount" />
-                        </Left>
-                        <Right>
-                          <Dollar>640250</Dollar>
-                        </Right>
-                      </LessThan>
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>55484</Dollar>
-                        <Multiply>
-                          <Rational>35/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>264400</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                  <!-- $640,250 and above: $187,031.50 plus 37% of the excess over $640,250 -->
-                  <Case>
-                    <When>
-                      <True />
-                    </When>
-                    <Then>
-                      <Add>
-                        <Dollar>187031.50</Dollar>
-                        <Multiply>
-                          <Rational>37/100</Rational>
-                          <Subtract>
-                            <Minuend>
-                              <Dependency path="../adjustedAnnualWageAmount" />
-                            </Minuend>
-                            <Subtrahends>
-                              <Dollar>640250</Dollar>
-                            </Subtrahends>
-                          </Subtract>
-                        </Multiply>
-                      </Add>
-                    </Then>
-                  </Case>
-                </Switch>
-              </Then>
-            </Case>
-          </Switch>
-        </Round>
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount" />
+                      </Left>
+                      <Right>
+                        <Dollar>640250</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>55484</Dollar>
+                      <Multiply>
+                        <Rational>35/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>264400</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- $640,250 and above: $187,031.50 plus 37% of the excess over $640,250 -->
+                <Case>
+                  <When>
+                    <True />
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>187031.50</Dollar>
+                      <Multiply>
+                        <Rational>37/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount" />
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>640250</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
 
@@ -1691,6 +1692,9 @@
           <Multiply>
             <Dependency path="../averageWithholdingPerPayPeriod" />
             <LesserOf>
+              <Floor>
+                <Dependency path="../fractionalRemainingPayPeriods" />
+              </Floor>
               <Dependency path="../remainingPayPeriods" />
               <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
             </LesserOf>
@@ -1699,20 +1703,21 @@
           <!-- For now, we treat this as a "given" that won't change. Probably will need to revisit
           this when we get to reducing below tentative withholding. -->
           <Multiply>
-            <Round>
-              <Dependency path="../tentativeWithholdingAmount" />
-            </Round>
-            <Subtract>
-              <Minuend>
-                <!-- Floor is used here to match QA spreadsheet calculation -->
-                <Floor>
-                  <Dependency path="../fractionalRemainingPayPeriods" />
-                </Floor>
-              </Minuend>
-              <Subtrahends>
-                <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
-              </Subtrahends>
-            </Subtract>
+            <Dependency path="../tentativeWithholdingAmount" />
+            <GreaterOf>
+              <Int>0</Int>
+              <Subtract>
+                <Minuend>
+                  <!-- Floor is used here to match QA spreadsheet calculation -->
+                  <Floor>
+                    <Dependency path="../fractionalRemainingPayPeriods" />
+                  </Floor>
+                </Minuend>
+                <Subtrahends>
+                  <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
+                </Subtrahends>
+              </Subtract>
+            </GreaterOf>
           </Multiply>
         </Add>
       </Derived>
