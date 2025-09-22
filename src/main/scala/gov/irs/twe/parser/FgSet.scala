@@ -5,6 +5,7 @@ import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.Utils.validateFact
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
+import scala.collection.JavaConverters.asJavaIterableConverter
 
 case class FgSet(
     path: String,
@@ -26,6 +27,14 @@ case class FgSet(
     context.setVariable("usesFieldset", usesFieldset)
     context.setVariable("question", question)
     context.setVariable("hint", hint)
+
+    input match {
+      // case select(options: List[HtmlOption], optionsPath: Option[String], hint: String, optional: Boolean = false)
+      case Input.select(options, optionsPath, _, _) =>
+        context.setVariable("options", options.asJava)
+        context.setVariable("optionsPath", optionsPath)
+      case _ =>
+    }
 
     templateEngine.process("nodes/fg-set", context)
   }
