@@ -65,9 +65,11 @@ class FgSet extends HTMLElement {
           });
 
           if (allFilled) {
-            this.onChange()
+            this.onChange();
+            this.validateRequiredFields();
           }
         });
+
         break
       }
       case 'dollar':
@@ -142,8 +144,12 @@ class FgSet extends HTMLElement {
     this.querySelector('.validate-alert')?.remove()
     this.querySelector('.usa-form-group')?.classList.remove('usa-form-group--error')
     this.querySelector('.usa-label--error')?.classList.remove('usa-label--error')
-    this.querySelector('.usa-input[aria-invalid="true"]')?.setAttribute('aria-invalid', 'false');
-    this.querySelector('.usa-input-group')?.classList.remove('usa-input--error');
+    this.querySelectorAll('.usa-input-group, .usa-select, .usa-input').forEach(item => {
+      item.classList.remove('usa-input--error');
+      item.removeAttribute('aria-describedby');
+    });
+    this.querySelectorAll('.usa-input[aria-invalid="true"], .usa-select[aria-invalid="true"]').forEach(item => item?.setAttribute('aria-invalid', 'false'));
+
   }
 
   setValidationError() {
@@ -169,19 +175,23 @@ class FgSet extends HTMLElement {
     // Set the modifier classes for errors
     this.querySelector('.usa-form-group')?.classList.add('usa-form-group--error');
     this.querySelector('.usa-legend, .usa-label')?.classList.add('usa-label--error');
-
-    // Set aria-invalid to true on non-radio form controls (possibly all inputs on memorable dates on first pass) & update input error class
-    this.querySelector('.usa-input[aria-invalid="false"]')?.setAttribute('aria-invalid', 'true');
-    this.querySelector('.usa-input-group')?.classList.add('usa-input--error');
+    this.querySelectorAll('.usa-input-group, .usa-select, .usa-input').forEach(item => {
+      item.classList.add('usa-input--error');
+      item.setAttribute('aria-describedby', `${errorId}`);
+    });
+    this.querySelectorAll('.usa-input[aria-invalid="false"], .usa-select[aria-invalid="false"]').forEach(item => {
+      item.setAttribute('aria-invalid', 'true');
+    });
   }
 
   validateRequiredFields() {
-    const tempScopedTypes = this.inputType === 'boolean' || this.inputType === 'dollar';
+    const tempScopedTypes = ['boolean', 'date', 'dollar', 'select'];
+    const isTempScoped = tempScopedTypes.includes(this.inputType);
 
     // Ultimately we can unwrap this when the inline validation work is done.
     // This isComplete handling actually applies the error messages properly with the exception of the TODOs in setValidationError and clearValidationError
     // I just have this if statement to limit where the error show up because of the additional work outlined to make them correct
-    if (tempScopedTypes) {
+    if (isTempScoped) {
       const isMissing = !this.isComplete();
       if (isMissing) {
           this.setValidationError();
