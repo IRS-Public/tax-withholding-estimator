@@ -69,6 +69,16 @@ cs install sbt
 cs install scalafmt
 ```
 
+5. Install xmllint _(part of libxml2)_
+```bash
+
+# Linux - xmllint is part of the libxml2-utils package.
+sudo apt install -y libxml2-utils
+
+# macOS - xmllint should be installed as part of Command Line Tools for Xcode, but can be downloaded through homebrew if necessary
+brew install libxml2
+```
+
 #### Fact Graph
 TWE depends on the [Fact Graph](https://github.com/IRSDigitalService/fact-graph), which you will need to have published
 to a local repository.
