@@ -1,10 +1,11 @@
+<?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <module src="./about-you.xml" />
-  <module src="./other-income.xml" />
-  <module src="./adjustments.xml" />
-  <module src="./standard-or-itemized.xml" />
-  <module src="./other-deductions.xml" />
-  <module src="./credits.xml" />
-  <module src="./results.xml" />
+  <module src="./about-you.xml"/>
+  <module src="./other-income.xml"/>
+  <module src="./adjustments.xml"/>
+  <module src="./standard-or-itemized.xml"/>
+  <module src="./other-deductions.xml"/>
+  <module src="./credits.xml"/>
+  <module src="./results.xml"/>
 </FlowConfig>

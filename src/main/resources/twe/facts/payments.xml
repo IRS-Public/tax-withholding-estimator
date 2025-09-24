@@ -1,10 +1,11 @@
+<?xml version="1.0"?>
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
     <Fact path="/totalAdvancedPayments">
       <Description>The taxpayer's advanced payments for the entire tax year.</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
   </Facts>

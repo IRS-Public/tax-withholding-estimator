@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
@@ -6,16 +7,15 @@
       <Derived>
         <Add>
           <Count>
-            <Dependency module="filers" path="/primaryFilerIsBlind" />
+            <Dependency module="filers" path="/primaryFilerIsBlind"/>
           </Count>
           <Count>
-            <Dependency module="filers" path="/primaryFilerAge65OrOlder" />
+            <Dependency module="filers" path="/primaryFilerAge65OrOlder"/>
           </Count>
-          <Dependency path="/secondaryFilerAdditionalStandardDeductionItems" />
+          <Dependency path="/secondaryFilerAdditionalStandardDeductionItems"/>
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/secondaryFilerAdditionalStandardDeductionItems">
       <Name>Secondary Filer Additional Standard Deduction Items</Name>
       <Description>Additional Standard Deduction Items from the secondary filer</Description>
@@ -23,22 +23,22 @@
         <Switch>
           <Case>
             <When>
-              <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
+              <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
             </When>
             <Then>
               <Add>
                 <Count>
-                  <Dependency module="filers" path="/secondaryFilerIsBlind" />
+                  <Dependency module="filers" path="/secondaryFilerIsBlind"/>
                 </Count>
                 <Count>
-                  <Dependency module="filers" path="/secondaryFilerAge65OrOlder" />
+                  <Dependency module="filers" path="/secondaryFilerAge65OrOlder"/>
                 </Count>
               </Add>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Int>0</Int>
@@ -47,19 +47,18 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/additionalStandardDeductionMultiplier">
       <Name>Additional standard deduction multiplier</Name>
       <Description>The amount to add to the standard deduction for each additional item. Rev Proc
-        .15 Standard Deduction §63(f)</Description>
+        .15 Standard Deduction &#xA7;63(f)</Description>
       <TaxYear>2025</TaxYear>
       <Derived>
         <Switch>
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusHOH" />
-                <Dependency module="filingStatus" path="/isFilingStatusSingle" />
+                <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
+                <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
               </Any>
             </When>
             <Then>
@@ -69,9 +68,9 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
-                <Dependency module="filingStatus" path="/isFilingStatusQSS" />
-                <Dependency module="filingStatus" path="/isFilingStatusMFS" />
+                <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+                <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
+                <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
               </Any>
             </When>
             <Then>
@@ -81,38 +80,35 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/additionalStandardDeduction">
       <Name>Additional standard deduction</Name>
       <Description>The additional amount to add to the standard deduction to account for blindness
         or old age.</Description>
       <Derived>
         <Multiply>
-          <Dependency path="/additionalStandardDeductionItems" />
-          <Dependency path="/additionalStandardDeductionMultiplier" />
+          <Dependency path="/additionalStandardDeductionItems"/>
+          <Dependency path="/additionalStandardDeductionMultiplier"/>
         </Multiply>
       </Derived>
     </Fact>
-
     <Fact path="/usePreOb3StandardDeduction">
       <Description>A temporary "feature flag". Manually change this if you want to use the original
         TY2025 numbers IRS announced. Useful when comparing to historical outcomes like the QA
         spreadsheet.</Description>
       <Derived>
-        <False />
+        <False/>
       </Derived>
     </Fact>
-
     <Fact path="/MFJStandardDeduction">
       <Name>Married Filing Jointly Standard Deduction</Name>
       <Description>Standard Deduction for filers who are married filing jointly. Rev Proc .15
-        Standard Deduction §1(j)(2)(A)</Description>
+        Standard Deduction &#xA7;1(j)(2)(A)</Description>
       <TaxYear>2025</TaxYear>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="/usePreOb3StandardDeduction" />
+              <Dependency path="/usePreOb3StandardDeduction"/>
             </When>
             <Then>
               <Dollar>30000</Dollar>
@@ -120,7 +116,7 @@
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Dollar>31500</Dollar>
@@ -129,17 +125,16 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/singleOrMFSStandardDeduction">
       <Name>Single or Married Filing Separately Standard Deduction</Name>
       <Description>Standard Deduction for filers who are married filing separately or single. Rev
-        Proc .15 Standard Deduction §1(j)(2)(C) §1(j)(2)(D)</Description>
+        Proc .15 Standard Deduction &#xA7;1(j)(2)(C) &#xA7;1(j)(2)(D)</Description>
       <TaxYear>2025</TaxYear>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="/usePreOb3StandardDeduction" />
+              <Dependency path="/usePreOb3StandardDeduction"/>
             </When>
             <Then>
               <Dollar>15000</Dollar>
@@ -147,7 +142,7 @@
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Dollar>15750</Dollar>
@@ -156,17 +151,16 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/HoHStandardDeduction">
       <Name>HoH Standard Deduction</Name>
       <Description>Standard Deduction for filers who are filing HoH. Rev Proc .15 Standard Deduction
-        §1(j)(2)(B)</Description>
+        &#xA7;1(j)(2)(B)</Description>
       <TaxYear>2025</TaxYear>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="/usePreOb3StandardDeduction" />
+              <Dependency path="/usePreOb3StandardDeduction"/>
             </When>
             <Then>
               <Dollar>22500</Dollar>
@@ -174,7 +168,7 @@
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Dollar>23625</Dollar>
@@ -183,7 +177,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/filingStatusStandardDeduction">
       <Description>The amount of the standard deduction based on filing status alone.</Description>
       <Derived>
@@ -191,48 +184,46 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusSingle" />
-                <Dependency module="filingStatus" path="/isFilingStatusMFS" />
+                <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
+                <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
               </Any>
             </When>
             <Then>
-              <Dependency path="/singleOrMFSStandardDeduction" />
+              <Dependency path="/singleOrMFSStandardDeduction"/>
             </Then>
           </Case>
           <Case>
             <When>
-              <Dependency module="filingStatus" path="/isFilingStatusHOH" />
+              <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
             </When>
             <Then>
-              <Dependency path="/HoHStandardDeduction" />
+              <Dependency path="/HoHStandardDeduction"/>
             </Then>
           </Case>
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
-                <Dependency module="filingStatus" path="/isFilingStatusQSS" />
+                <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+                <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
               </Any>
             </When>
             <Then>
-              <Dependency path="/MFJStandardDeduction" />
+              <Dependency path="/MFJStandardDeduction"/>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/normalStandardDeduction">
       <Description>The amount to use as the standard deduction if a filer cannot be claimed as a
         dependent.</Description>
       <Derived>
         <Add>
-          <Dependency path="/filingStatusStandardDeduction" />
-          <Dependency path="/additionalStandardDeduction" />
+          <Dependency path="/filingStatusStandardDeduction"/>
+          <Dependency path="/additionalStandardDeduction"/>
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/minimumStandardDeduction">
       <Description>The alternative amount to use as the standard deduction if a filer can be claimed
         as a dependent. This amount is not used if it exceeds the normal amount of the standard
@@ -243,15 +234,14 @@
           <GreaterOf>
             <Dollar>1350</Dollar>
             <Add>
-              <Dependency module="income" path="/totalIncome" />
+              <Dependency module="income" path="/totalIncome"/>
               <Dollar>450</Dollar>
             </Add>
           </GreaterOf>
-          <Dependency path="/additionalStandardDeduction" />
+          <Dependency path="/additionalStandardDeduction"/>
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/standardDeduction">
       <Description>The amount of the standard deduction</Description>
       <Derived>
@@ -259,21 +249,21 @@
           <Case>
             <When>
               <Not>
-                <Dependency module="filing" path="/treatFilersAsDependents" />
+                <Dependency module="filing" path="/treatFilersAsDependents"/>
               </Not>
             </When>
             <Then>
-              <Dependency path="/normalStandardDeduction" />
+              <Dependency path="/normalStandardDeduction"/>
             </Then>
           </Case>
           <Case>
             <When>
-              <Dependency module="filingStatus" path="/treatFilersAsDependents" />
+              <Dependency module="filingStatus" path="/treatFilersAsDependents"/>
             </When>
             <Then>
               <LesserOf>
-                <Dependency path="/minimumStandardDeduction" />
-                <Dependency path="/normalStandardDeduction" />
+                <Dependency path="/minimumStandardDeduction"/>
+                <Dependency path="/normalStandardDeduction"/>
               </LesserOf>
             </Then>
           </Case>

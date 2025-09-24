@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <?xml-model href="./FlowConfigModule.rng"?>
 <FlowConfigModule>
   <page title="Results" route="results">
@@ -13,35 +14,48 @@
         <tbody>
           <tr>
             <th scope="row">Adjusted gross income</th>
-            <td><fg-show path="/agi" /></td>
+            <td>
+              <fg-show path="/agi"/>
+            </td>
           </tr>
           <tr>
             <th scope="row">Standard deduction</th>
-            <td><fg-show path="/standardDeduction" /></td>
+            <td>
+              <fg-show path="/standardDeduction"/>
+            </td>
           </tr>
           <tr>
             <th scope="row">Taxable income</th>
-            <td><fg-show path="/taxableIncome" /></td>
+            <td>
+              <fg-show path="/taxableIncome"/>
+            </td>
           </tr>
           <tr>
             <th scope="row">Tentative Tax from Taxable Income:</th>
-            <td><fg-show path="/tentativeTaxFromTaxableIncome" /></td>
+            <td>
+              <fg-show path="/tentativeTaxFromTaxableIncome"/>
+            </td>
           </tr>
           <tr>
             <th scope="row">Total taxes owed:</th>
-            <td><fg-show path="/totalOwed" /></td>
+            <td>
+              <fg-show path="/totalOwed"/>
+            </td>
           </tr>
           <tr>
             <th scope="row">Total year-to-date jobs withholding</th>
-            <td><fg-show path="/totalYearToDateJobsWithholding" /></td>
+            <td>
+              <fg-show path="/totalYearToDateJobsWithholding"/>
+            </td>
           </tr>
           <tr>
             <th scope="row">Gap in withholding for the rest of the year</th>
-            <td><fg-show path="/withholdingGap" /></td>
+            <td>
+              <fg-show path="/withholdingGap"/>
+            </td>
           </tr>
         </tbody>
       </table>
-
       <table class="usa-table width-full usa-table--borderless usa-table--flush">
         <caption>New Form W-4 for job with extra withholding</caption>
         <thead>
@@ -53,7 +67,9 @@
         <tbody>
           <tr>
             <th scope="row">Line 1 filing status</th>
-            <td><fg-show path="/filingStatus" /></td>
+            <td>
+              <fg-show path="/filingStatus"/>
+            </td>
           </tr>
           <tr>
             <th scope="row">Line 2(c) checkbox</th>
@@ -61,23 +77,33 @@
           </tr>
           <tr>
             <th scope="row">Line 3 total credits</th>
-            <td><fg-show path="/totalCredits" /></td>
+            <td>
+              <fg-show path="/totalCredits"/>
+            </td>
           </tr>
           <tr>
             <th scope="row">Line 4(a) other income (not from jobs)</th>
-            <td><fg-show path="/totalNonJobsIncome" /></td>
+            <td>
+              <fg-show path="/totalNonJobsIncome"/>
+            </td>
           </tr>
-           <tr>
+          <tr>
             <th scope="row">Line 4(b) deductions</th>
-            <td><fg-show path="/jobSelectedForExtraWithholding/w4Line4b" /></td>
+            <td>
+              <fg-show path="/jobSelectedForExtraWithholding/w4Line4b"/>
+            </td>
           </tr>
           <tr>
             <th scope="row">Line 4(c) extra withholding</th>
-            <td><fg-show path="/jobSelectedForExtraWithholding/w4Line4c" /></td>
+            <td>
+              <fg-show path="/jobSelectedForExtraWithholding/w4Line4c"/>
+            </td>
           </tr>
           <tr>
             <th scope="row">Remaining pay periods</th>
-            <td><fg-show path="/jobSelectedForExtraWithholding/remainingPayPeriods" /></td>
+            <td>
+              <fg-show path="/jobSelectedForExtraWithholding/remainingPayPeriods"/>
+            </td>
           </tr>
         </tbody>
       </table>

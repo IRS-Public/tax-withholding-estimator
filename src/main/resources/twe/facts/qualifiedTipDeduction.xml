@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
@@ -9,80 +10,72 @@
         <Dollar>25000</Dollar>
       </Derived>
     </Fact>
-
     <!--        Qualified Tip Deduction Eligibility-->
     <Fact path="/hasTipsThisTaxYear">
       <Name>Has the taxpayer received tips this tax years?</Name>
-      <Description>OB3 Section 70201 temporarily creating §224(d)(1): tips received after 1/1/25</Description>
+      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(1): tips received after 1/1/25</Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/areTipsCash">
       <Name>Were the received tips cash</Name>
-      <Description>OB3 Section 70201 temporarily creating §224(d)(3): tips received from customers
+      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(3): tips received from customers
         that are paid
         in cash or charged and, in the case of an employee, tips received under any tip-sharing
         arrangement.</Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/areTipsVoluntary">
       <Name>Were the paid voluntarily</Name>
-      <Description>OB3 Section 70201 temporarily creating §224(d)(2)(A): paid voluntarily without
+      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(2)(A): paid voluntarily without
         any con-
         sequence in the event of nonpayment, is not the subject of negotiation, and is determined by
         the payor</Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/isTaxpayerSelfEmployedInSSTB">
       <Name>Is the Taxpayer self employed in a service or trade covered under 199A? </Name>
       <Description>Taxpayers self employed in a service or trade covered under 199A are ineligible </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/isTaxpayerEmployeeInSSTB">
       <Name>Is the Taxpayer an employee in a service or trade covered under 199A? </Name>
       <Description>Taxpayers who are employed in a service or trade covered under 199A are
         ineligible </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/isOccupationSpecifiedServiceTradeOrBusiness">
-      <Name>Were tips provided from a §199A specified service trades or businesses</Name>
-      <Description>OB3 Section 70201 temporarily creating §224(d)(2)(B): the trade or business in
+      <Name>Were tips provided from a &#xA7;199A specified service trades or businesses</Name>
+      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(2)(B): the trade or business in
         the course of which the individual receives such amount is **not** a specified service
         trade or business (as defined in section 199A(d)(2))</Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/doesOccupationTraditionallyReceiveTips">
       <Name>Does the taxpayer work in an occupation that traditionally receives tips</Name>
-      <Description>OB3 Section 70201 temporarily creating §224(h): Based on list published by
+      <Description>OB3 Section 70201 temporarily creating &#xA7;224(h): Based on list published by
         Treasury</Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/doTipsExceedSelfEmploymentIncome">
       <!-- TODO: confirm that this definition matches implementation, specifically 'exceeds sum of
       deductions' -->
       <Name>Do tips exceed self employment income?</Name>
-      <Description>OB3 Section 70201 temporarily creating §224(c): Deduction may not exceed
-        individual’s net income (without regard to this deduction) from the trade or business in
+      <Description>OB3 Section 70201 temporarily creating &#xA7;224(c): Deduction may not exceed
+        individual&#x2019;s net income (without regard to this deduction) from the trade or business in
         which the tips were earned.</Description>
       <Derived>
         <Switch>
@@ -90,53 +83,52 @@
             <When>
               <GreaterThan>
                 <Left>
-                  <Dependency path="/qualifiedTipIncome" />
+                  <Dependency path="/qualifiedTipIncome"/>
                 </Left>
                 <Right>
-                  <Dependency path="/selfEmploymentIncome" />
+                  <Dependency path="/selfEmploymentIncome"/>
                 </Right>
               </GreaterThan>
             </When>
             <Then>
-              <True />
+              <True/>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
-              <False />
+              <False/>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/isEligibleForQualifiedTipDeduction">
       <Name>Taxpayer eligible for qualified tip deduction</Name>
       <Description>Is the taxpayer eligible for the qualified tip deduction?</Description>
       <Derived>
         <All>
-          <Dependency path="/hasTipsThisTaxYear" />
-          <Dependency path="/areTipsCash" />
-          <Dependency path="/areTipsVoluntary" />
-          <Dependency path="/doesOccupationTraditionallyReceiveTips" />
-          <Dependency path="/doTipsExceedSelfEmploymentIncome" />
+          <Dependency path="/hasTipsThisTaxYear"/>
+          <Dependency path="/areTipsCash"/>
+          <Dependency path="/areTipsVoluntary"/>
+          <Dependency path="/doesOccupationTraditionallyReceiveTips"/>
+          <Dependency path="/doTipsExceedSelfEmploymentIncome"/>
           <Not>
             <All>
-              <Dependency path="/isOccupationSpecifiedServiceTradeOrBusiness" />
-              <Dependency path="/isTaxpayerSelfEmployedInSSTB" />
-              <Dependency path="/isTaxpayerEmployeeInSSTB" />
+              <Dependency path="/isOccupationSpecifiedServiceTradeOrBusiness"/>
+              <Dependency path="/isTaxpayerSelfEmployedInSSTB"/>
+              <Dependency path="/isTaxpayerEmployeeInSSTB"/>
             </All>
           </Not>
           <Any>
-            <Dependency path="/primaryFilerHasSSN" />
-            <Dependency path="/secondaryFilerHasSSN" />
+            <Dependency path="/primaryFilerHasSSN"/>
+            <Dependency path="/secondaryFilerHasSSN"/>
           </Any>
           <GreaterThan>
             <Left>
-              <Dependency path="/qualifiedTipIncome" />
+              <Dependency path="/qualifiedTipIncome"/>
             </Left>
             <Right>
               <Dollar>0</Dollar>
@@ -145,14 +137,12 @@
         </All>
       </Derived>
     </Fact>
-
-
     <Fact path="/excessAmountQualifiedTipDeductionForMFJFiler">
       <Derived>
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions" />
+              <Dependency path="/magiForOB3BelowLineDeductions"/>
             </Minuend>
             <Subtrahends>
               <Dollar>300000</Dollar>
@@ -162,13 +152,12 @@
         </GreaterOf>
       </Derived>
     </Fact>
-
     <Fact path="/excessAmountQualifiedTipDeductionorNonMFJFiler">
       <Derived>
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions" />
+              <Dependency path="/magiForOB3BelowLineDeductions"/>
             </Minuend>
             <Subtrahends>
               <Dollar>150000</Dollar>
@@ -178,42 +167,40 @@
         </GreaterOf>
       </Derived>
     </Fact>
-
     <Fact path="/excessOverThresholdQualifiedTipDeduction">
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="/isFilingStatusMFJ" />
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Dependency path="/excessAmountQualifiedTipDeductionForMFJFiler" />
+              <Dependency path="/excessAmountQualifiedTipDeductionForMFJFiler"/>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
-              <Dependency path="/excessAmountQualifiedTipDeductionorNonMFJFiler" />
+              <Dependency path="/excessAmountQualifiedTipDeductionorNonMFJFiler"/>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/phaseOutAmountQualifiedTipDeduction">
       <Name>Qualified Tip Deduction Phase Out</Name>
       <Description>The amount allowable as a deduction under shall be reduced (but not
         below zero) by $100 for each $1,000 by which the
-        taxpayer’s MAGI exceeds $150,000 ($300,000 in the case of a joint return).
+        taxpayer&#x2019;s MAGI exceeds $150,000 ($300,000 in the case of a joint return).
       </Description>
       <TaxYear>2025</TaxYear>
       <Derived>
         <Multiply>
           <Divide>
             <Dividend>
-              <Dependency path="/excessOverThresholdQualifiedTipDeduction" />
+              <Dependency path="/excessOverThresholdQualifiedTipDeduction"/>
             </Dividend>
             <Divisors>
               <Dollar>1000</Dollar>
@@ -223,7 +210,6 @@
         </Multiply>
       </Derived>
     </Fact>
-
     <Fact path="/qualifiedTipDeduction">
       <Name>Qualified tip deduction</Name>
       <Description>OB3 Section 70201: Qualified tip deductions
@@ -238,22 +224,22 @@
           <Switch>
             <Case>
               <When>
-                <Dependency path="/isEligibleForQualifiedTipDeduction" />
+                <Dependency path="/isEligibleForQualifiedTipDeduction"/>
               </When>
               <Then>
                 <Subtract>
                   <Minuend>
-                    <Dependency path="/qualifiedTipIncome" />
+                    <Dependency path="/qualifiedTipIncome"/>
                   </Minuend>
                   <Subtrahends>
-                    <Dependency path="/phaseOutAmountQualifiedTipDeduction" />
+                    <Dependency path="/phaseOutAmountQualifiedTipDeduction"/>
                   </Subtrahends>
                 </Subtract>
               </Then>
             </Case>
             <Case>
               <When>
-                <True />
+                <True/>
               </When>
               <Then>
                 <Dollar>0</Dollar>

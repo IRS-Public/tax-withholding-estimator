@@ -1,9 +1,10 @@
+<?xml version="1.0"?>
 <?xml-model href="./FlowConfigModule.rng"?>
 <FlowConfigModule>
   <page title="About you" route="/">
     <section>
       <fg-set path="/filingStatus">
-        <question content-key="flow.about-you.fields./filingStatus.question" />
+        <question content-key="flow.about-you.fields./filingStatus.question"/>
         <select options-path="/filingStatusOptions">
           <option value="single">Single</option>
           <option value="marriedFilingJointly">Married filing jointly</option>
@@ -12,93 +13,75 @@
           <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
         </select>
       </fg-set>
-
       <fg-set path="/primaryFilerDateOfBirth">
-        <question content-key="flow.about-you.fields./primaryFilerDateOfBirth.question" />
-        <input type="date" />
+        <question content-key="flow.about-you.fields./primaryFilerDateOfBirth.question"/>
+        <input type="date"/>
       </fg-set>
-
       <fg-set path="/primaryFilerIsBlind">
-        <question content-key="flow.about-you.fields./primaryFilerIsBlind.question" />
-        <input type="boolean" />
+        <question content-key="flow.about-you.fields./primaryFilerIsBlind.question"/>
+        <input type="boolean"/>
       </fg-set>
-
       <fg-set path="/primaryFilerHasSSN">
-        <question content-key="flow.about-you.fields./primaryFilerHasSSN.question" />
-        <input type="boolean" />
+        <question content-key="flow.about-you.fields./primaryFilerHasSSN.question"/>
+        <input type="boolean"/>
       </fg-set>
-
       <fg-set path="/primaryFilerIsClaimedOnAnotherReturn">
-        <question content-key="flow.about-you.fields./primaryFilerIsClaimedOnAnotherReturn.question" />
-        <input type="boolean" />
+        <question content-key="flow.about-you.fields./primaryFilerIsClaimedOnAnotherReturn.question"/>
+        <input type="boolean"/>
       </fg-set>
-
       <h2 condition="/isFilingStatusMFJ" operator="isTrue">Spouse</h2>
-
       <fg-set path="/secondaryFilerDateOfBirth" if-true="/isFilingStatusMFJ">
-        <question content-key="flow.about-you.fields./secondaryFilerDateOfBirth.question" />
-        <input type="date" />
+        <question content-key="flow.about-you.fields./secondaryFilerDateOfBirth.question"/>
+        <input type="date"/>
       </fg-set>
-
       <fg-set path="/secondaryFilerIsBlind" if-true="/isFilingStatusMFJ">
-        <question content-key="flow.about-you.fields./secondaryFilerIsBlind.question" />
-        <input type="boolean" />
+        <question content-key="flow.about-you.fields./secondaryFilerIsBlind.question"/>
+        <input type="boolean"/>
       </fg-set>
-
       <fg-set path="/secondaryFilerHasSSN" if-true="/isFilingStatusMFJ">
-        <question content-key="flow.about-you.fields./secondaryFilerHasSSN.question" />
-        <input type="boolean" />
+        <question content-key="flow.about-you.fields./secondaryFilerHasSSN.question"/>
+        <input type="boolean"/>
       </fg-set>
-
       <fg-set path="/secondaryFilerIsClaimedOnAnotherReturn" if-true="/isFilingStatusMFJ">
-        <question content-key="flow.about-you.fields./secondaryFilerIsClaimedOnAnotherReturn.question" />
-        <input type="boolean" />
+        <question content-key="flow.about-you.fields./secondaryFilerIsClaimedOnAnotherReturn.question"/>
+        <input type="boolean"/>
       </fg-set>
-
       <h2>Jobs</h2>
       <fg-collection path="/jobs" item-name="Income source">
         <fg-set path="/jobs/*/startDate">
-          <question content-key="flow.about-you.fields./jobs/*/startDate.question" />
-          <input type="date" />
+          <question content-key="flow.about-you.fields./jobs/*/startDate.question"/>
+          <input type="date"/>
         </fg-set>
-
         <fg-set path="/jobs/*/endDate">
-          <question content-key="flow.about-you.fields./jobs/*/endDate.question" />
-          <input type="date" />
+          <question content-key="flow.about-you.fields./jobs/*/endDate.question"/>
+          <input type="date"/>
         </fg-set>
-
         <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
-          <question content-key="flow.about-you.fields./jobs/*/mostRecentPayPeriodEnd.question" />
-          <input type="date" />
+          <question content-key="flow.about-you.fields./jobs/*/mostRecentPayPeriodEnd.question"/>
+          <input type="date"/>
         </fg-set>
-
         <fg-set path="/jobs/*/mostRecentPayDate">
-          <question content-key="flow.about-you.fields./jobs/*/mostRecentPayDate.question" />
-          <input type="date" />
+          <question content-key="flow.about-you.fields./jobs/*/mostRecentPayDate.question"/>
+          <input type="date"/>
         </fg-set>
-
         <fg-set path="/jobs/*/averagePayPerPayPeriod">
-          <question content-key="flow.about-you.fields./jobs/*/averagePayPerPayPeriod.question" />
-          <input type="dollar" />
+          <question content-key="flow.about-you.fields./jobs/*/averagePayPerPayPeriod.question"/>
+          <input type="dollar"/>
         </fg-set>
-
         <fg-set path="/jobs/*/yearToDateIncome">
-          <question content-key="flow.about-you.fields./jobs/*/yearToDateIncome.question" />
-          <input type="dollar" />
+          <question content-key="flow.about-you.fields./jobs/*/yearToDateIncome.question"/>
+          <input type="dollar"/>
         </fg-set>
-
         <fg-set path="/jobs/*/averageWithholdingPerPayPeriod">
-          <question content-key="flow.about-you.fields./jobs/*/averageWithholdingPerPayPeriod.question" />
-          <input type="dollar" />
+          <question content-key="flow.about-you.fields./jobs/*/averageWithholdingPerPayPeriod.question"/>
+          <input type="dollar"/>
         </fg-set>
-
         <fg-set path="/jobs/*/yearToDateWithholding">
-          <question content-key="flow.about-you.fields./jobs/*/yearToDateWithholding.question" />
-          <input type="dollar" />
+          <question content-key="flow.about-you.fields./jobs/*/yearToDateWithholding.question"/>
+          <input type="dollar"/>
         </fg-set>
-
         <fg-set path="/jobs/*/payFrequency">
-          <question content-key="flow.about-you.fields./jobs/*/payFrequency.question" />
+          <question content-key="flow.about-you.fields./jobs/*/payFrequency.question"/>
           <select options-path="/jobs/*/payFrequency">
             <option value="weekly">Weekly</option>
             <option value="biWeekly">Biweekly</option>
@@ -106,23 +89,19 @@
             <option value="monthly">Monthly</option>
           </select>
         </fg-set>
-
         <fg-set path="/jobs/*/totalBonusReceived">
-          <question content-key="flow.about-you.fields./jobs/*/totalBonusReceived.question" />
-          <input type="dollar" />
+          <question content-key="flow.about-you.fields./jobs/*/totalBonusReceived.question"/>
+          <input type="dollar"/>
         </fg-set>
-
         <fg-set path="/jobs/*/preTaxDeductions">
-          <question content-key="flow.about-you.fields./jobs/*/preTaxDeductions.question" />
-          <input type="dollar" />
+          <question content-key="flow.about-you.fields./jobs/*/preTaxDeductions.question"/>
+          <input type="dollar"/>
         </fg-set>
       </fg-collection>
-
       <fg-set path="/totalAdvancedPayments">
-        <question content-key="flow.about-you.fields./totalAdvancedPayments.question" />
-        <input type="dollar" />
+        <question content-key="flow.about-you.fields./totalAdvancedPayments.question"/>
+        <input type="dollar"/>
       </fg-set>
-
       <h2>Start over</h2>
       <fg-reset>
         <button class="usa-button usa-button--outline" type="reset">Start over</button>

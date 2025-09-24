@@ -1,4 +1,4 @@
-name: TWE
+name: TWE Lint and Validate
 
 on:
   workflow_dispatch:
@@ -20,37 +20,11 @@ env:
 
 jobs:
 
-  check-commit-emails:
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Checkout TWE
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          path: ${{ env.TWE_PATH }}
-
-      - name: Check commit emails
-        working-directory: ${{ env.TWE_PATH }}
-        run: |
-          git fetch origin ${{ github.base_ref }}
-          echo ${{ github.base_ref }}
-          git log origin/${{ github.base_ref }}..HEAD --pretty=format:"%ae%n%ce" | sort -u > emails.txt
-          echo "Found email(s):"
-          cat emails.txt
-          if grep -Evi '(^noreply@github\.com$|@users\.noreply\.github\.com$)' emails.txt | grep -v '^\s*$' > invalid.txt; then
-            echo "Invalid email(s):"
-            cat invalid.txt
-            exit 1
-          fi
-
-  build:
-
-    needs: check-commit-emails
+  lint:
 
     runs-on: ubuntu-latest
 
     steps:
-
 
     - name: Checkout TWE
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -70,21 +44,6 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: ${{ env.JAVA_VERSION }}
-
-    - name: Checkout Fact Graph
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      with:
-        repository: IRSDigitalService/fact-graph
-        path: fact-graph
-        token: ${{ secrets.SVC_ACCOUNT_PAT }}
-
-    - name: Compile and publish Fact Graph locally
-      working-directory: fact-graph
-      run: make ci_publish
-
-    - name: Run Tests
-      working-directory: ${{ env.TWE_PATH }}
-      run: make ci_test
 
     - name: Download jing for XML schema validation
       working-directory: ${{ env.TWE_PATH }}
@@ -111,3 +70,13 @@ jobs:
           fi
           java -jar jing.jar ${{ env.TWE_RESOURCES_PATH }}/flow/FlowConfigModule.rng "$xml"
         done
+
+    - name: Install xmllint (libxml2-utils) # v2.9.14+dfsg-1.3ubuntu3
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libxml2-utils=2.9.14+dfsg-1.3ubuntu3
+        sudo apt-mark hold libxml2-utils
+
+    - name: Format Scala and XML files
+      working-directory: ${{ env.TWE_PATH }}
+      run: make ci_format_check

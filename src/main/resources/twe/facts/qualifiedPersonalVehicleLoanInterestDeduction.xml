@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
@@ -5,147 +6,147 @@
     <Fact path="/isVehiclePurchasedAfterEffectiveDate">
       <Name>Is vehicle purchased after 12/31/13</Name>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <Fact path="/isQpvIndebtednessIncurredAfterEffectiveDate">
       <Name>Is QPV purchased and a loan originated after 12/34/24</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(B)(i): QPVLID Requirement: Any
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(i): QPVLID Requirement: Any
         interest which
         is paid or accrued during the taxable year on indebtedness incurred by the taxpayer after
         December 31,
         2024
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <Fact path="/isVehicleLoanFirstLien">
       <Name>Is QPV purchased with a first lien loan</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(B)(ii): QPVLID Requirement:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii): QPVLID Requirement:
         Loan must be
         secured by a first lien
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <!--        QPVLID Exclusions-->
     <Fact path="/isVehicleLoanFinancingFleetSale">
       <Name>Is loan used to finance fleet sales</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(B)(ii)(i): Qpvlid Exclusion: A
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(i): Qpvlid Exclusion: A
         loan to
         finance fleet sales.
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <Fact path="/isVehicleForPersonalUse">
       <Name>Is QPV purchased for personal use</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(B)(ii)(ii): Qpvlid Exclusion: A
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(ii): Qpvlid Exclusion: A
         loan incurred
         for the purchase of a commercial vehicle that is not used for personal purposes.
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <Fact path="/isVehicleLeaseFinanced">
       <Name>Is QPV purchased with lease financing</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(B)(ii)(iii): Qpvlid Exclusion:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(iii): Qpvlid Exclusion:
         Any lease
         financing
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <Fact path="/hasSalvageTitleOrPurchasedToScrap">
       <Name>Is QPV purchased with a salvage title or with the intent to scrap for parts</Name>
       <Description>OB3
-        Section 70203 temporarily amending §163(h)(4)(B)(ii)(iv-v): Qpvlid Exclusions: A loan to
+        Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(iv-v): Qpvlid Exclusions: A loan to
         finance the purchase of a vehicle with a salvage title or A loan to finance the purchase of
         a
         vehicle
         intended to be used for scrap or parts.
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <!--        VIN Requirement-->
     <Fact path="/doesHaveVIN">
       <Name>Can the taxpayer provide a VIN as part of their tax return</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(B)(iii): Qpvlid Requirement:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(iii): Qpvlid Requirement:
         Provide a VIN as
         part of tax return for the taxable years
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <!--        Applicable passenger vehicle (APV) definition-->
     <Fact path="/isTaxpayerOriginalUser">
       <Name>Original user of the vehicle</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(D)(i): APV Requirement:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(D)(i): APV Requirement:
         original use
         commences with the taxpayer
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <Fact path="/isVehicleManufacturedForStreetsRoadsAndHighways">
       <Name>Vehicle Manufacturing Criteria</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(D)(ii): APV Requirement:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(D)(ii): APV Requirement:
         vehicle is
         manufactured primarily for streets, roads and highways
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <Fact path="/isVehicleGTETwoWheels">
       <Name>Vehicle wheel number</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(D)(iii): APV Requirement:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(D)(iii): APV Requirement:
         vehicle has at
         least 2 wheels
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <Fact path="/isVehicleApplicableType">
       <Name>QPV type is applicable</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(D)(iv): APV Requirement:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(D)(iv): APV Requirement:
         vehicle is car,
         minivan, van, sport utility
         vehicle, pickup truck, or motorcycle
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <Fact path="/isVehicleUnderGVWRMax">
       <Name>QPV under max Gross Vehicle Weight RatingGVWR</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(D)(vi): APV Requirement:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(D)(vi): APV Requirement:
         vehicle is under 14k
         GVWR
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <!--        Final assemble requirements-->
     <Fact path="/isVehicleAssembledInUSA">
       <Name>QPV assembled in US</Name>
-      <Description>OB3 Section 70203 temporarily amending §163(h)(4)(E)(i): APV Requirement: vehicle
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(E)(i): APV Requirement: vehicle
         final
         assembly is in US
       </Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
     <!--        Interest paid on loan during taxable year-->
@@ -155,7 +156,7 @@
         year?
       </Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
@@ -167,26 +168,26 @@
       <Description>Taxpayer eligibility for</Description>
       <Derived>
         <All>
-          <Dependency path="/isQpvIndebtednessIncurredAfterEffectiveDate" />
-          <Dependency path="/isVehicleLoanFirstLien" />
+          <Dependency path="/isQpvIndebtednessIncurredAfterEffectiveDate"/>
+          <Dependency path="/isVehicleLoanFirstLien"/>
           <Not>
             <All>
-              <Dependency path="/isVehicleLoanFinancingFleetSale" />
-              <Dependency path="/isVehicleForPersonalUse" />
-              <Dependency path="/isVehicleLeaseFinanced" />
-              <Dependency path="/hasSalvageTitleOrPurchasedToScrap" />
+              <Dependency path="/isVehicleLoanFinancingFleetSale"/>
+              <Dependency path="/isVehicleForPersonalUse"/>
+              <Dependency path="/isVehicleLeaseFinanced"/>
+              <Dependency path="/hasSalvageTitleOrPurchasedToScrap"/>
             </All>
           </Not>
-          <Dependency path="/doesHaveVIN" />
-          <Dependency path="/isTaxpayerOriginalUser" />
-          <Dependency path="/isVehicleManufacturedForStreetsRoadsAndHighways" />
-          <Dependency path="/isVehicleGTETwoWheels" />
-          <Dependency path="/isVehicleApplicableType" />
-          <Dependency path="/isVehicleUnderGVWRMax" />
-          <Dependency path="/isVehicleAssembledInUSA" />
+          <Dependency path="/doesHaveVIN"/>
+          <Dependency path="/isTaxpayerOriginalUser"/>
+          <Dependency path="/isVehicleManufacturedForStreetsRoadsAndHighways"/>
+          <Dependency path="/isVehicleGTETwoWheels"/>
+          <Dependency path="/isVehicleApplicableType"/>
+          <Dependency path="/isVehicleUnderGVWRMax"/>
+          <Dependency path="/isVehicleAssembledInUSA"/>
           <GreaterThan>
             <Left>
-              <Dependency path="/personalVehicleLoanInterestAmount" />
+              <Dependency path="/personalVehicleLoanInterestAmount"/>
             </Left>
             <Right>
               <Dollar>0</Dollar>
@@ -211,7 +212,7 @@
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions" />
+              <Dependency path="/magiForOB3BelowLineDeductions"/>
             </Minuend>
             <Subtrahends>
               <Dollar>200000</Dollar>
@@ -226,7 +227,7 @@
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions" />
+              <Dependency path="/magiForOB3BelowLineDeductions"/>
             </Minuend>
             <Subtrahends>
               <Dollar>100000</Dollar>
@@ -241,18 +242,18 @@
         <Switch>
           <Case>
             <When>
-              <Dependency path="/isFilingStatusMFJ" />
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Dependency path="/excessAmountQPVLIDForMFJFiler" />
+              <Dependency path="/excessAmountQPVLIDForMFJFiler"/>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
-              <Dependency path="/excessAmountQpvlidorNonMFJFiler" />
+              <Dependency path="/excessAmountQpvlidorNonMFJFiler"/>
             </Then>
           </Case>
         </Switch>
@@ -269,7 +270,7 @@
         <Multiply>
           <Divide>
             <Dividend>
-              <Dependency path="/excessOverThresholdQPVLID" />
+              <Dependency path="/excessOverThresholdQPVLID"/>
             </Dividend>
             <Divisors>
               <Dollar>1000</Dollar>
@@ -288,13 +289,13 @@
       <Derived>
         <GreaterOf>
           <LesserOf>
-            <Dependency path="/maxQPVLIDAmount" />
+            <Dependency path="/maxQPVLIDAmount"/>
             <Subtract>
               <Minuend>
-                <Dependency path="/personalVehicleLoanInterestAmount" />
+                <Dependency path="/personalVehicleLoanInterestAmount"/>
               </Minuend>
               <Subtrahends>
-                <Dependency path="/phaseOutAmountQPVLID" />
+                <Dependency path="/phaseOutAmountQPVLID"/>
               </Subtrahends>
             </Subtract>
           </LesserOf>
@@ -311,18 +312,18 @@
             <When>
               <All>
                 <IsComplete>
-                  <Dependency path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction" />
+                  <Dependency path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction"/>
                 </IsComplete>
-                <Dependency path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction" />
+                <Dependency path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction"/>
               </All>
             </When>
             <Then>
-              <Dependency path="/tentativeQualifiedPersonalVehicleLoanInterestDeduction" />
+              <Dependency path="/tentativeQualifiedPersonalVehicleLoanInterestDeduction"/>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Dollar>0</Dollar>

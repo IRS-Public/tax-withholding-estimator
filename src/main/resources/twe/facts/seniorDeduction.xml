@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
@@ -14,9 +15,9 @@
           <Case>
             <When>
               <All>
-                <Dependency path="/isFilingStatusMFJ" />
-                <Dependency path="/primaryFilerAge65OrOlder" />
-                <Dependency path="/secondaryFilerAge65OrOlder" />
+                <Dependency path="/isFilingStatusMFJ"/>
+                <Dependency path="/primaryFilerAge65OrOlder"/>
+                <Dependency path="/secondaryFilerAge65OrOlder"/>
               </All>
             </When>
             <Then>
@@ -26,10 +27,10 @@
           <Case>
             <When>
               <All>
-                <Dependency path="/isFilingStatusMFJ" />
+                <Dependency path="/isFilingStatusMFJ"/>
                 <Any>
-                  <Dependency path="/primaryFilerAge65OrOlder" />
-                  <Dependency path="/secondaryFilerAge65OrOlder" />
+                  <Dependency path="/primaryFilerAge65OrOlder"/>
+                  <Dependency path="/secondaryFilerAge65OrOlder"/>
                 </Any>
               </All>
             </When>
@@ -40,12 +41,12 @@
           <Case>
             <When>
               <All>
-                <Dependency path="/isFilingStatusMFJ" />
+                <Dependency path="/isFilingStatusMFJ"/>
                 <Not>
-                  <Dependency path="/primaryFilerAge65OrOlder" />
+                  <Dependency path="/primaryFilerAge65OrOlder"/>
                 </Not>
                 <Not>
-                  <Dependency path="/secondaryFilerAge65OrOlder" />
+                  <Dependency path="/secondaryFilerAge65OrOlder"/>
                 </Not>
               </All>
             </When>
@@ -55,7 +56,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="/primaryFilerAge65OrOlder" />
+              <Dependency path="/primaryFilerAge65OrOlder"/>
             </When>
             <Then>
               <Int>1</Int>
@@ -63,7 +64,7 @@
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Int>0</Int>
@@ -80,7 +81,7 @@
       <Derived>
         <Multiply>
           <Dollar>0.06</Dollar>
-          <Dependency path="/excessOverThresholdSeniorDeduction" />
+          <Dependency path="/excessOverThresholdSeniorDeduction"/>
         </Multiply>
       </Derived>
     </Fact>
@@ -91,7 +92,7 @@
             <When>
               <Equal>
                 <Left>
-                  <Dependency path="/eligibleTaxpayersForSeniorDeduction" />
+                  <Dependency path="/eligibleTaxpayersForSeniorDeduction"/>
                 </Left>
                 <Right>
                   <Int>2</Int>
@@ -99,14 +100,14 @@
               </Equal>
             </When>
             <Then>
-              <Dependency path="/excessAmountSeniorDeductionForMFJFilerBothTaxpayersEligible" />
+              <Dependency path="/excessAmountSeniorDeductionForMFJFilerBothTaxpayersEligible"/>
             </Then>
           </Case>
           <Case>
             <When>
               <Equal>
                 <Left>
-                  <Dependency path="/eligibleTaxpayersForSeniorDeduction" />
+                  <Dependency path="/eligibleTaxpayersForSeniorDeduction"/>
                 </Left>
                 <Right>
                   <Int>1</Int>
@@ -114,12 +115,12 @@
               </Equal>
             </When>
             <Then>
-              <Dependency path="/excessAmountSeniorDeductionOneTaxpayerEligible" />
+              <Dependency path="/excessAmountSeniorDeductionOneTaxpayerEligible"/>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Dollar>0</Dollar>
@@ -140,7 +141,7 @@
             <When>
               <Equal>
                 <Left>
-                  <Dependency path="/eligibleTaxpayersForSeniorDeduction" />
+                  <Dependency path="/eligibleTaxpayersForSeniorDeduction"/>
                 </Left>
                 <Right>
                   <Int>2</Int>
@@ -148,14 +149,14 @@
               </Equal>
             </When>
             <Then>
-              <Dependency path="/maxSeniorDeductionAmountForTwoEligibleTaxpayers" />
+              <Dependency path="/maxSeniorDeductionAmountForTwoEligibleTaxpayers"/>
             </Then>
           </Case>
           <Case>
             <When>
               <Equal>
                 <Left>
-                  <Dependency path="/eligibleTaxpayersForSeniorDeduction" />
+                  <Dependency path="/eligibleTaxpayersForSeniorDeduction"/>
                 </Left>
                 <Right>
                   <Int>1</Int>
@@ -163,12 +164,12 @@
               </Equal>
             </When>
             <Then>
-              <Dependency path="/maxSeniorDeductionAmountForOneEligibleTaxpayer" />
+              <Dependency path="/maxSeniorDeductionAmountForOneEligibleTaxpayer"/>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Dollar>0</Dollar>
@@ -202,7 +203,7 @@
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions" />
+              <Dependency path="/magiForOB3BelowLineDeductions"/>
             </Minuend>
             <Subtrahends>
               <Dollar>150000</Dollar>
@@ -217,7 +218,7 @@
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions" />
+              <Dependency path="/magiForOB3BelowLineDeductions"/>
             </Minuend>
             <Subtrahends>
               <Dollar>75000</Dollar>
@@ -239,10 +240,10 @@
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/applicableMaxSeniorDeductionAmount" />
+              <Dependency path="/applicableMaxSeniorDeductionAmount"/>
             </Minuend>
             <Subtrahends>
-              <Dependency path="/phaseOutAmountSeniorDeduction" />
+              <Dependency path="/phaseOutAmountSeniorDeduction"/>
             </Subtrahends>
           </Subtract>
           <Dollar>0</Dollar>

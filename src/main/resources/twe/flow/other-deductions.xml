@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <FlowConfigModule>
   <page title="Other Deductions" route="other-deductions">
     <section>
@@ -5,216 +6,143 @@
         deductions are in addition to regardless to the Standard Deduction and Itemized Deductions
         and can be claimed by eligible taxpayers regardless of which deduction they choose</p>
       <h1>Senior Deduction</h1>
-
-      <p>Number of taxpayers eligible for Senior Deduction: <fg-show
-          path="/eligibleTaxpayersForSeniorDeduction" />
+      <p>Number of taxpayers eligible for Senior Deduction: <fg-show path="/eligibleTaxpayersForSeniorDeduction"/>
       </p>
-      <p> Total Senior Deduction amount: <fg-show
-          path="/seniorDeduction" /></p>
-
-
+      <p> Total Senior Deduction amount: <fg-show path="/seniorDeduction"/></p>
       <h1>Qualified Tips Income Deduction</h1>
-      <fg-set
-        path="/hasTipsThisTaxYear">
-        <question content-key="flow.other-deductions.fields./hasTipsThisTaxYear.question" />
-        <input type="boolean" />
+      <fg-set path="/hasTipsThisTaxYear">
+        <question content-key="flow.other-deductions.fields./hasTipsThisTaxYear.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set
-        path="/doesOccupationTraditionallyReceiveTips"
-        if-true="/hasTipsThisTaxYear">
-        <question content-key="flow.other-deductions.fields./doesOccupationTraditionallyReceiveTips.question" />
-        <input type="boolean" />
+      <fg-set path="/doesOccupationTraditionallyReceiveTips" if-true="/hasTipsThisTaxYear">
+        <question content-key="flow.other-deductions.fields./doesOccupationTraditionallyReceiveTips.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set
-        path="/areTipsCash" if-true="/hasTipsThisTaxYear">
-        <question content-key="flow.other-deductions.fields./areTipsCash.question" />
-        <input type="boolean" />
+      <fg-set path="/areTipsCash" if-true="/hasTipsThisTaxYear">
+        <question content-key="flow.other-deductions.fields./areTipsCash.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set
-        path="/areTipsVoluntary" if-true="/hasTipsThisTaxYear">
-        <question content-key="flow.other-deductions.fields./areTipsVoluntary.question" />
-        <input type="boolean" />
+      <fg-set path="/areTipsVoluntary" if-true="/hasTipsThisTaxYear">
+        <question content-key="flow.other-deductions.fields./areTipsVoluntary.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set
-        path="/isTaxpayerSelfEmployedInSSTB" if-true="/areTipsVoluntary">
-        <question content-key="flow.other-deductions.fields./isTaxpayerSelfEmployedInSSTB.question" />
-        <input type="boolean" />
+      <fg-set path="/isTaxpayerSelfEmployedInSSTB" if-true="/areTipsVoluntary">
+        <question content-key="flow.other-deductions.fields./isTaxpayerSelfEmployedInSSTB.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set
-        path="/isTaxpayerEmployeeInSSTB" if-true="/areTipsVoluntary">
-        <question content-key="flow.other-deductions.fields./isTaxpayerEmployeeInSSTB.question" />
-        <input type="boolean" />
+      <fg-set path="/isTaxpayerEmployeeInSSTB" if-true="/areTipsVoluntary">
+        <question content-key="flow.other-deductions.fields./isTaxpayerEmployeeInSSTB.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set
-        path="/isOccupationSpecifiedServiceTradeOrBusiness" if-true="/areTipsVoluntary">
-        <question content-key="flow.other-deductions.fields./isOccupationSpecifiedServiceTradeOrBusiness.question" />
-        <input type="boolean" />
+      <fg-set path="/isOccupationSpecifiedServiceTradeOrBusiness" if-true="/areTipsVoluntary">
+        <question content-key="flow.other-deductions.fields./isOccupationSpecifiedServiceTradeOrBusiness.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set
-        path="/qualifiedTipIncome" if-false="/isOccupationSpecifiedServiceTradeOrBusiness">
-        <question content-key="flow.other-deductions.fields./qualifiedTipIncome.question" />
-        <input type="dollar" />
+      <fg-set path="/qualifiedTipIncome" if-false="/isOccupationSpecifiedServiceTradeOrBusiness">
+        <question content-key="flow.other-deductions.fields./qualifiedTipIncome.question"/>
+        <input type="dollar"/>
       </fg-set>
-
-      <fg-set
-        path="/selfEmploymentIncome" if-false="/isOccupationSpecifiedServiceTradeOrBusiness">
-        <question content-key="flow.other-deductions.fields./selfEmploymentIncome.question" />
-        <input type="dollar" />
+      <fg-set path="/selfEmploymentIncome" if-false="/isOccupationSpecifiedServiceTradeOrBusiness">
+        <question content-key="flow.other-deductions.fields./selfEmploymentIncome.question"/>
+        <input type="dollar"/>
       </fg-set>
-
-      <p>Your eligibility for the Qualified Tip Deduction is: <fg-show
-          path="/isEligibleForQualifiedTipDeduction" />
+      <p>Your eligibility for the Qualified Tip Deduction is: <fg-show path="/isEligibleForQualifiedTipDeduction"/>
       </p>
-      <p>Total Qualified Tip Deduction is: <fg-show
-          path="/qualifiedTipDeduction" /></p>
-
-
+      <p>Total Qualified Tip Deduction is: <fg-show path="/qualifiedTipDeduction"/></p>
       <h1>Overtime
         Compensation Deduction</h1>
-      <fg-set
-        path="/hasOvertimeCompThisTaxYear">
-        <question content-key="flow.other-deductions.fields./hasOvertimeCompThisTaxYear.question" />
-        <input type="boolean" />
+      <fg-set path="/hasOvertimeCompThisTaxYear">
+        <question content-key="flow.other-deductions.fields./hasOvertimeCompThisTaxYear.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set
-        path="/isFlsaNonExempt" if-true="/hasOvertimeCompThisTaxYear">
-        <question content-key="flow.other-deductions.fields./isFlsaNonExempt.question" />
-        <input type="boolean" />
+      <fg-set path="/isFlsaNonExempt" if-true="/hasOvertimeCompThisTaxYear">
+        <question content-key="flow.other-deductions.fields./isFlsaNonExempt.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set
-        path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" if-true="/isFlsaNonExempt">
-        <question content-key="flow.other-deductions.fields./overtimeCompensationExcludingQualifiedTipsOvertimeComp.question" />
-        <input type="dollar" />
+      <fg-set path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" if-true="/isFlsaNonExempt">
+        <question content-key="flow.other-deductions.fields./overtimeCompensationExcludingQualifiedTipsOvertimeComp.question"/>
+        <input type="dollar"/>
       </fg-set>
-
-
-      <p>Your overtime compensation deduction is <fg-show
-          path="/overtimeCompensationDeduction" /></p>
-
+      <p>Your overtime compensation deduction is <fg-show path="/overtimeCompensationDeduction"/></p>
       <h1>Qualified
         Personal Vehicle Loan Interest Deduction</h1>
-      <fg-set
-        path="/isVehiclePurchasedAfterEffectiveDate">
-        <question content-key="flow.other-deductions.fields./isVehiclePurchasedAfterEffectiveDate.question" />
-        <input type="boolean" />
+      <fg-set path="/isVehiclePurchasedAfterEffectiveDate">
+        <question content-key="flow.other-deductions.fields./isVehiclePurchasedAfterEffectiveDate.question"/>
+        <input type="boolean"/>
       </fg-set>
-      <fg-set
-        path="/isQpvIndebtednessIncurredAfterEffectiveDate"
-        if-true="/isVehiclePurchasedAfterEffectiveDate">
-        <question content-key="flow.other-deductions.fields./isQpvIndebtednessIncurredAfterEffectiveDate.question" />
-        <input type="boolean" />
+      <fg-set path="/isQpvIndebtednessIncurredAfterEffectiveDate" if-true="/isVehiclePurchasedAfterEffectiveDate">
+        <question content-key="flow.other-deductions.fields./isQpvIndebtednessIncurredAfterEffectiveDate.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/isVehicleLoanFirstLien"
-        if-true="/isQpvIndebtednessIncurredAfterEffectiveDate">
-        <question content-key="flow.other-deductions.fields./isVehicleLoanFirstLien.question" />
-        <input type="boolean" />
+      <fg-set path="/isVehicleLoanFirstLien" if-true="/isQpvIndebtednessIncurredAfterEffectiveDate">
+        <question content-key="flow.other-deductions.fields./isVehicleLoanFirstLien.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/isVehicleForPersonalUse"
-        if-true="/isVehicleLoanFirstLien">
-        <question content-key="flow.other-deductions.fields./isVehicleForPersonalUse.question" />
-        <input type="boolean" />
+      <fg-set path="/isVehicleForPersonalUse" if-true="/isVehicleLoanFirstLien">
+        <question content-key="flow.other-deductions.fields./isVehicleForPersonalUse.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/isVehicleLoanFinancingFleetSale"
-        if-true="/isVehicleForPersonalUse">
-        <question content-key="flow.other-deductions.fields./isVehicleLoanFinancingFleetSale.question" />
-        <input type="boolean" />
+      <fg-set path="/isVehicleLoanFinancingFleetSale" if-true="/isVehicleForPersonalUse">
+        <question content-key="flow.other-deductions.fields./isVehicleLoanFinancingFleetSale.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/isVehicleLeaseFinanced"
-        if-false="/isVehicleLoanFinancingFleetSale">
-        <question content-key="flow.other-deductions.fields./isVehicleLeaseFinanced.question" />
-        <input type="boolean" />
+      <fg-set path="/isVehicleLeaseFinanced" if-false="/isVehicleLoanFinancingFleetSale">
+        <question content-key="flow.other-deductions.fields./isVehicleLeaseFinanced.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/hasSalvageTitleOrPurchasedToScrap"
-        if-false="/isVehicleLeaseFinanced">
-        <question content-key="flow.other-deductions.fields./hasSalvageTitleOrPurchasedToScrap.question" />
-        <input type="boolean" />
+      <fg-set path="/hasSalvageTitleOrPurchasedToScrap" if-false="/isVehicleLeaseFinanced">
+        <question content-key="flow.other-deductions.fields./hasSalvageTitleOrPurchasedToScrap.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/isTaxpayerOriginalUser"
-        if-false="/hasSalvageTitleOrPurchasedToScrap">
-        <question content-key="flow.other-deductions.fields./isTaxpayerOriginalUser.question" />
-        <input type="boolean" />
+      <fg-set path="/isTaxpayerOriginalUser" if-false="/hasSalvageTitleOrPurchasedToScrap">
+        <question content-key="flow.other-deductions.fields./isTaxpayerOriginalUser.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/doesHaveVIN"
-        if-true="/isTaxpayerOriginalUser">
-        <question content-key="flow.other-deductions.fields./doesHaveVIN.question" />
-        <input type="boolean" />
+      <fg-set path="/doesHaveVIN" if-true="/isTaxpayerOriginalUser">
+        <question content-key="flow.other-deductions.fields./doesHaveVIN.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set
-        path="/isVehicleManufacturedForStreetsRoadsAndHighways" if-true="/doesHaveVIN">
-        <question content-key="flow.other-deductions.fields./isVehicleManufacturedForStreetsRoadsAndHighways.question" />
-        <input type="boolean" />
+      <fg-set path="/isVehicleManufacturedForStreetsRoadsAndHighways" if-true="/doesHaveVIN">
+        <question content-key="flow.other-deductions.fields./isVehicleManufacturedForStreetsRoadsAndHighways.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/isVehicleGTETwoWheels"
-        if-true="/isVehicleManufacturedForStreetsRoadsAndHighways">
-        <question content-key="flow.other-deductions.fields./isVehicleGTETwoWheels.question" />
-        <input type="boolean" />
+      <fg-set path="/isVehicleGTETwoWheels" if-true="/isVehicleManufacturedForStreetsRoadsAndHighways">
+        <question content-key="flow.other-deductions.fields./isVehicleGTETwoWheels.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/isVehicleApplicableType"
-        if-true="/isVehicleGTETwoWheels">
-        <question content-key="flow.other-deductions.fields./isVehicleApplicableType.question" />
-        <input type="boolean" />
+      <fg-set path="/isVehicleApplicableType" if-true="/isVehicleGTETwoWheels">
+        <question content-key="flow.other-deductions.fields./isVehicleApplicableType.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/isVehicleUnderGVWRMax"
-        if-true="/isVehicleApplicableType">
-        <question content-key="flow.other-deductions.fields./isVehicleUnderGVWRMax.question" />
-        <input type="boolean" />
+      <fg-set path="/isVehicleUnderGVWRMax" if-true="/isVehicleApplicableType">
+        <question content-key="flow.other-deductions.fields./isVehicleUnderGVWRMax.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/isVehicleAssembledInUSA"
-        if-true="/isVehicleUnderGVWRMax">
-        <question content-key="flow.other-deductions.fields./isVehicleAssembledInUSA.question" />
-        <input type="boolean" />
+      <fg-set path="/isVehicleAssembledInUSA" if-true="/isVehicleUnderGVWRMax">
+        <question content-key="flow.other-deductions.fields./isVehicleAssembledInUSA.question"/>
+        <input type="boolean"/>
       </fg-set>
-
-      <fg-set path="/personalVehicleLoanInterestAmount"
-        if-true="/isVehicleAssembledInUSA">
-        <question content-key="flow.other-deductions.fields./personalVehicleLoanInterestAmount.question" />
-        <input type="dollar" />
+      <fg-set path="/personalVehicleLoanInterestAmount" if-true="/isVehicleAssembledInUSA">
+        <question content-key="flow.other-deductions.fields./personalVehicleLoanInterestAmount.question"/>
+        <input type="dollar"/>
       </fg-set>
-
-      <p>Your eligibility for the Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show
-          path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction" />
+      <p>Your eligibility for the Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction"/>
       </p>
-      <p>Your Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show
-          path="/qualifiedPersonalVehicleLoanInterestDeduction" />
+      <p>Your Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show path="/qualifiedPersonalVehicleLoanInterestDeduction"/>
       </p>
-
       <h1>
         Deductions</h1>
-
-      <p>Your total below the line deductions are: <fg-show path="/totalDeductions" />
+      <p>Your total below the line deductions are: <fg-show path="/totalDeductions"/>
       </p>
-      <p>Your total OB3 deductions are: <fg-show path="/oB3Deductions" />
+      <p>Your total OB3 deductions are: <fg-show path="/oB3Deductions"/>
       </p>
-      <p>Your Qualified Personal Vehicle Loan Interest Deduction amount is: <fg-show
-          path="/qualifiedPersonalVehicleLoanInterestDeduction" />
+      <p>Your Qualified Personal Vehicle Loan Interest Deduction amount is: <fg-show path="/qualifiedPersonalVehicleLoanInterestDeduction"/>
       </p>
-      <p>Your Senior Deduction amount is: <fg-show path="/seniorDeduction" />
+      <p>Your Senior Deduction amount is: <fg-show path="/seniorDeduction"/>
       </p>
-      <p>Your Qualified Tips Deduction amount is: <fg-show path="/qualifiedTipDeduction" />
+      <p>Your Qualified Tips Deduction amount is: <fg-show path="/qualifiedTipDeduction"/>
       </p>
-      <p>Your Overtime Compensation Deduction amount is: <fg-show
-          path="/overtimeCompensationDeduction" />
+      <p>Your Overtime Compensation Deduction amount is: <fg-show path="/overtimeCompensationDeduction"/>
       </p>
     </section>
   </page>

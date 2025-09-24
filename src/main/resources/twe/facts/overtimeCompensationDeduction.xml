@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
@@ -8,7 +9,6 @@
         <Dollar>12500</Dollar>
       </Derived>
     </Fact>
-
     <Fact path="/maxOvertimeCompensationDeductionAmountMFJ">
       <Name>Maximum overtime compensation deduction for MFJ filers</Name>
       <TaxYear>2025</TaxYear>
@@ -16,7 +16,6 @@
         <Dollar>25000</Dollar>
       </Derived>
     </Fact>
-
     <Fact path="/applicableMaxOvertimeCompensationDeductionAmount">
       <Name>Maximum overtime compensation deduction </Name>
       <TaxYear>2025</TaxYear>
@@ -24,64 +23,61 @@
         <Switch>
           <Case>
             <When>
-              <Dependency path="/isFilingStatusMFJ" />
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Dependency path="/maxOvertimeCompensationDeductionAmountMFJ" />
+              <Dependency path="/maxOvertimeCompensationDeductionAmountMFJ"/>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
-              <Dependency path="/maxOvertimeCompensationDeductionAmountNonMFJ" />
+              <Dependency path="/maxOvertimeCompensationDeductionAmountNonMFJ"/>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
-
     <!--        Overtime Compensation Eligibility
     This is largely based on FLSA Section 7 which determines the definition of 'qualified overtime'
     -->
     <Fact path="/hasOvertimeCompThisTaxYear">
       <Name>Has the taxpayer received overtime comp this tax years?</Name>
-      <Description>OB3 Section 70202 temporarily creating §225(c)(1): overtime comp received after
+      <Description>OB3 Section 70202 temporarily creating &#xA7;225(c)(1): overtime comp received after
         1/1/25 that is "that is in excess of the regular rate (as used in such section) at which
         such individual is employed."</Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/isFlsaNonExempt">
       <!-- This fact is writable today to allow content to handle eligibility. Given the complexity
       of FLSA Section 7, in future iterations to create a better taxpayer experience-->
       <Name>Is the taxpayer non-exempt and eligible for qualified overtime comp under FLSA Section
         7?</Name>
-      <Description>OB3 Section 70202 temporarily creating §225(c)(1): For purposes of this section,
-        the term ‘qualified overtime compensation’ means overtime compensation paid to an individual
+      <Description>OB3 Section 70202 temporarily creating &#xA7;225(c)(1): For purposes of this section,
+        the term &#x2018;qualified overtime compensation&#x2019; means overtime compensation paid to an individual
         required under section 7 of the Fair Labor Standards Act of 1938</Description>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/isEligibleForOvertimeCompensationDeduction">
       <Name>Taxpayer eligible for overtime compensation deduction</Name>
       <Description>Is the taxpayer eligible for the overtime compensation deduction?</Description>
       <Derived>
         <All>
           <Any>
-            <Dependency path="/hasOvertimeCompThisTaxYear" />
-            <Dependency path="/isFlsaNonExempt" />
-            <Dependency path="/primaryFilerHasSSN" />
-            <Dependency path="/secondaryFilerHasSSN" />
+            <Dependency path="/hasOvertimeCompThisTaxYear"/>
+            <Dependency path="/isFlsaNonExempt"/>
+            <Dependency path="/primaryFilerHasSSN"/>
+            <Dependency path="/secondaryFilerHasSSN"/>
           </Any>
           <GreaterThan>
             <Left>
-              <Dependency path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" />
+              <Dependency path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp"/>
             </Left>
             <Right>
               <Dollar>0</Dollar>
@@ -90,14 +86,12 @@
         </All>
       </Derived>
     </Fact>
-
-
     <Fact path="/excessAmountOvertimeCompensationDeductionForMFJFiler">
       <Derived>
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions" />
+              <Dependency path="/magiForOB3BelowLineDeductions"/>
             </Minuend>
             <Subtrahends>
               <Dollar>300000</Dollar>
@@ -107,13 +101,12 @@
         </GreaterOf>
       </Derived>
     </Fact>
-
     <Fact path="/excessAmountOvertimeCompensationDeductionForNonMFJFiler">
       <Derived>
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions" />
+              <Dependency path="/magiForOB3BelowLineDeductions"/>
             </Minuend>
             <Subtrahends>
               <Dollar>150000</Dollar>
@@ -123,42 +116,40 @@
         </GreaterOf>
       </Derived>
     </Fact>
-
     <Fact path="/excessOverThresholdOvertimeCompensationDeduction">
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="/isFilingStatusMFJ" />
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Dependency path="/excessAmountOvertimeCompensationDeductionForMFJFiler" />
+              <Dependency path="/excessAmountOvertimeCompensationDeductionForMFJFiler"/>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
-              <Dependency path="/excessAmountOvertimeCompensationDeductionForNonMFJFiler" />
+              <Dependency path="/excessAmountOvertimeCompensationDeductionForNonMFJFiler"/>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/phaseOutAmountOvertimeCompensationDeduction">
       <Name>Qualified Tip Deduction Phase Out</Name>
       <Description>The amount allowable as a deduction under shall be reduced (but not
         below zero) by $100 for each $1,000 by which the
-        taxpayer’s MAGI exceeds $150,000 ($300,000 in the case of a joint return).
+        taxpayer&#x2019;s MAGI exceeds $150,000 ($300,000 in the case of a joint return).
       </Description>
       <TaxYear>2025</TaxYear>
       <Derived>
         <Multiply>
           <Divide>
             <Dividend>
-              <Dependency path="/excessOverThresholdOvertimeCompensationDeduction" />
+              <Dependency path="/excessOverThresholdOvertimeCompensationDeduction"/>
             </Dividend>
             <Divisors>
               <Dollar>1000</Dollar>
@@ -168,7 +159,6 @@
         </Multiply>
       </Derived>
     </Fact>
-
     <Fact path="/overtimeCompensationDeduction">
       <Name>Overtime Compensation Deduction</Name>
       <Description>OB3 Section 70202: Qualified tip deductions
@@ -185,22 +175,22 @@
           <Switch>
             <Case>
               <When>
-                <Dependency path="/isEligibleForOvertimeCompensationDeduction" />
+                <Dependency path="/isEligibleForOvertimeCompensationDeduction"/>
               </When>
               <Then>
                 <Subtract>
                   <Minuend>
-                    <Dependency path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" />
+                    <Dependency path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp"/>
                   </Minuend>
                   <Subtrahends>
-                    <Dependency path="/phaseOutAmountOvertimeCompensationDeduction" />
+                    <Dependency path="/phaseOutAmountOvertimeCompensationDeduction"/>
                   </Subtrahends>
                 </Subtract>
               </Then>
             </Case>
             <Case>
               <When>
-                <True />
+                <True/>
               </When>
               <Then>
                 <Dollar>0</Dollar>
@@ -211,6 +201,5 @@
         </GreaterOf>
       </Derived>
     </Fact>
-
   </Facts>
 </FactDictionaryModule>

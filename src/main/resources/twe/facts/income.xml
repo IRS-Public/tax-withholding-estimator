@@ -1,108 +1,96 @@
+<?xml version="1.0"?>
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
     <Fact path="/jobs">
       <Description>The taxpayers's jobs</Description>
       <Writable>
-        <Collection />
+        <Collection/>
       </Writable>
     </Fact>
-
     <Fact path="/jobs/*/yearToDateIncome">
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/jobs/*/income">
       <Description>The total income from a specific job</Description>
       <Derived>
         <Subtract>
           <Minuend>
             <Add>
-              <Dependency path="../restOfYearIncome" />
-              <Dependency path="../yearToDateIncome" />
-              <Dependency path="../totalBonusReceived" />
+              <Dependency path="../restOfYearIncome"/>
+              <Dependency path="../yearToDateIncome"/>
+              <Dependency path="../totalBonusReceived"/>
             </Add>
           </Minuend>
           <Subtrahends>
-            <Dependency path="../preTaxDeductions" />
+            <Dependency path="../preTaxDeductions"/>
           </Subtrahends>
         </Subtract>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/preTaxDeductions">
       <Description>Pre-tax deductions from a specific job</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/jobs/*/yearToDateWithholding">
       <Description>The year-to-date withholding from a specific job</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/jobs/*/averageWithholdingPerPayPeriod">
       <Description>The average withholding from a specific job per pay period</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <!-- Note that the limits on dates may be more restrictive in the future based on component
          implementation -->
     <!-- E.g., a future job cannot start before tomorrow -->
     <Fact path="/jobs/*/startDate">
       <Description>The first date the job was held in the current calendar year.</Description>
       <Writable>
-        <Day />
+        <Day/>
         <Limit type="Max">
           <Day>2025-12-31</Day>
         </Limit>
       </Writable>
     </Fact>
-
     <Fact path="/jobs/*/endDate">
       <Description>The last date the job was held in the current calendar year.</Description>
       <Writable>
-        <Day />
+        <Day/>
         <Limit type="Max">
           <Day>2025-12-31</Day>
         </Limit>
       </Writable>
     </Fact>
-
     <Fact path="/jobs/*/mostRecentPayPeriodEnd">
       <Description>
         The date which the most recent pay period ended on for this particular job
       </Description>
-
       <Writable>
-        <Day />
+        <Day/>
         <Limit type="Max">
           <Day>2025-12-31</Day>
         </Limit>
       </Writable>
-
     </Fact>
-
     <Fact path="/jobs/*/mostRecentPayDate">
       <Description>
         The date on which pay was received, corresponding to the most recent pay period that ended
       </Description>
-
       <Writable>
-        <Day />
+        <Day/>
         <Limit type="Max">
           <Day>2025-12-31</Day>
         </Limit>
       </Writable>
     </Fact>
-
     <Fact path="/payFrequencyOptions">
       <Name>Pay Frequency Options</Name>
       <Description>Options for pay frequency</Description>
@@ -115,26 +103,23 @@
         </EnumOptions>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/payFrequency">
       <Name>Pay Frequency</Name>
       <Description>The frequency that the job pays the user. And the length of pay periods.</Description>
       <Writable>
-        <Enum optionsPath="/payFrequencyOptions" />
+        <Enum optionsPath="/payFrequencyOptions"/>
       </Writable>
     </Fact>
-
     <Fact path="/jobs/*/averagePayPerPayPeriod">
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/jobs/*/isPayFrequencyWeekly">
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../payFrequency" />
+            <Dependency path="../payFrequency"/>
           </Left>
           <Right>
             <Enum optionsPath="/payFrequencyOptions">weekly</Enum>
@@ -142,12 +127,11 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/isPayFrequencyBiWeekly">
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../payFrequency" />
+            <Dependency path="../payFrequency"/>
           </Left>
           <Right>
             <Enum optionsPath="/payFrequencyOptions">biWeekly</Enum>
@@ -155,12 +139,11 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/isPayFrequencySemiMonthly">
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../payFrequency" />
+            <Dependency path="../payFrequency"/>
           </Left>
           <Right>
             <Enum optionsPath="/payFrequencyOptions">semiMonthly</Enum>
@@ -168,12 +151,11 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/isPayFrequencyMonthly">
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../payFrequency" />
+            <Dependency path="../payFrequency"/>
           </Left>
           <Right>
             <Enum optionsPath="/payFrequencyOptions">monthly</Enum>
@@ -181,14 +163,13 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/payPeriodLength">
       <Description>Length of pay periods matching the Floor of Publication 15-T values.</Description>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyWeekly" />
+              <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>
               <Int>7</Int>
@@ -196,7 +177,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyBiWeekly" />
+              <Dependency path="../isPayFrequencyBiWeekly"/>
             </When>
             <Then>
               <Int>14</Int>
@@ -204,7 +185,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencySemiMonthly" />
+              <Dependency path="../isPayFrequencySemiMonthly"/>
             </When>
             <Then>
               <Int>15</Int>
@@ -212,7 +193,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyMonthly" />
+              <Dependency path="../isPayFrequencyMonthly"/>
             </When>
             <Then>
               <Int>30</Int>
@@ -221,27 +202,25 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/endDayForSemiMonthlyCalculations">
       <Description>For calculating number of pay periods for semimonthly jobs, substitute 31 with
         30 to compensate for 16 days length of the second pay period in the 31 day months
       </Description>
       <Derived>
         <LesserOf>
-          <Dependency path="../endDate/day" />
+          <Dependency path="../endDate/day"/>
           <Int>30</Int>
         </LesserOf>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/tentativeRemainingPayPeriods">
       <Derived>
         <Switch>
           <Case>
             <When>
               <Any>
-                <Dependency path="../isPayFrequencyWeekly" />
-                <Dependency path="../isPayFrequencyBiWeekly" />
+                <Dependency path="../isPayFrequencyWeekly"/>
+                <Dependency path="../isPayFrequencyBiWeekly"/>
               </Any>
             </When>
             <Then>
@@ -250,15 +229,15 @@
                   <Dividend>
                     <Subtract>
                       <Minuend>
-                        <Dependency path="../endDate/ordinal" />
+                        <Dependency path="../endDate/ordinal"/>
                       </Minuend>
                       <Subtrahends>
-                        <Dependency path="../mostRecentPayPeriodEnd/ordinal" />
+                        <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
                       </Subtrahends>
                     </Subtract>
                   </Dividend>
                   <Divisors>
-                    <Dependency path="../payPeriodLength" />
+                    <Dependency path="../payPeriodLength"/>
                   </Divisors>
                 </Divide>
               </Ceiling>
@@ -266,16 +245,16 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyMonthly" />
+              <Dependency path="../isPayFrequencyMonthly"/>
             </When>
             <Then>
               <Add>
                 <Subtract>
                   <Minuend>
-                    <Dependency path="../endDate/month" />
+                    <Dependency path="../endDate/month"/>
                   </Minuend>
                   <Subtrahends>
-                    <Dependency path="../mostRecentPayPeriodEnd/month" />
+                    <Dependency path="../mostRecentPayPeriodEnd/month"/>
                   </Subtrahends>
                 </Subtract>
                 <Int>1</Int>
@@ -284,7 +263,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencySemiMonthly" />
+              <Dependency path="../isPayFrequencySemiMonthly"/>
             </When>
             <Then>
               <!-- Add three numbers:
@@ -300,19 +279,19 @@
                         <!-- ... when it's not the final month ...  -->
                         <NotEqual>
                           <Left>
-                            <Dependency path="../mostRecentPayDate/month" />
+                            <Dependency path="../mostRecentPayDate/month"/>
                           </Left>
                           <Right>
-                            <Dependency path="../endDate/month" />
+                            <Dependency path="../endDate/month"/>
                           </Right>
                         </NotEqual>
                         <!-- ... and we were last paid in the first half of the month ...  -->
                         <LessThanOrEqual>
                           <Left>
-                            <Dependency path="../mostRecentPayDate/day" />
+                            <Dependency path="../mostRecentPayDate/day"/>
                           </Left>
                           <Right>
-                            <Dependency path="../payPeriodLength" />
+                            <Dependency path="../payPeriodLength"/>
                           </Right>
                         </LessThanOrEqual>
                       </All>
@@ -324,7 +303,7 @@
                   </Case>
                   <Case>
                     <When>
-                      <True />
+                      <True/>
                     </When>
                     <Then>
                       <!-- ... otherwise no more this month.  -->
@@ -340,10 +319,10 @@
                     <Int>2</Int>
                     <Subtract>
                       <Minuend>
-                        <Dependency path="../endDate/month" />
+                        <Dependency path="../endDate/month"/>
                       </Minuend>
                       <Subtrahends>
-                        <Dependency path="../mostRecentPayDate/month" />
+                        <Dependency path="../mostRecentPayDate/month"/>
                         <Int>1</Int>
                       </Subtrahends>
                     </Subtract>
@@ -356,10 +335,10 @@
                       <!-- ... when we were most recently paid in the final month ... -->
                       <Equal>
                         <Left>
-                          <Dependency path="../mostRecentPayDate/month" />
+                          <Dependency path="../mostRecentPayDate/month"/>
                         </Left>
                         <Right>
-                          <Dependency path="../endDate/month" />
+                          <Dependency path="../endDate/month"/>
                         </Right>
                       </Equal>
                     </When>
@@ -371,19 +350,19 @@
                               <!-- ... and it was for the first half ...  -->
                               <LessThanOrEqual>
                                 <Left>
-                                  <Dependency path="../mostRecentPayDate/day" />
+                                  <Dependency path="../mostRecentPayDate/day"/>
                                 </Left>
                                 <Right>
-                                  <Dependency path="../payPeriodLength" />
+                                  <Dependency path="../payPeriodLength"/>
                                 </Right>
                               </LessThanOrEqual>
                               <!-- ... and we have not been paid through the end date ... -->
                               <GreaterThan>
                                 <Left>
-                                  <Dependency path="../endDate/ordinal" />
+                                  <Dependency path="../endDate/ordinal"/>
                                 </Left>
                                 <Right>
-                                  <Dependency path="../mostRecentPayPeriodEnd/ordinal" />
+                                  <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
                                 </Right>
                               </GreaterThan>
                             </All>
@@ -395,7 +374,7 @@
                         </Case>
                         <Case>
                           <When>
-                            <True />
+                            <True/>
                           </When>
                           <Then>
                             <!-- ... otherwise, no payments remain.  -->
@@ -408,7 +387,7 @@
                   <Case>
                     <!-- ... otherwise we're paid twice in the month.  -->
                     <When>
-                      <True />
+                      <True/>
                     </When>
                     <Then>
                       <Int>2</Int>
@@ -421,19 +400,17 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/predictedOrdinalFinalPayDate">
       <Derived>
         <Add>
-          <Dependency path="../mostRecentPayDate/ordinal" />
+          <Dependency path="../mostRecentPayDate/ordinal"/>
           <Multiply>
-            <Dependency path="../tentativeRemainingPayPeriods" />
-            <Dependency path="../payPeriodLength" />
+            <Dependency path="../tentativeRemainingPayPeriods"/>
+            <Dependency path="../payPeriodLength"/>
           </Multiply>
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/remainingPayPeriods">
       <Description>
         This fact adjusts `../tentativeRemainingPayPeriods` by a variable amount based on how many
@@ -454,11 +431,11 @@
               <All>
                 <!-- When it's a leap year -->
                 <!-- Pending the creation of a modulo compnode or a LeapYear constant -->
-                <False />
+                <False/>
                 <!-- And the final pay date is past EOY -->
                 <GreaterThan>
                   <Left>
-                    <Dependency path="../predictedOrdinalFinalPayDate" />
+                    <Dependency path="../predictedOrdinalFinalPayDate"/>
                   </Left>
                   <Right>
                     <Int>366</Int>
@@ -469,7 +446,7 @@
             <Then>
               <Subtract>
                 <Minuend>
-                  <Dependency path="../tentativeRemainingPayPeriods" />
+                  <Dependency path="../tentativeRemainingPayPeriods"/>
                 </Minuend>
                 <Subtrahends>
                   <Ceiling>
@@ -477,7 +454,7 @@
                       <Dividend>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../predictedOrdinalFinalPayDate" />
+                            <Dependency path="../predictedOrdinalFinalPayDate"/>
                           </Minuend>
                           <Subtrahends>
                             <Int>366</Int>
@@ -485,7 +462,7 @@
                         </Subtract>
                       </Dividend>
                       <Divisors>
-                        <Dependency path="../payPeriodLength" />
+                        <Dependency path="../payPeriodLength"/>
                       </Divisors>
                     </Divide>
                   </Ceiling>
@@ -498,7 +475,7 @@
               <!-- Not a leap year and the final pay date is past EOY -->
               <GreaterThan>
                 <Left>
-                  <Dependency path="../predictedOrdinalFinalPayDate" />
+                  <Dependency path="../predictedOrdinalFinalPayDate"/>
                 </Left>
                 <Right>
                   <Int>365</Int>
@@ -508,7 +485,7 @@
             <Then>
               <Subtract>
                 <Minuend>
-                  <Dependency path="../tentativeRemainingPayPeriods" />
+                  <Dependency path="../tentativeRemainingPayPeriods"/>
                 </Minuend>
                 <Subtrahends>
                   <Ceiling>
@@ -516,7 +493,7 @@
                       <Dividend>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../predictedOrdinalFinalPayDate" />
+                            <Dependency path="../predictedOrdinalFinalPayDate"/>
                           </Minuend>
                           <Subtrahends>
                             <Int>365</Int>
@@ -524,7 +501,7 @@
                         </Subtract>
                       </Dividend>
                       <Divisors>
-                        <Dependency path="../payPeriodLength" />
+                        <Dependency path="../payPeriodLength"/>
                       </Divisors>
                     </Divide>
                   </Ceiling>
@@ -535,16 +512,15 @@
           <Case>
             <!-- If final pay date is within the year, then no adjustments are necessary -->
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
-              <Dependency path="../tentativeRemainingPayPeriods" />
+              <Dependency path="../tentativeRemainingPayPeriods"/>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/ordinalEffectiveEndDate">
       <Description>
         The date that is effectively the user's last day worked for this job
@@ -557,36 +533,35 @@
               <Not>
                 <Equal>
                   <Left>
-                    <Dependency path="../tentativeRemainingPayPeriods" />
+                    <Dependency path="../tentativeRemainingPayPeriods"/>
                   </Left>
                   <Right>
-                    <Dependency path="../remainingPayPeriods" />
+                    <Dependency path="../remainingPayPeriods"/>
                   </Right>
                 </Equal>
               </Not>
             </When>
             <Then>
               <Add>
-                <Dependency path="../mostRecentPayPeriodEnd/ordinal" />
+                <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
                 <Multiply>
-                  <Dependency path="../remainingPayPeriods" />
-                  <Dependency path="../payPeriodLength" />
+                  <Dependency path="../remainingPayPeriods"/>
+                  <Dependency path="../payPeriodLength"/>
                 </Multiply>
               </Add>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
-              <Dependency path="../endDate/ordinal" />
+              <Dependency path="../endDate/ordinal"/>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/fractionalRemainingPayPeriods">
       <Description>The fractional amount of remaining pay periods, for use in calculating resulting
         eoy total income.</Description>
@@ -597,10 +572,10 @@
             <When>
               <LessThan>
                 <Left>
-                  <Dependency path="../mostRecentPayPeriodEnd" />
+                  <Dependency path="../mostRecentPayPeriodEnd"/>
                 </Left>
                 <Right>
-                  <Dependency path="../startDate" />
+                  <Dependency path="../startDate"/>
                 </Right>
               </LessThan>
             </When>
@@ -609,15 +584,15 @@
                 <Dividend>
                   <Subtract>
                     <Minuend>
-                      <Dependency path="../endDate/ordinal" />
+                      <Dependency path="../endDate/ordinal"/>
                     </Minuend>
                     <Subtrahends>
-                      <Dependency path="../startDate/ordinal" />
+                      <Dependency path="../startDate/ordinal"/>
                     </Subtrahends>
                   </Subtract>
                 </Dividend>
                 <Divisors>
-                  <Dependency path="../payPeriodLength" />
+                  <Dependency path="../payPeriodLength"/>
                 </Divisors>
               </Divide>
             </Then>
@@ -625,7 +600,7 @@
           <!-- Semimonthly payments -->
           <Case>
             <When>
-              <Dependency path="../isPayFrequencySemiMonthly" />
+              <Dependency path="../isPayFrequencySemiMonthly"/>
             </When>
             <Then>
               <!-- Use diff between the last pay period and end day -->
@@ -634,16 +609,16 @@
                   <GreaterOf>
                     <Int>0</Int>
                     <Add>
-                      <Dependency path="../diffBetweenLastPayDateAndEndDate" />
+                      <Dependency path="../diffBetweenLastPayDateAndEndDate"/>
                       <Multiply>
-                        <Dependency path="../remainingPayPeriods" />
-                        <Dependency path="../payPeriodLength" />
+                        <Dependency path="../remainingPayPeriods"/>
+                        <Dependency path="../payPeriodLength"/>
                       </Multiply>
                     </Add>
                   </GreaterOf>
                 </Dividend>
                 <Divisors>
-                  <Dependency path="../payPeriodLength" />
+                  <Dependency path="../payPeriodLength"/>
                 </Divisors>
               </Divide>
             </Then>
@@ -651,22 +626,22 @@
           <!-- The user has been through at least one pay period -->
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Divide>
                 <Dividend>
                   <Subtract>
                     <Minuend>
-                      <Dependency path="../ordinalEffectiveEndDate" />
+                      <Dependency path="../ordinalEffectiveEndDate"/>
                     </Minuend>
                     <Subtrahends>
-                      <Dependency path="../mostRecentPayPeriodEnd/ordinal" />
+                      <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
                     </Subtrahends>
                   </Subtract>
                 </Dividend>
                 <Divisors>
-                  <Dependency path="../payPeriodLength" />
+                  <Dependency path="../payPeriodLength"/>
                 </Divisors>
               </Divide>
             </Then>
@@ -674,14 +649,12 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/totalBonusReceived">
       <Description>The total amount of bonus per year for a specific job</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/jobs/*/w4Line4a">
       <Description>Form W-4 Line 4(a); also Pub 15-T Worksheet 1A Line 1d.</Description>
       <Derived>
@@ -691,20 +664,20 @@
               <When>
                 <Equal>
                   <Left>
-                    <Dependency path=".." />
+                    <Dependency path=".."/>
                   </Left>
                   <Right>
-                    <Dependency path="/jobSelectedForExtraWithholding" />
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
                   </Right>
                 </Equal>
               </When>
               <Then>
-                <Dependency path="/totalOtherIncome" />
+                <Dependency path="/totalOtherIncome"/>
               </Then>
             </Case>
             <Case>
               <When>
-                <True />
+                <True/>
               </When>
               <Then>
                 <Dollar>0</Dollar>
@@ -714,7 +687,6 @@
         </Round>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/w4Line4b">
       <Description>Form W-4 Line 4(b); also Pub 15-T Worksheet 1A Line 1f.</Description>
       <Derived>
@@ -724,20 +696,20 @@
               <When>
                 <Equal>
                   <Left>
-                    <Dependency path=".." />
+                    <Dependency path=".."/>
                   </Left>
                   <Right>
-                    <Dependency path="/jobSelectedForExtraWithholding" />
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
                   </Right>
                 </Equal>
               </When>
               <Then>
-                <Dependency path="/adjustmentsToIncome" />
+                <Dependency path="/adjustmentsToIncome"/>
               </Then>
             </Case>
             <Case>
               <When>
-                <True />
+                <True/>
               </When>
               <Then>
                 <Dollar>0</Dollar>
@@ -747,7 +719,6 @@
         </Round>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/payPeriodsBeforeW4ChangesAppear">
       <Description>This is derived from the "2197 Scenarios checks" worksheet of the
         "TWESprint1_2025_UAT_WHC2197_2200" spreadsheet.</Description>
@@ -755,7 +726,7 @@
         <Switch>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyWeekly" />
+              <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>
               <Int>2</Int>
@@ -764,8 +735,8 @@
           <Case>
             <When>
               <Any>
-                <Dependency path="../isPayFrequencyBiWeekly" />
-                <Dependency path="../isPayFrequencySemiMonthly" />
+                <Dependency path="../isPayFrequencyBiWeekly"/>
+                <Dependency path="../isPayFrequencySemiMonthly"/>
               </Any>
             </When>
             <Then>
@@ -774,7 +745,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyMonthly" />
+              <Dependency path="../isPayFrequencyMonthly"/>
             </When>
             <Then>
               <Int>0</Int>
@@ -783,7 +754,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/w4Line4c">
       <Derived>
         <Switch>
@@ -791,10 +761,10 @@
             <When>
               <Equal>
                 <Left>
-                  <Dependency path=".." />
+                  <Dependency path=".."/>
                 </Left>
                 <Right>
-                  <Dependency path="/jobSelectedForExtraWithholding" />
+                  <Dependency path="/jobSelectedForExtraWithholding"/>
                 </Right>
               </Equal>
             </When>
@@ -804,20 +774,20 @@
                   <Dividend>
                     <Subtract>
                       <Minuend>
-                        <Dependency path="/totalTax" />
+                        <Dependency path="/totalTax"/>
                       </Minuend>
                       <Subtrahends>
-                        <Dependency path="/totalCommittedWithholding" />
+                        <Dependency path="/totalCommittedWithholding"/>
                       </Subtrahends>
                     </Subtract>
                   </Dividend>
                   <Divisors>
                     <Subtract>
                       <Minuend>
-                        <Dependency path="../remainingPayPeriods" />
+                        <Dependency path="../remainingPayPeriods"/>
                       </Minuend>
                       <Subtrahends>
-                        <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
+                        <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
                       </Subtrahends>
                     </Subtract>
                   </Divisors>
@@ -827,7 +797,7 @@
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Dollar>0</Dollar>
@@ -836,14 +806,13 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/pub15Worksheet1aLine1g">
       <Description>Line 1g of Pub 15-T Worksheet 1A</Description>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="/isFilingStatusMFJ" />
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
               <Dollar>12900</Dollar>
@@ -851,7 +820,7 @@
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Dollar>8600</Dollar>
@@ -860,7 +829,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/adjustedAnnualWageAmount">
       <Description>Line 1i of Pub 15-T Worksheet 1A</Description>
       <Derived>
@@ -870,21 +838,20 @@
             <Minuend>
               <Add>
                 <Multiply>
-                  <Dependency path="../averagePayPerPayPeriod" />
-                  <Dependency path="../payPeriodsPerYear" />
+                  <Dependency path="../averagePayPerPayPeriod"/>
+                  <Dependency path="../payPeriodsPerYear"/>
                 </Multiply>
-                <Dependency path="../w4Line4a" />
+                <Dependency path="../w4Line4a"/>
               </Add>
             </Minuend>
             <Subtrahends>
-              <Dependency path="../w4Line4b" />
-              <Dependency path="../pub15Worksheet1aLine1g" />
+              <Dependency path="../w4Line4b"/>
+              <Dependency path="../pub15Worksheet1aLine1g"/>
             </Subtrahends>
           </Subtract>
         </GreaterOf>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/standardAnnualWithholdingAmount">
       <Description>Standard withholding rate schedules for use when Form W-4 Step 2 box is not
         checked. Line 2g of Pub. 15-T Worksheet 1A. These amounts are generally a base withholding
@@ -897,8 +864,8 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusSingle" />
-                <Dependency module="filingStatus" path="/isFilingStatusMFS" />
+                <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
+                <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
               </Any>
             </When>
             <Then>
@@ -908,7 +875,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>6400</Dollar>
@@ -924,7 +891,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>18325</Dollar>
@@ -936,7 +903,7 @@
                       <Rational>10/100</Rational>
                       <Subtract>
                         <Minuend>
-                          <Dependency path="../adjustedAnnualWageAmount" />
+                          <Dependency path="../adjustedAnnualWageAmount"/>
                         </Minuend>
                         <Subtrahends>
                           <Dollar>6400</Dollar>
@@ -951,7 +918,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>54875</Dollar>
@@ -965,7 +932,7 @@
                         <Rational>12/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>18325</Dollar>
@@ -981,7 +948,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>109750</Dollar>
@@ -995,7 +962,7 @@
                         <Rational>22/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>54875</Dollar>
@@ -1011,7 +978,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>203700</Dollar>
@@ -1025,7 +992,7 @@
                         <Rational>24/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>109750</Dollar>
@@ -1041,7 +1008,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>256925</Dollar>
@@ -1055,7 +1022,7 @@
                         <Rational>32/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>203700</Dollar>
@@ -1071,7 +1038,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>632750</Dollar>
@@ -1085,7 +1052,7 @@
                         <Rational>35/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>256925</Dollar>
@@ -1098,7 +1065,7 @@
                 <!-- $632,750 and above: $188,769.75 plus 37% of the excess over $632,750 -->
                 <Case>
                   <When>
-                    <True />
+                    <True/>
                   </When>
                   <Then>
                     <Add>
@@ -1107,7 +1074,7 @@
                         <Rational>37/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>632750</Dollar>
@@ -1123,8 +1090,8 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
-                <Dependency module="filingStatus" path="/isFilingStatusQSS" />
+                <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+                <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
               </Any>
             </When>
             <Then>
@@ -1134,7 +1101,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>17100</Dollar>
@@ -1151,7 +1118,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>40950</Dollar>
@@ -1163,7 +1130,7 @@
                       <Rational>10/100</Rational>
                       <Subtract>
                         <Minuend>
-                          <Dependency path="../adjustedAnnualWageAmount" />
+                          <Dependency path="../adjustedAnnualWageAmount"/>
                         </Minuend>
                         <Subtrahends>
                           <Dollar>17100</Dollar>
@@ -1178,7 +1145,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>114050</Dollar>
@@ -1192,7 +1159,7 @@
                         <Rational>12/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>40950</Dollar>
@@ -1208,7 +1175,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>223800</Dollar>
@@ -1222,7 +1189,7 @@
                         <Rational>22/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>114050</Dollar>
@@ -1238,7 +1205,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>411700</Dollar>
@@ -1252,7 +1219,7 @@
                         <Rational>24/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>223800</Dollar>
@@ -1268,7 +1235,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>518150</Dollar>
@@ -1282,7 +1249,7 @@
                         <Rational>32/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>411700</Dollar>
@@ -1298,7 +1265,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>768700</Dollar>
@@ -1312,7 +1279,7 @@
                         <Rational>35/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>518150</Dollar>
@@ -1325,7 +1292,7 @@
                 <!-- $768,700 and above: $202,154.50 plus 37% of the excess over $768,700 -->
                 <Case>
                   <When>
-                    <True />
+                    <True/>
                   </When>
                   <Then>
                     <Add>
@@ -1334,7 +1301,7 @@
                         <Rational>37/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>768700</Dollar>
@@ -1349,7 +1316,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency module="filingStatus" path="/isFilingStatusHOH" />
+              <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
             </When>
             <Then>
               <Switch>
@@ -1358,7 +1325,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>13900</Dollar>
@@ -1375,7 +1342,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>30900</Dollar>
@@ -1387,7 +1354,7 @@
                       <Rational>10/100</Rational>
                       <Subtract>
                         <Minuend>
-                          <Dependency path="../adjustedAnnualWageAmount" />
+                          <Dependency path="../adjustedAnnualWageAmount"/>
                         </Minuend>
                         <Subtrahends>
                           <Dollar>13900</Dollar>
@@ -1402,7 +1369,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>78750</Dollar>
@@ -1416,7 +1383,7 @@
                         <Rational>12/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>30900</Dollar>
@@ -1432,7 +1399,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>117250</Dollar>
@@ -1446,7 +1413,7 @@
                         <Rational>22/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>78750</Dollar>
@@ -1462,7 +1429,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>211200</Dollar>
@@ -1476,7 +1443,7 @@
                         <Rational>24/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>117250</Dollar>
@@ -1492,7 +1459,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>264400</Dollar>
@@ -1506,7 +1473,7 @@
                         <Rational>32/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>211200</Dollar>
@@ -1522,7 +1489,7 @@
                   <When>
                     <LessThan>
                       <Left>
-                        <Dependency path="../adjustedAnnualWageAmount" />
+                        <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
                         <Dollar>640250</Dollar>
@@ -1536,7 +1503,7 @@
                         <Rational>35/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>264400</Dollar>
@@ -1549,7 +1516,7 @@
                 <!-- $640,250 and above: $187,031.50 plus 37% of the excess over $640,250 -->
                 <Case>
                   <When>
-                    <True />
+                    <True/>
                   </When>
                   <Then>
                     <Add>
@@ -1558,7 +1525,7 @@
                         <Rational>37/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../adjustedAnnualWageAmount" />
+                            <Dependency path="../adjustedAnnualWageAmount"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>640250</Dollar>
@@ -1574,22 +1541,20 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/tentativeWithholdingAmount">
       <Description>Line 2h of Pub. 15-T Worksheet 1A. The amount from the Annual Method Percentage
         table.</Description>
       <Derived>
         <Divide>
           <Dividend>
-            <Dependency path="../standardAnnualWithholdingAmount" />
+            <Dependency path="../standardAnnualWithholdingAmount"/>
           </Dividend>
           <Divisors>
-            <Dependency path="../payPeriodsPerYear" />
+            <Dependency path="../payPeriodsPerYear"/>
           </Divisors>
         </Divide>
       </Derived>
     </Fact>
-
     <!-- TODO: Eventually implement -->
     <!-- <Fact path="/jobs/*/baseWithholding">
       <Description>Line 3c of Pub. 15-T Worksheet 1A. The per-period withholding amount, excluding
@@ -1615,39 +1580,36 @@
         </GreaterOf>
       </Derived>
     </Fact> -->
-
     <Fact path="/jobs/*/endOfYearProjectedWithholding">
       <Description>The end of year amount withheld for this job if nothing is changed.</Description>
       <Derived>
         <Add>
-          <Dependency path="../yearToDateWithholding" />
+          <Dependency path="../yearToDateWithholding"/>
           <Multiply>
             <!-- Floor is used here to match QA spreadsheet calculation -->
             <Floor>
-              <Dependency path="../fractionalRemainingPayPeriods" />
+              <Dependency path="../fractionalRemainingPayPeriods"/>
             </Floor>
-            <Dependency path="../averageWithholdingPerPayPeriod" />
+            <Dependency path="../averageWithholdingPerPayPeriod"/>
           </Multiply>
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/restOfYearIncome">
       <Description>This amount this job will pay for the rest of the year.</Description>
       <Derived>
         <Multiply>
-          <Dependency path="../averagePayPerPayPeriod" />
-          <Dependency path="../fractionalRemainingPayPeriods" />
+          <Dependency path="../averagePayPerPayPeriod"/>
+          <Dependency path="../fractionalRemainingPayPeriods"/>
         </Multiply>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/payPeriodsPerYear">
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyWeekly" />
+              <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>
               <Int>52</Int>
@@ -1655,7 +1617,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyBiWeekly" />
+              <Dependency path="../isPayFrequencyBiWeekly"/>
             </When>
             <Then>
               <Int>26</Int>
@@ -1663,7 +1625,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencySemiMonthly" />
+              <Dependency path="../isPayFrequencySemiMonthly"/>
             </When>
             <Then>
               <Int>24</Int>
@@ -1671,7 +1633,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyMonthly" />
+              <Dependency path="../isPayFrequencyMonthly"/>
             </When>
             <Then>
               <Int>12</Int>
@@ -1680,41 +1642,40 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/committedWithholding">
       <Description>This job's withholding that cannot change because it's past or within the time
         lag before W4 changes kick in.</Description>
       <Derived>
         <Add>
           <!-- past withholding -->
-          <Dependency path="../yearToDateWithholding" />
+          <Dependency path="../yearToDateWithholding"/>
           <!-- future withholding, too soon to be changed -->
           <Multiply>
-            <Dependency path="../averageWithholdingPerPayPeriod" />
+            <Dependency path="../averageWithholdingPerPayPeriod"/>
             <LesserOf>
               <Floor>
-                <Dependency path="../fractionalRemainingPayPeriods" />
+                <Dependency path="../fractionalRemainingPayPeriods"/>
               </Floor>
-              <Dependency path="../remainingPayPeriods" />
-              <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
+              <Dependency path="../remainingPayPeriods"/>
+              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
             </LesserOf>
           </Multiply>
           <!-- future tentative withholding: result from Pub 15-T Worksheet 1A  -->
           <!-- For now, we treat this as a "given" that won't change. Probably will need to revisit
           this when we get to reducing below tentative withholding. -->
           <Multiply>
-            <Dependency path="../tentativeWithholdingAmount" />
+            <Dependency path="../tentativeWithholdingAmount"/>
             <GreaterOf>
               <Int>0</Int>
               <Subtract>
                 <Minuend>
                   <!-- Floor is used here to match QA spreadsheet calculation -->
                   <Floor>
-                    <Dependency path="../fractionalRemainingPayPeriods" />
+                    <Dependency path="../fractionalRemainingPayPeriods"/>
                   </Floor>
                 </Minuend>
                 <Subtrahends>
-                  <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
+                  <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
                 </Subtrahends>
               </Subtract>
             </GreaterOf>
@@ -1722,7 +1683,6 @@
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/w4pLine2bi">
       <Description>
         Total income from jobs + any W-4 Line 4a incomes (non-job, non-pension/annuity).
@@ -1736,7 +1696,6 @@
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/w4pLine2bii">
       <Description>The sum of all other taxable pension income, excluding the income from the single highest paying pension.</Description>
       <Derived>
@@ -1774,7 +1733,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/w4pLine2biii">
       <Description> Sum of Line 2bi and 2bii, may be negative.</Description>
       <Derived>
@@ -1784,7 +1742,6 @@
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/w4pLine4a">
       <Description>Total non-job or pension/annuity income.</Description>
       <Derived>
@@ -1827,7 +1784,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/w4pLine4b">
       <Description>Other deductions to income.</Description>
       <Derived>
@@ -1868,7 +1824,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/pub15Worksheet1bLine1g">
       <Derived>
         <Switch>
@@ -1891,7 +1846,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/adjustedAnnualPaymentAmount">
       <Description>Projected yearly pay with deductions removed.</Description>
       <Derived>
@@ -1909,7 +1863,6 @@
         </Subtract>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/pub15Worksheet1bLine2cOr2d">
       <Description>Adjusted total other income (2c), or adjusted annual payment amount (2d).</Description>
       <Derived>
@@ -1952,7 +1905,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/pub15Worksheet1bLine2j">
       <Description>
         Standard withholding rate schedules for the form W-4P. Line 2j of Pub. 15-T Worksheet 1B.
@@ -1968,8 +1920,8 @@
             <Case>
               <When>
                 <Any>
-                  <Dependency module="filingStatus" path="/isFilingStatusSingle" />
-                  <Dependency module="filingStatus" path="/isFilingStatusMFS" />
+                  <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
+                  <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
                 </Any>
               </When>
               <Then>
@@ -1979,7 +1931,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>6400</Dollar>
@@ -1995,7 +1947,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>18325</Dollar>
@@ -2007,7 +1959,7 @@
                         <Rational>10/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>6400</Dollar>
@@ -2022,7 +1974,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>54875</Dollar>
@@ -2036,7 +1988,7 @@
                           <Rational>12/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>18325</Dollar>
@@ -2052,7 +2004,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>109750</Dollar>
@@ -2066,7 +2018,7 @@
                           <Rational>22/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>54875</Dollar>
@@ -2082,7 +2034,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>203700</Dollar>
@@ -2096,7 +2048,7 @@
                           <Rational>24/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>109750</Dollar>
@@ -2112,7 +2064,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>256925</Dollar>
@@ -2126,7 +2078,7 @@
                           <Rational>32/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>203700</Dollar>
@@ -2142,7 +2094,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>632750</Dollar>
@@ -2156,7 +2108,7 @@
                           <Rational>35/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>256925</Dollar>
@@ -2169,7 +2121,7 @@
                   <!-- $632,750 and above: $188,769.75 plus 37% of the excess over $632,750 -->
                   <Case>
                     <When>
-                      <True />
+                      <True/>
                     </When>
                     <Then>
                       <Add>
@@ -2178,7 +2130,7 @@
                           <Rational>37/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>632750</Dollar>
@@ -2194,8 +2146,8 @@
             <Case>
               <When>
                 <Any>
-                  <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
-                  <Dependency module="filingStatus" path="/isFilingStatusQSS" />
+                  <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+                  <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
                 </Any>
               </When>
               <Then>
@@ -2205,7 +2157,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>17100</Dollar>
@@ -2222,7 +2174,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>40950</Dollar>
@@ -2234,7 +2186,7 @@
                         <Rational>10/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>17100</Dollar>
@@ -2249,7 +2201,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>114050</Dollar>
@@ -2263,7 +2215,7 @@
                           <Rational>12/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>40950</Dollar>
@@ -2279,7 +2231,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>223800</Dollar>
@@ -2293,7 +2245,7 @@
                           <Rational>22/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>114050</Dollar>
@@ -2309,7 +2261,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>411700</Dollar>
@@ -2323,7 +2275,7 @@
                           <Rational>24/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>223800</Dollar>
@@ -2339,7 +2291,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>518150</Dollar>
@@ -2353,7 +2305,7 @@
                           <Rational>32/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>411700</Dollar>
@@ -2369,7 +2321,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>768700</Dollar>
@@ -2383,7 +2335,7 @@
                           <Rational>35/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>518150</Dollar>
@@ -2396,7 +2348,7 @@
                   <!-- $768,700 and above: $202,154.50 plus 37% of the excess over $768,700 -->
                   <Case>
                     <When>
-                      <True />
+                      <True/>
                     </When>
                     <Then>
                       <Add>
@@ -2405,7 +2357,7 @@
                           <Rational>37/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>768700</Dollar>
@@ -2420,7 +2372,7 @@
             </Case>
             <Case>
               <When>
-                <Dependency module="filingStatus" path="/isFilingStatusHOH" />
+                <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
               </When>
               <Then>
                 <Switch>
@@ -2429,7 +2381,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>13900</Dollar>
@@ -2446,7 +2398,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>30900</Dollar>
@@ -2458,7 +2410,7 @@
                         <Rational>10/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                            <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>13900</Dollar>
@@ -2473,7 +2425,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>78750</Dollar>
@@ -2487,7 +2439,7 @@
                           <Rational>12/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>30900</Dollar>
@@ -2503,7 +2455,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>117250</Dollar>
@@ -2517,7 +2469,7 @@
                           <Rational>22/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>78750</Dollar>
@@ -2533,7 +2485,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>211200</Dollar>
@@ -2547,7 +2499,7 @@
                           <Rational>24/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>117250</Dollar>
@@ -2563,7 +2515,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>264400</Dollar>
@@ -2577,7 +2529,7 @@
                           <Rational>32/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>211200</Dollar>
@@ -2593,7 +2545,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                          <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
                           <Dollar>640250</Dollar>
@@ -2607,7 +2559,7 @@
                           <Rational>35/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>264400</Dollar>
@@ -2620,7 +2572,7 @@
                   <!-- $640,250 and above: $187,031.50 plus 37% of the excess over $640,250 -->
                   <Case>
                     <When>
-                      <True />
+                      <True/>
                     </When>
                     <Then>
                       <Add>
@@ -2629,7 +2581,7 @@
                           <Rational>37/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2cOr2d" />
+                              <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>640250</Dollar>
@@ -2646,7 +2598,6 @@
         </Round>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/pub15Worksheet1bLine2m">
       <Derived>
         <GreaterOf>
@@ -2658,7 +2609,6 @@
         </GreaterOf>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/pub15Worksheet1bLine2s">
       <Description>Standard withholding rate schedules for use when Form W-4P Step 2(b)iii box is filled.
         Line 2s of Pub. 15-T Worksheet 1b. These amounts are generally a base withholding
@@ -2673,8 +2623,8 @@
             <Case>
               <When>
                 <Any>
-                  <Dependency module="filingStatus" path="/isFilingStatusSingle" />
-                  <Dependency module="filingStatus" path="/isFilingStatusMFS" />
+                  <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
+                  <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
                 </Any>
               </When>
               <Then>
@@ -2684,7 +2634,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>6400</Dollar>
@@ -2700,7 +2650,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>18325</Dollar>
@@ -2712,7 +2662,7 @@
                         <Rational>10/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../pub15Worksheet1bLine2m" />
+                            <Dependency path="../pub15Worksheet1bLine2m"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>6400</Dollar>
@@ -2727,7 +2677,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>54875</Dollar>
@@ -2741,7 +2691,7 @@
                           <Rational>12/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>18325</Dollar>
@@ -2757,7 +2707,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>109750</Dollar>
@@ -2771,7 +2721,7 @@
                           <Rational>22/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>54875</Dollar>
@@ -2787,7 +2737,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>203700</Dollar>
@@ -2801,7 +2751,7 @@
                           <Rational>24/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>109750</Dollar>
@@ -2817,7 +2767,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>256925</Dollar>
@@ -2831,7 +2781,7 @@
                           <Rational>32/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>203700</Dollar>
@@ -2847,7 +2797,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>632750</Dollar>
@@ -2861,7 +2811,7 @@
                           <Rational>35/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>256925</Dollar>
@@ -2874,7 +2824,7 @@
                   <!-- $632,750 and above: $188,769.75 plus 37% of the excess over $632,750 -->
                   <Case>
                     <When>
-                      <True />
+                      <True/>
                     </When>
                     <Then>
                       <Add>
@@ -2883,7 +2833,7 @@
                           <Rational>37/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>632750</Dollar>
@@ -2899,8 +2849,8 @@
             <Case>
               <When>
                 <Any>
-                  <Dependency module="filingStatus" path="/isFilingStatusMFJ" />
-                  <Dependency module="filingStatus" path="/isFilingStatusQSS" />
+                  <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+                  <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
                 </Any>
               </When>
               <Then>
@@ -2910,7 +2860,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>17100</Dollar>
@@ -2927,7 +2877,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>40950</Dollar>
@@ -2939,7 +2889,7 @@
                         <Rational>10/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../pub15Worksheet1bLine2m" />
+                            <Dependency path="../pub15Worksheet1bLine2m"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>17100</Dollar>
@@ -2954,7 +2904,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>114050</Dollar>
@@ -2968,7 +2918,7 @@
                           <Rational>12/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>40950</Dollar>
@@ -2984,7 +2934,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>223800</Dollar>
@@ -2998,7 +2948,7 @@
                           <Rational>22/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>114050</Dollar>
@@ -3014,7 +2964,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>411700</Dollar>
@@ -3028,7 +2978,7 @@
                           <Rational>24/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>223800</Dollar>
@@ -3044,7 +2994,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>518150</Dollar>
@@ -3058,7 +3008,7 @@
                           <Rational>32/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>411700</Dollar>
@@ -3074,7 +3024,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>768700</Dollar>
@@ -3088,7 +3038,7 @@
                           <Rational>35/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>518150</Dollar>
@@ -3101,7 +3051,7 @@
                   <!-- $768,700 and above: $202,154.50 plus 37% of the excess over $768,700 -->
                   <Case>
                     <When>
-                      <True />
+                      <True/>
                     </When>
                     <Then>
                       <Add>
@@ -3110,7 +3060,7 @@
                           <Rational>37/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>768700</Dollar>
@@ -3125,7 +3075,7 @@
             </Case>
             <Case>
               <When>
-                <Dependency module="filingStatus" path="/isFilingStatusHOH" />
+                <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
               </When>
               <Then>
                 <Switch>
@@ -3134,7 +3084,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>13900</Dollar>
@@ -3151,7 +3101,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>30900</Dollar>
@@ -3163,7 +3113,7 @@
                         <Rational>10/100</Rational>
                         <Subtract>
                           <Minuend>
-                            <Dependency path="../pub15Worksheet1bLine2m" />
+                            <Dependency path="../pub15Worksheet1bLine2m"/>
                           </Minuend>
                           <Subtrahends>
                             <Dollar>13900</Dollar>
@@ -3178,7 +3128,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>78750</Dollar>
@@ -3192,7 +3142,7 @@
                           <Rational>12/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>30900</Dollar>
@@ -3208,7 +3158,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>117250</Dollar>
@@ -3222,7 +3172,7 @@
                           <Rational>22/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>78750</Dollar>
@@ -3238,7 +3188,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>211200</Dollar>
@@ -3252,7 +3202,7 @@
                           <Rational>24/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>117250</Dollar>
@@ -3268,7 +3218,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>264400</Dollar>
@@ -3282,7 +3232,7 @@
                           <Rational>32/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>211200</Dollar>
@@ -3298,7 +3248,7 @@
                     <When>
                       <LessThan>
                         <Left>
-                          <Dependency path="../pub15Worksheet1bLine2m" />
+                          <Dependency path="../pub15Worksheet1bLine2m"/>
                         </Left>
                         <Right>
                           <Dollar>640250</Dollar>
@@ -3312,7 +3262,7 @@
                           <Rational>35/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>264400</Dollar>
@@ -3325,7 +3275,7 @@
                   <!-- $640,250 and above: $187,031.50 plus 37% of the excess over $640,250 -->
                   <Case>
                     <When>
-                      <True />
+                      <True/>
                     </When>
                     <Then>
                       <Add>
@@ -3334,7 +3284,7 @@
                           <Rational>37/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../pub15Worksheet1bLine2m" />
+                              <Dependency path="../pub15Worksheet1bLine2m"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>640250</Dollar>
@@ -3351,7 +3301,6 @@
         </Round>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/pub15Worksheet1bLine2t">
       <Derived>
         <GreaterOf>
@@ -3367,7 +3316,6 @@
         </GreaterOf>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/baseAnnualWithholding">
       <Description>
         The tentative annual withholding amount. Pub. 15T Worksheet 1B Line 2u.
@@ -3402,7 +3350,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/basePerPayPeriodWithholding">
       <Derived>
         <Divide>
@@ -3415,7 +3362,6 @@
         </Divide>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/pub15FinalWithholding">
       <Description>
         Line 4c of Pub. 15-T Worksheet 1B. The per-period withholding amount sub credits, excluding
@@ -3442,7 +3388,6 @@
         </Divide>
       </Derived>
     </Fact>
-
     <Fact path="/jobsAvailableForExtraWithholding">
       <Description>Jobs that are ended or end too soon are not candidates for extra withholding on a
         new W4.</Description>
@@ -3451,16 +3396,15 @@
         <Filter path="/jobs">
           <GreaterThan>
             <Left>
-              <Dependency path="/jobs/*/remainingPayPeriods" />
+              <Dependency path="/jobs/*/remainingPayPeriods"/>
             </Left>
             <Right>
-              <Dependency path="/jobs/*/payPeriodsBeforeW4ChangesAppear" />
+              <Dependency path="/jobs/*/payPeriodsBeforeW4ChangesAppear"/>
             </Right>
           </GreaterThan>
         </Filter>
       </Derived>
     </Fact>
-
     <Fact path="/jobSelectedForExtraWithholding">
       <Description>The job selected for extra withholding on a new W4. The W4 refers to this as the
         "highest paying job".</Description>
@@ -3471,11 +3415,11 @@
               <Equal>
                 <Left>
                   <Maximum>
-                    <Dependency path="/jobsAvailableForExtraWithholding/*/restOfYearIncome" />
+                    <Dependency path="/jobsAvailableForExtraWithholding/*/restOfYearIncome"/>
                   </Maximum>
                 </Left>
                 <Right>
-                  <Dependency path="restOfYearIncome" />
+                  <Dependency path="restOfYearIncome"/>
                 </Right>
               </Equal>
             </Filter>
@@ -3486,37 +3430,33 @@
         </IndexOf>
       </Derived>
     </Fact>
-
     <Fact path="/totalJobsIncome">
       <Description>Total income for all jobs</Description>
       <Derived>
         <CollectionSum>
-          <Dependency path="/jobs/*/income" />
+          <Dependency path="/jobs/*/income"/>
         </CollectionSum>
       </Derived>
     </Fact>
-
     <Fact path="/totalYearToDateJobsWithholding">
       <Description>Total actual withholding for all jobs</Description>
       <Derived>
         <CollectionSum>
-          <Dependency path="/jobs/*/yearToDateWithholding" />
+          <Dependency path="/jobs/*/yearToDateWithholding"/>
         </CollectionSum>
       </Derived>
     </Fact>
-
     <Fact path="/totalEndOfYearProjectedWithholding">
       <Description>The amount withheld for all jobs if nothing is changed.</Description>
       <Derived>
         <Add>
           <CollectionSum>
-            <Dependency path="/jobs/*/endOfYearProjectedWithholding" />
+            <Dependency path="/jobs/*/endOfYearProjectedWithholding"/>
           </CollectionSum>
           <Dependency path="/pensionsTotalEndOfYearProjectedWithholding"/>
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/withholdingGap">
       <Description>The rest-of-year withholding gap: taxes owed if nothing is changed.</Description>
       <Derived>
@@ -3524,24 +3464,22 @@
           <Dollar>0</Dollar>
           <Subtract>
             <Minuend>
-              <Dependency path="/totalTax" />
+              <Dependency path="/totalTax"/>
             </Minuend>
             <Subtrahends>
-              <Dependency path="/totalEndOfYearProjectedWithholding" />
+              <Dependency path="/totalEndOfYearProjectedWithholding"/>
             </Subtrahends>
           </Subtract>
         </GreaterOf>
       </Derived>
     </Fact>
-
     <Fact path="/totalCommittedWithholding">
       <Derived>
         <CollectionSum>
-          <Dependency path="/jobs/*/committedWithholding" />
+          <Dependency path="/jobs/*/committedWithholding"/>
         </CollectionSum>
       </Derived>
     </Fact>
-
     <!-- This is a temporary definition, kind of circular with other facts. -->
     <Fact path="/totalNonJobsIncome">
       <Derived>
@@ -3549,97 +3487,86 @@
           <Dollar>0</Dollar>
           <Subtract>
             <Minuend>
-              <Dependency path="/totalIncome" />
+              <Dependency path="/totalIncome"/>
             </Minuend>
             <Subtrahends>
-              <Dependency path="/totalJobsIncome" />
-              <Dependency path="/selfEmploymentIncome" />
+              <Dependency path="/totalJobsIncome"/>
+              <Dependency path="/selfEmploymentIncome"/>
             </Subtrahends>
           </Subtract>
         </GreaterOf>
       </Derived>
     </Fact>
-
     <Fact path="/pensions">
       <Writable>
-        <Collection />
+        <Collection/>
       </Writable>
     </Fact>
-
     <Fact path="/pensions/*/startDate">
       <Description>
         The start date of the pension this year
       </Description>
       <Writable>
-        <Day />
+        <Day/>
       </Writable>
     </Fact>
-
     <Fact path="/pensions/*/endDate">
       <Description>
         The end date of the pension this year
       </Description>
       <Writable>
-        <Day />
+        <Day/>
       </Writable>
     </Fact>
-
     <Fact path="/pensions/*/averagePayPerPayPeriod">
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/pensions/*/averageWithholdingPerPayPeriod">
       <Description> Average withholding from a specific pension per pay-period. </Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/pensions/*/yearToDateIncome">
       <Writable>
         <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/pensions/*/income">
       <Derived>
         <Add>
           <Multiply>
-            <Dependency path="../averagePayPerPayPeriod" />
-            <Dependency path="../remainingPayDates" />
+            <Dependency path="../averagePayPerPayPeriod"/>
+            <Dependency path="../remainingPayDates"/>
           </Multiply>
-          <Dependency path="../yearToDateIncome" />
+          <Dependency path="../yearToDateIncome"/>
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/yearToDateWithholding">
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/pensions/*/mostRecentPayDate">
       <Writable>
-        <Day />
+        <Day/>
       </Writable>
     </Fact>
-
     <Fact path="/pensions/*/payFrequency">
       <Writable>
-        <Enum optionsPath="/payFrequencyOptions" />
+        <Enum optionsPath="/payFrequencyOptions"/>
       </Writable>
     </Fact>
-
     <Fact path="/pensions/*/payPeriodLength">
       <Description>Length of pay periods matching the Floor of Publication 15-T values.</Description>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyWeekly" />
+              <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>
               <Int>7</Int>
@@ -3647,7 +3574,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyBiWeekly" />
+              <Dependency path="../isPayFrequencyBiWeekly"/>
             </When>
             <Then>
               <Int>14</Int>
@@ -3655,7 +3582,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencySemiMonthly" />
+              <Dependency path="../isPayFrequencySemiMonthly"/>
             </When>
             <Then>
               <Int>15</Int>
@@ -3663,7 +3590,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyMonthly" />
+              <Dependency path="../isPayFrequencyMonthly"/>
             </When>
             <Then>
               <Int>30</Int>
@@ -3672,13 +3599,12 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/payPeriodsPerYear">
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyWeekly" />
+              <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>
               <Int>52</Int>
@@ -3686,7 +3612,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyBiWeekly" />
+              <Dependency path="../isPayFrequencyBiWeekly"/>
             </When>
             <Then>
               <Int>26</Int>
@@ -3694,7 +3620,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencySemiMonthly" />
+              <Dependency path="../isPayFrequencySemiMonthly"/>
             </When>
             <Then>
               <Int>24</Int>
@@ -3702,7 +3628,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyMonthly" />
+              <Dependency path="../isPayFrequencyMonthly"/>
             </When>
             <Then>
               <Int>12</Int>
@@ -3711,7 +3637,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/payPeriodsBeforeW4ChangesAppear">
       <Description>This is derived from the "2197 Scenarios checks" worksheet of the
         "TWESprint1_2025_UAT_WHC2197_2200" spreadsheet.</Description>
@@ -3719,7 +3644,7 @@
         <Switch>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyWeekly" />
+              <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>
               <Int>2</Int>
@@ -3728,8 +3653,8 @@
           <Case>
             <When>
               <Any>
-                <Dependency path="../isPayFrequencyBiWeekly" />
-                <Dependency path="../isPayFrequencySemiMonthly" />
+                <Dependency path="../isPayFrequencyBiWeekly"/>
+                <Dependency path="../isPayFrequencySemiMonthly"/>
               </Any>
             </When>
             <Then>
@@ -3738,7 +3663,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyMonthly" />
+              <Dependency path="../isPayFrequencyMonthly"/>
             </When>
             <Then>
               <Int>0</Int>
@@ -3747,12 +3672,11 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/isPayFrequencyWeekly">
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../payFrequency" />
+            <Dependency path="../payFrequency"/>
           </Left>
           <Right>
             <Enum optionsPath="/payFrequencyOptions">weekly</Enum>
@@ -3760,12 +3684,11 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/isPayFrequencyBiWeekly">
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../payFrequency" />
+            <Dependency path="../payFrequency"/>
           </Left>
           <Right>
             <Enum optionsPath="/payFrequencyOptions">biWeekly</Enum>
@@ -3773,13 +3696,11 @@
         </Equal>
       </Derived>
     </Fact>
-
-
     <Fact path="/pensions/*/isPayFrequencySemiMonthly">
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../payFrequency" />
+            <Dependency path="../payFrequency"/>
           </Left>
           <Right>
             <Enum optionsPath="/payFrequencyOptions">semiMonthly</Enum>
@@ -3787,12 +3708,11 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/isPayFrequencyMonthly">
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../payFrequency" />
+            <Dependency path="../payFrequency"/>
           </Left>
           <Right>
             <Enum optionsPath="/payFrequencyOptions">monthly</Enum>
@@ -3800,35 +3720,32 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/remainingPayDates">
       <Description>
         Rough initial calculation for the number of remaining pay dates.
         Works as-is for week-based pay frequencies. Needs further testing and
         modification for month-based.
       </Description>
-
       <Derived>
         <Floor>
           <Divide>
             <Dividend>
               <Subtract>
                 <Minuend>
-                  <Dependency path="../endDate/ordinal" />
+                  <Dependency path="../endDate/ordinal"/>
                 </Minuend>
                 <Subtrahends>
-                  <Dependency path="../mostRecentPayDate/ordinal" />
+                  <Dependency path="../mostRecentPayDate/ordinal"/>
                 </Subtrahends>
               </Subtract>
             </Dividend>
             <Divisors>
-              <Dependency path="../payPeriodLength" />
+              <Dependency path="../payPeriodLength"/>
             </Divisors>
           </Divide>
         </Floor>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/restOfYearIncome">
       <Derived>
         <Multiply>
@@ -3837,7 +3754,6 @@
         </Multiply>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/endOfYearProjectedWithholding">
       <Derived>
         <Add>
@@ -3852,7 +3768,6 @@
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/pensions/*/w4pLine4cRecommendation">
       <Derived>
         <Switch>
@@ -3886,26 +3801,26 @@
                       <!-- Divide the gap by the number of pay periods impacted by a new W4. -->
                       <Divide>
                         <Dividend>
-                          <Dependency path="/withholdingGap" />
+                          <Dependency path="/withholdingGap"/>
                         </Dividend>
                         <Divisors>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="../remainingPayDates" />
+                              <Dependency path="../remainingPayDates"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dependency path="../payPeriodsBeforeW4ChangesAppear" />
+                              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
                             </Subtrahends>
                           </Subtract>
                         </Divisors>
                       </Divide>
                       <!-- Add it to their existing rate of withholding. -->
-                      <Dependency path="../averageWithholdingPerPayPeriod" />
+                      <Dependency path="../averageWithholdingPerPayPeriod"/>
                     </Add>
                   </Minuend>
                   <Subtrahends>
                     <!-- Subtract the base withholding from Pub 15-T so we're left with the extra. -->
-                    <Dependency path="../basePerPayPeriodWithholding" />
+                    <Dependency path="../basePerPayPeriodWithholding"/>
                   </Subtrahends>
                 </Subtract>
               </Round>
@@ -3913,7 +3828,7 @@
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Dollar>0</Dollar>
@@ -3922,7 +3837,6 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/pensionsAvailableForExtraWithholding">
       <Derived>
         <Filter path="/pensions">
@@ -3937,7 +3851,6 @@
         </Filter>
       </Derived>
     </Fact>
-
     <Fact path="/pensionSelectedForExtraWithholding">
       <Derived>
         <IndexOf>
@@ -3961,7 +3874,6 @@
         </IndexOf>
       </Derived>
     </Fact>
-
     <Fact path="/totalPensionsIncome">
       <Description> Total income from all pensions. </Description>
       <Derived>
@@ -3970,7 +3882,6 @@
         </CollectionSum>
       </Derived>
     </Fact>
-
     <Fact path="/pensionsTotalEndOfYearProjectedWithholding">
       <Derived>
         <CollectionSum>
@@ -3978,176 +3889,155 @@
         </CollectionSum>
       </Derived>
     </Fact>
-
     <Fact path="/netSelfEmploymentIncome">
       <Description>Net self-employment income</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/ordinaryDividendsIncome">
       <Description>Ordinary dividends income</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/unemploymentInsuranceIncome">
       <Description>Unemployment insurance income</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/interestExcludingNonTaxableIncome">
       <Description>Interest income excluding non-taxable interest</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/shortTermCapitalGainsIncome">
       <Description>Short term capital gains income</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/taxableScholarshipIncome">
       <Description>Taxable income from scholarships</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/alimonyReceivedIncome">
       <Description>Alimony received income</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/sCorpNonPassiveIncome">
       <Description>S-corp non-passive income (Schedule K1)</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/netScheduleEIncome">
       <Description>Net Schedule E income</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/nonSpecificOtherIncome">
       <Description>Non-specific other income</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
     </Fact>
-
     <Fact path="/totalOtherIncome">
       <Derived>
         <Add>
-          <Dependency path="/netSelfEmploymentIncome" />
-          <Dependency path="/ordinaryDividendsIncome" />
-          <Dependency path="/unemploymentInsuranceIncome" />
-          <Dependency path="/interestExcludingNonTaxableIncome" />
-          <Dependency path="/shortTermCapitalGainsIncome" />
-          <Dependency path="/taxableScholarshipIncome" />
-          <Dependency path="/alimonyReceivedIncome" />
-          <Dependency path="/sCorpNonPassiveIncome" />
-          <Dependency path="/netScheduleEIncome" />
-          <Dependency path="/nonSpecificOtherIncome" />
+          <Dependency path="/netSelfEmploymentIncome"/>
+          <Dependency path="/ordinaryDividendsIncome"/>
+          <Dependency path="/unemploymentInsuranceIncome"/>
+          <Dependency path="/interestExcludingNonTaxableIncome"/>
+          <Dependency path="/shortTermCapitalGainsIncome"/>
+          <Dependency path="/taxableScholarshipIncome"/>
+          <Dependency path="/alimonyReceivedIncome"/>
+          <Dependency path="/sCorpNonPassiveIncome"/>
+          <Dependency path="/netScheduleEIncome"/>
+          <Dependency path="/nonSpecificOtherIncome"/>
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/totalIncome">
       <Derived>
         <Round>
           <Add>
-            <Dependency path="/totalJobsIncome" />
-            <Dependency path="/totalPensionsIncome" />
-            <Dependency path="/totalOtherIncome" />
+            <Dependency path="/totalJobsIncome"/>
+            <Dependency path="/totalPensionsIncome"/>
+            <Dependency path="/totalOtherIncome"/>
           </Add>
         </Round>
       </Derived>
     </Fact>
-
-
     <!-- Sections 911, 931, and 933 are carved out for OB3 MAGI calculations for senior deduction
     and car loan interest deduction
          Default to 0 for right now-->
     <Fact path="/foreignEarnedIncome">
-      <Name>§ 911 Foreign Earned Income Exclusion- Foreign Earned Income</Name>
+      <Name>&#xA7; 911 Foreign Earned Income Exclusion- Foreign Earned Income</Name>
       <Derived>
         <Dollar>0</Dollar>
       </Derived>
     </Fact>
-
     <Fact path="/overseasTerritoryIncome">
-      <Name>§ 931 - Income from sources within Guam, American Samoa, or the Northern Mariana Islands
+      <Name>&#xA7; 931 - Income from sources within Guam, American Samoa, or the Northern Mariana Islands
       </Name>
       <Derived>
         <Dollar>0</Dollar>
       </Derived>
     </Fact>
-
     <Fact path="/puertoRicoEarnedIncome">
-      <Name>§ 933. Income from sources within Puerto Rico</Name>
+      <Name>&#xA7; 933. Income from sources within Puerto Rico</Name>
       <Derived>
         <Dollar>0</Dollar>
       </Derived>
     </Fact>
-
     <Fact path="/qualifiedTipIncome">
       <Name>Qualified Tip Income</Name>
-      <Description>OB3 §70201; IRC §224. Qualified tip income</Description>
+      <Description>OB3 &#xA7;70201; IRC &#xA7;224. Qualified tip income</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-
     <Fact path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp">
       <Name>Overtime Compensation Excluding Qualified Tip Overtime Comp</Name>
-      <Description>OB3 §70202 IRC §225(c)(2). Overtime compensation excluding all qualified tips
+      <Description>OB3 &#xA7;70202 IRC &#xA7;225(c)(2). Overtime compensation excluding all qualified tips
         defined
-        in IRC §224 that were received as part of qualified overtime compensation</Description>
+        in IRC &#xA7;224 that were received as part of qualified overtime compensation</Description>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-
     <Fact path="/selfEmploymentIncome">
       <Name>Self Employment Income</Name>
       <Writable>
-        <Dollar />
+        <Dollar/>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-
     <Fact path="/incomeToIncludeForOB3MAGI">
       <Derived>
         <Add>
-          <Dependency path="/foreignEarnedIncome" />
-          <Dependency path="/overseasTerritoryIncome" />
-          <Dependency path="/puertoRicoEarnedIncome" />
+          <Dependency path="/foreignEarnedIncome"/>
+          <Dependency path="/overseasTerritoryIncome"/>
+          <Dependency path="/puertoRicoEarnedIncome"/>
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/nextPayDayForSemiMonthlyCalculations">
       <Description>For semimonthly pay calculate the second pay date, based on the provided day when
         the most recent pay period ended. Example: last pay day is 18th, then the other pay day of
@@ -4158,7 +4048,7 @@
             <When>
               <GreaterThan>
                 <Left>
-                  <Dependency path="../mostRecentPayPeriodEnd/day" />
+                  <Dependency path="../mostRecentPayPeriodEnd/day"/>
                 </Left>
                 <Right>
                   <Int>15</Int>
@@ -4168,7 +4058,7 @@
             <Then>
               <Subtract>
                 <Minuend>
-                  <Dependency path="../mostRecentPayPeriodEnd/day" />
+                  <Dependency path="../mostRecentPayPeriodEnd/day"/>
                 </Minuend>
                 <Subtrahends>
                   <Int>15</Int>
@@ -4178,11 +4068,11 @@
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <Add>
-                <Dependency path="../mostRecentPayPeriodEnd/day" />
+                <Dependency path="../mostRecentPayPeriodEnd/day"/>
                 <Int>15</Int>
               </Add>
             </Then>
@@ -4190,18 +4080,16 @@
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/latestPayDateForSemimonthlyCalculations">
       <Description>For semimonthly pay determine which one of two monthly pay days is later.
         Example: pay days are 5 and 20. Use 20 for diff calculation</Description>
       <Derived>
         <GreaterOf>
-          <Dependency path="../mostRecentPayPeriodEnd/day" />
-          <Dependency path="../nextPayDayForSemiMonthlyCalculations" />
+          <Dependency path="../mostRecentPayPeriodEnd/day"/>
+          <Dependency path="../nextPayDayForSemiMonthlyCalculations"/>
         </GreaterOf>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/closestPayDateForSemimonthlyCalculations">
       <Description>For semimonthly pay determine which one of two monthly pay days is earlier than a
         end date. Example: pay days are 5 and 20. End day is 15. Use 5 for diff calculation.</Description>
@@ -4211,29 +4099,28 @@
             <When>
               <GreaterThan>
                 <Left>
-                  <Dependency path="../endDayForSemiMonthlyCalculations" />
+                  <Dependency path="../endDayForSemiMonthlyCalculations"/>
                 </Left>
                 <Right>
-                  <Dependency path="../nextPayDayForSemiMonthlyCalculations" />
+                  <Dependency path="../nextPayDayForSemiMonthlyCalculations"/>
                 </Right>
               </GreaterThan>
             </When>
             <Then>
-              <Dependency path="../mostRecentPayPeriodEnd/day" />
+              <Dependency path="../mostRecentPayPeriodEnd/day"/>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
-              <Dependency path="../nextPayDayForSemiMonthlyCalculations" />
+              <Dependency path="../nextPayDayForSemiMonthlyCalculations"/>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/jobs/*/diffBetweenLastPayDateAndEndDate">
       <Description>For semimonthly pay calculate diff between the last pay date and the end date</Description>
       <Derived>
@@ -4245,18 +4132,18 @@
               <All>
                 <GreaterThanOrEqual>
                   <Left>
-                    <Dependency path="../endDayForSemiMonthlyCalculations" />
+                    <Dependency path="../endDayForSemiMonthlyCalculations"/>
                   </Left>
                   <Right>
-                    <Dependency path="../mostRecentPayPeriodEnd/day" />
+                    <Dependency path="../mostRecentPayPeriodEnd/day"/>
                   </Right>
                 </GreaterThanOrEqual>
                 <GreaterThanOrEqual>
                   <Left>
-                    <Dependency path="../endDayForSemiMonthlyCalculations" />
+                    <Dependency path="../endDayForSemiMonthlyCalculations"/>
                   </Left>
                   <Right>
-                    <Dependency path="../nextPayDayForSemiMonthlyCalculations" />
+                    <Dependency path="../nextPayDayForSemiMonthlyCalculations"/>
                   </Right>
                 </GreaterThanOrEqual>
               </All>
@@ -4265,27 +4152,27 @@
               <!-- Use latest pay date for diff calculation -->
               <Subtract>
                 <Minuend>
-                  <Dependency path="../endDayForSemiMonthlyCalculations" />
+                  <Dependency path="../endDayForSemiMonthlyCalculations"/>
                 </Minuend>
                 <Subtrahends>
-                  <Dependency path="../latestPayDateForSemimonthlyCalculations" />
+                  <Dependency path="../latestPayDateForSemimonthlyCalculations"/>
                 </Subtrahends>
               </Subtract>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
               <!-- Use pay date before the end date. Example: pay days are 5, 20. End day is 15. Use
               5 for diff calc -->
               <Subtract>
                 <Minuend>
-                  <Dependency path="../endDayForSemiMonthlyCalculations" />
+                  <Dependency path="../endDayForSemiMonthlyCalculations"/>
                 </Minuend>
                 <Subtrahends>
-                  <Dependency path="../closestPayDateForSemimonthlyCalculations" />
+                  <Dependency path="../closestPayDateForSemimonthlyCalculations"/>
                 </Subtrahends>
               </Subtract>
             </Then>
@@ -4293,6 +4180,5 @@
         </Switch>
       </Derived>
     </Fact>
-
   </Facts>
 </FactDictionaryModule>

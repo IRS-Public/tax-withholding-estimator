@@ -1,60 +1,52 @@
+<?xml version="1.0"?>
 <FlowConfigModule>
   <page title="Adjustments" route="adjustments">
     <section>
-
       <h2>Educator expenses</h2>
       <fg-set path="/actualEducatorExpensesAdjustmentAmount">
-        <question content-key="flow.adjustments.fields./actualEducatorExpensesAdjustmentAmount.question" />
-        <input type="dollar" />
+        <question content-key="flow.adjustments.fields./actualEducatorExpensesAdjustmentAmount.question"/>
+        <input type="dollar"/>
       </fg-set>
-
       <h2>Student loan interest</h2>
       <fg-set path="/actualStudentLoanInterestAdjustmentAmount">
-        <question content-key="flow.adjustments.fields./actualStudentLoanInterestAdjustmentAmount.question" />
-        <input type="dollar" />
+        <question content-key="flow.adjustments.fields./actualStudentLoanInterestAdjustmentAmount.question"/>
+        <input type="dollar"/>
       </fg-set>
-
       <h2>Health Savings Account Contributions</h2>
       <fg-set path="/actualHsaTotalDeductibleAmount">
-        <question content-key="flow.adjustments.fields./actualHsaTotalDeductibleAmount.question" />
+        <question content-key="flow.adjustments.fields./actualHsaTotalDeductibleAmount.question"/>
         <hint>Do not include amounts already deducted from your paycheck</hint>
-        <input type="dollar" />
+        <input type="dollar"/>
       </fg-set>
-
       <h2>Deduction for contributions to Traditional IRAs</h2>
       <fg-set path="/actualDeductionForTraditionalIRAContribution">
-        <question content-key="flow.adjustments.fields./actualDeductionForTraditionalIRAContribution.question" />
+        <question content-key="flow.adjustments.fields./actualDeductionForTraditionalIRAContribution.question"/>
         <hint>Do not include amounts already deducted from your paycheck</hint>
-        <input type="dollar" />
+        <input type="dollar"/>
       </fg-set>
-
       <h2>Moving expenses for members of armed services</h2>
       <fg-set path="/actualMovingExpensesForArmedServicesMembers">
-        <question content-key="flow.adjustments.fields./actualMovingExpensesForArmedServicesMembers.question" />
-        <input type="dollar" />
+        <question content-key="flow.adjustments.fields./actualMovingExpensesForArmedServicesMembers.question"/>
+        <input type="dollar"/>
       </fg-set>
-
       <h2>Alimony paid</h2>
       <fg-set path="/actualAlimonyPaid">
-        <question content-key="flow.adjustments.fields./actualAlimonyPaid.question" />
-        <input type="dollar" />
+        <question content-key="flow.adjustments.fields./actualAlimonyPaid.question"/>
+        <input type="dollar"/>
       </fg-set>
-
       <h2>Penalty for early withdrawal of savings</h2>
       <fg-set path="/actualPenaltyForEarlySavingsWithdrawal">
-        <question content-key="flow.adjustments.fields./actualPenaltyForEarlySavingsWithdrawal.question" />
-        <input type="dollar" />
+        <question content-key="flow.adjustments.fields./actualPenaltyForEarlySavingsWithdrawal.question"/>
+        <input type="dollar"/>
       </fg-set>
-
       <h2>Business credits</h2>
       <fg-set path="/actualBusinessCreditsForEligible">
-        <question content-key="flow.adjustments.fields./actualBusinessCreditsForEligible.question" />
-        <input type="dollar" />
+        <question content-key="flow.adjustments.fields./actualBusinessCreditsForEligible.question"/>
+        <input type="dollar"/>
       </fg-set>
-
       <h2>Your adjusted gross income:</h2>
       <p>
-        <fg-show path="/agi" />
+        <fg-show path="/agi"/>
       </p>
     </section>
   </page>

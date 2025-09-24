@@ -1,68 +1,58 @@
+<?xml version="1.0"?>
 <FlowConfigModule>
   <page title="Other Income" route="other-income">
     <section>
       <h1>Other Income</h1>
-
       <h2>Net Self-Employment Income</h2>
       <fg-set path="/netSelfEmploymentIncome">
-        <question content-key="flow.other-income.fields./netSelfEmploymentIncome.question" />
+        <question content-key="flow.other-income.fields./netSelfEmploymentIncome.question"/>
         <input type="dollar"/>
       </fg-set>
-
       <h2>Ordinary Dividends Income</h2>
       <fg-set path="/ordinaryDividendsIncome">
-        <question content-key="flow.other-income.fields./ordinaryDividendsIncome.question" />
+        <question content-key="flow.other-income.fields./ordinaryDividendsIncome.question"/>
         <input type="dollar"/>
       </fg-set>
-
       <h2>Unemployment Insurance Income</h2>
       <fg-set path="/unemploymentInsuranceIncome">
-        <question content-key="flow.other-income.fields./unemploymentInsuranceIncome.question" />
+        <question content-key="flow.other-income.fields./unemploymentInsuranceIncome.question"/>
         <input type="dollar"/>
       </fg-set>
-
       <h2>Interest Income (excluding non-taxable interest)</h2>
       <fg-set path="/interestExcludingNonTaxableIncome">
-        <question content-key="flow.other-income.fields./miscIncome.question" />
+        <question content-key="flow.other-income.fields./miscIncome.question"/>
         <input type="dollar"/>
       </fg-set>
-
       <h2>Short term capital gains</h2>
       <fg-set path="/shortTermCapitalGainsIncome">
-        <question content-key="flow.other-income.fields./shortTermCapitalGainsIncome.question" />
+        <question content-key="flow.other-income.fields./shortTermCapitalGainsIncome.question"/>
         <input type="dollar"/>
       </fg-set>
-
       <h2>Taxable Scholarship Income</h2>
       <fg-set path="/taxableScholarshipIncome">
-        <question content-key="flow.other-income.fields./taxableScholarshipIncome.question" />
+        <question content-key="flow.other-income.fields./taxableScholarshipIncome.question"/>
         <input type="dollar"/>
       </fg-set>
-
       <h2>Alimony Received</h2>
       <fg-set path="/alimonyReceivedIncome">
-        <question content-key="flow.other-income.fields./alimonyReceivedIncome.question" />
+        <question content-key="flow.other-income.fields./alimonyReceivedIncome.question"/>
         <input type="dollar"/>
       </fg-set>
-
       <h2>S-corp non-passive Income (Schedule K1)</h2>
       <fg-set path="/sCorpNonPassiveIncome">
-        <question content-key="flow.other-income.fields./sCorpNonPassiveIncome.question" />
+        <question content-key="flow.other-income.fields./sCorpNonPassiveIncome.question"/>
         <input type="dollar"/>
       </fg-set>
-
       <h2>Net Schedule E Income</h2>
       <fg-set path="/netScheduleEIncome">
-        <question content-key="flow.other-income.fields./netScheduleEIncome.question" />
+        <question content-key="flow.other-income.fields./netScheduleEIncome.question"/>
         <input type="dollar"/>
       </fg-set>
-
       <h2>Non-specific Other Income</h2>
       <fg-set path="/nonSpecificOtherIncome">
-        <question content-key="flow.other-income.fields./nonSpecificOtherIncome.question" />
+        <question content-key="flow.other-income.fields./nonSpecificOtherIncome.question"/>
         <input type="dollar"/>
       </fg-set>
-
     </section>
   </page>
 </FlowConfigModule>

@@ -1,82 +1,76 @@
+<?xml version="1.0"?>
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
     <Fact path="/primaryFilerIsBlind">
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/secondaryFilerIsBlind">
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/primaryFilerIsClaimedOnAnotherReturn">
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/secondaryFilerIsClaimedOnAnotherReturn">
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/treatFilersAsDependents">
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="/isFilingStatusMFJ" />
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
               <Any>
-                <Dependency path="/primaryFilerIsClaimedOnAnotherReturn" />
-                <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn" />
+                <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
+                <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
               </Any>
             </Then>
           </Case>
           <Case>
             <When>
-              <True />
+              <True/>
             </When>
             <Then>
-              <Dependency path="/primaryFilerIsClaimedOnAnotherReturn" />
+              <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
-
     <Fact path="/primaryFilerDateOfBirth">
       <Description>The date of birth of the filer.</Description>
       <Writable>
-        <Day />
+        <Day/>
         <Limit type="Max">
           <Day>2024-01-01</Day>
         </Limit>
       </Writable>
     </Fact>
-
     <Fact path="/secondaryFilerDateOfBirth">
       <Description>The date of birth of the filer.</Description>
       <Writable>
-        <Day />
+        <Day/>
         <Limit type="Max">
           <Day>2024-01-01</Day>
         </Limit>
       </Writable>
     </Fact>
-
     <Fact path="/primaryFilerDayBeforeDateOfBirth">
       <Description>The day before the filer's birthday</Description>
       <Derived>
         <Subtract>
           <Minuend>
-            <Dependency path="/primaryFilerDateOfBirth" />
+            <Dependency path="/primaryFilerDateOfBirth"/>
           </Minuend>
           <Subtrahends>
             <Days>1</Days>
@@ -84,13 +78,12 @@
         </Subtract>
       </Derived>
     </Fact>
-
     <Fact path="/secondaryFilerDayBeforeDateOfBirth">
       <Description>The day before the filer's birthday</Description>
       <Derived>
         <Subtract>
           <Minuend>
-            <Dependency path="/secondaryFilerDateOfBirth" />
+            <Dependency path="/secondaryFilerDateOfBirth"/>
           </Minuend>
           <Subtrahends>
             <Days>1</Days>
@@ -98,37 +91,34 @@
         </Subtract>
       </Derived>
     </Fact>
-
     <Fact path="/primaryFilerAgeCalculatedDayBeforeDOB">
       <Description>The age of the filer, calculated using their birthday as the day before
         their date of birth.</Description>
       <Derived>
         <Subtract>
           <Minuend>
-            <Dependency path="/taxYear" />
+            <Dependency path="/taxYear"/>
           </Minuend>
           <Subtrahends>
-            <Dependency path="/primaryFilerDayBeforeDateOfBirth/year" />
+            <Dependency path="/primaryFilerDayBeforeDateOfBirth/year"/>
           </Subtrahends>
         </Subtract>
       </Derived>
     </Fact>
-
     <Fact path="/secondaryFilerAgeCalculatedDayBeforeDOB">
       <Description>The age of the filer, calculated using their birthday as the day before
         their date of birth.</Description>
       <Derived>
         <Subtract>
           <Minuend>
-            <Dependency path="/taxYear" />
+            <Dependency path="/taxYear"/>
           </Minuend>
           <Subtrahends>
-            <Dependency path="/secondaryFilerDayBeforeDateOfBirth/year" />
+            <Dependency path="/secondaryFilerDayBeforeDateOfBirth/year"/>
           </Subtrahends>
         </Subtract>
       </Derived>
     </Fact>
-
     <Fact path="/primaryFilerAge65OrOlder">
       <Description>
         Whether the filer is 65 or older. Pub 554 states "You are considered age 65 at the
@@ -140,7 +130,7 @@
       <Derived>
         <GreaterThanOrEqual>
           <Left>
-            <Dependency path="/primaryFilerAgeCalculatedDayBeforeDOB" />
+            <Dependency path="/primaryFilerAgeCalculatedDayBeforeDOB"/>
           </Left>
           <Right>
             <Int>65</Int>
@@ -148,7 +138,6 @@
         </GreaterThanOrEqual>
       </Derived>
     </Fact>
-
     <Fact path="/secondaryFilerAge65OrOlder">
       <Description>
         Whether the filer is 65 or older. Pub 554 states "You are considered age 65 at the
@@ -160,7 +149,7 @@
       <Derived>
         <GreaterThanOrEqual>
           <Left>
-            <Dependency path="/secondaryFilerAgeCalculatedDayBeforeDOB" />
+            <Dependency path="/secondaryFilerAgeCalculatedDayBeforeDOB"/>
           </Left>
           <Right>
             <Int>65</Int>
@@ -168,25 +157,20 @@
         </GreaterThanOrEqual>
       </Derived>
     </Fact>
-
     <Fact path="/primaryFilerHasSSN">
       <Name>Does the primary Taxpayer have a Social Security Number as defined in IRC 24(h)(7)?</Name>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
     </Fact>
-
     <Fact path="/secondaryFilerHasSSN">
       <Name>Does the secondary Taxpayer have a Social Security Number as defined in IRC 24(h)(7)?</Name>
       <Writable>
-        <Boolean />
+        <Boolean/>
       </Writable>
       <Placeholder>
-        <False />
+        <False/>
       </Placeholder>
     </Fact>
-
   </Facts>
-
-
 </FactDictionaryModule>

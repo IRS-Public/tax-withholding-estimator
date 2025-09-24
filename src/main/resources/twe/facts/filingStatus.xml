@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
@@ -14,21 +15,19 @@
         </EnumOptions>
       </Derived>
     </Fact>
-
     <Fact path="/filingStatus">
       <Name>Filing status</Name>
       <Description>The filing status selected by the taxpayer.</Description>
       <Writable>
-        <Enum optionsPath="/filingStatusOptions" />
+        <Enum optionsPath="/filingStatusOptions"/>
       </Writable>
     </Fact>
-
     <Fact path="/isFilingStatusSingle">
       <Description>Is taxpayer filing status single</Description>
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="/filingStatus" />
+            <Dependency path="/filingStatus"/>
           </Left>
           <Right>
             <Enum optionsPath="/filingStatusOptions">single</Enum>
@@ -36,13 +35,12 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/isFilingStatusMFS">
       <Description>Is taxpayer filing status MFS</Description>
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="/filingStatus" />
+            <Dependency path="/filingStatus"/>
           </Left>
           <Right>
             <Enum optionsPath="/filingStatusOptions">marriedFilingSeparately</Enum>
@@ -50,13 +48,12 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/isFilingStatusMFJ">
       <Description>Is taxpayer filing status MFJ</Description>
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="/filingStatus" />
+            <Dependency path="/filingStatus"/>
           </Left>
           <Right>
             <Enum optionsPath="/filingStatusOptions">marriedFilingJointly</Enum>
@@ -64,13 +61,12 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/isFilingStatusHOH">
       <Description>Is taxpayer filing status HOH</Description>
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="/filingStatus" />
+            <Dependency path="/filingStatus"/>
           </Left>
           <Right>
             <Enum optionsPath="/filingStatusOptions">headOfHousehold</Enum>
@@ -78,13 +74,12 @@
         </Equal>
       </Derived>
     </Fact>
-
     <Fact path="/isFilingStatusQSS">
       <Description>Is taxpayer filing status QSS</Description>
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="/filingStatus" />
+            <Dependency path="/filingStatus"/>
           </Left>
           <Right>
             <Enum optionsPath="/filingStatusOptions">qualifiedSurvivingSpouse</Enum>
