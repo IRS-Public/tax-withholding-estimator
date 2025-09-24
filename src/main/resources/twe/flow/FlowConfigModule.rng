@@ -198,6 +198,15 @@
         </attribute>
         <ref name="TableContent"/>
       </element>
+      <element name="button">
+        <attribute name="onclick">
+          <text/>
+        </attribute>
+        <attribute name="class">
+          <text/>
+        </attribute>
+        <ref name="FlowConfigModuleInlineContent"></ref>
+      </element>
     </choice>
   </define>
 

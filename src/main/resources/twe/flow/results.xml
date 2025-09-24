@@ -107,6 +107,7 @@
           </tr>
         </tbody>
       </table>
+      <button class="usa-button usa-button--outline" onclick="downloadW4(window.factGraph)">Download pre-filled Form W4</button>
     </section>
   </page>
 </FlowConfigModule>
