@@ -1697,7 +1697,8 @@
       </Derived>
     </Fact>
     <Fact path="/pensions/*/w4pLine2bii">
-      <Description>The sum of all other taxable pension income, excluding the income from the single highest paying pension.</Description>
+      <Description>The sum of all other taxable pension income, excluding the income from the single
+        highest paying pension.</Description>
       <Derived>
         <Switch>
           <Case>
@@ -2610,7 +2611,8 @@
       </Derived>
     </Fact>
     <Fact path="/pensions/*/pub15Worksheet1bLine2s">
-      <Description>Standard withholding rate schedules for use when Form W-4P Step 2(b)iii box is filled.
+      <Description>Standard withholding rate schedules for use when Form W-4P Step 2(b)iii box is
+        filled.
         Line 2s of Pub. 15-T Worksheet 1b. These amounts are generally a base withholding
         amount plus a percentage of the excess of Annual Adjusted Wages Amount. The base withholding
         captures the total withholding for all the brackets below the one that the AAWA falls into.
@@ -3889,11 +3891,155 @@
         </CollectionSum>
       </Derived>
     </Fact>
+    <Fact path="/maxNetSelfEmploymentIncomeSubjectToSocialSecurityTax">
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>176100</Dollar>
+      </Derived>
+    </Fact>
     <Fact path="/netSelfEmploymentIncome">
-      <Description>Net self-employment income</Description>
+      <Description>Net self-employment income as reported on line 3 of Schedule SE (Form 1040).</Description>
       <Writable>
         <Dollar/>
       </Writable>
+    </Fact>
+    <Fact path="/selfEmploymentLineBCalculation">
+      <Description>Specific calculation on line 5b of Schedule SE (Form 1040) to multiply net self
+        employment income by 92.35%.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Multiply>
+                    <Dependency path="/netSelfEmploymentIncome"/>
+                    <Rational>1847/2000</Rational>
+                  </Multiply>
+                </Left>
+                <Right>
+                  <Dollar>100</Dollar>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Multiply>
+                <Dependency path="/netSelfEmploymentIncome"/>
+                <Rational>1847/2000</Rational>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/taxableSelfEmploymentIncome">
+      <Description>Taxable self-employment income from lines 4-5 on Schedule SE (Form 1040).</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/netSelfEmploymentIncome"/>
+                </Left>
+                <Right>
+                  <Dependency path="/maxNetSelfEmploymentIncomeSubjectToSocialSecurityTax"/>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <LesserOf>
+                <Dependency path="/maxNetSelfEmploymentIncomeSubjectToSocialSecurityTax"/>
+                <Dependency path="/selfEmploymentLineBCalculation"/>
+              </LesserOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <LessThan>
+                <Left>
+                  <Dependency path="/netSelfEmploymentIncome"/>
+                </Left>
+                <Right>
+                  <Dollar>400</Dollar>
+                </Right>
+              </LessThan>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/selfEmploymentLineBCalculation"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecuritySelfEmploymentTax">
+      <Description>Self-employment tax multiplied by the Social Security tax rate from line 10 on
+        Schedule SE (Form 1040).</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/taxableSelfEmploymentIncome"/>
+          <Rational>31/250</Rational>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/medicareSelfEmploymentTax">
+      <Description>Self-employment tax multiplied by the Medicare tax rate from line 11 on Schedule
+        SE (Form 1040).</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/taxableSelfEmploymentIncome"/>
+          <Rational>29/1000</Rational>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentTax">
+      <Description>Self-employment tax instructions from line 12 on Schedule SE (Form 1040).</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/taxableSelfEmploymentIncome"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="/socialSecuritySelfEmploymentTax"/>
+                <Dependency path="/medicareSelfEmploymentTax"/>
+              </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
     </Fact>
     <Fact path="/ordinaryDividendsIncome">
       <Description>Ordinary dividends income</Description>

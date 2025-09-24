@@ -350,6 +350,27 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     }
   }
 
+  test("2197 Scenarios spreadsheet Column H") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> Enum("marriedFilingJointly", "/filingStatusOptions"),
+      Path(s"/netSelfEmploymentIncome") -> Dollar("10000"),
+    )
+
+    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("1412.96")))
+
+  }
+
+  test("2197 Scenarios spreadsheet Column L") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> Enum("headOfHousehold", "/filingStatusOptions"),
+      Path(s"/netSelfEmploymentIncome") -> Dollar("20000"),
+    )
+
+    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("2825.91")))
+  }
+
   test("2197 Scenarios spreadsheet Column N") {
     val graph = makeGraphWith(
       factDictionary,
@@ -412,6 +433,26 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2453")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("265")))
     }
+  }
+
+  test("2197 Scenarios spreadsheet Column O") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> Enum("marriedFilingJointly", "/filingStatusOptions"),
+      Path(s"/netSelfEmploymentIncome") -> Dollar("7000"),
+    )
+
+    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("989.07")))
+
+  }
+
+  test("2197 Scenarios spreadsheet Column P") {
+    val graph = makeGraphWith(
+      factDictionary,
+      Path(s"/netSelfEmploymentIncome") -> Dollar("7000"),
+    )
+
+    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("989.07")))
   }
 
   test("Scenario with three jobs") {
