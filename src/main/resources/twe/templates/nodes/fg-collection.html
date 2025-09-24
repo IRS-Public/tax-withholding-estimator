@@ -3,8 +3,8 @@
         <template class="fg-collection__item-template">
             <h3 class="usa-accordion__heading">
             <button class="usa-accordion__button usa-accordion__button--highlight" type="button" aria-expanded="true">
-              <th th:if="${itemName == ''}" th:utext="#{components.fg-collection.item-name-default('<span class=\'item-number\'></span>')}"></th>
-              <th th:if="${itemName != ''}" th:utext="#{components.fg-collection.item-name('<span class=\'item-number\'></span>', ${itemName})}"></th>
+              <th th:if="${itemName == ''}" th:utext="#{components.fg-collection.item-name-default(~{nodes/collection-item-number})}"></th>
+              <th th:if="${itemName != ''}" th:utext="#{components.fg-collection.item-name(~{nodes/collection-item-number}, ${itemName})}"></th>
             </button>
             </h3>
             <div class="usa-accordion__content">

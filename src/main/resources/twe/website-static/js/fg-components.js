@@ -433,9 +433,9 @@ class FgCollection extends HTMLElement {
     this.setCollectionItemNumbers = () => {
       const collectionItems = this.querySelectorAll('fg-collection-item');
       collectionItems.forEach((item, index) => {
-        const itemNumberSlot = item.querySelector('.usa-accordion__button .item-number');
+        const itemNumberSlot = item.querySelectorAll('.collection-item-number');
         if (itemNumberSlot) {
-          itemNumberSlot.textContent = ` ${index + 1}`;
+          itemNumberSlot.forEach(slot => slot.textContent = `${index + 1}`);
         }
       });
     };

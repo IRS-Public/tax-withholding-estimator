@@ -1,1 +1,5 @@
-<label th:if="${question}" class="usa-label twe-question" th:for="${path}">[[#{${question}}]] [(${optional}? ~{} : ~{nodes/required-indicator})]</label>
+<label th:if="${question}" class="usa-label twe-question" th:for="${path}">
+    <th:block th:with="fragment=~{nodes/collection-item-number}"
+          th:utext="#{${question}(${#strings.trim(fragment)})}"></th:block>
+    <th:block th:unless="${optional}" th:insert="~{nodes/required-indicator}"></th:block>
+</label>

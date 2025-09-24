@@ -1,5 +1,9 @@
 <fieldset class="usa-fieldset" th:attr="aria-describedby=${hintId}">
-    <legend class="usa-legend twe-question">[[#{${question}}]] [(${optional}? ~{} : ~{nodes/required-indicator})]</legend>
+    <legend class="usa-legend twe-question">
+        <th:block th:with="fragment=~{nodes/collection-item-number}"
+          th:utext="#{${question}(${#strings.trim(fragment)})}"></th:block>
+        <th:block th:unless="${optional}" th:insert="~{nodes/required-indicator}"></th:block>
+    </legend>
     <div th:replace="nodes/hint"></div>
     <div class="usa-memorable-date">
         <div class="usa-form-group usa-form-group--month usa-form-group--select">
