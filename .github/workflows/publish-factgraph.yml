@@ -1,0 +1,121 @@
+name: Publish Fact Graph
+
+on:
+  workflow_call:
+    outputs:
+      artifact-name:
+        description: "Published Fact Graph artifact"
+        value: fact-graph-target
+    secrets:
+      SVC_ACCOUNT_PAT:
+        required: true
+
+env:
+  JAVA_VERSION: 21
+  FACT_GRAPH_PATH: fact-graph
+
+jobs:
+
+  publish-fact-graph:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout Fact Graph
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        repository: IRSDigitalService/${{ env.FACT_GRAPH_PATH }}
+        path: ${{ env.FACT_GRAPH_PATH }}
+        token: ${{ secrets.SVC_ACCOUNT_PAT }}
+
+    - name: Get latest fact-graph commit SHA
+      id: fg_sha
+      working-directory: ${{ env.FACT_GRAPH_PATH }}
+      run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+    - name: Retrieve cached local sbt dependencies
+      id: ivy_local_cache
+      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      with:
+        path: ~/.ivy2/local
+        key: ${{ env.FACT_GRAPH_PATH }}-ivy-local-${{ steps.fg_sha.outputs.sha }}
+
+    - name: Restore fact-graph target directory from cache
+      id: target_cache
+      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      with:
+        path: ${{ env.FACT_GRAPH_PATH }}/target
+        key: ${{ env.FACT_GRAPH_PATH }}-target-${{ steps.fg_sha.outputs.sha }}
+
+    - name: Check if target and ivy-local caches exist
+      id: check_cache
+      run: |
+        echo "target cache hit: ${{ steps.target_cache.outputs.cache-hit }}"
+        echo "ivy-local cache hit: ${{ steps.ivy_local_cache.outputs.cache-hit }}"
+
+        if [[ "${{ steps.target_cache.outputs.cache-hit }}" == 'true' && "${{ steps.ivy_local_cache.outputs.cache-hit }}" == 'true' ]]; then
+          echo "skip_compile=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "skip_compile=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Show skip_compile output
+      run: |
+        echo "skip_compile: ${{ steps.check_cache.outputs.skip_compile }}"
+
+    - name: Install sbt via Coursier v2.1.24
+      if: steps.check_cache.outputs.skip_compile == 'false'
+      run: |
+        curl -fL "https://github.com/coursier/coursier/releases/download/v2.1.24/cs-x86_64-pc-linux.gz" | gzip -d > cs
+        chmod +x cs
+        ./cs --version  # verify that we're using v2.1.24
+        ./cs install sbt
+        echo "$HOME/.local/share/coursier/bin" >> $GITHUB_PATH
+
+    - name: Setup Java
+      if: steps.check_cache.outputs.skip_compile == 'false'
+      uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4
+      with:
+        distribution: 'temurin'
+        java-version: ${{ env.JAVA_VERSION }}
+
+    - name: Retrieve cached global sbt dependencies
+      if: steps.check_cache.outputs.skip_compile == 'false'
+      id: global_sbt_dependencies_cache
+      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      with:
+        path: |
+          ~/.ivy2/cache
+          ~/.sbt
+          ~/.coursier
+        key: ${{ runner.os }}-sbt-${{ steps.fg_sha.outputs.sha }}
+
+    - name: Compile and publish Fact Graph locally
+      if: steps.check_cache.outputs.skip_compile == 'false'
+      working-directory: ${{ env.FACT_GRAPH_PATH }}
+      run: make ci_publish
+
+    - name: Save ivy-local cache
+      if: steps.check_cache.outputs.skip_compile == 'false'
+      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      with:
+        path: ~/.ivy2/local
+        key: ${{ env.FACT_GRAPH_PATH }}-ivy-local-${{ steps.fg_sha.outputs.sha }}
+
+    - name: Save fact-graph target directory
+      if: steps.check_cache.outputs.skip_compile == 'false'
+      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      with:
+        path: ${{ env.FACT_GRAPH_PATH }}/target
+        key: ${{ env.FACT_GRAPH_PATH }}-target-${{ steps.fg_sha.outputs.sha }}
+
+    - name: Save cached global sbt dependencies
+      if: steps.check_cache.outputs.skip_compile == 'false'
+      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      with:
+        path: |
+          ~/.ivy2/cache
+          ~/.sbt
+          ~/.coursier
+        key: ${{ runner.os }}-sbt-${{ steps.fg_sha.outputs.sha }}

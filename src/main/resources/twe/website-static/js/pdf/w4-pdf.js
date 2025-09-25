@@ -61,7 +61,7 @@ async function downloadW4(factGraph) {
   const extraWithholding = factGraph.get('/jobSelectedForExtraWithholding/w4Line4c').get.toString() // Line 4(c) amount
 
   // Determine which form template to use
-  const hasPensionIncome = pensionIncome != null && pensionIncome !== '' && pensionIncome > 0
+  const hasPensionIncome = pensionIncome !== null && pensionIncome !== '' && pensionIncome > 0
   const isSpanish = document.querySelector('input[name="lang"]:checked')?.value === 'es'
 
   let template

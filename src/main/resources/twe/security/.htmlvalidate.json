@@ -1,0 +1,35 @@
+{
+  "$schema": "https://html-validate.org/schemas/config.json",
+  "extends": [
+    "html-validate:recommended",
+    "html-validate:standard"
+  ],
+  "rules": {
+    "allowed-links": [
+      "error",
+      {
+        "allowExternal": true,
+        "allowRelative": true,
+        "allowAbsolute": true,
+        "allowBase": true
+      }
+    ],
+    "no-inline-style": "error",
+    "require-sri": ["error", { "target": "crossorigin"} ],
+    "attribute-allowed-values": "warn",
+    "attribute-boolean-style": "warn",
+    "close-order": "warn",
+    "element-permitted-content": "warn",
+    "empty-heading": "warn",
+    "empty-title": "warn",
+    "long-title": "warn",
+    "no-implicit-input-type": "warn",
+    "no-trailing-whitespace": "warn",
+    "text-content": "warn",
+    "void-style": "warn",
+    "wcag/h30": "warn",
+    "wcag/h71": "warn",
+    "doctype-style": "off",
+    "valid-id": "off"
+  }
+}

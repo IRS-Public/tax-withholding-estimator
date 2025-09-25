@@ -205,6 +205,9 @@
         <attribute name="class">
           <text/>
         </attribute>
+        <attribute name="type">
+          <text/>
+        </attribute>
         <ref name="FlowConfigModuleInlineContent"></ref>
       </element>
     </choice>

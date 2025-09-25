@@ -1,4 +1,4 @@
-name: TWE
+name: TWE Quality Checks
 
 on:
   workflow_dispatch:
@@ -15,6 +15,7 @@ concurrency:
 
 env:
   JAVA_VERSION: 21
+  FACT_GRAPH_PATH: fact-graph
   TWE_PATH: tax_withholding_estimator
   TWE_RESOURCES_PATH: src/main/resources/twe
 
@@ -43,19 +44,35 @@ jobs:
             exit 1
           fi
 
+
+  call-publish-fact-graph:
+    uses: ./.github/workflows/publish-factgraph.yml
+    secrets:
+      SVC_ACCOUNT_PAT: ${{ secrets.SVC_ACCOUNT_PAT }}
+
   build:
 
-    needs: check-commit-emails
-
+    needs: [check-commit-emails, call-publish-fact-graph]
     runs-on: ubuntu-latest
 
     steps:
-
 
     - name: Checkout TWE
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       with:
         path: ${{ env.TWE_PATH }}
+
+    - name: Checkout Fact Graph
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        repository: IRSDigitalService/${{ env.FACT_GRAPH_PATH }}
+        path: ${{ env.FACT_GRAPH_PATH }}
+        token: ${{ secrets.SVC_ACCOUNT_PAT }}
+
+    - name: Get latest fact-graph commit SHA
+      id: fg_sha
+      working-directory: ${{ env.FACT_GRAPH_PATH }}
+      run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
     - name: Install sbt via Coursier v2.1.24
       run: |
@@ -71,43 +88,18 @@ jobs:
         distribution: 'temurin'
         java-version: ${{ env.JAVA_VERSION }}
 
-    - name: Checkout Fact Graph
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+    - name: Retrieve cached sbt dependencies
+      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
       with:
-        repository: IRSDigitalService/fact-graph
-        path: fact-graph
-        token: ${{ secrets.SVC_ACCOUNT_PAT }}
+        path: ~/.ivy2/local
+        key: ${{ env.FACT_GRAPH_PATH }}-ivy-local-${{ steps.fg_sha.outputs.sha }}
 
-    - name: Compile and publish Fact Graph locally
-      working-directory: fact-graph
-      run: make ci_publish
+    - name: Retrieve cached fact-graph target directory
+      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      with:
+        path: ${{ env.FACT_GRAPH_PATH}}/target
+        key: ${{ env.FACT_GRAPH_PATH}}-target-${{ steps.fg_sha.outputs.sha }}
 
     - name: Run Tests
       working-directory: ${{ env.TWE_PATH }}
       run: make ci_test
-
-    - name: Download jing for XML schema validation
-      working-directory: ${{ env.TWE_PATH }}
-      run: |
-        cp "$(.././cs fetch --intransitive org.relaxng:jing:20241231)" jing.jar #V20241231
-        chmod +x jing.jar
-
-    - name: Validate fact XML files
-      working-directory: ${{ env.TWE_PATH }}
-      run: |
-        for xml in ${{ env.TWE_RESOURCES_PATH }}/facts/*.xml; do
-          echo "Processing $xml"
-          java -jar jing.jar ${{ env.TWE_RESOURCES_PATH }}/facts/FactDictionaryModule.rng "$xml"
-        done
-
-    - name: Validate flow XML files
-      working-directory: ${{ env.TWE_PATH }}
-      run: |
-        for xml in ${{ env.TWE_RESOURCES_PATH }}/flow/*.xml; do
-          echo "Processing $xml"
-          if [[ "$xml" == "${{ env.TWE_RESOURCES_PATH }}/flow/index.xml" ]]; then
-            java -jar jing.jar ${{ env.TWE_RESOURCES_PATH }}/flow/FlowConfig.rng "$xml"
-            continue
-          fi
-          java -jar jing.jar ${{ env.TWE_RESOURCES_PATH }}/flow/FlowConfigModule.rng "$xml"
-        done
