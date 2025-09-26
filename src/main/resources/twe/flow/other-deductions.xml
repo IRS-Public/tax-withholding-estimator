@@ -2,9 +2,15 @@
 <FlowConfigModule>
   <page title="Other Deductions" route="other-deductions">
     <section>
-      <p>These deductions were introduced in the One Big Beautiful Bill Act of 2025. These
-        deductions are in addition to regardless to the Standard Deduction and Itemized Deductions
+      <p>These
+        deductions are in addition to the Standard Deduction and Itemized Deductions
         and can be claimed by eligible taxpayers regardless of which deduction they choose</p>
+      <h1>Qualified Business Interest Deduction (199A)</h1>
+      <fg-set path="/qualifiedBusinessIncomeDeduction">
+        <question content-key="flow.other-deductions.fields./qualifiedBusinessIncomeDeduction.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <p/>
       <h1>Senior Deduction</h1>
       <p>Number of taxpayers eligible for Senior Deduction: <fg-show path="/eligibleTaxpayersForSeniorDeduction"/>
       </p>
@@ -131,8 +137,10 @@
       <p>Your Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show path="/qualifiedPersonalVehicleLoanInterestDeduction"/>
       </p>
       <h1>
-        Deductions</h1>
+        Deduction Results</h1>
       <p>Your total below the line deductions are: <fg-show path="/totalDeductions"/>
+      </p>
+      <p>Your total QBI deduction is: <fg-show path="/qualifiedBusinessIncomeDeduction"/>
       </p>
       <p>Your total OB3 deductions are: <fg-show path="/oB3Deductions"/>
       </p>

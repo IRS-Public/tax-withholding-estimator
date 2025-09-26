@@ -5,9 +5,9 @@
     <Fact path="/qualifiedBusinessIncomeDeduction">
       <Name>Qualified business income deduction</Name>
       <Description>Qualified business income deductions for line 13 of Form 1040</Description>
-      <Derived>
-        <Dollar>0</Dollar>
-      </Derived>
+      <Writable>
+        <Dollar/>
+      </Writable>
     </Fact>
   </Facts>
 </FactDictionaryModule>
