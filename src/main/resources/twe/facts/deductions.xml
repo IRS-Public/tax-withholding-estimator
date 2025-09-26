@@ -28,6 +28,7 @@
           <Dependency path="/seniorDeduction"/>
           <Dependency path="/qualifiedTipDeduction"/>
           <Dependency path="/overtimeCompensationDeduction"/>
+          <Dependency path="/nonItemizerCharitableContributionDeduction"/>
         </Add>
       </Derived>
     </Fact>
@@ -55,7 +56,6 @@
       <Name>Standard or itemized deductions</Name>
       <Description>The taxpayer's choice of standard or itemized deductions as reported on line 12
         of Form 1040.
-        Currently only the standard deduction is supported.
       </Description>
       <Derived>
         <Round>

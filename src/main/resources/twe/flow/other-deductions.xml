@@ -136,6 +136,11 @@
       </p>
       <p>Your Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show path="/qualifiedPersonalVehicleLoanInterestDeduction"/>
       </p>
+      <h1>Non-Itemizer Charitable Contribution Deduction</h1>
+      <fg-set path="/nonItemizerCharitableContributionDeductionAmount" if-false="/wantsItemizedDeduction">
+        <question content-key="flow.other-deductions.fields./nonItemizerCharitableContributionDeductionAmount.question"/>
+        <input type="dollar"/>
+      </fg-set>
       <h1>
         Deduction Results</h1>
       <p>Your total below the line deductions are: <fg-show path="/totalDeductions"/>
@@ -152,6 +157,7 @@
       </p>
       <p>Your Overtime Compensation Deduction amount is: <fg-show path="/overtimeCompensationDeduction"/>
       </p>
+      <p>Your Non-Itemizer Charitable Contribution Deduction is: <fg-show path="/nonItemizerCharitableContributionDeduction"/></p>
     </section>
   </page>
 </FlowConfigModule>

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/nonItemizerCharitableContributionDeductionMFJMax">
+      <Name>Maximum non itemizer charitable deduction cap for MFJ filer</Name>
+      <Description>2000 is maximum a non itemizer can deduct if they are MFJ</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>
+          2000
+        </Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/nonItemizerCharitableContributionDeductionNonMFJMax">
+      <Name>Maximum non itemizer charitable deduction cap for non-MFJ filer</Name>
+      <Description>1000 is maximum a non itemizer can deduct if they are non-MFJ</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>
+          1000
+        </Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/nonItemizerCharitableContributionDeductionAmount">
+      <Name>Amount a non-itemizer taxpayer contributed to charitable causes during the tax year</Name>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/nonItemizerCharitableContributionDeduction">
+      <Name>Non-itemizer charitable deduction</Name>
+      <Description>OB3 70242, amending IRC 170(p): Special rule for taxpayers who do not elect to
+        itemize deductionsIn the case of any taxable year, if the individual does not elect to
+        itemize deductions for such taxable year, the deduction under this section shall be equal to
+        the deduction, not in excess of 1,000 ($2,000 in the case of
+        a joint return), which would be determined under this section if the only charitable
+        contributions taken into account in determining such deduction
+        were contributions made in cash during such taxable year ...
+
+        We only this deduction to be taken if the filer' standard deduction is greater than their
+        itemized deduction, keeping in line with the logic in "/standardOrItemizedDeduction"
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFJ"/>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/standardDeduction"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/itemizedDeduction"/>
+                  </Right>
+                </GreaterThan>
+              </All>
+            </When>
+            <Then>
+              <LesserOf>
+                <Dependency path="/nonItemizerCharitableContributionDeductionMFJMax"/>
+                <Dependency path="/nonItemizerCharitableContributionDeductionAmount"/>
+              </LesserOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <All>
+                <Not>
+                  <Dependency path="/isFilingStatusMFJ"/>
+                </Not>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/standardDeduction"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/itemizedDeduction"/>
+                  </Right>
+                </GreaterThan>
+              </All>
+            </When>
+            <Then>
+              <LesserOf>
+                <Dependency path="/nonItemizerCharitableContributionDeductionNonMFJMax"/>
+                <Dependency path="/nonItemizerCharitableContributionDeductionAmount"/>
+              </LesserOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>
