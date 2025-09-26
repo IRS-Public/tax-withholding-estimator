@@ -204,6 +204,42 @@
     </Fact>
     <Fact path="/charitableContributionsTotal">
       <Name>Total of all charitable contributions </Name>
+      <Description>
+        OB3 70425(a) amends IRC 170(b)(1) to only allow this itemized deduction for individuals
+        whose aggregate charitable contributions are in excess of %0.5 of their AGI
+
+        MIN of A) Charitable contributions - (0.005 * MAX(contribution base, 0); or B) 0.6 *
+        contribution base
+
+      </Description>
+      <Derived>
+        <GreaterOf>
+          <LesserOf>
+            <Subtract>
+              <Minuend>
+                <Dependency path="/charitableContributionsAggregatedAmount"/>
+              </Minuend>
+              <Subtrahends>
+                <Multiply>
+                  <Rational>5/1000</Rational>
+                  <GreaterOf>
+                    <Dependency path="/agi"/>
+                    <Dollar>0</Dollar>
+                  </GreaterOf>
+                </Multiply>
+              </Subtrahends>
+            </Subtract>
+            <Multiply>
+              <Rational>60/100</Rational>
+              <Dependency path="/agi"/>
+            </Multiply>
+          </LesserOf>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/charitableContributionsAggregatedAmount">
+      <Name>Total of all charitable contributions </Name>
       <Description>Total of all /charitableContributions items </Description>
       <Derived>
         <CollectionSum>
