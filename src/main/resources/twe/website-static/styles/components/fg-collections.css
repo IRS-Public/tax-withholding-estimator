@@ -12,3 +12,7 @@ fg-collection-item {
   padding-top: var(--units-3);
   padding-left: var(--units-05)
 }
+
+fg-collection-item .usa-form-group--error {
+  margin-left: 0;
+}

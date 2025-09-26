@@ -186,21 +186,13 @@ class FgSet extends HTMLElement {
   }
 
   validateRequiredFields() {
-    const tempScopedTypes = ['boolean', 'date', 'dollar', 'select', 'enum'];
-    const isTempScoped = tempScopedTypes.includes(this.inputType);
-
-    // Ultimately we can unwrap this when the inline validation work is done.
-    // This isComplete handling actually applies the error messages properly with the exception of the TODOs in setValidationError and clearValidationError
-    // I just have this if statement to limit where the error show up because of the additional work outlined to make them correct
-    if (isTempScoped) {
-      const isMissing = !this.isComplete();
-      if (isMissing) {
-          this.setValidationError();
-      } else {
-          this.clearValidationError();
-      }
-      return isMissing;
+    const isMissing = !this.isComplete();
+    if (isMissing) {
+        this.setValidationError();
+    } else {
+        this.clearValidationError();
     }
+    return isMissing;
   }
 
   render() {
