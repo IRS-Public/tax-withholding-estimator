@@ -16,7 +16,7 @@ case class FgSet(
     optional: Boolean,
 ) {
   def html(templateEngine: TweTemplateEngine): String = {
-    val usesFieldset = input.typeString == "boolean" || input.typeString == "date"
+    val usesFieldset = input.typeString == "boolean" || input.typeString == "date" || input.typeString == "enum"
 
     val context = new Context()
     context.setVariable("path", this.path)
@@ -31,6 +31,9 @@ case class FgSet(
     input match {
       // case select(options: List[HtmlOption], optionsPath: Option[String], hint: String, optional: Boolean = false)
       case Input.select(options, optionsPath, _, _) =>
+        context.setVariable("options", options.asJava)
+        context.setVariable("optionsPath", optionsPath)
+      case Input.enumInput(options, optionsPath, _, _) =>
         context.setVariable("options", options.asJava)
         context.setVariable("optionsPath", optionsPath)
       case _ =>
@@ -63,7 +66,8 @@ object FgSet {
       case Input.dollar(_, _)     => typeNode != "DollarNode"
       case Input.date(_, _, _)    => typeNode != "DayNode"
       // We could make this more strict
-      case Input.select(_, _, _, _) => typeNode != "EnumNode"
+      case Input.select(_, _, _, _)    => typeNode != "EnumNode"
+      case Input.enumInput(_, _, _, _) => typeNode != "EnumNode"
     }
     if (inputAndNodeTypeMismatch) throw InvalidFormConfig(s"Path $path must be of type $input")
   }

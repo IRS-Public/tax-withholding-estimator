@@ -1,0 +1,23 @@
+<fieldset class="usa-fieldset" th:attr="aria-describedby=${hintId}">
+    <legend class="usa-legend twe-question">
+        <th:block th:with="fragment=~{nodes/collection-item-number}"
+                  th:utext="#{${question}(${#strings.trim(fragment)})}"></th:block>
+        <th:block th:unless="${optional}" th:insert="~{nodes/required-indicator}"></th:block>
+    </legend>
+    <div th:replace="nodes/hint"></div>
+
+    <div class="usa-radio" th:each="option : ${options}">
+        <input th:id="${path} + '-' + ${option.value}"
+               class="usa-radio__input usa-radio__input--tile"
+               type="radio"
+               th:value="${option.value}"
+               th:name="${path}"
+               th:required="${not optional}"
+               aria-invalid="false"
+               th:attr="data-description=${option.description}"/>
+        <label th:for="${path} + '-' + ${option.value}"
+               class="usa-radio__label radio-option">
+            <span th:text="${option.name}"></span>
+        </label>
+    </div>
+</fieldset>

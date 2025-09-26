@@ -81,6 +81,7 @@ class FgSet extends HTMLElement {
         break;
       case 'select':
       case 'boolean':
+      case 'enum':
         for (const input of this.inputs) {
           input.addEventListener('change', () => {
             this.onChange()
@@ -185,7 +186,7 @@ class FgSet extends HTMLElement {
   }
 
   validateRequiredFields() {
-    const tempScopedTypes = ['boolean', 'date', 'dollar', 'select'];
+    const tempScopedTypes = ['boolean', 'date', 'dollar', 'select', 'enum'];
     const isTempScoped = tempScopedTypes.includes(this.inputType);
 
     // Ultimately we can unwrap this when the inline validation work is done.
@@ -235,7 +236,8 @@ class FgSet extends HTMLElement {
 
   clear() {
     switch (this.inputType) {
-      case 'boolean': {
+      case 'boolean':
+      case 'enum': {
         const checkedRadio = this.querySelector(`input:checked`)
         if (checkedRadio) {
           checkedRadio.checked = false;
@@ -280,11 +282,12 @@ class FgSet extends HTMLElement {
     }
 
     switch (this.inputType) {
-      case 'boolean': {
+      case 'boolean':
+      case 'enum': {
         if (value !== "") {
           this.querySelector(`input[value=${value}]`).checked = true
         }
-        break
+        break;
       }
       case 'select': {
         this.querySelector('select').value = value
@@ -334,7 +337,8 @@ class FgSet extends HTMLElement {
   getFactValueFromInputValue() {
     console.debug(`Getting input value for ${this.path} of type ${this.inputType}`);
     switch (this.inputType) {
-      case 'boolean': {
+      case 'boolean':
+      case 'enum': {
         return this.querySelector('input:checked')?.value
       }
       case 'select': {
@@ -390,10 +394,11 @@ class FgSet extends HTMLElement {
     console.debug(`Deleting fact ${this.path}`)
 
     switch (this.inputType) {
-      case 'boolean': {
+      case 'boolean':
+      case 'enum': {
         const input = this.querySelector('input:checked')
         if (input) input.checked = false
-        break
+        break;
       }
       case 'select': {
         this.querySelector('select').value = ''

@@ -82,6 +82,21 @@
             </choice>
           </attribute>
         </element>
+      <element name="input">
+        <attribute name="type">
+          <value>enum</value>
+        </attribute>
+        <attribute name="options-path">
+          <data type="anyURI"/>
+        </attribute>
+        <oneOrMore>
+          <element name="option">
+            <attribute name="value">
+              <data type="token"/>
+            </attribute> <text/>
+          </element>
+        </oneOrMore>
+      </element>
       <element name="select">
         <attribute name="options-path">
           <data type="anyURI"/>
