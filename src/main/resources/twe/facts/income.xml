@@ -4156,6 +4156,36 @@
         <Dollar/>
       </Writable>
     </Fact>
+    <Fact path="/socialSecuityBenefitsIncome">
+      <Description>SSA Income from forms SSA-1099 and RRB-1099</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/nonTaxableInterestIncome">
+      <Description>Non-taxable interest income. Used to calculate modified AGI for calculating taxable amount of SSA benefits</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/magiForSSABenefitsTaxableAmount">
+      <Description>Modifed AGI used to determine taxable amount of SSA benefits. Based on IRS Pub 915 Worksheet 1</Description>
+      <Derived>
+        <Add>
+          <!-- half of the total SSA benefits received -->
+          <Multiply>
+            <Dependency path="/socialSecuityBenefitsIncome"/>
+            <Rational>50/100</Rational>
+          </Multiply>
+          <!-- gross income -->
+          <Dependency module="taxCalculations" path="/agi"/>
+          <!-- non-taxable interest -->
+          <Dependency path="/nonTaxableInterestIncome"/>
+          <!-- all adjustments are already deducted from AGI, bring back student loan interest amount -->
+          <Dependency module="adjustments" path="/actualStudentLoanInterestAdjustmentAmount"/>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/totalOtherIncome">
       <Derived>
         <Add>

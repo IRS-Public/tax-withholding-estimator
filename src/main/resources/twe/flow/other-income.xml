@@ -23,6 +23,11 @@
         <question content-key="flow.other-income.fields./miscIncome.question"/>
         <input type="dollar"/>
       </fg-set>
+      <h2>Non-taxable Interest Income</h2>
+      <fg-set path="/nonTaxableInterestIncome">
+        <question content-key="flow.other-income.fields./nonTaxableInterestIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
       <h2>Short term capital gains</h2>
       <fg-set path="/shortTermCapitalGainsIncome">
         <question content-key="flow.other-income.fields./shortTermCapitalGainsIncome.question"/>
@@ -51,6 +56,11 @@
       <h2>Non-specific Other Income</h2>
       <fg-set path="/nonSpecificOtherIncome">
         <question content-key="flow.other-income.fields./nonSpecificOtherIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Net SSA income from Forms SSA-1099 and RRB-1099</h2>
+      <fg-set path="/socialSecuityBenefitsIncome">
+        <question content-key="flow.other-income.fields./socialSecuityBenefitsIncome.question"/>
         <input type="dollar"/>
       </fg-set>
     </section>
