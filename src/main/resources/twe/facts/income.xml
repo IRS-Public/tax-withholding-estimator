@@ -21,7 +21,6 @@
             <Add>
               <Dependency path="../restOfYearIncome"/>
               <Dependency path="../yearToDateIncome"/>
-              <Dependency path="../totalBonusReceived"/>
             </Add>
           </Minuend>
           <Subtrahends>
@@ -654,6 +653,66 @@
       <Writable>
         <Dollar/>
       </Writable>
+    </Fact>
+    <Fact path="/totalBonusReceivedThreshold">
+      <Description>Threshold for changing bonus withholdings from 22% to 37%</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>1000000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/withholdingsFromTotalBonusReceived">
+      <Description>Bonus withholdings are 22% if less than 1,000,000 and 37% on the sum exceeding 1,000,000</Description>
+      <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <LessThanOrEqual>
+                  <Left>
+                    <Dependency path="../totalBonusReceived"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/totalBonusReceivedThreshold"/>
+                  </Right>
+                </LessThanOrEqual>
+              </When>
+              <Then>
+                <Multiply>
+                  <Rational>22/100</Rational>
+                  <Dependency path="../totalBonusReceived"/>
+                </Multiply>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Add>
+                  <!-- 22% on the first $1,000,000-->
+                  <Multiply>
+                    <Rational>22/100</Rational>
+                    <Dependency path="/totalBonusReceivedThreshold"/>
+                  </Multiply>
+                  <!-- 37% on the amount exceeding $1,000,000-->
+                  <Multiply>
+                    <Rational>37/100</Rational>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../totalBonusReceived"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="/totalBonusReceivedThreshold"/>
+                      </Subtrahends>
+                    </Subtract>
+                  </Multiply>
+                </Add>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
     </Fact>
     <Fact path="/jobs/*/w4Line4a">
       <Description>Form W-4 Line 4(a); also Pub 15-T Worksheet 1A Line 1d.</Description>
@@ -1680,6 +1739,8 @@
               </Subtract>
             </GreaterOf>
           </Multiply>
+          <!-- witholding from the bonus, formula is different than for the regular job payments-->
+          <Dependency path="../withholdingsFromTotalBonusReceived"/>
         </Add>
       </Derived>
     </Fact>
@@ -4132,7 +4193,8 @@
       </Derived>
     </Fact>
     <Fact path="/overseasTerritoryIncome">
-      <Name>&#xA7; 931 - Income from sources within Guam, American Samoa, or the Northern Mariana Islands
+      <Name>&#xA7; 931 - Income from sources within Guam, American Samoa, or the Northern Mariana
+        Islands
       </Name>
       <Derived>
         <Dollar>0</Dollar>
@@ -4156,7 +4218,8 @@
     </Fact>
     <Fact path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp">
       <Name>Overtime Compensation Excluding Qualified Tip Overtime Comp</Name>
-      <Description>OB3 &#xA7;70202 IRC &#xA7;225(c)(2). Overtime compensation excluding all qualified tips
+      <Description>OB3 &#xA7;70202 IRC &#xA7;225(c)(2). Overtime compensation excluding all
+        qualified tips
         defined
         in IRC &#xA7;224 that were received as part of qualified overtime compensation</Description>
       <Writable>
