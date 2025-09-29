@@ -1,7 +1,12 @@
 # ADR-002: Adopt Static Security Scanning for Scala 3 and Thymeleaf-Based Static Sites
 
-**Status:** In Review
-**Date:** 2025-09-06
+- **Status:** Approved
+- **Date:** 2025-09-06
+
+## Primary author(s)
+[primary authors]: #primary-authors
+
+@rav-gov
 
 ## Problem Statement
 

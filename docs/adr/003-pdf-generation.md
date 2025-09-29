@@ -1,5 +1,8 @@
 # ADR-003: Client-Side PDF Generation for IRS Tax Forms
 
+- **Status:** Approved
+- **Date:** 2025-09-12
+
 ## Table of Contents
 * [Problem Statement](#problem-statement)
   * [Goals](#goals)
@@ -7,10 +10,11 @@
 * [Decision](#decision-plain-javascript-with-pdf-lib)
 * [Alternatives Considered](#alternatives-considered)
 * [Risk Mitigation](#risk-mitigation)
-* [Implementation Details](#implementation-details)
-  * [Component Architecture](#component-architecture)
-    * [Integration Pattern](#integration-pattern)
-    * [Minimal Surface Area](#minimal-surface-area)
+
+## Primary author(s)
+[primary authors]: #primary-authors
+
+@rav-gov
 
 ## Problem Statement
 
