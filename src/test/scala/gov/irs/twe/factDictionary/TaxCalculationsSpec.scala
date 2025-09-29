@@ -361,6 +361,70 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
   }
 
+  test("2197 Scenarios spreadsheet Column I") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> Enum("headOfHousehold", "/filingStatusOptions"),
+      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      jobs -> jobsCollection,
+      Path(s"/jobs/#${job1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job1Id}/endDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
+      Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
+      Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-10-02"),
+      Path(s"/jobs/#${job1Id}/averagePayPerPayPeriod") -> Dollar("4000"),
+      Path(s"/jobs/#${job1Id}/yearToDateIncome") -> Dollar("76000"),
+      Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
+      Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("5700"),
+      Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job2Id}/endDate") -> Day("2025-12-31"),
+      Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
+      Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
+      Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-09-30"),
+      Path(s"/jobs/#${job2Id}/averagePayPerPayPeriod") -> Dollar("2000"),
+      Path(s"/jobs/#${job2Id}/yearToDateIncome") -> Dollar("36000"),
+      Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("200"),
+      Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("3600"),
+      Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
+      Path("/actualChildTaxCreditAmount") -> Dollar("4000"),
+      // Derived overrides
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      // Path("/usePreOb3StandardDeduction") -> true,
+    )
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("80000")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("48000")))
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("6000")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("4800")))
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("389.38")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("113.33")))
+
+    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("10800")))
+    assert(graph.get(Path("/agi")).value.contains(Dollar("128000")))
+
+    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
+      // These are the original values from the QA spreadsheet.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("16428")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("12428")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("1628")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("412")))
+    } else {
+      // The following values now differ from the QA spreadsheet due to standard deduction changes.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("16158")))
+      assert(graph.get(Path("/totalTax")).value.contains(Dollar("12158")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("1358")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("358")))
+    }
+  }
+
   test("2197 Scenarios spreadsheet Column L") {
     val graph = makeGraphWith(
       factDictionary,
@@ -688,15 +752,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     graph.set(Path("/totalOtherIncome"), Dollar(0))
     graph.set(Path("/totalCredits"), Dollar(0))
 
-    // TODO the following six statements are to work around bug #291.
-    // Remove them when it is fixed.
-    graph.set(Path(s"/jobs/#${_job1Id}/remainingPayPeriods"), 10)
-    graph.set(Path(s"/jobs/#${_job1Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
-    graph.set(Path(s"/jobs/#${_job2Id}/remainingPayPeriods"), 10)
-    graph.set(Path(s"/jobs/#${_job2Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
-    graph.set(Path(s"/jobs/#${_job3Id}/remainingPayPeriods"), 10)
-    graph.set(Path(s"/jobs/#${_job3Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
-
     assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(817)))
 
     // Other job(s) should have zero on line 4c
@@ -884,11 +939,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     graph.set(Path("/totalOtherIncome"), Dollar(0))
     graph.set(Path("/totalCredits"), Dollar(0))
 
-    // TODO the following two statements are to work around bug #291.
-    // Remove them when it is fixed.
-    graph.set(Path(s"/jobs/#${_job1Id}/remainingPayPeriods"), 10)
-    graph.set(Path(s"/jobs/#${_job1Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
-
     assert(graph.get(Path(s"/jobs/#${_job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.12")))
     assert(graph.get(Path(s"/jobs/#${_job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("80.80")))
     assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(665)))
@@ -1072,13 +1122,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     graph.set(Path("/adjustmentsToIncome"), Dollar(0))
     graph.set(Path("/totalOtherIncome"), Dollar(0))
     graph.set(Path("/totalCredits"), Dollar(0))
-
-    // TODO the following four statements are to work around bug #291.
-    // Remove them when it is fixed.
-    graph.set(Path(s"/jobs/#${_job1Id}/remainingPayPeriods"), 10)
-    graph.set(Path(s"/jobs/#${_job1Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
-    graph.set(Path(s"/jobs/#${_job2Id}/remainingPayPeriods"), 10)
-    graph.set(Path(s"/jobs/#${_job2Id}/fractionalRemainingPayPeriods"), Rational("10/1"))
 
     assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(384)))
 

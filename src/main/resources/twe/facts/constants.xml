@@ -9,5 +9,12 @@
         <Int>2025</Int>
       </Derived>
     </Fact>
+    <Fact path="/daysInYear">
+      <Description>The number of days in the tax year: 365 or 366.</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Int>365</Int>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>
