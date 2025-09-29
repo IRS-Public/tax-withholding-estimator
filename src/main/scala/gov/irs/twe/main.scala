@@ -2,6 +2,8 @@ package gov.irs.twe
 
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.generators.Website
+import gov.irs.twe.Locale
+import io.circe.yaml
 import java.io.File
 import scala.io.Source
 import scala.xml.Elem
@@ -54,6 +56,18 @@ object FileLoaderHelper:
       facts ++= factNodes
     }
     <FactDictionaryModule><Facts>{facts}</Facts></FactDictionaryModule>
+  }
+
+  def getLocaleContent(languageCode: String) = {
+    val localeFile = Source.fromResource(s"twe/locales/${languageCode}.yaml")
+
+    yaml.scalayaml.Parser.parse(localeFile.reader()) match {
+      case Left(value) =>
+        // Failing to load the content is an irrecoverable error
+        throw new Exception(s"Failed to load the content for ${languageCode}", value)
+      case Right(value) =>
+        value
+    }
   }
 
 def resolveModule(node: xml.Node): xml.NodeSeq = {

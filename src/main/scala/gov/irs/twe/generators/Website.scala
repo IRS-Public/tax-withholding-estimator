@@ -49,15 +49,15 @@ case class Website(pages: List[WebsitePage], factDictionary: xml.Elem) {
 }
 
 object Website {
+  private val templateEngine = new TweTemplateEngine()
+
   def fromXmlConfig(config: xml.Elem, dictionaryConfig: xml.Elem): Website = {
     val factDictionary = FactDictionary.fromXml(dictionaryConfig)
-    val flow = Flow.fromXmlConfig(config, factDictionary)
+    val flow = Flow.fromXmlConfig(config, factDictionary, templateEngine)
     generate(flow, dictionaryConfig)
   }
 
   def generate(flow: Flow, dictionaryConfig: xml.Elem): Website = {
-    val templateEngine = new TweTemplateEngine()
-
     val pages = flow.pages.zipWithIndex.map { (page, index) =>
       val route = if (page.route == "/") "index.html" else s"${page.route}.html"
       val title = s"Tax Withholding Estimator - ${page.title} | Internal Revenue Service"

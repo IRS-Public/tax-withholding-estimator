@@ -11,9 +11,8 @@ enum PageNode {
   case rawHTML(node: xml.Node)
 }
 
-case class Page(title: String, route: String, nodes: List[PageNode]):
+case class Page(title: String, route: String, nodes: List[PageNode], templateEngine: TweTemplateEngine):
   def content = {
-    val templateEngine = new TweTemplateEngine()
     val pageContent = nodes
       .map {
         case PageNode.section(x) => x.html(templateEngine)
@@ -32,7 +31,7 @@ case class Page(title: String, route: String, nodes: List[PageNode]):
   }
 
 object Page {
-  def parse(page: xml.Node, factDictionary: FactDictionary): Page = {
+  def parse(page: xml.Node, factDictionary: FactDictionary, templateEngine: TweTemplateEngine): Page = {
     val route = optionString(page \@ "route").getOrElse(throw InvalidFormConfig("<page> is missing a route attribute"))
     val title = optionString(page \@ "title").getOrElse(throw InvalidFormConfig("<page> is missing a title attribute"))
 
@@ -45,6 +44,6 @@ object Page {
       )
       .toList
 
-    Page(title, route, nodes)
+    Page(title, route, nodes, templateEngine)
   }
 }

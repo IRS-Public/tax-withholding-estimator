@@ -4,62 +4,62 @@
     <section>
       <h2>Child Tax Credit</h2>
       <fg-set path="/actualChildTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualChildTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualChildTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>Earned Income Tax Credit</h2>
       <fg-set path="/actualEarnedIncomeTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualEarnedIncomeTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualEarnedIncomeTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>Child and Dependent Care Credit</h2>
       <fg-set path="/actualChildAndDependentCareTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualChildAndDependentCareTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualChildAndDependentCareTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>Saver&#x2019;s Credit</h2>
       <fg-set path="/actualSaversTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualSaversTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualSaversTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>Credit for the Elderly or the Disabled</h2>
       <fg-set path="/actualElderlyAndDisabledTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualElderlyAndDisabledTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualElderlyAndDisabledTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>Lifetime Learning Credit</h2>
       <fg-set path="/actualLifetimeLeariningTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualLifetimeLeariningTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualLifetimeLeariningTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>American Opportunity Tax Credit</h2>
       <fg-set path="/actualAmericanOpportunityTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualAmericanOpportunityTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualAmericanOpportunityTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>Adoption Tax Credit</h2>
       <fg-set path="/actualAdoptionTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualAdoptionTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualAdoptionTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>Foreign Tax Credit</h2>
       <fg-set path="/actualForeignTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualForeignTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualForeignTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>Mortgage Interest Credit</h2>
       <fg-set path="/actualMortgageInterestTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualMortgageInterestTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualMortgageInterestTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>General Business Credit</h2>
       <fg-set path="/actualGeneralBusinessTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualGeneralBusinessTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualGeneralBusinessTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
       <h2>Alternative Minimum Tax Credit</h2>
       <fg-set path="/actualAlternativeMinimumTaxCreditAmount">
-        <question content-key="flow.other-deductions.fields./actualAlternativeMinimumTaxCreditAmount.question"/>
+        <question content-key="flow.credits.fields./actualAlternativeMinimumTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
     </section>

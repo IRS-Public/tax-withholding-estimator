@@ -1,9 +1,30 @@
 package gov.irs.twe
 
-import org.thymeleaf.context.Context
+import gov.irs.twe.Locale
+import org.thymeleaf.context.{ Context, ITemplateContext }
+import org.thymeleaf.messageresolver.AbstractMessageResolver
 import org.thymeleaf.templatemode.TemplateMode
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver
 import org.thymeleaf.TemplateEngine
+
+case class TweMessageResolver(locale: Locale) extends AbstractMessageResolver:
+  def createAbsentMessageRepresentation(
+      context: ITemplateContext,
+      origin: Class[?],
+      key: String,
+      messageParameters: Array[Object],
+  ): String = {
+    Log.warn(s"Could not find key ${key}")
+    s"!!${key}!!"
+  }
+
+  def resolveMessage(
+      context: ITemplateContext,
+      origin: Class[?],
+      key: String,
+      messageParameters: Array[Object],
+  ): String =
+    locale.get(key).as[String].getOrElse(null)
 
 class TweTemplateEngine {
   private val resolver = new ClassLoaderTemplateResolver()
@@ -12,8 +33,11 @@ class TweTemplateEngine {
   resolver.setPrefix("/twe/templates/")
   resolver.setSuffix(".html")
 
+  private val locale = new Locale("en")
   private val templateEngine = new TemplateEngine()
+  private val messageresolver = new TweMessageResolver(locale)
   templateEngine.setTemplateResolver(resolver)
+  templateEngine.addMessageResolver(messageresolver)
 
   def process(templateName: String, context: Context): String =
     templateEngine.process(templateName, context)
