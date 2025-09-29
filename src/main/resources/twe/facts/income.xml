@@ -662,7 +662,8 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/withholdingsFromTotalBonusReceived">
-      <Description>Bonus withholdings are 22% if less than 1,000,000 and 37% on the sum exceeding 1,000,000</Description>
+      <Description>Bonus withholdings are 22% if less than 1,000,000 and 37% on the sum exceeding
+        1,000,000</Description>
       <Derived>
         <Round>
           <Switch>
@@ -4163,13 +4164,15 @@
       </Writable>
     </Fact>
     <Fact path="/nonTaxableInterestIncome">
-      <Description>Non-taxable interest income. Used to calculate modified AGI for calculating taxable amount of SSA benefits</Description>
+      <Description>Non-taxable interest income. Used to calculate modified AGI for calculating
+        taxable amount of SSA benefits</Description>
       <Writable>
         <Dollar/>
       </Writable>
     </Fact>
     <Fact path="/magiForSSABenefitsTaxableAmount">
-      <Description>Modifed AGI used to determine taxable amount of SSA benefits. Based on IRS Pub 915 Worksheet 1</Description>
+      <Description>Modifed AGI used to determine taxable amount of SSA benefits. Based on IRS Pub
+        915 Worksheet 1</Description>
       <Derived>
         <Add>
           <!-- half of the total SSA benefits received -->
@@ -4181,10 +4184,20 @@
           <Dependency module="taxCalculations" path="/agi"/>
           <!-- non-taxable interest -->
           <Dependency path="/nonTaxableInterestIncome"/>
-          <!-- all adjustments are already deducted from AGI, bring back student loan interest amount -->
+          <!-- all adjustments are already deducted from AGI, bring back student loan interest
+          amount -->
           <Dependency module="adjustments" path="/actualStudentLoanInterestAdjustmentAmount"/>
         </Add>
       </Derived>
+    </Fact>
+    <Fact path="/trumpAccountDistribution">
+      <Name>OB3 70204: Distribution from Trump Account as defined by IRC 530A</Name>
+      <Description> The term "Trump account" means an individual retirement account (as defined in
+        section 408(a)) which is not
+        designated as a Roth IRA and which meets certain investment requirements</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
     </Fact>
     <Fact path="/totalOtherIncome">
       <Derived>
@@ -4199,6 +4212,7 @@
           <Dependency path="/sCorpNonPassiveIncome"/>
           <Dependency path="/netScheduleEIncome"/>
           <Dependency path="/nonSpecificOtherIncome"/>
+          <Dependency path="/trumpAccountDistribution"/>
         </Add>
       </Derived>
     </Fact>
