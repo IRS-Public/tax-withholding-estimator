@@ -719,6 +719,10 @@ function showValidationError() {
   // Place the alert at the top of the main content
   mainContent.insertBefore(alertElement, mainContent.firstChild);
 
+  // Focus the first invalid field
+  const firstInvalidInput = document.querySelector('fg-set:not(.hidden) [aria-invalid="true"]');
+  firstInvalidInput.focus();
+
 }
 
 window.handleSectionContinue = handleSectionContinue;
