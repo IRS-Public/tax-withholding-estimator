@@ -54,7 +54,7 @@ format_check:
 
 ci_format_check:
 	make format-xml-check
-	sbt -error scalafmtCheckAll
+	sbt -warn scalafmtCheckAll
 
 # --- Testing ---
 
