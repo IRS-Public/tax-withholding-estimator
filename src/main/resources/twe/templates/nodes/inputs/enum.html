@@ -14,10 +14,15 @@
                th:name="${path}"
                th:required="${not optional}"
                aria-invalid="false"
-               th:attr="data-description=${option.description}"/>
+               th:attr="aria-describedby=${option.description != null ? (path + '-' + option.value + '-description') : null}"/>
         <label th:for="${path} + '-' + ${option.value}"
                class="usa-radio__label radio-option">
             <span th:text="${option.name}"></span>
+            <span th:if="${option.description != null}"
+                  class="usa-radio__label-description"
+                  th:id="${path} + '-' + ${option.value} + '-description'"
+                  aria-hidden="true"
+                  th:text="#{${option.description}}"></span>
         </label>
     </div>
 </fieldset>

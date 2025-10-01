@@ -67,7 +67,9 @@ object Input {
           val name = node.text
           val value = node \@ "value"
           val finalValue = if (value.isEmpty) name else value
-          HtmlOption(name, finalValue)
+          val descriptionKey = node \@ "description-key"
+          val description = if (descriptionKey.nonEmpty) Some(descriptionKey) else None
+          HtmlOption(name, finalValue, description)
         }.toList
         Input.enumInput(options, optionsPath, hint, isOptional)
       case "dollar" => Input.dollar(hint, isOptional)

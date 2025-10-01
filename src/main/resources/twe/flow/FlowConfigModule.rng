@@ -97,7 +97,13 @@
           <element name="option">
             <attribute name="value">
               <data type="token"/>
-            </attribute> <text/>
+            </attribute>
+            <optional>
+              <attribute name="description-key">
+                <text/>
+              </attribute>
+            </optional>
+            <text/>
           </element>
         </oneOrMore>
       </element>

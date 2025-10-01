@@ -7,6 +7,7 @@ import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
 import scala.collection.JavaConverters.asJavaIterableConverter
 
+case class ThymeleafOption(name: String, value: String, description: String)
 case class FgSet(
     path: String,
     condition: Option[Condition],
@@ -34,7 +35,10 @@ case class FgSet(
         context.setVariable("options", options.asJava)
         context.setVariable("optionsPath", optionsPath)
       case Input.enumInput(options, optionsPath, _, _) =>
-        context.setVariable("options", options.asJava)
+        val javaOptions = options.map { opt =>
+          ThymeleafOption(opt.name, opt.value, opt.description.orNull)
+        }
+        context.setVariable("options", javaOptions.asJava)
         context.setVariable("optionsPath", optionsPath)
       case _ =>
     }
