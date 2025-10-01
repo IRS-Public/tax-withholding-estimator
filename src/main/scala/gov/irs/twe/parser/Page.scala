@@ -8,6 +8,7 @@ import scala.util.matching.Regex
 
 enum PageNode {
   case section(section: Section)
+  case modal(modal: Modal)
   case rawHTML(node: xml.Node)
 }
 
@@ -22,6 +23,7 @@ case class Page(
     val pageContent = nodes
       .map {
         case PageNode.section(x) => x.html(templateEngine)
+        case PageNode.modal(x)   => x.html(templateEngine)
         case PageNode.rawHTML(x) => x
       }
       .mkString("")
@@ -45,8 +47,9 @@ object Page {
     val nodes = (page \ "_")
       .map(node =>
         node.label match {
-          case "section" => PageNode.section(Section.parse(node, factDictionary))
-          case _         => PageNode.rawHTML(node)
+          case "section"      => PageNode.section(Section.parse(node, factDictionary))
+          case "modal-dialog" => PageNode.modal(Modal.parse(node))
+          case _              => PageNode.rawHTML(node)
         },
       )
       .toList

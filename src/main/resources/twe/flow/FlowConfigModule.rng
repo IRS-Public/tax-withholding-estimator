@@ -33,6 +33,23 @@
         <element name="section">
             <ref name="FlowConfigModuleContent"/>
         </element>
+        <zeroOrMore>
+          <element name="modal-dialog">
+            <attribute name="id">
+              <text/>
+            </attribute>
+              <element name="modal-heading">
+                <attribute name="content-key">
+                  <text />
+                </attribute>
+              </element>
+              <element name="modal-content">
+                <attribute name="content-key">
+                  <text />
+                </attribute>
+              </element>
+          </element>
+        </zeroOrMore>
       </element>
     </oneOrMore>
   </define>
