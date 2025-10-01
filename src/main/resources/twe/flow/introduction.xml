@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<?xml-model href="./FlowConfigModule.rng"?>
+<FlowConfigModule>
+  <page title="Intro Page" route="/" exclude-from-stepper="true">
+    <section>
+      <h2>Introduction Page</h2>
+      <p>This is a test description.</p>
+    </section>
+  </page>
+</FlowConfigModule>

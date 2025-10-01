@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfigModule.rng"?>
 <FlowConfigModule>
-  <page title="About you" route="/">
+  <page title="About you" route="about-you">
     <section>
       <fg-set path="/filingStatus">
         <question content-key="flow.about-you.fields./filingStatus.question"/>

@@ -1,4 +1,4 @@
-<div class="usa-step-indicator margin-top-3">
+<div class="usa-step-indicator margin-top-3" th:if="${exclude == false}">
   <ol class="usa-step-indicator__segments">
     <li class="usa-step-indicator__segment usa-step-indicator__segment--complete"
         th:each="page, iterStat : ${pages}"

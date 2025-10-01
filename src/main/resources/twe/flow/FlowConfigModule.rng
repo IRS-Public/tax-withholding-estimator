@@ -26,9 +26,13 @@
         <attribute name="route">
           <data type="token"/>
         </attribute>
-          <element name="section">
+        <optional>
+        <attribute name="exclude-from-stepper">
+        </attribute>
+        </optional>
+        <element name="section">
             <ref name="FlowConfigModuleContent"/>
-          </element>
+        </element>
       </element>
     </oneOrMore>
   </define>

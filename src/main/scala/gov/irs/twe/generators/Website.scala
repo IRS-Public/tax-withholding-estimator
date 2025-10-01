@@ -58,21 +58,26 @@ object Website {
   }
 
   def generate(flow: Flow, dictionaryConfig: xml.Elem): Website = {
+    val templateEngine = new TweTemplateEngine()
+    val navPages = flow.pages.filter(p => p.exclude == false)
+    val excludedPageLength = flow.pages.length - navPages.size
+
     val pages = flow.pages.zipWithIndex.map { (page, index) =>
       val route = if (page.route == "/") "index.html" else s"${page.route}.html"
       val title = s"Tax Withholding Estimator - ${page.title} | Internal Revenue Service"
       val stepTitle = page.title
 
       val context = new Context()
-      context.setVariable("pages", flow.pages.asJava) // th:each requires Java Iterables
+      context.setVariable("exclude", page.exclude)
       context.setVariable("dictionaryConfig", dictionaryConfig.toString)
       context.setVariable("title", title)
       context.setVariable("stepTitle", stepTitle)
-      context.setVariable("stepIndex", index)
-      context.setVariable("stepTotal", flow.pages.length)
+      context.setVariable("stepIndex", (index - excludedPageLength) % flow.pages.length)
+      context.setVariable("stepTotal", navPages.size)
+      context.setVariable("pages", navPages.asJava) // th:each requires Java Iterables
 
       // Add a link for the next page if it's not the last one
-      if (index + 1 < flow.pages.length) {
+      if (index + 1 < navPages.size) {
         val nextPageHref = flow.pages(index + 1).route
         context.setVariable("nextPageHref", nextPageHref)
       }
