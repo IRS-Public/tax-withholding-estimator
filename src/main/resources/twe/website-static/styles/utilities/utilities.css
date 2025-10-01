@@ -2,3 +2,9 @@
   opacity: 0;
   display: none;
 }
+
+.back-link {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-lg);
+}

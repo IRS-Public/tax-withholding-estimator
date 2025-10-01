@@ -76,6 +76,13 @@ object Website {
         val nextPageHref = flow.pages(index + 1).route
         context.setVariable("nextPageHref", nextPageHref)
       }
+      // Add a link for the last page if it's not the first one
+      if (index > 0) {
+        val lastPageHref = flow.pages(index - 1).route
+        context.setVariable("lastPageHref", lastPageHref)
+      } else {
+        context.setVariable("first", true)
+      }
 
       // Turn all the pages into HTML representations and join them together
       val pageXml = page.content

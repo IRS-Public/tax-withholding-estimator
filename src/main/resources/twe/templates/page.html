@@ -17,6 +17,16 @@
 
     <div th:replace="fragments/usa-step-indicator"></div>
 
+    <div class="header-bottom-border" th:if="!${first}">
+      <a class="usa-link back-link"
+        th:href="${lastPageHref}">
+        <svg aria-hidden="true" role="img" focusable="false" class="usa-icon">
+      <use href="/resources/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
+      </svg>
+      [[#{buttons.back}]]
+      </a>
+    </div>
+
     <div th:utext="${pageXml}" th:remove="tag" class=""></div>
 
     <div class="form-actions" th:if="${nextPageHref}">
