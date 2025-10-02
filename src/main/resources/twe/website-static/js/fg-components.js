@@ -267,7 +267,7 @@ class FgSet extends HTMLElement {
     let fact = factGraph.get(this.path)
 
     let value
-    if (fact.hasValue === false) {
+    if (fact.complete === false) {
       value = ""
     } else {
       value = fact.get?.toString()
