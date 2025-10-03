@@ -1,10 +1,14 @@
-# Tax Withholding Estimator
+# Tax Withholding Estimator (TWE)
 
-An online website for a taxpayer to estimate their withholdings.
+An online website for a taxpayer to estimate their tax withholdings for a variety of tax situations. For a deep dive into the technical design choices of this repository, start [here](docs/adr/001-twe-architecture.md).
 
-It is powered by a static site generator that turns FlowXML into multi-page forms.
-Right now this static site generator is purpose-built for TWE, but I've done what I can to write it as generically as
-possible.
+# Setup
+See [QUICKSTART-ONBOARDING.md](QUICKSTART-ONBOARDING.md) for a quickstart setup that can be used if you don't care about a developer setup
+See [DEV-ONBOARDING.md](DEV-ONBOARDING.md) for a more thorough setup meant for active development.
+
+# Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
 
 > ## Legal Disclaimer: Public Repository Access
 >
@@ -16,14 +20,7 @@ possible.
 >
 > **Official Tool for Tax Withholding Estimation**
 >
-> If you are a taxpayer seeking to estimate the federal income tax you want your employer to withhold from your paycheck, please use the official IRS Tax Withholding Estimator available at:
-> 👉 https://www.irs.gov/individuals/tax-withholding-estimator
+> If you are a taxpayer seeking to estimate the federal income tax you want your employer to withhold from your paycheck, please use the official IRS Tax Withholding Estimator available at https://www.irs.gov/individuals/tax-withholding-estimator
 >
 > Use of the code in this repository is at your own risk. This repository is not intended for production use or public consumption as a finalized product.
 
-# Setup
-See [ONBOARDING.md](ONBOARDING.md) for environment/developer setup.
-See [NON-DEV-ONBOARDING.md](NON-DEV-ONBOARDING.md) for non-developer local setup
-
-# Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
