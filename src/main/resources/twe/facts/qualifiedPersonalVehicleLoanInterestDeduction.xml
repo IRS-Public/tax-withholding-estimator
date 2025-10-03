@@ -11,7 +11,8 @@
     </Fact>
     <Fact path="/isQpvIndebtednessIncurredAfterEffectiveDate">
       <Name>Is QPV purchased and a loan originated after 12/34/24</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(i): QPVLID Requirement: Any
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(i): QPVLID Requirement:
+        Any
         interest which
         is paid or accrued during the taxable year on indebtedness incurred by the taxpayer after
         December 31,
@@ -23,7 +24,8 @@
     </Fact>
     <Fact path="/isVehicleLoanFirstLien">
       <Name>Is QPV purchased with a first lien loan</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii): QPVLID Requirement:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii): QPVLID
+        Requirement:
         Loan must be
         secured by a first lien
       </Description>
@@ -34,7 +36,8 @@
     <!--        QPVLID Exclusions-->
     <Fact path="/isVehicleLoanFinancingFleetSale">
       <Name>Is loan used to finance fleet sales</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(i): Qpvlid Exclusion: A
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(i): Qpvlid
+        Exclusion: A
         loan to
         finance fleet sales.
       </Description>
@@ -44,7 +47,8 @@
     </Fact>
     <Fact path="/isVehicleForPersonalUse">
       <Name>Is QPV purchased for personal use</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(ii): Qpvlid Exclusion: A
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(ii): Qpvlid
+        Exclusion: A
         loan incurred
         for the purchase of a commercial vehicle that is not used for personal purposes.
       </Description>
@@ -54,7 +58,8 @@
     </Fact>
     <Fact path="/isVehicleLeaseFinanced">
       <Name>Is QPV purchased with lease financing</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(iii): Qpvlid Exclusion:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(iii): Qpvlid
+        Exclusion:
         Any lease
         financing
       </Description>
@@ -65,7 +70,8 @@
     <Fact path="/hasSalvageTitleOrPurchasedToScrap">
       <Name>Is QPV purchased with a salvage title or with the intent to scrap for parts</Name>
       <Description>OB3
-        Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(iv-v): Qpvlid Exclusions: A loan to
+        Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(iv-v): Qpvlid Exclusions: A loan
+        to
         finance the purchase of a vehicle with a salvage title or A loan to finance the purchase of
         a
         vehicle
@@ -78,7 +84,8 @@
     <!--        VIN Requirement-->
     <Fact path="/doesHaveVIN">
       <Name>Can the taxpayer provide a VIN as part of their tax return</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(iii): Qpvlid Requirement:
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(iii): Qpvlid
+        Requirement:
         Provide a VIN as
         part of tax return for the taxable years
       </Description>
@@ -141,7 +148,8 @@
     <!--        Final assemble requirements-->
     <Fact path="/isVehicleAssembledInUSA">
       <Name>QPV assembled in US</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(E)(i): APV Requirement: vehicle
+      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(E)(i): APV Requirement:
+        vehicle
         final
         assembly is in US
       </Description>
@@ -261,23 +269,27 @@
     </Fact>
     <Fact path="/phaseOutAmountQPVLID">
       <Name>Qualified Personal Vehicle Loan Amount Phase Out</Name>
-      <Description>Phaseout amount for the qualified personal vehicle loan deduction. phaseOutAmount
-        = 200*(filing
-        status specific MAGI/1000)
+      <Description>The amount which is otherwise allowable as a deduction under subsection (a) as
+        qualified passenger vehicle loan interest (determined without regard to this clause and
+        after
+        theapplication of clause (i)) shall be reduced (but not below zero) by $200 for each $1,000
+        (orportion thereof) by which the modified adjusted gross income of the taxpayer for the
+        taxableyear exceeds $100,000 ($200,000 in the case of a joint return).
+
+        Phaseout amount for the qualified personal vehicle loan deduction:
+        phaseOutAmount= 200*(filing= 200*(filingstatus specific MAGI/1000)status specific MAGI/1000)
       </Description>
       <TaxYear>2025</TaxYear>
       <Derived>
-        <Multiply>
-          <Divide>
-            <Dividend>
-              <Dependency path="/excessOverThresholdQPVLID"/>
-            </Dividend>
-            <Divisors>
-              <Dollar>1000</Dollar>
-            </Divisors>
-          </Divide>
-          <Dollar>200</Dollar>
-        </Multiply>
+        <StepwiseMultiply>
+          <Multiplicand>
+            <Dependency path="/excessOverThresholdQPVLID"/>
+          </Multiplicand>
+          <Rate>
+            <!-- Reduce by a rate of $200 for each $1000 of MAGI exceeding the relevant threshold -->
+            <Rational>200/1000</Rational>
+          </Rate>
+        </StepwiseMultiply>
       </Derived>
     </Fact>
     <Fact path="/tentativeQualifiedPersonalVehicleLoanInterestDeduction">

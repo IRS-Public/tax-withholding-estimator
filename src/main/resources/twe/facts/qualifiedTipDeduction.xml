@@ -13,14 +13,16 @@
     <!--        Qualified Tip Deduction Eligibility-->
     <Fact path="/hasTipsThisTaxYear">
       <Name>Has the taxpayer received tips this tax years?</Name>
-      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(1): tips received after 1/1/25</Description>
+      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(1): tips received after
+        1/1/25</Description>
       <Writable>
         <Boolean/>
       </Writable>
     </Fact>
     <Fact path="/areTipsCash">
       <Name>Were the received tips cash</Name>
-      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(3): tips received from customers
+      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(3): tips received from
+        customers
         that are paid
         in cash or charged and, in the case of an employee, tips received under any tip-sharing
         arrangement.</Description>
@@ -30,7 +32,8 @@
     </Fact>
     <Fact path="/areTipsVoluntary">
       <Name>Were the paid voluntarily</Name>
-      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(2)(A): paid voluntarily without
+      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(2)(A): paid voluntarily
+        without
         any con-
         sequence in the event of nonpayment, is not the subject of negotiation, and is determined by
         the payor</Description>
@@ -55,7 +58,8 @@
     </Fact>
     <Fact path="/isOccupationSpecifiedServiceTradeOrBusiness">
       <Name>Were tips provided from a &#xA7;199A specified service trades or businesses</Name>
-      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(2)(B): the trade or business in
+      <Description>OB3 Section 70201 temporarily creating &#xA7;224(d)(2)(B): the trade or business
+        in
         the course of which the individual receives such amount is **not** a specified service
         trade or business (as defined in section 199A(d)(2))</Description>
       <Writable>
@@ -75,7 +79,8 @@
       deductions' -->
       <Name>Do tips exceed self employment income?</Name>
       <Description>OB3 Section 70201 temporarily creating &#xA7;224(c): Deduction may not exceed
-        individual&#x2019;s net income (without regard to this deduction) from the trade or business in
+        individual&#x2019;s net income (without regard to this deduction) from the trade or business
+        in
         which the tips were earned.</Description>
       <Derived>
         <Switch>
@@ -197,17 +202,20 @@
       </Description>
       <TaxYear>2025</TaxYear>
       <Derived>
-        <Multiply>
-          <Divide>
-            <Dividend>
-              <Dependency path="/excessOverThresholdQualifiedTipDeduction"/>
-            </Dividend>
-            <Divisors>
-              <Dollar>1000</Dollar>
-            </Divisors>
-          </Divide>
-          <Dollar>100</Dollar>
-        </Multiply>
+        <!-- Example: Single filer with MAGI of $160,500. This amount exceeds the relevant
+          threshold
+        ($150,000) by $10,500. This is 10.5 increments of $1,000 in excess of the threshold, which
+        is rounded down to 10 increments. Therefore, the otherwise allowable deduction amount is
+        reduced by $1,000 ($100/increment multiplied by 10 increments). -->
+        <StepwiseMultiply>
+          <Multiplicand>
+            <Dependency path="/excessOverThresholdQualifiedTipDeduction"/>
+          </Multiplicand>
+          <Rate>
+            <!-- Reduce by a rate of $100 for each $1000 of MAGI exceeding the relevant threshold -->
+            <Rational>100/1000</Rational>
+          </Rate>
+        </StepwiseMultiply>
       </Derived>
     </Fact>
     <Fact path="/qualifiedTipDeduction">

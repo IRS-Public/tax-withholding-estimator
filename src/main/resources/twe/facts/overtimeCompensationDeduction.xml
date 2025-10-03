@@ -45,7 +45,8 @@
     -->
     <Fact path="/hasOvertimeCompThisTaxYear">
       <Name>Has the taxpayer received overtime comp this tax years?</Name>
-      <Description>OB3 Section 70202 temporarily creating &#xA7;225(c)(1): overtime comp received after
+      <Description>OB3 Section 70202 temporarily creating &#xA7;225(c)(1): overtime comp received
+        after
         1/1/25 that is "that is in excess of the regular rate (as used in such section) at which
         such individual is employed."</Description>
       <Writable>
@@ -57,8 +58,10 @@
       of FLSA Section 7, in future iterations to create a better taxpayer experience-->
       <Name>Is the taxpayer non-exempt and eligible for qualified overtime comp under FLSA Section
         7?</Name>
-      <Description>OB3 Section 70202 temporarily creating &#xA7;225(c)(1): For purposes of this section,
-        the term &#x2018;qualified overtime compensation&#x2019; means overtime compensation paid to an individual
+      <Description>OB3 Section 70202 temporarily creating &#xA7;225(c)(1): For purposes of this
+        section,
+        the term &#x2018;qualified overtime compensation&#x2019; means overtime compensation paid to
+        an individual
         required under section 7 of the Fair Labor Standards Act of 1938</Description>
       <Writable>
         <Boolean/>
@@ -146,17 +149,20 @@
       </Description>
       <TaxYear>2025</TaxYear>
       <Derived>
-        <Multiply>
-          <Divide>
-            <Dividend>
-              <Dependency path="/excessOverThresholdOvertimeCompensationDeduction"/>
-            </Dividend>
-            <Divisors>
-              <Dollar>1000</Dollar>
-            </Divisors>
-          </Divide>
-          <Dollar>100</Dollar>
-        </Multiply>
+        <!-- Example: Single filer with MAGI of $160,500. This amount exceeds the relevant
+          threshold
+        ($150,000) by $10,500. This is 10.5 increments of $1,000 in excess of the threshold, which
+        is rounded down to 10 increments. Therefore, the otherwise allowable deduction amount is
+        reduced by $1,000 ($100/increment multiplied by 10 increments). -->
+        <StepwiseMultiply>
+          <Multiplicand>
+            <Dependency path="/excessOverThresholdOvertimeCompensationDeduction"/>
+          </Multiplicand>
+          <Rate>
+            <!-- Reduce by a rate of $100 for each $1000 of MAGI exceeding the relevant threshold -->
+            <Rational>100/1000</Rational>
+          </Rate>
+        </StepwiseMultiply>
       </Derived>
     </Fact>
     <Fact path="/overtimeCompensationDeduction">
