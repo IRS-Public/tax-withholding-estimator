@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<FlowConfigModule>
+  <page title="Income" route="income">
+    <section>
+      <h1>Income</h1>
+      <h2>Jobs</h2>
+      <fg-collection path="/jobs" item-name="Income source">
+        <fg-set path="/jobs/*/startDate">
+          <question content-key="flow.income.fields./jobs/*/startDate.question"/>
+          <input type="date"/>
+        </fg-set>
+        <fg-set path="/jobs/*/endDate">
+          <question content-key="flow.income.fields./jobs/*/endDate.question"/>
+          <input type="date"/>
+        </fg-set>
+        <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
+          <question content-key="flow.income.fields./jobs/*/mostRecentPayPeriodEnd.question"/>
+          <input type="date"/>
+        </fg-set>
+        <fg-set path="/jobs/*/mostRecentPayDate">
+          <question content-key="flow.income.fields./jobs/*/mostRecentPayDate.question"/>
+          <input type="date"/>
+        </fg-set>
+        <fg-set path="/jobs/*/averagePayPerPayPeriod">
+          <question content-key="flow.income.fields./jobs/*/averagePayPerPayPeriod.question"/>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/yearToDateIncome">
+          <question content-key="flow.income.fields./jobs/*/yearToDateIncome.question"/>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/averageWithholdingPerPayPeriod">
+          <question content-key="flow.income.fields./jobs/*/averageWithholdingPerPayPeriod.question"/>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/yearToDateWithholding">
+          <question content-key="flow.income.fields./jobs/*/yearToDateWithholding.question"/>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/payFrequency">
+          <question content-key="flow.income.fields./jobs/*/payFrequency.question"/>
+          <select options-path="/jobs/*/payFrequency">
+            <option value="weekly">Weekly</option>
+            <option value="biWeekly">Biweekly</option>
+            <option value="semiMonthly">Semimonthly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </fg-set>
+        <fg-set path="/jobs/*/totalBonusReceived">
+          <question content-key="flow.income.fields./jobs/*/totalBonusReceived.question"/>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/preTaxDeductions">
+          <question content-key="flow.income.fields./jobs/*/preTaxDeductions.question"/>
+          <input type="dollar"/>
+        </fg-set>
+      </fg-collection>
+      <fg-set path="/totalAdvancedPayments">
+        <question content-key="flow.income.fields./totalAdvancedPayments.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Trump Account Distribution</h2>
+      <fg-set path="/trumpAccountDistribution">
+        <question content-key="flow.income.fields./trumpAccountDistribution.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Net Self-Employment Income</h2>
+      <fg-set path="/netSelfEmploymentIncome">
+        <question content-key="flow.income.fields./netSelfEmploymentIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Ordinary Dividends Income</h2>
+      <fg-set path="/ordinaryDividendsIncome">
+        <question content-key="flow.income.fields./ordinaryDividendsIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Unemployment Insurance Income</h2>
+      <fg-set path="/unemploymentInsuranceIncome">
+        <question content-key="flow.income.fields./unemploymentInsuranceIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Interest Income (excluding non-taxable interest)</h2>
+      <fg-set path="/interestExcludingNonTaxableIncome">
+        <question content-key="flow.income.fields./miscIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Non-taxable Interest Income</h2>
+      <fg-set path="/nonTaxableInterestIncome">
+        <question content-key="flow.income.fields./nonTaxableInterestIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Short term capital gains</h2>
+      <fg-set path="/shortTermCapitalGainsIncome">
+        <question content-key="flow.income.fields./shortTermCapitalGainsIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Taxable Scholarship Income</h2>
+      <fg-set path="/taxableScholarshipIncome">
+        <question content-key="flow.income.fields./taxableScholarshipIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Alimony Received</h2>
+      <fg-set path="/alimonyReceivedIncome">
+        <question content-key="flow.income.fields./alimonyReceivedIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>S-corp non-passive Income (Schedule K1)</h2>
+      <fg-set path="/sCorpNonPassiveIncome">
+        <question content-key="flow.income.fields./sCorpNonPassiveIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Net Schedule E Income</h2>
+      <fg-set path="/netScheduleEIncome">
+        <question content-key="flow.income.fields./netScheduleEIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Non-specific Other Income</h2>
+      <fg-set path="/nonSpecificOtherIncome">
+        <question content-key="flow.income.fields./nonSpecificOtherIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Net SSA income from Forms SSA-1099 and RRB-1099</h2>
+      <fg-set path="/socialSecuityBenefitsIncome">
+        <question content-key="flow.income.fields./socialSecuityBenefitsIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+    </section>
+  </page>
+</FlowConfigModule>

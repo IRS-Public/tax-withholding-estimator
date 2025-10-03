@@ -3,10 +3,9 @@
 <FlowConfig>
   <module src="./introduction.xml"/>
   <module src="./about-you.xml"/>
-  <module src="./other-income.xml"/>
+  <module src="./income.xml"/>
+  <module src="./deductions.xml"/>
   <module src="./adjustments.xml"/>
-  <module src="./standard-or-itemized.xml"/>
-  <module src="./other-deductions.xml"/>
   <module src="./credits.xml"/>
   <module src="./results.xml"/>
 </FlowConfig>

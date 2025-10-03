@@ -46,62 +46,6 @@
         <question content-key="flow.about-you.fields./secondaryFilerIsClaimedOnAnotherReturn.question"/>
         <input type="boolean"/>
       </fg-set>
-      <h2>Jobs</h2>
-      <fg-collection path="/jobs" item-name="Income source">
-        <fg-set path="/jobs/*/startDate">
-          <question content-key="flow.about-you.fields./jobs/*/startDate.question"/>
-          <input type="date"/>
-        </fg-set>
-        <fg-set path="/jobs/*/endDate">
-          <question content-key="flow.about-you.fields./jobs/*/endDate.question"/>
-          <input type="date"/>
-        </fg-set>
-        <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
-          <question content-key="flow.about-you.fields./jobs/*/mostRecentPayPeriodEnd.question"/>
-          <input type="date"/>
-        </fg-set>
-        <fg-set path="/jobs/*/mostRecentPayDate">
-          <question content-key="flow.about-you.fields./jobs/*/mostRecentPayDate.question"/>
-          <input type="date"/>
-        </fg-set>
-        <fg-set path="/jobs/*/averagePayPerPayPeriod">
-          <question content-key="flow.about-you.fields./jobs/*/averagePayPerPayPeriod.question"/>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/yearToDateIncome">
-          <question content-key="flow.about-you.fields./jobs/*/yearToDateIncome.question"/>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/averageWithholdingPerPayPeriod">
-          <question content-key="flow.about-you.fields./jobs/*/averageWithholdingPerPayPeriod.question"/>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/yearToDateWithholding">
-          <question content-key="flow.about-you.fields./jobs/*/yearToDateWithholding.question"/>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/payFrequency">
-          <question content-key="flow.about-you.fields./jobs/*/payFrequency.question"/>
-          <select options-path="/jobs/*/payFrequency">
-            <option value="weekly">Weekly</option>
-            <option value="biWeekly">Biweekly</option>
-            <option value="semiMonthly">Semimonthly</option>
-            <option value="monthly">Monthly</option>
-          </select>
-        </fg-set>
-        <fg-set path="/jobs/*/totalBonusReceived">
-          <question content-key="flow.about-you.fields./jobs/*/totalBonusReceived.question"/>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/preTaxDeductions">
-          <question content-key="flow.about-you.fields./jobs/*/preTaxDeductions.question"/>
-          <input type="dollar"/>
-        </fg-set>
-      </fg-collection>
-      <fg-set path="/totalAdvancedPayments">
-        <question content-key="flow.about-you.fields./totalAdvancedPayments.question"/>
-        <input type="dollar"/>
-      </fg-set>
       <h2>Start over</h2>
       <fg-reset>
         <button class="usa-button usa-button--outline" type="reset">Start over</button>

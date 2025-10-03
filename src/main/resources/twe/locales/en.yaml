@@ -19,6 +19,8 @@ flow:
         question: Does your spouse have an SSN?
       /secondaryFilerIsClaimedOnAnotherReturn:
         question: Can anyone else claim your spouse as a dependent on their tax return?
+  income:
+    fields:
       /jobs/*/startDate:
         question: What’s the start date?
       /jobs/*/endDate:
@@ -43,28 +45,26 @@ flow:
         question: Job’s pre-tax deductions
       /totalAdvancedPayments:
         question: What is the total amount of advanced tax payments you made to date?
-  other-income:
-    fields:
-     /netSelfEmploymentIncome:
-       question: How much was your net self-employment income this year?
-     /ordinaryDividendsIncome:
-       question: How much have you made in ordinary dividends income so far this year?
-     /unemploymentInsuranceIncome:
-       question: How much have you received in employment insurance income so far this year?
-     /miscIncome:
-       question: How much other income have you made this year?
-     /shortTermCapitalGainsIncome:
-       question: How much short term capital gains have you received this year?
-     /taxableScholarshipIncome:
-       question: How much taxable scholarship income have you received this year?
-     /alimonyReceivedIncome:
-       question: How much alimony (pre-2019 divorce) have you received this year?
-     /sCorpNonPassiveIncome:
-       question: How much S-corp non-passive income (Schedule K1) have you made this year?
-     /netScheduleEIncome:
-       question: How much Net Schedule E income from passive activities have you received this year?
-     /nonSpecificOtherIncome:
-       question: How much non-specific other income have you made this year?
+      /netSelfEmploymentIncome:
+        question: How much was your net self-employment income this year?
+      /ordinaryDividendsIncome:
+        question: How much have you made in ordinary dividends income so far this year?
+      /unemploymentInsuranceIncome:
+        question: How much have you received in employment insurance income so far this year?
+      /miscIncome:
+        question: How much other income have you made this year?
+      /shortTermCapitalGainsIncome:
+        question: How much short term capital gains have you received this year?
+      /taxableScholarshipIncome:
+        question: How much taxable scholarship income have you received this year?
+      /alimonyReceivedIncome:
+        question: How much alimony (pre-2019 divorce) have you received this year?
+      /sCorpNonPassiveIncome:
+        question: How much S-corp non-passive income (Schedule K1) have you made this year?
+      /netScheduleEIncome:
+        question: How much Net Schedule E income from passive activities have you received this year?
+      /nonSpecificOtherIncome:
+        question: How much non-specific other income have you made this year?
   adjustments:
     fields:
      /actualEducatorExpensesAdjustmentAmount:
@@ -83,7 +83,7 @@ flow:
        question: Penalty for early withdrawal of savings
      /actualBusinessCreditsForEligible:
        question: Business credits for reservists, performing artists, and fee-based government officials
-  standardized-or-itemized:
+  deductions:
     fields:
      /wantsItemizedDeduction:
        question: Do you want to itemize your deductions? The standard deduction is higher for most taxpayers, but you may want to itemize your deductions if you have a mortgage, large gifts to charity, or large medical expenses
@@ -101,8 +101,6 @@ flow:
        question: Total casualty loss from a specific loss event
      /otherDeductions/*/payment:
        question: Any other deductible expenses
-  other-deductions:
-    fields:
      /qualifiedBusinessIncomeDeduction:
        question: What is your estimated Qualified Business Income Deduction for this year?
      /nonItemizerCharitableContributionDeductionAmount:
