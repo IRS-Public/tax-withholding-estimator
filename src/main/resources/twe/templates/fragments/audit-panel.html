@@ -1,0 +1,128 @@
+<link rel="stylesheet" href="/resources/styles/audit-panel.css" />
+<aside id="audit-panel" th:with="selectPsuedoPath='fact-select',collectionIdPsuedoPath='fact-collection-id'">
+  <h2>Fact Graph Audit Panel</h2>
+  <div class="usa-form-group">
+      <span th:replace="~{nodes/question-label(question='audit.fact-select.label',path=${selectPsuedoPath},optional=true)}"></span>
+      <select th:replace="~{nodes/inputs/select(selectBlankLabel='audit.fact-select.blank',path=${selectPsuedoPath})}"></select>
+  </div>
+  <div class="usa-form-group">
+      <span th:replace="~{nodes/question-label(question='audit.collection-id.label',path=${collectionIdPsuedoPath},optional=true)}"></span>
+      <input th:replace="~{nodes/inputs/text(path=${collectionIdPsuedoPath},optional=true)}" />
+  </div>
+  <br />
+  <div><button id="add-fact-button" type="button">Add fact</button></div>
+  <ul id="audit-panel__fact-list">
+    <template id="audit-panel__fact">
+      <h3 class="audit-panel__fact__path"></h3>
+      <dl>
+        <dt th:text="#{audit.fact.type}"></dt>
+        <dd class="audit-panel__fact__type"></dd>
+
+        <dt th:text="#{audit.fact.value}"></dt>
+        <dd class="audit-panel__fact__value"></dd>
+      </dl>
+      <div class="audit-panel__fact__controls">
+        <button class="audit-panel__fact__remove" th:text="#{audit.fact.remove}" type="button"></button>
+      </div>
+    </template>
+  </ul>
+</aside>
+
+<script>
+  function makeCollectionIdPath(abstractPath, id) {
+    return abstractPath.replace('*', `#${id}`);
+  }
+
+  const auditedFactsList = document.querySelector('#audit-panel__fact-list')
+  function trackFact(path, collectionId){
+    const auditedFact = document.createElement('audited-fact')
+
+    const factPath = makeCollectionIdPath(path, collectionId)
+    if(AuditedFact.selectedFacts.has(factPath)) {
+      console.debug(`Already tracking ${factPath}`)
+      return
+    }
+
+    auditedFact.setAttribute('path', path)
+    auditedFact.setAttribute('collectionId', collectionId)
+
+    const listItem = document.createElement('li')
+    listItem.appendChild(auditedFact)
+    auditedFactsList.appendChild(listItem)
+  }
+
+  const pathSelect = document.querySelector('#fact-select')
+  const collectionIdInput = document.querySelector('#fact-collection-id')
+  const addFactButton = document.querySelector('#add-fact-button')
+  addFactButton.addEventListener('click', () => {
+    const factPath = pathSelect.value;
+    const collectionId = collectionIdInput.value;
+
+    if(factPath) {
+      trackFact(factPath, collectionId)
+    }
+  })
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const paths = factGraph.paths().sort()
+
+    pathSelect.append(...paths.map((path) => {
+      const option = document.createElement('option')
+      option.text = option.value = path;
+
+      return option;
+    }))
+  })
+
+  class AuditedFact extends HTMLElement {
+    static selectedFacts = new Set();
+
+    constructor() {
+      super()
+
+      this.deleteListener = () => this.parentElement.remove()
+      this.renderListener = () => this.render()
+
+      const templateContent = document.querySelector('#audit-panel__fact').content.cloneNode(true)
+      this.attachShadow({mode: 'open'})
+      this.shadowRoot.append(templateContent)
+
+      this.factPathElem = this.shadowRoot.querySelector('.audit-panel__fact__path')
+      this.factTypeElem = this.shadowRoot.querySelector('.audit-panel__fact__type')
+      this.factValueElem = this.shadowRoot.querySelector('.audit-panel__fact__value')
+
+      this.removeButton = this.shadowRoot.querySelector('.audit-panel__fact__remove')
+    }
+
+    connectedCallback() {
+      const abstractPath = this.getAttribute('path')
+      const collectionId = this.getAttribute('collectionid')
+
+      this.factPath = makeCollectionIdPath(abstractPath, collectionId)
+      this.removeButton.addEventListener('click', this.deleteListener)
+      document.addEventListener(`fg-update`, this.renderListener)
+
+      AuditedFact.selectedFacts.add(this.factPath)
+
+      this.render()
+    }
+
+    disconnectedCallback() {
+      this.removeButton.removeEventListener('click', this.deleteListener)
+      document.removeEventListener(`fg-update`, this.renderListener)
+
+      AuditedFact.selectedFacts.delete(this.factPath)
+    }
+
+    render() {
+      const definition = factGraph.dictionary.getDefinition(this.factPath)
+      const fact = factGraph.get(this.factPath)
+
+      this.factPathElem.innerText = this.factPath
+      this.factTypeElem.innerText = definition.typeNode
+      this.factValueElem.innerText = `${fact.hasValue ? fact.get.toString() + ' ' : ''}${fact.complete ? `[Complete]` : `[Incomplete]`}`;
+
+    }
+  }
+  customElements.define('audited-fact', AuditedFact)
+</script>

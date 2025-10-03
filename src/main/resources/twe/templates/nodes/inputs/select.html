@@ -5,6 +5,6 @@
         aria-invalid="false"
     >
 
-    <option value="" th:disabled="${not optional}" th:selected="${not optional}" th:text="#{components.select.select}"></option>
+    <option value="" th:disabled="${not optional}" th:selected="${not optional}" th:text="#{${selectBlankLabel}? ${selectBlankLabel} : 'components.select.select'}"></option>
     <option th:each="option: ${options}" th:value="${option.value}" th:text="${option.name}"></option>
 </select>
