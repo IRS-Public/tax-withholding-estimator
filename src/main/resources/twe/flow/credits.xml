@@ -37,6 +37,11 @@
         <question content-key="flow.credits.fields./actualAmericanOpportunityTaxCreditAmount.question"/>
         <input type="dollar"/>
       </fg-set>
+      <h2> Credit for contributions of individuals to scholarship granting organizations</h2>
+      <fg-set path="/actualContributionsScholarshipGrantingOrganizationsCreditAmount">
+        <question content-key="flow.credits.fields./actualContributionsScholarshipGrantingOrganizationsCreditAmount.question"/>
+        <input type="dollar"/>
+      </fg-set>
       <h2>Adoption Tax Credit</h2>
       <fg-set path="/actualAdoptionTaxCreditAmount">
         <question content-key="flow.credits.fields./actualAdoptionTaxCreditAmount.question"/>

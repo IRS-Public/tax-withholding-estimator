@@ -179,8 +179,8 @@ flow:
        question: How much American Opportunity tax credit do you expect to claim this year?
      /actualAdoptionTaxCreditAmount:
        question: How much Adoption tax Credit do you expect to claim this year?
-     /actualAdoptionTaxCreditAmount:
-       question: How much Adoption tax Credit do you expect to claim this year?
+     /actualContributionsScholarshipGrantingOrganizationsCreditAmount:
+       question: How much Credit for contributions of individuals to scholarship granting organizations do you expect to claim this year?
      /actualForeignTaxCreditAmount:
        question: How much Foreign tax credit do you expect to claim this year?
      /actualMortgageInterestTaxCreditAmount:
