@@ -720,8 +720,18 @@ function showValidationError() {
   mainContent.insertBefore(alertElement, mainContent.firstChild);
 
   // Focus the first invalid field
-  const firstInvalidInput = document.querySelector('fg-set:not(.hidden) [aria-invalid="true"]');
-  firstInvalidInput.focus();
+  const firstInvalidField = document.querySelector('fg-set:not([inputtype="date"], .hidden) .usa-form-group--error .usa-fieldset, fg-set:not(.hidden) [aria-invalid="true"]');
+
+  if (firstInvalidField instanceof HTMLFieldSetElement) {
+    firstInvalidField.setAttribute('tabindex', '-1');
+    firstInvalidField.focus();
+
+    // Remove tabindex after focus to prevent outline from appearing on subsequent clicks
+    firstInvalidField.addEventListener('blur', () => {
+      firstInvalidField.removeAttribute('tabindex');
+    }, { once: true });
+  }
+  else {firstInvalidField.focus();}
 
 }
 
