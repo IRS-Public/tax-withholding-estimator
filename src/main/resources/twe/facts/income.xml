@@ -3803,30 +3803,356 @@
         </Equal>
       </Derived>
     </Fact>
-    <Fact path="/pensions/*/remainingPayDates">
-      <Description>
-        Rough initial calculation for the number of remaining pay dates.
-        Works as-is for week-based pay frequencies. Needs further testing and
-        modification for month-based.
-      </Description>
+    <Fact path="/pensions/*/weeklyRemainingPayDates">
       <Derived>
-        <Floor>
-          <Divide>
-            <Dividend>
+        <Switch>
+          <!-- When the end month is December, and we have days going into the next month -->
+          <Case>
+            <When>
+              <All>
+                <Equal>
+                  <Left>
+                    <Dependency path="../endDate/month"/>
+                  </Left>
+                  <Right>
+                    <Int>12</Int>
+                  </Right>
+                </Equal>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="../endDate/day"/>
+                  </Left>
+                  <Right>
+                    <Int>28</Int>
+                  </Right>
+                </GreaterThan>
+              </All>
+            </When>
+            <Then>
+              <Floor>
+                <Add>
+                  <Divide>
+                    <Dividend>
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="../endDate/ordinal"/>
+                        </Minuend>
+                        <Subtrahends>
+                          <Dependency path="../endDate/day"/>
+                          <Dependency path="../mostRecentPayDate/ordinal"/>
+                        </Subtrahends>
+                      </Subtract>
+                    </Dividend>
+                    <Divisors>
+                      <Dependency path="../payPeriodLength"/>
+                    </Divisors>
+                  </Divide>
+                  <Divide>
+                    <Dividend>
+                      <Dependency path="../endDate/day"/>
+                    </Dividend>
+                    <Divisors>
+                      <Dependency path="../payPeriodLength"/>
+                    </Divisors>
+                  </Divide>
+                </Add>
+              </Floor>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Ceiling>
+                <Divide>
+                  <Dividend>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../endDate/ordinal"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../mostRecentPayDate/ordinal"/>
+                      </Subtrahends>
+                    </Subtract>
+                  </Dividend>
+                  <Divisors>
+                    <Dependency path="../payPeriodLength"/>
+                  </Divisors>
+                </Divide>
+              </Ceiling>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/monthlyRemainingPayDates">
+      <Derived>
+        <!-- We've already been paid for the most recent pay period month,
+             pay periods only need to be calculated for the intermediate and
+             last months. -->
+        <Add>
+          <!-- Add intermediate months -->
+          <GreaterOf>
+            <Subtract>
+              <Minuend>
+                <Dependency path="../endDate/month"/>
+              </Minuend>
+              <Subtrahends>
+                <Dependency path="../mostRecentPayDate/month"/>
+                <Int>1</Int>
+              </Subtrahends>
+            </Subtract>
+            <Int>0</Int>
+          </GreaterOf>
+          <!-- Add paydate in final month and final month + 1 if applicable -->
+          <Switch>
+            <!-- If the most recent pay date and end date are both in December, then there are no
+                 more applicable pay dates in the current year. -->
+            <Case>
+              <When>
+                <All>
+                  <Equal>
+                    <Left>
+                      <Dependency path="../endDate/month"/>
+                    </Left>
+                    <Right>
+                      <Int>12</Int>
+                    </Right>
+                  </Equal>
+                  <Equal>
+                    <Left>
+                      <Dependency path="../mostRecentPayDate/month"/>
+                    </Left>
+                    <Right>
+                      <Dependency path="../endDate/month"/>
+                    </Right>
+                  </Equal>
+                </All>
+              </When>
+              <Then>
+                <Int>0</Int>
+              </Then>
+            </Case>
+            <!-- If the end month is in December, then only the pay date in december will apply towards
+                 this tax year. -->
+            <Case>
+              <When>
+                <Equal>
+                  <Left>
+                    <Dependency path="../endDate/month"/>
+                  </Left>
+                  <Right>
+                    <Int>12</Int>
+                  </Right>
+                </Equal>
+              </When>
+              <Then>
+                <Int>1</Int>
+              </Then>
+            </Case>
+            <!-- If the start month and end month are equal, then the last pay date will be the next month-->
+            <Case>
+              <When>
+                <Equal>
+                  <Left>
+                    <Dependency path="../mostRecentPayDate/month"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="../endDate/month"/>
+                  </Right>
+                </Equal>
+              </When>
+              <Then>
+                <Int>1</Int>
+              </Then>
+            </Case>
+            <!-- Otherwise, there will be an applicable paydate in the end month and the next. -->
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Int>2</Int>
+              </Then>
+            </Case>
+          </Switch>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/semiMonthlyRemainingPayDates">
+      <Derived>
+        <!-- Add three numbers:
+             remaining pay periods "this" month (if it is not the final month)
+             + pay periods for whole months intervening
+             + remaining pay periods for final month -->
+        <Add>
+          <!-- For "this" month (of most recent pay date) ...  -->
+          <Switch>
+            <Case>
+              <When>
+                <All>
+                  <!-- ... when it's not the final month ...  -->
+                  <NotEqual>
+                    <Left>
+                      <Dependency path="../mostRecentPayDate/month"/>
+                    </Left>
+                    <Right>
+                      <Dependency path="../endDate/month"/>
+                    </Right>
+                  </NotEqual>
+                  <!-- ... and we were last paid in the first half of the month ...  -->
+                  <LessThanOrEqual>
+                    <Left>
+                      <Dependency path="../mostRecentPayDate/day"/>
+                    </Left>
+                    <Right>
+                      <Dependency path="../payPeriodLength"/>
+                    </Right>
+                  </LessThanOrEqual>
+                </All>
+              </When>
+              <Then>
+                <!-- ... then we'll get paid once more this month ...  -->
+                <Int>1</Int>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <!-- ... otherwise no more this month.  -->
+                <Int>0</Int>
+              </Then>
+            </Case>
+          </Switch>
+          <!-- For full months between now and end date ...  -->
+          <GreaterOf>
+            <Int>0</Int>
+            <Multiply>
+              <!-- ... we get paid twice each.  -->
+              <Int>2</Int>
               <Subtract>
                 <Minuend>
-                  <Dependency path="../endDate/ordinal"/>
+                  <Dependency path="../endDate/month"/>
                 </Minuend>
                 <Subtrahends>
-                  <Dependency path="../mostRecentPayDate/ordinal"/>
+                  <Dependency path="../mostRecentPayDate/month"/>
+                  <Int>1</Int>
                 </Subtrahends>
               </Subtract>
-            </Dividend>
-            <Divisors>
-              <Dependency path="../payPeriodLength"/>
-            </Divisors>
-          </Divide>
-        </Floor>
+            </Multiply>
+          </GreaterOf>
+          <!-- For the final month ...  -->
+          <Switch>
+            <Case>
+              <When>
+                <!-- ... when we were most recently paid in the final month ... -->
+                <Equal>
+                  <Left>
+                    <Dependency path="../mostRecentPayDate/month"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="../endDate/month"/>
+                  </Right>
+                </Equal>
+              </When>
+              <Then>
+                <Switch>
+                  <Case>
+                    <When>
+                      <!-- ... and it was for the first half ...  -->
+                      <LessThanOrEqual>
+                        <Left>
+                          <Dependency path="../mostRecentPayDate/day"/>
+                        </Left>
+                        <Right>
+                          <Dependency path="../payPeriodLength"/>
+                        </Right>
+                      </LessThanOrEqual>
+                    </When>
+                    <Then>
+                      <!-- ... then one payment still remains; ... -->
+                      <Int>1</Int>
+                    </Then>
+                  </Case>
+                  <Case>
+                    <When>
+                      <True/>
+                    </When>
+                    <Then>
+                      <!-- ... otherwise, no payments remain.  -->
+                      <Int>0</Int>
+                    </Then>
+                  </Case>
+                </Switch>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <!-- ... otherwise if the first payment pays us through the end date ...   -->
+                <LessThanOrEqual>
+                  <Left>
+                    <Dependency path="../endDate/day"/>
+                  </Left>
+                  <Right>
+                    <Int>15</Int>
+                  </Right>
+                </LessThanOrEqual>
+              </When>
+              <Then>
+                <!-- ... then that's the only remaining payment; ...  -->
+                <Int>1</Int>
+              </Then>
+            </Case>
+            <Case>
+              <!-- ... otherwise we're paid twice in the month.  -->
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Int>2</Int>
+              </Then>
+            </Case>
+          </Switch>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/remainingPayDates">
+      <Description>
+        The number of pay dates remaining for this pension that will be paid out within the calendar year.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPayFrequencyWeekly"/>
+                <Dependency path="../isPayFrequencyBiWeekly"/>
+              </Any>
+            </When>
+            <Then>
+              <Dependency path="../weeklyRemainingPayDates"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly"/>
+            </When>
+            <Then>
+              <Dependency path="../monthlyRemainingPayDates"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly"/>
+            </When>
+            <Then>
+              <Dependency path="../semiMonthlyRemainingPayDates"/>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/pensions/*/restOfYearIncome">

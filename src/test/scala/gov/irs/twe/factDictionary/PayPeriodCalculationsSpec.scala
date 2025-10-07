@@ -358,4 +358,239 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
         assert(fractRemainingPayPeriods.value.contains(expectedFractionalPayPeriods))
     }
   }
+
+  val pension1Id = "8679f611-851e-44e8-9a31-d4ced931d1ed"
+  val pension2Id = "30bb164e-feed-40f9-b800-4178a98ae79a"
+  val pensions = Path("/pensions")
+  val pensionsCollection = Collection(Vector(java.util.UUID.fromString(pension1Id)))
+
+  test("Verifying monthly pension pay period calculations") {
+    val graph = makeGraphWith(
+      factDictionary,
+      pensions -> pensionsCollection,
+      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
+      Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
+      Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/pensions/#${pension1Id}/income") -> Dollar("60000"),
+      Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension1Id}/mostRecentPayDate") -> Day("2025-08-01"),
+      Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-12-31"),
+
+      // Derived overrides
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/totalCredits") -> Dollar("0"),
+    )
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(4))
+  }
+
+  test("Verifying monthly pension pay period calculations - recent pay date on end month") {
+    val graph = makeGraphWith(
+      factDictionary,
+      pensions -> pensionsCollection,
+      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
+      Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
+      Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/pensions/#${pension1Id}/income") -> Dollar("60000"),
+      Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension1Id}/mostRecentPayDate") -> Day("2025-08-01"),
+      Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-08-20"),
+
+      // Derived overrides
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/totalCredits") -> Dollar("0"),
+    )
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(1))
+  }
+
+  test("Verifying monthly pension pay period calculations - recent pay date on end month, when end month is december") {
+    val graph = makeGraphWith(
+      factDictionary,
+      pensions -> pensionsCollection,
+      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
+      Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
+      Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/pensions/#${pension1Id}/income") -> Dollar("60000"),
+      Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension1Id}/mostRecentPayDate") -> Day("2025-12-01"),
+      Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-12-31"),
+
+      // Derived overrides
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/totalCredits") -> Dollar("0"),
+    )
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(0))
+  }
+
+  test("Verifying semimonthly pension pay period calculations") {
+    val graph = makeGraphWith(
+      factDictionary,
+      pensions -> pensionsCollection,
+      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
+      Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
+      Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
+      Path(s"/pensions/#${pension1Id}/income") -> Dollar("60000"),
+      Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension1Id}/mostRecentPayDate") -> Day("2025-08-11"),
+      Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-12-31"),
+
+      // Derived overrides
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/totalCredits") -> Dollar("0"),
+    )
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(9))
+  }
+
+  test("Verifying semimonthly pension pay period calculations - Recent and End are same month") {
+    val graph = makeGraphWith(
+      factDictionary,
+      pensions -> pensionsCollection,
+      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
+      Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
+      Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
+      Path(s"/pensions/#${pension1Id}/income") -> Dollar("60000"),
+      Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension1Id}/mostRecentPayDate") -> Day("2025-08-11"),
+      Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-08-31"),
+
+      // Derived overrides
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/totalCredits") -> Dollar("0"),
+    )
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(1))
+  }
+
+  test("Verifying semimonthly pension pay period calculations -- Recent and End are same month, December") {
+    val graph = makeGraphWith(
+      factDictionary,
+      pensions -> pensionsCollection,
+      Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
+      Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension1Id}/mostRecentPayDate") -> Day("2025-12-11"),
+      Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-12-31"),
+    )
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(1))
+  }
+
+  val pensionDataTable = Table(
+    (
+      "frequencyValue",
+      "startDateValue",
+      "endDateValue",
+      "recentPayDateValue",
+      "expected true pay periods",
+      "description",
+    ),
+    // Weekly Pay Periods
+    (
+      weekly,
+      "2025-01-01",
+      "2025-10-25",
+      "2025-08-01",
+      13,
+      "working for a portion of the year with no eoy overlap on weekly pay",
+    ),
+    (
+      weekly,
+      "2025-02-01",
+      "2025-12-31",
+      "2025-02-18",
+      45,
+      "working for a portion of the year with eoy overlap on weekly pay",
+    ),
+    (
+      weekly,
+      "2025-01-01",
+      "2025-12-31",
+      "2025-08-01",
+      21,
+      "working for the whole year with eoy overlap on weekly pay",
+    ),
+    // Biweekly Pay Periods
+    (
+      biWeekly,
+      "2025-01-01",
+      "2025-10-25",
+      "2025-08-01",
+      7,
+      "working for a portion of the year with no eoy overlap on biweekly pay",
+    ),
+    (
+      biWeekly,
+      "2025-02-01",
+      "2025-12-31",
+      "2025-02-14",
+      22,
+      "working for a portion of the year with eoy overlap on biweekly pay",
+    ),
+    (
+      biWeekly,
+      "2025-01-01",
+      "2025-12-31",
+      "2025-08-01",
+      10,
+      "working for the whole year with eoy overlap on biweekly pay",
+    ),
+  )
+
+  test(
+    "testing remainingPayDates for pensions",
+  ) {
+    forAll(pensionDataTable) {
+      (
+          frequency,
+          startDateValue,
+          endDateValue,
+          recentPayDateValue,
+          expectedTruePayPeriods,
+          description,
+      ) =>
+        When(description)
+        var graph = makeGraphWith(
+          factDictionary,
+          pensions -> pensionsCollection,
+          Path(s"/pensions/#${pension1Id}/payFrequency") -> frequency,
+          Path(s"/pensions/#${pension1Id}/startDate") -> Day(startDateValue),
+          Path(s"/pensions/#${pension1Id}/mostRecentPayDate") -> Day(recentPayDateValue),
+          Path(s"/pensions/#${pension1Id}/endDate") -> Day(endDateValue),
+        )
+
+        assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(expectedTruePayPeriods))
+    }
+  }
 }
