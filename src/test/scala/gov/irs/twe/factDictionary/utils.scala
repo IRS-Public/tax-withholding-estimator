@@ -9,8 +9,16 @@ import gov.irs.twe.FileLoaderHelper
 
 def setupFactDictionary(): FactDictionary =
   val facts = FileLoaderHelper.getAllFacts()
-  val factDictionary = FactDictionaryForTests.fromXml(facts)
-  factDictionary
+  try {
+    val factDictionary = FactDictionaryForTests.fromXml(facts)
+    factDictionary
+  } catch {
+    case e: Exception =>
+      println(s"💥 Exception during XML parsing: ${e.getClass.getSimpleName}")
+      println(s"🚨 Error message: ${e.getMessage}")
+      e.printStackTrace()
+      throw e
+  }
 
 def makeGraphWith(factDictionary: FactDictionary, facts: (Path, WritableType)*): Graph = {
   val graph = Graph(factDictionary)

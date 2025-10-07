@@ -248,7 +248,8 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/predictedOrdinalFinalPayDate">
-      <Description>For weekly and biweekly jobs, the final pay date predicted by the tentative calculation of remaining pay periods-- which may be past the end of year.</Description>
+      <Description>For weekly and biweekly jobs, the final pay date predicted by the tentative
+        calculation of remaining pay periods-- which may be past the end of year.</Description>
       <Derived>
         <Switch>
           <Case>
@@ -4145,6 +4146,18 @@
         <Dollar/>
       </Writable>
     </Fact>
+    <Fact path="/longTermCapitalGainsIncome">
+      <Description>Long term capital gains income</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/qualifiedDividendsIncome">
+      <Description>Amount of qualified dividends estimated by tax payer.</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
     <Fact path="/taxableScholarshipIncome">
       <Description>Taxable income from scholarships</Description>
       <Writable>
@@ -4225,6 +4238,7 @@
           <Dependency path="/unemploymentInsuranceIncome"/>
           <Dependency path="/interestExcludingNonTaxableIncome"/>
           <Dependency path="/shortTermCapitalGainsIncome"/>
+          <Dependency path="/longTermCapitalGainsIncome"/>
           <Dependency path="/taxableScholarshipIncome"/>
           <Dependency path="/alimonyReceivedIncome"/>
           <Dependency path="/sCorpNonPassiveIncome"/>

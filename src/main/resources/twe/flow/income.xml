@@ -74,6 +74,16 @@
         <question content-key="flow.income.fields./ordinaryDividendsIncome.question"/>
         <input type="dollar"/>
       </fg-set>
+      <h2>Qualified Dividends Income</h2>
+      <fg-set path="/qualifiedDividendsIncome">
+        <question content-key="flow.income.fields./qualifiedDividendsIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Long-Term Capital Gains Income</h2>
+      <fg-set path="/longTermCapitalGainsIncome">
+        <question content-key="flow.income.fields./longTermCapitalGainsIncome.question"/>
+        <input type="dollar"/>
+      </fg-set>
       <h2>Unemployment Insurance Income</h2>
       <fg-set path="/unemploymentInsuranceIncome">
         <question content-key="flow.income.fields./unemploymentInsuranceIncome.question"/>
