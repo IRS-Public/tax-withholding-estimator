@@ -630,6 +630,8 @@ function checkCondition(condition, operator) {
       return value.hasValue && (value.get === true)
     } case 'isFalse': {
       return value.hasValue && (value.get === false)
+    } case 'isIncomplete': {
+      return value.complete === false
     } default: {
       console.error(`Unknown condition operator ${operator}`)
       return false

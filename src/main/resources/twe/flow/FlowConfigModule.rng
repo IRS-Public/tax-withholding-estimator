@@ -161,6 +161,39 @@
     </element>
   </define>
 
+  <define name="fg-section-gate-module">
+    <element name="fg-section-gate">
+      <group>
+        <attribute name="condition">
+            <data type="anyURI"/>
+        </attribute>
+        <attribute name="operator">
+          <choice>
+            <value>isTrue</value>
+            <value>isFalse</value>
+            <value>isIncomplete</value>
+          </choice>
+        </attribute>
+        <attribute name="state">
+          <choice>
+            <value>pending</value>
+            <value>complete</value>
+          </choice>
+        </attribute>
+      </group>
+      <element name="fg-section-gate-heading">
+          <attribute name="content-key">
+            <text />
+          </attribute>
+        </element>
+        <element name="fg-section-gate-content">
+          <attribute name="content-key">
+            <text />
+          </attribute>
+        </element>
+    </element>
+  </define>
+
   <define name="fg-reset-module">
     <element name="fg-reset">
       <element name="button">
@@ -342,6 +375,7 @@
           <ref name="fg-set-module"/>
           <ref name="fg-collection-module"/>
           <ref name="fg-reset-module"/>
+          <ref name="fg-section-gate-module"/>
         </choice>
       </zeroOrMore>
     </mixed>

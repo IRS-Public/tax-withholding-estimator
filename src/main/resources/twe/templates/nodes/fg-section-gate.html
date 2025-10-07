@@ -1,0 +1,15 @@
+<div th:class="'usa-accordion fg-section-gate fg-section-gate--'+${gateState}" th:attr="condition=${gateCondition}, operator=${gateOperator}">
+  <h2 class="usa-accordion__heading">
+    <button
+      type="button"
+      class="usa-accordion__button"
+      aria-expanded="true"
+      th:attr="aria-controls=${gateCondition}+'-'+${gateOperator}"
+      th:utext="#{${gateHeading}}"
+    >
+    </button>
+  </h2>
+  <div th:id="${gateCondition}+'-'+${gateOperator}" class="usa-accordion__content usa-prose" th:utext="#{${gateContent}}">
+
+  </div>
+</div>
