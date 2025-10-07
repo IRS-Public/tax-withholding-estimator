@@ -47,11 +47,26 @@
         <Dollar/>
       </Writable>
     </Fact>
+    <Fact path="/jobs/*/isAllYear">
+      <Description>Whether this job was held for the entire tax year.</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/flowAskPartYearDates">
+      <Description>Flow control: whether to ask start and end dates for this job.</Description>
+      <Derived>
+        <Not>
+          <Dependency path="../isAllYear"/>
+        </Not>
+      </Derived>
+    </Fact>
     <!-- Note that the limits on dates may be more restrictive in the future based on component
          implementation -->
     <!-- E.g., a future job cannot start before tomorrow -->
-    <Fact path="/jobs/*/startDate">
-      <Description>The first date the job was held in the current calendar year.</Description>
+    <Fact path="/jobs/*/writableStartDate">
+      <Description>The first date the job was held in the current calendar year, if not an all year job.</Description>
+      <TaxYear>2025</TaxYear>
       <Writable>
         <Day/>
         <Limit type="Max">
@@ -59,14 +74,63 @@
         </Limit>
       </Writable>
     </Fact>
-    <Fact path="/jobs/*/endDate">
-      <Description>The last date the job was held in the current calendar year.</Description>
+    <Fact path="/jobs/*/writableEndDate">
+      <Description>The last date the job was held in the current calendar year, if not an all year job.</Description>
+      <TaxYear>2025</TaxYear>
       <Writable>
         <Day/>
         <Limit type="Max">
           <Day>2025-12-31</Day>
         </Limit>
       </Writable>
+    </Fact>
+    <Fact path="/jobs/*/startDate">
+      <Description>The first date the job was held in the current calendar year.</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isAllYear"/>
+            </When>
+            <Then>
+              <Day>2025-01-01</Day>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../writableStartDate"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/endDate">
+      <Description>The last date the job was held in the current calendar year.</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isAllYear"/>
+            </When>
+            <Then>
+              <Day>2025-12-31</Day>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../writableEndDate"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
     </Fact>
     <Fact path="/jobs/*/mostRecentPayPeriodEnd">
       <Description>

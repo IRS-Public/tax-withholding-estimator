@@ -5,12 +5,16 @@
       <h1>Income</h1>
       <h2>Jobs</h2>
       <fg-collection path="/jobs" item-name="Income source">
-        <fg-set path="/jobs/*/startDate">
-          <question content-key="flow.income.fields./jobs/*/startDate.question"/>
+        <fg-set path="/jobs/*/isAllYear">
+          <question content-key="flow.income.fields./jobs/*/isAllYear.question"/>
+          <input type="boolean"/>
+        </fg-set>
+        <fg-set path="/jobs/*/writableStartDate" if-true="/jobs/*/flowAskPartYearDates">
+          <question content-key="flow.income.fields./jobs/*/writableStartDate.question"/>
           <input type="date"/>
         </fg-set>
-        <fg-set path="/jobs/*/endDate">
-          <question content-key="flow.income.fields./jobs/*/endDate.question"/>
+        <fg-set path="/jobs/*/writableEndDate" if-true="/jobs/*/flowAskPartYearDates">
+          <question content-key="flow.income.fields./jobs/*/writableEndDate.question"/>
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/mostRecentPayPeriodEnd">

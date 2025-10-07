@@ -102,8 +102,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
-      Path(s"/jobs/#${job1Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job1Id}/endDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/isAllYear") -> false,
+      Path(s"/jobs/#${job1Id}/writableStartDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job1Id}/writableEndDate") -> Day("2025-10-15"),
       Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
       Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-10-05"),
@@ -113,8 +114,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("2000"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job2Id}/endDate") -> Day("2025-12-31"),
+      Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
       Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-09-30"),
@@ -169,8 +169,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/secondaryFilerIsBlind") -> false,
       Path("/secondaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
-      Path(s"/jobs/#${job1Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job1Id}/endDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/writableStartDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job1Id}/writableEndDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/isAllYear") -> false,
       Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
       Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-10-05"),
@@ -180,8 +181,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("3000"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job2Id}/endDate") -> Day("2025-12-31"),
+      Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
       Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-09-30"),
@@ -232,8 +232,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
-      Path(s"/jobs/#${job1Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job1Id}/endDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/writableStartDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job1Id}/writableEndDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/isAllYear") -> false,
       Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
       Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-10-05"),
@@ -243,8 +244,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("1000"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job2Id}/endDate") -> Day("2025-12-31"),
+      Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
       Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-09-30"),
@@ -295,8 +295,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
-      Path(s"/jobs/#${job1Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job1Id}/endDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/writableStartDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job1Id}/writableEndDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/isAllYear") -> false,
       Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
       Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-10-02"),
@@ -306,8 +307,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("5700"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job2Id}/endDate") -> Day("2025-12-31"),
+      Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
       Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-09-30"),
@@ -369,8 +369,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
-      Path(s"/jobs/#${job1Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job1Id}/endDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/writableStartDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job1Id}/writableEndDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/isAllYear") -> false,
       Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
       Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-10-02"),
@@ -380,8 +381,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("5700"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job2Id}/endDate") -> Day("2025-12-31"),
+      Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
       Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-09-30"),
@@ -443,8 +443,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
-      Path(s"/jobs/#${job1Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job1Id}/endDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/writableStartDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job1Id}/writableEndDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/isAllYear") -> false,
       Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-10-05"),
       Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-10-08"),
       Path(s"/jobs/#${job1Id}/averagePayPerPayPeriod") -> Dollar("2000"),
@@ -454,8 +455,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("8200"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/startDate") -> Day("2025-01-01"),
-      Path(s"/jobs/#${job2Id}/endDate") -> Day("2025-12-31"),
+      Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-10-08"),
       Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-10-08"),
       Path(s"/jobs/#${job2Id}/averagePayPerPayPeriod") -> Dollar("1000"),
@@ -521,16 +521,18 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
   test("Scenario with three jobs") {
     val json = """ {
-  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/endDate": {
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/isAllYear": {
+    "$type": "BooleanWrapper",
+    "item": false
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/isAllYear": {
+    "$type": "BooleanWrapper",
+    "item": true
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/writableEndDate": {
     "$type": "DayWrapper",
     "item": {
       "date": "2025-12-31"
-    }
-  },
-  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/startDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-01-01"
     }
   },
   "/actualAmericanOpportunityTaxCreditAmount": {
@@ -625,7 +627,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       "date": "2025-01-31"
     }
   },
-  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/startDate": {
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/writableStartDate": {
     "$type": "DayWrapper",
     "item": {
       "date": "2025-01-01"
@@ -649,12 +651,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DayWrapper",
     "item": {
       "date": "2025-01-31"
-    }
-  },
-  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/endDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-12-31"
     }
   },
   "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/yearToDateWithholding": {
@@ -706,17 +702,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
-  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/startDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-01-01"
-    }
-  },
-  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/endDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-12-31"
-    }
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/isAllYear": {
+    "$type": "BooleanWrapper",
+    "item": true
   },
   "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/payFrequency": {
     "$type": "EnumWrapper",
@@ -764,17 +752,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     // 1. ease of data entry using the app
     // 2. access to `factGraph.debugFact` to investigate test calculations.
     val json = """ {
-  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/endDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-12-31"
-    }
-  },
-  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/startDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-01-01"
-    }
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/isAllYear": {
+    "$type": "BooleanWrapper",
+    "item": true
   },
   "/actualAmericanOpportunityTaxCreditAmount": {
     "$type": "DollarWrapper",
@@ -867,12 +847,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       "date": "2025-01-31"
     }
   },
-  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/startDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-01-01"
-    }
-  },
   "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/totalBonusReceived": {
     "$type": "DollarWrapper",
     "item": "0.00"
@@ -893,11 +867,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       "date": "2025-01-31"
     }
   },
-  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/endDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-12-31"
-    }
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/isAllYear": {
+    "$type": "BooleanWrapper",
+    "item": true
   },
   "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/yearToDateWithholding": {
     "$type": "DollarWrapper",
@@ -949,17 +921,13 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
   test("Scenario where Form W4 Multiple Jobs Worksheet could apply") {
     val json = """ {
-  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/endDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-12-31"
-    }
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/isAllYear": {
+    "$type": "BooleanWrapper",
+    "item": true
   },
-  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/startDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-01-01"
-    }
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/isAllYear": {
+    "$type": "BooleanWrapper",
+    "item": true
   },
   "/actualAmericanOpportunityTaxCreditAmount": {
     "$type": "DollarWrapper",
@@ -1052,12 +1020,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       "date": "2025-01-31"
     }
   },
-  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/startDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-01-01"
-    }
-  },
   "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/totalBonusReceived": {
     "$type": "DollarWrapper",
     "item": "0.00"
@@ -1076,12 +1038,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DayWrapper",
     "item": {
       "date": "2025-01-31"
-    }
-  },
-  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/endDate": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "2025-12-31"
     }
   },
   "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/yearToDateWithholding": {

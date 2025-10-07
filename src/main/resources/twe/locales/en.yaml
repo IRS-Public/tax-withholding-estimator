@@ -21,9 +21,11 @@ flow:
         question: Can anyone else claim your spouse as a dependent on their tax return?
   income:
     fields:
-      /jobs/*/startDate:
+      /jobs/*/isAllYear:
+        question: Do you expect to have this job all year, from January 1 - December 31, 2025?
+      /jobs/*/writableStartDate:
         question: What’s the start date?
-      /jobs/*/endDate:
+      /jobs/*/writableEndDate:
         question: What’s the end date?
       /jobs/*/mostRecentPayPeriodEnd:
         question: When did your most recent pay period end?
