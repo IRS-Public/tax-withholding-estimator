@@ -51,13 +51,13 @@ case class Website(pages: List[WebsitePage], factDictionary: xml.Elem) {
 object Website {
   private val templateEngine = new TweTemplateEngine()
 
-  def fromXmlConfig(config: xml.Elem, dictionaryConfig: xml.Elem): Website = {
+  def fromXmlConfig(config: xml.Elem, dictionaryConfig: xml.Elem, flags: Map[String, Boolean]): Website = {
     val factDictionary = FactDictionary.fromXml(dictionaryConfig)
     val flow = Flow.fromXmlConfig(config, factDictionary, templateEngine)
-    generate(flow, dictionaryConfig)
+    generate(flow, dictionaryConfig, flags)
   }
 
-  def generate(flow: Flow, dictionaryConfig: xml.Elem): Website = {
+  def generate(flow: Flow, dictionaryConfig: xml.Elem, flags: Map[String, Boolean]): Website = {
     val templateEngine = new TweTemplateEngine()
     val navPages = flow.pages.filter(p => p.exclude == false)
     val excludedPageLength = flow.pages.length - navPages.size
@@ -75,6 +75,7 @@ object Website {
       context.setVariable("stepIndex", (index - excludedPageLength) % flow.pages.length)
       context.setVariable("stepTotal", navPages.size)
       context.setVariable("pages", navPages.asJava) // th:each requires Java Iterables
+      context.setVariable("flags", flags.asJava)
 
       // Add a link for the next page if it's not the last one
       if (index + 1 < navPages.size) {

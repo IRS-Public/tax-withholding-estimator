@@ -6,12 +6,22 @@ import gov.irs.twe.Locale
 import io.circe.yaml
 import java.io.File
 import scala.io.Source
+import scala.util.matching.Regex
 import scala.xml.Elem
 import scala.xml.NodeBuffer
 
 val FlowResourceRoot = "twe/flow"
+val flagRegex = new Regex("""--(\w*)""")
 
 def main(args: Array[String]): Unit = {
+  val flags = Map.from(
+    args.map(flag =>
+      flag match
+        case flagRegex(name) => (name, true)
+        case _               =>
+          throw new Error(s"Unable to recognize parameter: $flag"),
+    ),
+  )
 
   // Processing for handling multiple xml files for facts
   val allFacts = FileLoaderHelper.getAllFacts()
@@ -30,7 +40,7 @@ def main(args: Array[String]): Unit = {
   )
   val resolvedConfig = <FlowConfig>{resolvedChildren}</FlowConfig>
 
-  val site = Website.fromXmlConfig(resolvedConfig, allFacts)
+  val site = Website.fromXmlConfig(resolvedConfig, allFacts, flags)
 
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"

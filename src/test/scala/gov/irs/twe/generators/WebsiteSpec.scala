@@ -38,7 +38,7 @@ class WebsiteSpec extends AnyFunSpec {
       </page>
     </FlowConfig>
 
-    val site = Website.fromXmlConfig(basicFormConfig, basicDictionaryConfig)
+    val site = Website.fromXmlConfig(basicFormConfig, basicDictionaryConfig, Map())
     val document = Jsoup.parse(site.pages.head.content)
 
     it("contains basic html elements") {

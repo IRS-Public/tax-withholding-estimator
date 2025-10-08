@@ -1,6 +1,6 @@
 .PHONY: dev
 dev:
-	sbt ~run
+	sbt "~run --auditMode"
 
 .PHONY: twe
 twe:
