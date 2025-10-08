@@ -9,6 +9,9 @@ flow:
         question: Are you blind?
       /primaryFilerHasSSN:
         question: Do you have an SSN?
+      /primaryFilerIsClaimingDependents:
+        #TODO Update 2025 with tax year variable
+        question: Do you plan to claim dependents on your 2025 tax return?
       /primaryFilerIsClaimedOnAnotherReturn:
         question: Can anyone else claim you as a dependent on their tax return?
       /secondaryFilerDateOfBirth:

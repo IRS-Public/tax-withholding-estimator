@@ -21,6 +21,10 @@
         <question content-key="flow.about-you.fields./primaryFilerDateOfBirth.question"/>
         <input type="date"/>
       </fg-set>
+      <fg-set path="/primaryFilerIsClaimingDependents">
+        <question content-key="flow.about-you.fields./primaryFilerIsClaimingDependents.question"/>
+        <input type="boolean"/>
+      </fg-set>
       <fg-set path="/primaryFilerIsBlind">
         <question content-key="flow.about-you.fields./primaryFilerIsBlind.question"/>
         <input type="boolean"/>

@@ -22,6 +22,11 @@
         <Boolean/>
       </Writable>
     </Fact>
+    <Fact path="/primaryFilerIsClaimingDependents">
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
     <Fact path="/treatFilersAsDependents">
       <Derived>
         <Switch>
