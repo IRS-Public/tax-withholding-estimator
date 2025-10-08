@@ -3,18 +3,21 @@
 <FactDictionaryModule>
   <Facts>
     <Fact path="/taxableIncome">
-      <Description>Taxable income as reported on line 15 of Form 1040.</Description>
+      <Description>Taxable income as reported on line 15 of Form 1040. Should not be negative.</Description>
       <Derived>
-        <Round>
-          <Subtract>
-            <Minuend>
-              <Dependency path="/agi"/>
-            </Minuend>
-            <Subtrahends>
-              <Dependency path="/totalDeductions"/>
-            </Subtrahends>
-          </Subtract>
-        </Round>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Round>
+            <Subtract>
+              <Minuend>
+                <Dependency path="/agi"/>
+              </Minuend>
+              <Subtrahends>
+                <Dependency path="/totalDeductions"/>
+              </Subtrahends>
+            </Subtract>
+          </Round>
+        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/agi">
