@@ -3,6 +3,10 @@
 <FlowConfigModule>
   <page title="About you" route="about-you">
     <section>
+      <fg-set path="/primaryFilerAge65OrOlder">
+        <question content-key="flow.about-you.fields./primaryFilerAge65OrOlder.question"/>
+        <input type="boolean"/>
+      </fg-set>
       <fg-set path="/filingStatus">
         <question content-key="flow.about-you.fields./filingStatus.question"/>
         <select options-path="/filingStatusOptions">
@@ -16,10 +20,6 @@
       <fg-set path="/isMFSLivedTogether" if-true="/isFilingStatusMFS">
         <question content-key="flow.about-you.fields./isMFSLivedTogether.question"/>
         <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/primaryFilerDateOfBirth">
-        <question content-key="flow.about-you.fields./primaryFilerDateOfBirth.question"/>
-        <input type="date"/>
       </fg-set>
       <fg-set path="/primaryFilerIsClaimingDependents">
         <question content-key="flow.about-you.fields./primaryFilerIsClaimingDependents.question"/>
@@ -38,9 +38,9 @@
         <input type="boolean"/>
       </fg-set>
       <h2 condition="/isFilingStatusMFJ" operator="isTrue">Spouse</h2>
-      <fg-set path="/secondaryFilerDateOfBirth" if-true="/isFilingStatusMFJ">
-        <question content-key="flow.about-you.fields./secondaryFilerDateOfBirth.question"/>
-        <input type="date"/>
+      <fg-set path="/secondaryFilerAge65OrOlder" if-true="/isFilingStatusMFJ">
+        <question content-key="flow.about-you.fields./secondaryFilerAge65OrOlder.question"/>
+        <input type="boolean"/>
       </fg-set>
       <fg-set path="/secondaryFilerIsBlind" if-true="/isFilingStatusMFJ">
         <question content-key="flow.about-you.fields./secondaryFilerIsBlind.question"/>

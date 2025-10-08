@@ -52,115 +52,17 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/primaryFilerDateOfBirth">
-      <Description>The date of birth of the filer.</Description>
-      <Writable>
-        <Day/>
-        <Limit type="Max">
-          <Day>2024-01-01</Day>
-        </Limit>
-      </Writable>
-    </Fact>
-    <Fact path="/secondaryFilerDateOfBirth">
-      <Description>The date of birth of the filer.</Description>
-      <Writable>
-        <Day/>
-        <Limit type="Max">
-          <Day>2024-01-01</Day>
-        </Limit>
-      </Writable>
-    </Fact>
-    <Fact path="/primaryFilerDayBeforeDateOfBirth">
-      <Description>The day before the filer's birthday</Description>
-      <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/primaryFilerDateOfBirth"/>
-          </Minuend>
-          <Subtrahends>
-            <Days>1</Days>
-          </Subtrahends>
-        </Subtract>
-      </Derived>
-    </Fact>
-    <Fact path="/secondaryFilerDayBeforeDateOfBirth">
-      <Description>The day before the filer's birthday</Description>
-      <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/secondaryFilerDateOfBirth"/>
-          </Minuend>
-          <Subtrahends>
-            <Days>1</Days>
-          </Subtrahends>
-        </Subtract>
-      </Derived>
-    </Fact>
-    <Fact path="/primaryFilerAgeCalculatedDayBeforeDOB">
-      <Description>The age of the filer, calculated using their birthday as the day before
-        their date of birth.</Description>
-      <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/taxYear"/>
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="/primaryFilerDayBeforeDateOfBirth/year"/>
-          </Subtrahends>
-        </Subtract>
-      </Derived>
-    </Fact>
-    <Fact path="/secondaryFilerAgeCalculatedDayBeforeDOB">
-      <Description>The age of the filer, calculated using their birthday as the day before
-        their date of birth.</Description>
-      <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/taxYear"/>
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="/secondaryFilerDayBeforeDateOfBirth/year"/>
-          </Subtrahends>
-        </Subtract>
-      </Derived>
-    </Fact>
     <Fact path="/primaryFilerAge65OrOlder">
-      <Description>
-        Whether the filer is 65 or older. Pub 554 states "You are considered age 65 at the
-        end of the year if your 65th birthday is on or before January 1 of the following
-        year" so we include the January 1 exception here.
-        Do NOT use this fact for EITC calculations -- That age 65 requirement does _not_
-        have the January 1 exception.
-      </Description>
-      <Derived>
-        <GreaterThanOrEqual>
-          <Left>
-            <Dependency path="/primaryFilerAgeCalculatedDayBeforeDOB"/>
-          </Left>
-          <Right>
-            <Int>65</Int>
-          </Right>
-        </GreaterThanOrEqual>
-      </Derived>
+      <Description>Whether the filer is 65 or older at the end of the tax year.</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
     </Fact>
     <Fact path="/secondaryFilerAge65OrOlder">
-      <Description>
-        Whether the filer is 65 or older. Pub 554 states "You are considered age 65 at the
-        end of the year if your 65th birthday is on or before January 1 of the following
-        year" so we include the January 1 exception here.
-        Do NOT use this fact for EITC calculations -- That age 65 requirement does _not_
-        have the January 1 exception.
-      </Description>
-      <Derived>
-        <GreaterThanOrEqual>
-          <Left>
-            <Dependency path="/secondaryFilerAgeCalculatedDayBeforeDOB"/>
-          </Left>
-          <Right>
-            <Int>65</Int>
-          </Right>
-        </GreaterThanOrEqual>
-      </Derived>
+      <Description>Whether the filer is 65 or older at the end of the tax year.</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
     </Fact>
     <Fact path="/primaryFilerHasSSN">
       <Name>Does the primary Taxpayer have a Social Security Number as defined in IRC 24(h)(7)?</Name>

@@ -98,7 +98,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       filingStatus -> single,
-      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
@@ -162,10 +162,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       filingStatus -> Enum("marriedFilingJointly", "/filingStatusOptions"),
-      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
-      Path("/secondaryFilerDateOfBirth") -> Day("1985-02-28"),
+      Path("/secondaryFilerAge65OrOlder") -> false,
       Path("/secondaryFilerIsBlind") -> false,
       Path("/secondaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
@@ -228,7 +228,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       filingStatus -> Enum("headOfHousehold", "/filingStatusOptions"),
-      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
@@ -291,7 +291,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       filingStatus -> single,
-      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
@@ -365,7 +365,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       filingStatus -> Enum("headOfHousehold", "/filingStatusOptions"),
-      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
@@ -439,7 +439,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       filingStatus -> single,
-      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       jobs -> jobsCollection,
@@ -676,11 +676,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
-  "/primaryFilerDateOfBirth": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "1990-01-01"
-    }
+  "/primaryFilerAge65OrOlder": {
+    "$type": "BooleanWrapper",
+    "item": false
   },
   "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/mostRecentPayPeriodEnd": {
     "$type": "DayWrapper",
@@ -894,11 +892,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
-  "/primaryFilerDateOfBirth": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "1990-01-01"
-    }
+  "/primaryFilerAge65OrOlder": {
+    "$type": "BooleanWrapper",
+    "item": false
   }
 }
     """
@@ -1063,11 +1059,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
-  "/primaryFilerDateOfBirth": {
-    "$type": "DayWrapper",
-    "item": {
-      "date": "1990-01-01"
-    }
+  "/primaryFilerAge65OrOlder": {
+    "$type": "BooleanWrapper",
+    "item": false
   }
 }
     """
@@ -1151,7 +1145,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       factDictionary,
       filingStatus -> single,
       pensions -> pensionsCollection,
-      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
@@ -1200,7 +1194,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       factDictionary,
       filingStatus -> single,
       pensions -> twoPensionsCollection,
-      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
@@ -1259,7 +1253,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       factDictionary,
       filingStatus -> single,
       pensions -> pensionsCollection,
-      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),

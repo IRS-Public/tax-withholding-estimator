@@ -1,10 +1,10 @@
 flow:
   about-you:
     fields:
+      /primaryFilerAge65OrOlder:
+        question: Will you be 65 years old or older on December 31, 2025?
       /filingStatus:
         question: What filing status will you use for your tax return?
-      /primaryFilerDateOfBirth:
-        question: What’s your date of birth
       /primaryFilerIsBlind:
         question: Are you blind?
       /primaryFilerHasSSN:
@@ -14,8 +14,8 @@ flow:
         question: Do you plan to claim dependents on your 2025 tax return?
       /primaryFilerIsClaimedOnAnotherReturn:
         question: Can anyone else claim you as a dependent on their tax return?
-      /secondaryFilerDateOfBirth:
-        question: What’s your spouse’s date of birth?
+      /secondaryFilerAge65OrOlder:
+        question: Will your spouse be 65 years old or older on December 31, 2025?
       /secondaryFilerIsBlind:
         question: Is your spouse blind?
       /secondaryFilerHasSSN:
