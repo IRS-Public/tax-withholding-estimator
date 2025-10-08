@@ -134,8 +134,8 @@
         <input type="dollar"/>
       </fg-set>
       <h2>Net SSA income from Forms SSA-1099 and RRB-1099</h2>
-      <fg-set path="/socialSecuityBenefitsIncome">
-        <question content-key="flow.income.fields./socialSecuityBenefitsIncome.question"/>
+      <fg-set path="/socialSecurityBenefitsIncome">
+        <question content-key="flow.income.fields./socialSecurityBenefitsIncome.question"/>
         <input type="dollar"/>
       </fg-set>
     </section>

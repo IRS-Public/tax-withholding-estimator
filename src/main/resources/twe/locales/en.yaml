@@ -71,7 +71,7 @@ flow:
         question: How much Net Schedule E income from passive activities have you received this year?
       /nonSpecificOtherIncome:
         question: How much non-specific other income have you made this year?
-      /socialSecuityBenefitsIncome:
+      /socialSecurityBenefitsIncome:
         question: How much Social Security Benefits you received this year? (total amount from forms SSA-1099 and RRB-1099)
       /nonTaxableInterestIncome:
         question: How much non-taxable interest income have you received this year?  (Used to calculate taxable portion of SSA benefits)
