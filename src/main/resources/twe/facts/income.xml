@@ -31,9 +31,13 @@
     </Fact>
     <Fact path="/jobs/*/preTaxDeductions">
       <Description>Pre-tax deductions from a specific job</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
+      <Derived>
+        <Add>
+          <Dependency path="../retirementPlanContributions"/>
+          <Dependency path="../healthInsuranceContributions"/>
+          <Dependency path="../hsaOrFsaContributions"/>
+        </Add>
+      </Derived>
     </Fact>
     <Fact path="/jobs/*/yearToDateWithholding">
       <Description>The year-to-date withholding from a specific job</Description>
@@ -1697,6 +1701,21 @@
           </Divisors>
         </Divide>
       </Derived>
+    </Fact>
+    <Fact path="/jobs/*/retirementPlanContributions">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/healthInsuranceContributions">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/hsaOrFsaContributions">
+      <Writable>
+        <Dollar/>
+      </Writable>
     </Fact>
     <!-- TODO: Eventually implement -->
     <!-- <Fact path="/jobs/*/baseWithholding">

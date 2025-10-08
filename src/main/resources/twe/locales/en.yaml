@@ -46,8 +46,12 @@ flow:
         question: How frequently are you paid?
       /jobs/*/totalBonusReceived:
         question: What bonus amount were you paid for this job?
-      /jobs/*/preTaxDeductions:
-        question: Job’s pre-tax deductions
+      /jobs/*/retirementPlanContributions:
+        question: What retirement plan contributions have you made for this job?
+      /jobs/*/healthInsuranceContributions:
+        question: What health insurance contributions have you made for this job?
+      /jobs/*/hsaOrFsaContributions:
+        question: What HSA or FSA contributions have you made for this job?
       /totalAdvancedPayments:
         question: What is the total amount of advanced tax payments you made to date?
       /netSelfEmploymentIncome:

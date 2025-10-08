@@ -113,7 +113,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("200"),
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("2000"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
@@ -123,9 +122,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("100"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("2000"),
       // Derived overrides
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
     )
@@ -180,7 +180,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("3000"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
@@ -190,9 +189,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("100"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("2000"),
       // Derived overrides
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
     )
@@ -243,7 +243,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("100"),
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("1000"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
@@ -253,9 +252,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("100"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("2000"),
       // Derived overrides
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
     )
@@ -306,7 +306,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("5700"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
@@ -316,9 +315,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("400"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("4000"),
       // Derived overrides
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
     )
@@ -380,7 +380,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("5700"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
@@ -390,9 +389,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("200"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("3600"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("4000"),
       // Derived overrides
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
       // Path("/usePreOb3StandardDeduction") -> true,
@@ -454,7 +454,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("200"),
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("8200"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-10-08"),
       Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-10-08"),
@@ -464,9 +463,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("100"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("4100"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
-      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("6000"),
       // Derived overrides
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
     )
@@ -609,7 +609,15 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DollarWrapper",
     "item": "430.00"
   },
-  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/preTaxDeductions": {
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/retirementPlanContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/healthInsuranceContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/hsaOrFsaContributions": {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
@@ -672,7 +680,15 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       "enumOptionsPath": "/filingStatusOptions"
     }
   },
-  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/preTaxDeductions": {
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/retirementPlanContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/healthInsuranceContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/hsaOrFsaContributions": {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
@@ -696,7 +712,15 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
-  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/preTaxDeductions": {
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/retirementPlanContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/healthInsuranceContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/hsaOrFsaContributions": {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
@@ -827,7 +851,15 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DollarWrapper",
     "item": "430.00"
   },
-  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/preTaxDeductions": {
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/retirementPlanContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/healthInsuranceContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/hsaOrFsaContributions": {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
@@ -888,7 +920,15 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       "enumOptionsPath": "/filingStatusOptions"
     }
   },
-  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/preTaxDeductions": {
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/retirementPlanContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/healthInsuranceContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/hsaOrFsaContributions": {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
@@ -998,7 +1038,15 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DollarWrapper",
     "item": "430.00"
   },
-  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/preTaxDeductions": {
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/retirementPlanContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/healthInsuranceContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/hsaOrFsaContributions": {
     "$type": "DollarWrapper",
     "item": "0.00"
   },
@@ -1055,7 +1103,15 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       "enumOptionsPath": "/filingStatusOptions"
     }
   },
-  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/preTaxDeductions": {
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/retirementPlanContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/healthInsuranceContributions": {
+    "$type": "DollarWrapper",
+    "item": "0.00"
+  },
+  "/jobs/#b961fe59-0caf-4463-b8f6-e7955be1ae89/hsaOrFsaContributions": {
     "$type": "DollarWrapper",
     "item": "0.00"
   },

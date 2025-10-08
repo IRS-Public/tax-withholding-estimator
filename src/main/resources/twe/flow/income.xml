@@ -54,8 +54,16 @@
           <question content-key="flow.income.fields./jobs/*/totalBonusReceived.question"/>
           <input type="dollar"/>
         </fg-set>
-        <fg-set path="/jobs/*/preTaxDeductions">
-          <question content-key="flow.income.fields./jobs/*/preTaxDeductions.question"/>
+        <fg-set path="/jobs/*/retirementPlanContributions">
+          <question content-key="flow.income.fields./jobs/*/retirementPlanContributions.question"/>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/healthInsuranceContributions">
+          <question content-key="flow.income.fields./jobs/*/healthInsuranceContributions.question"/>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/hsaOrFsaContributions">
+          <question content-key="flow.income.fields./jobs/*/hsaOrFsaContributions.question"/>
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
