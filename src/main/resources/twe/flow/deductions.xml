@@ -13,7 +13,12 @@
       <h2>Itemized Deductions
       </h2>
       <h2>Qualified mortgage interest</h2>
-      <p>Your total deductible State and Qualified mortgage interest is: <fg-show path="/qualifiedMortgageInterestTotal"/></p>
+      <p>Total interest from a mortgage loan used to buy, build, or substantially improve your first
+        or second home. This deduction includes mortgage insurance premiums (PMI) or government
+        mortgage insurance (e.g., FHA, VA, USDA loan insurance). Home equity loan interest and/or
+        HELOC interest is deductible only if the loan is used to buy, build, or substantially
+        improve the house.</p>
+      <p>Your total deductible qualified mortgage interest is: <fg-show path="/qualifiedMortgageInterestTotal"/></p>
       <fg-collection path="/qualifiedMortgageInterest">
         <fg-set path="/qualifiedMortgageInterest/*/interest">
           <question content-key="flow.deductions.fields./qualifiedMortgageInterest/*/interest.question"/>
