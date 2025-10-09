@@ -4,67 +4,98 @@
     <section>
       <h2>Child Tax Credit</h2>
       <fg-set path="/actualChildTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualChildTaxCreditAmount.question"/>
+        <question>
+          How much Child Tax credit do you expect to claim this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Earned Income Tax Credit</h2>
       <fg-set path="/actualEarnedIncomeTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualEarnedIncomeTaxCreditAmount.question"/>
+        <question>
+          How much Earned Income Tax credit do you expect to claim this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Child and Dependent Care Credit</h2>
       <fg-set path="/actualChildAndDependentCareTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualChildAndDependentCareTaxCreditAmount.question"/>
+        <question>
+          How much Child and Dependent Care Credit do you expect to claim this
+          year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Saver&#x2019;s Credit</h2>
       <fg-set path="/actualSaversTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualSaversTaxCreditAmount.question"/>
+        <question>
+          How much Saver&#x2019;s Credit do you expect to claim this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Credit for the Elderly or the Disabled</h2>
       <fg-set path="/actualElderlyAndDisabledTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualElderlyAndDisabledTaxCreditAmount.question"/>
+        <question>
+          How much Credit for the Elderly or the Disabled do you expect to claim
+          this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Lifetime Learning Credit</h2>
       <fg-set path="/actualLifetimeLeariningTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualLifetimeLeariningTaxCreditAmount.question"/>
+        <question>
+          How much Lifetime Learning Credit do you expect to claim this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>American Opportunity Tax Credit</h2>
       <fg-set path="/actualAmericanOpportunityTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualAmericanOpportunityTaxCreditAmount.question"/>
+        <question>
+          How much American Opportunity tax credit do you expect to claim this
+          year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2> Credit for contributions of individuals to scholarship granting organizations</h2>
       <fg-set path="/actualContributionsScholarshipGrantingOrganizationsCreditAmount">
-        <question content-key="flow.credits.fields./actualContributionsScholarshipGrantingOrganizationsCreditAmount.question"/>
+        <question>
+          How much Adoption tax Credit do you expect to claim this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Adoption Tax Credit</h2>
       <fg-set path="/actualAdoptionTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualAdoptionTaxCreditAmount.question"/>
+        <question>
+          How much Credit for contributions of individuals to scholarship
+          granting organizations do you expect to claim this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Foreign Tax Credit</h2>
       <fg-set path="/actualForeignTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualForeignTaxCreditAmount.question"/>
+        <question>
+          How much Foreign tax credit do you expect to claim this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Mortgage Interest Credit</h2>
       <fg-set path="/actualMortgageInterestTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualMortgageInterestTaxCreditAmount.question"/>
+        <question>
+          How much Mortgage Interest credit do you expect to claim this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>General Business Credit</h2>
       <fg-set path="/actualGeneralBusinessTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualGeneralBusinessTaxCreditAmount.question"/>
+        <question>
+          How much General business credit do you expect to claim this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Alternative Minimum Tax Credit</h2>
       <fg-set path="/actualAlternativeMinimumTaxCreditAmount">
-        <question content-key="flow.credits.fields./actualAlternativeMinimumTaxCreditAmount.question"/>
+        <question>
+          How much Alternative minimum tax credit do you expect to claim this
+          year?
+        </question>
         <input type="dollar"/>
       </fg-set>
     </section>

@@ -7,11 +7,14 @@
       <p>Your maximum standard deduction amount is: <fg-show path="/standardDeduction"/></p>
       <p>Your maximum itemized deduction amount is: <fg-show path="/itemizedDeduction"/></p>
       <fg-set path="/wantsItemizedDeduction">
-        <question content-key="flow.deductions.fields./wantsItemizedDeduction.question"/>
+        <question>
+          Do you want to itemize your deductions? The standard deduction is higher for most
+          taxpayers, but you may want to itemize your deductions if you have a mortgage, large gifts
+          to charity, or large medical expenses
+        </question>
         <input type="boolean"/>
       </fg-set>
-      <h2>Itemized Deductions
-      </h2>
+      <h2>Itemized Deductions</h2>
       <h2>Qualified mortgage interest</h2>
       <p>Total interest from a mortgage loan used to buy, build, or substantially improve your first
         or second home. This deduction includes mortgage insurance premiums (PMI) or government
@@ -21,7 +24,7 @@
       <p>Your total deductible qualified mortgage interest is: <fg-show path="/qualifiedMortgageInterestTotal"/></p>
       <fg-collection path="/qualifiedMortgageInterest">
         <fg-set path="/qualifiedMortgageInterest/*/interest">
-          <question content-key="flow.deductions.fields./qualifiedMortgageInterest/*/interest.question"/>
+          <question>Total mortgage interest from a mortgage loan</question>
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
@@ -30,7 +33,7 @@
       <p>Your total deductible State and Local Taxes is: <fg-show path="/qualifiedInvestmentInterestExpensesTotal"/></p>
       <fg-collection path="/qualifiedInvestmentInterestExpenses">
         <fg-set path="/qualifiedInvestmentInterestExpenses/*/expense">
-          <question content-key="flow.deductions.fields./qualifiedInvestmentInterestExpenses/*/expense"/>
+          <question>Total investment interest expenses for a single investment interest</question>
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
@@ -42,7 +45,7 @@
       <p>Your total deductible State and Local Taxes is: <fg-show path="/stateAndLocalTaxPaymentsTotal"/></p>
       <fg-collection path="/stateAndLocalTaxPayments">
         <fg-set path="/stateAndLocalTaxPayments/*/taxPayment">
-          <question content-key="flow.deductions.fields./stateAndLocalTaxPayments/*/taxPayment.question"/>
+          <question>Total state or local tax payments by recipient</question>
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
@@ -53,7 +56,7 @@
       <p>Your total deductible State and Local Taxes is: <fg-show path="/medicalAndDentalExpensesTotal"/></p>
       <fg-collection path="/medicalAndDentalExpenses">
         <fg-set path="/medicalAndDentalExpenses/*/expense">
-          <question content-key="flow.deductions.fields./medicalAndDentalExpenses/*/expense.question"/>
+          <question>Total amount for a single medical or dental expense category</question>
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
@@ -61,7 +64,7 @@
       <p>Your total deductible Charitable Contributions to Qualified Organizations is: <fg-show path="/charitableContributionsTotal"/></p>
       <fg-collection path="/charitableContributions">
         <fg-set path="/charitableContributions/*/contribution">
-          <question content-key="flow.deductions.fields./charitableContributions/*/contribution.question"/>
+          <question>Total contribution amount from a specific charitable contribution</question>
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
@@ -71,7 +74,7 @@
         the loss took place in a federally declared disaster area</p>
       <fg-collection path="/casualtyLosses">
         <fg-set path="/casualtyLosses/*/loss">
-          <question content-key="flow.deductions.fields./casualtyLosses/*/loss.question"/>
+          <question>Total casualty loss from a specific loss event</question>
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
@@ -81,7 +84,9 @@
         and can be claimed by eligible taxpayers regardless of which deduction they choose</p>
       <h2>Qualified Business Interest Deduction (199A)</h2>
       <fg-set path="/qualifiedBusinessIncomeDeduction">
-        <question content-key="flow.deductions.fields./qualifiedBusinessIncomeDeduction.question"/>
+        <question>
+          What is your estimated Qualified Business Income Deduction for this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <p/>
@@ -91,133 +96,167 @@
       <p> Total Senior Deduction amount: <fg-show path="/seniorDeduction"/></p>
       <h2>Qualified Tips Income Deduction</h2>
       <fg-set path="/hasTipsThisTaxYear">
-        <question content-key="flow.deductions.fields./hasTipsThisTaxYear.question"/>
+        <question>Do you expect to receive any tips this year?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/doesOccupationTraditionallyReceiveTips" if-true="/hasTipsThisTaxYear">
-        <question content-key="flow.deductions.fields./doesOccupationTraditionallyReceiveTips.question"/>
+        <question>Do you work in an occupation that traditionally receives tips?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/areTipsCash" if-true="/hasTipsThisTaxYear">
-        <question content-key="flow.deductions.fields./areTipsCash.question"/>
+        <question>
+          Will those tips be paid in cash or charged, or received under a tip-sharing arrangement?
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/areTipsVoluntary" if-true="/hasTipsThisTaxYear">
-        <question content-key="flow.deductions.fields./areTipsVoluntary.question"/>
+        <question>
+          Will those tips be paid voluntarily without consequence of nonpayment to the payor?
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isTaxpayerSelfEmployedInSSTB" if-true="/areTipsVoluntary">
-        <question content-key="flow.deductions.fields./isTaxpayerSelfEmployedInSSTB.question"/>
+        <question>
+          Are you self employed in a Section 199A Specified Service Trade or Business?
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isTaxpayerEmployeeInSSTB" if-true="/areTipsVoluntary">
-        <question content-key="flow.deductions.fields./isTaxpayerEmployeeInSSTB.question"/>
+        <question>
+          Are you an employee in a Section 199A Specified Service Trade or Business?
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isOccupationSpecifiedServiceTradeOrBusiness" if-true="/areTipsVoluntary">
-        <question content-key="flow.deductions.fields./isOccupationSpecifiedServiceTradeOrBusiness.question"/>
+        <question>
+          Are the tips provided to you provided in the course of business for a &#xA7;199A specified
+          service trades or businesses?
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/qualifiedTipIncome" if-false="/isOccupationSpecifiedServiceTradeOrBusiness">
-        <question content-key="flow.deductions.fields./qualifiedTipIncome.question"/>
+        <question>How much tip income do you expect to make this year?</question>
         <input type="dollar"/>
       </fg-set>
       <fg-set path="/selfEmploymentIncome" if-false="/isOccupationSpecifiedServiceTradeOrBusiness">
-        <question content-key="flow.deductions.fields./selfEmploymentIncome.question"/>
+        <question>How much self-employment income do you expect to make this year?</question>
         <input type="dollar"/>
       </fg-set>
       <p>Your eligibility for the Qualified Tip Deduction is: <fg-show path="/isEligibleForQualifiedTipDeduction"/>
       </p>
       <p>Total Qualified Tip Deduction is: <fg-show path="/qualifiedTipDeduction"/></p>
-      <h2>Overtime
-        Compensation Deduction</h2>
+      <h2>Overtime Compensation Deduction</h2>
       <fg-set path="/hasOvertimeCompThisTaxYear">
-        <question content-key="flow.deductions.fields./hasOvertimeCompThisTaxYear.question"/>
+        <question>
+          Have you received or do you expect to receive overtime compensation (such as
+          time-and-a-half) do you expect to this year?
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isFlsaNonExempt" if-true="/hasOvertimeCompThisTaxYear">
-        <question content-key="flow.deductions.fields./isFlsaNonExempt.question"/>
+        <question>
+          Are you considered FLSA non-exempt under Section 7 of the Fair Labor Standards Act of 1938
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" if-true="/isFlsaNonExempt">
-        <question content-key="flow.deductions.fields./overtimeCompensationExcludingQualifiedTipsOvertimeComp.question"/>
+        <question>How much overtime compensation have you received, excluding any tips?</question>
         <input type="dollar"/>
       </fg-set>
       <p>Your overtime compensation deduction is <fg-show path="/overtimeCompensationDeduction"/></p>
-      <h2>Qualified
-        Personal Vehicle Loan Interest Deduction</h2>
+      <h2>Qualified Personal Vehicle Loan Interest Deduction</h2>
       <fg-set path="/isVehiclePurchasedAfterEffectiveDate">
-        <question content-key="flow.deductions.fields./isVehiclePurchasedAfterEffectiveDate.question"/>
+        <question>Have you purchased a motor vehicle after 12/31/2024?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isQpvIndebtednessIncurredAfterEffectiveDate" if-true="/isVehiclePurchasedAfterEffectiveDate">
-        <question content-key="flow.deductions.fields./isQpvIndebtednessIncurredAfterEffectiveDate.question"/>
+        <question>
+          Did you incur a loan when you purchased this vehicle and was this loan originated after
+          12/31/2024?
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isVehicleLoanFirstLien" if-true="/isQpvIndebtednessIncurredAfterEffectiveDate">
-        <question content-key="flow.deductions.fields./isVehicleLoanFirstLien.question"/>
+        <question>Was the loan secured as the first lien on the vehicle?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isVehicleForPersonalUse" if-true="/isVehicleLoanFirstLien">
-        <question content-key="flow.deductions.fields./isVehicleForPersonalUse.question"/>
+        <question>
+          Is the vehicle intended for personal use and not commercial or fleet use?
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isVehicleLoanFinancingFleetSale" if-true="/isVehicleForPersonalUse">
-        <question content-key="flow.deductions.fields./isVehicleLoanFinancingFleetSale.question"/>
+        <question>Was the loan originated for the purposes of financing a fleet sale?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isVehicleLeaseFinanced" if-false="/isVehicleLoanFinancingFleetSale">
-        <question content-key="flow.deductions.fields./isVehicleLeaseFinanced.question"/>
+        <question>Are you leasing the vehicle?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/hasSalvageTitleOrPurchasedToScrap" if-false="/isVehicleLeaseFinanced">
-        <question content-key="flow.deductions.fields./hasSalvageTitleOrPurchasedToScrap.question"/>
+        <question>
+          Did you purchase the vehicle with the intend to scrap it for parts or is the title a
+          salvage title?
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isTaxpayerOriginalUser" if-false="/hasSalvageTitleOrPurchasedToScrap">
-        <question content-key="flow.deductions.fields./isTaxpayerOriginalUser.question"/>
+        <question>Are you the original and primary user of the vehicle</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/doesHaveVIN" if-true="/isTaxpayerOriginalUser">
-        <question content-key="flow.deductions.fields./doesHaveVIN.question"/>
+        <question>
+          Do you have a Vehicle Identification Number for the Vehicle? You can check on
+          https://www.nhtsa.gov/vin-decoder
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isVehicleManufacturedForStreetsRoadsAndHighways" if-true="/doesHaveVIN">
-        <question content-key="flow.deductions.fields./isVehicleManufacturedForStreetsRoadsAndHighways.question"/>
+        <question>Is the vehicle meant for driving on public streets, roads and highways?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isVehicleGTETwoWheels" if-true="/isVehicleManufacturedForStreetsRoadsAndHighways">
-        <question content-key="flow.deductions.fields./isVehicleGTETwoWheels.question"/>
+        <question>Does the vehicle have at least two wheels?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isVehicleApplicableType" if-true="/isVehicleGTETwoWheels">
-        <question content-key="flow.deductions.fields./isVehicleApplicableType.question"/>
+        <question>
+          Is the vehicle a car, minivan, van, sport utility vehicle, pickup truck, or motorcycle?
+        </question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isVehicleUnderGVWRMax" if-true="/isVehicleApplicableType">
-        <question content-key="flow.deductions.fields./isVehicleUnderGVWRMax.question"/>
+        <question>Is the Gross Vehicle Weight Rating below 14,000 lbs?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/isVehicleAssembledInUSA" if-true="/isVehicleUnderGVWRMax">
-        <question content-key="flow.deductions.fields./isVehicleAssembledInUSA.question"/>
+        <question>Was the final assembly of the vehicle in the United States?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/personalVehicleLoanInterestAmount" if-true="/isVehicleAssembledInUSA">
-        <question content-key="flow.deductions.fields./personalVehicleLoanInterestAmount.question"/>
+        <question>
+          How much interest have you paid on the loan during the current taxable year to-date?
+        </question>
         <input type="dollar"/>
       </fg-set>
-      <p>Your eligibility for the Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction"/>
+      <p>
+        Your eligibility for the Qualified Passenger Vehicle Loan Interest Deduction is:
+        <fg-show path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction"/>
       </p>
-      <p>Your Qualified Passenger Vehicle Loan Interest Deduction is: <fg-show path="/qualifiedPersonalVehicleLoanInterestDeduction"/>
+      <p>
+        Your Qualified Passenger Vehicle Loan Interest Deduction is:
+        <fg-show path="/qualifiedPersonalVehicleLoanInterestDeduction"/>
       </p>
       <h2>Non-Itemizer Charitable Contribution Deduction</h2>
       <fg-set path="/nonItemizerCharitableContributionDeductionAmount" if-false="/wantsItemizedDeduction">
-        <question content-key="flow.deductions.fields./nonItemizerCharitableContributionDeductionAmount.question"/>
+        <question>
+          If you are not itemizing your deductions, how much do you anticipate contributing to
+          charity this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>
-        Deduction Results
-      </h2>
+      <h2>Deduction Results</h2>
       <p>Your total below the line deductions are: <fg-show path="/totalDeductions"/>
       </p>
       <p>Your total QBI deduction is: <fg-show path="/qualifiedBusinessIncomeDeduction"/>

@@ -1,9 +1,9 @@
 package gov.irs.twe
 
+import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.generators.Website
-import gov.irs.twe.Locale
-import io.circe.yaml
+import gov.irs.twe.parser.Flow
 import java.io.File
 import scala.io.Source
 import scala.util.matching.Regex
@@ -12,6 +12,9 @@ import scala.xml.NodeBuffer
 
 val FlowResourceRoot = "twe/flow"
 val flagRegex = new Regex("""--(\w*)""")
+
+case class OptionContent(name: String, description: Option[String])
+case class FgSetContent(question: String, options: Option[Map[String, OptionContent]])
 
 def main(args: Array[String]): Unit = {
   val flags = Map.from(
@@ -24,7 +27,7 @@ def main(args: Array[String]): Unit = {
   )
 
   // Processing for handling multiple xml files for facts
-  val allFacts = FileLoaderHelper.getAllFacts()
+  val dictionaryConfig = FileLoaderHelper.getAllFacts()
 
   // Get flow root
   val flowFile = Source.fromResource(s"$FlowResourceRoot/index.xml").getLines().mkString("\n")
@@ -38,9 +41,13 @@ def main(args: Array[String]): Unit = {
       case _        => child
     },
   )
-  val resolvedConfig = <FlowConfig>{resolvedChildren}</FlowConfig>
 
-  val site = Website.fromXmlConfig(resolvedConfig, allFacts, flags)
+  val resolvedConfig = <FlowConfig>{resolvedChildren}</FlowConfig>
+  generateFlowLocalFile(resolvedConfig)
+
+  val factDictionary = FactDictionary.fromXml(dictionaryConfig)
+  val flow = Flow.fromXmlConfig(resolvedConfig, factDictionary)
+  val site = Website.generate(flow, dictionaryConfig, flags)
 
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"
@@ -66,18 +73,6 @@ object FileLoaderHelper:
       facts ++= factNodes
     }
     <FactDictionaryModule><Facts>{facts}</Facts></FactDictionaryModule>
-  }
-
-  def getLocaleContent(languageCode: String) = {
-    val localeFile = Source.fromResource(s"twe/locales/${languageCode}.yaml")
-
-    yaml.scalayaml.Parser.parse(localeFile.reader()) match {
-      case Left(value) =>
-        // Failing to load the content is an irrecoverable error
-        throw new Exception(s"Failed to load the content for ${languageCode}", value)
-      case Right(value) =>
-        value
-    }
   }
 
 def resolveModule(node: xml.Node): xml.NodeSeq = {

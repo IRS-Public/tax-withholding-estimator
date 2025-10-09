@@ -33,11 +33,11 @@ class TweTemplateEngine {
   resolver.setPrefix("/twe/templates/")
   resolver.setSuffix(".html")
 
-  private val locale = new Locale("en")
+  private val locale = Locale("en")
   private val templateEngine = new TemplateEngine()
-  private val messageresolver = new TweMessageResolver(locale)
+  private val messageResolver = TweMessageResolver(locale)
   templateEngine.setTemplateResolver(resolver)
-  templateEngine.addMessageResolver(messageresolver)
+  templateEngine.addMessageResolver(messageResolver)
 
   def process(templateName: String, context: Context): String =
     templateEngine.process(templateName, context)

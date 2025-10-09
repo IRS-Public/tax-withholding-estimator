@@ -84,7 +84,7 @@
       </attribute>
     </optional>
     <element name="question">
-      <ref name="ContentKey"/>
+        <ref name="FlowConfigModuleInlineContent"/>
     </element>
     <optional>
       <element name="hint">

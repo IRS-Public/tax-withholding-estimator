@@ -6,6 +6,9 @@ import gov.irs.factgraph.FactDictionaryForTests
 import gov.irs.factgraph.Graph
 import gov.irs.factgraph.Path
 import gov.irs.twe.FileLoaderHelper
+import java.io.File
+import scala.io.Source
+import scala.xml.{ Elem, NodeBuffer }
 
 def setupFactDictionary(): FactDictionary =
   val facts = FileLoaderHelper.getAllFacts()

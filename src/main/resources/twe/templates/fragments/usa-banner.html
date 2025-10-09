@@ -49,10 +49,10 @@
                 aria-hidden="true"
                 />
             <div class="usa-media-block__body">
-              <p>
               <strong th:text="#{layout.banner.secure-https}"></strong> <br/>
-              [(#{layout.banner.lock(~{fragments/lock})})]
-              </p>
+              <th:block th:utext="#{layout.banner.lock-1}"></th:block>
+              (<div th:replace="~{fragments/lock}"></div>)
+              <th:block th:utext="#{layout.banner.lock-2}"></th:block>
             </div>
           </div>
         </div>

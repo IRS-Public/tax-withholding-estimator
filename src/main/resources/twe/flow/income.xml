@@ -6,43 +6,45 @@
       <h2>Jobs</h2>
       <fg-collection path="/jobs" item-name="Income source">
         <fg-set path="/jobs/*/isAllYear">
-          <question content-key="flow.income.fields./jobs/*/isAllYear.question"/>
+          <question>
+            Do you expect to have this job all year, from January 1 - December 31, 2025?
+          </question>
           <input type="boolean"/>
         </fg-set>
         <fg-set path="/jobs/*/writableStartDate" if-true="/jobs/*/flowAskPartYearDates">
-          <question content-key="flow.income.fields./jobs/*/writableStartDate.question"/>
+          <question>What&#x2019;s the start date?</question>
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/writableEndDate" if-true="/jobs/*/flowAskPartYearDates">
-          <question content-key="flow.income.fields./jobs/*/writableEndDate.question"/>
+          <question>What&#x2019;s the end date?</question>
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
-          <question content-key="flow.income.fields./jobs/*/mostRecentPayPeriodEnd.question"/>
+          <question>When did your most recent pay period end?</question>
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/mostRecentPayDate">
-          <question content-key="flow.income.fields./jobs/*/mostRecentPayDate.question"/>
+          <question>When was your most recent pay date?</question>
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/averagePayPerPayPeriod">
-          <question content-key="flow.income.fields./jobs/*/averagePayPerPayPeriod.question"/>
+          <question>What&#x2019;s the average amount you get paid each pay period?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/yearToDateIncome">
-          <question content-key="flow.income.fields./jobs/*/yearToDateIncome.question"/>
+          <question>What&#x2019;s your year-to-date income for this job?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/averageWithholdingPerPayPeriod">
-          <question content-key="flow.income.fields./jobs/*/averageWithholdingPerPayPeriod.question"/>
+          <question>What&#x2019;s the average amount of federal withholding each pay period?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/yearToDateWithholding">
-          <question content-key="flow.income.fields./jobs/*/yearToDateWithholding.question"/>
+          <question>What&#x2019;s your year-to-date federal withholding for this job?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/payFrequency">
-          <question content-key="flow.income.fields./jobs/*/payFrequency.question"/>
+          <question>How frequently are you paid?</question>
           <select options-path="/jobs/*/payFrequency">
             <option value="weekly">Weekly</option>
             <option value="biWeekly">Biweekly</option>
@@ -51,99 +53,110 @@
           </select>
         </fg-set>
         <fg-set path="/jobs/*/totalBonusReceived">
-          <question content-key="flow.income.fields./jobs/*/totalBonusReceived.question"/>
+          <question>What bonus amount were you paid for this job?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/retirementPlanContributions">
-          <question content-key="flow.income.fields./jobs/*/retirementPlanContributions.question"/>
+          <question>What retirement plan contributions have you made for this job?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/healthInsuranceContributions">
-          <question content-key="flow.income.fields./jobs/*/healthInsuranceContributions.question"/>
+          <question>What health insurance contributions have you made for this job?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/hsaOrFsaContributions">
-          <question content-key="flow.income.fields./jobs/*/hsaOrFsaContributions.question"/>
+          <question>What HSA or FSA contributions have you made for this job?</question>
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
       <fg-set path="/totalAdvancedPayments">
-        <question content-key="flow.income.fields./totalAdvancedPayments.question"/>
+        <question>What is the total amount of advanced tax payments you made to date?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Trump Account Distribution</h2>
       <fg-set path="/trumpAccountDistribution">
-        <question content-key="flow.income.fields./trumpAccountDistribution.question"/>
+        <question/>
         <input type="dollar"/>
       </fg-set>
       <h2>Net Self-Employment Income</h2>
       <fg-set path="/netSelfEmploymentIncome">
-        <question content-key="flow.income.fields./netSelfEmploymentIncome.question"/>
+        <question>How much was your net self-employment income this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Ordinary Dividends Income</h2>
       <fg-set path="/ordinaryDividendsIncome">
-        <question content-key="flow.income.fields./ordinaryDividendsIncome.question"/>
+        <question>How much have you made in ordinary dividends income so far this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Qualified Dividends Income</h2>
       <fg-set path="/qualifiedDividendsIncome">
-        <question content-key="flow.income.fields./qualifiedDividendsIncome.question"/>
+        <question>How much qualified dividends income do you estimate for this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Long-Term Capital Gains Income</h2>
       <fg-set path="/longTermCapitalGainsIncome">
-        <question content-key="flow.income.fields./longTermCapitalGainsIncome.question"/>
+        <question>How much long-term capital gains income do you estimate for this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Unemployment Insurance Income</h2>
       <fg-set path="/unemploymentInsuranceIncome">
-        <question content-key="flow.income.fields./unemploymentInsuranceIncome.question"/>
+        <question>
+          How much have you received in employment insurance income so far this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Interest Income (excluding non-taxable interest)</h2>
       <fg-set path="/interestExcludingNonTaxableIncome">
-        <question content-key="flow.income.fields./miscIncome.question"/>
+        <question>
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Non-taxable Interest Income</h2>
       <fg-set path="/nonTaxableInterestIncome">
-        <question content-key="flow.income.fields./nonTaxableInterestIncome.question"/>
+        <question>
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Short term capital gains</h2>
       <fg-set path="/shortTermCapitalGainsIncome">
-        <question content-key="flow.income.fields./shortTermCapitalGainsIncome.question"/>
+        <question>How much short term capital gains have you received this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Taxable Scholarship Income</h2>
       <fg-set path="/taxableScholarshipIncome">
-        <question content-key="flow.income.fields./taxableScholarshipIncome.question"/>
+        <question>How much taxable scholarship income have you received this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Alimony Received</h2>
       <fg-set path="/alimonyReceivedIncome">
-        <question content-key="flow.income.fields./alimonyReceivedIncome.question"/>
+        <question>How much alimony (pre-2019 divorce) have you received this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>S-corp non-passive Income (Schedule K1)</h2>
       <fg-set path="/sCorpNonPassiveIncome">
-        <question content-key="flow.income.fields./sCorpNonPassiveIncome.question"/>
+        <question>
+          How much S-corp non-passive income (Schedule K1) have you made this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Net Schedule E Income</h2>
       <fg-set path="/netScheduleEIncome">
-        <question content-key="flow.income.fields./netScheduleEIncome.question"/>
+        <question>
+          How much Net Schedule E income from passive activities have you received this year?
+        </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Non-specific Other Income</h2>
       <fg-set path="/nonSpecificOtherIncome">
-        <question content-key="flow.income.fields./nonSpecificOtherIncome.question"/>
+        <question>How much non-specific other income have you made this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Net SSA income from Forms SSA-1099 and RRB-1099</h2>
       <fg-set path="/socialSecurityBenefitsIncome">
-        <question content-key="flow.income.fields./socialSecurityBenefitsIncome.question"/>
+        <question>
+          How much Social Security Benefits you received this year? (total amount from forms
+          SSA-1099 and RRB-1099)
+        </question>
         <input type="dollar"/>
       </fg-set>
     </section>

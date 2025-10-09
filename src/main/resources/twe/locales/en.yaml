@@ -1,206 +1,82 @@
-flow:
-  about-you:
-    fields:
-      /primaryFilerAge65OrOlder:
-        question: Will you be 65 years old or older on December 31, 2025?
-      /filingStatus:
-        question: What filing status will you use for your tax return?
-      /primaryFilerIsBlind:
-        question: Are you blind?
-      /primaryFilerHasSSN:
-        question: Do you have an SSN?
-      /primaryFilerIsClaimingDependents:
-        #TODO Update 2025 with tax year variable
-        question: Do you plan to claim dependents on your 2025 tax return?
-      /primaryFilerIsClaimedOnAnotherReturn:
-        question: Can anyone else claim you as a dependent on their tax return?
-      /secondaryFilerAge65OrOlder:
-        question: Will your spouse be 65 years old or older on December 31, 2025?
-      /secondaryFilerIsBlind:
-        question: Is your spouse blind?
-      /secondaryFilerHasSSN:
-        question: Does your spouse have an SSN?
-      /secondaryFilerIsClaimedOnAnotherReturn:
-        question: Can anyone else claim your spouse as a dependent on their tax return?
-  income:
-    fields:
-      /jobs/*/isAllYear:
-        question: Do you expect to have this job all year, from January 1 - December 31, 2025?
-      /jobs/*/writableStartDate:
-        question: What’s the start date?
-      /jobs/*/writableEndDate:
-        question: What’s the end date?
-      /jobs/*/mostRecentPayPeriodEnd:
-        question: When did your most recent pay period end?
-      /jobs/*/mostRecentPayDate:
-        question: When was your most recent pay date?
-      /jobs/*/averagePayPerPayPeriod:
-        question: What’s the average amount you get paid each pay period?
-      /jobs/*/yearToDateIncome:
-        question: What’s your year-to-date income for this job?
-      /jobs/*/averageWithholdingPerPayPeriod:
-        question: What’s the average amount of federal withholding each pay period?
-      /jobs/*/yearToDateWithholding:
-        question: What’s your year-to-date federal withholding for this job?
-      /jobs/*/payFrequency:
-        question: How frequently are you paid?
-      /jobs/*/totalBonusReceived:
-        question: What bonus amount were you paid for this job?
-      /jobs/*/retirementPlanContributions:
-        question: What retirement plan contributions have you made for this job?
-      /jobs/*/healthInsuranceContributions:
-        question: What health insurance contributions have you made for this job?
-      /jobs/*/hsaOrFsaContributions:
-        question: What HSA or FSA contributions have you made for this job?
-      /totalAdvancedPayments:
-        question: What is the total amount of advanced tax payments you made to date?
-      /netSelfEmploymentIncome:
-        question: How much was your net self-employment income this year?
-      /ordinaryDividendsIncome:
-        question: How much have you made in ordinary dividends income so far this year?
-      /qualifiedDividendsIncome:
-        question: How much qualified dividends income do you estimate for this year?
-      /longTermCapitalGainsIncome:
-        question: How much long-term capital gains income do you estimate for this year?
-      /unemploymentInsuranceIncome:
-        question: How much have you received in employment insurance income so far this year?
-      /miscIncome:
-        question: How much other income have you made this year?
-      /shortTermCapitalGainsIncome:
-        question: How much short term capital gains have you received this year?
-      /taxableScholarshipIncome:
-        question: How much taxable scholarship income have you received this year?
-      /alimonyReceivedIncome:
-        question: How much alimony (pre-2019 divorce) have you received this year?
-      /sCorpNonPassiveIncome:
-        question: How much S-corp non-passive income (Schedule K1) have you made this year?
-      /netScheduleEIncome:
-        question: How much Net Schedule E income from passive activities have you received this year?
-      /nonSpecificOtherIncome:
-        question: How much non-specific other income have you made this year?
-      /socialSecurityBenefitsIncome:
-        question: How much Social Security Benefits you received this year? (total amount from forms SSA-1099 and RRB-1099)
-      /nonTaxableInterestIncome:
-        question: How much non-taxable interest income have you received this year?  (Used to calculate taxable portion of SSA benefits)
-  adjustments:
-    fields:
-     /actualEducatorExpensesAdjustmentAmount:
-       question: How much have you paid this year in educator expenses?
-     /actualStudentLoanInterestAdjustmentAmount:
-       question: How much have you paid this year in student loan interest?
-     /actualHsaTotalDeductibleAmount:
-       question: What’s the total amount of deductible Health Savings Account contributions you made this year?
-     /actualDeductionForTraditionalIRAContribution:
-       question: What’s the total amount of deductible Health Savings Account contributions you made this year?
-     /actualMovingExpensesForArmedServicesMembers:
-       question: Moving expenses for members of armed services
-     /actualAlimonyPaid:
-       question: Alimony paid (pre 2019 divorce)
-     /actualPenaltyForEarlySavingsWithdrawal:
-       question: Penalty for early withdrawal of savings
-     /actualBusinessCreditsForEligible:
-       question: Business credits for reservists, performing artists, and fee-based government officials
-  deductions:
-    fields:
-     /wantsItemizedDeduction:
-       question: Do you want to itemize your deductions? The standard deduction is higher for most taxpayers, but you may want to itemize your deductions if you have a mortgage, large gifts to charity, or large medical expenses
-     /qualifiedMortgageInterest/*/interest:
-       question: Total mortgage interest from a mortgage loan
-     /qualifiedInvestmentInterestExpenses/*/expense:
-      question: Total investment interest expenses for a single investment interest
-     /stateAndLocalTaxPayments/*/taxPayment:
-       question: Total state or local tax payments by recipient
-     /medicalAndDentalExpenses/*/expense:
-       question: Total amount for a single medical or dental expense category
-     /charitableContributions/*/contribution:
-       question: Total contribution amount from a specific charitable contribution
-     /casualtyLosses/*/loss:
-       question: Total casualty loss from a specific loss event
-     /otherDeductions/*/payment:
-       question: Any other deductible expenses
-     /qualifiedBusinessIncomeDeduction:
-       question: What is your estimated Qualified Business Income Deduction for this year?
-     /nonItemizerCharitableContributionDeductionAmount:
-       question: If you are not itemizing your deductions, how much do you anticipate contributing to charity this year?
-     /hasTipsThisTaxYear:
-       question: Do you expect to receive any tips this year?
-     /doesOccupationTraditionallyReceiveTips:
-       question: Do you work in an occupation that traditionally receives tips?
-     /areTipsCash:
-       question: Will those tips be paid in cash or charged, or received under a tip-sharing arrangement?
-     /areTipsVoluntary:
-       question: Will those tips be paid voluntarily without consequence of nonpayment to the payor?
-     /isTaxpayerSelfEmployedInSSTB:
-       question: Are you self employed in a Section 199A Specified Service Trade or Business?
-     /isTaxpayerEmployeeInSSTB:
-       question: Are you an employee in a Section 199A Specified Service Trade or Business?
-     /isOccupationSpecifiedServiceTradeOrBusiness:
-       question: Are the tips provided to you provided in the course of business for a §199A specified service trades or businesses
-     /qualifiedTipIncome:
-       question: How much tip income do you expect to make this year?
-     /selfEmploymentIncome:
-       question: How much self-employment income do you expect to make this year?
-     /hasOvertimeCompThisTaxYear:
-       question: Have you received or do you expect to receive overtime compensation (such as time-and-a-half) do you expect to this year?
-     /isFlsaNonExempt:
-       question: Are you considered FLSA non-exempt under Section 7 of the Fair Labor Standards Act of 1938
-     /overtimeCompensationExcludingQualifiedTipsOvertimeComp:
-       question: How much overtime compensation have you received, excluding any tips?
-     /isVehiclePurchasedAfterEffectiveDate:
-       question: Have you purchased a motor vehicle after 12/31/2024?
-     /isQpvIndebtednessIncurredAfterEffectiveDate:
-       question: Did you incur a loan when you purchased this vehicle and was this loan originated after 12/31/2024
-     /isVehicleLoanFirstLien:
-       question: Was the loan secured as the first lien on the vehicle?
-     /isVehicleForPersonalUse:
-       question: Is the vehicle intended for personal use and not commercial or fleet use?
-     /isVehicleLoanFinancingFleetSale:
-       question: Was the loan originated for the purposes of financing a fleet sale?
-     /isVehicleLeaseFinanced:
-       question: Are you leasing the vehicle?
-     /hasSalvageTitleOrPurchasedToScrap:
-       question: Did you purchase the vehicle with the intend to scrap it for parts or is the title a salvage title?
-     /isTaxpayerOriginalUser:
-       question: Are you the original and primary user of the vehicle
-     /doesHaveVIN:
-       question: Do you have a Vehicle Identification Number for the Vehicle? You can check on https://www.nhtsa.gov/vin-decoder
-     /isVehicleManufacturedForStreetsRoadsAndHighways:
-       question: Is the vehicle meant for driving on public streets, roads and highways?
-     /isVehicleGTETwoWheels:
-       question: Does the vehicle have at least two wheels?
-     /isVehicleApplicableType:
-       question: Is the vehicle a car, minivan, van, sport utility vehicle, pickup truck, or motorcycle?
-     /isVehicleUnderGVWRMax:
-       question: Is the Gross Vehicle Weight Rating below 14,000 lbs?
-     /isVehicleAssembledInUSA:
-       question: Was the final assembly of the vehicle in the United States?
-     /personalVehicleLoanInterestAmount:
-       question: How much interest have you paid on the loan during the current taxable year to-date?
-  credits:
-    fields:
-     /actualChildTaxCreditAmount:
-       question: How much Child Tax credit do you expect to claim this year?
-     /actualEarnedIncomeTaxCreditAmount:
-       question: How much Earned Income Tax credit do you expect to claim this year?
-     /actualChildAndDependentCareTaxCreditAmount:
-       question: How much Child and Dependent Care Credit do you expect to claim this year?
-     /actualSaversTaxCreditAmount:
-       question: How much Saver’s Credit do you expect to claim this year?
-     /actualElderlyAndDisabledTaxCreditAmount:
-       question: How much Credit for the Elderly or the Disabled do you expect to claim this year?
-     /actualLifetimeLeariningTaxCreditAmount:
-       question: How much Lifetime Learning Credit do you expect to claim this year?
-     /actualAmericanOpportunityTaxCreditAmount:
-       question: How much American Opportunity tax credit do you expect to claim this year?
-     /actualAdoptionTaxCreditAmount:
-       question: How much Adoption tax Credit do you expect to claim this year?
-     /actualContributionsScholarshipGrantingOrganizationsCreditAmount:
-       question: How much Credit for contributions of individuals to scholarship granting organizations do you expect to claim this year?
-     /actualForeignTaxCreditAmount:
-       question: How much Foreign tax credit do you expect to claim this year?
-     /actualMortgageInterestTaxCreditAmount:
-       question: How much Mortgage Interest credit do you expect to claim this year?
-     /actualGeneralBusinessTaxCreditAmount:
-       question: How much General business credit do you expect to claim this year?
-     /actualAlternativeMinimumTaxCreditAmount:
-       question: How much Alternative minimum tax credit do you expect to claim this year?
+components:
+  fg-collection:
+    buttons:
+      item-name-default: Item
+      remove: Remove
+      remove-item: Remove item
+      add: Add
+      add-item: Add item
+  modal:
+    close: Close this window
+    ok: Okay
+  boolean:
+    yes: "Yes"
+    no: "No"
+  date:
+    month: Month
+    day: Day
+    year: Year
+    select: "- Select -"
+    january: January
+    february: February
+    march: March
+    april: April
+    may: May
+    june: June
+    july: July
+    august: August
+    september: September
+    october: October
+    november: November
+    december: December
+  select:
+    select: "--Select one --"
+
+layout:
+  title: Tax Withholding Estimator
+  skip:
+    to-main: Skip to main content
+  identifier:
+    agency-identifier: Agency identifier
+    disclaimer: An official website of the <a class="usa-link" href="https://irs.gov">IRS</a>
+    about: About
+    accessibility: Accessibility
+    privacy-policy: Privacy policy
+    important-links: Important links
+  usgov:
+    name: United States government
+  irs:
+    name: IRS
+    domain: IRS.gov
+    logo-alt-text: IRS logo
+
+  banner:
+    how-you-know: Here’s how you know
+    official-domain: Official websites use .gov
+    official-organization: A <strong>.gov</strong> website belongs to an official government organization in the United States.
+    secure-https: Secure .gov websites use HTTPS
+    disclaimer: An official website of the United States government
+    lock-1: "A <strong>lock</strong>"
+    lock-2: "or <strong>https://</strong> means you’ve safely connected to the .gov website. Share sensitive information only on official, secure websites."
+
+buttons:
+  next: Next
+  continue: Continue
+  back: Back
+  submit: Submit
+
+alerts:
+  warning:
+    heading: Warning status
+    complete-required: Please complete the required fields
+
+step-indicator:
+  completed: completed
+  not-completed: not completed
+  step: Step
+  of: of
+
+about-you:
+  /example-modal:
+    example-heading: What is a qualifying child for the EITC?
+    example-content: "Before sunrise, the bakery's oven hums to life and the first batch of croissants begins to puff; a neighbor."

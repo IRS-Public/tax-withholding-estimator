@@ -1,5 +1,8 @@
 package gov.irs.twe.generators
 
+import gov.irs.factgraph.FactDictionary
+import gov.irs.twe.generateFlowLocalFile
+import gov.irs.twe.parser.Flow
 import org.jsoup.Jsoup
 import org.scalatest.funspec.AnyFunSpec
 
@@ -38,7 +41,12 @@ class WebsiteSpec extends AnyFunSpec {
       </page>
     </FlowConfig>
 
-    val site = Website.fromXmlConfig(basicFormConfig, basicDictionaryConfig, Map())
+    val factDictionary = FactDictionary.fromXml(basicDictionaryConfig)
+    val flow = Flow.fromXmlConfig(basicFormConfig, factDictionary)
+    // TODO: This is a hack to make the test pass in GHA
+    // This needs to be fixed my moving the locale stuff into the form itself (which is very-doable)
+    generateFlowLocalFile(basicFormConfig)
+    val site = Website.generate(flow, basicDictionaryConfig, Map())
     val document = Jsoup.parse(site.pages.head.content)
 
     it("contains basic html elements") {

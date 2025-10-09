@@ -2,6 +2,7 @@ package gov.irs.twe.generators
 
 import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.parser.{ Flow, Page, PageNode }
+import gov.irs.twe.TweTemplateEngine
 import org.jsoup.parser.Tag
 import org.jsoup.Jsoup
 import org.thymeleaf.context.Context
@@ -29,19 +30,19 @@ case class AllScreens(pages: List[WebsitePage], factDictionary: xml.Elem) {
 
 object AllScreens {
   def generate(flow: Flow, dictionaryConfig: xml.Elem): WebsitePage = {
-    val resolver = new ClassLoaderTemplateResolver()
-    resolver.setTemplateMode(TemplateMode.HTML)
-    resolver.setCharacterEncoding("UTF-8")
-    resolver.setPrefix("/twe/templates/")
-    resolver.setSuffix(".html")
-
-    val templateEngine = new TemplateEngine()
-    templateEngine.setTemplateResolver(resolver)
-
+    val templateEngine = new TweTemplateEngine()
     val context = new Context()
     context.setVariable("title", "All Screens")
-    context.setVariable("pages", flow.pages.asJava)
     context.setVariable("dictionaryConfig", dictionaryConfig.toString)
+
+    val pages = flow.pages.map(page =>
+      Map(
+        "route" -> page.route,
+        "title" -> page.title,
+        "content" -> page.html(templateEngine),
+      ).asJava,
+    )
+    context.setVariable("pages", pages.asJava)
 
     val content = templateEngine.process("all-screens", context)
 

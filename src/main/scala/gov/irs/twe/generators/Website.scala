@@ -51,12 +51,6 @@ case class Website(pages: List[WebsitePage], factDictionary: xml.Elem) {
 object Website {
   private val templateEngine = new TweTemplateEngine()
 
-  def fromXmlConfig(config: xml.Elem, dictionaryConfig: xml.Elem, flags: Map[String, Boolean]): Website = {
-    val factDictionary = FactDictionary.fromXml(dictionaryConfig)
-    val flow = Flow.fromXmlConfig(config, factDictionary, templateEngine)
-    generate(flow, dictionaryConfig, flags)
-  }
-
   def generate(flow: Flow, dictionaryConfig: xml.Elem, flags: Map[String, Boolean]): Website = {
     val templateEngine = new TweTemplateEngine()
     val navPages = flow.pages.filter(p => p.exclude == false)
@@ -91,7 +85,7 @@ object Website {
       }
 
       // Turn all the pages into HTML representations and join them together
-      val pageXml = page.content
+      val pageXml = page.html(templateEngine)
 
       context.setVariable("pageXml", pageXml)
 

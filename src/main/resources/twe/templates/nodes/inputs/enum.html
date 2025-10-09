@@ -1,8 +1,7 @@
 <fieldset class="usa-fieldset" th:attr="aria-describedby=${hintId}">
     <legend class="usa-legend twe-question">
-        <th:block th:with="fragment=~{nodes/collection-item-number}"
-                  th:utext="#{${question}(${#strings.trim(fragment)})}"></th:block>
-        <th:block th:unless="${optional}" th:insert="~{nodes/required-indicator}"></th:block>
+        <div th:text="#{${contentKey} + .question}"></div>
+        <div th:unless="${optional}" th:replace="~{nodes/required-indicator}"></div>
     </legend>
     <div th:replace="nodes/hint"></div>
 
@@ -15,14 +14,13 @@
                th:required="${not optional}"
                aria-invalid="false"
                th:attr="aria-describedby=${option.description != null ? (path + '-' + option.value + '-description') : null}"/>
-        <label th:for="${path} + '-' + ${option.value}"
-               class="usa-radio__label radio-option">
-            <span th:text="${option.name}"></span>
+        <label th:for="${path} + '-' + ${option.value}j class="usa-radio__label radio-option">
+            <span th:text="#{${contentKey} + .options. + ${option.value} + .name}"></span>
             <span th:if="${option.description != null}"
                   class="usa-radio__label-description"
                   th:id="${path} + '-' + ${option.value} + '-description'"
                   aria-hidden="true"
-                  th:text="#{${option.description}}"></span>
+                  th:text="#{${contentKey} + .options. + ${option.value} + .description}"></span>
         </label>
     </div>
 </fieldset>

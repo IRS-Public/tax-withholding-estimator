@@ -1,8 +1,7 @@
 <fieldset class="usa-fieldset" th:attr="aria-describedby=${hintId}">
     <legend class="usa-legend twe-question">
-        <th:block th:with="fragment=~{nodes/collection-item-number}"
-          th:utext="#{${question}(${#strings.trim(fragment)})}"></th:block>
-        <th:block th:unless="${optional}" th:insert="~{nodes/required-indicator}"></th:block>
+        <div th:text="#{${contentKey} + .question}"></div>
+        <div th:unless="${optional}" th:insert="~{nodes/required-indicator}"></div>
     </legend>
     <div th:replace="nodes/hint"></div>
     <div class="usa-radio">

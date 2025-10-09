@@ -18,10 +18,7 @@
     <aside class="usa-in-page-nav" data-heading-elements="h1 h2"></aside>
 
     <main id="main-content" class="main-content usa-prose">
-      <article
-        th:each="page: ${pages}"
-        class="screen" data-route="${page.route}"
-      >
+      <article th:each="page: ${pages}" class="screen" data-route="${page.route}">
         <h1 class="screen__title" th:text="${page.title}">Page Title</h1>
         <div class="screen__content" th:utext="${page.content}">Lorem Ipsum</div>
       </article>

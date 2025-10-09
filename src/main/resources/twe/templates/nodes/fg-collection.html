@@ -3,8 +3,14 @@
         <template class="fg-collection__item-template">
             <h3 class="usa-accordion__heading">
             <button class="usa-accordion__button usa-accordion__button--highlight" type="button" aria-expanded="true">
-              <th th:if="${itemName == ''}" th:utext="#{components.fg-collection.item-name-default(~{nodes/collection-item-number})}"></th>
-              <th th:if="${itemName != ''}" th:utext="#{components.fg-collection.item-name(~{nodes/collection-item-number}, ${itemName})}"></th>
+              <th th:if="${itemName == ''}">
+                <span th:text="#{components.fg-collection.item-name-default}"></span>
+                <span class="collection-item-number"></span>
+              </th>
+              <th th:if="${itemName != ''}">
+                <span th:text="${itemName}"></span>
+                <span class="collection-item-number"></span>
+              </th>
             </button>
             </h3>
             <div class="usa-accordion__content">
@@ -16,7 +22,10 @@
                             <use href="/resources/uswds-3.13.0/img/sprite.svg#delete"></use>
                         </svg>
                         <th th:if="${itemName == ''}" th:text="#{components.fg-collection.buttons.remove-item}"></th>
-                        <th th:if="${itemName != ''}" th:text="#{components.fg-collection.buttons.remove(${itemName})}"></th>
+                        <th th:if="${itemName != ''}">
+                          <th:block th:text="#{components.fg-collection.buttons.remove}"></th:block>
+                          <th:block th:text="${itemName}"></th:block>
+                        </th>
                     </button>
                 </div>
             </div>
@@ -27,7 +36,10 @@
              class="usa-icon usa-icon--size-3 margin-left-neg-1 margin-y-neg-05">
             <use href="/resources/uswds-3.13.0/img/sprite.svg#add"></use>
         </svg>
-        <th th:if="${itemName == ''}">[[#{components.fg-collection.buttons.add-item}]]</th>
-        <th th:if="${itemName != ''}">[[#{components.fg-collection.buttons.add(${itemName})}]]</th>
+        <th th:if="${itemName == ''}" th:text="#{components.fg-collection.buttons.add-item}"></th>
+        <th th:if="${itemName != ''}">
+          <th:block th:text="#{components.fg-collection.buttons.add}"></th:block>
+          <th:block th:text="${itemName}"></th:block>
+        </th>
     </button>
 </fg-collection>

@@ -10,9 +10,9 @@ import scala.collection.JavaConverters.asJavaIterableConverter
 case class ThymeleafOption(name: String, value: String, description: String)
 case class FgSet(
     path: String,
+    question: String,
     condition: Option[Condition],
     input: Input,
-    question: String,
     hint: String,
     optional: Boolean,
 ) {
@@ -26,8 +26,10 @@ case class FgSet(
     context.setVariable("typeString", input.typeString)
     context.setVariable("optional", optional)
     context.setVariable("usesFieldset", usesFieldset)
-    context.setVariable("question", question)
     context.setVariable("hint", hint)
+
+    val contentKey = "fg-sets." + path
+    context.setVariable("contentKey", contentKey)
 
     input match {
       // case select(options: List[HtmlOption], optionsPath: Option[String], hint: String, optional: Boolean = false)
@@ -50,14 +52,14 @@ case class FgSet(
 object FgSet {
   def parse(node: xml.Node, factDictionary: FactDictionary): FgSet = {
     val path = node \@ "path"
+    val question = (node \ "question").text
     val isOptional = !(node \@ "optional").isEmpty()
     val condition = Condition.getCondition(node, factDictionary)
     val input = Input.extractFromFgSet(node, isOptional, factDictionary)
 
-    val questionKey = node \ "question" \@ "content-key"
     val hint = (node \ "hint").text
 
-    FgSet(path, condition, input, questionKey, hint, isOptional)
+    FgSet(path, question, condition, input, hint, isOptional)
   }
 
   private def validateFgSet(path: String, input: Input, factDictionary: FactDictionary): Unit = {

@@ -31,10 +31,19 @@
 
   <div class="usa-step-indicator__header">
     <h2 class="usa-step-indicator__heading">
-      <span class="usa-sr-only" th:text="#{step-indicator.step-of(${stepIndex + 1}, ${stepTotal}, ${stepTitle})}"></span>
+      <span class="usa-sr-only">
+        <th:block th:text="#{step-indicator.step}"></th:block>
+        <th:block th:text="${stepIndex + 1}"></th:block>
+        <th:block th:text="#{step-indicator.of}"></th:block>
+        <th:block th:text="${stepTotal}"></th:block>:
+        <th:block th:text="${stepTitle}"></th:block>
+      </span>
+
       <span class="usa-step-indicator__heading-counter" aria-hidden="true">
         <span class="usa-step-indicator__current-step" th:text="${stepIndex + 1}"></span>
-        <span class="usa-step-indicator__total-steps">[[#{step-indicator.of}]] <span th:text="${stepTotal}"></span>
+        <span class="usa-step-indicator__total-steps">
+            <span th:text="#{step-indicator.of}"></span>
+            <span th:text="${stepTotal}"></span>
         </span><span class="usa-step-indicator__heading-text" th:text="${stepTitle}"></span
       >
     </h2>

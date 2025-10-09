@@ -4,11 +4,11 @@
   <page title="About you" route="about-you">
     <section>
       <fg-set path="/primaryFilerAge65OrOlder">
-        <question content-key="flow.about-you.fields./primaryFilerAge65OrOlder.question"/>
+        <question>Will you be 65 years old or older on December 31, 2025?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/filingStatus">
-        <question content-key="flow.about-you.fields./filingStatus.question"/>
+        <question>What filing status will you use for your tax return?</question>
         <select options-path="/filingStatusOptions">
           <option value="single">Single</option>
           <option value="marriedFilingJointly">Married filing jointly</option>
@@ -18,40 +18,40 @@
         </select>
       </fg-set>
       <fg-set path="/isMFSLivedTogether" if-true="/isFilingStatusMFS">
-        <question content-key="flow.about-you.fields./isMFSLivedTogether.question"/>
+        <question>Did you and your spouse live together in 2025?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/primaryFilerIsClaimingDependents">
-        <question content-key="flow.about-you.fields./primaryFilerIsClaimingDependents.question"/>
+        <question>Do you plan to claim dependents on your 2025 tax return?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/primaryFilerIsBlind">
-        <question content-key="flow.about-you.fields./primaryFilerIsBlind.question"/>
+        <question>Are you blind?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/primaryFilerHasSSN">
-        <question content-key="flow.about-you.fields./primaryFilerHasSSN.question"/>
+        <question>Do you have an SSN?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/primaryFilerIsClaimedOnAnotherReturn">
-        <question content-key="flow.about-you.fields./primaryFilerIsClaimedOnAnotherReturn.question"/>
+        <question>Can anyone else claim you as a dependent on their tax return?</question>
         <input type="boolean"/>
       </fg-set>
       <h2 condition="/isFilingStatusMFJ" operator="isTrue">Spouse</h2>
       <fg-set path="/secondaryFilerAge65OrOlder" if-true="/isFilingStatusMFJ">
-        <question content-key="flow.about-you.fields./secondaryFilerAge65OrOlder.question"/>
+        <question>Will your spouse be 65 years old or older on December 31, 2025?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/secondaryFilerIsBlind" if-true="/isFilingStatusMFJ">
-        <question content-key="flow.about-you.fields./secondaryFilerIsBlind.question"/>
+        <question>Is your spouse blind?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/secondaryFilerHasSSN" if-true="/isFilingStatusMFJ">
-        <question content-key="flow.about-you.fields./secondaryFilerHasSSN.question"/>
+        <question>Does your spouse have an SSN?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/secondaryFilerIsClaimedOnAnotherReturn" if-true="/isFilingStatusMFJ">
-        <question content-key="flow.about-you.fields./secondaryFilerIsClaimedOnAnotherReturn.question"/>
+        <question>Can anyone else claim your spouse as a dependent on their tax return?</question>
         <input type="boolean"/>
       </fg-set>
       <h2>Start over</h2>
