@@ -237,6 +237,11 @@
       </element>
       <element name="h3">
         <optional>
+          <attribute name="class">
+            <text/>
+          </attribute>
+        </optional>
+        <optional>
           <group>
             <attribute name="condition">
                 <data type="anyURI"/>
@@ -253,6 +258,11 @@
       </element>
       <element name="p">
         <optional>
+          <attribute name="class">
+            <text/>
+          </attribute>
+        </optional>
+        <optional>
           <group>
             <attribute name="condition">
                 <data type="anyURI"/>
@@ -266,6 +276,27 @@
           </group>
         </optional>
         <ref name="FlowConfigModuleInlineContent"/>
+      </element>
+      <element name="ol">
+        <optional>
+          <attribute name="class">
+            <text/>
+          </attribute>
+        </optional>
+        <oneOrMore>
+          <element name="li">
+            <optional>
+              <attribute name="class">
+                <text/>
+              </attribute>
+            </optional>
+            <mixed>
+              <zeroOrMore>
+                <ref name="HtmlBlockContent"/>
+              </zeroOrMore>
+            </mixed>
+          </element>
+        </oneOrMore>
       </element>
       <element name="table">
         <attribute name="class">
