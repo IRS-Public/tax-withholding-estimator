@@ -2,12 +2,94 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/qualifiedBusinessIncomeDeduction">
-      <Name>Qualified business income deduction</Name>
+    <Fact path="/isApplicableTaxpayerForQBIDeduction">
+      <Description>Has estimated QBI over applicable taxpayer threshold of $1,000</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+      <Placeholder>
+        <False/>
+      </Placeholder>
+    </Fact>
+    <Fact path="/estimatedQualifiedBusinessIncomeDeduction">
+      <Name>Estimated qualified business income deduction</Name>
       <Description>Qualified business income deductions for line 13 of Form 1040</Description>
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/minimumDeductionForActiveQBIAmount">
+      <Name>Minimum Deduction for Active QBI</Name>
+      <Description>OB3 70111, amending IRC 26 Section 199A(i): In the case of an applicable
+        taxpayerfor any taxable
+        year, the deduction allowed under subsection(a) for the taxable year shall be equal to the
+        greater of&#x2014;(A) the amount of such deduction determined withoutregard to this
+        subsection,
+        or (B) $400.</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>400</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/minimumQBIThresholdForApplicableTaxpayer">
+      <Name>Minimum QBI for Base Deduction</Name>
+      <Description>OB3 70111, amending IRC 26 Section 199A(i):
+        (2) APPLICABLE TAXPAYER.&#x2014;For purposes of this sub-section&#x2014;(A) IN
+        GENERAL.&#x2014;The term &#x2018;applicable taxpayer&#x2019;means, with respect to any
+        taxable year, a taxpayer
+        whose aggregate qualified business income with respect to all active qualified trades or
+        businesses of the taxpayer for such taxable year is at least $1,000.</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>1000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedBusinessIncomeDeduction">
+      <Name>Qualified Business Income Deduction</Name>
+      <Description>Section 199A: qualified business income deduction. The deduction allows eligible
+        taxpayers to deduct up to 20 percent of their QBI, plus 20 percent of qualified real estate
+        investment trust (REIT) dividends and qualified publicly traded partnership (PTP) income.
+        Income earned through a C corporation or by providing services as an employee is not
+        eligible for the deduction. For more information on what qualifies as a trade or business,
+        see Determining your qualified trades or businesses in the Instructions for Form 8995-A or
+        Form 8995.
+
+        Currently, we do minimal derivation of QBI based on income and tax calculations, and
+        instead take an estimate from the taxpayer of their deduction and apply some basic logic in
+        accordance with OB3. The more complex version of this would look at various income sources
+        and calculate it all behind the scenes.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <!-- When the taxpayer isn't an applicable taxpayer for QBI Deduction and doesn't have
+            at least $1,000 in QBI, the deduction is $0 -->
+            <When>
+              <Not>
+                <Dependency path="/isApplicableTaxpayerForQBIDeduction"/>
+              </Not>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <!-- Otherwise, take the greater of the minimum deduction ($400) or the estimated
+            deduction provided by the taxpayer -->
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <GreaterOf>
+                <Dependency path="/minimumDeductionForActiveQBIAmount"/>
+                <Dependency path="/estimatedQualifiedBusinessIncomeDeduction"/>
+              </GreaterOf>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
     </Fact>
   </Facts>
 </FactDictionaryModule>

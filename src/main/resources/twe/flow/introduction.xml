@@ -20,15 +20,15 @@
           </p>
         </li>
         <li class="usa-process-list__item">
-          <h3 class="usa-process-list__heading">Deductions</h3>
-          <p class="margin-top-05">
-            Choose a standard or itemized deduction.
-          </p>
-        </li>
-        <li class="usa-process-list__item">
           <h3 class="usa-process-list__heading">Adjustments</h3>
           <p class="margin-top-05">
             Enter any expenses that can reduce your taxable income.
+          </p>
+        </li>
+        <li class="usa-process-list__item">
+          <h3 class="usa-process-list__heading">Deductions</h3>
+          <p class="margin-top-05">
+            Choose a standard or itemized deduction.
           </p>
         </li>
         <li class="usa-process-list__item">

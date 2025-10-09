@@ -83,10 +83,12 @@
         deductions are in addition to the Standard Deduction and Itemized Deductions
         and can be claimed by eligible taxpayers regardless of which deduction they choose</p>
       <h2>Qualified Business Interest Deduction (199A)</h2>
-      <fg-set path="/qualifiedBusinessIncomeDeduction">
-        <question>
-          What is your estimated Qualified Business Income Deduction for this year?
-        </question>
+      <fg-set path="/isApplicableTaxpayerForQBIDeduction">
+        <question>Do you estimate making over $1,000 of Qualified Business Income (QBI) this year?</question>
+        <input type="boolean"/>
+      </fg-set>
+      <fg-set path="/estimatedQualifiedBusinessIncomeDeduction" if-true="/isApplicableTaxpayerForQBIDeduction">
+        <question>What is your estimated Qualified Business Income (QBI) Deduction for this year? Note that there is a minimum $400 deduction if your QBI is greater than $1,000.</question>
         <input type="dollar"/>
       </fg-set>
       <p/>
