@@ -5079,8 +5079,124 @@
         </GreaterThan>
       </Derived>
     </Fact>
-    <Fact path="/selfEmploymentLineBCalculation">
-      <Description>Specific calculation on line 5b of Schedule SE (Form 1040) to multiply net self
+    <Fact path="/additionalMedicareTaxThresholdForMFJ">
+      <Derived>
+        <Dollar>250000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxThresholdForAllOtherTPs">
+      <Derived>
+        <Dollar>200000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxThresholdForMFS">
+      <Derived>
+        <Dollar>125000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxThreshold">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFJ"/>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/netSelfEmploymentIncome"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/additionalMedicareTaxThresholdForMFJ"/>
+                  </Right>
+                </GreaterThan>
+              </All>
+            </When>
+            <Then>
+              <Dependency path="/additionalMedicareTaxThresholdForMFJ"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFS"/>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/netSelfEmploymentIncome"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/additionalMedicareTaxThresholdForMFS"/>
+                  </Right>
+                </GreaterThan>
+              </All>
+            </When>
+            <Then>
+              <Dependency path="/additionalMedicareTaxThresholdForMFS"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/additionalMedicareTaxThresholdForAllOtherTPs"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTax">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/additionalMedicareTaxThreshold"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </GreaterThan>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/selfEmploymentLine6Calculation"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/additionalMedicareTaxThreshold"/>
+                  </Right>
+                </GreaterThan>
+              </All>
+            </When>
+            <Then>
+              <Multiply>
+                <!-- Calculate excess income -->
+                <Subtract>
+                  <Minuend>
+                    <Dependency path="/selfEmploymentLine6Calculation"/>
+                  </Minuend>
+                  <Subtrahends>
+                    <Dependency path="/additionalMedicareTaxThreshold"/>
+                  </Subtrahends>
+                </Subtract>
+                <!-- Mutiply by 0.009 -->
+                <Rational>9/1000</Rational>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentLine6Calculation">
+      <Description>Specific calculation on line 6 of Schedule SE (Form 1040) to multiply net self
         employment income by 92.35%.</Description>
       <Derived>
         <Switch>
@@ -5134,7 +5250,7 @@
             <Then>
               <LesserOf>
                 <Dependency path="/maxNetSelfEmploymentIncomeSubjectToSocialSecurityTax"/>
-                <Dependency path="/selfEmploymentLineBCalculation"/>
+                <Dependency path="/selfEmploymentLine6Calculation"/>
               </LesserOf>
             </Then>
           </Case>
@@ -5158,7 +5274,7 @@
               <True/>
             </When>
             <Then>
-              <Dependency path="/selfEmploymentLineBCalculation"/>
+              <Dependency path="/selfEmploymentLine6Calculation"/>
             </Then>
           </Case>
         </Switch>
@@ -5178,10 +5294,13 @@
       <Description>Self-employment tax multiplied by the Medicare tax rate from line 11 on Schedule
         SE (Form 1040).</Description>
       <Derived>
-        <Multiply>
-          <Dependency path="/taxableSelfEmploymentIncome"/>
-          <Rational>29/1000</Rational>
-        </Multiply>
+        <Add>
+          <Multiply>
+            <Dependency path="/selfEmploymentLine6Calculation"/>
+            <Rational>29/1000</Rational>
+          </Multiply>
+          <Dependency path="/additionalMedicareTax"/>
+        </Add>
       </Derived>
     </Fact>
     <Fact path="/selfEmploymentTax">
