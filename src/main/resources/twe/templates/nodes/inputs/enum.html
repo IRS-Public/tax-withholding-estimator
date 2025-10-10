@@ -14,7 +14,7 @@
                th:required="${not optional}"
                aria-invalid="false"
                th:attr="aria-describedby=${option.description != null ? (path + '-' + option.value + '-description') : null}"/>
-        <label th:for="${path} + '-' + ${option.value}j class="usa-radio__label radio-option">
+        <label th:for="${path} + '-' + ${option.value}" class="usa-radio__label radio-option">
             <span th:text="#{${contentKey} + .options. + ${option.value} + .name}"></span>
             <span th:if="${option.description != null}"
                   class="usa-radio__label-description"

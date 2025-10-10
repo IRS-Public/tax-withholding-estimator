@@ -9,13 +9,13 @@
       </fg-set>
       <fg-set path="/filingStatus">
         <question>What filing status will you use for your tax return?</question>
-        <select options-path="/filingStatusOptions">
+        <input type="enum" options-path="/filingStatusOptions">
           <option value="single">Single</option>
           <option value="marriedFilingJointly">Married filing jointly</option>
           <option value="marriedFilingSeparately">Married filing separately</option>
           <option value="headOfHousehold">Head of Household</option>
           <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
-        </select>
+        </input>
       </fg-set>
       <fg-set path="/isMFSLivedTogether" if-true="/isFilingStatusMFS">
         <question>Did you and your spouse live together in 2025?</question>
