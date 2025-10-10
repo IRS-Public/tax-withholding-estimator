@@ -59,7 +59,7 @@ For more details, see:
 
 ### Download Repos & Install Dependencies
 * Download Github Desktop from here & login using your IRS associated account
-* In GitHub Desktop, clone the fact-graph & tax_withholding_estimator repos to your ~/Documents/GitHub folder
+* In GitHub Desktop, clone the fact-graph & tax-withholding-estimator repos to your ~/Documents/GitHub folder
 * In terminal, move to the fact-graph repo & install dependencies
     * Open terminal and move to your fact-graph repo: `cd ~/Documents/GitHub/fact-graph`
     * Once you're in the fact-graph repo, use this command to install SBT: `brew install scala openjdk sbt`
@@ -82,11 +82,13 @@ For more details, see:
 
 ### Download Repos & Install Dependencies
 
-* Extract and install package the relevant package from https://github.com/coursier/coursier/releases/
+* Extract and install the relevant package from https://github.com/coursier/coursier/releases/
+    * Make sure you are downloading from the version marked "Latest" ([Version 2.1.24](https://github.com/coursier/coursier/releases/tag/v2.1.24) as of 10/10/2025)
+    * Look for cs-x86_64-pc-win32.zip
 * In terminal run cs setup
 * Download and install node.js: https://nodejs.org/en/download/
 * Download Github Desktop from here & login using your IRS associated account
-* In GitHub Desktop, clone the fact-graph & tax_withholding_estimator repos to your /Documents/GitHub folder
+* In GitHub Desktop, clone the fact-graph & tax-withholding-estimator repos to your /Documents/GitHub folder
 * In terminal, move to the fact-graph repo & install dependencies
     * Open terminal in Run as Administrator mode (right click on app icon) and move to your fact-graph repo: `cd ~/Documents/GitHub/fact-graph`
     * Once you're in the fact-graph repo, use this command to install Make: `choco install make`
@@ -104,7 +106,7 @@ Before you can run TWE you'll need to compile the fact-graph.
 ### Run TWE
 Once you've compiled the fact-graph and run `make publish` you're ready to run TWE locally
 * In terminal, move to the tax-withholding-estimator repo & run it!
-    * Open terminal and nav to your twe repo: `cd ~/Documents/GitHub/tax_withholding_estimator`
+    * Open terminal and nav to your twe repo: `cd ~/Documents/GitHub/tax-withholding-estimator`
     * Once you're in the twe repo, use this series of commands to run the application
         * In one terminal window: `make twe` (this will run and complete)
         * In the same terminal window: `make dev` (this will run and keep running)
@@ -121,3 +123,4 @@ Once you've compiled the fact-graph and run `make publish` you're ready to run T
 * In GitHub desktop, make sure you're on the main branch.
 * Click the 'Fetch origin' button (top right corner) and wait for it to load
 * This can be done while TWE is running in the background. It should update automatically
+
