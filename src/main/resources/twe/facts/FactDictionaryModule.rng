@@ -32,6 +32,9 @@
       <optional>
         <ref name="TaxYearContent"/>
       </optional>
+      <optional>
+        <ref name="OverrideContent"/>
+      </optional>
       <choice>
         <group>
           <ref name="DerivedContent"/>
@@ -1031,6 +1034,32 @@
           </oneOrMore>
         </optional>
       </interleave>
+    </element>
+  </define>
+  <define name="OverrideContent">
+    <element name="Override">
+      <ref name="OverrideConditionContent"/>
+      <ref name="DefaultContent"/>
+    </element>
+  </define>
+  <define name="OverrideConditionContent">
+    <element name="Condition">
+      <choice>
+        <optional>
+          <ref name="DependencyContent"/>
+        </optional>
+        <optional>
+          <ref name="LogicalContent"/>
+        </optional>
+        <optional>
+          <ref name="TrueContent"/>
+        </optional>
+      </choice>
+    </element>
+  </define>
+  <define name="DefaultContent">
+    <element name="Default">
+      <ref name="CalculationContent"/>
     </element>
   </define>
   <define name="AddressContent">
