@@ -27,10 +27,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
   val recentPayDate = Path(s"/jobs/#$dummyUUID/mostRecentPayDate")
   val tentativeRemainingPayPeriods = Path(s"/jobs/#$dummyUUID/tentativeRemainingPayPeriods")
   val remainingPayPeriods = Path(s"/jobs/#$dummyUUID/remainingPayPeriods")
-  val fractionalRemainingPayPeriods = Path(s"/jobs/#$dummyUUID/fractionalRemainingPayPeriods")
   val ordinalEffectiveEndDate = Path(s"/jobs/#$dummyUUID/ordinalEffectiveEndDate")
-
-  // TODO! Add cases where the most recent pay date is before the start date
+  val restOfYearIncome = Path(s"/jobs/#$dummyUUID/restOfYearIncome")
+  val averagePayPerPayPeriod = Path(s"/jobs/#$dummyUUID/averagePayPerPayPeriod")
 
   val weekly = Enum("weekly", "/payFrequencyOptions");
   val biWeekly = Enum("biWeekly", "/payFrequencyOptions");
@@ -47,7 +46,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "expected tentative pay periods",
       "expected effective end date",
       "expected true pay periods",
-      "expected fractional pay periods",
+      "expected rest of year income",
       "description",
     ),
     // Weekly Pay Periods
@@ -60,7 +59,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Some(13),
       Some(298),
       13,
-      Rational(91, 7),
+      1300,
       "working for a portion of the year with no eoy overlap on weekly pay",
     ),
     (
@@ -72,7 +71,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Some(46),
       Some(360),
       45,
-      Rational(315, 7),
+      4500,
       "working for a portion of the year with eoy overlap on weekly pay",
     ),
     (
@@ -84,8 +83,56 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Some(23),
       Some(354),
       21,
-      Rational(147, 7),
+      2100,
       "working for the whole year with eoy overlap on weekly pay",
+    ),
+    (
+      weekly,
+      "2025-01-01",
+      "2025-12-30",
+      "2025-06-26",
+      "2025-06-26",
+      Some(27),
+      Some(359),
+      26,
+      2600,
+      "working for part of the year with eoy overlap on weekly pay",
+    ),
+    (
+      weekly,
+      "2025-01-01",
+      "2025-05-22",
+      "2024-12-15",
+      "2025-01-05",
+      Some(23),
+      Some(145),
+      23,
+      2257.14,
+      "weekly - partial year employment, handles period end dates in prior year",
+    ),
+    (
+      weekly,
+      "2025-01-01",
+      "2025-12-31",
+      "2024-12-15",
+      "2025-01-05",
+      Some(55),
+      Some(341),
+      51,
+      5100,
+      "weekly - full year employment, handles period end dates in prior year",
+    ),
+    (
+      weekly,
+      "2025-01-01",
+      "2025-01-02",
+      "2024-12-15",
+      "2025-01-05",
+      Some(3),
+      Some(5),
+      3,
+      257.14,
+      "weekly - minimal amount worked this year but has lagging payments from prior year",
     ),
     // Biweekly Pay Periods
     (
@@ -95,9 +142,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-07-26",
       "2025-08-01",
       Some(7),
-      Some(298),
+      Some(305),
       7,
-      Rational(91, 14),
+      650,
       "working for a portion of the year with no eoy overlap on biweekly pay",
     ),
     (
@@ -109,7 +156,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Some(24),
       Some(349),
       22,
-      Rational(308, 14),
+      2200,
       "working for a portion of the year with eoy overlap on biweekly pay",
     ),
     (
@@ -121,7 +168,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Some(12),
       Some(347),
       10,
-      Rational(140, 14),
+      1000,
       "working for the whole year with eoy overlap on biweekly pay",
     ),
     // Semi Monthly Pay Periods
@@ -132,9 +179,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-02-15",
       "2025-02-19",
       None,
-      None,
+      Some(349),
       20,
-      Rational(300, 15),
+      2000,
       "working for a portion of the year with no eoy overlap on semimonthly pay",
     ),
     (
@@ -144,9 +191,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-03-18",
       "2025-03-25",
       None,
-      None,
+      Some(352),
       18,
-      Rational(282, 15),
+      1800,
       "working for a portion of the year with eoy overlap on semimonthly pay",
     ),
     (
@@ -156,9 +203,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-08-05",
       "2025-08-11",
       None,
-      None,
+      Some(354),
       9,
-      Rational(145, 15),
+      900,
       "working for the whole year with eoy overlap on semimonthly pay",
     ),
     (
@@ -168,9 +215,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-08-05",
       "2025-08-11",
       None,
-      None,
+      Some(354),
       9,
-      Rational(125, 15),
+      833.33,
       "working part of the year with eoy overlap on semimonthly pay",
     ),
     (
@@ -180,9 +227,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-12-14",
       "2025-12-15",
       None,
-      None,
+      Some(363),
       1,
-      Rational(1, 15),
+      6.67,
       "working part of the year with final payment in next period/this year on semimonthly pay",
     ),
     (
@@ -192,9 +239,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-12-14",
       "2025-12-16",
       None,
-      None,
+      Some(348),
       0,
-      Rational(0, 15),
+      0,
       "working part of the year with final payment in next period/next year on semimonthly pay",
     ),
     (
@@ -204,9 +251,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-09-30",
       "2025-10-02",
       None,
-      None,
+      Some(288),
       1,
-      Rational(15, 15),
+      100,
       "working part of the year paid in arrears across month boundary on semimonthly pay",
     ),
     (
@@ -216,10 +263,22 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-08-05",
       "2025-08-11",
       None,
-      None,
+      Some(339),
       8,
-      Rational(103, 15),
+      786.67,
       "working part of the year with one payment in final month on semimonthly pay",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-06-30",
+      "2025-05-31",
+      "2025-05-31",
+      None,
+      Some(181),
+      2,
+      200,
+      "handles end date edge case",
     ),
     (
       semiMonthly,
@@ -228,27 +287,59 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-10-31",
       "2025-10-31",
       None,
-      None,
+      Some(365),
       4,
-      Rational(59, 15),
+      393.33,
       "working part of the year with two payments in final month on semimonthly pay",
     ),
-    // See bug #428 for discussion of this test data. The 69/15 value for /fractionalRemainingPayPeriods that we called
-    // correct is based on the unwarranted assumptions that the user will be paid Dec 31, for work thru Dec 31.
-    // We can activate this test once we understand what assumptions to make, and add that logic.
-    // (Currently we compute 67/15.)
-    // (
-    //   semiMonthly,
-    //   "2025-01-01",
-    //   "2025-12-31",
-    //   "2025-10-23",
-    //   "2025-10-23",
-    //   None,
-    //   None,
-    //   4,
-    //   Rational(69, 15),
-    //   "bug 428",
-    // ),
+    (
+      semiMonthly,
+      "2025-11-01",
+      "2025-12-15",
+      "2025-11-15",
+      "2025-11-20",
+      None,
+      Some(349),
+      2,
+      200,
+      "partial year, with a gap between payment and end date",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-12-31",
+      "2025-10-23",
+      "2025-10-23",
+      None,
+      Some(357),
+      4,
+      400,
+      "bug 428",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-09-15",
+      "2025-01-15",
+      "2025-05-05",
+      None,
+      Some(242),
+      15,
+      1500,
+      "semi-monthly handles lagging pay pay date where you are limited by pay dates",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-09-16",
+      "2024-11-15",
+      "2025-01-05",
+      None,
+      Some(273),
+      21,
+      2006.67,
+      "semi-monthly handles lagging pay pay date from the previous year",
+    ),
     // Monthly Pay Periods
     (
       monthly,
@@ -257,9 +348,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-08-05",
       "2025-08-15",
       None,
-      Some(337),
+      Some(339),
       4,
-      Rational(120, 30),
+      400,
       "working for example when they have three remaining monthly pay periods",
     ),
     (
@@ -271,7 +362,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       None,
       Some(344),
       1,
-      Rational(30, 30),
+      100,
       "working for a portion of the year with eoy overlap on monthly pay",
     ),
     (
@@ -283,7 +374,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       None,
       Some(171),
       0,
-      Rational(0, 30),
+      0,
       "ends in the same pay period on monthly pay",
     ),
     (
@@ -293,10 +384,22 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-06-25",
       "2025-07-02",
       None,
-      Some(326),
+      Some(329),
       5,
-      Rational(150, 30),
-      "pay date is in future on monthly pay",
+      500,
+      "pay date is in future on monthly pay, ends last day",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-12-30",
+      "2025-06-25",
+      "2025-07-02",
+      None,
+      Some(329),
+      5,
+      500,
+      "pay date is in future on monthly pay, ends prior to last day",
     ),
     (
       monthly,
@@ -305,15 +408,86 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       "2025-01-10",
       "2025-01-10",
       None,
-      Some(53),
+      Some(69),
       2,
-      Rational(43, 30),
+      140,
       "need another paycheck to cover lag on monthly pay",
     ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-02-09",
+      "2025-01-10",
+      "2025-01-10",
+      None,
+      Some(41),
+      1,
+      100,
+      "doesn't need another paycheck to cover lag on monthly pay",
+    ),
+    (
+      monthly,
+      "2025-02-01",
+      "2025-03-31",
+      "2025-02-28",
+      "2025-02-28",
+      None,
+      Some(90),
+      1,
+      100,
+      "doesn't need another paycheck when end date day is after pay period end day",
+    ),
+    (
+      monthly,
+      "2025-02-01",
+      "2025-03-31",
+      "2025-02-28",
+      "2025-03-05",
+      None,
+      Some(90),
+      1,
+      100,
+      "doesn't need another paycheck when end date day is after pay period end day and paid after period end",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-09-15",
+      "2025-01-15",
+      "2025-03-05",
+      None,
+      Some(258),
+      8,
+      800,
+      "handles lagging pay pay date",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-09-15",
+      "2025-01-15",
+      "2025-05-05",
+      None,
+      Some(227),
+      7,
+      700,
+      "handles lagging pay pay date where you are limited by pay dates",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-09-16",
+      "2024-11-15",
+      "2025-01-05",
+      None,
+      Some(288),
+      11,
+      1003.33,
+      "handles lagging pay pay date from the previous year",
+    ),
   )
-
   test(
-    "test tentativeRemainingPayPeriods, remainingPayPeriods, fractionalRemainingPayPeriods, and ordinalEffectiveEndDate",
+    "test tentativeRemainingPayPeriods, remainingPayPeriods, restOfYearIncome and ordinalEffectiveEndDate",
   ) {
     forAll(dataTable) {
       (
@@ -325,7 +499,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
           expectedTentativePayPeriods,
           expectedEffectiveEndDate,
           expectedTruePayPeriods,
-          expectedFractionalPayPeriods,
+          expectedRestOfYearIncome,
           description,
       ) =>
         When(description)
@@ -337,11 +511,12 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
           endDate -> Day(endDateValue),
           recentPayPeriodEnd -> Day(recentPayPeriodEndValue),
           recentPayDate -> Day(recentPayDateValue),
+          averagePayPerPayPeriod -> Dollar(100),
         )
 
         val tentativePayPeriods = graph.get(tentativeRemainingPayPeriods)
         val trueRemainingPayPeriods = graph.get(remainingPayPeriods)
-        val fractRemainingPayPeriods = graph.get(fractionalRemainingPayPeriods)
+        val royIncome = graph.get(restOfYearIncome)
         val effectiveLastDay = graph.get(ordinalEffectiveEndDate)
 
         if (expectedTentativePayPeriods.isEmpty)
@@ -355,7 +530,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
           assert(effectiveLastDay.value.contains(expectedEffectiveEndDate.value))
 
         assert(trueRemainingPayPeriods.value.contains(expectedTruePayPeriods))
-        assert(fractRemainingPayPeriods.value.contains(expectedFractionalPayPeriods))
+        assert(royIncome.value.contains(expectedRestOfYearIncome))
     }
   }
 

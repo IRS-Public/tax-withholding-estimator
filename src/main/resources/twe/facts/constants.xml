@@ -16,5 +16,12 @@
         <Int>365</Int>
       </Derived>
     </Fact>
+    <Fact path="/daysInPriorYear">
+      <Description>The number of days in the prior tax year: 365 or 366.</Description>
+      <TaxYear>2024</TaxYear>
+      <Derived>
+        <Int>366</Int>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>

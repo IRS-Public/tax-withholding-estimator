@@ -1,51 +1,51 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"
   datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <start>
-    <ref name="FactDictionaryModuleContent" />
+    <ref name="FactDictionaryModuleContent"/>
   </start>
   <define name="FactDictionaryModuleContent">
     <element name="FactDictionaryModule">
-      <ref name="FactsContent" />
+      <ref name="FactsContent"/>
     </element>
   </define>
   <define name="FactsContent">
     <element name="Facts">
       <oneOrMore>
-        <ref name="FactContent" />
+        <ref name="FactContent"/>
       </oneOrMore>
     </element>
   </define>
   <define name="FactContent">
     <element name="Fact">
       <optional>
-        <ref name="NameContent" />
+        <ref name="NameContent"/>
       </optional>
       <optional>
-        <ref name="DescriptionContent" />
+        <ref name="DescriptionContent"/>
       </optional>
       <optional>
-        <ref name="ExportContent" />
+        <ref name="ExportContent"/>
       </optional>
       <optional>
-        <ref name="BlockSubmissionOnTrueContent" />
+        <ref name="BlockSubmissionOnTrueContent"/>
       </optional>
       <optional>
-        <ref name="TaxYearContent" />
+        <ref name="TaxYearContent"/>
       </optional>
       <choice>
         <group>
-          <ref name="DerivedContent" />
+          <ref name="DerivedContent"/>
           <optional>
-            <ref name="PlaceholderContent" />
+            <ref name="PlaceholderContent"/>
           </optional>
         </group>
         <group>
-          <ref name="WritableContent" />
+          <ref name="WritableContent"/>
           <optional>
-            <ref name="PlaceholderContent" />
+            <ref name="PlaceholderContent"/>
           </optional>
         </group>
-        <ref name="PlaceholderContent" />
+        <ref name="PlaceholderContent"/>
       </choice>
       <attribute name="path">
         <data type="token"></data>
@@ -62,80 +62,80 @@
   </define>
   <define name="NameContent">
     <element name="Name">
-      <text />
+      <text/>
     </element>
   </define>
   <define name="DescriptionContent">
     <element name="Description">
-      <text />
+      <text/>
     </element>
   </define>
   <define name="ExportContent">
     <element name="Export">
-      <empty />
+      <empty/>
     </element>
   </define>
   <define name="BlockSubmissionOnTrueContent">
     <element name="BlockSubmissionOnTrue">
-      <empty />
+      <empty/>
     </element>
   </define>
   <define name="TaxYearContent">
     <element name="TaxYear">
-      <text />
+      <text/>
     </element>
   </define>
   <define name="NumericContent">
     <optional>
-      <ref name="AddContent" />
+      <ref name="AddContent"/>
     </optional>
     <optional>
-      <ref name="CollectionSumContent" />
+      <ref name="CollectionSumContent"/>
     </optional>
     <optional>
-      <ref name="IntContent" />
+      <ref name="IntContent"/>
     </optional>
     <optional>
-      <ref name="DaysContent" />
+      <ref name="DaysContent"/>
     </optional>
     <optional>
-      <ref name="DollarContent" />
+      <ref name="DollarContent"/>
     </optional>
     <optional>
-      <ref name="SubtractContent" />
+      <ref name="SubtractContent"/>
     </optional>
     <optional>
-      <ref name="MultiplyContent" />
+      <ref name="MultiplyContent"/>
     </optional>
     <optional>
-      <ref name="DivideContent" />
+      <ref name="DivideContent"/>
     </optional>
     <optional>
-      <ref name="RoundContent" />
+      <ref name="RoundContent"/>
     </optional>
     <optional>
-      <ref name="RoundToIntContent" />
+      <ref name="RoundToIntContent"/>
     </optional>
     <optional>
-      <ref name="TruncateCentsContent" />
+      <ref name="TruncateCentsContent"/>
     </optional>
     <optional>
-      <ref name="RationalContent" />
+      <ref name="RationalContent"/>
     </optional>
     <optional>
-      <ref name="StepwiseMultiplyContent" />
+      <ref name="StepwiseMultiplyContent"/>
     </optional>
     <optional>
-      <ref name="MinimumContent" />
+      <ref name="MinimumContent"/>
     </optional>
     <optional>
-      <ref name="MaximumContent" />
+      <ref name="MaximumContent"/>
     </optional>
     <optional>
-      <ref name="CollectionSizeContent" />
+      <ref name="CollectionSizeContent"/>
     </optional>
     <optional>
-      <ref name="CountContent" />
+      <ref name="CountContent"/>
     </optional>
     <optional>
       <ref name="CeilingContent"></ref>
@@ -146,43 +146,43 @@
   </define>
   <define name="LogicalContent">
     <optional>
-      <ref name="IsCompleteContent" />
+      <ref name="IsCompleteContent"/>
     </optional>
     <optional>
-      <ref name="AnyContent" />
+      <ref name="AnyContent"/>
     </optional>
     <optional>
-      <ref name="EqualContent" />
+      <ref name="EqualContent"/>
     </optional>
     <optional>
-      <ref name="NotEqualContent" />
+      <ref name="NotEqualContent"/>
     </optional>
     <optional>
-      <ref name="AllContent" />
+      <ref name="AllContent"/>
     </optional>
     <optional>
-      <ref name="SwitchContent" />
+      <ref name="SwitchContent"/>
     </optional>
     <optional>
-      <ref name="GreaterOfContent" />
+      <ref name="GreaterOfContent"/>
     </optional>
     <optional>
-      <ref name="GreaterThanContent" />
+      <ref name="GreaterThanContent"/>
     </optional>
     <optional>
-      <ref name="GreaterThanOrEqualContent" />
+      <ref name="GreaterThanOrEqualContent"/>
     </optional>
     <optional>
-      <ref name="LesserOfContent" />
+      <ref name="LesserOfContent"/>
     </optional>
     <optional>
-      <ref name="LessThanContent" />
+      <ref name="LessThanContent"/>
     </optional>
     <optional>
-      <ref name="LessThanOrEqualContent" />
+      <ref name="LessThanOrEqualContent"/>
     </optional>
     <optional>
-      <ref name="EnumOptionsContainsContent" />
+      <ref name="EnumOptionsContainsContent"/>
     </optional>
     <optional>
       <ref name="NotContent"></ref>
@@ -190,154 +190,163 @@
   </define>
   <define name="CalculationContent">
     <optional>
-      <ref name="FalseContent" />
+      <ref name="FalseContent"/>
     </optional>
     <optional>
-      <ref name="TrueContent" />
+      <ref name="TrueContent"/>
     </optional>
     <optional>
-      <ref name="TodayContent" />
+      <ref name="TodayContent"/>
     </optional>
     <optional>
-      <ref name="EnumOptionsContent" />
+      <ref name="EnumOptionsContent"/>
     </optional>
     <optional>
-      <ref name="IntContent" />
+      <ref name="IntContent"/>
     </optional>
     <optional>
-      <ref name="DaysContent" />
+      <ref name="DaysContent"/>
     </optional>
     <optional>
-      <ref name="AnyContent" />
+      <ref name="AnyContent"/>
     </optional>
     <optional>
-      <ref name="EqualContent" />
+      <ref name="EqualContent"/>
     </optional>
     <optional>
-      <ref name="AllContent" />
+      <ref name="AllContent"/>
     </optional>
     <optional>
-      <ref name="SwitchContent" />
+      <ref name="SwitchContent"/>
     </optional>
     <optional>
-      <ref name="CollectionSumContent" />
+      <ref name="CollectionSumContent"/>
     </optional>
     <optional>
-      <ref name="AddContent" />
+      <ref name="AddContent"/>
     </optional>
     <optional>
-      <ref name="BankAccountContent" />
+      <ref name="AddPayrollMonthsContent"/>
     </optional>
     <optional>
-      <ref name="DollarContent" />
+      <ref name="BankAccountContent"/>
     </optional>
     <optional>
-      <ref name="SubtractContent" />
+      <ref name="DollarContent"/>
     </optional>
     <optional>
-      <ref name="GreaterOfContent" />
+      <ref name="SubtractContent"/>
     </optional>
     <optional>
-      <ref name="MultiplyContent" />
+      <ref name="GreaterOfContent"/>
     </optional>
     <optional>
-      <ref name="RoundContent" />
+      <ref name="MultiplyContent"/>
     </optional>
     <optional>
-      <ref name="RoundToIntContent" />
+      <ref name="RoundContent"/>
     </optional>
     <optional>
-      <ref name="TruncateCentsContent" />
+      <ref name="RoundToIntContent"/>
     </optional>
     <optional>
-      <ref name="GreaterThanContent" />
+      <ref name="TruncateCentsContent"/>
     </optional>
     <optional>
-      <ref name="DependencyContent" />
+      <ref name="GreaterThanContent"/>
     </optional>
     <optional>
-      <ref name="CountContent" />
+      <ref name="DependencyContent"/>
     </optional>
     <optional>
-      <ref name="StepwiseMultiplyContent" />
+      <ref name="CountContent"/>
     </optional>
     <optional>
-      <ref name="LesserOfContent" />
+      <ref name="StepwiseMultiplyContent"/>
     </optional>
     <optional>
-      <ref name="LessThanContent" />
+      <ref name="LesserOfContent"/>
     </optional>
     <optional>
-      <ref name="LessThanOrEqualContent" />
+      <ref name="LessThanContent"/>
     </optional>
     <optional>
-      <ref name="EnumOptionsContainsContent" />
+      <ref name="LessThanOrEqualContent"/>
     </optional>
     <optional>
-      <ref name="PasteContent" />
+      <ref name="EnumOptionsContainsContent"/>
     </optional>
     <optional>
-      <ref name="GreaterThanOrEqualContent" />
+      <ref name="PasteContent"/>
     </optional>
     <optional>
-      <ref name="NotContent" />
+      <ref name="GreaterThanOrEqualContent"/>
     </optional>
     <optional>
-      <ref name="FindContent" />
+      <ref name="NotContent"/>
     </optional>
     <optional>
-      <ref name="IsCompleteContent" />
+      <ref name="FindContent"/>
     </optional>
     <optional>
-      <ref name="MinimumContent" />
+      <ref name="IsCompleteContent"/>
     </optional>
     <optional>
-      <ref name="MaximumContent" />
+      <ref name="MinimumContent"/>
     </optional>
     <optional>
-      <ref name="NotEqualContent" />
+      <ref name="MaximumContent"/>
     </optional>
     <optional>
-      <ref name="EnumContent" />
+      <ref name="NotEqualContent"/>
     </optional>
     <optional>
-      <ref name="StringContent" />
+      <ref name="EnumContent"/>
     </optional>
     <optional>
-      <ref name="FilterContent" />
+      <ref name="StringContent"/>
     </optional>
     <optional>
-      <ref name="IndexOfContent" />
+      <ref name="FilterContent"/>
     </optional>
     <optional>
-      <ref name="CollectionSizeContent" />
+      <ref name="IndexOfContent"/>
     </optional>
     <optional>
-      <ref name="EnumOptionsSizeContent" />
+      <ref name="CollectionSizeContent"/>
     </optional>
     <optional>
-      <ref name="MaximumContent" />
+      <ref name="EnumOptionsSizeContent"/>
     </optional>
     <optional>
-      <ref name="DivideContent" />
+      <ref name="MaximumContent"/>
     </optional>
     <optional>
-      <ref name="RationalContent" />
+      <ref name="DivideContent"/>
     </optional>
     <optional>
-      <ref name="DayContent" />
+      <ref name="RationalContent"/>
     </optional>
     <optional>
-      <ref name="FirstNCollectionItemsContent" />
+      <ref name="DayContent"/>
     </optional>
     <optional>
-      <ref name="LengthContent" />
+      <ref name="LastDayOfMonthContent"/>
     </optional>
     <optional>
-      <ref name="StringOperationsContent" />
+      <ref name="ModuloContent"/>
     </optional>
     <optional>
-      <ref name="EinContent" />
+      <ref name="FirstNCollectionItemsContent"/>
+    </optional>
+    <optional>
+      <ref name="LengthContent"/>
+    </optional>
+    <optional>
+      <ref name="StringOperationsContent"/>
+    </optional>
+    <optional>
+      <ref name="EinContent"/>
     </optional>
     <optional>
       <ref name="CeilingContent"></ref>
@@ -348,34 +357,34 @@
   </define>
   <define name="DerivedContent">
     <element name="Derived">
-      <ref name="CalculationContent" />
+      <ref name="CalculationContent"/>
     </element>
   </define>
   <define name="EnumOptionsContent">
     <element name="EnumOptions">
       <oneOrMore>
         <optional>
-          <ref name="EnumOptionContent" />
+          <ref name="EnumOptionContent"/>
         </optional>
         <optional>
-          <ref name="StringContent" />
+          <ref name="StringContent"/>
         </optional>
       </oneOrMore>
     </element>
   </define>
   <define name="EnumOptionContent">
     <element name="EnumOption">
-      <ref name="ConditionContent" />
-      <ref name="ValueContent" />
+      <ref name="ConditionContent"/>
+      <ref name="ValueContent"/>
     </element>
   </define>
   <define name="ConditionContent">
     <element name="Condition">
       <choice>
-        <ref name="DependencyContent" />
-        <ref name="LogicalContent" />
-        <ref name="TrueContent" />
-        <ref name="FalseContent" />
+        <ref name="DependencyContent"/>
+        <ref name="LogicalContent"/>
+        <ref name="TrueContent"/>
+        <ref name="FalseContent"/>
       </choice>
     </element>
   </define>
@@ -385,28 +394,28 @@
         <data type="token"></data>
       </attribute>
       <optional>
-        <attribute name="module" />
+        <attribute name="module"/>
       </optional>
     </element>
   </define>
   <define name="NotContent">
     <element name="Not">
       <choice>
-        <ref name="DependencyContent" />
-        <ref name="LogicalContent" />
+        <ref name="DependencyContent"/>
+        <ref name="LogicalContent"/>
       </choice>
     </element>
   </define>
 
   <define name="ValueContent">
     <element name="Value">
-      <ref name="StringContent" />
+      <ref name="StringContent"/>
     </element>
   </define>
 
   <define name="StringContent">
     <element name="String">
-      <text />
+      <text/>
     </element>
   </define>
 
@@ -420,14 +429,14 @@
           </choice>
         </attribute>
       </optional>
-      <empty />
+      <empty/>
     </element>
   </define>
 
   <define name="EinContent">
     <element name="EIN">
       <optional>
-        <text />
+        <text/>
       </optional>
     </element>
   </define>
@@ -435,23 +444,23 @@
 
   <define name="IntContent">
     <element name="Int">
-      <text />
+      <text/>
     </element>
   </define>
 
   <define name="DaysContent">
     <element name="Days">
-      <text />
+      <text/>
     </element>
   </define>
   <define name="AnyContent">
     <element name="Any">
       <oneOrMore>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
         <optional>
-          <ref name="LogicalContent" />
+          <ref name="LogicalContent"/>
         </optional>
       </oneOrMore>
     </element>
@@ -459,52 +468,52 @@
 
   <define name="MultiEnumContent">
     <element name="MultiEnum">
-      <attribute name="optionsPath" />
+      <attribute name="optionsPath"/>
     </element>
   </define>
 
   <define name="OptionsContent">
     <element name="Options">
-      <ref name="DependencyContent" />
+      <ref name="DependencyContent"/>
     </element>
   </define>
   <define name="EnumValueContent">
     <element name="Value">
-      <ref name="EnumContent" />
+      <ref name="EnumContent"/>
     </element>
   </define>
   <define name="EqualContent">
     <element name="Equal">
-      <ref name="LeftContent" />
-      <ref name="RightContent" />
+      <ref name="LeftContent"/>
+      <ref name="RightContent"/>
     </element>
   </define>
   <define name="LeftContent">
     <element name="Left">
       <oneOrMore>
-        <ref name="CalculationContent" />
+        <ref name="CalculationContent"/>
       </oneOrMore>
     </element>
   </define>
   <define name="RightContent">
     <element name="Right">
-      <ref name="CalculationContent" />
+      <ref name="CalculationContent"/>
     </element>
   </define>
   <define name="EnumContent">
     <element name="Enum">
-      <text />
-      <attribute name="optionsPath" />
+      <text/>
+      <attribute name="optionsPath"/>
     </element>
   </define>
   <define name="AllContent">
     <element name="All">
       <oneOrMore>
         <optional>
-          <ref name="CalculationContent" />
+          <ref name="CalculationContent"/>
         </optional>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
       </oneOrMore>
     </element>
@@ -512,74 +521,74 @@
   </define>
   <define name="LessThanContent">
     <element name="LessThan">
-      <ref name="LeftContent" />
-      <ref name="RightContent" />
+      <ref name="LeftContent"/>
+      <ref name="RightContent"/>
     </element>
   </define>
   <define name="GreaterThanContent">
     <element name="GreaterThan">
-      <ref name="LeftContent" />
-      <ref name="RightContent" />
+      <ref name="LeftContent"/>
+      <ref name="RightContent"/>
     </element>
   </define>
   <define name="CountContent">
     <element name="Count">
       <choice>
-        <ref name="DependencyContent" />
-        <ref name="LogicalContent" />
-        <ref name="IntContent" />
+        <ref name="DependencyContent"/>
+        <ref name="LogicalContent"/>
+        <ref name="IntContent"/>
       </choice>
     </element>
   </define>
   <define name="NotEqualContent">
     <element name="NotEqual">
-      <ref name="LeftContent" />
-      <ref name="RightContent" />
+      <ref name="LeftContent"/>
+      <ref name="RightContent"/>
     </element>
   </define>
 
   <define name="GreaterThanOrEqualContent">
     <element name="GreaterThanOrEqual">
-      <ref name="LeftContent" />
-      <ref name="RightContent" />
+      <ref name="LeftContent"/>
+      <ref name="RightContent"/>
     </element>
   </define>
   <define name="LessThanOrEqualContent">
     <element name="LessThanOrEqual">
-      <ref name="LeftContent" />
-      <ref name="RightContent" />
+      <ref name="LeftContent"/>
+      <ref name="RightContent"/>
     </element>
   </define>
   <define name="EnumOptionsContainsContent">
     <element name="EnumOptionsContains">
-      <ref name="OptionsContent" />
-      <ref name="EnumValueContent" />
+      <ref name="OptionsContent"/>
+      <ref name="EnumValueContent"/>
     </element>
   </define>
   <define name="SwitchContent">
     <element name="Switch">
       <oneOrMore>
-        <ref name="CaseContent" />
+        <ref name="CaseContent"/>
       </oneOrMore>
     </element>
   </define>
   <define name="CaseContent">
     <element name="Case">
-      <ref name="WhenContent" />
-      <ref name="ThenContent" />
+      <ref name="WhenContent"/>
+      <ref name="ThenContent"/>
     </element>
   </define>
   <define name="WhenContent">
     <element name="When">
       <choice>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
         <optional>
-          <ref name="LogicalContent" />
+          <ref name="LogicalContent"/>
         </optional>
         <optional>
-          <ref name="TrueContent" />
+          <ref name="TrueContent"/>
         </optional>
       </choice>
     </element>
@@ -587,7 +596,7 @@
   <define name="ThenContent">
     <element name="Then">
       <optional>
-        <ref name="CalculationContent" />
+        <ref name="CalculationContent"/>
       </optional>
     </element>
   </define>
@@ -595,13 +604,13 @@
     <element name="BankAccount">
       <optional>
         <element name="AccountType">
-          <data type="string" />
+          <data type="string"/>
         </element>
         <element name="RoutingNumber">
-          <data type="string" />
+          <data type="string"/>
         </element>
         <element name="AccountNumber">
-          <data type="string" />
+          <data type="string"/>
         </element>
       </optional>
     </element>
@@ -609,7 +618,7 @@
   <define name="DollarContent">
     <element name="Dollar">
       <optional>
-        <data type="decimal" />
+        <data type="decimal"/>
       </optional>
     </element>
   </define>
@@ -617,29 +626,29 @@
     <element name="LesserOf">
       <oneOrMore>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
         <optional>
-          <ref name="NumericContent" />
+          <ref name="NumericContent"/>
         </optional>
         <optional>
-          <ref name="SwitchContent" />
+          <ref name="SwitchContent"/>
         </optional>
       </oneOrMore>
     </element>
   </define>
   <define name="SubtractContent">
     <element name="Subtract">
-      <ref name="MinuendContent" />
-      <ref name="SubtrahendsContent" />
+      <ref name="MinuendContent"/>
+      <ref name="SubtrahendsContent"/>
     </element>
   </define>
   <define name="MinuendContent">
     <element name="Minuend">
       <choice>
-        <ref name="NumericContent" />
-        <ref name="DependencyContent" />
-        <ref name="LogicalContent" />
+        <ref name="NumericContent"/>
+        <ref name="DependencyContent"/>
+        <ref name="LogicalContent"/>
       </choice>
     </element>
   </define>
@@ -647,10 +656,13 @@
     <element name="Subtrahends">
       <oneOrMore>
         <optional>
-          <ref name="NumericContent" />
+          <ref name="NumericContent"/>
         </optional>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
+        </optional>
+        <optional>
+          <ref name="LogicalContent"/>
         </optional>
       </oneOrMore>
     </element>
@@ -658,8 +670,8 @@
   <define name="CollectionSumContent">
     <element name="CollectionSum">
       <choice>
-        <ref name="DependencyContent" />
-        <ref name="NumericContent" />
+        <ref name="DependencyContent"/>
+        <ref name="NumericContent"/>
       </choice>
     </element>
   </define>
@@ -667,41 +679,75 @@
     <element name="Add">
       <oneOrMore>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
         <optional>
-          <ref name="NumericContent" />
+          <ref name="NumericContent"/>
         </optional>
         <optional>
-          <ref name="CountContent" />
+          <ref name="CountContent"/>
         </optional>
         <optional>
-          <ref name="LogicalContent" />
+          <ref name="LogicalContent"/>
         </optional>
       </oneOrMore>
 
     </element>
   </define>
+  <define name="AddPayrollMonthsContent">
+    <element name="AddPayrollMonths">
+      <choice>
+        <ref name="DayContent"/>
+        <ref name="DependencyContent"/>
+        <ref name="SwitchContent"/>
+      </choice>
+      <choice>
+        <ref name="CalculationContent"/>
+        <ref name="IntContent"/>
+        <ref name="DependencyContent"/>
+      </choice>
+    </element>
+  </define>
+  <define name="LastDayOfMonthContent">
+    <element name="LastDayOfMonth">
+      <choice>
+        <ref name="DayContent"/>
+        <ref name="DependencyContent"/>
+      </choice>
+    </element>
+  </define>
+  <define name="ModuloContent">
+    <element name="Modulo">
+      <choice>
+        <ref name="IntContent"/>
+        <ref name="DependencyContent"/>
+      </choice>
+      <choice>
+        <ref name="IntContent"/>
+        <ref name="DependencyContent"/>
+      </choice>
+    </element>
+  </define>
   <define name="AsDecimalStringContent">
     <element name="AsDecimalString">
       <optional>
-        <attribute name="scale" />
+        <attribute name="scale"/>
       </optional>
       <choice>
-        <ref name="RationalContent" />
-        <ref name="DependencyContent" />
+        <ref name="RationalContent"/>
+        <ref name="DependencyContent"/>
       </choice>
     </element>
   </define>
   <define name="GreaterOfContent">
     <element name="GreaterOf">
       <oneOrMore>
-        <ref name="NumericContent" />
+        <ref name="NumericContent"/>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
         <optional>
-          <ref name="LogicalContent" />
+          <ref name="LogicalContent"/>
         </optional>
       </oneOrMore>
     </element>
@@ -710,36 +756,36 @@
   <define name="ToUpperContent">
     <element name="ToUpper">
       <choice>
-        <ref name="DependencyContent" />
-        <ref name="StringOperationsContent" />
+        <ref name="DependencyContent"/>
+        <ref name="StringOperationsContent"/>
       </choice>
     </element>
   </define>
   <define name="TrimContent">
     <element name="Trim">
       <choice>
-        <ref name="DependencyContent" />
-        <ref name="StringOperationsContent" />
+        <ref name="DependencyContent"/>
+        <ref name="StringOperationsContent"/>
       </choice>
     </element>
   </define>
   <define name="AsStringContent">
     <element name="AsString">
-      <ref name="DependencyContent" />
+      <ref name="DependencyContent"/>
     </element>
   </define>
   <define name="StripCharsContent">
     <element name="StripChars">
       <element name="Input">
         <choice>
-          <ref name="DependencyContent" />
-          <ref name="StringOperationsContent" />
+          <ref name="DependencyContent"/>
+          <ref name="StringOperationsContent"/>
         </choice>
       </element>
       <element name="Allow">
         <choice>
-          <ref name="DependencyContent" />
-          <ref name="StringContent" />
+          <ref name="DependencyContent"/>
+          <ref name="StringContent"/>
         </choice>
       </element>
     </element>
@@ -747,44 +793,44 @@
   <define name="TruncateNameForMeFContent">
     <element name="TruncateNameForMeF">
       <element name="FirstName">
-        <ref name="DependencyContent" />
+        <ref name="DependencyContent"/>
       </element>
       <element name="MiddleInitial">
-        <ref name="DependencyContent" />
+        <ref name="DependencyContent"/>
       </element>
       <element name="LastName">
-        <ref name="DependencyContent" />
+        <ref name="DependencyContent"/>
       </element>
       <element name="Suffix">
-        <ref name="DependencyContent" />
+        <ref name="DependencyContent"/>
       </element>
     </element>
   </define>
   <define name="StringOperationsContent">
     <oneOrMore>
       <optional>
-        <ref name="ToUpperContent" />
+        <ref name="ToUpperContent"/>
       </optional>
       <optional>
-        <ref name="TrimContent" />
+        <ref name="TrimContent"/>
       </optional>
       <optional>
-        <ref name="AsStringContent" />
+        <ref name="AsStringContent"/>
       </optional>
       <optional>
-        <ref name="StringContent" />
+        <ref name="StringContent"/>
       </optional>
       <optional>
-        <ref name="StripCharsContent" />
+        <ref name="StripCharsContent"/>
       </optional>
       <optional>
-        <ref name="PasteContent" />
+        <ref name="PasteContent"/>
       </optional>
       <optional>
-        <ref name="TruncateNameForMeFContent" />
+        <ref name="TruncateNameForMeFContent"/>
       </optional>
       <optional>
-        <ref name="AsDecimalStringContent" />
+        <ref name="AsDecimalStringContent"/>
       </optional>
     </oneOrMore>
   </define>
@@ -793,8 +839,8 @@
   <define name="LengthContent">
     <element name="Length">
       <choice>
-        <ref name="DependencyContent" />
-        <ref name="StringOperationsContent" />
+        <ref name="DependencyContent"/>
+        <ref name="StringOperationsContent"/>
       </choice>
     </element>
   </define>
@@ -802,13 +848,13 @@
     <element name="Multiply">
       <oneOrMore>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
         <optional>
-          <ref name="NumericContent" />
+          <ref name="NumericContent"/>
         </optional>
         <optional>
-          <ref name="LogicalContent" />
+          <ref name="LogicalContent"/>
         </optional>
       </oneOrMore>
     </element>
@@ -817,13 +863,13 @@
     <element name="Maximum">
       <oneOrMore>
         <optional>
-          <ref name="NumericContent" />
+          <ref name="NumericContent"/>
         </optional>
         <optional>
-          <ref name="DollarContent" />
+          <ref name="DollarContent"/>
         </optional>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
       </oneOrMore>
     </element>
@@ -839,149 +885,149 @@
   <define name="RoundContent">
     <element name="Round">
       <choice>
-        <ref name="NumericContent" />
-        <ref name="SwitchContent" />
-        <ref name="LogicalContent" />
-        <ref name="DependencyContent" />
+        <ref name="NumericContent"/>
+        <ref name="SwitchContent"/>
+        <ref name="LogicalContent"/>
+        <ref name="DependencyContent"/>
       </choice>
     </element>
   </define>
   <define name="RoundToIntContent">
     <element name="RoundToInt">
       <choice>
-        <ref name="NumericContent" />
-        <ref name="SwitchContent" />
-        <ref name="LogicalContent" />
-        <ref name="DependencyContent" />
+        <ref name="NumericContent"/>
+        <ref name="SwitchContent"/>
+        <ref name="LogicalContent"/>
+        <ref name="DependencyContent"/>
       </choice>
     </element>
   </define>
   <define name="TruncateCentsContent">
     <element name="TruncateCents">
       <choice>
-        <ref name="NumericContent" />
-        <ref name="SwitchContent" />
-        <ref name="LogicalContent" />
-        <ref name="DependencyContent" />
+        <ref name="NumericContent"/>
+        <ref name="SwitchContent"/>
+        <ref name="LogicalContent"/>
+        <ref name="DependencyContent"/>
       </choice>
     </element>
   </define>
   <define name="StepwiseMultiplyContent">
     <element name="StepwiseMultiply">
-      <ref name="MultiplicandContent" />
-      <ref name="RateContent" />
+      <ref name="MultiplicandContent"/>
+      <ref name="RateContent"/>
     </element>
   </define>
   <define name="MultiplicandContent">
     <element name="Multiplicand">
       <optional>
-        <ref name="NumericContent" />
+        <ref name="NumericContent"/>
       </optional>
       <optional>
-        <ref name="DependencyContent" />
+        <ref name="DependencyContent"/>
       </optional>
     </element>
   </define>
 
   <define name="RateContent">
     <element name="Rate">
-      <ref name="RationalContent" />
+      <ref name="RationalContent"/>
     </element>
   </define>
   <define name="PasteContent">
     <element name="Paste">
       <optional>
-        <attribute name="sep" />
+        <attribute name="sep"/>
       </optional>
       <oneOrMore>
-        <ref name="DependencyContent" />
+        <ref name="DependencyContent"/>
       </oneOrMore>
     </element>
   </define>
   <define name="FindContent">
     <element name="Find">
-      <ref name="DependencyContent" />
-      <attribute name="path" />
+      <ref name="DependencyContent"/>
+      <attribute name="path"/>
     </element>
   </define>
   <define name="IsCompleteContent">
     <element name="IsComplete">
       <optional>
-        <ref name="DependencyContent" />
+        <ref name="DependencyContent"/>
       </optional>
       <optional>
-        <ref name="FindContent" />
+        <ref name="FindContent"/>
       </optional>
     </element>
   </define>
   <define name="MinimumContent">
     <element name="Minimum">
-      <ref name="DependencyContent" />
-      <ref name="NumericContent" />
+      <ref name="DependencyContent"/>
+      <ref name="NumericContent"/>
     </element>
   </define>
   <define name="PlaceholderContent">
     <element name="Placeholder">
       <optional>
-        <ref name="LogicalContent" />
+        <ref name="LogicalContent"/>
       </optional>
       <optional>
-        <ref name="FalseContent" />
+        <ref name="FalseContent"/>
       </optional>
 
       <optional>
-        <ref name="TrueContent" />
+        <ref name="TrueContent"/>
       </optional>
       <optional>
-        <ref name="DependencyContent" />
+        <ref name="DependencyContent"/>
       </optional>
       <optional>
-        <ref name="DollarContent" />
+        <ref name="DollarContent"/>
       </optional>
     </element>
   </define>
   <define name="FalseContent">
     <element name="False">
-      <empty />
+      <empty/>
     </element>
   </define>
 
   <define name="TrueContent">
     <element name="True">
-      <empty />
+      <empty/>
     </element>
   </define>
   <define name="TodayContent">
     <element name="Today">
 
-      <ref name="DependencyContent" />
+      <ref name="DependencyContent"/>
     </element>
   </define>
   <define name="WritableContent">
     <element name="Writable">
       <interleave>
         <choice>
-          <ref name="AddressContent" />
-          <ref name="PINContent" />
-          <ref name="IPPINContent" />
-          <ref name="PhoneNumberContent" />
-          <ref name="EmailAddressContent" />
-          <ref name="EnumContent" />
-          <ref name="BooleanContent" />
-          <ref name="BankAccountContent" />
-          <ref name="DollarContent" />
-          <ref name="CollectionContent" />
-          <ref name="StringContent" />
-          <ref name="DayContent" />
-          <ref name="CollectionItemContent" />
-          <ref name="TinContent" />
-          <ref name="EinContent" />
-          <ref name="IntContent" />
-          <ref name="MultiEnumContent" />
+          <ref name="AddressContent"/>
+          <ref name="PINContent"/>
+          <ref name="IPPINContent"/>
+          <ref name="PhoneNumberContent"/>
+          <ref name="EmailAddressContent"/>
+          <ref name="EnumContent"/>
+          <ref name="BooleanContent"/>
+          <ref name="BankAccountContent"/>
+          <ref name="DollarContent"/>
+          <ref name="CollectionContent"/>
+          <ref name="StringContent"/>
+          <ref name="DayContent"/>
+          <ref name="CollectionItemContent"/>
+          <ref name="TinContent"/>
+          <ref name="EinContent"/>
+          <ref name="IntContent"/>
+          <ref name="MultiEnumContent"/>
         </choice>
         <optional>
           <oneOrMore>
-            <ref name="LimitContent" />
+            <ref name="LimitContent"/>
           </oneOrMore>
         </optional>
       </interleave>
@@ -989,40 +1035,40 @@
   </define>
   <define name="AddressContent">
     <element name="Address">
-      <empty />
+      <empty/>
     </element>
   </define>
   <define name="PINContent">
     <element name="PIN">
-      <empty />
+      <empty/>
     </element>
   </define>
   <define name="IPPINContent">
     <element name="IPPIN">
-      <empty />
+      <empty/>
     </element>
   </define>
   <define name="PhoneNumberContent">
     <element name="PhoneNumber">
-      <empty />
+      <empty/>
     </element>
   </define>
   <define name="EmailAddressContent">
     <element name="EmailAddress">
-      <empty />
+      <empty/>
     </element>
   </define>
   <define name="BooleanContent">
     <element name="Boolean">
-      <empty />
+      <empty/>
     </element>
   </define>
   <define name="CollectionContent">
     <element name="Collection">
       <optional>
         <choice>
-          <ref name="DependencyContent" />
-          <ref name="FilterContent" />
+          <ref name="DependencyContent"/>
+          <ref name="FilterContent"/>
         </choice>
       </optional>
     </element>
@@ -1030,82 +1076,82 @@
   <define name="LimitContent">
     <element name="Limit">
       <choice>
-        <ref name="IntContent" />
-        <ref name="DollarContent" />
-        <ref name="StringContent" />
-        <ref name="DayContent" />
+        <ref name="IntContent"/>
+        <ref name="DollarContent"/>
+        <ref name="StringContent"/>
+        <ref name="DayContent"/>
       </choice>
-      <attribute name="type" />
+      <attribute name="type"/>
     </element>
   </define>
   <define name="DayContent">
     <element name="Day">
-      <text />
+      <text/>
     </element>
   </define>
   <define name="CollectionItemContent">
     <element name="CollectionItem">
-      <attribute name="collection" />
+      <attribute name="collection"/>
     </element>
   </define>
   <define name="FilterContent">
     <element name="Filter">
-      <attribute name="path" />
+      <attribute name="path"/>
       <optional>
-        <ref name="DependencyContent" />
+        <ref name="DependencyContent"/>
       </optional>
       <optional>
-        <ref name="LogicalContent" />
+        <ref name="LogicalContent"/>
       </optional>
     </element>
   </define>
   <define name="IndexOfContent">
     <element name="IndexOf">
-      <ref name="CollectionContent" />
-      <ref name="IndexContent" />
+      <ref name="CollectionContent"/>
+      <ref name="IndexContent"/>
     </element>
   </define>
   <define name="IndexContent">
     <element name="Index">
-      <ref name="IntContent" />
+      <ref name="IntContent"/>
     </element>
   </define>
   <define name="CollectionSizeContent">
     <element name="CollectionSize">
       <choice>
-        <ref name="DependencyContent" />
-        <ref name="FilterContent" />
+        <ref name="DependencyContent"/>
+        <ref name="FilterContent"/>
       </choice>
     </element>
   </define>
   <define name="FirstNCollectionItemsContent">
     <element name="FirstNCollectionItems">
-      <ref name="CollectionContent" />
-      <ref name="CountContent" />
+      <ref name="CollectionContent"/>
+      <ref name="CountContent"/>
     </element>
   </define>
   <define name="EnumOptionsSizeContent">
     <element name="EnumOptionsSize">
-      <ref name="DependencyContent" />
+      <ref name="DependencyContent"/>
     </element>
   </define>
   <define name="DivideContent">
     <element name="Divide">
-      <ref name="DividendContent" />
-      <ref name="DivisorContent" />
+      <ref name="DividendContent"/>
+      <ref name="DivisorContent"/>
     </element>
   </define>
   <define name="DividendContent">
     <element name="Dividend">
       <oneOrMore>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
         <optional>
-          <ref name="NumericContent" />
+          <ref name="NumericContent"/>
         </optional>
         <optional>
-          <ref name="LogicalContent" />
+          <ref name="LogicalContent"/>
         </optional>
       </oneOrMore>
     </element>
@@ -1114,13 +1160,13 @@
     <element name="Divisors">
       <oneOrMore>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
         <optional>
-          <ref name="NumericContent" />
+          <ref name="NumericContent"/>
         </optional>
         <optional>
-          <ref name="LogicalContent" />
+          <ref name="LogicalContent"/>
         </optional>
       </oneOrMore>
     </element>
@@ -1129,13 +1175,13 @@
     <element name="Ceiling">
       <oneOrMore>
         <optional>
-          <ref name="NumericContent" />
+          <ref name="NumericContent"/>
         </optional>
         <optional>
-          <ref name="DollarContent" />
+          <ref name="DollarContent"/>
         </optional>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
       </oneOrMore>
     </element>
@@ -1144,13 +1190,13 @@
     <element name="Floor">
       <oneOrMore>
         <optional>
-          <ref name="NumericContent" />
+          <ref name="NumericContent"/>
         </optional>
         <optional>
-          <ref name="DollarContent" />
+          <ref name="DollarContent"/>
         </optional>
         <optional>
-          <ref name="DependencyContent" />
+          <ref name="DependencyContent"/>
         </optional>
       </oneOrMore>
     </element>
