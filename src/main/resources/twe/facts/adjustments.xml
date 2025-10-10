@@ -50,6 +50,22 @@
         <Dollar/>
       </Writable>
     </Fact>
+    <Fact path="/actualSelfEmploymentHealthInsuranceDeduction">
+      <Description>Self-employed health insurance deduction</Description>
+      <Override>
+        <Condition>
+          <Not>
+            <Dependency path="/hasSelfEmploymentIncome"/>
+          </Not>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
     <Fact path="/actualBusinessCreditsForEligible">
       <Description>Business credits for reservists, performing artists, and fee-based government
         officials</Description>
@@ -86,6 +102,7 @@
             <Dependency path="/actualAlimonyPaid"/>
             <Dependency path="/actualPenaltyForEarlySavingsWithdrawal"/>
             <Dependency path="/actualBusinessCreditsForEligible"/>
+            <Dependency path="/actualSelfEmploymentHealthInsuranceDeduction"/>
             <Dependency path="/selfEmployedRetirementPlanDeduction"/>
           </Add>
         </Round>
