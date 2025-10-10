@@ -5067,6 +5067,18 @@
         <Dollar/>
       </Writable>
     </Fact>
+    <Fact path="/hasSelfEmploymentIncome">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/netSelfEmploymentIncome"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
     <Fact path="/selfEmploymentLineBCalculation">
       <Description>Specific calculation on line 5b of Schedule SE (Form 1040) to multiply net self
         employment income by 92.35%.</Description>

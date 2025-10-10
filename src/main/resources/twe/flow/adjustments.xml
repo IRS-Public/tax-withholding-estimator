@@ -52,6 +52,11 @@
         </question>
         <input type="dollar"/>
       </fg-set>
+      <h2 condition="/hasSelfEmploymentIncome" operator="isTrue">Self-employed retirement plan deduction</h2>
+      <fg-set path="/selfEmployedRetirementPlanDeduction" if-true="/hasSelfEmploymentIncome">
+        <question>Self-employed retirement plan deduction</question>
+        <input type="dollar"/>
+      </fg-set>
       <h2>Your adjusted gross income:</h2>
       <p>
         <fg-show path="/agi"/>

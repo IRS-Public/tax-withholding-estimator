@@ -57,6 +57,22 @@
         <Dollar/>
       </Writable>
     </Fact>
+    <Fact path="/selfEmployedRetirementPlanDeduction">
+      <Description>Self-employed contributions to eligible retirement plans.</Description>
+      <Override>
+        <Condition>
+          <Not>
+            <Dependency path="/hasSelfEmploymentIncome"/>
+          </Not>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
     <Fact path="/adjustmentsToIncome">
       <Description>Adjustments to income to report on line 10 of Form 1040 and line 26 of Schedule.</Description>
       <Derived>
@@ -70,6 +86,7 @@
             <Dependency path="/actualAlimonyPaid"/>
             <Dependency path="/actualPenaltyForEarlySavingsWithdrawal"/>
             <Dependency path="/actualBusinessCreditsForEligible"/>
+            <Dependency path="/selfEmployedRetirementPlanDeduction"/>
           </Add>
         </Round>
       </Derived>
