@@ -48,11 +48,12 @@
               <All>
                 <Dependency path="/isFilingStatusMFJ"/>
                 <GreaterThan>
+                  <!--                  Compare against itemizedDeductionTotal because itemizedDeduction creates a circular dependency with OB3 deductions-->
                   <Left>
                     <Dependency path="/standardDeduction"/>
                   </Left>
                   <Right>
-                    <Dependency path="/itemizedDeduction"/>
+                    <Dependency path="/itemizedDeductionTotal"/>
                   </Right>
                 </GreaterThan>
               </All>
@@ -75,7 +76,7 @@
                     <Dependency path="/standardDeduction"/>
                   </Left>
                   <Right>
-                    <Dependency path="/itemizedDeduction"/>
+                    <Dependency path="/itemizedDeductionTotal"/>
                   </Right>
                 </GreaterThan>
               </All>

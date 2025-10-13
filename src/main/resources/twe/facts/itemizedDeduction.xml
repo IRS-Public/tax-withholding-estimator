@@ -3,7 +3,26 @@
 <FactDictionaryModule>
   <Facts>
     <Fact path="/itemizedDeduction">
-      <Name>Itemized Deduction</Name>
+      <Name>Itemized deductions</Name>
+      <Description>Total amount of itemized deductions minus 2/37 of the excess taxable income of
+        the top tax bracket. For taxpayers not in that bracket, the excess will be $0.
+        estimated itemized deductions</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/itemizedDeductionTotal"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/amountOfItemizedDeductionsToSubtract"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/itemizedDeductionTotal">
+      <Name>Total amount of itemized deductions</Name>
+      <Description>Total amount of itemized deductions that the taxpayer estimates for this tax
+        year. There are edge cases for taxpayers in the highest tax bracket that must apply before
+        we calculate the final amount of itemized deductions</Description>
       <Derived>
         <Add>
           <Dependency path="/qualifiedMortgageInterestTotal"/>
@@ -14,6 +33,32 @@
           <Dependency path="/casualtyLossesTotal"/>
           <Dependency path="/otherDeductionsTotal"/>
         </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/amountOfItemizedDeductionsToSubtract">
+      <Description>OB3 70111 adding: IRC Section 68:
+        (a) In general In the case of an individual, the
+        amount of the itemized deductions otherwise allowable for the taxable year (determined
+        without regard to this section) shall be reduced by 2&#x2044;37 of the lesser of
+        (1) such amount of
+        itemized deductions, or
+        (2) so much of the taxable income of the taxpayer for the taxable
+        year (determined without regard to this section and increased by such amount of itemized
+        deductions) as exceeds the dollar amount at which the 37 percent rate bracket under section
+        1 begins with respect to the taxpayer.</Description>
+      <Derived>
+        <Round>
+          <GreaterOf>
+            <Dollar>0</Dollar>
+            <Multiply>
+              <LesserOf>
+                <Dependency path="/excessTaxableIncomeOverTopTaxRate"/>
+                <Dependency path="/itemizedDeductionTotal"/>
+              </LesserOf>
+              <Rational>2/37</Rational>
+            </Multiply>
+          </GreaterOf>
+        </Round>
       </Derived>
     </Fact>
     <Fact path="/qualifiedMortgageInterest">
@@ -136,22 +181,60 @@
     <Fact path="/qualifiedMortgageInterestTotal">
       <Description>Total of all /qualifiedMortgageInterest</Description>
       <Derived>
-        <CollectionSum>
-          <Dependency path="/qualifiedMortgageInterest/*/interest"/>
-        </CollectionSum>
+        <Switch>
+          <Case>
+            <When>
+              <IsComplete>
+                <Dependency path="/qualifiedMortgageInterest"/>
+              </IsComplete>
+            </When>
+            <Then>
+              <CollectionSum>
+                <Dependency path="/qualifiedMortgageInterest/*/interest"/>
+              </CollectionSum>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/qualifiedInvestmentInterestExpensesTotal">
       <Description>Total of all /qualifiedInvestmentInterestExpenses items </Description>
       <Derived>
-        <CollectionSum>
-          <Dependency path="/qualifiedInvestmentInterestExpenses/*/expense"/>
-        </CollectionSum>
+        <Switch>
+          <Case>
+            <When>
+              <IsComplete>
+                <Dependency path="/qualifiedInvestmentInterestExpenses"/>
+              </IsComplete>
+            </When>
+            <Then>
+              <CollectionSum>
+                <Dependency path="/qualifiedInvestmentInterestExpenses/*/expense"/>
+              </CollectionSum>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/stateAndLocalTaxPaymentsApplicableLimitationAmount">
       <Name>SALT tax payment applicable limitation amount</Name>
-      <Description>Maximum ammount that can be itemized for SALT</Description>
+      <Description>Maximum amount that can be itemized for SALT</Description>
       <TaxYear>2025</TaxYear>
       <Derived>
         <Dollar>40000</Dollar>
@@ -163,6 +246,18 @@
       <TaxYear>2025</TaxYear>
       <Derived>
         <Switch>
+          <Case>
+            <When>
+              <Not>
+                <IsComplete>
+                  <Dependency path="/stateAndLocalTaxPayments"/>
+                </IsComplete>
+              </Not>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
           <Case>
             <When>
               <GreaterThan>
@@ -197,9 +292,28 @@
       <Name>Total of all medical and dental expenses </Name>
       <Description>Aggregated total of all medical and dental expense items </Description>
       <Derived>
-        <CollectionSum>
-          <Dependency path="/medicalAndDentalExpenses/*/expense"/>
-        </CollectionSum>
+        <Switch>
+          <Case>
+            <When>
+              <IsComplete>
+                <Dependency path="/medicalAndDentalExpenses"/>
+              </IsComplete>
+            </When>
+            <Then>
+              <CollectionSum>
+                <Dependency path="/medicalAndDentalExpenses/*/expense"/>
+              </CollectionSum>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/charitableContributionsTotal">
@@ -242,27 +356,84 @@
       <Name>Total of all charitable contributions </Name>
       <Description>Total of all /charitableContributions items </Description>
       <Derived>
-        <CollectionSum>
-          <Dependency path="/charitableContributions/*/contribution"/>
-        </CollectionSum>
+        <Switch>
+          <Case>
+            <When>
+              <IsComplete>
+                <Dependency path="/charitableContributions"/>
+              </IsComplete>
+            </When>
+            <Then>
+              <CollectionSum>
+                <Dependency path="/charitableContributions/*/contribution"/>
+              </CollectionSum>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/casualtyLossesTotal">
       <Name>Total of all casualty loss items </Name>
       <Description>Total of all /casualtyLosses items </Description>
       <Derived>
-        <CollectionSum>
-          <Dependency path="/casualtyLosses/*/loss"/>
-        </CollectionSum>
+        <Switch>
+          <Case>
+            <When>
+              <IsComplete>
+                <Dependency path="/casualtyLosses"/>
+              </IsComplete>
+            </When>
+            <Then>
+              <CollectionSum>
+                <Dependency path="/casualtyLosses/*/loss"/>
+              </CollectionSum>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/otherDeductionsTotal">
       <Name> Total of all other itemized deductions </Name>
       <Description>Total of all /otherDeductions items </Description>
       <Derived>
-        <CollectionSum>
-          <Dependency path="/otherDeductions/*/payment"/>
-        </CollectionSum>
+        <Switch>
+          <Case>
+            <When>
+              <IsComplete>
+                <Dependency path="/otherDeductions"/>
+              </IsComplete>
+            </When>
+            <Then>
+              <CollectionSum>
+                <Dependency path="/otherDeductions/*/payment"/>
+              </CollectionSum>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
   </Facts>

@@ -55,7 +55,7 @@
         <input type="dollar"/>
       </fg-set>
       <h2> Credit for contributions of individuals to scholarship granting organizations</h2>
-      <fg-set path="/actualContributionsScholarshipGrantingOrganizationsCreditAmount">
+      <fg-set path="/contributionsScholarshipGrantingOrganizationsAmount">
         <question>
           How much Adoption tax Credit do you expect to claim this year?
         </question>

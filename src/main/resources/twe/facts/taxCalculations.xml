@@ -263,7 +263,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $96,950 but not over $206,700: $11,157 plus 22% of the excess over $96,950 -->
+                  <!-- Over $96,950 but not over $206,700: $11,157 plus 22% of the excess over
+                  $96,950 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -292,7 +293,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $206,700 but not over $394,600: $35,302 plus 24% of the excess over $206,700  -->
+                  <!-- Over $206,700 but not over $394,600: $35,302 plus 24% of the excess over
+                  $206,700  -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -321,7 +323,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $394,600 but not over $501,050: $80,398 plus 32% of the excess over $394,600  -->
+                  <!-- Over $394,600 but not over $501,050: $80,398 plus 32% of the excess over
+                  $394,600  -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -350,7 +353,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $501,050 but not over $751,600: $114,462 plus 35% of the excess over $501,050  -->
+                  <!-- Over $501,050 but not over $751,600: $114,462 plus 35% of the excess over
+                  $501,050  -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -466,7 +470,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $64,850 but not over $103,350: $7,442 plus 22% of the excess over $64,850  -->
+                  <!-- Over $64,850 but not over $103,350: $7,442 plus 22% of the excess over
+                  $64,850  -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -495,7 +500,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $103,350 but not over $197,300: $15,912 plus 24% of the excess over $103,350 -->
+                  <!-- Over $103,350 but not over $197,300: $15,912 plus 24% of the excess over
+                  $103,350 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -524,7 +530,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $197,300 but not over $250,500: $38,460 plus 32% of the excess over $197,300 -->
+                  <!-- Over $197,300 but not over $250,500: $38,460 plus 32% of the excess over
+                  $197,300 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -553,7 +560,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $250,500 but not over $626,350: $55,484 plus 35% of the excess over $250,500 -->
+                  <!-- Over $250,500 but not over $626,350: $55,484 plus 35% of the excess over
+                  $250,500 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -640,7 +648,8 @@
                       </Multiply>
                     </Then>
                   </Case>
-                  <!-- Over $11,925 but not over $48,475: $1,192.50 plus 12% of the excess over $11,925 -->
+                  <!-- Over $11,925 but not over $48,475: $1,192.50 plus 12% of the excess over
+                  $11,925 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -669,7 +678,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $48,475 but not over $103,350: $5,578.50 plus 22% of the excess over $48,475 -->
+                  <!-- Over $48,475 but not over $103,350: $5,578.50 plus 22% of the excess over
+                  $48,475 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -698,7 +708,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $103,350 but not over $197,300: $17,651 plus 24% of the excess over $103,350 -->
+                  <!-- Over $103,350 but not over $197,300: $17,651 plus 24% of the excess over
+                  $103,350 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -727,7 +738,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $197,300 but not over $250,525: $40,199 plus 32% of the excess over $197,300 -->
+                  <!-- Over $197,300 but not over $250,525: $40,199 plus 32% of the excess over
+                  $197,300 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -756,7 +768,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $250,525 but not over $626,350: $57,231 plus 35% of the excess over $250,525 -->
+                  <!-- Over $250,525 but not over $626,350: $57,231 plus 35% of the excess over
+                  $250,525 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -843,7 +856,8 @@
                       </Multiply>
                     </Then>
                   </Case>
-                  <!-- Over $11,925 but not over $48,475: $1,192.50 plus 12% of the excess over $11,925 -->
+                  <!-- Over $11,925 but not over $48,475: $1,192.50 plus 12% of the excess over
+                  $11,925 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -872,7 +886,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $48,475 but not over $103,350: $5,578.50 plus 22% of the excess over $48,475 -->
+                  <!-- Over $48,475 but not over $103,350: $5,578.50 plus 22% of the excess over
+                  $48,475 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -901,7 +916,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $103,350 but not over $197,300: $17,651 plus 24% of the excess over $103,350 -->
+                  <!-- Over $103,350 but not over $197,300: $17,651 plus 24% of the excess over
+                  $103,350 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -930,7 +946,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $197,300 but not over $250,525: $40,199 plus 32% of the excess over $197,300 -->
+                  <!-- Over $197,300 but not over $250,525: $40,199 plus 32% of the excess over
+                  $197,300 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -959,7 +976,8 @@
                       </Add>
                     </Then>
                   </Case>
-                  <!-- Over $250,525 but not over $375,800: $57,231 plus 35% of the excess over $250,525 -->
+                  <!-- Over $250,525 but not over $375,800: $57,231 plus 35% of the excess over
+                  $250,525 -->
                   <Case>
                     <When>
                       <LessThanOrEqual>
@@ -1025,7 +1043,8 @@
       </Derived>
     </Fact>
     <Fact path="/totalOwed">
-      <Description>Estimated total taxes owed. The tax liability minus the total credits and total advance payments made during the tax year.
+      <Description>Estimated total taxes owed. The tax liability minus the total credits and total
+        advance payments made during the tax year.
       </Description>
       <Derived>
         <Subtract>
@@ -1049,6 +1068,83 @@
             <Dependency path="/totalCredits"/>
           </Subtrahends>
         </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/topTaxRateBracketThresholdByFilingStatus">
+      <Description> Threshold at which the top tax bracket (37%) applies by filing status
+      </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <!-- MFJ or QSS -->
+            <When>
+              <Any>
+                <Dependency path="/isFilingStatusMFJ"/>
+                <Dependency path="/isFilingStatusQSS"/>
+              </Any>
+            </When>
+            <Then>
+              <Dollar>751600</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <!-- Single or HoH -->
+            <When>
+              <Any>
+                <Dependency path="/isFilingStatusSingle"/>
+                <Dependency path="/isFilingStatusHOH"/>
+              </Any>
+            </When>
+            <Then>
+              <Dollar>626350</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <!-- MFS -->
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dollar>375800</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/taxableIncomeExcludingItemizedDeductions">
+      <Description>Taxable income for calculating itemized deduction cap for itemizers. By default excludes standard deduction because the taxpayer
+        is itemizing, as well as itemized deduction to avoid circular dependency.</Description>
+      <Derived>
+        <Round>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/agi"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/qualifiedBusinessIncomeDeduction"/>
+              <Dependency path="/oB3Deductions"/>
+            </Subtrahends>
+          </Subtract>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/excessTaxableIncomeOverTopTaxRate">
+      <Description> Excess taxable income over the 37% tax rate. Different brackets apply depending
+        on filing status
+      </Description>
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/taxableIncomeExcludingItemizedDeductions"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/topTaxRateBracketThresholdByFilingStatus"/>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
       </Derived>
     </Fact>
   </Facts>
