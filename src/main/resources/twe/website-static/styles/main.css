@@ -11,6 +11,7 @@
 /* Components */
 @import "components/accordions.css";
 @import "components/alerts.css";
+@import "components/details.css";
 @import "components/fg-collections.css";
 @import "components/fg-section-gates.css";
 @import "components/forms.css";

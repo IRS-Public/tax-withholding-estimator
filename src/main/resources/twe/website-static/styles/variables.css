@@ -87,6 +87,13 @@
   --emergency: #9c3d10;
   --emergency-dark: #332d29;
 
+ /* System colors
+    - Based off: https://designsystem.digital.gov/design-tokens/color/system-tokens/
+    - Taking only the ones we need for now
+  */
+  --blue-40v: #2491ff;
+  --gray-10: #e6e6e6;
+
   /* Spacing
   - Based https://designsystem.digital.gov/design-tokens/spacing-units/
   - Uses rem for consistency with font sizes and to allow for easy scaling
