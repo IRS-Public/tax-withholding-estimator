@@ -43,6 +43,10 @@
   right: 0;
 }
 
+.usa-modal__content {
+  display: block
+}
+
 ::backdrop {
   animation: fadeIn .15s ease-in forwards;
   background-color: rgba(0,0,0,.7);

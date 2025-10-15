@@ -1,7 +1,7 @@
 <dialog th:id="${modalId}" class="usa-modal--dialog" closedby="any">
   <div class="usa-modal__content">
     <div class="usa-modal__main">
-      <h1 class="usa-modal__heading"  th:id="#{${modalId}-heading}" th:utext="#{${modalHeading}}"></h1>
+      <h1 class="usa-modal__heading" th:id="#{${modalId}-heading}" th:utext="${modalHeading}"></h1>
       <button
         type="button"
         class="usa-button usa-modal__close"
@@ -12,14 +12,15 @@
           <use href="/resources/uswds-3.13.0/img/sprite.svg#close"></use>
         </svg>
       </button>
-    </button>
-    <div class="usa-prose usa-modal__content" th:utext="#{${modalContent}}">
+    <div class="usa-prose usa-modal__content" th:utext="${modalContent}"></div>
 
-    </div>
     <div class="usa-modal__footer">
         <ul class="usa-button-group">
           <li class="usa-button-group__item">
-            <button type="button" class="usa-button" th:utext="#{components.modal.ok}" data-close-modal>
+            <button type="button"
+                    class="usa-button"
+                    th:text="#{components.modal.ok}"
+                    data-close-modal>
               Close
             </button>
           </li>

@@ -1,3 +1,32 @@
+class ModalLink extends HTMLElement {
+  connectedCallback() {
+    this.modalId = this.getAttribute('for')
+
+    const link = document.createElement('a')
+    link.classList.add('usa-link')
+    link.href = '#' + this.modalId
+    link.text = this.innerText
+    link.addEventListener('click', (event) => this.onclick(event))
+
+    this.replaceChildren(link)
+  }
+
+  onclick(event) {
+    event.preventDefault()
+    const modal = document.getElementById(this.modalId)
+    if (!modal) {
+      console.warn(`No modal found for ${this.modalId}`)
+    } else {
+      const currentVerticalScroll = window.scrollY
+      modal.showModal()
+      document.body.classList.add("usa-js-modal--active")
+      window.scrollTo(0, currentVerticalScroll)
+      trapFocus(modal)
+    }
+  }
+}
+customElements.define('modal-link', ModalLink)
+
 // Trap focus utility function
 function trapFocus(element) {
   const focusableEls = element.querySelectorAll(
@@ -39,25 +68,8 @@ function trapFocus(element) {
   };
 }
 
-
 const modals = document.querySelectorAll('.usa-modal--dialog');
-const showModalButtons = document.querySelectorAll('a[href^="#modal-"], button[data-open-modal]');
 const closeModalButtons = document.querySelectorAll('[data-close-modal]');
-
-showModalButtons.forEach((button) => {
-  button.addEventListener('click', (event) => {
-    event.preventDefault();
-    const modalId = button.getAttribute('href') ? button.getAttribute('href').substring(1) : button.getAttribute('data-open-modal');
-    const modal = document.getElementById(modalId);
-    if (modal) {
-      const currentVerticalScroll = window.scrollY;
-      modal.showModal();
-      document.body.classList.add("usa-js-modal--active");
-      window.scrollTo(0, currentVerticalScroll);
-      trapFocus(modal);
-    }
-  })
-});
 
 closeModalButtons.forEach((button) => {
   button.addEventListener('click', () => {

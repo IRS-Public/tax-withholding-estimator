@@ -17,6 +17,9 @@
           <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
         </input>
       </fg-set>
+      <p>
+        Test modal: <modal-link for="modal-filing-status">Learn more about filing status</modal-link>.
+      </p>
       <fg-set path="/isMFSLivedTogether" if-true="/isFilingStatusMFS">
         <question>Did you and your spouse live together in 2025?</question>
         <input type="boolean"/>
@@ -59,5 +62,15 @@
         <button class="usa-button usa-button--outline" type="reset">Start over</button>
       </fg-reset>
     </section>
+    <modal-dialog id="modal-filing-status">
+      <modal-heading>Heading</modal-heading>
+      <modal-content>
+        <p>Test paragrah</p>
+        <ul>
+          <li>Item 1</li>
+          <li>Item 2</li>
+        </ul>
+      </modal-content>
+    </modal-dialog>
   </page>
 </FlowConfigModule>

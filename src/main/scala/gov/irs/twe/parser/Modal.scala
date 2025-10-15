@@ -1,17 +1,18 @@
 package gov.irs.twe.parser
+import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
 
 case class Modal(
     id: String,
-    modalHeadingKey: String,
-    modalContentKey: String,
+    modalHeading: String,
+    modalContent: String,
 ) {
   def html(templateEngine: TweTemplateEngine): String = {
     val context = new Context()
     context.setVariable("modalId", this.id)
-    context.setVariable("modalHeading", modalHeadingKey)
-    context.setVariable("modalContent", modalContentKey)
+    context.setVariable("modalHeading", modalHeading)
+    context.setVariable("modalContent", modalContent)
 
     templateEngine.process("nodes/modal-dialog", context)
   }
@@ -20,9 +21,15 @@ case class Modal(
 object Modal {
   def parse(node: xml.Node): Modal = {
     val id = node \@ "id"
-    val modalHeadingKey = node \ "modal-heading" \@ "content-key"
-    val modalContentKey = node \ "modal-content" \@ "content-key"
+    if (id == null) { throw InvalidFormConfig(s"Modal is missing an ID") }
 
-    Modal(id, modalHeadingKey, modalContentKey)
+    val modalHeadingNode = (node \ "modal-heading").head
+    if (modalHeadingNode.isEmpty) { throw InvalidFormConfig(s"Modal $id is missing a heading") }
+
+    val modalContentNode = (node \ "modal-content").head
+    if (modalContentNode.isEmpty) { throw InvalidFormConfig(s"Modal $id is missing content") }
+    val modalContent = modalContentNode.child.mkString
+
+    Modal(id, modalHeadingNode.text, modalContent)
   }
 }

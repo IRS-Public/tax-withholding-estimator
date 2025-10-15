@@ -7,8 +7,6 @@ import io.circe.yaml.Printer
 import scala.io.Source
 import scala.util.matching.Regex
 
-// Regex to match modal-link tags like <modal-link for="modal-name">text</modal-link>
-private val modalTagPattern: Regex = """<modal-link\s+for="([^"]+)">(.*?)</modal-link>""".r
 // This is in /target for now, but I will figure out an idiomatic place for it to go where we can commit it.
 // It isn't in /resources because that triggers a rebuild loop.
 private val generatedFlowContentPath = os.pwd / "target" / s"flow_en.yaml"
@@ -68,17 +66,7 @@ private def GetValueFromLocaleJson(key: String, content: Json): Option[Json] = {
   val cursor = content.hcursor.downFields(keyParts.head, keyParts.tail*)
 
   cursor.as[String] match {
-    case Right(str) => Some(Json.fromString(convertModalTags(str)))
+    case Right(str) => Some(Json.fromString(str))
     case Left(_)    => cursor.focus
   }
 }
-
-private def convertModalTags(text: String): String =
-  modalTagPattern.replaceAllIn(
-    text,
-    m => {
-      val modalName = m.group(1)
-      val linkText = m.group(2)
-      s"""<a class="usa-link" href="#$modalName">$linkText</a>"""
-    },
-  )

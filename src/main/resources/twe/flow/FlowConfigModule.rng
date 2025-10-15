@@ -31,23 +31,24 @@
         </attribute>
         </optional>
         <element name="section">
-            <ref name="FlowConfigModuleContent"/>
+          <ref name="FlowConfigModuleContent"/>
         </element>
         <zeroOrMore>
           <element name="modal-dialog">
             <attribute name="id">
               <text/>
             </attribute>
-              <element name="modal-heading">
-                <attribute name="content-key">
-                  <text />
-                </attribute>
-              </element>
-              <element name="modal-content">
-                <attribute name="content-key">
-                  <text />
-                </attribute>
-              </element>
+            <element name="modal-heading">
+              <ref name="FlowConfigModuleInlineContent"/>
+            </element>
+            <element name="modal-content">
+              <oneOrMore>
+                <choice>
+                  <ref name="HtmlBlockContent"/>
+                  <ref name="FlowConfigModuleInlineContent"/>
+                </choice>
+              </oneOrMore>
+            </element>
           </element>
         </zeroOrMore>
       </element>
@@ -246,6 +247,15 @@
     </element>
   </define>
 
+  <define name="modal-link-module">
+    <element name="modal-link">
+      <attribute name="for">
+          <data type="anyURI"/>
+      </attribute>
+      <ref name="FlowConfigModuleInlineContent"/>
+    </element>
+  </define>
+
   <define name="HtmlBlockContent">
     <zeroOrMore>
       <choice>
@@ -378,6 +388,7 @@
         <choice>
           <element name="strong"><ref name="FlowConfigModuleInlineContent"/></element>
           <ref name="fg-show-module"/>
+          <ref name="modal-link-module"/>
         </choice>
       </zeroOrMore>
     </mixed>
