@@ -1,5 +1,3 @@
-.DEFAULT_GOAL := site
-
 DIR ?= ./out
 PORT ?= 3000
 
@@ -13,7 +11,7 @@ twe:
 
 .PHONY: site
 site:
-	sbt run "runMain smol.runServer --port $(PORT) --dir $(DIR)"
+	sbt "runMain smol.runServer --port $(PORT) --dir $(DIR)"
 
 .PHONY: copy-fg
 copy-fg:
