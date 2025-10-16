@@ -355,6 +355,7 @@
               <mixed>
                 <zeroOrMore>
                   <ref name="HtmlBlockContent"/>
+                  <ref name="fg-show-module"/>
                 </zeroOrMore>
               </mixed>
             </element>
@@ -387,6 +388,15 @@
       <zeroOrMore>
         <choice>
           <element name="strong"><ref name="FlowConfigModuleInlineContent"/></element>
+          <element name="a">
+            <attribute name="href"/>
+            <optional>
+              <attribute name="target">
+                <value>_blank</value>
+              </attribute>
+            </optional>
+            <ref name="FlowConfigModuleInlineContent"/>
+          </element>
           <ref name="fg-show-module"/>
           <ref name="modal-link-module"/>
         </choice>

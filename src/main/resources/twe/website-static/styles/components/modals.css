@@ -21,6 +21,7 @@
   line-height: 1.5;
   border-radius: .5rem;
   background: #fff;
+  scrollbar-color: lightGray transparent;
   margin: 1.25rem auto;
   max-width: 30rem;
   opacity: 1;

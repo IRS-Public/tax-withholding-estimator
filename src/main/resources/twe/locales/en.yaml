@@ -75,8 +75,3 @@ step-indicator:
   not-completed: not completed
   step: Step
   of: of
-
-about-you:
-  /example-modal:
-    example-heading: What is a qualifying child for the EITC?
-    example-content: "Before sunrise, the bakery's oven hums to life and the first batch of croissants begins to puff; a neighbor."

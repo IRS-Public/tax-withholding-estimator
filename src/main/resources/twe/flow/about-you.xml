@@ -17,8 +17,7 @@
           <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
         </input>
       </fg-set>
-      <p>
-        Test modal: <modal-link for="modal-filing-status">Learn more about filing status</modal-link>.
+      <p><modal-link for="modal-filing-status">Which filing status should I use?</modal-link>.
       </p>
       <fg-set path="/isMFSLivedTogether" if-true="/isFilingStatusMFS">
         <question>Did you and your spouse live together in 2025?</question>
@@ -63,13 +62,43 @@
       </fg-reset>
     </section>
     <modal-dialog id="modal-filing-status">
-      <modal-heading>Heading</modal-heading>
+      <modal-heading>Which filing status should I use?</modal-heading>
       <modal-content>
-        <p>Test paragrah</p>
+        <p>If there's no change in your martial status or family situation this year, then you may want to use the same filing status from your <fg-show path="/lastTaxYear"/> tax return.</p>
+        <p>If you had a change in your martial status or household in the past year, you may need to use a different filing status for a more accurate estimate.</p>
+        <p>Each filing status has different requirements.</p>
+        <p>
+          <strong>Married Filing Jointly and Married Filing Separately:</strong>
+        </p>
         <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
+          <li>You must be married</li>
+          <li>You must meet specific citizenship or residency requirements</li>
         </ul>
+        <p>
+          <strong>Head of Household:</strong>
+        </p>
+        <ul>
+          <li>You can't be married (or you're considered unmarried for tax purposes)</li>
+          <li>You must have paid more than half the cost of keeping up a home for a family member or member of your household for a specific amount of time, and they must meet certain requirements</li>
+        </ul>
+        <p>
+          <strong>Surviving Spouse:</strong>
+        </p>
+        <ul>
+          <li>Your spouse must have died in <fg-show path="/lastTaxYear"/> or <fg-show path="/taxYearMinusTwo"/></li>
+          <li>You didn't remarry before <fg-show path="/taxYear"/></li>
+          <li>You have a dependent child who lives with you all year</li>
+          <li>You pay more than half the cost of keeping up your home</li>
+        </ul>
+        <p>
+          <strong>Single</strong>
+        </p>
+        <ul>
+          <li>You can't be married</li>
+        </ul>
+        <p>
+          <a target="_blank" href="https://www.irs.gov/filing/filing-status">Learn more about filing statuses</a>
+        </p>
       </modal-content>
     </modal-dialog>
   </page>

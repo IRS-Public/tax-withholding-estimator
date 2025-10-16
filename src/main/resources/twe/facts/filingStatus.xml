@@ -2,6 +2,41 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/taxYear">
+      <Description>Current tax year</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Int>2025</Int>
+      </Derived>
+    </Fact>
+    <Fact path="/lastTaxYear">
+      <Description>Previous tax year</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/taxYear"/>
+          </Minuend>
+          <Subtrahends>
+            <Int>1</Int>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/taxYearMinusTwo">
+      <Description>Tax year minus two years</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/taxYear"/>
+          </Minuend>
+          <Subtrahends>
+            <Int>2</Int>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
     <Fact path="/filingStatusOptions">
       <Name>Filing Status Options</Name>
       <Description>Options for filing status</Description>

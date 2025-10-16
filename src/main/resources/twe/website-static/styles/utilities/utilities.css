@@ -8,3 +8,8 @@
   align-items: center;
   font-size: var(--font-size-lg);
 }
+
+.usa-prose a,
+.usa-prose a:visited {
+  color: var(--primary);
+}
