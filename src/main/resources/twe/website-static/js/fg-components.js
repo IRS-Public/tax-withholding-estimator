@@ -82,6 +82,7 @@ class FgSet extends HTMLElement {
       case 'select':
       case 'boolean':
       case 'enum':
+      case 'multi-enum':
         for (const input of this.inputs) {
           input.addEventListener('change', () => {
             this.onChange()
@@ -236,6 +237,13 @@ class FgSet extends HTMLElement {
         };
         break
       }
+      case 'multi-enum': {
+        const checkedBoxes = this.querySelectorAll(`input:checked`)
+        for (const checkbox of checkedBoxes) {
+          checkbox.checked = false
+        }
+        break
+      }
       case 'select': {
         this.querySelector('select').value = ''
         break
@@ -278,6 +286,15 @@ class FgSet extends HTMLElement {
       case 'enum': {
         if (value !== "") {
           this.querySelector(`input[value=${value}]`).checked = true
+        }
+        break;
+      }
+      case 'multi-enum': {
+        // MultiEnum stores Set of values - convert from Scala Set to JS Set
+        const selectedValues = fact.hasValue ? fg.scalaSetToJsSet(fact.get.getValue()) : new Set()
+        const checkboxes = this.querySelectorAll('input[type="checkbox"]')
+        for (const checkbox of checkboxes) {
+          checkbox.checked = selectedValues.has(checkbox.value)
         }
         break;
       }
@@ -333,6 +350,13 @@ class FgSet extends HTMLElement {
       case 'enum': {
         return this.querySelector('input:checked')?.value
       }
+      case 'multi-enum': {
+        // Collect all checked checkbox values into Set, convert to Scala Set, wrap in MultiEnum
+        const checkboxes = this.querySelectorAll('input[type="checkbox"]:checked')
+        const values = new Set(Array.from(checkboxes).map(cb => cb.value))
+        // Return null if empty (not empty Set) to match optional field semantics
+        return values.size > 0 ? fg.MultiEnum(fg.jsSetToScalaSet(values), "") : null
+      }
       case 'select': {
         return this.querySelector('select')?.value
       }
@@ -360,7 +384,7 @@ class FgSet extends HTMLElement {
     console.debug(`Setting fact ${this.path}`)
     const value = this.getFactValueFromInputValue()
 
-    if (value === "") {
+    if (value === "" || value === null) {
       console.debug(`Value was blank, deleting fact`);
       factGraph.delete(this.path);
     } else {
@@ -390,6 +414,13 @@ class FgSet extends HTMLElement {
       case 'enum': {
         const input = this.querySelector('input:checked')
         if (input) input.checked = false
+        break;
+      }
+      case 'multi-enum': {
+        const checkboxes = this.querySelectorAll('input[type="checkbox"]:checked')
+        for (const checkbox of checkboxes) {
+          checkbox.checked = false
+        }
         break;
       }
       case 'select': {

@@ -14,17 +14,19 @@ enum Input {
   case int(hint: String, optional: Boolean = false)
   case boolean(question: String, hint: String, optional: Boolean = false)
   case enumInput(options: List[HtmlOption], optionsPath: String, hint: String, optional: Boolean = false)
+  case multiEnumInput(options: List[HtmlOption], optionsPath: String, hint: String, optional: Boolean = false)
   case dollar(hint: String, optional: Boolean = false)
   case date(question: String, hint: String, optional: Boolean = false)
 
   def typeString: String = this match {
-    case Input.text(_, _)            => "text"
-    case Input.int(_, _)             => "int"
-    case Input.boolean(_, _, _)      => "boolean"
-    case Input.enumInput(_, _, _, _) => "enum"
-    case Input.dollar(_, _)          => "dollar"
-    case Input.select(_, _, _, _)    => "select"
-    case Input.date(_, _, _)         => "date"
+    case Input.text(_, _)                 => "text"
+    case Input.int(_, _)                  => "int"
+    case Input.boolean(_, _, _)           => "boolean"
+    case Input.enumInput(_, _, _, _)      => "enum"
+    case Input.multiEnumInput(_, _, _, _) => "multi-enum"
+    case Input.dollar(_, _)               => "dollar"
+    case Input.select(_, _, _, _)         => "select"
+    case Input.date(_, _, _)              => "date"
   }
 }
 object Input {
@@ -72,6 +74,17 @@ object Input {
           HtmlOption(name, finalValue, description)
         }.toList
         Input.enumInput(options, optionsPath, hint, isOptional)
+      case "multi-enum" =>
+        val optionsPath = inputNode \@ "optionsPath"
+        val options = (inputNode \ "option").map { node =>
+          val name = node.text
+          val value = node \@ "value"
+          val finalValue = if (value.isEmpty) name else value
+          val descriptionKey = node \@ "description-key"
+          val description = if (descriptionKey.nonEmpty) Some(descriptionKey) else None
+          HtmlOption(name, finalValue, description)
+        }.toList
+        Input.multiEnumInput(options, optionsPath, hint, isOptional)
       case "dollar" => Input.dollar(hint, isOptional)
       case "date"   => Input.date(question, hint, isOptional)
       case x        => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")

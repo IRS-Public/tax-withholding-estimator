@@ -1,0 +1,26 @@
+<fieldset class="usa-fieldset" th:attr="aria-describedby=${hintId}">
+    <legend class="usa-legend twe-question">
+        <div th:remove="tag" th:text="#{${contentKey} + .question}"></div>
+        <div th:unless="${optional}" th:replace="~{nodes/required-indicator}"></div>
+    </legend>
+    <div th:replace="nodes/hint"></div>
+
+    <div class="usa-checkbox" th:each="option : ${options}">
+        <input th:id="${path} + '-' + ${option.value}"
+               class="usa-checkbox__input usa-checkbox__input--tile"
+               type="checkbox"
+               th:value="${option.value}"
+               th:name="${path}"
+               aria-invalid="false"
+               th:attr="aria-describedby=${option.description != null ? (path + '-' + option.value + '-description') : null}"/>
+        <label th:for="${path} + '-' + ${option.value}"
+               class="usa-checkbox__label checkbox-option">
+            <span th:text="#{${contentKey} + .options. + ${option.value} + .name}"></span>
+            <span th:if="${option.description != null}"
+                  class="usa-checkbox__label-description"
+                  th:id="${path} + '-' + ${option.value} + '-description'"
+                  aria-hidden="true"
+                  th:text="#{${option.description}}"></span>
+        </label>
+    </div>
+</fieldset>
