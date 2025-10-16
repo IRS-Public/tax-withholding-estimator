@@ -1,4 +1,4 @@
 <label th:if="#{${contentKey} + .question}" class="usa-label twe-question" th:for="${path}">
-    <div th:text="#{${contentKey} + .question}"></div>
-    <div th:unless="${optional}" th:insert="~{nodes/required-indicator}"></div>
+    <div th:text="#{${contentKey} + .question}" th:remove="tag"></div>
+    <div th:unless="${optional}" th:replace="~{nodes/required-indicator}"></div>
 </label>
