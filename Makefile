@@ -1,3 +1,8 @@
+.DEFAULT_GOAL := site
+
+DIR ?= ./out
+PORT ?= 3000
+
 .PHONY: dev
 dev:
 	sbt "~run --auditMode"
@@ -6,10 +11,9 @@ dev:
 twe:
 	sbt run
 
-# This uses the NodeJS toolchain to run "serve", a static site server
 .PHONY: site
 site:
-	npx serve out
+	sbt run "runMain smol.runServer --port $(PORT) --dir $(DIR)"
 
 .PHONY: copy-fg
 copy-fg:

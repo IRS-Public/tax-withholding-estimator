@@ -16,7 +16,7 @@ lazy val root = (project in file("."))
     libraryDependencies += "org.jsoup" % "jsoup" % "1.21.1",
     libraryDependencies += "com.lihaoyi" %% "os-lib" % "0.11.4",
     libraryDependencies += "org.thymeleaf" % "thymeleaf" % "3.1.3.RELEASE",
-
+    libraryDependencies += "org.smol-utils" %% "smol" % "0.1.2",
     libraryDependencies += "io.circe" %% "circe-yaml" % "0.16.0",
     libraryDependencies += "io.circe" %% "circe-yaml-scalayaml" % "0.16.0",
     libraryDependencies ++= Seq(
