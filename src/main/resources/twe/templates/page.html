@@ -20,7 +20,7 @@
       <a class="usa-link back-link"
         th:href="${lastPageHref}">
         <svg aria-hidden="true" role="img" focusable="false" class="usa-icon">
-      <use href="/resources/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
+      <use href="/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
       </svg>
       [[#{buttons.back}]]
       </a>
@@ -34,7 +34,7 @@
         onclick="return handleSectionContinue(event)">
         [[${first} ? #{buttons.next} : #{buttons.continue}]]
         <svg th:unless="${first}" aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
-          <use href="/resources/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
+          <use href="/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
         </svg>
       </a>
 

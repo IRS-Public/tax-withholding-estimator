@@ -1,5 +1,5 @@
 /* U.S. Web Design System (vendor-compiled) */
-@import "../uswds-3.13.0/styles/uswds.min.css";
+@import "../vendor/uswds-3.13.0/styles/uswds.min.css";
 
 /* Variables */
 @import "variables.css";
