@@ -13,7 +13,7 @@ case class FgSet(
     question: String,
     condition: Option[Condition],
     input: Input,
-    hint: String,
+    hint: Option[String],
     optional: Boolean,
 ) {
   def html(templateEngine: TweTemplateEngine): String = {
@@ -27,23 +27,22 @@ case class FgSet(
     context.setVariable("typeString", input.typeString)
     context.setVariable("optional", optional)
     context.setVariable("usesFieldset", usesFieldset)
-    context.setVariable("hint", hint)
+    context.setVariable("hint", hint.orNull)
 
     val contentKey = "fg-sets." + path
     context.setVariable("contentKey", contentKey)
 
     input match {
-      // case select(options: List[HtmlOption], optionsPath: Option[String], hint: String, optional: Boolean = false)
-      case Input.select(options, optionsPath, _, _) =>
+      case Input.select(options, optionsPath, _) =>
         context.setVariable("options", options.asJava)
         context.setVariable("optionsPath", optionsPath)
-      case Input.enumInput(options, optionsPath, _, _) =>
+      case Input.enumInput(options, optionsPath, _) =>
         val javaOptions = options.map { opt =>
           ThymeleafOption(opt.name, opt.value, opt.description.orNull)
         }
         context.setVariable("options", javaOptions.asJava)
         context.setVariable("optionsPath", optionsPath)
-      case Input.multiEnumInput(options, optionsPath, _, _) =>
+      case Input.multiEnumInput(options, optionsPath, _) =>
         val javaOptions = options.map { opt =>
           ThymeleafOption(opt.name, opt.value, opt.description.orNull)
         }
@@ -64,7 +63,12 @@ object FgSet {
     val condition = Condition.getCondition(node, factDictionary)
     val input = Input.extractFromFgSet(node, isOptional, factDictionary)
 
-    val hint = (node \ "hint").text
+    val hintNode = node \ "hint"
+    val hint = if (hintNode.isEmpty) {
+      None
+    } else {
+      Some(hintNode.head.child.mkString.trim)
+    }
 
     FgSet(path, question, condition, input, hint, isOptional)
   }
@@ -73,15 +77,15 @@ object FgSet {
     validateFact(path, factDictionary)
     val typeNode = factDictionary.getDefinition(path).typeNode
     val inputAndNodeTypeMismatch = input match {
-      case Input.text(_, _)       => typeNode != "StringNode"
-      case Input.int(_, _)        => typeNode != "IntNode"
-      case Input.boolean(_, _, _) => typeNode != "BooleanNode"
-      case Input.dollar(_, _)     => typeNode != "DollarNode"
-      case Input.date(_, _, _)    => typeNode != "DayNode"
+      case Input.text(_)       => typeNode != "StringNode"
+      case Input.int(_)        => typeNode != "IntNode"
+      case Input.boolean(_, _) => typeNode != "BooleanNode"
+      case Input.dollar(_)     => typeNode != "DollarNode"
+      case Input.date(_, _)    => typeNode != "DayNode"
       // We could make this more strict
-      case Input.select(_, _, _, _)         => typeNode != "EnumNode"
-      case Input.enumInput(_, _, _, _)      => typeNode != "EnumNode"
-      case Input.multiEnumInput(_, _, _, _) => typeNode != "MultiEnumNode"
+      case Input.select(_, _, _)         => typeNode != "EnumNode"
+      case Input.enumInput(_, _, _)      => typeNode != "EnumNode"
+      case Input.multiEnumInput(_, _, _) => typeNode != "MultiEnumNode"
     }
     if (inputAndNodeTypeMismatch) throw InvalidFormConfig(s"Path $path must be of type $input")
   }

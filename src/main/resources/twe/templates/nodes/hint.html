@@ -1,1 +1,1 @@
-<div th:if="${hint != null and !hint.isEmpty()}" class="usa-hint" th:id="${path} + '-hint'" th:text="${hint}"></div>
+<div th:if="${hint}" class="usa-hint" th:id="${path} + '-hint'" th:utext="${hint}"></div>
