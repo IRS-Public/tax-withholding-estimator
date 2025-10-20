@@ -2,14 +2,6 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/actualEducatorExpensesAdjustmentAmount">
-      <Description>Non Educator expense adjustments, no logic in place for actually calculating the
-        applicable amount
-      </Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-    </Fact>
     <Fact path="/actualStudentLoanInterestAdjustmentAmount">
       <Description>Student loan interest adjustments, no logic in place for actually calculating the
         applicable amount

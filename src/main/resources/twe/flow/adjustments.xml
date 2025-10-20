@@ -17,7 +17,7 @@
           </ul>
           <p>Learn more about educator expenses [X].</p>
         </div>
-        <fg-set path="/actualEducatorExpensesAdjustmentAmount">
+        <fg-set path="/educatorExpenses">
           <question>How much have you paid this year in educator expenses?</question>
           <input type="dollar"/>
         </fg-set>
