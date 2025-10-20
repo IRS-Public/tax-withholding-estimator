@@ -1,5 +1,6 @@
 package gov.irs.twe
 
+import gov.irs.twe.parser.FgAlert
 import io.circe.*
 import io.circe.generic.auto.deriveEncoder
 import io.circe.syntax.*
@@ -33,12 +34,15 @@ case class Locale(languageCode: String) {
   }
 }
 
+case class FlowContent(alerts: Map[String, FgAlertContent])
+
 /** Generate the flow_en.yaml locale file.
   *
   * @param flowConfig
   *   A fully-resolved (no modules) Flow Config
   */
 def generateFlowLocalFile(flowConfig: xml.Node): Unit = {
+  // TODO: Move these to page groupings
   val fgSets = (flowConfig \\ "fg-set").map { fgSet =>
     val path = fgSet \@ "path"
     val question = (fgSet \ "question").text.trim
@@ -53,7 +57,24 @@ def generateFlowLocalFile(flowConfig: xml.Node): Unit = {
     (path -> content)
   }.toMap
 
-  val contentJson = Json.obj("fg-sets" -> fgSets.asJson)
+  val flowContent = (flowConfig \\ "page").map { pageNode =>
+    val alerts = (pageNode \\ "fg-alert").map { alertNode =>
+      val alertKey = (alertNode \@ "alert-key")
+      val headingContent = (alertNode \\ "heading").text.trim()
+      val bodyNodes = FgAlert.getBodyNodes(alertNode)
+      var bodyContent = bodyNodes.zipWithIndex
+        .map((node, index) => s"${index}-${node.label}" -> node.descendant.mkString(" ").trim)
+        .toMap
+
+      (alertKey -> FgAlertContent(headingContent, bodyContent))
+    }.toMap
+
+    val hasAlerts = alerts.nonEmpty
+
+    ((pageNode \@ "route") -> (if (hasAlerts) Some(FlowContent(alerts)) else None))
+  }.toMap
+
+  val contentJson = Json.obj("flow" -> flowContent.asJson, "fg-sets" -> fgSets.asJson)
   val contentYaml = Printer(dropNullKeys = true, preserveOrder = true)
     .pretty(contentJson)
 

@@ -4,6 +4,14 @@
     <section>
       <h1>Income</h1>
       <h2>Jobs</h2>
+      <fg-alert alert-type="error" alert-key="at-least-one-job" if-true="/declaredDoneAddingIncome">
+        <heading>You need to have a job or pension to continue</heading>
+        <p>
+          To continue using the estimator, you need to have at least one job or pension that regularly withholds federal
+          income taxes. If you don&#x2019;t pay any taxes on your income through withholding, you may want to plan to
+          <a href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">pay estimated taxes.</a>
+        </p>
+      </fg-alert>
       <fg-collection path="/jobs" item-name="Income source">
         <fg-set path="/jobs/*/isAllYear">
           <question>

@@ -753,18 +753,22 @@ function showValidationError() {
   mainContent.insertBefore(alertElement, mainContent.firstChild);
 
   // Focus the first invalid field
-  const firstInvalidField = document.querySelector('fg-set:not([inputtype="date"], .hidden) .usa-form-group--error .usa-fieldset, fg-set:not(.hidden) [aria-invalid="true"]');
+  const firstErrorFocusTarget = document.querySelector(
+    'fg-alert[blocking]:not(.hidden) :is(.usa-alert__heading, .usa-alert__text),'
+    + 'fg-set:not([inputtype="date"], .hidden) .usa-form-group--error .usa-fieldset,'
+    + 'fg-set:not(.hidden) [aria-invalid="true"]'
+  );
 
-  if (firstInvalidField instanceof HTMLFieldSetElement) {
-    firstInvalidField.setAttribute('tabindex', '-1');
-    firstInvalidField.focus();
+  if (firstErrorFocusTarget instanceof HTMLFieldSetElement || firstErrorFocusTarget.closest(`fg-alert`)) {
+    firstErrorFocusTarget.setAttribute('tabindex', '-1');
+    firstErrorFocusTarget.focus();
 
     // Remove tabindex after focus to prevent outline from appearing on subsequent clicks
-    firstInvalidField.addEventListener('blur', () => {
-      firstInvalidField.removeAttribute('tabindex');
+    firstErrorFocusTarget.addEventListener('blur', () => {
+      firstErrorFocusTarget.removeAttribute('tabindex');
     }, { once: true });
   }
-  else {firstInvalidField.focus();}
+  else {firstErrorFocusTarget.focus();}
 
 }
 

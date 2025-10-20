@@ -46,7 +46,7 @@ object Page {
     val nodes = (page \ "_")
       .map(node =>
         node.label match {
-          case "section"      => PageNode.section(Section.parse(node, factDictionary))
+          case "section"      => PageNode.section(Section.parse(node, route, factDictionary))
           case "modal-dialog" => PageNode.modal(Modal.parse(node))
           case _              => PageNode.rawHTML(node)
         },

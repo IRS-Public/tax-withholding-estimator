@@ -6,6 +6,7 @@ import gov.irs.twe.TweTemplateEngine
 enum SectionNode {
   case fgCollection(fgCollection: FgCollection)
   case fgSet(fgSet: FgSet)
+  case fgAlert(fgSet: FgAlert)
   case fgSectionGate(fgSectionGate: FgSectionGate)
   case rawHTML(node: xml.Node)
 }
@@ -16,6 +17,7 @@ case class Section(nodes: List[SectionNode], factDictionary: FactDictionary) {
       .map {
         case SectionNode.fgCollection(x)  => x.html(templateEngine)
         case SectionNode.fgSet(x)         => x.html(templateEngine)
+        case SectionNode.fgAlert(x)       => x.html(templateEngine)
         case SectionNode.fgSectionGate(x) => x.html(templateEngine)
         case SectionNode.rawHTML(x)       => renderNode(x, templateEngine)
       }
@@ -61,18 +63,19 @@ case class Section(nodes: List[SectionNode], factDictionary: FactDictionary) {
 }
 
 object Section {
-  def parse(section: xml.Node, factDictionary: FactDictionary): Section = {
+  def parse(section: xml.Node, pageRoute: String, factDictionary: FactDictionary): Section = {
     val nodes = (section \ "_")
-      .map(node => processNode(node, factDictionary))
+      .map(node => processNode(node, pageRoute, factDictionary))
       .toList
 
     Section(nodes, factDictionary)
   }
 
-  private def processNode(node: xml.Node, factDictionary: FactDictionary): SectionNode =
+  private def processNode(node: xml.Node, pageRoute: String, factDictionary: FactDictionary): SectionNode =
     node.label match {
       case "fg-collection"   => SectionNode.fgCollection(FgCollection.parse(node, factDictionary))
       case "fg-set"          => SectionNode.fgSet(FgSet.parse(node, factDictionary))
+      case "fg-alert"        => SectionNode.fgAlert(FgAlert.parse(node, pageRoute, factDictionary))
       case "fg-section-gate" => SectionNode.fgSectionGate(FgSectionGate.parse(node))
       case _                 => SectionNode.rawHTML(node)
     }

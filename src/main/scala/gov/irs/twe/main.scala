@@ -15,6 +15,7 @@ val flagRegex = new Regex("""--(\w*)""")
 
 case class OptionContent(name: String, description: Option[String])
 case class FgSetContent(question: String, options: Option[Map[String, OptionContent]])
+case class FgAlertContent(heading: String, body: Map[String, String])
 
 def main(args: Array[String]): Unit = {
   val flags = Map.from(

@@ -1,0 +1,11 @@
+<fg-alert
+    th:attr="alert-type=${alertType}, condition=${condition}, operator=${operator}, blocking=${alertType == 'error'}"
+    th:class="${condition ? '' : 'hidden'}"
+>
+  <div th:class="'usa-alert usa-alert--' + ${alertType}">
+    <div class="usa-alert__body">
+      <h3 class="usa-alert__heading" th:text="#{${headingKey}}"></h3>
+      <p class="usa-alert__text" th:each="bodyKey: ${bodyKeys}" th:utext="#{${bodyKey}}"></h3>
+    </div>
+  </div>
+</fg-alert>

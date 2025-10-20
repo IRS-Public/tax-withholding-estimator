@@ -286,6 +286,45 @@
     </element>
   </define>
 
+  <define name="fg-alert-module">
+    <element name="fg-alert">
+      <attribute name="alert-key"> <text/> </attribute>
+      <attribute name="alert-type">
+        <choice>
+          <value>info</value>
+          <value>warning</value>
+          <value>success</value>
+          <value>error</value>
+          <value>emergency</value>
+        </choice>
+      </attribute>
+      <optional>
+        <attribute name="slim">
+          <value>true</value>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="icon">
+          <value>false</value>
+        </attribute>
+      </optional>
+      <optional>
+        <choice>
+          <attribute name="if-false">
+              <data type="anyURI"/>
+          </attribute>
+          <attribute name="if-true">
+              <data type="anyURI"/>
+          </attribute>
+        </choice>
+      </optional>
+
+      <element name="heading"><text /></element>
+      <oneOrMore>
+        <element name="p"><ref name="FlowConfigModuleInlineContent" /></element>
+      </oneOrMore>
+    </element>
+  </define>
   <define name="modal-link-module">
     <element name="modal-link">
       <attribute name="for">
@@ -437,6 +476,10 @@
             <ref name="FlowConfigModuleInlineContent"/>
           </element>
           <ref name="fg-show-module"/>
+          <element name="a">
+            <attribute name="href"></attribute>
+            <text />
+          </element>
           <ref name="modal-link-module"/>
         </choice>
       </zeroOrMore>
@@ -511,12 +554,13 @@
       <zeroOrMore>
         <choice>
           <!--
-            These 4 FlowConfigModule XML elements are directly translated to their HTML equivalents by the flow code.
+            These FlowConfigModule XML elements are directly translated to their HTML equivalents by the flow code.
             If we add more of the same in the future, those elements would go here.
             These rules essentially say these can appear in any order and can be nested within each other.
            -->
           <ref name="HtmlBlockContent"/>
           <ref name="fg-set-module"/>
+          <ref name="fg-alert-module"/>
           <ref name="fg-collection-module"/>
           <ref name="fg-reset-module"/>
           <ref name="fg-section-gate-module"/>

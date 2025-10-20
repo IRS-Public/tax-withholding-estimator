@@ -8,6 +8,12 @@
         <Collection/>
       </Writable>
     </Fact>
+    <Fact path="/declaredDoneAddingIncome">
+      <Description>Whether the taxpayer has declared they are done adding new income</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
     <Fact path="/jobs/*/yearToDateIncome">
       <Writable>
         <Dollar/>
