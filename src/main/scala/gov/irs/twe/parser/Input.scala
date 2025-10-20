@@ -12,7 +12,7 @@ enum Input {
   case select(options: List[HtmlOption], optionsPath: Option[String], optional: Boolean = false)
   case text(optional: Boolean = false)
   case int(optional: Boolean = false)
-  case boolean(question: String, optional: Boolean = false)
+  case boolean(question: String, optional: Boolean = false, options: List[HtmlOption] = List.empty)
   case enumInput(options: List[HtmlOption], optionsPath: String, optional: Boolean = false)
   case multiEnumInput(options: List[HtmlOption], optionsPath: String, optional: Boolean = false)
   case dollar(optional: Boolean = false)
@@ -21,7 +21,7 @@ enum Input {
   def typeString: String = this match {
     case Input.text(_)                 => "text"
     case Input.int(_)                  => "int"
-    case Input.boolean(_, _)           => "boolean"
+    case Input.boolean(_, _, _)        => "boolean"
     case Input.enumInput(_, _, _)      => "enum"
     case Input.multiEnumInput(_, _, _) => "multi-enum"
     case Input.dollar(_)               => "dollar"
@@ -63,8 +63,19 @@ object Input {
     inputNode \@ "type" match {
       case "text"    => Input.text(isOptional)
       case "int"     => Input.int(isOptional)
-      case "boolean" => Input.boolean(question, isOptional)
-      case "enum"    =>
+      case "boolean" =>
+        val options = (inputNode \ "option").map { node =>
+          val name = node.text.trim
+          val value = node \@ "value"
+
+          if (value != "true" && value != "false") {
+            throw InvalidFormConfig(s"Boolean option must have value 'true' or 'false', got '$value' at path $path")
+          }
+          HtmlOption(name, value)
+        }.toList
+
+        Input.boolean(question, isOptional, options)
+      case "enum" =>
         val optionsPath = inputNode \@ "optionsPath"
         val options = (inputNode \ "option").map { node =>
           val name = node.text

@@ -96,7 +96,6 @@
         <element name="input">
           <attribute name="type">
             <choice>
-              <value>boolean</value>
               <value>dollar</value>
               <value>text</value>
               <value>date</value>
@@ -104,6 +103,25 @@
             </choice>
           </attribute>
         </element>
+      <element name="input">
+        <attribute name="type">
+          <value>boolean</value>
+        </attribute>
+        <optional>
+          <element name="option">
+            <attribute name="value">
+              <value>true</value>
+            </attribute>
+            <text/>
+          </element>
+          <element name="option">
+            <attribute name="value">
+              <value>false</value>
+            </attribute>
+            <text/>
+          </element>
+        </optional>
+      </element>
       <element name="input">
         <attribute name="type">
           <value>enum</value>
