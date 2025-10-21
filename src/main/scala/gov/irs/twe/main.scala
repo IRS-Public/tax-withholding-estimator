@@ -7,8 +7,10 @@ import gov.irs.twe.parser.Flow
 import java.io.File
 import scala.io.Source
 import scala.util.matching.Regex
+import scala.util.Try
 import scala.xml.Elem
 import scala.xml.NodeBuffer
+import smol.{ Config, Smol }
 
 val FlowResourceRoot = "twe/flow"
 val flagRegex = new Regex("""--(\w*)""")
@@ -53,6 +55,33 @@ def main(args: Array[String]): Unit = {
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"
   site.save(outDir)
+
+  val serve = args.contains("--serve")
+
+  if !serve then return // build only
+
+  // Marshall smol config vars
+  val host = "localhost"
+  val port = sys.props.get("smol.port").flatMap(s => Try(s.toInt).toOption).getOrElse(3000)
+  val dir = outDir.toString
+  val logEnabled = true
+
+  // Start server in-process, but do not block.
+  // If it’s already running from a previous ~run cycle, starting again will throw BindException - ignore and continue.
+  try
+    val server = Smol.start(
+      Config(
+        dir = dir,
+        host = host,
+        port = port,
+        logEnabled = logEnabled,
+      ),
+    )
+    sys.addShutdownHook(server.stop(0))
+    println(s"[smol] started at http://$host:$port => $dir")
+  catch
+    case _: java.net.BindException =>
+      println(s"[smol] already serving on $host:$port — leaving it running")
 }
 
 object FileLoaderHelper:

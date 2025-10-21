@@ -1,19 +1,22 @@
-DIR ?= ./out
+.DEFAULT_GOAL := site
 PORT ?= 3000
 
-.PHONY: dev
+# Build and run targets
+
+.PHONY: dev twe site site-auditMode copy-fg
+
 dev:
 	sbt "~run --auditMode"
 
-.PHONY: twe
 twe:
 	sbt run
 
-.PHONY: site
 site:
-	sbt "runMain smol.runServer --port $(PORT) --dir $(DIR)"
+	sbt -Dsmol.port=$(PORT) '~run --serve'
 
-.PHONY: copy-fg
+site-auditMode:
+	sbt -Dsmol.port=$(PORT) '~run --serve --auditMode'
+
 copy-fg:
 	cp ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt/main.mjs ./src/main/resources/twe/website-static/js/factgraph-3.1.0.js
 	cp ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt/main.mjs.map ./src/main/resources/twe/website-static/js
