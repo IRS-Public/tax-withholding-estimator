@@ -24,7 +24,7 @@ main {
 }
 
 .header-bottom-border {
-  border-bottom: 1px solid var(--base-lighter);
+  border-bottom: 2px solid var(--base-lighter);
   display: block;
   margin: var(--units-3) 0;
   padding-bottom: var(--units-3);
