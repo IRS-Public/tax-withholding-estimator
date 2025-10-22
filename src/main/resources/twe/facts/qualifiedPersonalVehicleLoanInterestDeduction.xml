@@ -2,161 +2,6 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <!--        Qpvlid Base Requirements-->
-    <Fact path="/isVehiclePurchasedAfterEffectiveDate">
-      <Name>Is vehicle purchased after 12/31/13</Name>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <Fact path="/isQpvIndebtednessIncurredAfterEffectiveDate">
-      <Name>Is QPV purchased and a loan originated after 12/34/24</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(i): QPVLID Requirement:
-        Any
-        interest which
-        is paid or accrued during the taxable year on indebtedness incurred by the taxpayer after
-        December 31,
-        2024
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <Fact path="/isVehicleLoanFirstLien">
-      <Name>Is QPV purchased with a first lien loan</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii): QPVLID
-        Requirement:
-        Loan must be
-        secured by a first lien
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <!--        QPVLID Exclusions-->
-    <Fact path="/isVehicleLoanFinancingFleetSale">
-      <Name>Is loan used to finance fleet sales</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(i): Qpvlid
-        Exclusion: A
-        loan to
-        finance fleet sales.
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <Fact path="/isVehicleForPersonalUse">
-      <Name>Is QPV purchased for personal use</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(ii): Qpvlid
-        Exclusion: A
-        loan incurred
-        for the purchase of a commercial vehicle that is not used for personal purposes.
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <Fact path="/isVehicleLeaseFinanced">
-      <Name>Is QPV purchased with lease financing</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(iii): Qpvlid
-        Exclusion:
-        Any lease
-        financing
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <Fact path="/hasSalvageTitleOrPurchasedToScrap">
-      <Name>Is QPV purchased with a salvage title or with the intent to scrap for parts</Name>
-      <Description>OB3
-        Section 70203 temporarily amending &#xA7;163(h)(4)(B)(ii)(iv-v): Qpvlid Exclusions: A loan
-        to
-        finance the purchase of a vehicle with a salvage title or A loan to finance the purchase of
-        a
-        vehicle
-        intended to be used for scrap or parts.
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <!--        VIN Requirement-->
-    <Fact path="/doesHaveVIN">
-      <Name>Can the taxpayer provide a VIN as part of their tax return</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(B)(iii): Qpvlid
-        Requirement:
-        Provide a VIN as
-        part of tax return for the taxable years
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <!--        Applicable passenger vehicle (APV) definition-->
-    <Fact path="/isTaxpayerOriginalUser">
-      <Name>Original user of the vehicle</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(D)(i): APV Requirement:
-        original use
-        commences with the taxpayer
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <Fact path="/isVehicleManufacturedForStreetsRoadsAndHighways">
-      <Name>Vehicle Manufacturing Criteria</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(D)(ii): APV Requirement:
-        vehicle is
-        manufactured primarily for streets, roads and highways
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <Fact path="/isVehicleGTETwoWheels">
-      <Name>Vehicle wheel number</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(D)(iii): APV Requirement:
-        vehicle has at
-        least 2 wheels
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <Fact path="/isVehicleApplicableType">
-      <Name>QPV type is applicable</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(D)(iv): APV Requirement:
-        vehicle is car,
-        minivan, van, sport utility
-        vehicle, pickup truck, or motorcycle
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <Fact path="/isVehicleUnderGVWRMax">
-      <Name>QPV under max Gross Vehicle Weight RatingGVWR</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(D)(vi): APV Requirement:
-        vehicle is under 14k
-        GVWR
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <!--        Final assemble requirements-->
-    <Fact path="/isVehicleAssembledInUSA">
-      <Name>QPV assembled in US</Name>
-      <Description>OB3 Section 70203 temporarily amending &#xA7;163(h)(4)(E)(i): APV Requirement:
-        vehicle
-        final
-        assembly is in US
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
     <!--        Interest paid on loan during taxable year-->
     <Fact path="/personalVehicleLoanInterestAmount">
       <Name>Interest paid on passenger vehicle loan</Name>
@@ -175,33 +20,15 @@
       <Name>Eligible for Qualified Passenger Vehicle Loan Interest Deduction</Name>
       <Description>Taxpayer eligibility for</Description>
       <Derived>
-        <All>
-          <Dependency path="/isQpvIndebtednessIncurredAfterEffectiveDate"/>
-          <Dependency path="/isVehicleLoanFirstLien"/>
-          <Not>
-            <All>
-              <Dependency path="/isVehicleLoanFinancingFleetSale"/>
-              <Dependency path="/isVehicleForPersonalUse"/>
-              <Dependency path="/isVehicleLeaseFinanced"/>
-              <Dependency path="/hasSalvageTitleOrPurchasedToScrap"/>
-            </All>
-          </Not>
-          <Dependency path="/doesHaveVIN"/>
-          <Dependency path="/isTaxpayerOriginalUser"/>
-          <Dependency path="/isVehicleManufacturedForStreetsRoadsAndHighways"/>
-          <Dependency path="/isVehicleGTETwoWheels"/>
-          <Dependency path="/isVehicleApplicableType"/>
-          <Dependency path="/isVehicleUnderGVWRMax"/>
-          <Dependency path="/isVehicleAssembledInUSA"/>
-          <GreaterThan>
-            <Left>
-              <Dependency path="/personalVehicleLoanInterestAmount"/>
-            </Left>
-            <Right>
-              <Dollar>0</Dollar>
-            </Right>
-          </GreaterThan>
-        </All>
+        <!--We plan to handle eligibilty through content. Previous iterations used fact-based eligibility with ~a dozen writable booleans to ensure that the vehicle and loan met the legal requirements-->
+        <GreaterThan>
+          <Left>
+            <Dependency path="/personalVehicleLoanInterestAmount"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
       </Derived>
     </Fact>
     <Fact path="/maxQPVLIDAmount">
@@ -230,7 +57,7 @@
         </GreaterOf>
       </Derived>
     </Fact>
-    <Fact path="/excessAmountQpvlidorNonMFJFiler">
+    <Fact path="/excessAmountQpvlidForNonMFJFiler">
       <Derived>
         <GreaterOf>
           <Subtract>
@@ -261,7 +88,7 @@
               <True/>
             </When>
             <Then>
-              <Dependency path="/excessAmountQpvlidorNonMFJFiler"/>
+              <Dependency path="/excessAmountQpvlidForNonMFJFiler"/>
             </Then>
           </Case>
         </Switch>
@@ -271,13 +98,12 @@
       <Name>Qualified Personal Vehicle Loan Amount Phase Out</Name>
       <Description>The amount which is otherwise allowable as a deduction under subsection (a) as
         qualified passenger vehicle loan interest (determined without regard to this clause and
-        after
-        theapplication of clause (i)) shall be reduced (but not below zero) by $200 for each $1,000
-        (orportion thereof) by which the modified adjusted gross income of the taxpayer for the
-        taxableyear exceeds $100,000 ($200,000 in the case of a joint return).
+        after the application of clause (i)) shall be reduced (but not below zero) by $200 for each $1,000
+        (or portion thereof) by which the modified adjusted gross income of the taxpayer for the
+        taxable year exceeds $100,000 ($200,000 in the case of a joint return).
 
         Phaseout amount for the qualified personal vehicle loan deduction:
-        phaseOutAmount= 200*(filing= 200*(filingstatus specific MAGI/1000)status specific MAGI/1000)
+        phaseOutAmount= 200*(filing= 200*(filing status specific MAGI/1000)status specific MAGI/1000)
       </Description>
       <TaxYear>2025</TaxYear>
       <Derived>

@@ -77,10 +77,6 @@
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
-      <fg-set path="/totalAdvancedPayments">
-        <question>What is the total amount of advanced tax payments you made to date?</question>
-        <input type="dollar"/>
-      </fg-set>
       <h2>Trump Account Distribution</h2>
       <fg-set path="/trumpAccountDistribution">
         <question/>

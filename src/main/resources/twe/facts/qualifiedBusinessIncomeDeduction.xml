@@ -4,12 +4,16 @@
   <Facts>
     <Fact path="/isApplicableTaxpayerForQBIDeduction">
       <Description>Has estimated QBI over applicable taxpayer threshold of $1,000</Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-      <Placeholder>
-        <False/>
-      </Placeholder>
+      <Derived>
+        <GreaterThanOrEqual>
+          <Left>
+            <Dependency path="/estimatedQualifiedBusinessIncomeDeduction"/>
+          </Left>
+          <Right>
+            <Dependency path="/minimumQBIThresholdForApplicableTaxpayer"/>
+          </Right>
+        </GreaterThanOrEqual>
+      </Derived>
     </Fact>
     <Fact path="/estimatedQualifiedBusinessIncomeDeduction">
       <Name>Estimated qualified business income deduction</Name>
@@ -24,9 +28,9 @@
     <Fact path="/minimumDeductionForActiveQBIAmount">
       <Name>Minimum Deduction for Active QBI</Name>
       <Description>OB3 70111, amending IRC 26 Section 199A(i): In the case of an applicable
-        taxpayerfor any taxable
+        taxpayer for any taxable
         year, the deduction allowed under subsection(a) for the taxable year shall be equal to the
-        greater of&#x2014;(A) the amount of such deduction determined withoutregard to this
+        greater of&#x2014;(A) the amount of such deduction determined without regard to this
         subsection,
         or (B) $400.</Description>
       <TaxYear>2025</TaxYear>
@@ -77,7 +81,8 @@
           </Case>
           <Case>
             <!-- Otherwise, take the greater of the minimum deduction ($400) or the estimated
-            deduction provided by the taxpayer -->
+            deduction provided by the taxpayer
+             Note that until we implement Form 8995, this will always default to $1000-->
             <When>
               <True/>
             </When>

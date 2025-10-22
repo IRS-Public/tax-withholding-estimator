@@ -3,277 +3,58 @@
   <page title="Deductions" route="deductions">
     <section>
       <h2>Standard or Itemized Deductions</h2>
-      <p>Standard or itemized deductions reduce the amount of your income subject to tax.</p>
-      <p>Your maximum standard deduction amount is: <fg-show path="/standardDeduction"/></p>
-      <p>Your maximum itemized deduction amount is: <fg-show path="/itemizedDeduction"/></p>
+      <p>Standard or itemized deductions reduce the amount of tax you owe.</p>
+      <p>Most people take the standard deduction, but you can itemize your deductions if you have a mortgage, large gifts to charity, or large medical expenses. For most people, the standard deduction amount is higher than the amount they'd get by itemizing.</p>
+      <p/>
       <fg-set path="/wantsItemizedDeduction">
         <question>
-          Do you want to itemize your deductions? The standard deduction is higher for most
-          taxpayers, but you may want to itemize your deductions if you have a mortgage, large gifts
-          to charity, or large medical expenses
+          Do you want to check what your itemized deduction would be?
         </question>
         <input type="boolean"/>
       </fg-set>
-      <h2>Itemized Deductions</h2>
-      <h2>Qualified mortgage interest</h2>
-      <p>Total interest from a mortgage loan used to buy, build, or substantially improve your first
-        or second home. This deduction includes mortgage insurance premiums (PMI) or government
-        mortgage insurance (e.g., FHA, VA, USDA loan insurance). Home equity loan interest and/or
-        HELOC interest is deductible only if the loan is used to buy, build, or substantially
-        improve the house.</p>
-      <p>Your total deductible qualified mortgage interest is: <fg-show path="/qualifiedMortgageInterestTotal"/></p>
-      <fg-collection path="/qualifiedMortgageInterest">
-        <fg-set path="/qualifiedMortgageInterest/*/interest">
-          <question>Total mortgage interest from a mortgage loan</question>
-          <input type="dollar"/>
-        </fg-set>
-      </fg-collection>
-      <h2>Investment interest (limited to your net investment income)</h2>
-      <p>Investment interest (limited to your net investment income)</p>
-      <p>Your total deductible State and Local Taxes is: <fg-show path="/qualifiedInvestmentInterestExpensesTotal"/></p>
-      <fg-collection path="/qualifiedInvestmentInterestExpenses">
-        <fg-set path="/qualifiedInvestmentInterestExpenses/*/expense">
-          <question>Total investment interest expenses for a single investment interest</question>
-          <input type="dollar"/>
-        </fg-set>
-      </fg-collection>
+      <h2 condition="/wantsItemizedDeduction" operator="isTrue">Itemized Deductions</h2>
+      <h2>Qualified mortgage interest and investment interest expenses</h2>
+      <p>If you borrowed money to buy a home or investment property, you can deduct the interest you paid on that loan. You can also deduct your mortgage insurance premiums.</p>
+      <p>Learn more about mortgage interest and investment interest [X].</p>
+      <fg-set path="/qualifiedMortgageInterestAndInvestmentInterestExpenses">
+        <question>Qualified interest</question>
+        <input type="dollar"/>
+      </fg-set>
       <h2>State and Local Taxes</h2>
       <p>There are four types of State and Local Taxes: 1) State, local, and foreign income taxes;
         2) State and local general sales taxes; 3) State and local real estate taxes; 4) State and
         local personal property taxes</p>
       <p>There is a $40,000 deduction cap on SALT payments</p>
-      <p>Your total deductible State and Local Taxes is: <fg-show path="/stateAndLocalTaxPaymentsTotal"/></p>
-      <fg-collection path="/stateAndLocalTaxPayments">
-        <fg-set path="/stateAndLocalTaxPayments/*/taxPayment">
-          <question>Total state or local tax payments by recipient</question>
-          <input type="dollar"/>
-        </fg-set>
-      </fg-collection>
-      <h2>Estimated medical and dental expenses</h2>
+      <fg-set path="/stateAndLocalTaxPayments/">
+        <question>Total state or local tax payments by recipient</question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Medical and dental expenses deduction</h2>
       <p>Total expenses that exceed 7.5% of your Estimated medical and dental expenses Can include
         the total estimated amount paid for health insurance premiums, not including any amount the
         employer pays</p>
-      <p>Your total deductible State and Local Taxes is: <fg-show path="/medicalAndDentalExpensesTotal"/></p>
-      <fg-collection path="/medicalAndDentalExpenses">
-        <fg-set path="/medicalAndDentalExpenses/*/expense">
-          <question>Total amount for a single medical or dental expense category</question>
-          <input type="dollar"/>
-        </fg-set>
-      </fg-collection>
-      <h2>Charitable Contributions to Qualified Organizations</h2>
-      <p>Your total deductible Charitable Contributions to Qualified Organizations is: <fg-show path="/charitableContributionsTotal"/></p>
-      <fg-collection path="/charitableContributions">
-        <fg-set path="/charitableContributions/*/contribution">
-          <question>Total contribution amount from a specific charitable contribution</question>
-          <input type="dollar"/>
-        </fg-set>
-      </fg-collection>
-      <h2>Casualty Losses</h2>
-      <p>Your total deductible Casualty Losses is: <fg-show path="/casualtyLossesTotal"/></p>
+      <fg-set path="/medicalAndDentalExpenses/">
+        <question>Total amount for a single medical or dental expense category</question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Gifts to charity</h2>
+      <fg-set path="/charitableContributions/">
+        <question>Total contribution amount from a specific charitable contribution</question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Casualty losses</h2>
       <p>Casualty and theft losses relating to your home, household items, and vehicles if
         the loss took place in a federally declared disaster area</p>
-      <fg-collection path="/casualtyLosses">
-        <fg-set path="/casualtyLosses/*/loss">
-          <question>Total casualty loss from a specific loss event</question>
-          <input type="dollar"/>
-        </fg-set>
-      </fg-collection>
-      <h2>Other Deductions</h2>
-      <p>These
-        deductions are in addition to the Standard Deduction and Itemized Deductions
-        and can be claimed by eligible taxpayers regardless of which deduction they choose</p>
-      <h2>Qualified Business Interest Deduction (199A)</h2>
-      <fg-set path="/isApplicableTaxpayerForQBIDeduction">
-        <question>Do you estimate making over $1,000 of Qualified Business Income (QBI) this year?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/estimatedQualifiedBusinessIncomeDeduction" if-true="/isApplicableTaxpayerForQBIDeduction">
-        <question>What is your estimated Qualified Business Income (QBI) Deduction for this year? Note that there is a minimum $400 deduction if your QBI is greater than $1,000.</question>
+      <fg-set path="/casualtyLosses/*/loss">
+        <question>Total casualty loss from a specific loss event</question>
         <input type="dollar"/>
       </fg-set>
-      <p/>
-      <h2>Senior Deduction</h2>
-      <p>Number of taxpayers eligible for Senior Deduction: <fg-show path="/eligibleTaxpayersForSeniorDeduction"/>
-      </p>
-      <p> Total Senior Deduction amount: <fg-show path="/seniorDeduction"/></p>
-      <h2>Qualified Tips Income Deduction</h2>
-      <fg-set path="/hasTipsThisTaxYear">
-        <question>Do you expect to receive any tips this year?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/doesOccupationTraditionallyReceiveTips" if-true="/hasTipsThisTaxYear">
-        <question>Do you work in an occupation that traditionally receives tips?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/areTipsCash" if-true="/hasTipsThisTaxYear">
-        <question>
-          Will those tips be paid in cash or charged, or received under a tip-sharing arrangement?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/areTipsVoluntary" if-true="/hasTipsThisTaxYear">
-        <question>
-          Will those tips be paid voluntarily without consequence of nonpayment to the payor?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isTaxpayerSelfEmployedInSSTB" if-true="/areTipsVoluntary">
-        <question>
-          Are you self employed in a Section 199A Specified Service Trade or Business?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isTaxpayerEmployeeInSSTB" if-true="/areTipsVoluntary">
-        <question>
-          Are you an employee in a Section 199A Specified Service Trade or Business?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isOccupationSpecifiedServiceTradeOrBusiness" if-true="/areTipsVoluntary">
-        <question>
-          Are the tips provided to you provided in the course of business for a &#xA7;199A specified
-          service trades or businesses?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/qualifiedTipIncome" if-false="/isOccupationSpecifiedServiceTradeOrBusiness">
-        <question>How much tip income do you expect to make this year?</question>
+      <h2>Other itemized deductions</h2>
+      <p>You can deduct any of these expenses...</p>
+      <fg-set path="/otherDeductions/">
+        <question>Other deductions</question>
         <input type="dollar"/>
       </fg-set>
-      <fg-set path="/selfEmploymentIncome" if-false="/isOccupationSpecifiedServiceTradeOrBusiness">
-        <question>How much self-employment income do you expect to make this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <p>Your eligibility for the Qualified Tip Deduction is: <fg-show path="/isEligibleForQualifiedTipDeduction"/>
-      </p>
-      <p>Total Qualified Tip Deduction is: <fg-show path="/qualifiedTipDeduction"/></p>
-      <h2>Overtime Compensation Deduction</h2>
-      <fg-set path="/hasOvertimeCompThisTaxYear">
-        <question>
-          Have you received or do you expect to receive overtime compensation (such as
-          time-and-a-half) do you expect to this year?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isFlsaNonExempt" if-true="/hasOvertimeCompThisTaxYear">
-        <question>
-          Are you considered FLSA non-exempt under Section 7 of the Fair Labor Standards Act of 1938
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp" if-true="/isFlsaNonExempt">
-        <question>How much overtime compensation have you received, excluding any tips?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <p>Your overtime compensation deduction is <fg-show path="/overtimeCompensationDeduction"/></p>
-      <h2>Qualified Personal Vehicle Loan Interest Deduction</h2>
-      <fg-set path="/isVehiclePurchasedAfterEffectiveDate">
-        <question>Have you purchased a motor vehicle after 12/31/2024?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isQpvIndebtednessIncurredAfterEffectiveDate" if-true="/isVehiclePurchasedAfterEffectiveDate">
-        <question>
-          Did you incur a loan when you purchased this vehicle and was this loan originated after
-          12/31/2024?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isVehicleLoanFirstLien" if-true="/isQpvIndebtednessIncurredAfterEffectiveDate">
-        <question>Was the loan secured as the first lien on the vehicle?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isVehicleForPersonalUse" if-true="/isVehicleLoanFirstLien">
-        <question>
-          Is the vehicle intended for personal use and not commercial or fleet use?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isVehicleLoanFinancingFleetSale" if-true="/isVehicleForPersonalUse">
-        <question>Was the loan originated for the purposes of financing a fleet sale?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isVehicleLeaseFinanced" if-false="/isVehicleLoanFinancingFleetSale">
-        <question>Are you leasing the vehicle?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/hasSalvageTitleOrPurchasedToScrap" if-false="/isVehicleLeaseFinanced">
-        <question>
-          Did you purchase the vehicle with the intend to scrap it for parts or is the title a
-          salvage title?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isTaxpayerOriginalUser" if-false="/hasSalvageTitleOrPurchasedToScrap">
-        <question>Are you the original and primary user of the vehicle</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/doesHaveVIN" if-true="/isTaxpayerOriginalUser">
-        <question>
-          Do you have a Vehicle Identification Number for the Vehicle? You can check on
-          https://www.nhtsa.gov/vin-decoder
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isVehicleManufacturedForStreetsRoadsAndHighways" if-true="/doesHaveVIN">
-        <question>Is the vehicle meant for driving on public streets, roads and highways?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isVehicleGTETwoWheels" if-true="/isVehicleManufacturedForStreetsRoadsAndHighways">
-        <question>Does the vehicle have at least two wheels?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isVehicleApplicableType" if-true="/isVehicleGTETwoWheels">
-        <question>
-          Is the vehicle a car, minivan, van, sport utility vehicle, pickup truck, or motorcycle?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isVehicleUnderGVWRMax" if-true="/isVehicleApplicableType">
-        <question>Is the Gross Vehicle Weight Rating below 14,000 lbs?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/isVehicleAssembledInUSA" if-true="/isVehicleUnderGVWRMax">
-        <question>Was the final assembly of the vehicle in the United States?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/personalVehicleLoanInterestAmount" if-true="/isVehicleAssembledInUSA">
-        <question>
-          How much interest have you paid on the loan during the current taxable year to-date?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <p>
-        Your eligibility for the Qualified Passenger Vehicle Loan Interest Deduction is:
-        <fg-show path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction"/>
-      </p>
-      <p>
-        Your Qualified Passenger Vehicle Loan Interest Deduction is:
-        <fg-show path="/qualifiedPersonalVehicleLoanInterestDeduction"/>
-      </p>
-      <h2>Non-Itemizer Charitable Contribution Deduction</h2>
-      <fg-set path="/nonItemizerCharitableContributionDeductionAmount" if-false="/wantsItemizedDeduction">
-        <question>
-          If you are not itemizing your deductions, how much do you anticipate contributing to
-          charity this year?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <h2>Deduction Results</h2>
-      <p>Your total below the line deductions are: <fg-show path="/totalDeductions"/>
-      </p>
-      <p>Your total QBI deduction is: <fg-show path="/qualifiedBusinessIncomeDeduction"/>
-      </p>
-      <p>Your total OB3 deductions are: <fg-show path="/oB3Deductions"/>
-      </p>
-      <p>Your Qualified Personal Vehicle Loan Interest Deduction amount is: <fg-show path="/qualifiedPersonalVehicleLoanInterestDeduction"/>
-      </p>
-      <p>Your Senior Deduction amount is: <fg-show path="/seniorDeduction"/>
-      </p>
-      <p>Your Qualified Tips Deduction amount is: <fg-show path="/qualifiedTipDeduction"/>
-      </p>
-      <p>Your Overtime Compensation Deduction amount is: <fg-show path="/overtimeCompensationDeduction"/>
-      </p>
-      <p>Your Non-Itemizer Charitable Contribution Deduction is: <fg-show path="/nonItemizerCharitableContributionDeduction"/></p>
     </section>
   </page>
 </FlowConfigModule>

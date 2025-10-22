@@ -61,6 +61,7 @@ class AdjustmentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
           Path("/actualBusinessCreditsForEligible") -> Dollar(0),
           Path("/actualSelfEmploymentHealthInsuranceDeduction") -> Dollar(0),
           Path("/selfEmployedRetirementPlanDeduction") -> Dollar(0),
+          Path("/totalEstimatedTaxesPaid") -> Dollar(0),
         )
 
         val actualAdjustments = graph.get("/adjustmentsToIncome")

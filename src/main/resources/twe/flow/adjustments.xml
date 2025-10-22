@@ -3,6 +3,45 @@
 <FlowConfigModule>
   <page title="Adjustments" route="adjustments">
     <section>
+      <h1>Adjustments</h1>
+      <p>Enter the amount for any adjustments you plan to take this year. The amounts may be different from last year.</p>
+      <p>Adjustments are expenses, payments,contributions, and fees that taxpayers can subtract from their total income. These adjustments reduce the amount of income that will be taxed. They're also sometimes called deductions.</p>
+      <p>This estimator only supports some adjustments.There may be other adjustments that you qualify for, which could impact your estimate.</p>
+      <p>Learn more about adjustments to income in theInstructions for Form 1040. (X)</p>
+      <h2 condition="/couldEitherTaxpayerBeEligibleForSeniorDeduction" operator="isTrue">Senior Deduction</h2>
+      <fg-set path="/primaryTaxpayerElectsForSeniorDeduction" if-true="/primaryFilerAge65OrOlder">
+        <question>
+          Do you plan to take the senior deduction?
+        </question>
+        <input type="boolean"/>
+      </fg-set>
+      <fg-set path="/secondaryTaxpayerElectsForSeniorDeduction" if-true="/couldSecondaryTaxpayerBeEligibleForSeniorDeduction">
+        <question>
+          Does your spouse plan to take the senior deduction?
+        </question>
+        <input type="boolean"/>
+      </fg-set>
+      <h2>Non-Itemizer Charitable Contribution Deduction</h2>
+      <fg-set path="/nonItemizerCharitableContributionDeductionAmount">
+        <question>
+          If you take the standard deduction and donate to a qualifying organization, you can deduct those donations up to $.
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+      <details open="true">
+        <summary>
+          <h2>Student loan interest deduction</h2>
+        </summary>
+        <div class="usa-prose">
+          <p>If you pay interest on a qualified student loan, you can deduct up to $2,500.</p>
+          <p> This includes both required and voluntarily pre - paid interest payments. </p>
+          <p>Learn more about student loan interest [X].</p>
+        </div>
+        <fg-set path="/actualStudentLoanInterestAdjustmentAmount">
+          <question>How much have you paid this year in student loan interest?</question>
+          <input type="dollar"/>
+        </fg-set>
+      </details>
       <details open="true">
         <summary>
           <h2>Educator expenses</h2>
@@ -22,25 +61,6 @@
           <input type="dollar"/>
         </fg-set>
       </details>
-      <details open="true">
-        <summary>
-          <h2>Student loan interest</h2>
-        </summary>
-        <div class="usa-prose">
-        </div>
-        <fg-set path="/actualStudentLoanInterestAdjustmentAmount">
-          <question>How much have you paid this year in student loan interest?</question>
-          <input type="dollar"/>
-        </fg-set>
-      </details>
-      <h2>Health Savings Account Contributions</h2>
-      <fg-set path="/actualHsaTotalDeductibleAmount">
-        <question>
-          What&#x2019;s the total amount of deductible Health Savings Account contributions you made this year?
-        </question>
-        <hint>Do not include amounts already deducted from your paycheck</hint>
-        <input type="dollar"/>
-      </fg-set>
       <h2>Deduction for contributions to Traditional IRAs</h2>
       <fg-set path="/actualDeductionForTraditionalIRAContribution">
         <question>
@@ -49,10 +69,25 @@
         <hint>Do not include amounts already deducted from your paycheck</hint>
         <input type="dollar"/>
       </fg-set>
-      <h2>Moving expenses for members of armed services</h2>
+      <h2>Health Savings Account Contributions</h2>
+      <fg-set path="/actualHsaTotalDeductibleAmount">
+        <question>
+          What&#x2019;s the total amount of deductible Health Savings Account contributions you made this year?
+        </question>
+        <hint>Do not include amounts already deducted from your paycheck</hint>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Car loan interest deduction</h2>
+      <fg-set path="/personalVehicleLoanInterestAmount">
+        <question>
+          How much interest have you paid on the loan during the current taxable year to-date?
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Moving expenses for members of armed services and intelligence community</h2>
       <fg-set path="/actualMovingExpensesForArmedServicesMembers">
         <question>
-          Moving expenses for members of armed services
+          Moving expenses for members of armed services and intelligence community
         </question>
         <input type="dollar"/>
       </fg-set>
@@ -66,16 +101,22 @@
         <question>Penalty for early withdrawal of savings</question>
         <input type="dollar"/>
       </fg-set>
-      <h2 condition="/hasSelfEmploymentIncome" operator="isTrue">Self-employed health insurance deduction</h2>
-      <fg-set path="/actualSelfEmploymentHealthInsuranceDeduction" if-true="/hasSelfEmploymentIncome">
-        <question>Self-employed health insurance deduction</question>
+      <h2>Qualified Business Interest Deduction (199A)</h2>
+      <fg-set path="/estimatedQualifiedBusinessIncomeDeduction">
+        <question>What is your estimated Qualified Business Income (QBI) Deduction for this year? Note that there is a minimum $400 deduction if your QBI is greater than $1,000.</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Business credits</h2>
+      <p/>
+      <h2>Certain business expenses</h2>
       <fg-set path="/actualBusinessCreditsForEligible">
         <question>
           Business credits for reservists, performing artists, and fee-based government officials
         </question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2 condition="/hasSelfEmploymentIncome" operator="isTrue">Self-employed health insurance deduction</h2>
+      <fg-set path="/actualSelfEmploymentHealthInsuranceDeduction" if-true="/hasSelfEmploymentIncome">
+        <question>Self-employed health insurance deduction</question>
         <input type="dollar"/>
       </fg-set>
       <h2 condition="/hasSelfEmploymentIncome" operator="isTrue">Self-employed retirement plan deduction</h2>
@@ -83,10 +124,11 @@
         <question>Self-employed retirement plan deduction</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Your adjusted gross income:</h2>
-      <p>
-        <fg-show path="/agi"/>
-      </p>
+      <h2>Estimated taxes paid</h2>
+      <fg-set path="/totalEstimatedTaxesPaid">
+        <question>If you [and your spouse] made any estimated tax payments this year, you may deduct those. This does not include taxes withheld from your paycheck .</question>
+        <input type="dollar"/>
+      </fg-set>
     </section>
   </page>
 </FlowConfigModule>

@@ -1053,7 +1053,7 @@
           </Minuend>
           <Subtrahends>
             <Dependency path="/totalCredits" module="credits"/>
-            <Dependency path="/totalAdvancedPayments" module="payments"/>
+            <Dependency path="/totalEstimatedTaxesPaid"/>
           </Subtrahends>
         </Subtract>
       </Derived>

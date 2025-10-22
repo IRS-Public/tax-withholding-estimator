@@ -25,8 +25,7 @@
         we calculate the final amount of itemized deductions</Description>
       <Derived>
         <Add>
-          <Dependency path="/qualifiedMortgageInterestTotal"/>
-          <Dependency path="/qualifiedInvestmentInterestExpensesTotal"/>
+          <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpensesTotal"/>
           <Dependency path="/stateAndLocalTaxPaymentsTotal"/>
           <Dependency path="/medicalAndDentalExpensesTotal"/>
           <Dependency path="/charitableContributionsTotal"/>
@@ -61,38 +60,13 @@
         </Round>
       </Derived>
     </Fact>
-    <Fact path="/qualifiedMortgageInterest">
-      <Name>Qualified mortgage interest </Name>
-      <Description>Qualified mortgage interest including points (if you're the buyer)
+    <Fact path="/qualifiedMortgageInterestAndInvestmentInterestExpenses">
+      <Name>Qualified mortgage interest and investment interest expenses </Name>
+      <Description>Qualified mortgage interest including points (if you're the buyer) and Investment interest (limited to your net investment income)
       </Description>
       <Writable>
-        <Collection/>
-      </Writable>
-    </Fact>
-    <Fact path="/qualifiedMortgageInterest/*/interest">
-      <Description>Total mortgage interest from a mortgage loan</Description>
-      <Writable>
         <Dollar/>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/qualifiedInvestmentInterestExpenses">
-      <Name>Investment interest</Name>
-      <Description>Investment interest (limited to your net investment income)</Description>
-      <Writable>
-        <Collection/>
-      </Writable>
-    </Fact>
-    <Fact path="/qualifiedInvestmentInterestExpenses/*/expense">
-      <Description>Total investment interest expenses for a single investment interest</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/stateAndLocalTaxPayments">
       <Name>State and Local Taxes</Name>
@@ -100,17 +74,8 @@
         State, local, and foreign income taxes; 2) State and local general sales taxes; 3) State and
         local real estate taxes; 4) State and local personal property taxes</Description>
       <Writable>
-        <Collection/>
-      </Writable>
-    </Fact>
-    <Fact path="/stateAndLocalTaxPayments/*/taxPayment">
-      <Description>Total state or local tax payments by recipient</Description>
-      <Writable>
         <Dollar/>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/medicalAndDentalExpenses">
       <Name>Estimated medical and dental expenses</Name>
@@ -118,107 +83,41 @@
         total estimated amount paid for health insurance premiums, not including any amount the
         employer pays</Description>
       <Writable>
-        <Collection/>
-      </Writable>
-    </Fact>
-    <Fact path="/medicalAndDentalExpenses/*/expense">
-      <Description>Total amount for a single medical or dental expense category</Description>
-      <Writable>
         <Dollar/>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/charitableContributions">
       <Name>Charitable Contributions</Name>
       <Description>Charitable contributions to qualified organizations</Description>
       <Writable>
-        <Collection/>
-      </Writable>
-    </Fact>
-    <Fact path="/charitableContributions/*/contribution">
-      <Description>Total contribution amount from a specific charitable contribution</Description>
-      <Writable>
         <Dollar/>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/casualtyLosses">
       <Name>Casualty Losses</Name>
       <Description>Casualty and theft losses relating to your home, household items, and vehicles if
         the loss took place in a federally declared disaster area</Description>
       <Writable>
-        <Collection/>
-      </Writable>
-    </Fact>
-    <Fact path="/casualtyLosses/*/loss">
-      <Description>Total casualty loss from a specific loss event</Description>
-      <Writable>
         <Dollar/>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/otherDeductions">
       <Name>Other Deductions</Name>
       <Writable>
-        <Collection/>
-      </Writable>
-    </Fact>
-    <Fact path="/otherDeductions/*/payment">
-      <Description>Total other expenses for a single deductible item</Description>
-      <Writable>
         <Dollar/>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
-    <Fact path="/qualifiedMortgageInterestTotal">
-      <Description>Total of all /qualifiedMortgageInterest</Description>
+    <Fact path="/qualifiedMortgageInterestAndInvestmentInterestExpensesTotal">
       <Derived>
         <Switch>
           <Case>
             <When>
               <IsComplete>
-                <Dependency path="/qualifiedMortgageInterest"/>
+                <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpenses"/>
               </IsComplete>
             </When>
             <Then>
-              <CollectionSum>
-                <Dependency path="/qualifiedMortgageInterest/*/interest"/>
-              </CollectionSum>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
-      </Derived>
-    </Fact>
-    <Fact path="/qualifiedInvestmentInterestExpensesTotal">
-      <Description>Total of all /qualifiedInvestmentInterestExpenses items </Description>
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <IsComplete>
-                <Dependency path="/qualifiedInvestmentInterestExpenses"/>
-              </IsComplete>
-            </When>
-            <Then>
-              <CollectionSum>
-                <Dependency path="/qualifiedInvestmentInterestExpenses/*/expense"/>
-              </CollectionSum>
+              <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpenses"/>
             </Then>
           </Case>
           <Case>
@@ -262,9 +161,7 @@
             <When>
               <GreaterThan>
                 <Left>
-                  <CollectionSum>
-                    <Dependency path="/stateAndLocalTaxPayments/*/taxPayment"/>
-                  </CollectionSum>
+                  <Dependency path="/stateAndLocalTaxPayments"/>
                 </Left>
                 <Right>
                   <Dependency path="/stateAndLocalTaxPaymentsApplicableLimitationAmount"/>
@@ -280,9 +177,7 @@
               <True/>
             </When>
             <Then>
-              <CollectionSum>
-                <Dependency path="/stateAndLocalTaxPayments/*/taxPayment"/>
-              </CollectionSum>
+              <Dependency path="/stateAndLocalTaxPayments"/>
             </Then>
           </Case>
         </Switch>
@@ -300,9 +195,7 @@
               </IsComplete>
             </When>
             <Then>
-              <CollectionSum>
-                <Dependency path="/medicalAndDentalExpenses/*/expense"/>
-              </CollectionSum>
+              <Dependency path="/medicalAndDentalExpenses"/>
             </Then>
           </Case>
           <Case>
@@ -364,9 +257,7 @@
               </IsComplete>
             </When>
             <Then>
-              <CollectionSum>
-                <Dependency path="/charitableContributions/*/contribution"/>
-              </CollectionSum>
+              <Dependency path="/charitableContributions"/>
             </Then>
           </Case>
           <Case>
@@ -392,9 +283,7 @@
               </IsComplete>
             </When>
             <Then>
-              <CollectionSum>
-                <Dependency path="/casualtyLosses/*/loss"/>
-              </CollectionSum>
+              <Dependency path="/casualtyLosses"/>
             </Then>
           </Case>
           <Case>
@@ -420,9 +309,7 @@
               </IsComplete>
             </When>
             <Then>
-              <CollectionSum>
-                <Dependency path="/otherDeductions/*/payment"/>
-              </CollectionSum>
+              <Dependency path="/otherDeductions"/>
             </Then>
           </Case>
           <Case>

@@ -81,6 +81,12 @@
         <Dollar/>
       </Writable>
     </Fact>
+    <Fact path="/totalEstimatedTaxesPaid">
+      <Description>The taxpayer's estimated taxes paid for the entire tax year.</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
     <Fact path="/adjustmentsToIncome">
       <Description>Adjustments to income to report on line 10 of Form 1040 and line 26 of Schedule.</Description>
       <Derived>
@@ -96,6 +102,7 @@
             <Dependency path="/actualBusinessCreditsForEligible"/>
             <Dependency path="/actualSelfEmploymentHealthInsuranceDeduction"/>
             <Dependency path="/selfEmployedRetirementPlanDeduction"/>
+            <Dependency path="/totalEstimatedTaxesPaid"/>
           </Add>
         </Round>
       </Derived>

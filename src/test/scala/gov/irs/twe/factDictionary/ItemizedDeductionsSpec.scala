@@ -153,4 +153,26 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     }
     println(s"Completed ${dataTable.length} tests for calculating itemized deduction limits")
   }
+
+  test("test OB3 70120: SALT cap") {
+    val dataTable = Table(
+      ("stateAndLocalTaxPaymentsTotal", "expectedStateAndLocalTaxPaymentsTotal"),
+      ("10000", "10000"),
+      ("30000", "30000"),
+      ("40000", "40000"),
+      ("50000", "40000"),
+    )
+    forAll(dataTable) { (stateAndLocalTaxPaymentsTotal, expectedStateAndLocalTaxPaymentsTotal) =>
+      val graph = makeGraphWith(
+        factDictionary,
+        Path("/stateAndLocalTaxPayments") -> Dollar(stateAndLocalTaxPaymentsTotal),
+      )
+
+      val actualSALT = graph.get("/stateAndLocalTaxPaymentsTotal")
+
+      assert(actualSALT.value.contains(Dollar(expectedStateAndLocalTaxPaymentsTotal)))
+    }
+    println(s"Completed ${dataTable.length} tests for calculating SALT cap")
+  }
+
 }
