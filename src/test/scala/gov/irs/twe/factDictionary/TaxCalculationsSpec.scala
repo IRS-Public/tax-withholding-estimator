@@ -123,7 +123,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("2000"),
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -191,7 +191,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("2000"),
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -255,7 +255,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("2000"),
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -319,7 +319,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("4000"),
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -394,7 +394,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("3600"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("4000"),
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -469,7 +469,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("4100"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("6000"),
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -757,7 +757,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "DollarWrapper",
     "item": "200.00"
   },
-  "/totalAdvancedPayments": {
+  "/totalEstimatedTaxesPaid": {
     "$type": "DollarWrapper",
     "item": "0"
   }
@@ -946,7 +946,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "BooleanWrapper",
     "item": false
   },
-  "/totalAdvancedPayments": {
+  "/totalEstimatedTaxesPaid": {
     "$type": "DollarWrapper",
     "item": "0"
   }
@@ -1133,7 +1133,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     "$type": "BooleanWrapper",
     "item": false
   },
-  "/totalAdvancedPayments": {
+  "/totalEstimatedTaxesPaid": {
     "$type": "DollarWrapper",
     "item": "0"
   }
@@ -1185,7 +1185,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   //     Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
   //     Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
   //     Path("/actualChildTaxCreditAmount") -> Dollar("6000"),
-  //     Path("/totalAdvancedPayments") -> Dollar("0"),
+  //     Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
 
   //     Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
   //     Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("400"),
@@ -1230,7 +1230,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path("/wantsItemizedDeduction") -> false,
       Path("/wantsStandardDeduction") -> true,
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
 
       // Derived overrides
       Path("/adjustmentsToIncome") -> Dollar("0"),
@@ -1285,7 +1285,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/pensions/#${pension2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path("/wantsItemizedDeduction") -> false,
       Path("/wantsStandardDeduction") -> true,
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
 
       // Derived overrides
       Path("/adjustmentsToIncome") -> Dollar("0"),
@@ -1339,7 +1339,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/pensions/#${pension1Id}/income") -> Dollar("60000"),
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
 
       // Derived overrides
       Path("/adjustmentsToIncome") -> Dollar("0"),
@@ -1440,7 +1440,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
-      Path("/totalAdvancedPayments") -> Dollar("10000"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("10000"),
       jobs -> jobsCollection,
       Path(s"/jobs/#${job1Id}/isAllYear") -> true,
       Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
@@ -1528,7 +1528,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("3000"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -1592,7 +1592,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("3000"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
-      Path("/totalAdvancedPayments") -> Dollar("0"),
+      Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
