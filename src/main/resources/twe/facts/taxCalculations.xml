@@ -1044,8 +1044,9 @@
     </Fact>
     <Fact path="/totalOwed">
       <Description>Estimated total taxes owed. The tax liability minus the total credits and total
-        advance payments made during the tax year.
+        advance payments made during the tax year. Effectively line 37 of the 1040.
       </Description>
+      <!-- TODO: this currently doesn't match line 37 of the 1040 exactly -->
       <Derived>
         <Subtract>
           <Minuend>
@@ -1059,6 +1060,8 @@
       </Derived>
     </Fact>
     <Fact path="/totalTax">
+      <Description>Taxes from taxable income minus credits plus other taxes, including sefl-employment tax. As reported on line 24 of Form 1040.</Description>
+      <!-- TODO: This currently doesn't match line 24 of the 1040 -->
       <Derived>
         <Subtract>
           <Minuend>

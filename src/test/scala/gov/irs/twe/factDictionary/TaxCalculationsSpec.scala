@@ -123,6 +123,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("2000"),
+      Path("/totalAdvancedPayments") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -146,13 +147,13 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
       // These are the original values from the QA spreadsheet.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("6140")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("4140")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("4140")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("940")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("338")))
     } else {
       // The following values now differ from the QA spreadsheet due to standard deduction changes.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("5975")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("3975")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("3975")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("775")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("283")))
     }
@@ -190,6 +191,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("2000"),
+      Path("/totalAdvancedPayments") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -212,13 +214,13 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
       // These are the original values from the QA spreadsheet.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("6726")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("4726")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("4726")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("526")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("125")))
     } else {
       // The following values now differ from the QA spreadsheet due to standard deduction changes.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("6546")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("4546")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("4546")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("346")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("65")))
     }
@@ -253,6 +255,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("2000"),
+      Path("/totalAdvancedPayments") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -275,13 +278,13 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
       // These are the original values from the QA spreadsheet.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("4883")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("2883")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("2883")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("683")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("315")))
     } else {
       // The following values now differ from the QA spreadsheet due to standard deduction changes.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("4745")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("2745")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("2745")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("545")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("269")))
     }
@@ -316,6 +319,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("4000"),
+      Path("/totalAdvancedPayments") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -338,13 +342,13 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
       // These are the original values from the QA spreadsheet.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("19967")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("15967")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("15967")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("367")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("318")))
     } else {
       // The following values now differ from the QA spreadsheet due to standard deduction changes.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("19787")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("15787")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("15787")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("187")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("282")))
     }
@@ -390,6 +394,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("3600"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("4000"),
+      Path("/totalAdvancedPayments") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -413,13 +418,13 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
       // These are the original values from the QA spreadsheet.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("16428")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("12428")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("12428")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("1628")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("412")))
     } else {
       // The following values now differ from the QA spreadsheet due to standard deduction changes.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("16158")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("12158")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("12158")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("1358")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("358")))
     }
@@ -464,6 +469,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("4100"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
       Path("/actualChildTaxCreditAmount") -> Dollar("6000"),
+      Path("/totalAdvancedPayments") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
@@ -486,14 +492,14 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
       // These are the original values from the QA spreadsheet.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("22333")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("16333")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("16333")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2633")))
       // This is actually 280 in the spreadsheet but when calculating it manually we get 283
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("283")))
     } else {
       // The following values now differ from the QA spreadsheet due to standard deduction changes.
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("22153")))
-      assert(graph.get(Path("/totalTax")).value.contains(Dollar("16153")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("16153")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2453")))
       assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("265")))
     }
@@ -750,6 +756,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   "/jobs/#697b03f6-2f2b-4fe0-be56-356e7695a677/yearToDateWithholding": {
     "$type": "DollarWrapper",
     "item": "200.00"
+  },
+  "/totalAdvancedPayments": {
+    "$type": "DollarWrapper",
+    "item": "0"
   }
 }
     """
@@ -935,6 +945,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   "/primaryFilerAge65OrOlder": {
     "$type": "BooleanWrapper",
     "item": false
+  },
+  "/totalAdvancedPayments": {
+    "$type": "DollarWrapper",
+    "item": "0"
   }
 }
     """
@@ -1118,6 +1132,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   "/primaryFilerAge65OrOlder": {
     "$type": "BooleanWrapper",
     "item": false
+  },
+  "/totalAdvancedPayments": {
+    "$type": "DollarWrapper",
+    "item": "0"
   }
 }
     """
@@ -1167,6 +1185,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   //     Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
   //     Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
   //     Path("/actualChildTaxCreditAmount") -> Dollar("6000"),
+  //     Path("/totalAdvancedPayments") -> Dollar("0"),
 
   //     Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
   //     Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("400"),
@@ -1190,7 +1209,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
   //   assert(graph.get(Path("/agi")).value.contains(Dollar("137857")))
   //   assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("22333")))
-  //   assert(graph.get(Path("/totalTax")).value.contains(Dollar("16333")))
+  //   assert(graph.get(Path("/totalOwed")).value.contains(Dollar("16333")))
 
   //   assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2633")))
   //   assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("280")))
@@ -1211,6 +1230,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path("/wantsItemizedDeduction") -> false,
       Path("/wantsStandardDeduction") -> true,
+      Path("/totalAdvancedPayments") -> Dollar("0"),
 
       // Derived overrides
       Path("/adjustmentsToIncome") -> Dollar("0"),
@@ -1265,6 +1285,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/pensions/#${pension2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path("/wantsItemizedDeduction") -> false,
       Path("/wantsStandardDeduction") -> true,
+      Path("/totalAdvancedPayments") -> Dollar("0"),
 
       // Derived overrides
       Path("/adjustmentsToIncome") -> Dollar("0"),
@@ -1318,6 +1339,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/pensions/#${pension1Id}/income") -> Dollar("60000"),
+      Path("/totalAdvancedPayments") -> Dollar("0"),
 
       // Derived overrides
       Path("/adjustmentsToIncome") -> Dollar("0"),
@@ -1404,8 +1426,210 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
   //   assert(graph.get(Path("/agi")).value.contains(Dollar("141362")))
   //   assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("14041")))
-  //   assert(graph.get(Path("/totalTax")).value.contains(Dollar("10041")))
+  //   assert(graph.get(Path("/totalOwed")).value.contains(Dollar("10041")))
   //   assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("741")))
   //   assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("122")))
   // }
+
+  // These following scenarios are for scenarios where we need to reduce withholding
+  // Right now they are only applied to a singular job, this will be updated as part of https://github.com/IRSDigitalService/tax-withholding-estimator/issues/841
+  test("2200 Scenarios spreadsheet Column B") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> Enum("single", "/filingStatusOptions"),
+      Path("/primaryFilerAge65OrOlder") -> false,
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path("/totalAdvancedPayments") -> Dollar("10000"),
+      jobs -> jobsCollection,
+      Path(s"/jobs/#${job1Id}/isAllYear") -> true,
+      Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-04-30"),
+      Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-04-30"),
+      Path(s"/jobs/#${job1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/jobs/#${job1Id}/yearToDateIncome") -> Dollar("20000"),
+      Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
+      Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("4000"),
+      Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/isAllYear") -> true,
+      Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("biWeekly", "/payFrequencyOptions"),
+      Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-05-10"),
+      Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-05-10"),
+      Path(s"/jobs/#${job2Id}/averagePayPerPayPeriod") -> Dollar("1000"),
+      Path(s"/jobs/#${job2Id}/yearToDateIncome") -> Dollar("10000"),
+      Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
+      Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("3000"),
+      Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
+      // Derived overrides
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("20000"),
+    )
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("60000")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("26000")))
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("12000")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("7800")))
+    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("19800")))
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/standardAnnualWithholdingAmount")).value.contains(Dollar("5161.50")))
+    // 430.13 is expected but since we are using banker's rounding and the value is 430.125 we round down
+    assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.12")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("42.31")))
+
+    assert(graph.get(Path("/agi")).value.contains(Dollar("106000")))
+
+    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
+      // These are the original values from the QA spreadsheet.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("14940")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("4940")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("-14860")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("0")))
+      // Rounding from tentativeWithholdingAmount causes this to differ from the expected 5162
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line3")).value.contains(Dollar("5161")))
+    } else {
+      // The following values now differ from the QA spreadsheet due to standard deduction changes.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("14775")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("4775")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("-15025")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("0")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line3")).value.contains(Dollar("5161")))
+    }
+  }
+
+  test("2200 Scenarios spreadsheet Column D") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> Enum("marriedFilingJointly", "/filingStatusOptions"),
+      Path("/primaryFilerAge65OrOlder") -> false,
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path("/secondaryFilerAge65OrOlder") -> false,
+      Path("/secondaryFilerIsBlind") -> false,
+      Path("/secondaryFilerIsClaimedOnAnotherReturn") -> false,
+      jobs -> jobsCollection,
+      Path(s"/jobs/#${job1Id}/isAllYear") -> true,
+      Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-04-30"),
+      Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-04-30"),
+      Path(s"/jobs/#${job1Id}/averagePayPerPayPeriod") -> Dollar("4000"),
+      Path(s"/jobs/#${job1Id}/yearToDateIncome") -> Dollar("16000"),
+      Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("500"),
+      Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("2000"),
+      Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/isAllYear") -> true,
+      Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("biWeekly", "/payFrequencyOptions"),
+      Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-05-10"),
+      Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-05-10"),
+      Path(s"/jobs/#${job2Id}/averagePayPerPayPeriod") -> Dollar("1000"),
+      Path(s"/jobs/#${job2Id}/yearToDateIncome") -> Dollar("10000"),
+      Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
+      Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("3000"),
+      Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
+      Path("/totalAdvancedPayments") -> Dollar("0"),
+      // Derived overrides
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+    )
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("48000")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("26000")))
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("6000")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("7800")))
+    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("13800")))
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/standardAnnualWithholdingAmount")).value.contains(Dollar("1800")))
+    assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("150")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("0")))
+
+    assert(graph.get(Path("/agi")).value.contains(Dollar("74000")))
+
+    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
+      // These are the original values from the QA spreadsheet.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("4806")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("4806")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("-8994")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("0")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line3")).value.contains(Dollar("1800")))
+    } else {
+      // The following values now differ from the QA spreadsheet due to standard deduction changes.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("4626")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("4626")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("-9174")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("0")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line3")).value.contains(Dollar("1800")))
+    }
+  }
+
+  test("when you need to reduce withholding but haven't already paid enough for the year") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> Enum("single", "/filingStatusOptions"),
+      Path("/primaryFilerAge65OrOlder") -> false,
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      jobs -> jobsCollection,
+      Path(s"/jobs/#${job1Id}/isAllYear") -> true,
+      Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-04-30"),
+      Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-04-30"),
+      Path(s"/jobs/#${job1Id}/averagePayPerPayPeriod") -> Dollar("10000"),
+      Path(s"/jobs/#${job1Id}/yearToDateIncome") -> Dollar("40000"),
+      Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("3000"),
+      Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("12000"),
+      Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/isAllYear") -> true,
+      Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("biWeekly", "/payFrequencyOptions"),
+      Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-05-10"),
+      Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-05-10"),
+      Path(s"/jobs/#${job2Id}/averagePayPerPayPeriod") -> Dollar("1000"),
+      Path(s"/jobs/#${job2Id}/yearToDateIncome") -> Dollar("10000"),
+      Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
+      Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("3000"),
+      Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
+      Path("/totalAdvancedPayments") -> Dollar("0"),
+      // Derived overrides
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+    )
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("120000")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/income")).value.contains(Dollar("26000")))
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/endOfYearProjectedWithholding")).value.contains(Dollar("36000")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/endOfYearProjectedWithholding")).value.contains(Dollar("7800")))
+    assert(graph.get(Path("/totalEndOfYearProjectedWithholding")).value.contains(Dollar("43800")))
+
+    assert(graph.get(Path(s"/jobs/#${job1Id}/standardAnnualWithholdingAmount")).value.contains(Dollar("18047")))
+    assert(graph.get(Path(s"/jobs/#${job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("1503.92")))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("42.31")))
+
+    assert(graph.get(Path("/agi")).value.contains(Dollar("146000")))
+
+    if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
+      // These are only included in case we wanted to compare it with the older numbers
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("24287")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("24287")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("-19513")))
+      assert(graph.get(Path("/taxGap")).value.contains(Dollar("-3679.01")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("0")))
+      // There are some roundings for intermediate values that cause this to be 5519 instead of 5518
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line3")).value.contains(Dollar("5519")))
+    } else {
+      // The following values now differ from the QA spreadsheet due to standard deduction changes.
+      assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("24107")))
+      assert(graph.get(Path("/totalOwed")).value.contains(Dollar("24107")))
+      assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("-19693")))
+      assert(graph.get(Path("/taxGap")).value.contains(Dollar("-3859.01")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("0")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line3")).value.contains(Dollar("5789")))
+    }
+  }
 }
