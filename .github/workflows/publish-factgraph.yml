@@ -12,12 +12,13 @@ on:
 
 env:
   JAVA_VERSION: 21
+  SBT_VERSION: 1.11.4
   FACT_GRAPH_PATH: fact-graph
 
 jobs:
 
   publish-fact-graph:
-
+    if: vars.build == 'false'
     runs-on: ubuntu-latest
 
     steps:
@@ -36,14 +37,14 @@ jobs:
 
     - name: Retrieve cached local sbt dependencies
       id: ivy_local_cache
-      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
       with:
         path: ~/.ivy2/local
         key: ${{ env.FACT_GRAPH_PATH }}-ivy-local-${{ steps.fg_sha.outputs.sha }}
 
     - name: Restore fact-graph target directory from cache
       id: target_cache
-      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
       with:
         path: ${{ env.FACT_GRAPH_PATH }}/target
         key: ${{ env.FACT_GRAPH_PATH }}-target-${{ steps.fg_sha.outputs.sha }}
@@ -64,26 +65,16 @@ jobs:
       run: |
         echo "skip_compile: ${{ steps.check_cache.outputs.skip_compile }}"
 
-    - name: Install sbt via Coursier v2.1.24
-      if: steps.check_cache.outputs.skip_compile == 'false'
-      run: |
-        curl -fL "https://github.com/coursier/coursier/releases/download/v2.1.24/cs-x86_64-pc-linux.gz" | gzip -d > cs
-        chmod +x cs
-        ./cs --version  # verify that we're using v2.1.24
-        ./cs install sbt
-        echo "$HOME/.local/share/coursier/bin" >> $GITHUB_PATH
-
-    - name: Setup Java
-      if: steps.check_cache.outputs.skip_compile == 'false'
-      uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4
+    - name: Install sbt via shared action
+      uses: IRSDigitalService/shared-actions/.github/actions/setup_sbt_coursier@d39382f7b23cb52c0762b5e321f29f2ed66e8189
       with:
-        distribution: 'temurin'
-        java-version: ${{ env.JAVA_VERSION }}
+        java_version: ${{ env.JAVA_VERSION }}
+        sbt_version: ${{ env.SBT_VERSION }}
 
     - name: Retrieve cached global sbt dependencies
       if: steps.check_cache.outputs.skip_compile == 'false'
       id: global_sbt_dependencies_cache
-      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
       with:
         path: |
           ~/.ivy2/cache
@@ -98,21 +89,21 @@ jobs:
 
     - name: Save ivy-local cache
       if: steps.check_cache.outputs.skip_compile == 'false'
-      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
       with:
         path: ~/.ivy2/local
         key: ${{ env.FACT_GRAPH_PATH }}-ivy-local-${{ steps.fg_sha.outputs.sha }}
 
     - name: Save fact-graph target directory
       if: steps.check_cache.outputs.skip_compile == 'false'
-      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
       with:
         path: ${{ env.FACT_GRAPH_PATH }}/target
         key: ${{ env.FACT_GRAPH_PATH }}-target-${{ steps.fg_sha.outputs.sha }}
 
     - name: Save cached global sbt dependencies
       if: steps.check_cache.outputs.skip_compile == 'false'
-      uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4
+      uses: actions/cache@d4323d4df104b026a6aa633fdb11d772146be0bf #v4.2.2
       with:
         path: |
           ~/.ivy2/cache

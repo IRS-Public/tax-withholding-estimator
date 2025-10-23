@@ -1,4 +1,4 @@
-name: TWE Quality Checks
+name: Quality Checks
 
 on:
   workflow_dispatch:
@@ -15,44 +15,30 @@ concurrency:
 
 env:
   JAVA_VERSION: 21
+  SBT_VERSION: 1.11.4
   FACT_GRAPH_PATH: fact-graph
   TWE_PATH: tax_withholding_estimator
   TWE_RESOURCES_PATH: src/main/resources/twe
 
 jobs:
-
-  check-commit-emails:
-    runs-on: ubuntu-latest
+  check-emails:
+    if: vars.build == 'false'
+    runs-on: ${{ vars.runner }}
     steps:
-
-      - name: Checkout TWE
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: IRSDigitalService/shared-actions/.github/actions/check-commit-emails@d39382f7b23cb52c0762b5e321f29f2ed66e8189
         with:
-          path: ${{ env.TWE_PATH }}
-
-      - name: Check commit emails
-        working-directory: ${{ env.TWE_PATH }}
-        run: |
-          git fetch origin ${{ github.base_ref }}
-          echo ${{ github.base_ref }}
-          git log origin/${{ github.base_ref }}..HEAD --pretty=format:"%ae%n%ce" | sort -u > emails.txt
-          echo "Found email(s):"
-          cat emails.txt
-          if grep -Evi '(^noreply@github\.com$|@users\.noreply\.github\.com$)' emails.txt | grep -v '^\s*$' > invalid.txt; then
-            echo "Invalid email(s):"
-            cat invalid.txt
-            exit 1
-          fi
-
+          repo_path: ${{ env.TWE_PATH }}
+          base_ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || 'main' }}
 
   call-publish-fact-graph:
+    if: vars.build == 'false'
     uses: ./.github/workflows/publish-factgraph.yml
     secrets:
       SVC_ACCOUNT_PAT: ${{ secrets.SVC_ACCOUNT_PAT }}
 
-  build:
-
-    needs: [check-commit-emails, call-publish-fact-graph]
+  quality-checks:
+    needs: [check-emails, call-publish-fact-graph]
+    if: vars.build == 'false'
     runs-on: ubuntu-latest
 
     steps:
@@ -60,7 +46,9 @@ jobs:
     - name: Checkout TWE
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       with:
+        repository: IRSDigitalService/${{ env.TWE_PATH }}
         path: ${{ env.TWE_PATH }}
+        token: ${{ secrets.SVC_ACCOUNT_PAT }}
 
     - name: Checkout Fact Graph
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -74,19 +62,11 @@ jobs:
       working-directory: ${{ env.FACT_GRAPH_PATH }}
       run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
-    - name: Install sbt via Coursier v2.1.24
-      run: |
-        curl -fL "https://github.com/coursier/coursier/releases/download/v2.1.24/cs-x86_64-pc-linux.gz" | gzip -d > cs
-        chmod +x cs
-        ./cs --version  # verify that we're using v2.1.24
-        ./cs install sbt
-        echo "$HOME/.local/share/coursier/bin" >> $GITHUB_PATH
-
-    - name: Setup Java
-      uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4
+    - name: Install sbt via shared action
+      uses: IRSDigitalService/shared-actions/.github/actions/setup_sbt_coursier@d39382f7b23cb52c0762b5e321f29f2ed66e8189
       with:
-        distribution: 'temurin'
-        java-version: ${{ env.JAVA_VERSION }}
+        java_version: ${{ env.JAVA_VERSION }}
+        sbt_version: ${{ env.SBT_VERSION }}
 
     - name: Retrieve cached sbt dependencies
       uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 #v4.2.4

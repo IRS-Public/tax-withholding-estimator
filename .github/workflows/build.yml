@@ -1,0 +1,98 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  id-token: write
+
+
+# Cancel redundant builds on same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # do not cancel redundant builds on main or release branches
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/heads/release/') }}
+
+env:
+  JAVA_VERSION: 21
+  SBT_VERSION: 1.11.4
+  FACT_GRAPH_PATH: fact-graph
+  TWE_PATH: tax_withholding_estimator
+
+jobs:
+
+  build:
+    if: vars.build == 'true'
+    runs-on: ${{ vars.runner }}
+
+    steps:
+    - name: Checkout TWE
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        path: ${{ env.TWE_PATH }}
+
+    - name: Checkout Fact Graph
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        repository: IRSDigitalService/${{ env.FACT_GRAPH_PATH }}
+        path: ${{ env.FACT_GRAPH_PATH }}
+        token: ${{ secrets.SVC_ACCOUNT_PAT }}
+
+    - name: Install sbt via shared action
+      id: sbt-setup
+      uses: IRSDigitalService/shared-actions/.github/actions/setup_sbt_maven@d39382f7b23cb52c0762b5e321f29f2ed66e8189
+      with:
+        sbt_version: ${{ env.SBT_VERSION }}
+        java_version: ${{ env.JAVA_VERSION }}
+        maven_host: ${{ vars.MAVEN_HOST }}
+
+    - name: Compile and publish Fact Graph locally
+      working-directory: ${{ env.FACT_GRAPH_PATH }}
+      run: |
+        export SBT_BATCH=true
+        export SBT_OPTS="${SBT_OPTS} \
+          -Xms8G \
+          -Xmx8G \
+          -Dsbt.log.noformat=true \
+          -Dsbt.ci=true
+          -Dsbt.repository.config=$HOME/.sbt/repositories"
+
+        sbt compile publishLocal
+
+    - name: Run Tests
+      working-directory: ${{ env.TWE_PATH }}
+      run: sbt test
+
+    - name: Generate static site
+      working-directory: ${{ env.TWE_PATH }}
+      run: sbt run
+
+    - name: Verify generated site output
+      working-directory: ${{ env.TWE_PATH }}
+      run: |
+        set -euo pipefail
+
+        echo "--- Verifying 'out' directory ---"
+
+        if [ ! -d "out" ]; then
+          echo "ERROR: 'out/' directory doesn't exist"
+          exit 1
+        fi
+
+        echo "SUCCESS: 'out/' directory exists."
+
+        echo "--- Listing 'out' directory contents ---"
+        ls -AlF out
+        echo "----------------------------------------"
+
+        if [ -z "$(ls -A out)" ]; then
+          echo "ERROR: 'out/' is empty"
+          exit 1
+        fi
+
+        echo "SUCCESS: 'out/' exists and is not empty"
