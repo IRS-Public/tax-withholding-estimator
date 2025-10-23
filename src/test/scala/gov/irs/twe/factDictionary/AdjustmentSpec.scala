@@ -71,7 +71,223 @@ class AdjustmentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         assert(agi.value.contains(Dollar(expectedAgi)))
     }
     println(
-      s"Completed ${dataTable.length} educator expense adjustment tests for calculating itemized deduction limits",
+      s"Completed ${dataTable.length} educator expense adjustment scenarios for calculating agi and total adjustments",
+    )
+  }
+
+  test("test student loan interest adjustment: applies correct limit depending on filing status") {
+    val dataTable = Table(
+      ("status", "totalIncome", "agi", "studentLoanInterestAmount", "actualStudentLoanInterestAdjustment"),
+      // Non-MFJ
+      (single, "50000", "50000", "0", "0"),
+      (single, "150000", "150000", "0", "0"),
+      (single, "95000", "95000", "5000", "0"),
+      (single, "250000", "250000", "5000", "0"),
+      (single, "80000", "78000", "2000", "2000"),
+      (single, "80000", "77500", "2500", "2500"),
+      (single, "80000", "77500", "5000", "2500"),
+      (single, "85000", "83666", "2000", "1334"),
+      (single, "85000", "83332", "5000", "1668"),
+      (single, "91100", "90814", "1100", "286"),
+      (single, "91100", "90710", "1500", "390"),
+      (single, "91100", "90450", "5000", "650"),
+      (hoh, "50000", "50000", "0", "0"),
+      (hoh, "150000", "150000", "0", "0"),
+      (hoh, "95000", "95000", "5000", "0"),
+      (hoh, "250000", "250000", "5000", "0"),
+      (hoh, "80000", "78000", "2000", "2000"),
+      (hoh, "80000", "77500", "2500", "2500"),
+      (hoh, "80000", "77500", "5000", "2500"),
+      (hoh, "85000", "83666", "2000", "1334"),
+      (hoh, "85000", "83332", "5000", "1668"),
+      (hoh, "91100", "90814", "1100", "286"),
+      (hoh, "91100", "90710", "1500", "390"),
+      (hoh, "91100", "90450", "5000", "650"),
+      (qss, "50000", "50000", "0", "0"),
+      (qss, "150000", "150000", "0", "0"),
+      (qss, "95000", "95000", "5000", "0"),
+      (qss, "250000", "250000", "5000", "0"),
+      (qss, "80000", "78000", "2000", "2000"),
+      (qss, "80000", "77500", "2500", "2500"),
+      (qss, "80000", "77500", "5000", "2500"),
+      (qss, "85000", "83666", "2000", "1334"),
+      (qss, "85000", "83332", "5000", "1668"),
+      (qss, "91100", "90814", "1100", "286"),
+      (qss, "91100", "90710", "1500", "390"),
+      (qss, "91100", "90450", "5000", "650"),
+      (mfs, "50000", "50000", "0", "0"),
+      (mfs, "150000", "150000", "0", "0"),
+      (mfs, "95000", "95000", "5000", "0"),
+      (mfs, "250000", "250000", "5000", "0"),
+      (mfs, "80000", "80000", "2000", "0"),
+      (mfs, "80000", "80000", "2500", "0"),
+      (mfs, "80000", "80000", "5000", "0"),
+      (mfs, "85000", "85000", "2000", "0"),
+      (mfs, "85000", "85000", "5000", "0"),
+      (mfs, "91100", "91100", "1100", "0"),
+      (mfs, "91100", "91100", "1500", "0"),
+      (mfs, "91100", "91100", "5000", "0"),
+      // MFJ
+      (mfj, "50000", "50000", "0", "0"),
+      (mfj, "150000", "150000", "0", "0"),
+      (mfj, "95000", "92500", "5000", "2500"),
+      (mfj, "250000", "250000", "5000", "0"),
+      (mfj, "80000", "78000", "2000", "2000"),
+      (mfj, "80000", "77500", "2500", "2500"),
+      (mfj, "80000", "77500", "5000", "2500"),
+      (mfj, "85000", "83000", "2000", "2000"),
+      (mfj, "85000", "82500", "5000", "2500"),
+      (mfj, "91100", "90000", "1100", "1100"),
+      (mfj, "91100", "89600", "1500", "1500"),
+      (mfj, "91100", "88600", "5000", "2500"),
+      (mfj, "165000", "162500", "5000", "2500"),
+      (mfj, "165000", "163800", "1200", "1200"),
+      (mfj, "170000", "167917", "5000", "2083"),
+      (mfj, "170000", "169000", "1200", "1000"),
+      (mfj, "175000", "173332", "5000", "1668"),
+      (mfj, "175000", "174200", "1200", "800"),
+      (mfj, "180000", "178750", "5000", "1250"),
+      (mfj, "180000", "179400", "1200", "600"),
+      (mfj, "185000", "184167", "5000", "833"),
+      (mfj, "185000", "184600", "1200", "400"),
+      (mfj, "190000", "189582", "5000", "418"),
+      (mfj, "190000", "189800", "1200", "200"),
+      (mfj, "195000", "195000", "5000", "0"),
+      (mfj, "195000", "195000", "1200", "0"),
+    )
+
+    forAll(dataTable) {
+      (status, totalIncome, expectedAgi, studentLoanInterestAmount, actualStudentLoanInterestAdjustment) =>
+        val graph = makeGraphWith(
+          factDictionary,
+          Path("/filingStatus") -> status,
+          Path("/totalIncome") -> Dollar(totalIncome),
+          Path("/studentLoanInterestAmount") -> Dollar(studentLoanInterestAmount),
+          Path("/actualEducatorExpensesAdjustmentAmount") -> Dollar(0),
+          Path("/actualHsaTotalDeductibleAmount") -> Dollar(0),
+          Path("/actualDeductionForTraditionalIRAContribution") -> Dollar(0),
+          Path("/actualMovingExpensesForArmedServicesMembers") -> Dollar(0),
+          Path("/actualAlimonyPaid") -> Dollar(0),
+          Path("/actualPenaltyForEarlySavingsWithdrawal") -> Dollar(0),
+          Path("/actualBusinessCreditsForEligible") -> Dollar(0),
+          Path("/actualSelfEmploymentHealthInsuranceDeduction") -> Dollar(0),
+          Path("/selfEmployedRetirementPlanDeduction") -> Dollar(0),
+        )
+
+        val actualAdjustments = graph.get("/adjustmentsToIncome")
+        val agi = graph.get("/agi")
+
+        assert(actualAdjustments.value.contains(Dollar(actualStudentLoanInterestAdjustment)))
+        assert(agi.value.contains(Dollar(expectedAgi)))
+    }
+    println(
+      s"Completed ${dataTable.length} student loan interest adjustments for calculating agi and total adjustments",
+    )
+  }
+
+  test(
+    "test educator expense and student loan interest adjustment: applies correct limit and phase out depending on filing status",
+  ) {
+    val dataTable = Table(
+      (
+        "status",
+        "totalIncome",
+        "agi",
+        "educatorExpensesAdjustmentAmount",
+        "actualEducatorExpensesAdjustmentAmount",
+        "studentLoanInterestAmount",
+        "actualStudentLoanInterestAdjustment",
+      ),
+      // Non-MFJ cases, up to $300 educator expense and 2500 deduction with 80-95k MAGI phase out
+      (single, "50000", "47750", "250", "250", "2000", "2000"),
+      (single, "50000", "47700", "300", "300", "2000", "2000"),
+      (single, "50000", "47700", "500", "300", "2000", "2000"),
+      (single, "50000", "48700", "500", "300", "1000", "1000"),
+      (single, "80000", "78700", "500", "300", "1000", "1000"),
+      (single, "85000", "83326", "500", "300", "2000", "1374"),
+      (single, "90000", "88994", "500", "300", "2000", "706"),
+      (single, "95000", "94700", "500", "300", "0", "0"),
+      (single, "150000", "149700", "500", "300", "0", "0"),
+      (hoh, "50000", "47750", "250", "250", "2000", "2000"),
+      (hoh, "50000", "47700", "300", "300", "2000", "2000"),
+      (hoh, "50000", "47700", "500", "300", "2000", "2000"),
+      (hoh, "50000", "48700", "500", "300", "1000", "1000"),
+      (hoh, "80000", "78700", "500", "300", "1000", "1000"),
+      (hoh, "85000", "83326", "500", "300", "2000", "1374"),
+      (hoh, "90000", "88994", "500", "300", "2000", "706"),
+      (hoh, "95000", "94700", "500", "300", "0", "0"),
+      (hoh, "150000", "149700", "500", "300", "0", "0"),
+      (qss, "50000", "47750", "250", "250", "2000", "2000"),
+      (qss, "50000", "47700", "300", "300", "2000", "2000"),
+      (qss, "50000", "47700", "500", "300", "2000", "2000"),
+      (qss, "50000", "48700", "500", "300", "1000", "1000"),
+      (qss, "80000", "78700", "500", "300", "1000", "1000"),
+      (qss, "85000", "83326", "500", "300", "2000", "1374"),
+      (qss, "90000", "88994", "500", "300", "2000", "706"),
+      (qss, "95000", "94700", "500", "300", "0", "0"),
+      (qss, "150000", "149700", "500", "300", "0", "0"),
+
+      // MFS is ineligible for student loan interest adjustment, but remains eligible for educator expense adjustment
+      (mfs, "50000", "49750", "250", "250", "2500", "0"),
+      (mfs, "50000", "49700", "300", "300", "2500", "0"),
+      (mfs, "50000", "49700", "500", "300", "2500", "0"),
+
+      // MFJ cases, up to $600
+      (mfj, "50000", "47750", "250", "250", "2000", "2000"),
+      (mfj, "50000", "47700", "300", "300", "2000", "2000"),
+      (mfj, "50000", "47400", "600", "600", "2000", "2000"),
+      (mfj, "50000", "48400", "600", "600", "1000", "1000"),
+      (mfj, "80000", "78400", "600", "600", "1000", "1000"),
+      (mfj, "85000", "82400", "600", "600", "2000", "2000"),
+      (mfj, "90000", "87400", "600", "600", "2000", "2000"),
+      (mfj, "165000", "162200", "300", "300", "5000", "2500"),
+      (mfj, "170000", "167267", "600", "600", "5000", "2133"),
+      (mfj, "175000", "172900", "400", "400", "5000", "1700"),
+      (mfj, "180000", "178100", "600", "600", "5000", "1300"),
+      (mfj, "185000", "183625", "500", "500", "5000", "875"),
+      (mfj, "190000", "188932", "600", "600", "5000", "468"),
+      (mfj, "195000", "194457", "500", "500", "5000", "43"),
+      (mfj, "195000", "194350", "600", "600", "5000", "50"),
+      (mfj, "200000", "199500", "500", "500", "5000", "0"),
+    )
+
+    forAll(dataTable) {
+      (
+          status,
+          totalIncome,
+          expectedAgi,
+          educatorExpensesAdjustmentAmount,
+          actualEducatorExpensesAdjustmentAmount,
+          studentLoanInterestAmount,
+          actualStudentLoanInterestAdjustment,
+      ) =>
+        val graph = makeGraphWith(
+          factDictionary,
+          Path("/filingStatus") -> status,
+          Path("/totalIncome") -> Dollar(totalIncome),
+          Path("/educatorExpenses") -> Dollar(educatorExpensesAdjustmentAmount),
+          Path("/studentLoanInterestAmount") -> Dollar(studentLoanInterestAmount),
+          Path("/actualHsaTotalDeductibleAmount") -> Dollar(0),
+          Path("/actualDeductionForTraditionalIRAContribution") -> Dollar(0),
+          Path("/actualMovingExpensesForArmedServicesMembers") -> Dollar(0),
+          Path("/actualAlimonyPaid") -> Dollar(0),
+          Path("/actualPenaltyForEarlySavingsWithdrawal") -> Dollar(0),
+          Path("/actualBusinessCreditsForEligible") -> Dollar(0),
+          Path("/actualSelfEmploymentHealthInsuranceDeduction") -> Dollar(0),
+          Path("/selfEmployedRetirementPlanDeduction") -> Dollar(0),
+        )
+
+        val actualAdjustments = graph.get("/adjustmentsToIncome")
+        val agi = graph.get("/agi")
+        val expectedAdjustments = Dollar.DollarIsFractional.plus(
+          Dollar(actualEducatorExpensesAdjustmentAmount),
+          Dollar(actualStudentLoanInterestAdjustment),
+        )
+        assert(actualAdjustments.value.contains(expectedAdjustments))
+        assert(agi.value.contains(Dollar(expectedAgi)))
+    }
+    println(
+      s"Completed ${dataTable.length} educator expense adjustment scenarios for calculating agi and total adjustments",
     )
   }
 }

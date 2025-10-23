@@ -1115,6 +1115,20 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/magiForStudentLoanInterestDeduction">
+      <Name>Modified Adjusted Gross Income for Student Loan Interest Deduction</Name>
+      <Description>This is AGI, but without student loan interest deduction.</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/totalIncome"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/adjustmentsToIncomeExcludingStudentLoanInterest"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
     <Fact path="/taxableIncomeExcludingItemizedDeductions">
       <Description>Taxable income for calculating itemized deduction cap for itemizers. By default excludes standard deduction because the taxpayer
         is itemizing, as well as itemized deduction to avoid circular dependency.</Description>

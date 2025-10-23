@@ -30,7 +30,7 @@
           <p> This includes both required and voluntarily pre - paid interest payments. </p>
           <p>Learn more about student loan interest [X].</p>
         </div>
-        <fg-set path="/actualStudentLoanInterestAdjustmentAmount">
+        <fg-set path="/studentLoanInterestAmount">
           <question>How much have you paid this year in student loan interest?</question>
           <input type="dollar"/>
         </fg-set>

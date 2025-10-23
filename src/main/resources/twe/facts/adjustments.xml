@@ -2,14 +2,6 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/actualStudentLoanInterestAdjustmentAmount">
-      <Description>Student loan interest adjustments, no logic in place for actually calculating the
-        applicable amount
-      </Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-    </Fact>
     <Fact path="/actualHsaTotalDeductibleAmount">
       <Description>HSA total deductible amount, no logic in place for actually calculating the
         applicable
@@ -81,30 +73,37 @@
         <Dollar/>
       </Writable>
     </Fact>
-    <Fact path="/totalEstimatedTaxesPaid">
-      <Description>The taxpayer's estimated taxes paid for the entire tax year.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
+    <Fact path="/adjustmentsToIncomeExcludingStudentLoanInterest">
+      <Description>The adjustments to income used in the calculation of non-IRA deduction MAGIs to determine deducible
+        amounts. Used in the Student Loan Interest Deduction and Social Security Benefits Worksheets. This should
+        include be a sum of Schedule 1, lines 11 through 20, and 23 and 25</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/actualEducatorExpensesAdjustmentAmount"/>
+          <Dependency path="/actualBusinessCreditsForEligible"/>
+          <Dependency path="/actualHsaTotalDeductibleAmount"/>
+          <Dependency path="/actualMovingExpensesForArmedServicesMembers"/>
+          <!--              TODO: Add deductible part of SE tax Schedule 1 line 15 here-->
+          <Dependency path="/selfEmployedRetirementPlanDeduction"/>
+          <Dependency path="/actualSelfEmploymentHealthInsuranceDeduction"/>
+          <Dependency path="/actualPenaltyForEarlySavingsWithdrawal"/>
+          <Dependency path="/actualAlimonyPaid"/>
+          <Dependency path="/actualDeductionForTraditionalIRAContribution"/>
+        </Add>
+      </Derived>
     </Fact>
     <Fact path="/adjustmentsToIncome">
-      <Description>Adjustments to income to report on line 10 of Form 1040 and line 26 of Schedule.</Description>
+      <Description>Adjustments to income to report on line 10 of Form 1040 and line 26 of Schedule 1.</Description>
       <Derived>
-        <Round>
-          <Add>
-            <Dependency path="/actualEducatorExpensesAdjustmentAmount"/>
-            <Dependency path="/actualStudentLoanInterestAdjustmentAmount"/>
-            <Dependency path="/actualHsaTotalDeductibleAmount"/>
-            <Dependency path="/actualDeductionForTraditionalIRAContribution"/>
-            <Dependency path="/actualMovingExpensesForArmedServicesMembers"/>
-            <Dependency path="/actualAlimonyPaid"/>
-            <Dependency path="/actualPenaltyForEarlySavingsWithdrawal"/>
-            <Dependency path="/actualBusinessCreditsForEligible"/>
-            <Dependency path="/actualSelfEmploymentHealthInsuranceDeduction"/>
-            <Dependency path="/selfEmployedRetirementPlanDeduction"/>
-            <Dependency path="/totalEstimatedTaxesPaid"/>
-          </Add>
-        </Round>
+        <GreaterOf>
+          <Round>
+            <Add>
+              <Dependency path="/adjustmentsToIncomeExcludingStudentLoanInterest"/>
+              <Dependency path="/actualStudentLoanInterestAdjustmentAmount"/>
+            </Add>
+          </Round>
+          <Dollar>0</Dollar>
+        </GreaterOf>
       </Derived>
     </Fact>
   </Facts>

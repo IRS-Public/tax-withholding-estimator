@@ -5487,17 +5487,7 @@
         should not be included. IRS Pub 915 Worksheet 1, Line 7.
       </Description>
       <Derived>
-        <GreaterOf>
-          <Dollar>0</Dollar>
-          <Subtract>
-            <Minuend>
-              <Dependency path="/adjustmentsToIncome"/>
-            </Minuend>
-            <Subtrahends>
-              <Dependency module="adjustments" path="/actualStudentLoanInterestAdjustmentAmount"/>
-            </Subtrahends>
-          </Subtract>
-        </GreaterOf>
+        <Dependency path="/adjustmentsToIncomeExcludingStudentLoanInterest"/>
       </Derived>
     </Fact>
     <Fact path="/pub915MAGIForBenefitsTaxableAmountLine8">
