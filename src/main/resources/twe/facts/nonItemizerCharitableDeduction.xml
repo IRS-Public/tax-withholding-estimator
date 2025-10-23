@@ -5,7 +5,7 @@
     <Fact path="/nonItemizerCharitableContributionDeductionMFJMax">
       <Name>Maximum non itemizer charitable deduction cap for MFJ filer</Name>
       <Description>2000 is maximum a non itemizer can deduct if they are MFJ</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>
           2000
@@ -15,11 +15,35 @@
     <Fact path="/nonItemizerCharitableContributionDeductionNonMFJMax">
       <Name>Maximum non itemizer charitable deduction cap for non-MFJ filer</Name>
       <Description>1000 is maximum a non itemizer can deduct if they are non-MFJ</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>
           1000
         </Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/actualNonItemizerCharitableContributionDeductionMax">
+      <Name>Maximum non itemizer charitable deduction based on filing status</Name>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dependency path="/nonItemizerCharitableContributionDeductionMFJMax"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/nonItemizerCharitableContributionDeductionNonMFJMax"/>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/nonItemizerCharitableContributionDeductionAmount">
@@ -30,16 +54,16 @@
     </Fact>
     <Fact path="/nonItemizerCharitableContributionDeduction">
       <Name>Non-itemizer charitable deduction</Name>
-      <Description>OB3 70242, amending IRC 170(p): Special rule for taxpayers who do not elect to
-        itemize deductionsIn the case of any taxable year, if the individual does not elect to
+      <Description>OB3 70424, amending IRC 170(p): Special rule for taxpayers who do not elect to
+        itemize deductions. In the case of any taxable year, if the individual does not elect to
         itemize deductions for such taxable year, the deduction under this section shall be equal to
         the deduction, not in excess of 1,000 ($2,000 in the case of
         a joint return), which would be determined under this section if the only charitable
         contributions taken into account in determining such deduction
         were contributions made in cash during such taxable year ...
 
-        We only this deduction to be taken if the filer' standard deduction is greater than their
-        itemized deduction, keeping in line with the logic in "/standardOrItemizedDeduction"
+        We only expect this deduction to be taken if the filer's standard deduction is greater than
+        their itemized deduction, keeping in line with the logic in "/standardOrItemizedDeduction"
       </Description>
       <Derived>
         <Switch>
@@ -48,7 +72,8 @@
               <All>
                 <Dependency path="/isFilingStatusMFJ"/>
                 <GreaterThan>
-                  <!--                  Compare against itemizedDeductionTotal because itemizedDeduction creates a circular dependency with OB3 deductions-->
+                  <!--                  Compare against itemizedDeductionTotal because itemizedDeduction creates a
+                  circular dependency with OB3 deductions-->
                   <Left>
                     <Dependency path="/standardDeduction"/>
                   </Left>

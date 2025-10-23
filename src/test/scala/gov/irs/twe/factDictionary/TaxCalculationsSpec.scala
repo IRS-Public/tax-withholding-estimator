@@ -129,6 +129,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("42000")))
@@ -197,6 +198,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("42000")))
@@ -261,6 +263,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("42000")))
@@ -325,6 +328,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("80000")))
@@ -401,6 +405,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
       // Path("/usePreOb3StandardDeduction") -> true,
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("80000")))
@@ -475,6 +480,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("84857.14")))
@@ -771,6 +777,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     graph.set(Path("/adjustmentsToIncome"), Dollar(0))
     graph.set(Path("/totalOtherIncome"), Dollar(0))
     graph.set(Path("/totalCredits"), Dollar(0))
+    graph.set(Path("/nonItemizerCharitableContributionDeductionAmount"), Dollar("0"))
 
     assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(817)))
 
@@ -960,6 +967,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     graph.set(Path("/adjustmentsToIncome"), Dollar(0))
     graph.set(Path("/totalOtherIncome"), Dollar(0))
     graph.set(Path("/totalCredits"), Dollar(0))
+    graph.set(Path("/nonItemizerCharitableContributionDeductionAmount"), Dollar("0"))
 
     assert(graph.get(Path(s"/jobs/#${_job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.12")))
     assert(graph.get(Path(s"/jobs/#${_job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("80.80")))
@@ -1146,6 +1154,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     graph.set(Path("/adjustmentsToIncome"), Dollar(0))
     graph.set(Path("/totalOtherIncome"), Dollar(0))
     graph.set(Path("/totalCredits"), Dollar(0))
+    graph.set(Path("/nonItemizerCharitableContributionDeductionAmount"), Dollar("0"))
 
     assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(384)))
 
@@ -1237,7 +1246,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/totalOtherIncome") -> Dollar("0"),
       Path("/totalCredits") -> Dollar("0"),
       Path(s"/pensions/#${pension1Id}/remainingPayDates") -> 4,
-
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
       // Don't matters
       Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
       Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-10-15"),
@@ -1293,6 +1302,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/totalCredits") -> Dollar("0"),
       Path(s"/pensions/#${pension1Id}/remainingPayDates") -> 4,
       Path(s"/pensions/#${pension2Id}/remainingPayDates") -> 4,
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
 
       // Don't matters
       Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
@@ -1346,7 +1356,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/totalOtherIncome") -> Dollar("0"),
       Path("/totalCredits") -> Dollar("0"),
       Path(s"/pensions/#${pension1Id}/remainingPayDates") -> 8,
-
       // Don't matters
       Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
       Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-10-15"),
@@ -1465,6 +1474,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("20000"),
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("60000")))
@@ -1534,6 +1544,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("48000")))
@@ -1598,6 +1609,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("120000")))

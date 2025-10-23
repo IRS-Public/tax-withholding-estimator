@@ -14,7 +14,7 @@
           <Add>
             <Dependency path="/standardOrItemizedDeduction"/>
             <!-- <Dependency path="/qualifiedBusinessIncomeDeduction" /> -->
-            <!-- <Dependency path="/oB3Deductions" /> -->
+            <Dependency path="/oB3Deductions"/>
           </Add>
         </Round>
       </Derived>

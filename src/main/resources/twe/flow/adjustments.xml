@@ -21,13 +21,6 @@
         </question>
         <input type="boolean"/>
       </fg-set>
-      <h2>Non-Itemizer Charitable Contribution Deduction</h2>
-      <fg-set path="/nonItemizerCharitableContributionDeductionAmount">
-        <question>
-          If you take the standard deduction and donate to a qualifying organization, you can deduct those donations up to $.
-        </question>
-        <input type="dollar"/>
-      </fg-set>
       <details open="true">
         <summary>
           <h2>Student loan interest deduction</h2>
@@ -47,7 +40,9 @@
           <h2>Educator expenses</h2>
         </summary>
         <div class="usa-prose">
-          <p>If you're a K-12 educator, you can deduct up to $300 of unreimbursed expenses. If you're filing a joint tax return and both of you are educators, you can deduct up to $600.</p>
+          <p>If you're a K-12 educator, you can deduct up to $300 of unreimbursed expenses. If
+            you're filing a joint tax return and both of you are educators, you can deduct up to
+            $600.</p>
           <p>Qualified expenses include:</p>
           <ul>
             <li>Professional development courses</li>
@@ -58,6 +53,21 @@
         </div>
         <fg-set path="/educatorExpenses">
           <question>How much have you paid this year in educator expenses?</question>
+          <input type="dollar"/>
+        </fg-set>
+      </details>
+      <details open="true">
+        <summary>
+          <h2>Cash charitable contributions</h2>
+        </summary>
+        <div class="usa-prose">
+          <p>If you take the standard deduction and donate to a qualifying organization, you can deduct those donations up to $<fg-show path="/actualNonItemizerCharitableContributionDeductionMax"/>.</p>
+          <p>Learn more about cash
+            charitable contributions [X]
+          </p>
+        </div>
+        <fg-set path="/nonItemizerCharitableContributionDeductionAmount">
+          <question>Cash charitable contributions</question>
           <input type="dollar"/>
         </fg-set>
       </details>
@@ -72,7 +82,8 @@
       <h2>Health Savings Account Contributions</h2>
       <fg-set path="/actualHsaTotalDeductibleAmount">
         <question>
-          What&#x2019;s the total amount of deductible Health Savings Account contributions you made this year?
+          What&#x2019;s the total amount of deductible Health Savings Account contributions you made
+          this year?
         </question>
         <hint>Do not include amounts already deducted from your paycheck</hint>
         <input type="dollar"/>
