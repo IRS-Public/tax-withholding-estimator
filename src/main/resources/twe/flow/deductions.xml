@@ -45,7 +45,7 @@
       <h2>Casualty losses</h2>
       <p>Casualty and theft losses relating to your home, household items, and vehicles if
         the loss took place in a federally declared disaster area</p>
-      <fg-set path="/casualtyLosses/*/loss">
+      <fg-set path="/casualtyLosses">
         <question>Total casualty loss from a specific loss event</question>
         <input type="dollar"/>
       </fg-set>
