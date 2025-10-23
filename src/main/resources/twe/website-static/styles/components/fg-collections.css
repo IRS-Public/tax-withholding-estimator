@@ -16,3 +16,7 @@ fg-collection-item {
 fg-collection-item .usa-form-group--error {
   margin-left: 0;
 }
+
+fg-collection[disallowempty="true"] fg-collection-item:only-of-type  .fg-collection-item__controls {
+  display: none;
+}

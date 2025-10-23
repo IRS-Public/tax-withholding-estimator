@@ -477,6 +477,11 @@ class FgCollection extends HTMLElement {
     // Add any items that currently exist in this collection
     const ids = factGraph.getCollectionIds(this.path)
     ids.map(id => this.addItem(id))
+
+    // If disallowempty="true" and no items, add one
+    if (this.getAttribute('disallowempty') === 'true' && this.querySelectorAll('fg-collection-item').length === 0) {
+      this.addItem();
+    }
   }
 
   disconnectedCallback() {

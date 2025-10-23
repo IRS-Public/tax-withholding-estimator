@@ -190,6 +190,14 @@
           <text />
         </attribute>
       </optional>
+      <optional>
+        <attribute name="disallow-empty">
+          <choice>
+            <value>true</value>
+            <value>false</value>
+          </choice>
+        </attribute>
+      </optional>
       <interleave>
         <oneOrMore>
           <ref name="fg-set-module"></ref>
