@@ -56,32 +56,36 @@ def main(args: Array[String]): Unit = {
   val outDir = os.pwd / "out"
   site.save(outDir)
 
-  val serve = args.contains("--serve")
-
-  if !serve then return // build only
+  if !flags.contains("serve") then return // Only start smol if 'serve' flag is set
 
   // Marshall smol config vars
-  val host = "localhost"
-  val port = sys.props.get("smol.port").flatMap(s => Try(s.toInt).toOption).getOrElse(3000)
-  val dir = outDir.toString
-  val logEnabled = true
+  object SmolConfig {
+    val Host = "localhost"
+    val Port = 3000
+    val OutputDir = "out"
+    val LogEnabled = true
+  }
 
   // Start server in-process, but do not block.
   // If it’s already running from a previous ~run cycle, starting again will throw BindException - ignore and continue.
   try
     val server = Smol.start(
       Config(
-        dir = dir,
-        host = host,
-        port = port,
-        logEnabled = logEnabled,
+        dir = outDir.toString(),
+        host = SmolConfig.Host,
+        port = sys.props.get("smol.port").flatMap(s => Try(s.toInt).toOption).getOrElse(SmolConfig.Port),
+        logEnabled = SmolConfig.LogEnabled,
       ),
     )
     sys.addShutdownHook(server.stop(0))
-    println(s"[smol] started at http://$host:$port => $dir")
+    println(
+      s"[smol] started at http://${SmolConfig.Host}:${sys.props.get("smol.port").getOrElse(SmolConfig.Port.toString)} => ${outDir.toString}",
+    )
   catch
     case _: java.net.BindException =>
-      println(s"[smol] already serving on $host:$port — leaving it running")
+      println(
+        s"[smol] already serving on ${SmolConfig.Host}:${sys.props.get("smol.port").getOrElse(SmolConfig.Port.toString)} — leaving it running",
+      )
 }
 
 object FileLoaderHelper:
