@@ -3,6 +3,7 @@
 <FlowConfigModule>
   <page title="About you" route="about-you">
     <section>
+      <h2>About You</h2>
       <fg-set path="/primaryFilerAge65OrOlder">
         <question>Will you be 65 years old or older on December 31, 2025?</question>
         <input type="boolean"/>
@@ -20,6 +21,7 @@
       <p>
         <modal-link for="modal-filing-status">Which filing status should I use?</modal-link>
       </p>
+      <h3 class="form-actions">Your Household</h3>
       <fg-set path="/isMFSLivedTogether" if-true="/isFilingStatusMFS">
         <question>Did you and your spouse live together in 2025?</question>
         <input type="boolean"/>
