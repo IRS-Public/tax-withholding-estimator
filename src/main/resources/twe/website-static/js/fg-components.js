@@ -1,4 +1,4 @@
-import * as fg from './factgraph-3.1.0.js'
+import * as fg from '../vendor/fact-graph/factgraph-3.1.0.js'
 
 const text = document.getElementById('fact-dictionary').textContent
 const factDictionary = fg.FactDictionaryFactory.importFromXml(text)

@@ -1,7 +1,7 @@
 PORT ?= 3000
 XML_FILES := $(shell git ls-files '*.xml')
 FG_SOURCE_DIR := ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt
-FG_TARGET_DIR := ./src/main/resources/twe/website-static/js
+FG_TARGET_DIR := ./src/main/resources/twe/website-static/vendor/fact-graph/
 
 # Build and run development server, watching for changes
 .PHONY: dev
@@ -13,7 +13,7 @@ dev:
 twe:
 	sbt run
 
-# Copy Fact Graph from sibling reposiorty
+# Copy compiled Fact Graph from sibling reposiorty
 .PHONY: copy-fg
 copy-fg:
 	cp $(FG_SOURCE_DIR)/main.mjs $(FG_TARGET_DIR)/factgraph-3.1.0.js
