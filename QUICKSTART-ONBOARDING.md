@@ -54,8 +54,6 @@ For more details, see:
 
 ### Install Homebrew
 * Open terminal, and paste in the following command: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-* Once that completes, run: `brew install node`
-* Each should start a process to download and install homebrew & node which gives you some tools you'll need further ahead
 
 ### Download Repos & Install Dependencies
 * Download Github Desktop from here & login using your IRS associated account
