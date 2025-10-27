@@ -57,7 +57,7 @@
         </tbody>
       </table>
       <table class="usa-table width-full usa-table--borderless usa-table--flush">
-        <caption>New Form W-4 for job with extra withholding</caption>
+        <caption>New Forms W-4 information</caption>
         <thead>
           <tr>
             <th scope="col">Description</th>
@@ -84,25 +84,25 @@
           <tr>
             <th scope="row">Line 4(a) other income (not from jobs)</th>
             <td>
-              <fg-show path="/totalNonJobsIncome"/>
+              <fg-show path="/jobs/*/w4Line4a"/>
             </td>
           </tr>
           <tr>
             <th scope="row">Line 4(b) deductions</th>
             <td>
-              <fg-show path="/jobSelectedForExtraWithholding/w4Line4b"/>
+              <fg-show path="/jobs/*/w4Line4b"/>
             </td>
           </tr>
           <tr>
             <th scope="row">Line 4(c) extra withholding</th>
             <td>
-              <fg-show path="/jobSelectedForExtraWithholding/w4Line4c"/>
+              <fg-show path="/jobs/*/w4Line4c"/>
             </td>
           </tr>
           <tr>
             <th scope="row">Remaining pay periods</th>
             <td>
-              <fg-show path="/jobSelectedForExtraWithholding/remainingPayPeriods"/>
+              <fg-show path="/jobs/*/remainingPayPeriods"/>
             </td>
           </tr>
         </tbody>

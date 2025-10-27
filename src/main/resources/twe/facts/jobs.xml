@@ -138,6 +138,19 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/isHeldToYearEnd">
+      <Description>Does the filer hold this job at the end of the year?</Description>
+      <Derived>
+        <GreaterThanOrEqual>
+          <Left>
+            <Dependency path="../endDate/ordinal"/>
+          </Left>
+          <Right>
+            <Dependency path="/daysInYear"/>
+          </Right>
+        </GreaterThanOrEqual>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/mostRecentPayPeriodEnd">
       <Description>
         The date which the most recent pay period ended on for this particular job
@@ -1478,68 +1491,132 @@
         </Round>
       </Derived>
     </Fact>
+    <Fact path="/w4Line4NetChange">
+      <Description>Total other income minus adjustments to income; the net change to be entered on Forms W4 Lines 4a (when positive) or 4b (when negative; use absolute value).</Description>
+      <Derived>
+        <Round>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/totalOtherIncome"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/adjustmentsToIncome"/>
+            </Subtrahends>
+          </Subtract>
+        </Round>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/w4Line4a">
       <Description>Form W-4 Line 4(a); also Pub 15-T Worksheet 1A Line 1d.</Description>
       <Derived>
-        <Round>
-          <Switch>
-            <Case>
-              <When>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <!-- When net change is positive ... -->
+                <GreaterThanOrEqual>
+                  <Left>
+                    <Dependency path="/w4Line4NetChange"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </GreaterThanOrEqual>
+                <!-- ... the year end job, if any, with highest income proportion ... -->
+                <!-- ... OR the job with highest remaining standard withholding proportion ... -->
                 <Equal>
                   <Left>
                     <Dependency path=".."/>
                   </Left>
                   <Right>
-                    <Dependency path="/jobSelectedForExtraWithholding"/>
+                    <Dependency path="/jobSelectedForW4Line4a"/>
                   </Right>
                 </Equal>
-              </When>
-              <Then>
-                <Dependency path="/totalOtherIncome"/>
-              </Then>
-            </Case>
-            <Case>
-              <When>
-                <True/>
-              </When>
-              <Then>
-                <Dollar>0</Dollar>
-              </Then>
-            </Case>
-          </Switch>
-        </Round>
+              </All>
+            </When>
+            <Then>
+              <!-- ... gets the entire net change on its Line 4a. -->
+              <Dependency path="/w4Line4NetChange"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/w4Line4b">
       <Description>Form W-4 Line 4(b); also Pub 15-T Worksheet 1A Line 1f.</Description>
       <Derived>
-        <Round>
-          <Switch>
-            <Case>
-              <When>
-                <Equal>
-                  <Left>
-                    <Dependency path=".."/>
-                  </Left>
-                  <Right>
-                    <Dependency path="/jobSelectedForExtraWithholding"/>
-                  </Right>
-                </Equal>
-              </When>
-              <Then>
-                <Dependency path="/adjustmentsToIncome"/>
-              </Then>
-            </Case>
-            <Case>
-              <When>
-                <True/>
-              </When>
-              <Then>
-                <Dollar>0</Dollar>
-              </Then>
-            </Case>
-          </Switch>
-        </Round>
+        <Switch>
+          <Case>
+            <When>
+              <!-- When the net change is negative ... -->
+              <LessThan>
+                <Left>
+                  <Dependency path="/w4Line4NetChange"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </LessThan>
+            </When>
+            <Then>
+              <Switch>
+                <Case>
+                  <When>
+                    <!-- ... and this is a year end job ... -->
+                    <Dependency path="../isHeldToYearEnd"/>
+                  </When>
+                  <Then>
+                    <!-- ... it gets absolute value of net change in proportion to income for year end jobs. -->
+                    <Multiply>
+                      <Dependency path="/w4Line4NetChange"/>
+                      <Dollar>-1</Dollar>
+                      <Dependency path="../proportionOfYearEndJobsIncome"/>
+                    </Multiply>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <!-- ... and there are no year end jobs ... -->
+                    <Equal>
+                      <Left>
+                        <CollectionSize>
+                          <Dependency path="/yearEndJobs"/>
+                        </CollectionSize>
+                      </Left>
+                      <Right>
+                        <Int>0</Int>
+                      </Right>
+                    </Equal>
+                  </When>
+                  <Then>
+                    <!-- ... it gets absolute value of net change in proportion to rest of year standard withholding. -->
+                    <Multiply>
+                      <Dependency path="/w4Line4NetChange"/>
+                      <Int>-1</Int>
+                      <Dependency path="../proportionOfRestOfYearStandardWithholding"/>
+                    </Multiply>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Dollar>0</Dollar>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/payPeriodsBeforeW4ChangesAppear">
@@ -1597,7 +1674,7 @@
                     <Dependency path=".."/>
                   </Left>
                   <Right>
-                    <Dependency path="/jobSelectedForExtraWithholding"/>
+                    <Dependency path="/jobSelectedForW4Line4a"/>
                   </Right>
                 </Equal>
               </All>
@@ -1665,7 +1742,7 @@
                     <Dependency path=".."/>
                   </Left>
                   <Right>
-                    <Dependency path="/jobSelectedForExtraWithholding"/>
+                    <Dependency path="/jobSelectedForW4Line4a"/>
                   </Right>
                 </Equal>
               </All>
@@ -1731,12 +1808,10 @@
           <Dollar>0</Dollar>
           <Subtract>
             <Minuend>
-              <Add>
-                <Multiply>
-                  <Dependency path="../averagePayPerPayPeriod"/>
-                  <Dependency path="../payPeriodsPerYear"/>
-                </Multiply>
-              </Add>
+              <Multiply>
+                <Dependency path="../averagePayPerPayPeriod"/>
+                <Dependency path="../payPeriodsPerYear"/>
+              </Multiply>
             </Minuend>
             <Subtrahends>
               <Dependency path="../pub15Worksheet1aLine1g"/>
@@ -2558,14 +2633,164 @@
               </Subtract>
             </GreaterOf>
           </Multiply>
-          <!-- witholding from the bonus, formula is different than for the regular job payments-->
+          <!-- witholding from the bonus, formula is different than for the regular job payments -->
           <Dependency path="../withholdingsFromTotalBonusReceived"/>
         </Add>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/annualizedIncome">
+      <Description>The earnings if the job duration were all year.</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="../averagePayPerPayPeriod"/>
+          <Dependency path="../payPeriodsPerYear"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/yearEndJobs">
+      <Derived>
+        <Filter path="/jobs">
+          <Dependency path="isHeldToYearEnd"/>
+        </Filter>
+      </Derived>
+    </Fact>
+    <Fact path="/annualizedIncomeFromYearEndJobs">
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/yearEndJobs/*/annualizedIncome"/>
+        </CollectionSum>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/proportionOfYearEndJobsIncome">
+      <!--      TODO: update per spreadsheet from valentina so that we are doing average pay per period * pay periods in the table in worksheet 1A-->
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isHeldToYearEnd"/>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Dependency path="../annualizedIncome"/>
+                </Dividend>
+                <Divisors>
+                  <Dependency path="/annualizedIncomeFromYearEndJobs"/>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/restOfYearStandardWithholding">
+      <Derived>
+        <Multiply>
+          <Divide>
+            <Dividend>
+              <Dependency path="../standardAnnualWithholdingAmount"/>
+            </Dividend>
+            <Divisors>
+              <Dependency path="../payPeriodsPerYear"/>
+            </Divisors>
+          </Divide>
+          <Dependency path="../fullPayPeriods"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/totalRestOfYearStandardWithholding">
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobs/*/restOfYearStandardWithholding"/>
+        </CollectionSum>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/proportionOfRestOfYearStandardWithholding">
+      <Derived>
+        <Divide>
+          <Dividend>
+            <Dependency path="../restOfYearStandardWithholding"/>
+          </Dividend>
+          <Divisors>
+            <Dependency path="/totalRestOfYearStandardWithholding"/>
+          </Divisors>
+        </Divide>
+      </Derived>
+    </Fact>
+    <Fact path="/jobSelectedForW4Line4a">
+      <Description>The job selected to have Line 4a populated on a new W4. It is the year end job with the highest proportion of income among all year jobs, or if there are no year end jobs it is the job with highest proportion of standard withholding for the rest of the year.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <CollectionSize>
+                    <Dependency path="/yearEndJobs"/>
+                  </CollectionSize>
+                </Left>
+                <Right>
+                  <Int>0</Int>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <IndexOf>
+                <Collection>
+                  <!-- When there is a year end job, use the year end job with highest proportion of income. -->
+                  <!-- (This is effectively /yearEndJobs but we can't write it that way: Cases must use same collection.) -->
+                  <Filter path="/jobs">
+                    <Equal>
+                      <Left>
+                        <Maximum>
+                          <Dependency path="/yearEndJobs/*/proportionOfYearEndJobsIncome"/>
+                        </Maximum>
+                      </Left>
+                      <Right>
+                        <Dependency path="proportionOfYearEndJobsIncome"/>
+                      </Right>
+                    </Equal>
+                  </Filter>
+                </Collection>
+                <Index>
+                  <Int>0</Int>
+                </Index>
+              </IndexOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <!-- When there are no year end jobs, use the job with highest proportion of rest-of-year standard withholding. -->
+              <IndexOf>
+                <Collection>
+                  <Filter path="/jobs">
+                    <Equal>
+                      <Left>
+                        <Maximum>
+                          <Dependency path="/jobs/*/proportionOfRestOfYearStandardWithholding"/>
+                        </Maximum>
+                      </Left>
+                      <Right>
+                        <Dependency path="proportionOfRestOfYearStandardWithholding"/>
+                      </Right>
+                    </Equal>
+                  </Filter>
+                </Collection>
+                <Index>
+                  <Int>0</Int>
+                </Index>
+              </IndexOf>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/jobsAvailableForExtraWithholding">
       <Description>Jobs that are ended or end too soon are not candidates for extra withholding on a
-        new W4.</Description>
+      new W4.</Description>
       <Derived>
         <!-- TODO: what should we do if no jobs meet this filter? -->
         <Filter path="/jobs">

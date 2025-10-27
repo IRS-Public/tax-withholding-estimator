@@ -93,6 +93,94 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     Vector(java.util.UUID.fromString(pension1Id), java.util.UUID.fromString(pension2Id)),
   )
 
+  test("Form W4 Line 4a allocation") {
+    val graph = makeGraphWith(
+      factDictionary,
+      jobs -> jobsCollection,
+      Path(s"/jobs/#${job1Id}/writableStartDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job1Id}/writableEndDate") -> Day("2025-12-31"),
+      Path(s"/jobs/#${job2Id}/writableStartDate") -> Day("2025-02-01"),
+      Path(s"/jobs/#${job2Id}/writableEndDate") -> Day("2025-12-31"),
+      // Derived overrides
+      Path(s"/jobs/#${job1Id}/annualizedIncome") -> Dollar(1000),
+      Path(s"/jobs/#${job2Id}/annualizedIncome") -> Dollar(2000),
+      Path(s"/jobs/#${job1Id}/restOfYearStandardWithholding") -> Dollar(4000),
+      Path(s"/jobs/#${job2Id}/restOfYearStandardWithholding") -> Dollar(5000),
+      Path("/w4Line4NetChange") -> Dollar(100), // net change is positive: use Line 4a
+    )
+
+    // Two jobs at year end: full amount goes to year end job with highest income proportion.
+    assert(graph.get(Path("/annualizedIncomeFromYearEndJobs")).value.contains(Dollar(3000)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job1Id}/proportionOfYearEndJobsIncome")).value.contains(BigDecimal(0.33)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job2Id}/proportionOfYearEndJobsIncome")).value.contains(BigDecimal(0.67)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job1Id}/w4Line4a")).value.contains(Dollar(0)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job2Id}/w4Line4a")).value.contains(Dollar(100)))
+
+    // One job at year end and one ending earlier: full amount goes to year end job with highest income proportion.
+    graph.set(Path(s"/jobs/#${job2Id}/writableEndDate"), Day("2025-12-30"))
+    assert(graph.get(Path("/annualizedIncomeFromYearEndJobs")).value.contains(Dollar(1000)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job1Id}/proportionOfYearEndJobsIncome")).value.contains(BigDecimal(1.00)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job1Id}/w4Line4a")).value.contains(Dollar(100)))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/w4Line4a")).value.contains(Dollar(0)))
+
+    // No jobs at year end: full amount goes to job with highest proportion of rest of year standard withholding.
+    graph.set(Path(s"/jobs/#${job1Id}/writableEndDate"), Day("2025-12-30"))
+    assert(graph.get(Path("/annualizedIncomeFromYearEndJobs")).value.contains(Dollar(0)))
+    assert(graph.get(Path("/totalRestOfYearStandardWithholding")).value.contains(Dollar(9000)))
+    assert(
+      graph.get(Path(s"/jobs/#${job1Id}/proportionOfRestOfYearStandardWithholding")).value.contains(BigDecimal(0.44)),
+    )
+    assert(
+      graph.get(Path(s"/jobs/#${job2Id}/proportionOfRestOfYearStandardWithholding")).value.contains(BigDecimal(0.56)),
+    )
+    assert(graph.get(Path(s"/jobs/#${job1Id}/w4Line4a")).value.contains(Dollar(0)))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/w4Line4a")).value.contains(Dollar(100)))
+  }
+
+  test("Form W4 Line 4b allocation") {
+    val graph = makeGraphWith(
+      factDictionary,
+      jobs -> jobsCollection,
+      Path(s"/jobs/#${job1Id}/writableStartDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job1Id}/writableEndDate") -> Day("2025-12-31"),
+      Path(s"/jobs/#${job2Id}/writableStartDate") -> Day("2025-02-01"),
+      Path(s"/jobs/#${job2Id}/writableEndDate") -> Day("2025-12-31"),
+      // Derived overrides
+      Path(s"/jobs/#${job1Id}/annualizedIncome") -> Dollar(1000),
+      Path(s"/jobs/#${job2Id}/annualizedIncome") -> Dollar(2000),
+      Path(s"/jobs/#${job1Id}/restOfYearStandardWithholding") -> Dollar(4000),
+      Path(s"/jobs/#${job2Id}/restOfYearStandardWithholding") -> Dollar(5000),
+      Path("/w4Line4NetChange") -> Dollar(-100), // net change is negative: use Line 4b
+    )
+
+    // Two jobs at year end: allocate amount in proportion to income.
+    assert(graph.get(Path("/annualizedIncomeFromYearEndJobs")).value.contains(Dollar(3000)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job1Id}/proportionOfYearEndJobsIncome")).value.contains(BigDecimal(0.33)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job2Id}/proportionOfYearEndJobsIncome")).value.contains(BigDecimal(0.67)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job1Id}/w4Line4b")).value.contains(Dollar(33)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job2Id}/w4Line4b")).value.contains(Dollar(67)))
+
+    // One job at year end and one ending earlier: allocate amount in proportion to income.
+    graph.set(Path(s"/jobs/#${job2Id}/writableEndDate"), Day("2025-12-30"))
+    assert(graph.get(Path("/annualizedIncomeFromYearEndJobs")).value.contains(Dollar(1000)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job1Id}/proportionOfYearEndJobsIncome")).value.contains(BigDecimal(1.00)))
+    assert(graph.get(Path(s"/yearEndJobs/#${job1Id}/w4Line4b")).value.contains(Dollar(100)))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/w4Line4b")).value.contains(Dollar(0)))
+
+    // No jobs at year end: allocate amount in proportion to rest of year standard withholding.
+    graph.set(Path(s"/jobs/#${job1Id}/writableEndDate"), Day("2025-12-30"))
+    assert(graph.get(Path("/annualizedIncomeFromYearEndJobs")).value.contains(Dollar(0)))
+    assert(graph.get(Path("/totalRestOfYearStandardWithholding")).value.contains(Dollar(9000)))
+    assert(
+      graph.get(Path(s"/jobs/#${job1Id}/proportionOfRestOfYearStandardWithholding")).value.contains(BigDecimal(0.44)),
+    )
+    assert(
+      graph.get(Path(s"/jobs/#${job2Id}/proportionOfRestOfYearStandardWithholding")).value.contains(BigDecimal(0.56)),
+    )
+    assert(graph.get(Path(s"/jobs/#${job1Id}/w4Line4b")).value.contains(Dollar(44)))
+    assert(graph.get(Path(s"/jobs/#${job2Id}/w4Line4b")).value.contains(Dollar(56)))
+  }
+
   // These tests are based on the "2197 Scenarios checks" worksheet of the "TWESprint1_2025_UAT_WHC2197_2200" spreadsheet.
   test("2197 Scenarios spreadsheet Column C") {
     val graph = makeGraphWith(
