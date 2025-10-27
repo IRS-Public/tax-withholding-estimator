@@ -57,7 +57,7 @@ For more details, see:
 
 ### Download Repos & Install Dependencies
 * Download Github Desktop from here & login using your IRS associated account
-* In GitHub Desktop, clone the fact-graph & tax-withholding-estimator repos to your ~/Documents/GitHub folder
+* In GitHub Desktop, clone the `fact-graph` & `tax-withholding-estimator` repos to your ~/Documents/GitHub folder
 * In terminal, move to the fact-graph repo & install dependencies
     * Open terminal and move to your fact-graph repo: `cd ~/Documents/GitHub/fact-graph`
     * Once you're in the fact-graph repo, use this command to install SBT: `brew install scala openjdk sbt`
@@ -84,7 +84,6 @@ For more details, see:
     * Make sure you are downloading from the version marked "Latest" ([Version 2.1.24](https://github.com/coursier/coursier/releases/tag/v2.1.24) as of 10/10/2025)
     * Look for cs-x86_64-pc-win32.zip
 * In terminal run cs setup
-* Download and install node.js: https://nodejs.org/en/download/
 * Download Github Desktop from here & login using your IRS associated account
 * In GitHub Desktop, clone the fact-graph & tax-withholding-estimator repos to your /Documents/GitHub folder
 * In terminal, move to the fact-graph repo & install dependencies
@@ -105,16 +104,12 @@ Before you can run TWE you'll need to compile the fact-graph.
 Once you've compiled the fact-graph and run `make publish` you're ready to run TWE locally
 * In terminal, move to the tax-withholding-estimator repo & run it!
     * Open terminal and nav to your twe repo: `cd ~/Documents/GitHub/tax-withholding-estimator`
-    * Once you're in the twe repo, use this series of commands to run the application
-        * In one terminal window: `make twe` (this will run and complete)
-        * In the same terminal window: `make dev` (this will run and keep running)
-        * In a new terminal window (`cmd+t` on Mac): `make site` (this will run and keep running)
+    * Run `make twe` (this will run and keep running)
 * With twe running in the background, you can open your browser and navigate to: http://localhost:3000/
 * Note: you'll need to do this every time you want to run TWE (or just leave it running in the background)
 
 ### Kill TWE
-* While TWE is running you'll have 2 terminal windows with active processes
-* On each of those windows use the relevant keyboard command to kill the process (`ctrl+c` on Mac)
+* Use `ctrl+c` to kill the process
 * From here you can quit terminal
 
 ### Update TWE
