@@ -1,0 +1,2609 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/jobs">
+      <Description>The taxpayers's jobs</Description>
+      <Writable>
+        <Collection/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/yearToDateIncome">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/income">
+      <Description>The total income from a specific job</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Add>
+              <Dependency path="../restOfYearIncome"/>
+              <Dependency path="../yearToDateIncome"/>
+            </Add>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="../preTaxDeductions"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/preTaxDeductions">
+      <Description>Pre-tax deductions from a specific job</Description>
+      <Derived>
+        <Add>
+          <Dependency path="../retirementPlanContributions"/>
+          <Dependency path="../healthInsuranceContributions"/>
+          <Dependency path="../hsaOrFsaContributions"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/yearToDateWithholding">
+      <Description>The year-to-date withholding from a specific job</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/averageWithholdingPerPayPeriod">
+      <Description>The average withholding from a specific job per pay period</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/isAllYear">
+      <Description>Whether this job was held for the entire tax year.</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/flowAskPartYearDates">
+      <Description>Flow control: whether to ask start and end dates for this job.</Description>
+      <Derived>
+        <Not>
+          <Dependency path="../isAllYear"/>
+        </Not>
+      </Derived>
+    </Fact>
+    <!-- Note that the limits on dates may be more restrictive in the future based on component
+         implementation -->
+    <!-- E.g., a future job cannot start before tomorrow -->
+    <Fact path="/jobs/*/writableStartDate">
+      <Description>The first date the job was held in the current calendar year, if not an all year
+        job.</Description>
+      <TaxYear>2025</TaxYear>
+      <Writable>
+        <Day/>
+        <Limit type="Max">
+          <Day>2025-12-31</Day>
+        </Limit>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/writableEndDate">
+      <Description>The last date the job was held in the current calendar year, if not an all year
+        job.</Description>
+      <TaxYear>2025</TaxYear>
+      <Writable>
+        <Day/>
+        <Limit type="Max">
+          <Day>2025-12-31</Day>
+        </Limit>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/startDate">
+      <Description>The first date the job was held in the current calendar year.</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isAllYear"/>
+            </When>
+            <Then>
+              <Day>2025-01-01</Day>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../writableStartDate"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/endDate">
+      <Description>The last date the job was held in the current calendar year.</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isAllYear"/>
+            </When>
+            <Then>
+              <Day>2025-12-31</Day>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../writableEndDate"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/mostRecentPayPeriodEnd">
+      <Description>
+        The date which the most recent pay period ended on for this particular job
+      </Description>
+      <Writable>
+        <Day/>
+        <Limit type="Max">
+          <Day>2025-12-31</Day>
+        </Limit>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/mostRecentPayDate">
+      <Description>
+        The date on which pay was received, corresponding to the most recent pay period that ended
+      </Description>
+      <Writable>
+        <Day/>
+        <Limit type="Max">
+          <Day>2025-12-31</Day>
+        </Limit>
+      </Writable>
+    </Fact>
+    <Fact path="/payFrequencyOptions">
+      <Name>Pay Frequency Options</Name>
+      <Description>Options for pay frequency</Description>
+      <Derived>
+        <EnumOptions>
+          <String>weekly</String>
+          <String>biWeekly</String>
+          <String>semiMonthly</String>
+          <String>monthly</String>
+        </EnumOptions>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/payFrequency">
+      <Name>Pay Frequency</Name>
+      <Description>The frequency that the job pays the user. And the length of pay periods.</Description>
+      <Writable>
+        <Enum optionsPath="/payFrequencyOptions"/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/averagePayPerPayPeriod">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/isPayFrequencyWeekly">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../payFrequency"/>
+          </Left>
+          <Right>
+            <Enum optionsPath="/payFrequencyOptions">weekly</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/isPayFrequencyBiWeekly">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../payFrequency"/>
+          </Left>
+          <Right>
+            <Enum optionsPath="/payFrequencyOptions">biWeekly</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/isPayFrequencySemiMonthly">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../payFrequency"/>
+          </Left>
+          <Right>
+            <Enum optionsPath="/payFrequencyOptions">semiMonthly</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/isPayFrequencyMonthly">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../payFrequency"/>
+          </Left>
+          <Right>
+            <Enum optionsPath="/payFrequencyOptions">monthly</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/payPeriodLength">
+      <Description>Length of pay periods matching the Floor of Publication 15-T values.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyWeekly"/>
+            </When>
+            <Then>
+              <Int>7</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyBiWeekly"/>
+            </When>
+            <Then>
+              <Int>14</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly"/>
+            </When>
+            <Then>
+              <Int>15</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly"/>
+            </When>
+            <Then>
+              <Int>30</Int>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/tentativeRemainingPayPeriods">
+      <Description>A preliminary calculation of remaining pay periods for weekly and biweekly
+        frequencies, to be adjusted because it may extend past the end of the year.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPayFrequencyWeekly"/>
+                <Dependency path="../isPayFrequencyBiWeekly"/>
+              </Any>
+            </When>
+            <Then>
+              <Ceiling>
+                <Divide>
+                  <Dividend>
+                    <Switch>
+                      <Case>
+                        <When>
+                          <Dependency path="../hasLaggingPaymentsFromPriorYear"/>
+                        </When>
+                        <Then>
+                          <Add>
+                            <Subtract>
+                              <Minuend>
+                                <Dependency path="/daysInPriorYear"/>
+                              </Minuend>
+                              <Subtrahends>
+                                <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
+                              </Subtrahends>
+                            </Subtract>
+                            <Dependency path="../endDate/ordinal"/>
+                          </Add>
+                        </Then>
+                      </Case>
+                      <Case>
+                        <When>
+                          <True/>
+                        </When>
+                        <Then>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../endDate/ordinal"/>
+                            </Minuend>
+                            <Subtrahends>
+                              <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
+                            </Subtrahends>
+                          </Subtract>
+                        </Then>
+                      </Case>
+                    </Switch>
+                  </Dividend>
+                  <Divisors>
+                    <Dependency path="../payPeriodLength"/>
+                  </Divisors>
+                </Divide>
+              </Ceiling>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/predictedOrdinalFinalPayDate">
+      <Description>For weekly and biweekly jobs, the final pay date predicted by the tentative
+        calculation of remaining pay periods-- which may be past the end of year.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPayFrequencyWeekly"/>
+                <Dependency path="../isPayFrequencyBiWeekly"/>
+              </Any>
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="../mostRecentPayDate/ordinal"/>
+                <Multiply>
+                  <Dependency path="../tentativeRemainingPayPeriods"/>
+                  <Dependency path="../payPeriodLength"/>
+                </Multiply>
+              </Add>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/mostRecentPayPeriodEndIsOnLastDayOfMonth">
+      <Description>mostRecentPayPeriodEnd is on the last day of the month</Description>
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../mostRecentPayPeriodEnd"/>
+          </Left>
+          <Right>
+            <LastDayOfMonth>
+              <Dependency path="../mostRecentPayPeriodEnd"/>
+            </LastDayOfMonth>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/hasLaggingPaymentsFromPriorYear">
+      <Description>Has lagging payments from the prior year</Description>
+      <Derived>
+        <LessThan>
+          <Left>
+            <Dependency path="../mostRecentPayPeriodEnd/year"/>
+          </Left>
+          <Right>
+            <Dependency path="../mostRecentPayDate/year"/>
+          </Right>
+        </LessThan>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/semimonthlyEarlierPeriodEnd">
+      <Description>For semimonthly pay periods, determines the earlier pay period ending date</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="../mostRecentPayPeriodEnd/day"/>
+                </Left>
+                <Right>
+                  <Int>15</Int>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="../mostRecentPayPeriodEnd"/>
+                </Minuend>
+                <Subtrahends>
+                  <Days>15</Days>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../mostRecentPayPeriodEnd"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/semimonthlyLaterPeriodEnd">
+      <Description>For semimonthly pay periods, determines the later pay period ending date</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <LessThanOrEqual>
+                <Left>
+                  <Dependency path="../mostRecentPayPeriodEnd/day"/>
+                </Left>
+                <Right>
+                  <Int>15</Int>
+                </Right>
+              </LessThanOrEqual>
+            </When>
+            <!-- add 15 days by default if the 14th or 15th of feb get last day of feb -->
+            <Then>
+              <Switch>
+                <Case>
+                  <When>
+                    <All>
+                      <Equal>
+                        <Left>
+                          <Dependency path="../mostRecentPayPeriodEnd/month"/>
+                        </Left>
+                        <Right>
+                          <Int>2</Int>
+                        </Right>
+                      </Equal>
+                      <Any>
+                        <Equal>
+                          <Left>
+                            <Dependency path="../mostRecentPayPeriodEnd/day"/>
+                          </Left>
+                          <Right>
+                            <Int>14</Int>
+                          </Right>
+                        </Equal>
+                        <Equal>
+                          <Left>
+                            <Dependency path="../mostRecentPayPeriodEnd/day"/>
+                          </Left>
+                          <Right>
+                            <Int>15</Int>
+                          </Right>
+                        </Equal>
+                      </Any>
+                    </All>
+                  </When>
+                  <Then>
+                    <LastDayOfMonth>
+                      <Dependency path="../mostRecentPayPeriodEnd"/>
+                    </LastDayOfMonth>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dependency path="../mostRecentPayPeriodEnd"/>
+                      <Days>15</Days>
+                    </Add>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../mostRecentPayPeriodEnd"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/remainingPayPeriods">
+      <Description>
+        The number of pay dates remaining in the year.
+
+        Monthly and semimonthly are computed directly.
+
+        Weekly and biweekly are computed using `../tentativeRemainingPayPeriods` and
+        `../predictedOrdinalFinalPayDate` to make any necessary adjustment when the tentative
+        calculation overflows the end of year.
+        For example, let's say you are paid weekly every Friday for the previous week, and you're
+        working through EOY.
+        Then (in 2025) you will be paid on the 2nd of January 2026 for 12/21-27, and on the 9th of
+        January 2026 for 12/28-01/03. That's two pay periods that are in 2025 that will be paid for
+        (and taxed in) 2026.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly"/>
+            </When>
+            <Then>
+              <LesserOf>
+                <Subtract>
+                  <Minuend>
+                    <Int>12</Int>
+                  </Minuend>
+                  <Subtrahends>
+                    <Dependency path="../mostRecentPayDate/month"/>
+                  </Subtrahends>
+                </Subtract>
+                <Add>
+                  <!-- Months remaining in the job ... -->
+                  <Subtract>
+                    <Minuend>
+                      <Dependency path="../endDate/month"/>
+                    </Minuend>
+                    <Subtrahends>
+                      <!-- start at the beginning of the year if there are lagging payments from the
+                      prior year -->
+                      <Switch>
+                        <Case>
+                          <When>
+                            <Dependency path="../hasLaggingPaymentsFromPriorYear"/>
+                          </When>
+                          <Then>
+                            <Int>0</Int>
+                          </Then>
+                        </Case>
+                        <Case>
+                          <When>
+                            <True/>
+                          </When>
+                          <Then>
+                            <Dependency path="../mostRecentPayPeriodEnd/month"/>
+                          </Then>
+                        </Case>
+                      </Switch>
+                    </Subtrahends>
+                  </Subtract>
+                  <!-- ... plus one if needed for pay lag AND that does not take us past EOY. -->
+                  <Switch>
+                    <Case>
+                      <When>
+                        <All>
+                          <GreaterThan>
+                            <Left>
+                              <Dependency path="../endDate/day"/>
+                            </Left>
+                            <Right>
+                              <Dependency path="../mostRecentPayPeriodEnd/day"/>
+                            </Right>
+                          </GreaterThan>
+                          <NotEqual>
+                            <Left>
+                              <Dependency path="../endDate/month"/>
+                            </Left>
+                            <Right>
+                              <Int>12</Int>
+                            </Right>
+                          </NotEqual>
+                          <Not>
+                            <Dependency path="../mostRecentPayPeriodEndIsOnLastDayOfMonth"/>
+                          </Not>
+                        </All>
+                      </When>
+                      <Then>
+                        <Int>1</Int>
+                      </Then>
+                    </Case>
+                    <Case>
+                      <When>
+                        <True/>
+                      </When>
+                      <Then>
+                        <Int>0</Int>
+                      </Then>
+                    </Case>
+                  </Switch>
+                  <!-- plus any lagging payments from the previous year -->
+                  <Switch>
+                    <Case>
+                      <When>
+                        <Dependency path="../hasLaggingPaymentsFromPriorYear"/>
+                      </When>
+                      <Then>
+                        <Subtract>
+                          <Minuend>
+                            <Int>12</Int>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dependency path="../mostRecentPayPeriodEnd/month"/>
+                          </Subtrahends>
+                        </Subtract>
+                      </Then>
+                    </Case>
+                    <Case>
+                      <When>
+                        <True/>
+                      </When>
+                      <Then>
+                        <Int>0</Int>
+                      </Then>
+                    </Case>
+                  </Switch>
+                </Add>
+              </LesserOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly"/>
+            </When>
+            <Then>
+              <LesserOf>
+                <!-- pay dates until the end of year: Full months * 2 + any potential payments in
+                current month -->
+                <Add>
+                  <Multiply>
+                    <Int>2</Int>
+                    <Subtract>
+                      <Minuend>
+                        <Int>12</Int>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../mostRecentPayDate/month"/>
+                      </Subtrahends>
+                    </Subtract>
+                  </Multiply>
+                  <Count>
+                    <!-- Assumption: We are assuming pay days on the 16 correspond to another payday
+                    on the 1st instead of the 31st -->
+                    <LessThanOrEqual>
+                      <Left>
+                        <Dependency path="../mostRecentPayDate/day"/>
+                      </Left>
+                      <Right>
+                        <Int>15</Int>
+                      </Right>
+                    </LessThanOrEqual>
+                  </Count>
+                </Add>
+                <!-- Add four numbers:
+                  remaining pay periods "this" month (not the final month + no lagging payments from prior year)
+                  + pay periods for whole months intervening
+                  + remaining pay periods for final month if not "this" month
+                  + any lagging payments from the prior year
+                  (in practice the lagging payments, modifies how we calculate some of the previous values)
+                -->
+                <Add>
+                  <!-- For "this" month (of period end date) ...  -->
+                  <Count>
+                    <All>
+                      <!-- ... when it's not the the final month ...  -->
+                      <NotEqual>
+                        <Left>
+                          <Dependency path="../mostRecentPayPeriodEnd/month"/>
+                        </Left>
+                        <Right>
+                          <Dependency path="../endDate/month"/>
+                        </Right>
+                      </NotEqual>
+                      <!-- ... and we were last paid in the first pay period of the month ...  -->
+                      <Equal>
+                        <Left>
+                          <Dependency path="../mostRecentPayPeriodEnd"/>
+                        </Left>
+                        <Right>
+                          <!-- There's an edge case where this might be 16 -->
+                          <Dependency path="../semimonthlyEarlierPeriodEnd"/>
+                        </Right>
+                      </Equal>
+                      <Not>
+                        <Dependency path="../hasLaggingPaymentsFromPriorYear"/>
+                      </Not>
+                    </All>
+                  </Count>
+                  <!-- For full months between now and end date ...  -->
+                  <GreaterOf>
+                    <Int>0</Int>
+                    <Multiply>
+                      <!-- ... we get paid twice each.  -->
+                      <Int>2</Int>
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="../endDate/month"/>
+                        </Minuend>
+                        <Subtrahends>
+                          <Switch>
+                            <Case>
+                              <When>
+                                <Dependency path="../hasLaggingPaymentsFromPriorYear"/>
+                              </When>
+                              <Then>
+                                <Int>0</Int>
+                              </Then>
+                            </Case>
+                            <Case>
+                              <When>
+                                <True/>
+                              </When>
+                              <Then>
+                                <Dependency path="../mostRecentPayPeriodEnd/month"/>
+                              </Then>
+                            </Case>
+                          </Switch>
+                          <Int>1</Int>
+                        </Subtrahends>
+                      </Subtract>
+                    </Multiply>
+                  </GreaterOf>
+                  <!-- For the final month ...  -->
+                  <!-- ... 2 scenarios: last month is also current month | regular last month -->
+                  <Switch>
+                    <Case>
+                      <!-- last month is also current month -->
+                      <When>
+                        <All>
+                          <!-- This scenario is not possible when there is a lagging payment -->
+                          <Not>
+                            <Dependency path="../hasLaggingPaymentsFromPriorYear"/>
+                          </Not>
+                          <Equal>
+                            <Left>
+                              <Dependency path="../mostRecentPayPeriodEnd/month"/>
+                            </Left>
+                            <Right>
+                              <Dependency path="../endDate/month"/>
+                            </Right>
+                          </Equal>
+                        </All>
+                      </When>
+                      <Then>
+                        <!-- if paid on earlier PP and worked after -->
+                        <Count>
+                          <All>
+                            <Equal>
+                              <Left>
+                                <Dependency path="../mostRecentPayPeriodEnd"/>
+                              </Left>
+                              <Right>
+                                <Dependency path="../semimonthlyEarlierPeriodEnd"/>
+                              </Right>
+                            </Equal>
+                            <GreaterThan>
+                              <Left>
+                                <Dependency path="../endDate/day"/>
+                              </Left>
+                              <Right>
+                                <Dependency path="../mostRecentPayPeriodEnd/day"/>
+                              </Right>
+                            </GreaterThan>
+                          </All>
+                        </Count>
+                      </Then>
+                    </Case>
+                    <Case>
+                      <When>
+                        <True/>
+                      </When>
+                      <Then>
+                        <!-- regular last month -->
+                        <Switch>
+                          <Case>
+                            <When>
+                              <LessThanOrEqual>
+                                <Left>
+                                  <Dependency path="../endDate/day"/>
+                                </Left>
+                                <Right>
+                                  <Dependency path="../semimonthlyEarlierPeriodEnd/day"/>
+                                </Right>
+                              </LessThanOrEqual>
+                            </When>
+                            <Then>
+                              <Int>1</Int>
+                            </Then>
+                          </Case>
+                          <Case>
+                            <When>
+                              <GreaterThan>
+                                <Left>
+                                  <Dependency path="../endDate/day"/>
+                                </Left>
+                                <Right>
+                                  <Dependency path="../semimonthlyEarlierPeriodEnd/day"/>
+                                </Right>
+                              </GreaterThan>
+                            </When>
+                            <Then>
+                              <Int>2</Int>
+                            </Then>
+                          </Case>
+                          <Case>
+                            <When>
+                              <True/>
+                            </When>
+                            <Then>
+                              <Int>0</Int>
+                            </Then>
+                          </Case>
+                        </Switch>
+                      </Then>
+                    </Case>
+                  </Switch>
+                  <!-- ... Shared by both scenarios -->
+                  <!-- end day > laterPP day + not dec + laterPP day not last day of month -->
+                  <Count>
+                    <All>
+                      <GreaterThan>
+                        <Left>
+                          <Dependency path="../endDate/day"/>
+                        </Left>
+                        <Right>
+                          <Dependency path="../semimonthlyLaterPeriodEnd/day"/>
+                        </Right>
+                      </GreaterThan>
+                      <NotEqual>
+                        <Left>
+                          <Dependency path="../endDate/month"/>
+                        </Left>
+                        <Right>
+                          <Int>12</Int>
+                        </Right>
+                      </NotEqual>
+                      <NotEqual>
+                        <Left>
+                          <Dependency path="../semimonthlyLaterPeriodEnd"/>
+                        </Left>
+                        <Right>
+                          <LastDayOfMonth>
+                            <Dependency path="../semimonthlyLaterPeriodEnd"/>
+                          </LastDayOfMonth>
+                        </Right>
+                      </NotEqual>
+                    </All>
+                  </Count>
+                  <Switch>
+                    <!-- handle lagging pay periods -->
+                    <Case>
+                      <When>
+                        <Dependency path="../hasLaggingPaymentsFromPriorYear"/>
+                      </When>
+                      <Then>
+                        <!-- 2 for every full months + 1 conditionally for current month -->
+                        <Add>
+                          <Multiply>
+                            <Subtract>
+                              <Minuend>
+                                <Int>12</Int>
+                              </Minuend>
+                              <Subtrahends>
+                                <Dependency path="../mostRecentPayPeriodEnd/month"/>
+                              </Subtrahends>
+                            </Subtract>
+                            <Int>2</Int>
+                          </Multiply>
+                          <Count>
+                            <Equal>
+                              <Left>
+                                <Dependency path="../mostRecentPayPeriodEnd"/>
+                              </Left>
+                              <Right>
+                                <Dependency path="../semimonthlyEarlierPeriodEnd"/>
+                              </Right>
+                            </Equal>
+                          </Count>
+                        </Add>
+                      </Then>
+                    </Case>
+                    <Case>
+                      <When>
+                        <True/>
+                      </When>
+                      <Then>
+                        <Int>0</Int>
+                      </Then>
+                    </Case>
+                  </Switch>
+                </Add>
+              </LesserOf>
+            </Then>
+          </Case>
+          <Case>
+            <!-- For weekly or biweekly ... -->
+            <When>
+              <!-- When the final pay date predicted by tentative calculation is past EOY ... -->
+              <GreaterThan>
+                <Left>
+                  <Dependency path="../predictedOrdinalFinalPayDate"/>
+                </Left>
+                <Right>
+                  <Dependency path="/daysInYear"/>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <!-- ... adjust the tentative number to account for that. -->
+              <Subtract>
+                <Minuend>
+                  <Dependency path="../tentativeRemainingPayPeriods"/>
+                </Minuend>
+                <Subtrahends>
+                  <Ceiling>
+                    <Divide>
+                      <Dividend>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../predictedOrdinalFinalPayDate"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dependency path="/daysInYear"/>
+                          </Subtrahends>
+                        </Subtract>
+                      </Dividend>
+                      <Divisors>
+                        <Dependency path="../payPeriodLength"/>
+                      </Divisors>
+                    </Divide>
+                  </Ceiling>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <!-- When the predicted final pay date is within the year, then no adjustment is needed. -->
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../tentativeRemainingPayPeriods"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/effectiveEndDate">
+      <Description>The month in which the user last worked as far as income counting towards this
+        year is concerned, used for semi-monthly and monthly</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly"/>
+            </When>
+            <Then>
+              <AddPayrollMonths>
+                <Dependency path="../mostRecentPayPeriodEnd"/>
+                <Dependency path="../remainingPayPeriods"/>
+              </AddPayrollMonths>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly"/>
+            </When>
+            <Then>
+              <Switch>
+                <Case>
+                  <When>
+                    <Equal>
+                      <Left>
+                        <Dependency path="../mostRecentPayPeriodEnd"/>
+                      </Left>
+                      <Right>
+                        <Dependency path="../semimonthlyEarlierPeriodEnd"/>
+                      </Right>
+                    </Equal>
+                  </When>
+                  <Then>
+                    <AddPayrollMonths>
+                      <Switch>
+                        <Case>
+                          <When>
+                            <Equal>
+                              <Left>
+                                <Modulo>
+                                  <Dependency path="../remainingPayPeriods"/>
+                                  <Int>2</Int>
+                                </Modulo>
+                              </Left>
+                              <Right>
+                                <Int>0</Int>
+                              </Right>
+                            </Equal>
+                          </When>
+                          <Then>
+                            <Dependency path="../semimonthlyEarlierPeriodEnd"/>
+                          </Then>
+                        </Case>
+                        <Case>
+                          <When>
+                            <True/>
+                          </When>
+                          <Then>
+                            <Dependency path="../semimonthlyLaterPeriodEnd"/>
+                          </Then>
+                        </Case>
+                      </Switch>
+                      <Floor>
+                        <Divide>
+                          <Dividend>
+                            <Dependency path="../remainingPayPeriods"/>
+                          </Dividend>
+                          <Divisors>
+                            <Int>2</Int>
+                          </Divisors>
+                        </Divide>
+                      </Floor>
+                    </AddPayrollMonths>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <Equal>
+                      <Left>
+                        <Dependency path="../mostRecentPayPeriodEnd"/>
+                      </Left>
+                      <Right>
+                        <Dependency path="../semimonthlyLaterPeriodEnd"/>
+                      </Right>
+                    </Equal>
+                  </When>
+                  <Then>
+                    <AddPayrollMonths>
+                      <Switch>
+                        <Case>
+                          <When>
+                            <Equal>
+                              <Left>
+                                <Modulo>
+                                  <Dependency path="../remainingPayPeriods"/>
+                                  <Int>2</Int>
+                                </Modulo>
+                              </Left>
+                              <Right>
+                                <Int>0</Int>
+                              </Right>
+                            </Equal>
+                          </When>
+                          <Then>
+                            <Dependency path="../semimonthlyLaterPeriodEnd"/>
+                          </Then>
+                        </Case>
+                        <Case>
+                          <When>
+                            <True/>
+                          </When>
+                          <Then>
+                            <Dependency path="../semimonthlyEarlierPeriodEnd"/>
+                          </Then>
+                        </Case>
+                      </Switch>
+                      <Ceiling>
+                        <Divide>
+                          <Dividend>
+                            <Dependency path="../remainingPayPeriods"/>
+                          </Dividend>
+                          <Divisors>
+                            <Int>2</Int>
+                          </Divisors>
+                        </Divide>
+                      </Ceiling>
+                    </AddPayrollMonths>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/ordinalEffectiveEndDate">
+      <Description>The date that is effectively the user's last day worked for this job as far as
+        income counting towards this year is concerned</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPayFrequencyMonthly"/>
+                <Dependency path="../isPayFrequencySemiMonthly"/>
+              </Any>
+            </When>
+            <Then>
+              <Dependency path="../effectiveEndDate/ordinal"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Add>
+                <Switch>
+                  <Case>
+                    <When>
+                      <Dependency path="../hasLaggingPaymentsFromPriorYear"/>
+                    </When>
+                    <Then>
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
+                        </Minuend>
+                        <Subtrahends>
+                          <Dependency path="/daysInPriorYear"/>
+                        </Subtrahends>
+                      </Subtract>
+                    </Then>
+                  </Case>
+                  <Case>
+                    <When>
+                      <True/>
+                    </When>
+                    <Then>
+                      <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
+                    </Then>
+                  </Case>
+                </Switch>
+                <Multiply>
+                  <Dependency path="../remainingPayPeriods"/>
+                  <Dependency path="../payPeriodLength"/>
+                </Multiply>
+              </Add>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/lastFullPaymentEffectiveEndDate">
+      <Description>similar to jobs/*/effectiveEndDate but only up to the last full pay period</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly"/>
+            </When>
+            <Then>
+              <AddPayrollMonths>
+                <Dependency path="../mostRecentPayPeriodEnd"/>
+                <Dependency path="../fullPayPeriods"/>
+              </AddPayrollMonths>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly"/>
+            </When>
+            <Then>
+              <!-- Same formula as effectiveEndDate but using fullPayPeriods instead of
+              remainingPayPeriods -->
+              <Switch>
+                <Case>
+                  <When>
+                    <Equal>
+                      <Left>
+                        <Dependency path="../mostRecentPayPeriodEnd"/>
+                      </Left>
+                      <Right>
+                        <Dependency path="../semimonthlyEarlierPeriodEnd"/>
+                      </Right>
+                    </Equal>
+                  </When>
+                  <Then>
+                    <AddPayrollMonths>
+                      <Switch>
+                        <Case>
+                          <When>
+                            <Equal>
+                              <Left>
+                                <Modulo>
+                                  <Dependency path="../fullPayPeriods"/>
+                                  <Int>2</Int>
+                                </Modulo>
+                              </Left>
+                              <Right>
+                                <Int>0</Int>
+                              </Right>
+                            </Equal>
+                          </When>
+                          <Then>
+                            <Dependency path="../semimonthlyEarlierPeriodEnd"/>
+                          </Then>
+                        </Case>
+                        <Case>
+                          <When>
+                            <True/>
+                          </When>
+                          <Then>
+                            <Dependency path="../semimonthlyLaterPeriodEnd"/>
+                          </Then>
+                        </Case>
+                      </Switch>
+                      <Floor>
+                        <Divide>
+                          <Dividend>
+                            <Dependency path="../fullPayPeriods"/>
+                          </Dividend>
+                          <Divisors>
+                            <Int>2</Int>
+                          </Divisors>
+                        </Divide>
+                      </Floor>
+                    </AddPayrollMonths>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <Equal>
+                      <Left>
+                        <Dependency path="../mostRecentPayPeriodEnd"/>
+                      </Left>
+                      <Right>
+                        <Dependency path="../semimonthlyLaterPeriodEnd"/>
+                      </Right>
+                    </Equal>
+                  </When>
+                  <Then>
+                    <AddPayrollMonths>
+                      <Switch>
+                        <Case>
+                          <When>
+                            <Equal>
+                              <Left>
+                                <Modulo>
+                                  <Dependency path="../fullPayPeriods"/>
+                                  <Int>2</Int>
+                                </Modulo>
+                              </Left>
+                              <Right>
+                                <Int>0</Int>
+                              </Right>
+                            </Equal>
+                          </When>
+                          <Then>
+                            <Dependency path="../semimonthlyLaterPeriodEnd"/>
+                          </Then>
+                        </Case>
+                        <Case>
+                          <When>
+                            <True/>
+                          </When>
+                          <Then>
+                            <Dependency path="../semimonthlyEarlierPeriodEnd"/>
+                          </Then>
+                        </Case>
+                      </Switch>
+                      <Ceiling>
+                        <Divide>
+                          <Dividend>
+                            <Dependency path="../fullPayPeriods"/>
+                          </Dividend>
+                          <Divisors>
+                            <Int>2</Int>
+                          </Divisors>
+                        </Divide>
+                      </Ceiling>
+                    </AddPayrollMonths>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/lastFullPaymentOrdinalEndDate">
+      <Description>Similar to jobs/*/ordinalEffectiveEndDate but only until the end of the last full
+        payment</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPayFrequencyMonthly"/>
+                <Dependency path="../isPayFrequencySemiMonthly"/>
+              </Any>
+            </When>
+            <Then>
+              <Dependency path="../lastFullPaymentEffectiveEndDate/ordinal"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Add>
+                <Switch>
+                  <Case>
+                    <When>
+                      <Dependency path="../hasLaggingPaymentsFromPriorYear"/>
+                    </When>
+                    <Then>
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
+                        </Minuend>
+                        <Subtrahends>
+                          <Dependency path="/daysInPriorYear"/>
+                        </Subtrahends>
+                      </Subtract>
+                    </Then>
+                  </Case>
+                  <Case>
+                    <When>
+                      <True/>
+                    </When>
+                    <Then>
+                      <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
+                    </Then>
+                  </Case>
+                </Switch>
+                <Multiply>
+                  <Dependency path="../fullPayPeriods"/>
+                  <Dependency path="../payPeriodLength"/>
+                </Multiply>
+              </Add>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/hasPartialPayPeriod">
+      <Description>Is paid for a partial partial period</Description>
+      <Derived>
+        <LessThan>
+          <Left>
+            <Dependency path="../endDate/ordinal"/>
+          </Left>
+          <Right>
+            <Dependency path="../ordinalEffectiveEndDate"/>
+          </Right>
+        </LessThan>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/fullPayPeriods">
+      <Description># of full pay periods that are left to be paid this year</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="../remainingPayPeriods"/>
+          </Minuend>
+          <Subtrahends>
+            <Count>
+              <Dependency path="../hasPartialPayPeriod"/>
+            </Count>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/partialPayPeriods">
+      <Description>Rationale representing the fractional pay period that is paid</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../hasPartialPayPeriod"/>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Subtract>
+                    <Minuend>
+                      <Dependency path="../endDate/ordinal"/>
+                    </Minuend>
+                    <Subtrahends>
+                      <Dependency path="../lastFullPaymentOrdinalEndDate"/>
+                    </Subtrahends>
+                  </Subtract>
+                </Dividend>
+                <Divisors>
+                  <Dependency path="../payPeriodLength"/>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Rational>0/1</Rational>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/totalBonusReceived">
+      <Description>The total amount of bonus per year for a specific job</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/totalBonusReceivedThreshold">
+      <Description>Threshold for changing bonus withholdings from 22% to 37%</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>1000000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/withholdingsFromTotalBonusReceived">
+      <Description>Bonus withholdings are 22% if less than 1,000,000 and 37% on the sum exceeding
+        1,000,000</Description>
+      <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <LessThanOrEqual>
+                  <Left>
+                    <Dependency path="../totalBonusReceived"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/totalBonusReceivedThreshold"/>
+                  </Right>
+                </LessThanOrEqual>
+              </When>
+              <Then>
+                <Multiply>
+                  <Rational>22/100</Rational>
+                  <Dependency path="../totalBonusReceived"/>
+                </Multiply>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Add>
+                  <!-- 22% on the first $1,000,000-->
+                  <Multiply>
+                    <Rational>22/100</Rational>
+                    <Dependency path="/totalBonusReceivedThreshold"/>
+                  </Multiply>
+                  <!-- 37% on the amount exceeding $1,000,000-->
+                  <Multiply>
+                    <Rational>37/100</Rational>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../totalBonusReceived"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="/totalBonusReceivedThreshold"/>
+                      </Subtrahends>
+                    </Subtract>
+                  </Multiply>
+                </Add>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/w4Line4a">
+      <Description>Form W-4 Line 4(a); also Pub 15-T Worksheet 1A Line 1d.</Description>
+      <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <Equal>
+                  <Left>
+                    <Dependency path=".."/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
+                  </Right>
+                </Equal>
+              </When>
+              <Then>
+                <Dependency path="/totalOtherIncome"/>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/w4Line4b">
+      <Description>Form W-4 Line 4(b); also Pub 15-T Worksheet 1A Line 1f.</Description>
+      <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <Equal>
+                  <Left>
+                    <Dependency path=".."/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
+                  </Right>
+                </Equal>
+              </When>
+              <Then>
+                <Dependency path="/adjustmentsToIncome"/>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/payPeriodsBeforeW4ChangesAppear">
+      <Description>This is derived from the "2197 Scenarios checks" worksheet of the
+        "TWESprint1_2025_UAT_WHC2197_2200" spreadsheet.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyWeekly"/>
+            </When>
+            <Then>
+              <Int>2</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPayFrequencyBiWeekly"/>
+                <Dependency path="../isPayFrequencySemiMonthly"/>
+              </Any>
+            </When>
+            <Then>
+              <Int>1</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly"/>
+            </When>
+            <Then>
+              <Int>0</Int>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/w4Line3">
+      <Description>W-4 Line 3. Also used on Line 3c of Pub. 15-T Worksheet 1A</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <LessThan>
+                  <Left>
+                    <Dependency path="/taxGap"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </LessThan>
+                <Equal>
+                  <Left>
+                    <Dependency path=".."/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
+                  </Right>
+                </Equal>
+              </All>
+            </When>
+            <Then>
+              <Round>
+                <LesserOf>
+                  <!-- bridge gap to zero -->
+                  <Divide>
+                    <Dividend>
+                      <Multiply>
+                        <!-- Ensure taxGap gets converted to a positive number and annualized -->
+                        <Dependency path="/taxGap"/>
+                        <Int>-1</Int>
+                        <Dependency path="../payPeriodsPerYear"/>
+                      </Multiply>
+                    </Dividend>
+                    <Divisors>
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="../fullPayPeriods"/>
+                        </Minuend>
+                        <Subtrahends>
+                          <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                        </Subtrahends>
+                      </Subtract>
+                    </Divisors>
+                  </Divide>
+                  <!-- Withhold zero -->
+                  <Multiply>
+                    <Dependency path="../tentativeWithholdingAmount"/>
+                    <Dependency path="../payPeriodsPerYear"/>
+                  </Multiply>
+                </LesserOf>
+              </Round>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/w4Line4c">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/taxGap"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </GreaterThan>
+                <Equal>
+                  <Left>
+                    <Dependency path=".."/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
+                  </Right>
+                </Equal>
+              </All>
+            </When>
+            <Then>
+              <Round>
+                <Divide>
+                  <Dividend>
+                    <Dependency path="/taxGap"/>
+                  </Dividend>
+                  <Divisors>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../fullPayPeriods"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                      </Subtrahends>
+                    </Subtract>
+                  </Divisors>
+                </Divide>
+              </Round>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/pub15Worksheet1aLine1g">
+      <Description>Line 1g of Pub 15-T Worksheet 1A</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>12900</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>8600</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/adjustedAnnualWageAmount">
+      <Description>Line 1i of Pub 15-T Worksheet 1A</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Add>
+                <Multiply>
+                  <Dependency path="../averagePayPerPayPeriod"/>
+                  <Dependency path="../payPeriodsPerYear"/>
+                </Multiply>
+              </Add>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="../pub15Worksheet1aLine1g"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/standardAnnualWithholdingAmount">
+      <Description>Standard withholding rate schedules for use when Form W-4 Step 2 box is not
+        checked. Line 2g of Pub. 15-T Worksheet 1A. These amounts are generally a base withholding
+        amount plus a percentage of the excess of Annual Adjusted Wages Amount. The base withholding
+        captures the total withholding for all the brackets below the one that the AAWA falls into. </Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <!-- SINGLE OR MARRIED FILING SEPARATELY -->
+          <Case>
+            <When>
+              <Any>
+                <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
+                <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
+              </Any>
+            </When>
+            <Then>
+              <Switch>
+                <!-- Less than $6,400: no withholding -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>6400</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Dollar>0</Dollar>
+                  </Then>
+                </Case>
+                <!-- At least $6,400 but less than $18,325: $0 plus 10% of the excess over $6,400 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>18325</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Multiply>
+                      <Rational>10/100</Rational>
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="../adjustedAnnualWageAmount"/>
+                        </Minuend>
+                        <Subtrahends>
+                          <Dollar>6400</Dollar>
+                        </Subtrahends>
+                      </Subtract>
+                    </Multiply>
+                  </Then>
+                </Case>
+                <!-- At least $18,325 but less than $54,875: $1,192.50 plus 12% of the excess over
+            $18,325 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>54875</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>1192.50</Dollar>
+                      <Multiply>
+                        <Rational>12/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>18325</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $54,875 but less than $109,750: $5,578.50 plus 22% of the excess
+                  over $54,875 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>109750</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>5578.50</Dollar>
+                      <Multiply>
+                        <Rational>22/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>54875</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $109,750 but less than $203,700: $17,651 plus 24% of the excess over
+                  $109,750 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>203700</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>17651</Dollar>
+                      <Multiply>
+                        <Rational>24/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>109750</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $203,700 but less than $256,925: $40,199 plus 32% of the excess over
+                  $203,700 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>256925</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>40199</Dollar>
+                      <Multiply>
+                        <Rational>32/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>203700</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $256,925 but less than $632,750: $57,231 plus 35% of the excess over
+                  $256,925 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>632750</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>57231</Dollar>
+                      <Multiply>
+                        <Rational>35/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>256925</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- $632,750 and above: $188,769.75 plus 37% of the excess over $632,750 -->
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>188769.75</Dollar>
+                      <Multiply>
+                        <Rational>37/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>632750</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Any>
+                <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+                <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
+              </Any>
+            </When>
+            <Then>
+              <Switch>
+                <!-- Less than $17,100: no withholding -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>17100</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Dollar>0</Dollar>
+                  </Then>
+                </Case>
+                <!-- At least $17,100 but less than $40,950: $0 plus 10% of the excess over
+                  $17,100 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>40950</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Multiply>
+                      <Rational>10/100</Rational>
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="../adjustedAnnualWageAmount"/>
+                        </Minuend>
+                        <Subtrahends>
+                          <Dollar>17100</Dollar>
+                        </Subtrahends>
+                      </Subtract>
+                    </Multiply>
+                  </Then>
+                </Case>
+                <!-- At least $40,950 but less than $114,050: $2,385 plus 12% of the excess over
+                  $40,950 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>114050</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>2385</Dollar>
+                      <Multiply>
+                        <Rational>12/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>40950</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $114,050 but less than $223,800: $11,157 plus 22% of the excess over
+                  $114,050 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>223800</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>11157</Dollar>
+                      <Multiply>
+                        <Rational>22/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>114050</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $223,800 but less than $411,700: $35,302 plus 24% of the excess over
+                  $223,800 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>411700</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>35302</Dollar>
+                      <Multiply>
+                        <Rational>24/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>223800</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $411,700 but less than $518,150: $80,398 plus 32% of the excess over
+                  $411,700 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>518150</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>80398</Dollar>
+                      <Multiply>
+                        <Rational>32/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>411700</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $518,150 but less than $768,700: $114,462 plus 35% of the excess
+                  over $518,150 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>768700</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>114462</Dollar>
+                      <Multiply>
+                        <Rational>35/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>518150</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- $768,700 and above: $202,154.50 plus 37% of the excess over $768,700 -->
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>202154.50</Dollar>
+                      <Multiply>
+                        <Rational>37/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>768700</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
+            </When>
+            <Then>
+              <Switch>
+                <!-- Less than $13,900: no withholding -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>13900</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Dollar>0</Dollar>
+                  </Then>
+                </Case>
+                <!-- At least $13,900 but less than $30,900: $0 plus 10% of the excess over
+                  $13,900 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>30900</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Multiply>
+                      <Rational>10/100</Rational>
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="../adjustedAnnualWageAmount"/>
+                        </Minuend>
+                        <Subtrahends>
+                          <Dollar>13900</Dollar>
+                        </Subtrahends>
+                      </Subtract>
+                    </Multiply>
+                  </Then>
+                </Case>
+                <!-- At least $30,900 but less than $78,750: $1,700 plus 12% of the excess over
+                  $30,900 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>78750</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>1700</Dollar>
+                      <Multiply>
+                        <Rational>12/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>30900</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $78,750 but less than $117,250: $7,442 plus 22% of the excess over
+                  $78,750 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>117250</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>7442</Dollar>
+                      <Multiply>
+                        <Rational>22/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>78750</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $117,250 but less than $211,200: $15,912 plus 24% of the excess over
+                  $117,250 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>211200</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>15912</Dollar>
+                      <Multiply>
+                        <Rational>24/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>117250</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $211,200 but less than $264,400: $38,460 plus 32% of the excess over
+                  $211,200 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>264400</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>38460</Dollar>
+                      <Multiply>
+                        <Rational>32/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>211200</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- At least $264,400 but less than $640,250: $55,484 plus 35% of the excess over
+                  $264,400 -->
+                <Case>
+                  <When>
+                    <LessThan>
+                      <Left>
+                        <Dependency path="../adjustedAnnualWageAmount"/>
+                      </Left>
+                      <Right>
+                        <Dollar>640250</Dollar>
+                      </Right>
+                    </LessThan>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>55484</Dollar>
+                      <Multiply>
+                        <Rational>35/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>264400</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+                <!-- $640,250 and above: $187,031.50 plus 37% of the excess over $640,250 -->
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dollar>187031.50</Dollar>
+                      <Multiply>
+                        <Rational>37/100</Rational>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../adjustedAnnualWageAmount"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Dollar>640250</Dollar>
+                          </Subtrahends>
+                        </Subtract>
+                      </Multiply>
+                    </Add>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/tentativeWithholdingAmount">
+      <Description>Line 2h of Pub. 15-T Worksheet 1A. The amount from the Annual Method Percentage
+        table.</Description>
+      <Derived>
+        <Divide>
+          <Dividend>
+            <Dependency path="../standardAnnualWithholdingAmount"/>
+          </Dividend>
+          <Divisors>
+            <Dependency path="../payPeriodsPerYear"/>
+          </Divisors>
+        </Divide>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/retirementPlanContributions">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/healthInsuranceContributions">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/hsaOrFsaContributions">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/endOfYearProjectedWithholding">
+      <Description>The end of year amount withheld for this job if nothing is changed.</Description>
+      <Derived>
+        <Add>
+          <Dependency path="../yearToDateWithholding"/>
+          <Multiply>
+            <Dependency path="../fullPayPeriods"/>
+            <Dependency path="../averageWithholdingPerPayPeriod"/>
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/restOfYearIncome">
+      <Description>This amount this job will pay for the rest of the year.</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="../averagePayPerPayPeriod"/>
+          <Add>
+            <Dependency path="../fullPayPeriods"/>
+            <Dependency path="../partialPayPeriods"/>
+          </Add>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/payPeriodsPerYear">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyWeekly"/>
+            </When>
+            <Then>
+              <Int>52</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyBiWeekly"/>
+            </When>
+            <Then>
+              <Int>26</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly"/>
+            </When>
+            <Then>
+              <Int>24</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly"/>
+            </When>
+            <Then>
+              <Int>12</Int>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/committedWithholding">
+      <Description>This job's withholding that cannot change because it's past or within the time
+        lag before W4 changes kick in.</Description>
+      <Derived>
+        <Add>
+          <!-- past withholding -->
+          <Dependency path="../yearToDateWithholding"/>
+          <!-- future withholding, too soon to be changed -->
+          <Multiply>
+            <Dependency path="../averageWithholdingPerPayPeriod"/>
+            <LesserOf>
+              <Dependency path="../fullPayPeriods"/>
+              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+            </LesserOf>
+          </Multiply>
+          <!-- future tentative withholding: result from Pub 15-T Worksheet 1A  -->
+          <!-- For now, we treat this as a "given" that won't change. Probably will need to revisit
+          this when we get to reducing below tentative withholding. -->
+          <Multiply>
+            <Dependency path="../tentativeWithholdingAmount"/>
+            <GreaterOf>
+              <Int>0</Int>
+              <Subtract>
+                <Minuend>
+                  <!-- Full pay periods are used here to match QA spreadsheet calculation -->
+                  <Dependency path="../fullPayPeriods"/>
+                </Minuend>
+                <Subtrahends>
+                  <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                </Subtrahends>
+              </Subtract>
+            </GreaterOf>
+          </Multiply>
+          <!-- witholding from the bonus, formula is different than for the regular job payments-->
+          <Dependency path="../withholdingsFromTotalBonusReceived"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobsAvailableForExtraWithholding">
+      <Description>Jobs that are ended or end too soon are not candidates for extra withholding on a
+        new W4.</Description>
+      <Derived>
+        <!-- TODO: what should we do if no jobs meet this filter? -->
+        <Filter path="/jobs">
+          <GreaterThan>
+            <Left>
+              <Dependency path="/jobs/*/remainingPayPeriods"/>
+            </Left>
+            <Right>
+              <Dependency path="/jobs/*/payPeriodsBeforeW4ChangesAppear"/>
+            </Right>
+          </GreaterThan>
+        </Filter>
+      </Derived>
+    </Fact>
+    <Fact path="/jobSelectedForExtraWithholding">
+      <Description>The job selected for extra withholding on a new W4. The W4 refers to this as the
+        "highest paying job".</Description>
+      <Derived>
+        <IndexOf>
+          <Collection>
+            <Filter path="/jobsAvailableForExtraWithholding">
+              <Equal>
+                <Left>
+                  <Maximum>
+                    <Dependency path="/jobsAvailableForExtraWithholding/*/restOfYearIncome"/>
+                  </Maximum>
+                </Left>
+                <Right>
+                  <Dependency path="restOfYearIncome"/>
+                </Right>
+              </Equal>
+            </Filter>
+          </Collection>
+          <Index>
+            <Int>0</Int>
+          </Index>
+        </IndexOf>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

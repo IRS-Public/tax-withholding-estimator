@@ -1,0 +1,501 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/netSelfEmploymentIncomeSelf">
+      <Description>Net profit loss, reported as Line 31 on Schedule C and line 2 of Schedule SE for self.</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/grossSelfEmploymentIncomeSelf"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/selfEmploymentIncomeExpensesSelf"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/netSelfEmploymentIncomeSpouse">
+      <Description>Net profit loss, reported as Line 31 on Schedule C and line 2 of Schedule SE for spouse.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFJ"/>
+                <IsComplete>
+                  <Dependency path="/grossSelfEmploymentIncomeSpouse"/>
+                </IsComplete>
+              </All>
+            </When>
+            <Then>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="/grossSelfEmploymentIncomeSpouse"/>
+                </Minuend>
+                <Subtrahends>
+                  <Dependency path="/selfEmploymentIncomeExpensesSpouse"/>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFJ"/>
+                <Not>
+                  <IsComplete>
+                    <Dependency path="/grossSelfEmploymentIncomeSpouse"/>
+                  </IsComplete>
+                </Not>
+              </All>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecuritySelfEmploymentTaxPortion">
+      <Derived>
+        <Rational>31/250</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/medicareSelfEmploymentTaxPortion">
+      <Derived>
+        <Rational>29/1000</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentTaxDeductionMultiplier">
+      <Derived>
+        <Rational>1/2</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine4aLine5bMultiplier">
+      <Derived>
+        <Rational>1847/2000</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/maxNetSelfEmploymentIncomeSubjectToSocialSecurityTax">
+      <Description> Schedule SE Line 7. Maximum amount of combined wages and self-employment earnings subject to social security tax or
+        the 6.2% portion of the 7.65% railroad retirement (tier 1) tax for 2025</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>176100</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/primaryHasSelfEmploymentIncome">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/netSelfEmploymentIncomeSelf"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/secondaryHasSelfEmploymentIncome">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/eitherTPHasSelfEmploymentIncome">
+      <Derived>
+        <Any>
+          <Dependency path="/primaryHasSelfEmploymentIncome"/>
+          <Dependency path="/secondaryHasSelfEmploymentIncome"/>
+        </Any>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine4aSelf">
+      <Description>Specific calculation on line 4a of Schedule SE (Form 1040) to multiply net self
+        employment income by 92.35%.</Description>
+      <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/netSelfEmploymentIncomeSelf"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </GreaterThan>
+              </When>
+              <Then>
+                <Multiply>
+                  <Dependency path="/netSelfEmploymentIncomeSelf"/>
+                  <Dependency path="/scheduleSELine4aLine5bMultiplier"/>
+                </Multiply>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Dependency path="/netSelfEmploymentIncomeSelf"/>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine4bSelf">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine4cSelf">
+      <Description>Combine lines 4a and 4b. If less than $400, 0 and no self-employment tax.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Add>
+                    <Dependency path="/scheduleSELine4aSelf"/>
+                    <Dependency path="/scheduleSELine4bSelf"/>
+                  </Add>
+                </Left>
+                <Right>
+                  <Dollar>400</Dollar>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="/scheduleSELine4aSelf"/>
+                <Dependency path="/scheduleSELine4bSelf"/>
+              </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine5aSelf">
+      <Description>5a) Enter your church employee income from Form W-2. See instructions for definition of church employee income. </Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine5bSelf">
+      <Description>5b) Multiply line 5a by 92.35% (0.9235). If less than $100, enter -0- </Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/scheduleSELine5aSelf"/>
+          <Dependency path="/scheduleSELine4aLine5bMultiplier"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine6Self">
+      <Description>Line 4c + Line 5b </Description>
+      <Derived>
+        <Add>
+          <Dependency path="/scheduleSELine4cSelf"/>
+          <Dependency path="/scheduleSELine5bSelf"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine8dSelf">
+      <Description>
+        Sum of 8a + 8b + 8c
+        8a) Total social security wages and tips (total of boxes 3 and 7 on Form(s) W-2) and railroad retirement (tier 1) compensation.
+        8b) Unreported tips subject to social security tax from Form 4137, line 10
+        8c) Wages subject to social security tax from Form 8919, line 10
+      </Description>
+      <Derived>
+        <!--        TODO: Confirm that this is the right aggregate fact, update once we split out income by self and spouse-->
+        <Dependency path="/totalJobsIncome"/>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine9Self">
+      <Description>
+        Greater of zero or Line 7 - Line 8d
+      </Description>
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/maxNetSelfEmploymentIncomeSubjectToSocialSecurityTax"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/scheduleSELine8dSelf"/>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine10Self">
+      <Description>Self-employment tax multiplied by the Social Security tax rate from line 10 on
+        Schedule SE (Form 1040).
+        12.4 * MIN(line6,line9)
+      </Description>
+      <Derived>
+        <Round>
+          <Multiply>
+            <LesserOf>
+              <Dependency path="/scheduleSELine6Self"/>
+              <Dependency path="/scheduleSELine9Self"/>
+            </LesserOf>
+            <Dependency path="/socialSecuritySelfEmploymentTaxPortion"/>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine11Self">
+      <Description>Line 10 *2.9%  (medicare self employment tax portion)
+      </Description>
+      <Derived>
+        <Round>
+          <Multiply>
+            <Dependency path="/scheduleSELine6Self"/>
+            <Dependency path="/medicareSelfEmploymentTaxPortion"/>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine12Self">
+      <Description>Self employment tax (line 10 + line 11)
+        Enter here and on Schedule 2 (Form 1040), line 4, or Form 1040-SS, Part I, line 3 </Description>
+      <Derived>
+        <Add>
+          <Dependency path="/scheduleSELine10Self"/>
+          <Dependency path="/scheduleSELine11Self"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine13Self">
+      <Description>Self Employment Tax Deduction. Multiply line 12 by 50% (0.50). Schedule SE line 13, Schedule 1 (Form 1040), line 15</Description>
+      <Derived>
+        <Round>
+          <Multiply>
+            <Dependency path="/scheduleSELine12Self"/>
+            <Dependency path="/selfEmploymentTaxDeductionMultiplier"/>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine4aSpouse">
+      <Description>Specific calculation on line 4a of Schedule SE (Form 1040) to multiply net self
+        employment income by 92.35%.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Multiply>
+                <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+                <Dependency path="/scheduleSELine4aLine5bMultiplier"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine4bSpouse">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine4cSpouse">
+      <Description>Combine lines 4a and 4b. If less than $400, 0 and no self-employment tax.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Add>
+                    <Dependency path="/scheduleSELine4aSpouse"/>
+                    <Dependency path="/scheduleSELine4bSpouse"/>
+                  </Add>
+                </Left>
+                <Right>
+                  <Dollar>400</Dollar>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="/scheduleSELine4aSpouse"/>
+                <Dependency path="/scheduleSELine4bSpouse"/>
+              </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine5aSpouse">
+      <Description>5a) Enter your church employee income from Form W-2. See instructions for definition of church employee income. </Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine5bSpouse">
+      <Description>5b) Multiply line 5a by 92.35% (0.9235). If less than $100, enter -0- </Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/scheduleSELine5aSpouse"/>
+          <Dependency path="/scheduleSELine4aLine5bMultiplier"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine6Spouse">
+      <Description>Add line 4c and 5b for spouse</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/scheduleSELine4cSpouse"/>
+          <Dependency path="/scheduleSELine5bSpouse"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine8dSpouse">
+      <Description>
+        Sum of 8a + 8b + 8c
+        8a) Total social security wages and tips (total of boxes 3 and 7 on Form(s) W-2) and railroad retirement (tier 1) compensation.
+        8b) Unreported tips subject to social security tax from Form 4137, line 10
+        8c) Wages subject to social security tax from Form 8919, line 10
+      </Description>
+      <Derived>
+        <!--        TODO: CHANGE TO SPOUSAL VERSION + Confirm that this is the right aggregate fact, update once we split out income by self and spouse-->
+        <Dependency path="/totalJobsIncome"/>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine9Spouse">
+      <Description>
+        Greater of zero or Line 7 - Line 8d
+      </Description>
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/maxNetSelfEmploymentIncomeSubjectToSocialSecurityTax"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/scheduleSELine8dSpouse"/>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine10Spouse">
+      <Description>Self-employment tax multiplied by the Social Security tax rate from line 10 on
+        Schedule SE (Form 1040).
+        12.4 * MIN(line6,line9)
+      </Description>
+      <Derived>
+        <Round>
+          <Multiply>
+            <LesserOf>
+              <Dependency path="/scheduleSELine6Spouse"/>
+              <Dependency path="/scheduleSELine9Spouse"/>
+            </LesserOf>
+            <Dependency path="/socialSecuritySelfEmploymentTaxPortion"/>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine11Spouse">
+      <Description>Line 10 *2.9%  (medicare self employment tax portion)
+      </Description>
+      <Derived>
+        <Round>
+          <Multiply>
+            <Dependency path="/scheduleSELine6Spouse"/>
+            <Dependency path="/medicareSelfEmploymentTaxPortion"/>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine12Spouse">
+      <Description>Self employment tax (line 10 + line 11)
+        Enter here and on Schedule 2 (Form 1040), line 4, or Form 1040-SS, Part I, line 3 </Description>
+      <Derived>
+        <Round>
+          <Add>
+            <Dependency path="/scheduleSELine10Spouse"/>
+            <Dependency path="/scheduleSELine11Spouse"/>
+          </Add>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine13Spouse">
+      <Description>Self Employment Tax Deduction. Multiply line 12 by 50% (0.50). Schedule SE line 13, Schedule 1 (Form 1040), line 15</Description>
+      <Derived>
+        <Round>
+          <Multiply>
+            <Dependency path="/scheduleSELine12Spouse"/>
+            <Dependency path="/selfEmploymentTaxDeductionMultiplier"/>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentTax">
+      <Description>Self employment tax combined for both self and spouse. Entered on Schedule 2 line 4 and Form 1040-SS Part I, line 3</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/scheduleSELine12Self"/>
+          <Dependency path="/scheduleSELine12Spouse"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentTaxDeduction">
+      <Description>Self Employment Tax Deduction combined for both self and spouse</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/scheduleSELine13Self"/>
+          <Dependency path="/scheduleSELine13Spouse"/>
+        </Add>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

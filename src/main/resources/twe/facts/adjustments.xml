@@ -39,7 +39,7 @@
       <Override>
         <Condition>
           <Not>
-            <Dependency path="/hasSelfEmploymentIncome"/>
+            <Dependency path="/primaryHasSelfEmploymentIncome"/>
           </Not>
         </Condition>
         <Default>
@@ -62,7 +62,7 @@
       <Override>
         <Condition>
           <Not>
-            <Dependency path="/hasSelfEmploymentIncome"/>
+            <Dependency path="/primaryHasSelfEmploymentIncome"/>
           </Not>
         </Condition>
         <Default>

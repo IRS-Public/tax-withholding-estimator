@@ -1050,27 +1050,42 @@
       <Derived>
         <Subtract>
           <Minuend>
-            <Dependency path="/tentativeTaxFromTaxableIncome"/>
+            <Dependency path="/totalTax"/>
           </Minuend>
           <Subtrahends>
-            <Dependency path="/totalCredits" module="credits"/>
             <Dependency path="/totalEstimatedTaxesPaid"/>
           </Subtrahends>
         </Subtract>
       </Derived>
     </Fact>
+    <Fact path="/totalTaxMinusCredits">
+      <Description>Estimated total taxes owed. The tax liability minus the total credits and total
+        advance payments made during the tax year. As reported on line 22 of Form 1040. Zero if credits are larger than tax.
+      </Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/tentativeTaxFromTaxableIncome"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/totalCredits"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
     <Fact path="/totalTax">
-      <Description>Taxes from taxable income minus credits plus other taxes, including sefl-employment tax. As reported on line 24 of Form 1040.</Description>
+      <Description>Taxes from taxable income minus credits plus other taxes, including self-employment tax. As reported on line 24 of Form 1040.</Description>
       <!-- TODO: This currently doesn't match line 24 of the 1040 -->
       <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/tentativeTaxFromTaxableIncome"/>
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="/totalCredits"/>
-          </Subtrahends>
-        </Subtract>
+        <Add>
+          <Dependency path="/totalTaxMinusCredits"/>
+          <Dependency path="/selfEmploymentTax"/>
+          <Dependency path="/additionalMedicareTax"/>
+          <Dependency path="/netInvestmentIncomeTax"/>
+        </Add>
       </Derived>
     </Fact>
     <Fact path="/topTaxRateBracketThresholdByFilingStatus">

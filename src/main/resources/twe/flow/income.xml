@@ -84,7 +84,7 @@
         <input type="dollar"/>
       </fg-set>
       <h2>Net Self-Employment Income</h2>
-      <fg-set path="/netSelfEmploymentIncome">
+      <fg-set path="/netSelfEmploymentIncomeSelf">
         <question>How much was your net self-employment income this year?</question>
         <input type="dollar"/>
       </fg-set>

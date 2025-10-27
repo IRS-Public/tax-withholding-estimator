@@ -74,6 +74,32 @@
         <Boolean/>
       </Writable>
     </Fact>
+    <Fact path="/selfEmploymentIncomeForQualifiedTips">
+      <!--      TODO: fix this if we are splitting out tip income by job/self vs. spouse so that there Tip deduction is for each filer, not for both at once-->
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="/netSelfEmploymentIncomeSelf"/>
+                <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+              </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/netSelfEmploymentIncomeSelf"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/doTipsExceedSelfEmploymentIncome">
       <!-- TODO: confirm that this definition matches implementation, specifically 'exceeds sum of
       deductions' -->
@@ -91,7 +117,7 @@
                   <Dependency path="/qualifiedTipIncome"/>
                 </Left>
                 <Right>
-                  <Dependency path="/selfEmploymentIncome"/>
+                  <Dependency path="/selfEmploymentIncomeForQualifiedTips"/>
                 </Right>
               </GreaterThan>
             </When>

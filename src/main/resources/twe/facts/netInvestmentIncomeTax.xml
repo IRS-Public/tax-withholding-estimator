@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/netInvestmentIncomeTax">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

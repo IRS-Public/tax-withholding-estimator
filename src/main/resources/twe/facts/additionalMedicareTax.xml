@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/additionalMedicareTaxThresholdForMFJ">
+      <Derived>
+        <Dollar>250000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxThresholdForAllOtherTPs">
+      <Derived>
+        <Dollar>200000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxThresholdForMFS">
+      <Derived>
+        <Dollar>125000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxMultiplier">
+      <Derived>
+        <Rational>9/1000</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/medicareWagesAndTipsForm8959Line1">
+      <Description> Form 8959 Part I Line 1. Per the Form instructions, this should include the total Medicare wages and tips plus your self-employment income, if any (including the Medicare wages and tips and self-employment income of your spouse, if married filing jointly), are greater than the threshold amount for your filing status. See example 5 https://www.irs.gov/instructions/i8959</Description>
+      <Derived>
+        <!--        TODO: Confirm that this is the right aggregate fact-->
+        <Dependency path="/totalJobsIncomeSelfAndSpouse"/>
+      </Derived>
+    </Fact>
+    <Fact path="/unreportedTipsForm8959Line2">
+      <Description> Form 8959 Part I Line 2</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/uncollectedSSWagesForm8959Line3">
+      <Description> Form 8959 Part I Line 3</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/totalMedicareWagesForm8959Line4">
+      <Description> Form 8959 Part I Line 4</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/medicareWagesAndTipsForm8959Line1"/>
+          <Dependency path="/unreportedTipsForm8959Line2"/>
+          <Dependency path="/uncollectedSSWagesForm8959Line3"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxThreshold">
+      <Description> Form 8959 Part I Line 5 and II Line 9</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dependency path="/additionalMedicareTaxThresholdForMFJ"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dependency path="/additionalMedicareTaxThresholdForMFS"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/additionalMedicareTaxThresholdForAllOtherTPs"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/excessAdditionalMedicareTaxForm5969Line6">
+      <Description> Form 8959 Part I Line 6</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/totalMedicareWagesForm8959Line4"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/additionalMedicareTaxThreshold"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxOnMedicareWagesForm5969Line7">
+      <Description> Form 8959 Part I Line 7</Description>
+      <Derived>
+        <Round>
+          <Multiply>
+            <Dependency path="/excessAdditionalMedicareTaxForm5969Line6"/>
+            <Dependency path="/additionalMedicareTaxMultiplier"/>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentIncomeForm8959Line8">
+      <Description> Form 8959 Part I Line 1. Per the Form instructions, this should include the total Medicare wages and tips plus your self-employment income, if any (including the Medicare wages and tips and self-employment income of your spouse, if married filing jointly), are greater than the threshold amount for your filing status</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/scheduleSELine6Self"/>
+          <Switch>
+            <Case>
+              <When>
+                <Dependency path="/isFilingStatusMFJ"/>
+              </When>
+              <Then>
+                <Dependency path="/scheduleSELine6Spouse"/>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+          </Switch>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/excessMedicareTaxForm5969Line11">
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/additionalMedicareTaxThreshold"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/totalMedicareWagesForm8959Line4"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/excessSelfEmploymentIncomeOfExcessMedicareTaxForm5969Line12">
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/selfEmploymentIncomeForm8959Line8"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/excessMedicareTaxForm5969Line11"/>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxOnSelfEmploymentIncomeForm8959Line13">
+      <Derived>
+        <Round>
+          <Multiply>
+            <Dependency path="/excessSelfEmploymentIncomeOfExcessMedicareTaxForm5969Line12"/>
+            <Dependency path="/additionalMedicareTaxMultiplier"/>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxOnRRTAForm8959Line17">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTax">
+      <Description>Form8959 Line17</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/additionalMedicareTaxOnMedicareWagesForm5969Line7"/>
+          <Dependency path="/additionalMedicareTaxOnSelfEmploymentIncomeForm8959Line13"/>
+          <Dependency path="/additionalMedicareTaxOnRRTAForm8959Line17"/>
+        </Add>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

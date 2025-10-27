@@ -362,10 +362,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       filingStatus -> Enum("marriedFilingJointly", "/filingStatusOptions"),
-      Path(s"/netSelfEmploymentIncome") -> Dollar("10000"),
+      Path(s"/netSelfEmploymentIncomeSelf") -> Dollar("10000"),
     )
 
-    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("1412.96")))
+    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("1413")))
 
   }
 
@@ -439,10 +439,10 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       filingStatus -> Enum("headOfHousehold", "/filingStatusOptions"),
-      Path(s"/netSelfEmploymentIncome") -> Dollar("20000"),
+      Path(s"/netSelfEmploymentIncomeSelf") -> Dollar("20000"),
     )
 
-    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("2825.91")))
+    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("2826")))
   }
 
   test("2197 Scenarios spreadsheet Column N") {
@@ -515,20 +515,20 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       filingStatus -> Enum("marriedFilingJointly", "/filingStatusOptions"),
-      Path(s"/netSelfEmploymentIncome") -> Dollar("7000"),
+      Path(s"/netSelfEmploymentIncomeSelf") -> Dollar("7000"),
     )
 
-    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("989.07")))
+    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("989")))
 
   }
 
   test("2197 Scenarios spreadsheet Column P") {
     val graph = makeGraphWith(
       factDictionary,
-      Path(s"/netSelfEmploymentIncome") -> Dollar("7000"),
+      Path(s"/netSelfEmploymentIncomeSelf") -> Dollar("7000"),
     )
 
-    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("989.07")))
+    assert(graph.get(Path(s"/selfEmploymentTax")).value.contains(Dollar("989")))
   }
 
   test("Scenario with three jobs") {

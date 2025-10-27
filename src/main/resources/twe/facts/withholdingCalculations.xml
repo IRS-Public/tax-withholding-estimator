@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/totalYearToDateJobsWithholding">
+      <Description>Total actual withholding for all jobs</Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobs/*/yearToDateWithholding"/>
+        </CollectionSum>
+      </Derived>
+    </Fact>
+    <Fact path="/totalEndOfYearProjectedWithholding">
+      <Description>The amount withheld for all jobs if nothing is changed.</Description>
+      <Derived>
+        <Add>
+          <CollectionSum>
+            <Dependency path="/jobs/*/endOfYearProjectedWithholding"/>
+          </CollectionSum>
+          <Dependency path="/pensionsTotalEndOfYearProjectedWithholding"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/withholdingGap">
+      <Description>The rest-of-year withholding gap: taxes owed if nothing is changed.</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/totalOwed"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/totalEndOfYearProjectedWithholding"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/taxGap">
+      <Description>The tax gap once W-4s are updated and we account for the remaining pay periods</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/totalOwed"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/totalCommittedWithholding"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/totalCommittedWithholding">
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobs/*/committedWithholding"/>
+        </CollectionSum>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>
