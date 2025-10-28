@@ -75,3 +75,43 @@ step-indicator:
   not-completed: not completed
   step: Step
   of: of
+
+# Note that these errors use CamelCase because they come from the Fact Graph. Some of these errors
+# are user errors (i.e. they entered an amount larger than the limit) but not all of them are (i.e.
+# if the limit is misconfigured). I've tried to the denote the ones that should only appear if
+# there's a bug that needs to be fixed.
+errors:
+  # Dollar errors
+  CombinedHyphensAndParentheses: Enter only numbers and a decimal.
+  # Not obvious to me why the fact graph breaks down invalid characters
+  # this way but I don't think it needs to be exposed to the user
+  InvalidCharacters: Enter only numbers and a decimal.
+  InvalidDollar: Enter only numbers and a decimal.
+  InvalidHyphens: Enter only numbers and a decimal.
+  InvalidParentheses: Enter only numbers and a decimal.
+  TooManyDecimals: Enter a number with only one decimal.
+  TooManyFractionalDigits: Enter only two digits after the decimal.
+
+  # Day errors
+  InvalidDay: Enter a valid day.
+  InvalidDayDueToLeapYear: Invalid day due to leap year.
+  InvalidMonth: Enter a valid month.
+  InvalidDate: Enter a valid date.
+  InvalidLimit: Invalid limit set. # Server error
+
+  # Enum errors
+  BlankEnum: Value was blank. # Server error
+  InvalidEnum: Value not found. # Server error
+
+  Default: Sorry, something went wrong # Server error
+
+  # Limit errors
+  #
+  # There are a few other limits types in the Fact Graph, but we don't use them for TWE. Strangely,
+  # Dollar et. al. have their own limit validations, like ExceedsMaxLimit. I don't know under what
+  # circumstances those would trigger; I think it's a vestige of a different way of setting limits
+  #
+  # Yes, it would be nice to do proper parameterization rather than just appending the limit value
+  # to the end of the string
+  Max: Enter an amount less than
+  Min: Enter an amount more than

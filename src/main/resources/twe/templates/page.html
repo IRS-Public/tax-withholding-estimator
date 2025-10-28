@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-    <meta th:replace="fragments/head" />
-  </head>
+  <div th:replace="fragments/head"></div>
 
   <a class="usa-skipnav" href='#main-content' th:text="#{layout.skip-to-main}"></a>
   <header>
@@ -13,25 +10,21 @@
 
   <main id="main-content">
     <h1 th:text="#{layout.title}"></h1>
-
     <div th:replace="fragments/usa-step-indicator"></div>
 
     <div class="header-bottom-border" th:if="!${first}">
-      <a class="usa-link back-link"
-        th:href="${lastPageHref}">
+      <a class="usa-link back-link" th:href="${lastPageHref}">
         <svg aria-hidden="true" role="img" focusable="false" class="usa-icon">
-      <use href="/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
-      </svg>
-      [[#{buttons.back}]]
+          <use href="/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
+        </svg>
+        <span th:text="#{buttons.back}" th:remove="tag"></span>
       </a>
     </div>
 
     <div th:utext="${pageXml}" th:remove="tag" class=""></div>
 
     <div class="form-actions" th:if="${nextPageHref}">
-      <a class="usa-button"
-        th:href="${nextPageHref}"
-        onclick="return handleSectionContinue(event)">
+      <a class="usa-button" th:href="${nextPageHref}" onclick="return handleSectionContinue(event)">
         [[${first} ? #{buttons.next} : #{buttons.continue}]]
         <svg th:unless="${first}" aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
           <use href="/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
@@ -88,5 +81,6 @@
     </div>
   </footer>
 
+  <div th:replace="~{errors}"></div>
   <script type="text" id="fact-dictionary" th:utext="${dictionaryConfig}"></script>
 </html>

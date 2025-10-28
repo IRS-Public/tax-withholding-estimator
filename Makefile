@@ -1,7 +1,7 @@
 PORT ?= 3000
 XML_FILES := $(shell git ls-files '*.xml')
 FG_SOURCE_DIR := ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt
-FG_TARGET_DIR := ./src/main/resources/twe/website-static/vendor/fact-graph/
+FG_TARGET_DIR := ./src/main/resources/twe/website-static/vendor/fact-graph
 
 # Build and run development server, watching for changes
 .PHONY: dev

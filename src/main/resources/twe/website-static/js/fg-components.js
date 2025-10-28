@@ -38,6 +38,8 @@ class FgSet extends HTMLElement {
   constructor() {
     super()
 
+    this.DEFAULT_ERROR_ELEMENT_ID = 'errors.Default'
+
     this.tabListener = (event) => {
       // Conditions must be re-evaluated before the keydown event resolves, so that focusable elements are updated
       // before the focus moves. The `blur` and `change` events don't fire until *after* the focus has already moved.
@@ -66,7 +68,6 @@ class FgSet extends HTMLElement {
 
           if (allFilled) {
             this.onChange();
-            this.validateRequiredFields();
           }
         });
 
@@ -75,8 +76,6 @@ class FgSet extends HTMLElement {
       case 'dollar':
         this.addEventListener('change', () => {
             this.onChange()
-            // Clear validation error once user provides valid input
-            this.validateRequiredFields();
           });
         break;
       case 'select':
@@ -104,17 +103,14 @@ class FgSet extends HTMLElement {
     console.debug(`Adding fg-set with path ${this.path} of inputType ${this.inputType}`)
 
     // This is done with bind, rather than an arrow function, so that it can be removed later
-    this.render = this.render.bind(this)
     this.clear = this.clear.bind(this)
-
-    document.addEventListener('fg-update', this.render);
     document.addEventListener('fg-clear', this.clear);
+
     this.render()
   }
 
   disconnectedCallback() {
     console.debug(`Removing fg-set with path ${this.path}`)
-    document.removeEventListener('fg-update', this.render)
     document.removeEventListener('fg-clear', this.clear);
   }
 
@@ -154,7 +150,7 @@ class FgSet extends HTMLElement {
 
   }
 
-  setValidationError() {
+  setValidationError(errorText) {
     this.clearValidationError();
     const errorId = `${this.path}-error`; // Keep the slash for primary filer
 
@@ -162,7 +158,7 @@ class FgSet extends HTMLElement {
     const errorDiv = document.createElement('div');
     errorDiv.classList.add('usa-error-message');
     errorDiv.setAttribute('id', errorId);
-    errorDiv.textContent = "this field is required";
+    errorDiv.textContent = errorText
 
     const elementWithDescription = this.querySelector('.usa-fieldset, .usa-select, .usa-input');
     const errorLocation = this.querySelector('.usa-radio, .usa-memorable-date, .usa-checkbox, .usa-select, .usa-input-group, .usa-input');
@@ -189,7 +185,7 @@ class FgSet extends HTMLElement {
   validateRequiredFields() {
     const isMissing = !this.isComplete();
     if (isMissing) {
-        this.setValidationError();
+        this.setValidationError("This field is required");
     } else {
         this.clearValidationError();
     }
@@ -197,29 +193,22 @@ class FgSet extends HTMLElement {
   }
 
   render() {
-    this.clearAlerts()
-
-    // Show error if there is one
-    if (this.error) {
-      const warnDiv = document.createElement('div')
-      warnDiv.classList.add('alert--warning')
-      warnDiv.innerText = this.error
-      this.insertAdjacentElement('afterbegin', warnDiv)
-    }
-
     this.setInputValueFromFactValue()
   }
 
   onChange() {
     try {
-      this.setFact()
-      this.error = null
+      const res = this.setFact()
+      if (res.errorType) {
+        const errorTextKey = `errors.${res.errorName}`
+        const errorElement = document.getElementById(errorTextKey) || document.getElementById(this.DEFAULT_ERROR_ELEMENT_ID)
+        const errorText = errorElement.innerText + ' ' + (res.expectedValue || '')
+        this.setValidationError(errorText)
+      } else {
+        this.clearValidationError()
+      }
     } catch (error) {
-      console.error(error)
-      this.error = error.message
-      return
-    } finally {
-      this.render()
+      this.setValidationError(error.message)
     }
   }
 
@@ -384,15 +373,17 @@ class FgSet extends HTMLElement {
     console.debug(`Setting fact ${this.path}`)
     const value = this.getFactValueFromInputValue()
 
+    let res = {}
     if (value === "" || value === null) {
       console.debug(`Value was blank, deleting fact`);
       factGraph.delete(this.path);
     } else {
-      factGraph.set(this.path, value);
+      res = factGraph.set(this.path, value);
     }
 
     saveFactGraph()
     document.dispatchEvent(new CustomEvent('fg-update'))
+    return res
   }
 
   /**
@@ -529,7 +520,6 @@ class FgCollectionItem extends HTMLElement {
 
     // Get our template from the parent fg-collection
     const fgCollection = this.closest('fg-collection')
-    const addButton = fgCollection.querySelector('.fg-collection__add-item')
     const templateContent = fgCollection.querySelector('.fg-collection__item-template').content.cloneNode(true)
 
     // Update all abstract paths in the template to include the collection id
@@ -621,7 +611,6 @@ class FgShow extends HTMLElement {
     let outputHtml = ''
     for (const result of results) {
       if (outputHtml !== '') outputHtml += ', '
-      console.log(result.hasValue)
       if (result.hasValue) {
         const value = result.get.toString()
         if (result.complete === false) {
