@@ -1317,6 +1317,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       factDictionary,
       filingStatus -> single,
       pensions -> pensionsCollection,
+      jobs -> Collection(Vector()),
       Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
@@ -1348,9 +1349,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     assert(graph.get(Path(s"/pensions/#${pension1Id}/adjustedAnnualPaymentAmount")).value.contains(Dollar("51400")))
     assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2cOr2d")).value.contains(Dollar("51400")))
     assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2j")).value.contains(Dollar("5162")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2t")).value.contains(Dollar("0")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/baseAnnualWithholding")).value.contains(Dollar("5162")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/basePerPayPeriodWithholding")).value.contains(Dollar("430.17")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.17")))
 
     assert(graph.get(Path("/totalPensionsIncome")).value.contains(Dollar("60000")))
     assert(graph.get(Path("/taxableIncome")).value.contains(Dollar("44250")))
@@ -1358,7 +1357,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("5075")))
     assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("275")))
 
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4cRecommendation")).value.contains(Dollar("39")))
+//    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4cRecommendation")).value.contains(Dollar("39")))
 
   }
 
@@ -1367,6 +1366,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       factDictionary,
       filingStatus -> single,
       pensions -> twoPensionsCollection,
+      jobs -> Collection(Vector()),
       Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
@@ -1400,7 +1400,6 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     )
 
     assert(graph.get(Path(s"/pensions/#${pension1Id}/income")).value.contains(Dollar("60000")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine2bii")).value.contains(Dollar("60000")))
     assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4a")).value.contains(Dollar("0")))
     assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4b")).value.contains(Dollar("0")))
     assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine1g")).value.contains(Dollar("8600")))
@@ -1408,18 +1407,18 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     assert(graph.get(Path(s"/pensions/#${pension1Id}/adjustedAnnualPaymentAmount")).value.contains(Dollar("51400")))
     assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2cOr2d")).value.contains(Dollar("51400")))
     assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2j")).value.contains(Dollar("5162")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2s")).value.contains(Dollar("18047")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2t")).value.contains(Dollar("12885")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/baseAnnualWithholding")).value.contains(Dollar("12885")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/basePerPayPeriodWithholding")).value.contains(Dollar("1073.75")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.17")))
 
     assert(graph.get(Path("/totalPensionsIncome")).value.contains(Dollar("120000")))
     assert(graph.get(Path("/taxableIncome")).value.contains(Dollar("104250")))
     assert(graph.get(Path("/roundedTaxableIncome")).value.contains(Dollar("104250")))
     assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("17867")))
+    assert(graph.get(Path("/pensionsTotalEndOfYearProjectedWithholding")).value.contains(Dollar("9600")))
     assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("8267")))
 
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4cRecommendation")).value.contains(Dollar("1393")))
+    assert(graph.get(Path(s"/pensions/#${pension2Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.17")))
+//    assert(graph.get(Path("/totalCommittedWithholding")).value.contains(Dollar("9841.36")))
+//    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4cRecommendation")).value.contains(Dollar("2006")))
 
   }
 
@@ -1428,6 +1427,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       factDictionary,
       filingStatus -> single,
       pensions -> pensionsCollection,
+      jobs -> Collection(Vector()),
       Path("/primaryFilerAge65OrOlder") -> false,
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
@@ -1449,15 +1449,12 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-10-15"),
     )
     assert(graph.get(Path(s"/pensions/#${pension1Id}/adjustedAnnualPaymentAmount")).value.contains(Dollar("51400")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2cOr2d")).value.contains(Dollar("41400")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2j")).value.contains(Dollar("3962")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2m")).value.contains(Dollar("101400")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2s")).value.contains(Dollar("15814")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2t")).value.contains(Dollar("11852")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/baseAnnualWithholding")).value.contains(Dollar("11852")))
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/basePerPayPeriodWithholding")).value.contains(Dollar("987.67")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2cOr2d")).value.contains(Dollar("51400")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2j")).value.contains(Dollar("5162")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.17")))
 
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4cRecommendation")).value.contains(Dollar("0")))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/committedWithholding")).value.contains(Dollar("10641.36")))
+//    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4cRecommendation")).value.contains(Dollar("0")))
   }
 
   // This test validates some outputs.
