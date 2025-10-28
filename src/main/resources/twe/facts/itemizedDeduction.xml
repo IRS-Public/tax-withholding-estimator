@@ -67,6 +67,9 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/stateAndLocalTaxPayments">
       <Name>State and Local Taxes</Name>
@@ -76,6 +79,9 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/medicalAndDentalExpenses">
       <Name>Estimated medical and dental expenses</Name>
@@ -85,6 +91,9 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/charitableContributions">
       <Name>Charitable Contributions</Name>
@@ -92,6 +101,9 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/casualtyLosses">
       <Name>Casualty Losses</Name>
@@ -100,35 +112,22 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/otherDeductions">
       <Name>Other Deductions</Name>
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/qualifiedMortgageInterestAndInvestmentInterestExpensesTotal">
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <IsComplete>
-                <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpenses"/>
-              </IsComplete>
-            </When>
-            <Then>
-              <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpenses"/>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpenses"/>
       </Derived>
     </Fact>
     <Fact path="/stateAndLocalTaxPaymentsApplicableLimitationAmount">
@@ -145,18 +144,6 @@
       <TaxYear>2025</TaxYear>
       <Derived>
         <Switch>
-          <Case>
-            <When>
-              <Not>
-                <IsComplete>
-                  <Dependency path="/stateAndLocalTaxPayments"/>
-                </IsComplete>
-              </Not>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
           <Case>
             <When>
               <GreaterThan>
@@ -187,26 +174,7 @@
       <Name>Total of all medical and dental expenses </Name>
       <Description>Aggregated total of all medical and dental expense items </Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <IsComplete>
-                <Dependency path="/medicalAndDentalExpenses"/>
-              </IsComplete>
-            </When>
-            <Then>
-              <Dependency path="/medicalAndDentalExpenses"/>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <Dependency path="/medicalAndDentalExpenses"/>
       </Derived>
     </Fact>
     <Fact path="/charitableContributionsTotal">
@@ -275,52 +243,14 @@
       <Name>Total of all casualty loss items </Name>
       <Description>Total of all /casualtyLosses items </Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <IsComplete>
-                <Dependency path="/casualtyLosses"/>
-              </IsComplete>
-            </When>
-            <Then>
-              <Dependency path="/casualtyLosses"/>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <Dependency path="/casualtyLosses"/>
       </Derived>
     </Fact>
     <Fact path="/otherDeductionsTotal">
       <Name> Total of all other itemized deductions </Name>
       <Description>Total of all /otherDeductions items </Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <IsComplete>
-                <Dependency path="/otherDeductions"/>
-              </IsComplete>
-            </When>
-            <Then>
-              <Dependency path="/otherDeductions"/>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <Dependency path="/otherDeductions"/>
       </Derived>
     </Fact>
   </Facts>
