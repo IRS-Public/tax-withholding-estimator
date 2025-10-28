@@ -1002,8 +1002,7 @@
   </define>
   <define name="TodayContent">
     <element name="Today">
-
-      <ref name="DependencyContent"/>
+      <ref name="IntContent"/>
     </element>
   </define>
   <define name="WritableContent">

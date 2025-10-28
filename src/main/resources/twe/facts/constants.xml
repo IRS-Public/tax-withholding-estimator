@@ -23,5 +23,36 @@
         <Int>366</Int>
       </Derived>
     </Fact>
+    <Fact path="/isLeapYear">
+      <Description>Whether or not the current tax year is a leap year.</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/daysInYear"/>
+                </Left>
+                <Right>
+                  <Int>366</Int>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <True/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <True/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>

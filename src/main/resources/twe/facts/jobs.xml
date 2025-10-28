@@ -151,6 +151,60 @@
         </GreaterThanOrEqual>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/isPastJob">
+      <Derived>
+        <LessThan>
+          <Left>
+            <Dependency path="../endDate"/>
+          </Left>
+          <Right>
+            <Today>
+              <Int>0</Int>
+            </Today>
+          </Right>
+        </LessThan>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/isCurrentJob">
+      <Derived>
+        <All>
+          <LessThanOrEqual>
+            <Left>
+              <Today>
+                <Int>0</Int>
+              </Today>
+            </Left>
+            <Right>
+              <Dependency path="../endDate"/>
+            </Right>
+          </LessThanOrEqual>
+          <GreaterThanOrEqual>
+            <Left>
+              <Today>
+                <Int>0</Int>
+              </Today>
+            </Left>
+            <Right>
+              <Dependency path="../startDate"/>
+            </Right>
+          </GreaterThanOrEqual>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/isFutureJob">
+      <Derived>
+        <LessThan>
+          <Left>
+            <Today>
+              <Int>0</Int>
+            </Today>
+          </Left>
+          <Right>
+            <Dependency path="../startDate"/>
+          </Right>
+        </LessThan>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/mostRecentPayPeriodEnd">
       <Description>
         The date which the most recent pay period ended on for this particular job
@@ -282,6 +336,131 @@
             </Then>
           </Case>
         </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/futureTentativeRemainingPayPeriods">
+      <Description>
+        The tentative number of remaining pay periods, for a job
+        that will be held later in the year.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPayFrequencyWeekly"/>
+                <Dependency path="../isPayFrequencyBiWeekly"/>
+              </Any>
+            </When>
+            <Then>
+              <!-- To what degree can we adjust this if we don't know when their pay dates will land? -->
+              <Ceiling>
+                <Divide>
+                  <Dividend>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../endDate/ordinal"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
+                      </Subtrahends>
+                    </Subtract>
+                  </Dividend>
+                  <Divisors>
+                    <Dependency path="../payPeriodLength"/>
+                  </Divisors>
+                </Divide>
+              </Ceiling>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly"/>
+            </When>
+            <Then>
+              <Add>
+                <Subtract>
+                  <Minuend>
+                    <!-- Assumption: User will not be paid for December until next year -->
+                    <GreaterOf>
+                      <Dependency path="../endDate/month"/>
+                      <Int>11</Int>
+                    </GreaterOf>
+                  </Minuend>
+                  <Subtrahends>
+                    <Dependency path="../startDate/month"/>
+                  </Subtrahends>
+                </Subtract>
+                <Int>1</Int>
+              </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly"/>
+            </When>
+            <Then>
+              <Add>
+                <!-- Pay periods in first month:  3 - ceil(start day/15)-->
+                <Subtract>
+                  <Minuend>
+                    <Int>3</Int>
+                  </Minuend>
+                  <Subtrahends>
+                    <Ceiling>
+                      <Divide>
+                        <Dividend>
+                          <Dependency path="../startDate/day"/>
+                        </Dividend>
+                        <Divisors>
+                          <Dependency path="../payPeriodLength"/>
+                        </Divisors>
+                      </Divide>
+                    </Ceiling>
+                  </Subtrahends>
+                </Subtract>
+                <!-- Pay periods in last month: ceil(start day/15) -->
+                <Ceiling>
+                  <Divide>
+                    <Dividend>
+                      <Dependency path="../endDate/day"/>
+                    </Dividend>
+                    <Divisors>
+                      <Dependency path="../payPeriodLength"/>
+                    </Divisors>
+                  </Divide>
+                </Ceiling>
+                <!-- Pay periods in intermediate months -->
+                <Multiply>
+                  <Int> 2 </Int>
+                  <Add>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../endDate/month"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../startDate/month"/>
+                      </Subtrahends>
+                    </Subtract>
+                    <Int>1</Int>
+                  </Add>
+                </Multiply>
+              </Add>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/zeroIndexedStartDay">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="../startDate/day"/>
+          </Minuend>
+          <Subtrahends>
+            <Int>1</Int>
+          </Subtrahends>
+        </Subtract>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/tentativeRemainingPayPeriods">
@@ -1387,7 +1566,7 @@
         </Subtract>
       </Derived>
     </Fact>
-    <Fact path="/jobs/*/partialPayPeriods">
+    <Fact path="/jobs/*/currentPartialPayPeriods">
       <Description>Rationale representing the fractional pay period that is paid</Description>
       <Derived>
         <Switch>
@@ -1416,6 +1595,302 @@
           <Case>
             <When>
               <True/>
+            </When>
+            <Then>
+              <Rational>0/1</Rational>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/futurePartialPayPeriods">
+      <Description> Calculated as a combined number/decimal value. </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPayFrequencyWeekly"/>
+                <Dependency path="../isPayFrequencyBiWeekly"/>
+              </Any>
+            </When>
+            <Then>
+              <!-- Follows this formula:
+                   (ordinal(endDate)-ordinal(startDate))/pay period length
+              -->
+              <Divide>
+                <Dividend>
+                  <Subtract>
+                    <Minuend>
+                      <Dependency path="../endDate/ordinal"/>
+                    </Minuend>
+                    <Subtrahends>
+                      <Dependency path="../startDate/ordinal"/>
+                    </Subtrahends>
+                  </Subtract>
+                </Dividend>
+                <Divisors>
+                  <Dependency path="../payPeriodLength"/>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly"/>
+            </When>
+            <Then>
+              <!-- Follows this formula
+                   (Days in start month - Zero indexed start day) / Days in start month
+                   + Max(End month - Start month - 1, 0)
+                   + End month == December ? 0 : (End day / days in end month)
+              -->
+              <Add>
+                <!-- Start month fractional -->
+                <Divide>
+                  <Dividend>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../lastDayOfStartMonth/day"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../zeroIndexedStartDay"/>
+                      </Subtrahends>
+                    </Subtract>
+                  </Dividend>
+                  <Divisors>
+                    <Dependency path="../lastDayOfStartMonth/day"/>
+                  </Divisors>
+                </Divide>
+                <!-- End month fractional -->
+                <Switch>
+                  <Case>
+                    <!-- December would be paid out next year -->
+                    <When>
+                      <Equal>
+                        <Left>
+                          <Dependency path="../endDate/month"/>
+                        </Left>
+                        <Right>
+                          <Int>12</Int>
+                        </Right>
+                      </Equal>
+                    </When>
+                    <Then>
+                      <Rational>0/1</Rational>
+                    </Then>
+                  </Case>
+                  <Case>
+                    <When>
+                      <True/>
+                    </When>
+                    <Then>
+                      <Divide>
+                        <Dividend>
+                          <Dependency path="../endDate/day"/>
+                        </Dividend>
+                        <Divisors>
+                          <Dependency path="../lastDayOfEndMonth/day"/>
+                        </Divisors>
+                      </Divide>
+                    </Then>
+                  </Case>
+                </Switch>
+                <!-- Between months -->
+                <GreaterOf>
+                  <Subtract>
+                    <Minuend>
+                      <Dependency path="../endDate/month"/>
+                    </Minuend>
+                    <Subtrahends>
+                      <Dependency path="../startDate/month"/>
+                      <Int>1</Int>
+                    </Subtrahends>
+                  </Subtract>
+                  <Int>0</Int>
+                </GreaterOf>
+              </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly"/>
+            </When>
+            <Then>
+              <!-- Follows this formula:
+                   Pay period length - Min(Pay period length, zero indexed day) / Pay Period length
+                   + Days in start month - Max(pay period length, zero indexed start day) / (Days in start month - pay period length)
+                   + 2 * Max(end month - start month - 1, 0)
+                   + Min(end date, pay period length)/pay period length
+                   + end month == December ? 0 : (end day - pay period length)/(days in end month - pay period length)
+              -->
+              <Add>
+                <!-- Fractional pay periods in start month -->
+                <!-- Get the fractional for the first half of the month -->
+                <Divide>
+                  <Dividend>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../payPeriodLength"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <LesserOf>
+                          <Dependency path="../payPeriodLength"/>
+                          <Dependency path="../zeroIndexedStartDay"/>
+                        </LesserOf>
+                      </Subtrahends>
+                    </Subtract>
+                  </Dividend>
+                  <Divisors>
+                    <Dependency path="../payPeriodLength"/>
+                  </Divisors>
+                </Divide>
+                <!-- Get the fractional for the second half of the month -->
+                <Divide>
+                  <Dividend>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../lastDayOfStartMonth/day"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <GreaterOf>
+                          <Dependency path="../zeroIndexedStartDay"/>
+                          <Dependency path="../payPeriodLength"/>
+                        </GreaterOf>
+                      </Subtrahends>
+                    </Subtract>
+                  </Dividend>
+                  <Divisors>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../lastDayOfStartMonth/day"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../payPeriodLength"/>
+                      </Subtrahends>
+                    </Subtract>
+                  </Divisors>
+                </Divide>
+                <!-- Fractional pay periods in end month -->
+                <!-- First half of end month -->
+                <Divide>
+                  <Dividend>
+                    <LesserOf>
+                      <Dependency path="../endDate/day"/>
+                      <Dependency path="../payPeriodLength"/>
+                    </LesserOf>
+                  </Dividend>
+                  <Divisors>
+                    <Dependency path="../payPeriodLength"/>
+                  </Divisors>
+                </Divide>
+                <!-- Second half of end month -->
+                <Switch>
+                  <Case>
+                    <!-- The second pay period in december would be paid next year -->
+                    <When>
+                      <Equal>
+                        <Left>
+                          <Dependency path="../endDate/month"/>
+                        </Left>
+                        <Right>
+                          <Int>12</Int>
+                        </Right>
+                      </Equal>
+                    </When>
+                    <Then>
+                      <Rational>0/1</Rational>
+                    </Then>
+                  </Case>
+                  <Case>
+                    <When>
+                      <True/>
+                    </When>
+                    <Then>
+                      <Divide>
+                        <Dividend>
+                          <GreaterOf>
+                            <Subtract>
+                              <Minuend>
+                                <Dependency path="../endDate/day"/>
+                              </Minuend>
+                              <Subtrahends>
+                                <Dependency path="../payPeriodLength"/>
+                              </Subtrahends>
+                            </Subtract>
+                            <Int>0</Int>
+                          </GreaterOf>
+                        </Dividend>
+                        <Divisors>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../lastDayOfEndMonth/day"/>
+                            </Minuend>
+                            <Subtrahends>
+                              <Dependency path="../payPeriodLength"/>
+                            </Subtrahends>
+                          </Subtract>
+                        </Divisors>
+                      </Divide>
+                    </Then>
+                  </Case>
+                </Switch>
+                <!-- Get intermediary months -->
+                <Multiply>
+                  <Int>2</Int>
+                  <GreaterOf>
+                    <Int>0</Int>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="../endDate/month"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../startDate/month"/>
+                        <Int>1</Int>
+                      </Subtrahends>
+                    </Subtract>
+                    <Int>0</Int>
+                  </GreaterOf>
+                </Multiply>
+              </Add>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/partialPayPeriods">
+      <Description>The fractional amount of remaining pay periods, for use in calculating resulting
+        eoy total income.</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isCurrentJob"/>
+            </When>
+            <Then>
+              <Dependency path="../currentPartialPayPeriods"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isFutureJob"/>
+            </When>
+            <Then>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="../futurePartialPayPeriods"/>
+                </Minuend>
+                <Subtrahends>
+                  <Floor>
+                    <Dependency path="../futurePartialPayPeriods"/>
+                  </Floor>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPastJob"/>
             </When>
             <Then>
               <Rational>0/1</Rational>
@@ -2538,28 +3013,70 @@
         <Dollar/>
       </Writable>
     </Fact>
+    <Fact path="/jobs/*/restOfYearWithholding">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPastJob"/>
+              </Any>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Multiply>
+                <!-- Floor is used here to match QA spreadsheet calculation -->
+                <Dependency path="../fullPayPeriods"/>
+                <Dependency path="../averageWithholdingPerPayPeriod"/>
+              </Multiply>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/endOfYearProjectedWithholding">
       <Description>The end of year amount withheld for this job if nothing is changed.</Description>
       <Derived>
         <Add>
           <Dependency path="../yearToDateWithholding"/>
-          <Multiply>
-            <Dependency path="../fullPayPeriods"/>
-            <Dependency path="../averageWithholdingPerPayPeriod"/>
-          </Multiply>
+          <Dependency path="../restOfYearWithholding"/>
         </Add>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/restOfYearIncome">
       <Description>This amount this job will pay for the rest of the year.</Description>
       <Derived>
-        <Multiply>
-          <Dependency path="../averagePayPerPayPeriod"/>
-          <Add>
-            <Dependency path="../fullPayPeriods"/>
-            <Dependency path="../partialPayPeriods"/>
-          </Add>
-        </Multiply>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPastJob"/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Multiply>
+                <Dependency path="../averagePayPerPayPeriod"/>
+                <Add>
+                  <Dependency path="../fullPayPeriods"/>
+                  <Dependency path="../partialPayPeriods"/>
+                </Add>
+              </Multiply>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/payPeriodsPerYear">
@@ -2828,6 +3345,20 @@
             <Int>0</Int>
           </Index>
         </IndexOf>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/lastDayOfStartMonth">
+      <Derived>
+        <LastDayOfMonth>
+          <Dependency path="../startDate"/>
+        </LastDayOfMonth>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/lastDayOfEndMonth">
+      <Derived>
+        <LastDayOfMonth>
+          <Dependency path="../endDate"/>
+        </LastDayOfMonth>
       </Derived>
     </Fact>
   </Facts>

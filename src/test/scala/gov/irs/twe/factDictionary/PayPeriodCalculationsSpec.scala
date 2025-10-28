@@ -30,7 +30,11 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
   val ordinalEffectiveEndDate = Path(s"/jobs/#$dummyUUID/ordinalEffectiveEndDate")
   val restOfYearIncome = Path(s"/jobs/#$dummyUUID/restOfYearIncome")
   val averagePayPerPayPeriod = Path(s"/jobs/#$dummyUUID/averagePayPerPayPeriod")
+  val isPastJob = Path(s"/jobs/#$dummyUUID/isPastJob")
+  val isCurrentJob = Path(s"/jobs/#$dummyUUID/isCurrentJob")
+  val isFutureJob = Path(s"/jobs/#$dummyUUID/isFutureJob")
 
+  // TODO! Add cases where the most recent pay date is before the start date
   val weekly = Enum("weekly", "/payFrequencyOptions");
   val biWeekly = Enum("biWeekly", "/payFrequencyOptions");
   val semiMonthly = Enum("semiMonthly", "/payFrequencyOptions");
@@ -512,6 +516,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
           recentPayPeriodEnd -> Day(recentPayPeriodEndValue),
           recentPayDate -> Day(recentPayDateValue),
           averagePayPerPayPeriod -> Dollar(100),
+          isPastJob -> false,
+          isFutureJob -> false,
+          isCurrentJob -> true,
         )
 
         val tentativePayPeriods = graph.get(tentativeRemainingPayPeriods)
@@ -766,6 +773,48 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
         )
 
         assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(expectedTruePayPeriods))
+    }
+  }
+
+  val futureJobDataTable = Table(
+    ("frequency", "startDateValue", "endDateValue", "expectedFractional", "description"),
+    // Weekly pay frequency
+    (weekly, "2025-10-01", "2025-12-05", Rational(2, 7), "Weekly pay freq"),
+    // Biweekly pay frequency
+    (biWeekly, "2025-10-01", "2025-12-05", Rational(9, 14), "Biweekly pay freq"),
+    // Monthly pay frequency
+    (monthly, "2025-10-01", "2025-12-05", Rational(0, 1), "Monthly end date is in December"),
+    (monthly, "2025-10-31", "2025-11-20", Rational(65, 93), "Monthly at the margins"),
+    // Semi-monthly pay frequency
+    (semiMonthly, "2025-10-01", "2025-12-05", Rational(1, 3), "Semimonthly end date is in December"),
+    (semiMonthly, "2025-10-14", "2025-11-15", Rational(2, 15), "Semimonthly at both margins"),
+    (semiMonthly, "2025-10-15", "2025-11-16", Rational(2, 15), "Semimonthly at end date margin"),
+  )
+  test(
+    "test fractionalRemainingPayPeriods for future jobs",
+  ) {
+    forAll(futureJobDataTable) {
+      (
+          frequency,
+          startDateValue,
+          endDateValue,
+          expectedFractional,
+          description,
+      ) =>
+        When(description)
+        var graph = makeGraphWith(
+          factDictionary,
+          jobs -> Collection(uuidVector),
+          payFrequency -> frequency,
+          startDate -> Day(startDateValue),
+          endDate -> Day(endDateValue),
+          isPastJob -> false,
+          isCurrentJob -> false,
+          isFutureJob -> true,
+        )
+
+        val fractRemainingPayPeriods = graph.get(Path(s"/jobs/#${dummyUUID}/partialPayPeriods"))
+        assert(fractRemainingPayPeriods.value.contains(expectedFractional))
     }
   }
 }

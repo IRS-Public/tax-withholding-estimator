@@ -218,6 +218,12 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
+      Path(s"/jobs/#${job2Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job2Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job2Id}/isFutureJob") -> false,
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("42000")))
@@ -286,6 +292,12 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
+      Path(s"/jobs/#${job2Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job2Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job2Id}/isFutureJob") -> false,
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
@@ -351,6 +363,12 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
+      Path(s"/jobs/#${job2Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job2Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job2Id}/isFutureJob") -> false,
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
@@ -416,6 +434,12 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
+      Path(s"/jobs/#${job2Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job2Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job2Id}/isFutureJob") -> false,
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
@@ -494,6 +518,12 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/totalOtherIncome") -> Dollar("0"),
       // Path("/usePreOb3StandardDeduction") -> true,
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
+      Path(s"/jobs/#${job2Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job2Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job2Id}/isFutureJob") -> false,
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("80000")))
@@ -569,6 +599,12 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
+      Path(s"/jobs/#${job2Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job2Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job2Id}/isFutureJob") -> false,
     )
 
     assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("84857.14")))
@@ -1057,6 +1093,13 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     graph.set(Path("/totalCredits"), Dollar(0))
     graph.set(Path("/nonItemizerCharitableContributionDeductionAmount"), Dollar("0"))
 
+    graph.set(Path(s"/jobs/#${_job1Id}/isPastJob"), false)
+    graph.set(Path(s"/jobs/#${_job1Id}/isCurrentJob"), true)
+    graph.set(Path(s"/jobs/#${_job1Id}/isFutureJob"), false)
+    graph.set(Path(s"/jobs/#${_job2Id}/isPastJob"), false)
+    graph.set(Path(s"/jobs/#${_job2Id}/isCurrentJob"), true)
+    graph.set(Path(s"/jobs/#${_job2Id}/isFutureJob"), false)
+
     assert(graph.get(Path(s"/jobs/#${_job1Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.12")))
     assert(graph.get(Path(s"/jobs/#${_job2Id}/tentativeWithholdingAmount")).value.contains(Dollar("80.80")))
     assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar(665)))
@@ -1455,6 +1498,49 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     assert(graph.get(Path(s"/pensions/#${pension1Id}/committedWithholding")).value.contains(Dollar("10641.36")))
 //    assert(graph.get(Path(s"/pensions/#${pension1Id}/w4pLine4cRecommendation")).value.contains(Dollar("0")))
+  }
+
+  test("Verifying future job income calculations") {
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> single,
+      Path("/primaryFilerAge65OrOlder") -> false,
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      jobs -> jobsCollection,
+      Path(s"/jobs/#${job1Id}/isAllYear") -> false,
+      Path(s"/jobs/#${job1Id}/writableStartDate") -> Day("2025-01-01"),
+      Path(s"/jobs/#${job1Id}/writableEndDate") -> Day("2025-10-15"),
+      Path(s"/jobs/#${job1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/jobs/#${job1Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
+      Path(s"/jobs/#${job1Id}/mostRecentPayDate") -> Day("2025-10-05"),
+      Path(s"/jobs/#${job1Id}/averagePayPerPayPeriod") -> Dollar("4000"),
+      Path(s"/jobs/#${job1Id}/yearToDateIncome") -> Dollar("40000"),
+      Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("200"),
+      Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("2000"),
+      Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/isAllYear") -> true,
+      Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
+      Path(s"/jobs/#${job2Id}/mostRecentPayDate") -> Day("2025-09-30"),
+      Path(s"/jobs/#${job2Id}/averagePayPerPayPeriod") -> Dollar("2000"),
+      Path(s"/jobs/#${job2Id}/yearToDateIncome") -> Dollar("18000"),
+      Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("100"),
+      Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
+      Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
+      Path("/actualChildTaxCreditAmount") -> Dollar("2000"),
+      // Derived overrides
+      Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
+      Path(s"/jobs/#${job2Id}/isPastJob") -> false,
+      Path(s"/jobs/#${job2Id}/isCurrentJob") -> true,
+      Path(s"/jobs/#${job2Id}/isFutureJob") -> false,
+    )
   }
 
   // This test validates some outputs.
