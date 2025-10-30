@@ -2,7 +2,7 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/actualHsaTotalDeductibleAmount">
+    <Fact path="/hsaTotalDeductibleAmount">
       <Description>HSA total deductible amount, no logic in place for actually calculating the
         applicable
         amount</Description>
@@ -10,11 +10,46 @@
         <Dollar/>
       </Writable>
     </Fact>
-    <Fact path="/actualDeductionForTraditionalIRAContribution">
+    <Fact path="/hsaTotalDeductibleAmountMax">
+      <Description>Maximum annual deductible and other out-of-pocket expenses for family</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>16600</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/actualHsaTotalDeductibleAmount">
+      <Description>HSA total deductible amount, no logic in place for actually calculating the
+        applicable
+        amount</Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/hsaTotalDeductibleAmount"/>
+          <Dependency path="/hsaTotalDeductibleAmountMax"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/deductionForTraditionalIRAContribution">
       <Description>Deduction for contributions to traditional IRAs (excluding payroll deductions)</Description>
       <Writable>
         <Dollar/>
       </Writable>
+    </Fact>
+    <Fact path="/deductionForTraditionalIRAContributionMax">
+      <Description>Max contribution for traditional IRAs (excluding payroll deductions) is $8000 per year. $7000 is the limit for those under 50, but we only know if someone is under 65 or not
+      We are agnostic to filing status so double to 16000 and do not take MAGI into account for simplified computation
+      </Description>
+      <Derived>
+        <Dollar>16000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/actualDeductionForTraditionalIRAContribution">
+      <Description>Deduction for contributions to traditional IRAs (excluding payroll deductions)</Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/deductionForTraditionalIRAContribution"/>
+          <Dependency path="/deductionForTraditionalIRAContributionMax"/>
+        </LesserOf>
+      </Derived>
     </Fact>
     <Fact path="/actualMovingExpensesForArmedServicesMembers">
       <Description>Moving expenses for members of armed services</Description>
@@ -34,12 +69,12 @@
         <Dollar/>
       </Writable>
     </Fact>
-    <Fact path="/actualSelfEmploymentHealthInsuranceDeduction">
-      <Description>Self-employed health insurance deduction</Description>
+    <Fact path="/selfEmploymentHealthInsuranceContributions">
+      <Description>Self-employed health insurance contributions. Implements Form 7206</Description>
       <Override>
         <Condition>
           <Not>
-            <Dependency path="/primaryHasSelfEmploymentIncome"/>
+            <Dependency path="/eitherTPHasSelfEmploymentIncome"/>
           </Not>
         </Condition>
         <Default>
@@ -57,12 +92,12 @@
         <Dollar/>
       </Writable>
     </Fact>
-    <Fact path="/selfEmployedRetirementPlanDeduction">
+    <Fact path="/selfEmployedRetirementPlanContributions">
       <Description>Self-employed contributions to eligible retirement plans.</Description>
       <Override>
         <Condition>
           <Not>
-            <Dependency path="/primaryHasSelfEmploymentIncome"/>
+            <Dependency path="/eitherTPHasSelfEmploymentIncome"/>
           </Not>
         </Condition>
         <Default>
@@ -82,9 +117,9 @@
           <Dependency path="/actualEducatorExpensesAdjustmentAmount"/>
           <Dependency path="/actualBusinessCreditsForEligible"/>
           <Dependency path="/actualHsaTotalDeductibleAmount"/>
+          <Dependency path="/selfEmploymentTaxDeduction"/>
           <Dependency path="/actualMovingExpensesForArmedServicesMembers"/>
-          <!--              TODO: Add deductible part of SE tax Schedule 1 line 15 here-->
-          <Dependency path="/selfEmployedRetirementPlanDeduction"/>
+          <Dependency path="/actualSelfEmployedRetirementPlanDeduction"/>
           <Dependency path="/actualSelfEmploymentHealthInsuranceDeduction"/>
           <Dependency path="/actualPenaltyForEarlySavingsWithdrawal"/>
           <Dependency path="/actualAlimonyPaid"/>

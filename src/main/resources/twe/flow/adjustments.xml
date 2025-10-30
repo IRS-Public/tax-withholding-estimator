@@ -72,7 +72,7 @@
         </fg-set>
       </details>
       <h2>Deduction for contributions to Traditional IRAs</h2>
-      <fg-set path="/actualDeductionForTraditionalIRAContribution">
+      <fg-set path="/deductionForTraditionalIRAContribution">
         <question>
           What&#x2019;s the total amount of deductible Health Savings Account contributions you made this year?
         </question>
@@ -80,7 +80,7 @@
         <input type="dollar"/>
       </fg-set>
       <h2>Health Savings Account Contributions</h2>
-      <fg-set path="/actualHsaTotalDeductibleAmount">
+      <fg-set path="/hsaTotalDeductibleAmount">
         <question>
           What&#x2019;s the total amount of deductible Health Savings Account contributions you made
           this year?
@@ -125,14 +125,13 @@
         </question>
         <input type="dollar"/>
       </fg-set>
-      <!--      TODO: FIx this up to match self vs. spouse SE income conditions-->
-      <h2 condition="/primaryHasSelfEmploymentIncome" operator="isTrue">Self-employed health insurance deduction</h2>
-      <fg-set path="/actualSelfEmploymentHealthInsuranceDeduction" if-true="/primaryHasSelfEmploymentIncome">
+      <h2 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Self-employed health insurance deduction</h2>
+      <fg-set path="/selfEmploymentHealthInsuranceContributions" if-true="/eitherTPHasSelfEmploymentIncome">
         <question>Self-employed health insurance deduction</question>
         <input type="dollar"/>
       </fg-set>
-      <h2 condition="/primaryHasSelfEmploymentIncome" operator="isTrue">Self-employed retirement plan deduction</h2>
-      <fg-set path="/selfEmployedRetirementPlanDeduction" if-true="/primaryHasSelfEmploymentIncome">
+      <h2 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Self-employed retirement plan deduction</h2>
+      <fg-set path="/selfEmployedRetirementPlanContributions" if-true="/eitherTPHasSelfEmploymentIncome">
         <question>Self-employed retirement plan deduction</question>
         <input type="dollar"/>
       </fg-set>

@@ -161,4 +161,94 @@ class SelfEmploymentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     println(s"Completed ${dataTable.length} tests for calculating self-employment tax and SE tax deduction")
   }
 
+  test("test IRA deduction: applies correct limit") {
+    val dataTable = Table(
+      (
+        "status",
+        "netSelfEmploymentIncomeTotal",
+        "selfEmployedRetirementPlanContributions",
+        "selfEmploymentTaxDeduction",
+        "expectedActualSelfEmployedRetirementPlanDeduction",
+      ),
+
+      // contribution is higher than net SE income - SE tax deduction
+      (single, "20000", "19000", "1413", "18587"),
+      // contribution is lower than net SE income - SE tax deduction
+      (single, "20000", "5000", "1413", "5000"),
+      (single, "74000", "10000", "5228", "10000"),
+      (single, "176100", "10000", "12441", "10000"),
+      (single, "180000", "20000", "12717", "20000"),
+    )
+
+    forAll(dataTable) {
+      (
+          status,
+          netSelfEmploymentIncomeTotal,
+          selfEmployedRetirementPlanContributions,
+          selfEmploymentTaxDeduction,
+          expectedActualSelfEmployedRetirementPlanDeduction,
+      ) =>
+        val graph = makeGraphWith(
+          factDictionary,
+          Path("/filingStatus") -> status,
+          Path("/netSelfEmploymentIncomeTotal") -> Dollar(netSelfEmploymentIncomeTotal),
+          Path("/selfEmployedRetirementPlanContributions") -> Dollar(selfEmployedRetirementPlanContributions),
+          Path("/selfEmploymentTaxDeduction") -> Dollar(selfEmploymentTaxDeduction),
+        )
+
+        val actualRetirementPlanDeduction = graph.get("/actualSelfEmployedRetirementPlanDeduction")
+
+        assert(actualRetirementPlanDeduction.value.contains(Dollar(expectedActualSelfEmployedRetirementPlanDeduction)))
+    }
+    println(
+      s"Completed ${dataTable.length} SE retirement plan deduction scenarios",
+    )
+  }
+
+  test("test SE health insurance deduction: applies correct limit") {
+    val dataTable = Table(
+      (
+        "status",
+        "netSelfEmploymentIncomeSelf",
+        "netSelfEmploymentIncomeSpouse",
+        "selfEmploymentHealthInsuranceContributions",
+        "selfEmploymentTaxDeduction",
+        "actualSelfEmployedRetirementPlanDeduction",
+        "expectedSelfEmploymentHealthInsuranceContributions",
+      ),
+      (single, "30000", "0", "5890", "2295", "12000", "5890"),
+      (single, "87600", "0", "12000", "6189", "0", "12000"),
+      (mfj, "15000", "15000", "5890", "2295", "12000", "5890"),
+      (mfj, "40000", "47600", "12000", "6189", "0", "12000"),
+    )
+
+    forAll(dataTable) {
+      (
+          status,
+          netSelfEmploymentIncomeSelf,
+          netSelfEmploymentIncomeSpouse,
+          selfEmploymentHealthInsuranceContributions,
+          selfEmploymentTaxDeduction,
+          actualSelfEmployedRetirementPlanDeduction,
+          expectedSelfEmploymentHealthInsuranceDeduction,
+      ) =>
+        val graph = makeGraphWith(
+          factDictionary,
+          Path("/filingStatus") -> status,
+          Path("/netSelfEmploymentIncomeSelf") -> Dollar(netSelfEmploymentIncomeSelf),
+          Path("/netSelfEmploymentIncomeSpouse") -> Dollar(netSelfEmploymentIncomeSpouse),
+          Path("/selfEmploymentHealthInsuranceContributions") -> Dollar(selfEmploymentHealthInsuranceContributions),
+          Path("/selfEmploymentTaxDeduction") -> Dollar(selfEmploymentTaxDeduction),
+          Path("/actualSelfEmployedRetirementPlanDeduction") -> Dollar(actualSelfEmployedRetirementPlanDeduction),
+        )
+
+        val actual = graph.get("/actualSelfEmploymentHealthInsuranceDeduction")
+
+        assert(actual.value.contains(Dollar(expectedSelfEmploymentHealthInsuranceDeduction)))
+    }
+    println(
+      s"Completed ${dataTable.length} SE health insuracne deduction scenarios",
+    )
+  }
+
 }

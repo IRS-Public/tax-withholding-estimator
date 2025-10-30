@@ -14,6 +14,71 @@ class AdjustmentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   val qss = Enum("qualifiedSurvivingSpouse", "/filingStatusOptions")
   val hoh = Enum("headOfHousehold", "/filingStatusOptions")
 
+  test("test HSA deduction: applies correct limit") {
+    val dataTable = Table(
+      ("status", "expectedHsaTotalDeductibleAmount", "actualHsaTotalDeductibleAmount"),
+      (single, "1000", "1000"),
+      (single, "5000", "5000"),
+      (single, "8000", "8000"),
+      (single, "16600", "16600"),
+      (single, "16700", "16600"),
+      (single, "20000", "16600"),
+      (mfj, "5000", "5000"),
+      (mfj, "8000", "8000"),
+      (mfj, "16600", "16600"),
+      (mfj, "16700", "16600"),
+      (mfj, "20000", "16600"),
+    )
+
+    forAll(dataTable) { (status, expectedHsaTotalDeductibleAmount, actualHsaTotalDeductibleAmount) =>
+      val graph = makeGraphWith(
+        factDictionary,
+        Path("/filingStatus") -> status,
+        Path("/hsaTotalDeductibleAmount") -> Dollar(expectedHsaTotalDeductibleAmount),
+      )
+
+      val actual = graph.get("/actualHsaTotalDeductibleAmount")
+
+      assert(actual.value.contains(Dollar(actualHsaTotalDeductibleAmount)))
+    }
+    println(
+      s"Completed ${dataTable.length} HSA deduction scenarios",
+    )
+  }
+  test("test IRA deduction: applies correct limit") {
+    val dataTable = Table(
+      ("status", "expectedDeductionForTraditionalIRAContribution", "actualDeductionForTraditionalIRAContribution"),
+      (single, "1000", "1000"),
+      (single, "5000", "5000"),
+      (single, "8000", "8000"),
+      (single, "16000", "16000"),
+      (single, "16700", "16000"),
+      (single, "20000", "16000"),
+      (mfj, "5000", "5000"),
+      (mfj, "8000", "8000"),
+      (mfj, "16000", "16000"),
+      (mfj, "16600", "16000"),
+      (mfj, "16700", "16000"),
+      (mfj, "20000", "16000"),
+    )
+
+    forAll(dataTable) {
+      (status, expectedDeductionForTraditionalIRAContribution, actualDeductionForTraditionalIRAContribution) =>
+        val graph = makeGraphWith(
+          factDictionary,
+          Path("/filingStatus") -> status,
+          Path("/deductionForTraditionalIRAContribution") -> Dollar(expectedDeductionForTraditionalIRAContribution),
+        )
+
+        val actual = graph.get("/actualDeductionForTraditionalIRAContribution")
+
+        assert(actual.value.contains(Dollar(actualDeductionForTraditionalIRAContribution)))
+    }
+    println(
+      s"Completed ${dataTable.length} IRA deduction scenarios",
+    )
+  }
+
   test("test educator expense adjustment: applies correct limit depending on filing status") {
     val dataTable = Table(
       ("status", "totalIncome", "agi", "educatorExpensesAdjustmentAmount", "actualEducatorExpensesAdjustmentAmount"),
@@ -52,16 +117,16 @@ class AdjustmentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
           Path("/filingStatus") -> status,
           Path("/totalIncome") -> Dollar(totalIncome),
           Path("/educatorExpenses") -> Dollar(educatorExpensesAdjustmentAmount),
-          Path("/actualStudentLoanInterestAdjustmentAmount") -> Dollar(0),
-          Path("/actualHsaTotalDeductibleAmount") -> Dollar(0),
-          Path("/actualDeductionForTraditionalIRAContribution") -> Dollar(0),
-          Path("/actualMovingExpensesForArmedServicesMembers") -> Dollar(0),
-          Path("/actualAlimonyPaid") -> Dollar(0),
-          Path("/actualPenaltyForEarlySavingsWithdrawal") -> Dollar(0),
           Path("/actualBusinessCreditsForEligible") -> Dollar(0),
+          Path("/actualHsaTotalDeductibleAmount") -> Dollar(0),
+          Path("/selfEmploymentTaxDeduction") -> Dollar(0),
+          Path("/actualMovingExpensesForArmedServicesMembers") -> Dollar(0),
+          Path("/actualSelfEmployedRetirementPlanDeduction") -> Dollar(0),
           Path("/actualSelfEmploymentHealthInsuranceDeduction") -> Dollar(0),
-          Path("/selfEmployedRetirementPlanDeduction") -> Dollar(0),
-          Path("/totalEstimatedTaxesPaid") -> Dollar(0),
+          Path("/actualPenaltyForEarlySavingsWithdrawal") -> Dollar(0),
+          Path("/actualAlimonyPaid") -> Dollar(0),
+          Path("/actualDeductionForTraditionalIRAContribution") -> Dollar(0),
+          Path("/actualStudentLoanInterestAdjustmentAmount") -> Dollar(0),
         )
 
         val actualAdjustments = graph.get("/adjustmentsToIncome")
@@ -164,14 +229,15 @@ class AdjustmentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
           Path("/totalIncome") -> Dollar(totalIncome),
           Path("/studentLoanInterestAmount") -> Dollar(studentLoanInterestAmount),
           Path("/actualEducatorExpensesAdjustmentAmount") -> Dollar(0),
-          Path("/actualHsaTotalDeductibleAmount") -> Dollar(0),
-          Path("/actualDeductionForTraditionalIRAContribution") -> Dollar(0),
-          Path("/actualMovingExpensesForArmedServicesMembers") -> Dollar(0),
-          Path("/actualAlimonyPaid") -> Dollar(0),
-          Path("/actualPenaltyForEarlySavingsWithdrawal") -> Dollar(0),
           Path("/actualBusinessCreditsForEligible") -> Dollar(0),
+          Path("/actualHsaTotalDeductibleAmount") -> Dollar(0),
+          Path("/selfEmploymentTaxDeduction") -> Dollar(0),
+          Path("/actualMovingExpensesForArmedServicesMembers") -> Dollar(0),
+          Path("/actualSelfEmployedRetirementPlanDeduction") -> Dollar(0),
           Path("/actualSelfEmploymentHealthInsuranceDeduction") -> Dollar(0),
-          Path("/selfEmployedRetirementPlanDeduction") -> Dollar(0),
+          Path("/actualPenaltyForEarlySavingsWithdrawal") -> Dollar(0),
+          Path("/actualAlimonyPaid") -> Dollar(0),
+          Path("/actualDeductionForTraditionalIRAContribution") -> Dollar(0),
         )
 
         val actualAdjustments = graph.get("/adjustmentsToIncome")
@@ -267,14 +333,15 @@ class AdjustmentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
           Path("/totalIncome") -> Dollar(totalIncome),
           Path("/educatorExpenses") -> Dollar(educatorExpensesAdjustmentAmount),
           Path("/studentLoanInterestAmount") -> Dollar(studentLoanInterestAmount),
-          Path("/actualHsaTotalDeductibleAmount") -> Dollar(0),
-          Path("/actualDeductionForTraditionalIRAContribution") -> Dollar(0),
-          Path("/actualMovingExpensesForArmedServicesMembers") -> Dollar(0),
-          Path("/actualAlimonyPaid") -> Dollar(0),
-          Path("/actualPenaltyForEarlySavingsWithdrawal") -> Dollar(0),
           Path("/actualBusinessCreditsForEligible") -> Dollar(0),
+          Path("/actualHsaTotalDeductibleAmount") -> Dollar(0),
+          Path("/selfEmploymentTaxDeduction") -> Dollar(0),
+          Path("/actualMovingExpensesForArmedServicesMembers") -> Dollar(0),
+          Path("/actualSelfEmployedRetirementPlanDeduction") -> Dollar(0),
           Path("/actualSelfEmploymentHealthInsuranceDeduction") -> Dollar(0),
-          Path("/selfEmployedRetirementPlanDeduction") -> Dollar(0),
+          Path("/actualPenaltyForEarlySavingsWithdrawal") -> Dollar(0),
+          Path("/actualAlimonyPaid") -> Dollar(0),
+          Path("/actualDeductionForTraditionalIRAContribution") -> Dollar(0),
         )
 
         val actualAdjustments = graph.get("/adjustmentsToIncome")

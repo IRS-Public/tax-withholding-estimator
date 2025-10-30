@@ -2,6 +2,14 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/netSelfEmploymentIncomeTotal">
+      <Derived>
+        <Add>
+          <Dependency path="/netSelfEmploymentIncomeSelf"/>
+          <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/netSelfEmploymentIncomeSelf">
       <Description>Net profit loss, reported as Line 31 on Schedule C and line 2 of Schedule SE for self.</Description>
       <Derived>
@@ -117,6 +125,11 @@
         </Any>
       </Derived>
     </Fact>
+    <Fact path="/scheduleSELine2Self">
+      <Derived>
+        <Dependency path="/netSelfEmploymentIncomeSelf"/>
+      </Derived>
+    </Fact>
     <Fact path="/scheduleSELine4aSelf">
       <Description>Specific calculation on line 4a of Schedule SE (Form 1040) to multiply net self
         employment income by 92.35%.</Description>
@@ -127,7 +140,7 @@
               <When>
                 <GreaterThan>
                   <Left>
-                    <Dependency path="/netSelfEmploymentIncomeSelf"/>
+                    <Dependency path="/scheduleSELine2Self"/>
                   </Left>
                   <Right>
                     <Dollar>0</Dollar>
@@ -296,6 +309,11 @@
             <Dependency path="/selfEmploymentTaxDeductionMultiplier"/>
           </Multiply>
         </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleSELine2Spouse">
+      <Derived>
+        <Dependency path="/netSelfEmploymentIncomeSpouse"/>
       </Derived>
     </Fact>
     <Fact path="/scheduleSELine4aSpouse">
@@ -495,6 +513,169 @@
           <Dependency path="/scheduleSELine13Self"/>
           <Dependency path="/scheduleSELine13Spouse"/>
         </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line1">
+      <Description>Total amount paid in 2024 for health insurance coverage established under your business(or the S corporation in which you were a more-than-2% shareholder) for 2024 for you, your spouse,and your dependents.
+        Excludes:
+        1) Amounts for any month you were eligible to participate in a health plan subsidized by your employer or your spouse&#x2019;s employer or the employer of either your dependent or your child who was under the age of 27 at the end of 2024.
+        2) Any amounts paid, not to exceed $3,000, from retirement plan distributions that were non taxablebecause you are a retired public safety officer.
+        3) Any payments for qualified long-term care insurance (see line 2)</Description>
+      <Derived>
+        <Dependency path="/selfEmploymentHealthInsuranceContributions"/>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line2">
+      <Description>Qualified long-term care insurance contract payments or premiums. Included in Line 1 per content</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line3">
+      <Description>Total SE health insurance and long term care premiums </Description>
+      <Derived>
+        <Add>
+          <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line1"/>
+          <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line2"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line4">
+      <Description>Net profit and any other earned income from the trade or business under which the insurance plan is established. Don&#x2019;t include Conservation Reserve Program payments exempt from self-employment tax. </Description>
+      <Derived>
+        <GreaterOf>
+          <Add>
+            <Dependency path="/scheduleSELine2Self"/>
+            <Dependency path="/scheduleSELine2Spouse"/>
+          </Add>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line5">
+      <Description>Schedule C line 31, Schedule SE line 2. Total net profit of self-employment income combined for both self and spouse </Description>
+      <Derived>
+        <GreaterOf>
+          <Add>
+            <Dependency path="/scheduleSELine2Self"/>
+            <Dependency path="/scheduleSELine2Spouse"/>
+          </Add>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line6">
+      <Description>Percentage of profit allocated to the business under which the insurance plan is established</Description>
+      <Derived>
+        <Divide>
+          <Dividend>
+            <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line4"/>
+          </Dividend>
+          <Divisors>
+            <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line5"/>
+          </Divisors>
+        </Divide>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line7">
+      <Description>Line 6 multiplied by deductible portion of SE tax</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/selfEmploymentTaxDeduction"/>
+          <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line6"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line8">
+      <Description>Net profit - applicable portion of SE tax deduction</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line4"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line7"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line9">
+      <Description>SE SEP SIMPLE or qualified plans under the insurance plan is established</Description>
+      <Derived>
+        <Dependency path="/actualSelfEmployedRetirementPlanDeduction"/>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line10">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line8"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line9"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line11">
+      <Description>Medicare wages from an S corp in which you are &gt;2% shareholder in which the insurance plan is established</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line12">
+      <Description>Form 2555, line 45</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line13">
+      <Description>Medicare wages from an S corp in which you are &gt;2% shareholder in which the insurance plan is established</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line10"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line12"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line14">
+      <Description>Final self employment health insurance deduction amount</Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line3"/>
+          <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line13"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/actualSelfEmploymentHealthInsuranceDeduction">
+      <Description>Form 7206 line 14. Self-employed health insurance deduction.</Description>
+      <Derived>
+        <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line14"/>
+      </Derived>
+    </Fact>
+    <Fact path="/actualSelfEmployedRetirementPlanDeduction">
+      <Description>Self-employed retirement plan deduction. SEP SIMPLE or other qualified plan
+        (Schedule C net profit - deductible portion of SE tax) x (plan contribution rate/ 100% + plan contribution rate)
+        Because we don't know what the plan contribution rate is, for all intents and purposes, the max SE retirement plan deduction is
+        net self-employment profit - SE tax deduction
+        https://www.irs.gov/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction
+      </Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/selfEmployedRetirementPlanContributions"/>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/netSelfEmploymentIncomeTotal"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/selfEmploymentTaxDeduction"/>
+            </Subtrahends>
+          </Subtract>
+        </LesserOf>
       </Derived>
     </Fact>
   </Facts>

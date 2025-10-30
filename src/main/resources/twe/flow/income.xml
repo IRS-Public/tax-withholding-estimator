@@ -83,9 +83,22 @@
         <question>Distributions from Trump Account</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Net Self-Employment Income</h2>
-      <fg-set path="/netSelfEmploymentIncomeSelf">
-        <question>How much was your net self-employment income this year?</question>
+      <h2>Self-Employment Income</h2>
+      <fg-set path="/grossSelfEmploymentIncomeSelf">
+        <question>How much was your gross self-employment income this year?</question>
+        <input type="dollar"/>
+      </fg-set>
+      <fg-set path="/selfEmploymentIncomeExpensesSelf">
+        <question>How much was your self-employment expenses this year?</question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2 condition="/isFilingStatusMFJ" operator="isTrue">Spouse Self-Employment Income</h2>
+      <fg-set path="/grossSelfEmploymentIncomeSpouse" if-true="/isFilingStatusMFJ">
+        <question>How much was your spouses' gross self-employment income this year?</question>
+        <input type="dollar"/>
+      </fg-set>
+      <fg-set path="/selfEmploymentIncomeExpensesSpouse" if-true="/isFilingStatusMFJ">
+        <question>How much was your spouses' self-employment expenses this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Ordinary Dividends Income</h2>

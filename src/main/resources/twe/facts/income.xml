@@ -380,11 +380,17 @@ and car loan interest deduction
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/grossSelfEmploymentIncomeSpouse">
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/selfEmploymentIncomeExpensesSelf">
       <Writable>
