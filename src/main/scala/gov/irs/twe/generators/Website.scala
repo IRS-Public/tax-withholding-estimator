@@ -45,6 +45,9 @@ case class Website(pages: List[WebsitePage], factDictionary: xml.Elem) {
     val resourcesSource = os.pwd / "src" / "main" / "resources" / "twe" / "website-static"
     val resourcesTarget = directoryPath / "resources"
     os.copy(resourcesSource, resourcesTarget)
+
+    val dictionaryString = factDictionary.toString
+    os.write(resourcesTarget / "fact-dictionary.xml", dictionaryString, null)
   }
 }
 
@@ -63,7 +66,6 @@ object Website {
 
       val context = new Context()
       context.setVariable("exclude", page.exclude)
-      context.setVariable("dictionaryConfig", dictionaryConfig.toString)
       context.setVariable("title", title)
       context.setVariable("stepTitle", stepTitle)
       context.setVariable("stepIndex", (index - excludedPageLength) % flow.pages.length)

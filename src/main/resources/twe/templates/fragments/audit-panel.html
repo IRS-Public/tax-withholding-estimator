@@ -34,11 +34,11 @@
 </aside>
 
 <script type="module">
-  const factDictionaryXml = (() => {
-    const text = document.getElementById('fact-dictionary').textContent
-    const parser = new DOMParser()
-    return parser.parseFromString(text, "application/xml")
-  })()
+  const parser = new DOMParser()
+
+  const res = await fetch('/resources/fact-dictionary.xml')
+  const text = await res.text()
+  const factDictionaryXml = parser.parseFromString(text, "application/xml")
 
   function makeCollectionIdPath(abstractPath, id) {
     return abstractPath.replace('*', `#${id}`);

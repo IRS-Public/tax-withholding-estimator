@@ -42,11 +42,10 @@
       -->
     </div>
   </main>
-  <th th:if="${flags.auditMode}">
-    <div th:replace="fragments/audit-panel"></div>
-  </th>
 
-  <template th:replace="fragments/js-templates"></template>
+  <div th:if="${flags.auditMode}">
+    <div th:replace="fragments/audit-panel"></div>
+  </div>
 
   <footer th:aria-label="#{layout.title}" class="footer">
     <div data-testid="identifier" class="usa-identifier">
@@ -81,6 +80,7 @@
     </div>
   </footer>
 
+  <template th:replace="fragments/js-templates"></template>
   <div th:replace="~{errors}"></div>
-  <script type="text" id="fact-dictionary" th:utext="${dictionaryConfig}"></script>
+
 </html>

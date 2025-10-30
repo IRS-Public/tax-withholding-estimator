@@ -33,7 +33,6 @@ object AllScreens {
     val templateEngine = new TweTemplateEngine()
     val context = new Context()
     context.setVariable("title", "All Screens")
-    context.setVariable("dictionaryConfig", dictionaryConfig.toString)
 
     val pages = flow.pages.map(page =>
       Map(
