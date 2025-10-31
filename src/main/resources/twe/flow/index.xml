@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <module src="./introduction.xml"/>
+  <page title="Checklist Page" route="/" exclude-from-stepper="true" html-src="./checklist.html"/>
   <module src="./about-you.xml"/>
   <module src="./income.xml"/>
   <module src="./adjustments.xml"/>

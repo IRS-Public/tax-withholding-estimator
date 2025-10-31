@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<FlowConfigModule>
+<?xml-model href="./FlowConfig.rng"?>
+<FlowConfig>
   <page title="Credits" route="credits">
     <section>
       <h2>Child Tax Credit</h2>
@@ -100,4 +101,4 @@
       </fg-set>
     </section>
   </page>
-</FlowConfigModule>
+</FlowConfig>

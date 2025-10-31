@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<?xml-model href="./FlowConfigModule.rng"?>
-<FlowConfigModule>
+<?xml-model href="./FlowConfig.rng"?>
+<FlowConfig>
   <page title="Results" route="results">
     <section>
       <table class="usa-table width-full usa-table--borderless usa-table--flush">
@@ -110,4 +110,4 @@
       <button class="usa-button usa-button--outline" type="button" onclick="downloadW4(window.factGraph)">Download pre-filled Form W4</button>
     </section>
   </page>
-</FlowConfigModule>
+</FlowConfig>

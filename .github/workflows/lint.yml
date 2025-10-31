@@ -63,11 +63,7 @@ jobs:
       run: |
         for xml in ${{ env.TWE_RESOURCES_PATH }}/flow/*.xml; do
           echo "Processing $xml"
-          if [[ "$xml" == "${{ env.TWE_RESOURCES_PATH }}/flow/index.xml" ]]; then
-            java -jar jing.jar ${{ env.TWE_RESOURCES_PATH }}/flow/FlowConfig.rng "$xml"
-            continue
-          fi
-          java -jar jing.jar ${{ env.TWE_RESOURCES_PATH }}/flow/FlowConfigModule.rng "$xml"
+          java -jar jing.jar ${{ env.TWE_RESOURCES_PATH }}/flow/FlowConfig.rng "$xml"
         done
 
     - name: Install xmllint (libxml2-utils) # v2.9.14+dfsg-1.3ubuntu3

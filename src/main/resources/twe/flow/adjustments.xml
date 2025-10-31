@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<?xml-model href="./FlowConfigModule.rng"?>
-<FlowConfigModule>
+<?xml-model href="./FlowConfig.rng"?>
+<FlowConfig>
   <page title="Adjustments" route="adjustments">
     <section>
       <h1>Adjustments</h1>
@@ -41,7 +41,7 @@
         </summary>
         <div class="usa-prose">
           <p>If you're a K-12 educator, you can deduct up to $300 of unreimbursed expenses. If
-            you're filing a joint tax return and both of you are educators, you can deduct up to
+          you're filing a joint tax return and both of you are educators, you can deduct up to
             $600.</p>
           <p>Qualified expenses include:</p>
           <ul>
@@ -142,4 +142,4 @@
       </fg-set>
     </section>
   </page>
-</FlowConfigModule>
+</FlowConfig>

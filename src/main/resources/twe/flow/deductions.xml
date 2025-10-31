@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<FlowConfigModule>
+<?xml-model href="./FlowConfig.rng"?>
+<FlowConfig>
   <page title="Deductions" route="deductions">
     <section>
       <h2>Standard or Itemized Deductions</h2>
@@ -22,7 +23,7 @@
       </fg-set>
       <h2>State and Local Taxes</h2>
       <p>There are four types of State and Local Taxes: 1) State, local, and foreign income taxes;
-        2) State and local general sales taxes; 3) State and local real estate taxes; 4) State and
+      2) State and local general sales taxes; 3) State and local real estate taxes; 4) State and
         local personal property taxes</p>
       <p>There is a $40,000 deduction cap on SALT payments</p>
       <fg-set path="/stateAndLocalTaxPayments/">
@@ -31,7 +32,7 @@
       </fg-set>
       <h2>Medical and dental expenses deduction</h2>
       <p>Total expenses that exceed 7.5% of your Estimated medical and dental expenses Can include
-        the total estimated amount paid for health insurance premiums, not including any amount the
+      the total estimated amount paid for health insurance premiums, not including any amount the
         employer pays</p>
       <fg-set path="/medicalAndDentalExpenses/">
         <question>Total amount for a single medical or dental expense category</question>
@@ -57,4 +58,4 @@
       </fg-set>
     </section>
   </page>
-</FlowConfigModule>
+</FlowConfig>

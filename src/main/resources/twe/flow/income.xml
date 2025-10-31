@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<?xml-model href="./FlowConfigModule.rng"?>
-<FlowConfigModule>
+<?xml-model href="./FlowConfig.rng"?>
+<FlowConfig>
   <page title="Income" route="income">
     <section>
       <h1>Income</h1>
@@ -177,4 +177,4 @@
       </fg-set>
     </section>
   </page>
-</FlowConfigModule>
+</FlowConfig>

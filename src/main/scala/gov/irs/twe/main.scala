@@ -38,6 +38,7 @@ def main(args: Array[String]): Unit = {
   val children = flowConfig \\ "FlowConfig" \ "_"
 
   // Resolve modules
+  // Note that modules can only appear in the top level
   val resolvedChildren = children.map(child =>
     child.label match {
       case "module" => resolveModule(child)
@@ -114,12 +115,11 @@ def resolveModule(node: xml.Node): xml.NodeSeq = {
   // Remove the ./ prefix in the src attribute
   // We support this so that people can use local file path resolution in their text editors
   val resolvedSrc = src.replaceAll("^\\./", "")
-
   val moduleFile = Source.fromResource(s"$FlowResourceRoot/$resolvedSrc").getLines().mkString("\n")
 
   val flowConfigModule = xml.XML.loadString(moduleFile)
-  if (flowConfigModule.label != "FlowConfigModule") {
-    throw InvalidFormConfig(s"Module file $src does not have a top-level FlowConfigModule")
+  if (flowConfigModule.label != "FlowConfig") {
+    throw InvalidFormConfig(s"Module file $src does not have a top-level FlowConfig")
   }
 
   flowConfigModule \ "_"
