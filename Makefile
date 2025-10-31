@@ -1,5 +1,12 @@
 PORT ?= 3000
-XML_FILES := $(shell git ls-files '*.xml')
+TWE_RESOURCES_DIR := ./src/main/resources/twe
+
+FLOW_DIR := $(TWE_RESOURCES_DIR)/flow
+FLOW_CONFIG := $(FLOW_DIR)/FlowConfig.rng
+
+FACTS_DIR := $(TWE_RESOURCES_DIR)/facts
+FACTS_CONFIG := $(FACTS_DIR)/FactDictionaryModule.rng
+
 FG_SOURCE_DIR := ../fact-graph/js/target/scala-3.3.6/factgraph-fastopt
 FG_TARGET_DIR := ./src/main/resources/twe/website-static/vendor/fact-graph
 
@@ -34,12 +41,14 @@ clean:
 	find ./project -name target | xargs rm -rf
 	rm -rf ./out/
 
+.PHONY: validate-xml
+validate-xml:
+	find $(FLOW_DIR) -name '*xml' | xargs xmllint --relaxng $(FLOW_CONFIG) > /dev/null
+	find $(FACTS_DIR) -name '*xml' | xargs xmllint --relaxng $(FACTS_CONFIG) > /dev/null
+
 .PHONY: format-xml
 format-xml:
-	@for file in $(XML_FILES); do \
-		echo "Formatting $$file"; \
-		xmllint --format "$$file" > "$$file.tmp" && mv "$$file.tmp" "$$file"; \
-	done
+	find $(TWE_RESOURCES_DIR) -name '*xml' | xargs -n1 -I {} xmllint --format {} --output {}
 
 .PHONY: format-xml-check
 format-xml-check:
@@ -74,12 +83,9 @@ ci_security_scan:
 # Scala JVM  static analysis with Semgrep
 .PHONY: ci_semgrep
 ci_semgrep:
-	semgrep scan --verbose \
-		--metrics off \
-	  --config p/security-audit \
-		--config p/scala \
-	  --severity WARNING \
-	  --error
+	semgrep scan --verbose --metrics off --severity WARNING --error \
+		--config p/security-audit --config p/scala
+
 
 # HTML validation with Thymeleaf-aware security profile
 .PHONY: ci_html_validate
