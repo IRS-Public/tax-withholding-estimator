@@ -6,7 +6,7 @@ this repository, start [here](./docs/adr/001-twe-architecture.md).
 
 ## Setup
 
-If you are an IRS developer, first follow the instructions in [NONDEV-ONBOARDING.md](./docs/IRS-ONBOARDING.md).
+If you are an IRS developer, first follow the instructions in [IRS-ONBOARDING.md](./docs/IRS-ONBOARDING.md).
 
 If you are not a developer, follow the instructions in [NONDEV-ONBOARDING.md](./docs/NONDEV-ONBOARDING.md).
 
@@ -25,11 +25,22 @@ Additional developer notes and tips for installing LSP integrations and the like
 
 Basic development commands are declared via Makefile.
 
-* `make` (or `make dev`) - Build TWE and start a static file server; automatically rebuild on changes
+* `make` - Build TWE and start a static file server; automatically rebuild on changes
 * `make twe` - Build and output TWE to the `/out` directory
 * `make clean` - Clean all the build artifacts
 * `make format` - Format the Scala and XML code
 * `make ci` - Run CI checks locally
+
+### Updating the vendored copy of the Fact Graph
+
+The Fact Graph is used in two places: first as a declared Scala dependency in `build.sbt`, and second as a vendored JavaScript file that gets sent to the client.
+
+If you make changes to the Fact Graph, and you want to propapage those changes, you need to do two things:
+
+1. Run `make publish` in the Fact Graph repo
+2. Run `make copy-fg` in this repo
+
+Note that the `make copy-fg` target assumes that the Fact Graph repo is located in `../fact-graph`.
 
 ## Contributing
 

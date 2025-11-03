@@ -1,14 +1,6 @@
 # Developer Tips
 
-## Updating the vendored copy of the Fact Graph
-
 You can access the current Fact Graph in the developer console, as `factGraph`.
-
-If you are working on some fact-graph changes and want to test them here:
-
-1. Ensure you have published the latest Fact Graph scala files by running `make publish` in the Fact Graph repo
-2. In this repo, run `make copy-fg` to ensure that the updated main.mjs file is copied over.
-(This assumes that the fact-graph repo is located in the same directory as this repo and is called `fact-graph`.)
 
 ## IDE Support
 
