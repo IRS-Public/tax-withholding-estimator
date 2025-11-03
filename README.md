@@ -1,17 +1,42 @@
 # Tax Withholding Estimator (TWE)
 
-An online website for a taxpayer to estimate their tax withholdings for a variety of tax situations. For a deep dive into the technical design choices of this repository, start [here](docs/adr/001-twe-architecture.md).
+An online website for a taxpayer to estimate their tax withholdings for a
+variety of tax situations. For a deep dive into the technical design choices of
+this repository, start [here](./docs/adr/001-twe-architecture.md).
 
-# Setup
-See [QUICKSTART-ONBOARDING.md](QUICKSTART-ONBOARDING.md) for a quickstart setup that can be used if you don't care about a developer setup
-See [DEV-ONBOARDING.md](DEV-ONBOARDING.md) for a more thorough setup meant for active development.
+## Setup
 
-# Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+If you are an IRS developer, first follow the instructions in [NONDEV-ONBOARDING.md](./docs/IRS-ONBOARDING.md).
 
+If you are not a developer, follow the instructions in [NONDEV-ONBOARDING.md](./docs/NONDEV-ONBOARDING.md).
 
-> ## Legal Disclaimer: Public Repository Access
->
+### Instructions
+
+1. Install [Scala 3.7](https://www.scala-lang.org/download) and [sbt](https://www.scala-sbt.org/1.x/docs/Setup.html).
+You may choose install these with Coursier, sdkman, or some other method of your choosing;
+it shouldn't make a difference.
+2. Download the [Fact Graph](https://github.com/IRS-Public/fact-graph) and run `make publish` in that repository
+3. Return to this repository and run `make`
+4. (Optional) Ensure that you have local installations of `xmllint` (via `libxml2`) and `npx` (via `npm`) command line tools, which are used in the `make ci` checks.
+
+Additional developer notes and tips for installing LSP integrations and the like can be found in [DEVELOPER-TIPS.md](./docs/DEVELOPER-TIPS.md).
+
+## Development
+
+Basic development commands are declared via Makefile.
+
+* `make` (or `make dev`) - Build TWE and start a static file server; automatically rebuild on changes
+* `make twe` - Build and output TWE to the `/out` directory
+* `make clean` - Clean all the build artifacts
+* `make format` - Format the Scala and XML code
+* `make ci` - Run CI checks locally
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
+
+## Legal Disclaimer: Public Repository Access
+
 > This repository contains draft and under-development source code for the IRS Tax Withholding Estimator. It is made available to the public solely for transparency, collaboration, and research purposes. The source code and associated content are not official IRS tools, and must not be used by taxpayers to estimate federal income tax withholding from their paychecks.
 >
 > **No Endorsement or Warranty**
