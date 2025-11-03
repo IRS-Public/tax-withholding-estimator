@@ -35,6 +35,14 @@ format:
 	make format-xml
 	sbt scalafmtAll
 
+# Run most of the CI checks locally
+.PHONY: ci
+ci:
+	make validate-xml
+	make ci_validate-format
+	make ci_validate-html
+	# Skipping eslint and semgrep (locally) for now
+
 .PHONY: clean
 clean:
 	rm -rf ./target/
@@ -50,36 +58,27 @@ validate-xml:
 format-xml:
 	find $(TWE_RESOURCES_DIR) -name '*xml' | xargs -I {} xmllint --format {} --output {}
 
-.PHONY: ci-format-check
-ci_format_check:
-	find $(TWE_RESOURCES_DIR) -name '*xml' | \
-		xargs -I {} bash -c "diff {} <(xmllint --format {})"
-	sbt -warn scalafmtCheckAll
-
 # These command line flags only output the failed tests, for a simpler CI output
 .PHONY: ci_test
 ci_test:
 	sbt -info 'set Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oC")' test
 
-.PHONY: ci_test
-ci_security_scan:
-	make ci_html_validate ci_semgrep ci_eslint_check
+.PHONY: ci_validate-format
+ci_validate-format:
+	find $(TWE_RESOURCES_DIR) -name '*xml' | \
+		xargs -I {} bash -c "diff {} <(xmllint --format {})"
+	sbt -warn scalafmtCheckAll
 
-# Scala JVM  static analysis with Semgrep
+.PHONY: ci_validate-html
+ci_validate-html:
+	npx html-validate --config $(TWE_RESOURCES_DIR)/security/.htmlvalidate.json \
+		"$(TWE_RESOURCES_DIR)/templates/fragments/*.html" "out/*.html"
+
+.PHONY: ci_validate-js
+ci_validate-js:
+	npx eslint --config .github/eslint.config.mjs
+
 .PHONY: ci_semgrep
 ci_semgrep:
 	semgrep scan --verbose --metrics off --severity WARNING --error \
 		--config p/security-audit --config p/scala
-
-
-# HTML validation with Thymeleaf-aware security profile
-.PHONY: ci_html_validate
-ci_html_validate:
-	npx html-validate --config src/main/resources/twe/security/.htmlvalidate.json \
-	"src/main/resources/twe/templates/fragments/*.html" \
-	"out/*.html"
-
-# JavaScript security linting with ESLint
-.PHONY: ci_eslint_check
-ci_eslint_check:
-	npx eslint --config .github/eslint.config.mjs

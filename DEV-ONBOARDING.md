@@ -125,14 +125,12 @@ Simply download the Fact Graph and run `sbt compile publishLocal` in the fact-gr
 
 * `make` (or `make dev`) - Same as above, but automatically recompile and re-run on code changes
 * `make twe` - Output TWE to the `/out` directory
-* `make site` - Serve the static site out of the `/out` directory (requires npm installation)
 * `make clean` - Clean all the build artifacts
-* `make format` - Format all the Scala code
-* `make format_check` - Check to see if you have code formatting violations
+* `make format` - Format the Scala and XML code
+* `make ci` - Run CI checks
 
 ### Get up and running:
 1. Run `make dev`
-2. Run `make site`
 
 ### Tips
 

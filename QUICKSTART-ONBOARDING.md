@@ -104,7 +104,7 @@ Before you can run TWE you'll need to compile the fact-graph.
 Once you've compiled the fact-graph and run `make publish` you're ready to run TWE locally
 * In terminal, move to the tax-withholding-estimator repo & run it!
     * Open terminal and nav to your twe repo: `cd ~/Documents/GitHub/tax-withholding-estimator`
-    * Run `make twe` (this will run and keep running)
+    * Run `make` (this will run and keep running)
 * With twe running in the background, you can open your browser and navigate to: http://localhost:3000/
 * Note: you'll need to do this every time you want to run TWE (or just leave it running in the background)
 

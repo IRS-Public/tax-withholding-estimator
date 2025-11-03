@@ -56,4 +56,4 @@ jobs:
 
     - name: Format Scala and XML files
       working-directory: ${{ env.TWE_PATH }}
-      run: make ci_format_check
+      run: make ci_validate-format
