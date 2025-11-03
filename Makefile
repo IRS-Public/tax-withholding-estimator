@@ -48,27 +48,12 @@ validate-xml:
 
 .PHONY: format-xml
 format-xml:
-	find $(TWE_RESOURCES_DIR) -name '*xml' | xargs -n1 -I {} xmllint --format {} --output {}
+	find $(TWE_RESOURCES_DIR) -name '*xml' | xargs -I {} xmllint --format {} --output {}
 
-.PHONY: format-xml-check
-format-xml-check:
-	@failed=0; \
-	for file in $(XML_FILES); do \
-		if ! xmllint --format "$$file" | diff -q "$$file" - >/dev/null; then \
-			echo "✗ $$file is not properly formatted"; \
-			failed=1; \
-		fi; \
-	done; \
-	exit $$failed
-
-.PHONY: format_check
-format_check:
-	make format-xml-check
-	sbt scalafmtCheckAll
-
-.PHONY: ci_format_check
+.PHONY: ci-format-check
 ci_format_check:
-	make format-xml-check
+	find $(TWE_RESOURCES_DIR) -name '*xml' | \
+		xargs -I {} bash -c "diff {} <(xmllint --format {})"
 	sbt -warn scalafmtCheckAll
 
 # These command line flags only output the failed tests, for a simpler CI output
