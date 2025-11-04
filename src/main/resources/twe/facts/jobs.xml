@@ -434,5 +434,12 @@
         </LastDayOfMonth>
       </Derived>
     </Fact>
+    <Fact path="/yearEndJobs">
+      <Derived>
+        <Filter path="/jobs">
+          <Dependency path="isHeldToYearEnd"/>
+        </Filter>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>
