@@ -14,12 +14,13 @@ cd -- "$( dirname -- "${BASH_SOURCE[0]}" )"
 
 TWE_FACTS="../src/main/resources/twe/facts"
 
-help() {
+usage() {
   cat << EOF
 usage: fgs
        fgs defn [PATH]
        fgs deps [PATH]
 EOF
+  exit 1
 }
 
 all-facts() {
@@ -47,15 +48,16 @@ defn() {
 }
 
 search() {
-  all-facts | xpath -q -e '//Fact/@path' | extract-path | fzf
+  echo -n "Selected fact: " >&2
+  all-facts | xpath -q -e '//Fact/@path' | extract-path | fzf | tee /dev/stderr
 }
 
 # The default command is search, otherwise run the command specified
 if [[ $# == 0 ]]; then
   defn "$(search)"
 elif [[ "$1" == "deps" ]] || [[ "$1" == "defn" ]]; then
-  "$@"
+  # Either use the fact path provided by $2 or fuzzy search for one
+  $1 ${2:-$(search)}
 else
-  help
-  exit 1
+  usage
 fi
