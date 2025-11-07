@@ -2,62 +2,6 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/jobs/*/pub15Worksheet1aLine1g">
-      <Description>Line 1g of Pub 15-T Worksheet 1A</Description>
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/isFilingStatusMFJ"/>
-            </When>
-            <Then>
-              <Dollar>12900</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>8600</Dollar>
-            </Then>
-          </Case>
-        </Switch>
-      </Derived>
-    </Fact>
-    <Fact path="/jobs/*/adjustedAnnualWageAmount">
-      <Description>Line 1i of Pub 15-T Worksheet 1A</Description>
-      <Derived>
-        <GreaterOf>
-          <Dollar>0</Dollar>
-          <Subtract>
-            <Minuend>
-              <Multiply>
-                <Dependency path="../averagePayPerPayPeriod"/>
-                <Dependency path="../payPeriodsPerYear"/>
-              </Multiply>
-            </Minuend>
-            <Subtrahends>
-              <Dependency path="../pub15Worksheet1aLine1g"/>
-            </Subtrahends>
-          </Subtract>
-        </GreaterOf>
-      </Derived>
-    </Fact>
-    <Fact path="/jobs/*/tentativeWithholdingAmount">
-      <Description>Line 2h of Pub. 15-T Worksheet 1A. The amount from the Annual Method Percentage
-        table.</Description>
-      <Derived>
-        <Divide>
-          <Dividend>
-            <Dependency path="../standardAnnualWithholdingAmount"/>
-          </Dividend>
-          <Divisors>
-            <Dependency path="../payPeriodsPerYear"/>
-          </Divisors>
-        </Divide>
-      </Derived>
-    </Fact>
     <Fact path="/w4Line4NetChange">
       <Description>Total other income minus adjustments to income; the net change to be entered on Forms W4 Lines 4a (when positive) or 4b (when negative; use absolute value).</Description>
       <Derived>

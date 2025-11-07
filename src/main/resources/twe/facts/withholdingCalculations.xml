@@ -171,6 +171,20 @@
         </Divide>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/tentativeWithholdingAmount">
+      <Description>Line 2h of Pub. 15-T Worksheet 1A. The amount from the Annual Method Percentage
+        table.</Description>
+      <Derived>
+        <Divide>
+          <Dividend>
+            <Dependency path="../standardAnnualWithholdingAmount"/>
+          </Dividend>
+          <Divisors>
+            <Dependency path="../payPeriodsPerYear"/>
+          </Divisors>
+        </Divide>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/committedWithholding">
       <Description>This job's withholding that cannot change because it's past or within the time
         lag before W4 changes kick in.</Description>
@@ -178,7 +192,7 @@
         <Add>
           <!-- past withholding -->
           <Dependency path="../yearToDateWithholding"/>
-          <!-- future withholding, too soon to be changed -->
+          <!-- future withholding, too soon to be changed and thus incorporates lag. Does not use Pub 15-T Worksheet 1a calculation -->
           <Multiply>
             <Dependency path="../averageWithholdingPerPayPeriod"/>
             <LesserOf>
@@ -186,7 +200,7 @@
               <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
             </LesserOf>
           </Multiply>
-          <!-- future tentative withholding: result from Pub 15-T Worksheet 1A  -->
+          <!-- future tentative withholding: result from Pub 15-T Worksheet 1A, no lag -->
           <!-- For now, we treat this as a "given" that won't change. Probably will need to revisit
           this when we get to reducing below tentative withholding. -->
           <Multiply>
@@ -430,6 +444,48 @@
         <CollectionSum>
           <Dependency path="/jobs/*/committedWithholding"/>
         </CollectionSum>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/pub15Worksheet1aLine1g">
+      <Description>Line 1g of Pub 15-T Worksheet 1A</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>12900</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>8600</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/adjustedAnnualWageAmount">
+      <Description>Line 1i of Pub 15-T Worksheet 1A</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Multiply>
+                <Dependency path="../averagePayPerPayPeriod"/>
+                <Dependency path="../payPeriodsPerYear"/>
+              </Multiply>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="../pub15Worksheet1aLine1g"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/standardAnnualWithholdingAmount">
