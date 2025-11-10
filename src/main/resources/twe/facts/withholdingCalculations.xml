@@ -69,8 +69,10 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/withholdingsFromTotalBonusReceived">
-      <Description>Bonus withholdings are 22% if less than 1,000,000 and 37% on the sum exceeding
-        1,000,000</Description>
+      <Description>
+        Bonus withholdings are 22% if less than 1,000,000 and 37% on the sum exceeding
+        1,000,000. Ref: Pub 15, Section 7.
+      </Description>
       <Derived>
         <Round>
           <Switch>
