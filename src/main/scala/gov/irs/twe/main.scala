@@ -10,7 +10,7 @@ import scala.util.matching.Regex
 import scala.util.Try
 import scala.xml.Elem
 import scala.xml.NodeBuffer
-import smol.{ Config, Smol }
+import smol.*
 
 val FlowResourceRoot = "twe/flow"
 val flagRegex = new Regex("""--(\w*)""")
@@ -55,38 +55,30 @@ def main(args: Array[String]): Unit = {
 
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"
-  site.save(outDir)
+
+  // We save everything to a /twe subdirectory so that the CDN team can set up consistent rules
+  // for our application at the /twe subroute.
+  site.save(outDir / "twe")
 
   if !flags.contains("serve") then return // Only start smol if 'serve' flag is set
 
-  // Marshall smol config vars
-  object SmolConfig {
-    val Host = "localhost"
-    val Port = 3000
-    val OutputDir = "out"
-    val LogEnabled = true
-  }
+  val host = "localhost"
+  val port = sys.props
+    .get("smol.port")
+    .flatMap(s => Try(s.toInt).toOption)
+    .getOrElse(3000)
+  val config = smol.Config(outDir.toString(), host, port, logEnabled = true)
 
   // Start server in-process, but do not block.
   // If it’s already running from a previous ~run cycle, starting again will throw BindException - ignore and continue.
   try
-    val server = Smol.start(
-      Config(
-        dir = outDir.toString(),
-        host = SmolConfig.Host,
-        port = sys.props.get("smol.port").flatMap(s => Try(s.toInt).toOption).getOrElse(SmolConfig.Port),
-        logEnabled = SmolConfig.LogEnabled,
-      ),
-    )
+    val server = smol.Smol.start(config)
     sys.addShutdownHook(server.stop(0))
-    println(
-      s"[smol] started at http://${SmolConfig.Host}:${sys.props.get("smol.port").getOrElse(SmolConfig.Port.toString)} => ${outDir.toString}",
-    )
+    println(s"Serving TWE at http://${host}:${port}/twe")
   catch
     case _: java.net.BindException =>
-      println(
-        s"[smol] already serving on ${SmolConfig.Host}:${sys.props.get("smol.port").getOrElse(SmolConfig.Port.toString)} — leaving it running",
-      )
+      println(s"Error: server is already running on port ${port}")
+      scala.sys.exit(1)
 }
 
 object FileLoaderHelper:

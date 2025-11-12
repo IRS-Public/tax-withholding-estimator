@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/resources/styles/audit-panel.css" />
+<link rel="stylesheet" href="/twe/resources/styles/audit-panel.css" />
 <aside id="audit-panel" th:with="selectPsuedoPath='fact-select',collectionIdPsuedoPath='fact-collection-id'">
   <h2>Fact Graph Audit Panel</h2>
   <div class="usa-form-group">
@@ -36,7 +36,7 @@
 <script type="module">
   const parser = new DOMParser()
 
-  const res = await fetch('/resources/fact-dictionary.xml')
+  const res = await fetch('/twe/resources/fact-dictionary.xml')
   const text = await res.text()
   const factDictionaryXml = parser.parseFromString(text, "application/xml")
 

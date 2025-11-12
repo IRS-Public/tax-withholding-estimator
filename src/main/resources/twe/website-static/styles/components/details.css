@@ -18,7 +18,7 @@
 .flow > details > summary {
   display: block;
   background-color: var(--base-lightest);
-  background-image: url("/resources/vendor/uswds-3.13.0/img/usa-icons/add.svg"), linear-gradient(transparent, transparent);
+  background-image: url("/twe/resources/vendor/uswds-3.13.0/img/usa-icons/add.svg"), linear-gradient(transparent, transparent);
   background-repeat: no-repeat;
   background-position: right var(--units-205) center;
   background-size: var(--units-3);
@@ -44,7 +44,7 @@
 
 .flow > details[open] {
   summary {
-      background-image: url("/resources/vendor/uswds-3.13.0/img/usa-icons/remove.svg"), linear-gradient(transparent, transparent);
+      background-image: url("/twe/resources/vendor/uswds-3.13.0/img/usa-icons/remove.svg"), linear-gradient(transparent, transparent);
   }
 }
 

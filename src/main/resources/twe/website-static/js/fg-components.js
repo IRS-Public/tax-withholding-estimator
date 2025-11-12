@@ -2,7 +2,7 @@ import * as fg from '../vendor/fact-graph/factgraph-3.1.0.js'
 
 // This blocks the rest of the file because you can't set up the web components the fact dictionary
 // is set up
-const res = await fetch('/resources/fact-dictionary.xml')
+const res = await fetch('/twe/resources/fact-dictionary.xml')
 const text = await res.text()
 const factDictionary = fg.FactDictionaryFactory.importFromXml(text)
 

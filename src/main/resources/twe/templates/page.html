@@ -5,7 +5,7 @@
   <a class="usa-skipnav" href='#main-content' th:text="#{layout.skip-to-main}"></a>
   <header>
     <div th:replace="fragments/usa-banner"></div>
-    <div class="logo-banner"><img src="/resources/img/irs-logo.svg" alt=""/></div>
+    <div class="logo-banner"><img src="/twe/resources/img/irs-logo.svg" alt=""/></div>
   </header>
 
   <main id="main-content">
@@ -15,7 +15,7 @@
     <div class="header-bottom-border" th:if="!${first}">
       <a class="usa-link back-link" th:href="${lastPageHref}">
         <svg aria-hidden="true" role="img" focusable="false" class="usa-icon">
-          <use href="/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
+          <use href="/twe/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
         </svg>
         <span th:text="#{buttons.back}" th:remove="tag"></span>
       </a>
@@ -27,7 +27,7 @@
       <a class="usa-button" th:href="${nextPageHref}" onclick="return handleSectionContinue(event)">
         [[${first} ? #{buttons.next} : #{buttons.continue}]]
         <svg th:unless="${first}" aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
-          <use href="/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
+          <use href="/twe/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
         </svg>
       </a>
 
@@ -53,7 +53,7 @@
         <div class="usa-identifier__container">
           <div data-testid="identifierLogos" class="usa-identifier__logos">
             <a class="usa-identifier__logo" href="https://irs.gov">
-              <img src="/resources/img/irs_logo_bk.svg" class="usa-identifier__logo-img" th:alt="#{layout.irs.logo-alt-text}" height="1em" width="1em">
+              <img src="/twe/resources/img/irs_logo_bk.svg" class="usa-identifier__logo-img" th:alt="#{layout.irs.logo-alt-text}" height="1em" width="1em">
             </a>
           </div>
           <div data-testid="identifierIdentity" class="usa-identifier__identity">
