@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="About you" route="about-you">
+  <page title="About you" route="about-you.html">
     <section>
       <h2>About You</h2>
       <fg-set path="/primaryFilerAge65OrOlder">

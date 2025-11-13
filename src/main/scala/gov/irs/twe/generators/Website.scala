@@ -60,7 +60,6 @@ object Website {
     val excludedPageLength = flow.pages.length - navPages.size
 
     val pages = flow.pages.zipWithIndex.map { (page, index) =>
-      val route = if (page.route == "/") "index.html" else s"${page.route}.html"
       val title = s"Tax Withholding Estimator - ${page.title} | Internal Revenue Service"
       val stepTitle = page.title
 
@@ -92,7 +91,7 @@ object Website {
       context.setVariable("pageXml", pageXml)
 
       val content = templateEngine.process("page", context)
-      WebsitePage(route, content)
+      WebsitePage(page.route, content)
     }
 
     Website(

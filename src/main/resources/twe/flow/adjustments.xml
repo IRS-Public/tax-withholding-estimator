@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="Adjustments" route="adjustments">
+  <page title="Adjustments" route="adjustments.html">
     <section>
       <h1>Adjustments</h1>
       <p>Enter the amount for any adjustments you plan to take this year. The amounts may be different from last year.</p>

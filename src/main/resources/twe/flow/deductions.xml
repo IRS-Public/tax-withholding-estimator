@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="Deductions" route="deductions">
+  <page title="Deductions" route="deductions.html">
     <section>
       <h2>Standard or Itemized Deductions</h2>
       <p>Standard or itemized deductions reduce the amount of tax you owe.</p>

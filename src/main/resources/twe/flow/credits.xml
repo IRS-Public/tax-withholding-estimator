@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="Credits" route="credits">
+  <page title="Credits" route="credits.html">
     <section>
       <h2>Child Tax Credit</h2>
       <fg-set path="/actualChildTaxCreditAmount">

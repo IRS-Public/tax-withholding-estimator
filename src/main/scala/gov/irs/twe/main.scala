@@ -77,8 +77,7 @@ def main(args: Array[String]): Unit = {
     println(s"Serving TWE at http://${host}:${port}/twe")
   catch
     case _: java.net.BindException =>
-      println(s"Error: server is already running on port ${port}")
-      scala.sys.exit(1)
+      println(s"Server is already running on port http://${host}:${port}/twe")
 }
 
 object FileLoaderHelper:
