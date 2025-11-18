@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/lifetimeLearningTaxCreditAmount">
+      <Description>Lifetime Learning Tax credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/americanOpportunityTaxCreditAmount">
+      <Description>American opportunity tax credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/americanOpportunityTaxCredit">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/lifetimeLearningTaxCredit">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

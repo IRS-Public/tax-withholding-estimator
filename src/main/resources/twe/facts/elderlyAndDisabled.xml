@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/elderlyAndDisabledTaxCreditAmount">
+      <Description>Elderly and Disabled tax credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/totalEdc">
+      <Derived>
+        <!--        TODO: update this with correct derivation logic-->
+        <Dependency path="/elderlyAndDisabledTaxCreditAmount"/>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

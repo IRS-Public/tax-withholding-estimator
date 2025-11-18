@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/schedule3Line1">
+      <Description>Foreign tax credit. Form 1116</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/schedule3Line2">
+      <Description>Credit for child and dependent care expenses from Form 2441, line 11.</Description>
+      <Derived>
+        <Dependency path="/cdccTotalCredit"/>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line3">
+      <Description>Education credits from Form 8863, line 19</Description>
+      <Derived>
+        <Dependency path="/lifetimeLearningTaxCredit"/>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line4">
+      <Description>Retirement savings contributions credit. Form 8880</Description>
+      <Derived>
+        <Dependency path="/retirementSavingsContributionsCredit"/>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line5a">
+      <Description>Residential clean energy credit from Form 5695, line 15</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line5b">
+      <Description>Energy efficient home improvement credit from Form 5695, line 32 </Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6a">
+      <Description>General business credit. Form 3800</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/schedule3Line6b">
+      <Description>Credit for prior year minimum tax. Form 8801</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6c">
+      <Description>Non-refundable portion of Adoption credit. Form 8839</Description>
+      <Derived>
+        <Dependency path="/adoptionCreditNonRefundable"/>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6d">
+      <Description>Credit for the elderly or disabled. Schedule R </Description>
+      <Derived>
+        <Dependency path="/totalEdc"/>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6e">
+      <Description>Reserved for future use</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6f">
+      <Description>Clean vehicle credit. Form 8936</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6g">
+      <Description>Mortgage interest credit. Form 8396</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/schedule3Line6h">
+      <Description>District of Columbia first-time homebuyer credit. Form 8859</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6i">
+      <Description>Qualified electric vehicle credit. Form 8834 </Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6j">
+      <Description>Alternative fuel vehicle refueling property credit. Form 8911</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6k">
+      <Description>Credit to holders of tax credit bonds. Form 8912 </Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6l">
+      <Description>Form 8978, line 14.</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6m">
+      <Description>Credit for previously owned clean vehicles. Form 8936 </Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/actualAlternativeMinimumTaxCreditAmount">
+      <Description>AMT Credit</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/schedule3Line6z">
+      <Description>Other nonrefundable credits.</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/actualAlternativeMinimumTaxCreditAmount"/>
+          <Dependency path="/contributionsScholarshipGrantingOrganizationsCreditAmount"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line7">
+      <Description>Total other nonrefundable credits.</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/schedule3Line6a"/>
+          <Dependency path="/schedule3Line6b"/>
+          <Dependency path="/schedule3Line6c"/>
+          <Dependency path="/schedule3Line6d"/>
+          <Dependency path="/schedule3Line6e"/>
+          <Dependency path="/schedule3Line6f"/>
+          <Dependency path="/schedule3Line6g"/>
+          <Dependency path="/schedule3Line6h"/>
+          <Dependency path="/schedule3Line6i"/>
+          <Dependency path="/schedule3Line6j"/>
+          <Dependency path="/schedule3Line6k"/>
+          <Dependency path="/schedule3Line6l"/>
+          <Dependency path="/schedule3Line6m"/>
+          <Dependency path="/schedule3Line6z"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line9">
+      <Description>Net premium tax credit. Form 8962</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line10">
+      <Description>Amount paid with request for extension to file </Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line11">
+      <Description>Excess social security and tier 1 RRTA tax withheld</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line12">
+      <Description>Credit for federal tax on fuels. Form 4136</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line13">
+      <Description>Other payments or refundable credits</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3NonRefundableCreditsTotal">
+      <Description>Schedule 3 Line 8. Total of all non-refundable credits</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/schedule3Line1"/>
+          <Dependency path="/schedule3Line2"/>
+          <Dependency path="/schedule3Line3"/>
+          <Dependency path="/schedule3Line4"/>
+          <Dependency path="/schedule3Line5a"/>
+          <Dependency path="/schedule3Line5b"/>
+          <Dependency path="/schedule3Line7"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3OtherPaymentsAndRefundableCreditsTotal">
+      <Description>Schedule 3 Line 5. Total of all other payments and refundable credits</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/schedule3Line9"/>
+          <Dependency path="/schedule3Line10"/>
+          <Dependency path="/schedule3Line11"/>
+          <Dependency path="/schedule3Line12"/>
+          <Dependency path="/schedule3Line13"/>
+        </Add>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

@@ -987,6 +987,9 @@
       <optional>
         <ref name="DollarContent"/>
       </optional>
+      <optional>
+        <ref name="IntContent"/>
+      </optional>
     </element>
   </define>
   <define name="FalseContent">

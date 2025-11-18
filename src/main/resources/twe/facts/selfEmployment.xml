@@ -272,7 +272,7 @@
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/maxNetSelfEmploymentIncomeSubjectToSocialSecurityTax"/>
+              <Dependency path="/maxIncomeSubjectToSocialSecurityTax"/>
             </Minuend>
             <Subtrahends>
               <Dependency path="/scheduleSELine8dSelf"/>
@@ -456,7 +456,7 @@
         <GreaterOf>
           <Subtract>
             <Minuend>
-              <Dependency path="/maxNetSelfEmploymentIncomeSubjectToSocialSecurityTax"/>
+              <Dependency path="/maxIncomeSubjectToSocialSecurityTax"/>
             </Minuend>
             <Subtrahends>
               <Dependency path="/scheduleSELine8dSpouse"/>
@@ -528,7 +528,7 @@
       </Derived>
     </Fact>
     <Fact path="/selfEmploymentTaxDeduction">
-      <Description>Self Employment Tax Deduction combined for both self and spouse</Description>
+      <Description>Self Employment Tax Deduction combined for both self and spouse. Form 1040 Schedule 1 Line 15</Description>
       <Derived>
         <Add>
           <Dependency path="/scheduleSELine13Self"/>

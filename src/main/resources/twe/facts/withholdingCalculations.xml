@@ -429,7 +429,7 @@
       </Derived>
     </Fact>
     <Fact path="/taxGap">
-      <Description>The tax gap once W-4s are updated and we account for the remaining pay periods</Description>
+      <Description>The tax gap once W-4s are updated and we account for the remaining pay periods. Effectively 1040 Line 37 - Lines 25d</Description>
       <Derived>
         <Subtract>
           <Minuend>

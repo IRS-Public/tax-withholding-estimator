@@ -183,7 +183,7 @@ class SelfEmploymentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     forAll(dataTable) {
       (
           status,
-          netSelfEmploymentIncomeTotal,
+          netSelfEmploymentIncomeSelf,
           selfEmployedRetirementPlanContributions,
           selfEmploymentTaxDeduction,
           expectedActualSelfEmployedRetirementPlanDeduction,
@@ -191,7 +191,8 @@ class SelfEmploymentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         val graph = makeGraphWith(
           factDictionary,
           Path("/filingStatus") -> status,
-          Path("/netSelfEmploymentIncomeTotal") -> Dollar(netSelfEmploymentIncomeTotal),
+          Path("/netSelfEmploymentIncomeSelf") -> Dollar(netSelfEmploymentIncomeSelf),
+          Path("/netSelfEmploymentIncomeSpouse") -> Dollar(0),
           Path("/selfEmployedRetirementPlanContributions") -> Dollar(selfEmployedRetirementPlanContributions),
           Path("/selfEmploymentTaxDeduction") -> Dollar(selfEmploymentTaxDeduction),
         )

@@ -4,11 +4,17 @@
   <page title="Credits" route="credits.html">
     <section>
       <h2>Child Tax Credit</h2>
-      <fg-set path="/actualChildTaxCreditAmount">
+      <fg-set path="/ctcEligibleDependents">
         <question>
-          How much Child Tax credit do you expect to claim this year?
+          How many CTC qualifying children do you have?
         </question>
-        <input type="dollar"/>
+        <input type="int"/>
+      </fg-set>
+      <fg-set path="/odcEligibleDependents">
+        <question>
+          How many ODC qualifying dependents do you have?
+        </question>
+        <input type="int"/>
       </fg-set>
       <h2>Earned Income Tax Credit</h2>
       <fg-set path="/actualEarnedIncomeTaxCreditAmount">
@@ -25,10 +31,10 @@
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Saver&#x2019;s Credit</h2>
-      <fg-set path="/actualSaversTaxCreditAmount">
+      <h2>Retirement Savings Contribution Credit</h2>
+      <fg-set path="/retirementSavingsCreditAmount">
         <question>
-          How much Saver&#x2019;s Credit do you expect to claim this year?
+          How much Retirement Savings Contribution Credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
@@ -58,34 +64,34 @@
       <h2> Credit for contributions of individuals to scholarship granting organizations</h2>
       <fg-set path="/contributionsScholarshipGrantingOrganizationsAmount">
         <question>
-          How much Adoption tax Credit do you expect to claim this year?
+          How much Credit for contributions of individuals to scholarship
+          granting organizations do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Adoption Tax Credit</h2>
       <fg-set path="/actualAdoptionTaxCreditAmount">
         <question>
-          How much Credit for contributions of individuals to scholarship
-          granting organizations do you expect to claim this year?
+          How much Adoption tax Credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Foreign Tax Credit</h2>
-      <fg-set path="/actualForeignTaxCreditAmount">
+      <fg-set path="/schedule3Line1">
         <question>
           How much Foreign tax credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Mortgage Interest Credit</h2>
-      <fg-set path="/actualMortgageInterestTaxCreditAmount">
+      <fg-set path="/schedule3Line6g">
         <question>
           How much Mortgage Interest credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
       <h2>General Business Credit</h2>
-      <fg-set path="/actualGeneralBusinessTaxCreditAmount">
+      <fg-set path="/schedule3Line6a">
         <question>
           How much General business credit do you expect to claim this year?
         </question>

@@ -2,184 +2,35 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/actualChildTaxCreditAmount">
-      <Description>Child tax credit, no logic in place for actually calculating the applicable
-        amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/actualEarnedIncomeTaxCreditAmount">
-      <Description>Earned Income tax credit, no logic in place for actually calculating the
-        applicable amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/actualChildAndDependentCareTaxCreditAmount">
-      <Description>Child and Dependent Care tax credit, no logic in place for actually calculating
-        the applicable amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/actualSaversTaxCreditAmount">
-      <Description>Savers credit, no logic in place for actually calculating the applicable amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/actualElderlyAndDisabledTaxCreditAmount">
-      <Description>Elderly and Disabled tax credit, no logic in place for actually calculating the
-        applicable amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/actualLifetimeLeariningTaxCreditAmount">
-      <Description>Lifetime Learning Tax credit, no logic in place for actually calculating the
-        applicable amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/actualAmericanOpportunityTaxCreditAmount">
-      <Description>American opportunity tax credit, no logic in place for actually calculating the
-        applicable amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/actualAdoptionTaxCreditAmount">
-      <Description>Adoption tax credit, no logic in place for actually calculating the
-        applicable amount</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/contributionsScholarshipGrantingOrganizationsAmount">
-      <Description>Non-refundable credit for contributions of individuals to scholarship granting
-        organizations, no logic in place for actually calculating the
-        applicable amount</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/maxContributionsScholarshipGrantingOrganizations">
-      <Description>Max amount of Credit for contributions of individuals to scholarship granting
-        organizations
-</Description>
-      <TaxYear>2025</TaxYear>
-      <Derived>
-        <Dollar>
-          1700
-        </Dollar>
-      </Derived>
-    </Fact>
-    <Fact path="/actualContributionsScholarshipGrantingOrganizationsCreditAmount">
-      <Description>26 U.S. Code &#xA7; 25F: (b) Limitations (1) In general The credit allowed under
-        subsection (a) to any taxpayer for any taxable year shall not exceed $1,700. (2) Reduction
-        based on State credit The amount allowed as a credit under subsection (a) for a taxable
-        year shall be reduced by the amount allowed as a credit on any State tax return of the
-        taxpayer for qualified contributions made by the taxpayer during the taxable year. </Description>
-      <Derived>
-        <LesserOf>
-          <Dependency path="/maxContributionsScholarshipGrantingOrganizations"/>
-          <Dependency path="/contributionsScholarshipGrantingOrganizationsAmount"/>
-        </LesserOf>
-      </Derived>
-    </Fact>
-    <Fact path="/actualForeignTaxCreditAmount">
-      <Description>Foreign tax credit, no logic in place for actually calculating the
-        applicable amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/actualMortgageInterestTaxCreditAmount">
-      <Description>Mortgage interest credit, no logic in place for actually calculating the
-        applicable amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/actualGeneralBusinessTaxCreditAmount">
-      <Description>General business credit, no logic in place for actually calculating the
-        applicable amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/actualAlternativeMinimumTaxCreditAmount">
-      <Description>Alternative minimum tax credit, no logic in place for actually calculating the
-        applicable amount.</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
     <Fact path="/totalCredits">
-      <Description>Total sum of applicable credits.</Description>
+      <Description>Total sum of non-refundable and refundable credits.</Description>
       <Derived>
-        <Round>
-          <Add>
-            <Dependency path="/actualChildTaxCreditAmount"/>
-            <Dependency path="/actualEarnedIncomeTaxCreditAmount"/>
-            <Dependency path="/actualChildAndDependentCareTaxCreditAmount"/>
-            <Dependency path="/actualSaversTaxCreditAmount"/>
-            <Dependency path="/actualElderlyAndDisabledTaxCreditAmount"/>
-            <Dependency path="/actualLifetimeLeariningTaxCreditAmount"/>
-            <Dependency path="/actualAmericanOpportunityTaxCreditAmount"/>
-            <Dependency path="/actualAdoptionTaxCreditAmount"/>
-            <Dependency path="/actualContributionsScholarshipGrantingOrganizationsCreditAmount"/>
-            <Dependency path="/actualForeignTaxCreditAmount"/>
-            <Dependency path="/actualMortgageInterestTaxCreditAmount"/>
-            <Dependency path="/actualGeneralBusinessTaxCreditAmount"/>
-            <Dependency path="/actualAlternativeMinimumTaxCreditAmount"/>
-          </Add>
-        </Round>
+        <Add>
+          <Dependency path="/totalNonRefundableCredits"/>
+          <Dependency path="/totaRefundableCredits"/>
+        </Add>
       </Derived>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
+    </Fact>
+    <Fact path="/totalNonRefundableCredits">
+      <Description>Form 1040 Line 21. Schedule 3 Line 8 + CTC/ODC nonrefundable portion.</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/totalCtcAndOdc"/>
+          <Dependency path="/schedule3NonRefundableCreditsTotal"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/totaRefundableCredits">
+      <Description>Form 1040 Line 32. Schedule 3 Line 15 + EITC,ACTC, AOTC, refundable portion of Adoption</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/earnedIncomeTaxCreditAmount"/>
+          <Dependency path="/additionalCtc"/>
+          <Dependency path="/americanOpportunityTaxCredit"/>
+          <Dependency path="/adoptionCreditRefundable"/>
+          <Dependency path="/schedule3OtherPaymentsAndRefundableCreditsTotal"/>
+        </Add>
+      </Derived>
     </Fact>
   </Facts>
 </FactDictionaryModule>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/adoptionTaxCreditAmount">
+      <Description>Adoption tax credit, no logic in place for actually calculating the
+        applicable amount</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/adoptionCreditNonRefundable">
+      <Description>Non-refundable portion of Adoption Credit</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditRefundable">
+      <Description>Refundable portion of Adoption Credit</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

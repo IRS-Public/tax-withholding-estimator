@@ -344,6 +344,11 @@ and car loan interest deduction
         <Dollar>0</Dollar>
       </Derived>
     </Fact>
+    <Fact path="/nonTaxableCombatPay">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
     <Fact path="/qualifiedTipIncome">
       <Name>Qualified Tip Income</Name>
       <Description>OB3 &#xA7;70201; IRC &#xA7;224. Qualified tip income</Description>
@@ -455,6 +460,84 @@ and car loan interest deduction
         </GreaterOf>
       </Derived>
     </Fact>
+    <Fact path="/netSelfEmploymentIncomeTotal">
+      <Derived>
+        <Add>
+          <Dependency path="/netSelfEmploymentIncomeSelf"/>
+          <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/earnedIncomeSelf">
+      <!--      TODO: break this out between self and spouse-->
+      <Description>
+        Earned Income includes:
+          Wages, salary, or tips where federal income taxes are withheld on Form W-2, box 1
+          Income from a job where your employer didn&#x2019;t withhold tax (such as gig economy work) including:
+            Driving a car for booked rides or deliveries
+            Running errands or doing tasks
+            Selling goods online
+            Providing creative or professional services
+            Providing other temporary, on-demand or freelance work
+          Money made from self-employment, including if you:
+            Own or operate a business or farm
+            Are a minister or member of a religious order
+            Are a statutory employee and have income
+          Benefits from a union strike
+          Certain disability benefits you got before you were the minimum retirement age
+          Nontaxable Combat Pay (Form W-2, box 12 with code Q)
+
+        Earned income does not include:
+          Pay you got for work when you were an inmate in a penal institution
+          Interest and dividends
+          Pensions or annuities
+          Social Security
+          Unemployment benefits
+          Alimony
+          Child support
+
+
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="/netSelfEmploymentIncomeSelf"/>
+          <Dependency path="/totalJobsIncome"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/earnedIncomeSpouse">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+                <Dependency path="/totalJobsIncomeSpouse"/>
+              </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/earnedIncomeTotal">
+      <Derived>
+        <Add>
+          <Dependency path="/earnedIncomeSelf"/>
+          <Dependency path="/earnedIncomeSpouse"/>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/totalOtherIncomeWithoutSSABenefitsTaxableAmount">
       <Description> Other sources of income. Taxable portion of SSA benefits not included. Used to
         calculate taxable portion onf SSA benefits</Description>
@@ -492,6 +575,7 @@ and car loan interest deduction
             <Dependency path="/totalJobsIncome"/>
             <Dependency path="/totalPensionsIncome"/>
             <Dependency path="/totalOtherIncome"/>
+            <Dependency path="/netSelfEmploymentIncomeTotal"/>
           </Add>
         </Round>
       </Derived>

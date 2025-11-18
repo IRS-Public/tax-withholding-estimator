@@ -3,7 +3,7 @@
 <FactDictionaryModule>
   <Facts>
     <Fact path="/totalEstimatedTaxesPaid">
-      <Description>The taxpayer's estimated taxes paid for the entire tax year.</Description>
+      <Description>Form 1040 Line 26. The taxpayer's estimated taxes paid for the entire tax year.</Description>
       <Writable>
         <Dollar/>
       </Writable>

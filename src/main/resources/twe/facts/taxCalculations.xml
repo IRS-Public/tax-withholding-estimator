@@ -2,6 +2,22 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/agi">
+      <Name>Adjusted Gross Income</Name>
+      <Description>Total income to report on line 11 of Form 1040.</Description>
+      <Derived>
+        <Round>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/totalIncome"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/adjustmentsToIncome"/>
+            </Subtrahends>
+          </Subtract>
+        </Round>
+      </Derived>
+    </Fact>
     <Fact path="/taxableIncome">
       <Description>Taxable income as reported on line 15 of Form 1040. Should not be negative.</Description>
       <Derived>
@@ -20,22 +36,6 @@
         </GreaterOf>
       </Derived>
     </Fact>
-    <Fact path="/agi">
-      <Name>Adjusted Gross Income</Name>
-      <Description>Total income to report on line 11 of Form 1040.</Description>
-      <Derived>
-        <Round>
-          <Subtract>
-            <Minuend>
-              <Dependency module="income" path="/totalIncome"/>
-            </Minuend>
-            <Subtrahends>
-              <Dependency path="/adjustmentsToIncome" module="adjustments"/>
-            </Subtrahends>
-          </Subtract>
-        </Round>
-      </Derived>
-    </Fact>
     <Fact path="/magiForOB3BelowLineDeductions">
       <Name>Modified Adjusted Gross Income for OB3 Below Line Deductions</Name>
       <Description>Adjusted gross income of the taxpayer for the taxable year increased by any
@@ -46,7 +46,7 @@
         <Round>
           <Add>
             <Dependency path="/agi"/>
-            <Dependency path="/incomeToIncludeForOB3MAGI" module="income"/>
+            <Dependency path="/incomeToIncludeForOB3MAGI"/>
           </Add>
         </Round>
       </Derived>
@@ -1042,50 +1042,86 @@
         </Round>
       </Derived>
     </Fact>
-    <Fact path="/totalOwed">
-      <Description>Estimated total taxes owed. The tax liability minus the total credits and total
-        advance payments made during the tax year. Effectively line 37 of the 1040.
-      </Description>
-      <!-- TODO: this currently doesn't match line 37 of the 1040 exactly -->
+    <Fact path="/totalAdditionalTaxesOwed">
+      <Description>Schedule 2 Line 3. Form 1040 line 17. Summation of Lines 1a-z and 2, all of which are not supported in TWE today</Description>
       <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/totalTax"/>
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="/totalEstimatedTaxesPaid"/>
-          </Subtrahends>
-        </Subtract>
+        <Dollar>0</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/totalTaxMinusCredits">
-      <Description>Estimated total taxes owed. The tax liability minus the total credits and total
-        advance payments made during the tax year. As reported on line 22 of Form 1040. Zero if credits are larger than tax.
-      </Description>
+    <Fact path="/totalOtherTaxes">
+      <Description>Schedule 2 Line 21. Form 1040 line 23.</Description>
       <Derived>
+        <Add>
+          <Dependency path="/selfEmploymentTax"/>
+          <Dependency path="/additionalMedicareTax"/>
+          <Dependency path="/netInvestmentIncomeTax"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/totalTentativeTax">
+      <Name>Total tentative tax</Name>
+      <Description>Form 1040 Line 18. Total tentative tax</Description>
+      <Derived>
+        <Round>
+          <Add>
+            <Dependency path="/tentativeTaxFromTaxableIncome"/>
+            <Dependency path="/totalAdditionalTaxesOwed"/>
+          </Add>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/tentativeTaxNetNonRefundableCredits">
+      <Name>Total tentative tax - non refundable credits</Name>
+      <Description>Form 1040 Line 22. </Description>
+      <Derived>
+        <!--          Form 1040 Line 22-->
         <GreaterOf>
           <Dollar>0</Dollar>
           <Subtract>
             <Minuend>
-              <Dependency path="/tentativeTaxFromTaxableIncome"/>
+              <Dependency path="/totalTentativeTax"/>
             </Minuend>
             <Subtrahends>
-              <Dependency path="/totalCredits"/>
+              <Dependency path="/totalNonRefundableCredits"/>
             </Subtrahends>
           </Subtract>
         </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/totalTax">
-      <Description>Taxes from taxable income minus credits plus other taxes, including self-employment tax. As reported on line 24 of Form 1040.</Description>
-      <!-- TODO: This currently doesn't match line 24 of the 1040 -->
+      <Description>Form 1040 Line 24. Taxes from taxable income minus non refundable credits plus other taxes, including self-employment tax. </Description>
       <Derived>
         <Add>
-          <Dependency path="/totalTaxMinusCredits"/>
-          <Dependency path="/selfEmploymentTax"/>
-          <Dependency path="/additionalMedicareTax"/>
-          <Dependency path="/netInvestmentIncomeTax"/>
+          <Dependency path="/tentativeTaxNetNonRefundableCredits"/>
+          <Dependency path="/totalOtherTaxes"/>
         </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/totalPayments">
+      <Description>Form 1040 Line 33</Description>
+      <!--      TODO: do we need to include line 25d for FIT withheld?-->
+      <Derived>
+        <Add>
+          <Dependency path="/totalEstimatedTaxesPaid"/>
+          <Dependency path="/totaRefundableCredits"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/totalOwed">
+      <Description>Form 1040 Line 37. Estimated total taxes owed. The tax liability minus the total credits and total
+        advance payments made during the tax year.
+        Negative value = overpayment = refund
+        Positive value = underpayment = balance due
+      </Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/totalTax"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/totalPayments"/>
+          </Subtrahends>
+        </Subtract>
       </Derived>
     </Fact>
     <Fact path="/topTaxRateBracketThresholdByFilingStatus">
@@ -1177,6 +1213,123 @@
           </Subtract>
           <Dollar>0</Dollar>
         </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/maxIncomeSubjectToSocialSecurityTax">
+      <Description> Schedule SE Line 7. Maximum amount of combined wages and self-employment earnings subject to social security tax or
+        the 6.2% portion of the 7.65% railroad retirement (tier 1) tax for 2025</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>176100</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecurityEmployeeTaxRate">
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Rational>62/1000</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/medicareEmployeeTaxRate">
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Rational>145/10000</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecurityTaxesWithheld">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Multiply>
+                <Add>
+                  <LesserOf>
+                    <Dependency path="/earnedIncomeSelf"/>
+                    <Dependency path="/maxIncomeSubjectToSocialSecurityTax"/>
+                  </LesserOf>
+                  <LesserOf>
+                    <Dependency path="/earnedIncomeSpouse"/>
+                    <Dependency path="/maxIncomeSubjectToSocialSecurityTax"/>
+                  </LesserOf>
+                </Add>
+                <Dependency path="/socialSecurityEmployeeTaxRate"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Multiply>
+                <LesserOf>
+                  <Dependency path="/earnedIncomeSelf"/>
+                  <Dependency path="/maxIncomeSubjectToSocialSecurityTax"/>
+                </LesserOf>
+                <Dependency path="/socialSecurityEmployeeTaxRate"/>
+              </Multiply>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/medicareTaxesWithheld">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Multiply>
+                <Add>
+                  <Dependency path="/earnedIncomeSelf"/>
+                  <Dependency path="/earnedIncomeSpouse"/>
+                </Add>
+                <Dependency path="/medicareEmployeeTaxRate"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Multiply>
+                <Dependency path="/earnedIncomeSelf"/>
+                <Dependency path="/medicareEmployeeTaxRate"/>
+              </Multiply>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/withheldFICA">
+      <Derived>
+        <Add>
+          <Dependency path="/socialSecurityTaxesWithheld"/>
+          <Dependency path="/medicareTaxesWithheld"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxAndFICA">
+      <Description>Schedule 8812 Line 21</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/withheldFICA"/>
+          <Dependency path="/additionalMedicareTax"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalMedicareTaxAndFICAAndSETaxDeduction">
+      <Description>Schedule 8812 Line 23</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/additionalMedicareTaxAndFICA"/>
+          <Dependency path="/selfEmploymentTaxDeduction"/>
+        </Add>
       </Derived>
     </Fact>
   </Facts>

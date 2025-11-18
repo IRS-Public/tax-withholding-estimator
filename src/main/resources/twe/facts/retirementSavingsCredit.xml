@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/retirementSavingsContributionsTaxCreditAmount">
+      <Description>Savers credit, no logic in place for actually calculating the applicable amount.</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/retirementSavingsContributionsCredit">
+      <Derived>
+        <Dependency path="/retirementSavingsContributionsTaxCreditAmount"/>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/earnedIncomeTaxCreditAmount">
+      <Description>Earned Income tax credit, no logic in place for actually calculating the
+        applicable amount.</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/earnedIncomeCredit">
+      <Derived>
+        <Dependency path="/earnedIncomeTaxCreditAmount"/>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

@@ -1,0 +1,684 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/ctcEligibleDependents">
+      <Name>Number of CTC-eligible dependents</Name>
+      <Description>The number of dependents who are eligible for the Child Tax Credit.
+        Reported on line 4 of Schedule 8812.</Description>
+      <Writable>
+        <Int/>
+        <Limit type="Min">
+          <Int>0</Int>
+        </Limit>
+      </Writable>
+      <Placeholder>
+        <Int>0</Int>
+      </Placeholder>
+    </Fact>
+    <Fact path="/odcEligibleDependents">
+      <Name>Number of ODC-eligible dependents</Name>
+      <Description>The number of dependents who are eligible for the Credit for Other
+        Dependents. Reported on line 6 of Schedule 8812.</Description>
+      <Writable>
+        <Int/>
+        <Limit type="Min">
+          <Int>0</Int>
+        </Limit>
+      </Writable>
+      <Placeholder>
+        <Int>0</Int>
+      </Placeholder>
+    </Fact>
+    <Fact path="/maybeEligibleForCtc">
+      <Name>Whether the TP may be eligible to receive CTC based on dependents</Name>
+      <Description>Whether there are dependents who are eligible for the Child Tax Credit.</Description>
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/ctcEligibleDependents"/>
+          </Left>
+          <Right>
+            <Int>0</Int>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/maybeEligibleForOdc">
+      <Name>Whether the TP may be eligible for ODC based on dependents</Name>
+      <Description>Whether there are dependents who are eligible for the Credit for Other
+        Dependents.</Description>
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/odcEligibleDependents"/>
+          </Left>
+          <Right>
+            <Int>0</Int>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/maxCtcAmount">
+      <Name>Maximum child tax credit amount</Name>
+      <Description>The maximum child tax credit per child</Description>
+      <TaxYear>2024</TaxYear>
+      <Derived>
+        <Dollar>2000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/totalPotentialCtc">
+      <Name>Total potential CTC</Name>
+      <Description>The maximum amount of the Child Tax Credit that could be claimed. Reported
+        on line 5 of Schedule 8812.</Description>
+      <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <Not>
+                  <Dependency path="/maybeEligibleForCtc"/>
+                </Not>
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Multiply>
+                  <Dependency path="/ctcEligibleDependents"/>
+                  <Dependency path="/maxCtcAmount"/>
+                </Multiply>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/exactlyOneOdcEligibleDependent">
+      <Name>Exactly one ODC-eligible dependent</Name>
+      <Description>Whether the taxpayer has exactly one ODC-eligible dependent.</Description>
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="/odcEligibleDependents"/>
+          </Left>
+          <Right>
+            <Int>1</Int>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+    <Fact path="/moreThanOneOdcEligibleDependent">
+      <Name>More than one ODC-eligible dependent</Name>
+      <Description>Whether the taxpayer has more than one ODC-eligible dependent.</Description>
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/odcEligibleDependents"/>
+          </Left>
+          <Right>
+            <Int>1</Int>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/maxOdcAmount">
+      <Name>Maximum credit amount for other dependents</Name>
+      <Description>The maximum credit for other dependents, per dependent</Description>
+      <TaxYear>2024</TaxYear>
+      <Derived>
+        <Dollar>500</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/totalPotentialOdc">
+      <Name>Total potential ODC</Name>
+      <Description>The maximum amount of the Credit for Other Dependents that could be
+        claimed. Reported on line 7 of Schedule 8812.</Description>
+      <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <Not>
+                  <Dependency path="/maybeEligibleForOdc"/>
+                </Not>
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Multiply>
+                  <Dependency path="/odcEligibleDependents"/>
+                  <Dependency path="/maxOdcAmount"/>
+                </Multiply>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/totalPotentialDependentCredits">
+      <Name>Total potential dependent credits</Name>
+      <Description>The combined amount of the maximum Child Tax Credit and Credit for Other
+        Dependents. Reported on line 8 of Schedule 8812.</Description>
+      <Derived>
+        <Round>
+          <Add>
+            <Dependency path="/totalPotentialCtc"/>
+            <Dependency path="/totalPotentialOdc"/>
+          </Add>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/dependentCreditPhaseoutThreshold">
+      <Name>Dependent credit phaseout threshold</Name>
+      <Description>The MAGI threshold at which the dependent credits begin to phaseout.
+        Reported on line 9 of Schedule 8812.</Description>
+      <TaxYear>2024</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>400000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Not>
+                <Dependency path="/isFilingStatusMFJ"/>
+              </Not>
+            </When>
+            <Then>
+              <Dollar>200000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/dependentCreditMagi">
+      <Name>Modified AGI for purposes of dependent credits</Name>
+      <Description>
+            Modified AGI for purposes of dependent credits. Reported on line 3 of Schedule 8812.  Schedule 8812  line 2a is 0 because Puerto Rico is out of scope;  Schedule 8812 line 2b is 0 because Foreign Earned  Income (Form  2555) is out of scope;  Schedule 8812 line 2c is 0 because residents of American Samoa (Form 4563) are  out of  scope;  Therefore the MAGI, due to scope, is the AGI
+          </Description>
+      <Derived>
+        <Round>
+          <Dependency path="/agi"/>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/dependentCreditMagiAboveThreshold">
+      <Name>Dependent credit MAGI above threshold</Name>
+      <Description>The amount of excess income above the threshold.</Description>
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/dependentCreditMagi"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/dependentCreditPhaseoutThreshold"/>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/roundedDependentCreditMagiAboveThreshold">
+      <Name>Rounded dependent credit MAGI above threshold</Name>
+      <Description>In whole $1,000s, the amount of excess income above the threshold. Per
+        &#xA7;24(b)(2), any fraction of $1,000 is rounded to $1,000. Reported on line 10 of
+        Form 8812.</Description>
+      <Derived>
+        <Round>
+          <StepwiseMultiply>
+            <Multiplicand>
+              <Add>
+                <Dependency path="/dependentCreditMagiAboveThreshold"/>
+                <Dollar>999.99</Dollar>
+                <!-- round up to the nearest $1,000 -->
+              </Add>
+            </Multiplicand>
+            <Rate>
+              <Rational>1000/1000</Rational>
+            </Rate>
+          </StepwiseMultiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/dependentCreditPhaseout">
+      <Name>Dependent credit phaseout</Name>
+      <Description>The amount to reduce the dependent credit amount by. Reported on line 11 of
+        Form
+        8812.</Description>
+      <Derived>
+        <Round>
+          <Multiply>
+            <Dependency path="/roundedDependentCreditMagiAboveThreshold"/>
+            <Rational>5/100</Rational>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/dependentCreditLessPhaseout">
+      <Name>Dependent credit less phaseout</Name>
+      <Description>The amount of dependent credits left to claim after applying the phaseout.
+        Reported on line 12 of Schedule 8812.</Description>
+      <Derived>
+        <Round>
+          <GreaterOf>
+            <Subtract>
+              <Minuend>
+                <Dependency path="/totalPotentialDependentCredits"/>
+              </Minuend>
+              <Subtrahends>
+                <Dependency path="/dependentCreditPhaseout"/>
+              </Subtrahends>
+            </Subtract>
+            <Dollar>0</Dollar>
+          </GreaterOf>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/dependentCreditNotFullyPhasedOut">
+      <Name>Dependent credit not fully phased out</Name>
+      <Description>Whether there is any amount of dependent credits left to claim after
+        applying the
+        phaseout. Reported
+        on a checkbox on line 12 of Form 8812.</Description>
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/dependentCreditLessPhaseout"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/dependentCreditFullyPhasedOut">
+      <Name>Dependent credit fully phased out</Name>
+      <Description>Whether there is no amount of dependent credits left to claim after applying the phaseout. Reported on a checkbox on line 12 of Form 8812.</Description>
+      <Derived>
+        <Not>
+          <Dependency path="/dependentCreditNotFullyPhasedOut"/>
+        </Not>
+      </Derived>
+    </Fact>
+    <Fact path="/maxPotentialOdcAfterPhaseOut">
+      <Name>Max potential ODC amount after phase out</Name>
+      <Description>The max potential odc amount accounting for phase out if applicable</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/totalPotentialOdc"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/dependentCreditPhaseout"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/creditLimitWorksheetALine2">
+      <Name>Credit Limit Worksheet A Line 2</Name>
+      <Derived>
+        <Add>
+          <Dependency path="/schedule3Line1"/>
+          <Dependency path="/schedule3Line2"/>
+          <Dependency path="/schedule3Line3"/>
+          <Dependency path="/schedule3Line4"/>
+          <Dependency path="/schedule3Line5b"/>
+          <Dependency path="/schedule3Line6d"/>
+          <Dependency path="/schedule3Line6f"/>
+          <Dependency path="/schedule3Line6l"/>
+          <Dependency path="/schedule3Line6m"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/creditLimitWorksheetALine3">
+      <Name>Credit Limit Worksheet A Line 3</Name>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/totalTentativeTax"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/creditLimitWorksheetALine2"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/creditLimitWorksheetALine4">
+      <Name>Credit Limit Worksheet A Line 4, referencing the output of Credit Limit Worksheet B</Name>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule8812CreditLimit">
+      <Name>Credit Limit for Credits for Qualifying Children and Other Dependents</Name>
+      <Description>The credit limit per Credit Limit Worksheet A Line 5 from Schedule 8812. Reported
+            on line 13.</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/creditLimitWorksheetALine3"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/creditLimitWorksheetALine4"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/remainingCtcAndOdc">
+      <Name>Remaining CTC and ODC</Name>
+      <Description>The amount of dependent credits left to claim after crediting the total tentative tax. Reported on line 16a of Form 8812.</Description>
+      <Derived>
+        <Round>
+          <GreaterOf>
+            <Subtract>
+              <Minuend>
+                <Dependency path="/dependentCreditLessPhaseout"/>
+              </Minuend>
+              <Subtrahends>
+                <Dependency path="/totalCtcAndOdc"/>
+              </Subtrahends>
+            </Subtract>
+            <Dollar>0</Dollar>
+          </GreaterOf>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/totalPotentialActc">
+      <Name>Total potential additional CTC</Name>
+      <Description>The maximum amount of the Additional Child Tax Credit that could be claimed. Reported on line 16b of Schedule 8812.</Description>
+      <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <Not>
+                  <Dependency path="/maybeEligibleForCtc"/>
+                </Not>
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Multiply>
+                  <Dependency path="/ctcEligibleDependents"/>
+                  <Dependency path="/maxActcAmount"/>
+                </Multiply>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/maxActcAmount">
+      <Name>Maximum additional child tax credit amount</Name>
+      <Description>The maximum additional tax credit per child
+            Rev Proc .05 Child Tax Credit &#xA7;24(d)(1)(A)
+          </Description>
+      <TaxYear>2024</TaxYear>
+      <Derived>
+        <Dollar>1700</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/remainingPotentialActc">
+      <Name>Remaining potential additional CTC</Name>
+      <Description>The remaining amount of the Additional Child Tax Credit that could be claimed after crediting the total tentative tax.
+      Schedule 8812 Line 17
+      </Description>
+      <Derived>
+        <Round>
+          <LesserOf>
+            <Dependency path="/remainingCtcAndOdc"/>
+            <Dependency path="/totalPotentialActc"/>
+          </LesserOf>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/actcRefundabilityThreshold">
+      <Name>Additional CTC refundability threshold</Name>
+      <Description>The amount of earned income that must be exceeded in order to receive the
+            refundable additional child
+            tax credit.</Description>
+      <TaxYear>2024</TaxYear>
+      <Derived>
+        <Dollar>2500</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/earnedIncomeAboveActcRefundabilityThreshold">
+      <Name>Earned income above additional CTC refundability threshold</Name>
+      <Description>The amount of earned income that can be used to calculate the refundable amount of the additional child tax credit.
+      Schedule 8812 Line 19
+      </Description>
+      <Derived>
+        <Round>
+          <GreaterOf>
+            <Subtract>
+              <Minuend>
+                <Add>
+                  <Dependency path="/earnedIncomeTotal"/>
+                  <Dependency path="/nonTaxableCombatPay"/>
+                </Add>
+              </Minuend>
+              <Subtrahends>
+                <Dependency path="/actcRefundabilityThreshold"/>
+              </Subtrahends>
+            </Subtract>
+            <Dollar>0</Dollar>
+          </GreaterOf>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/actcLine20Multiplier">
+      <Derived>
+        <Rational>15/100</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/regularMaximumActc">
+      <Name>Regular maximum additional child tax credit</Name>
+      <Description>The maximum amount of the additional child tax credit that could be refunded to you, absent provisions for taxpayers with three or more children.
+      Schedule 8812 Line 20
+      </Description>
+      <Derived>
+        <Round>
+          <Multiply>
+            <Dependency path="/earnedIncomeAboveActcRefundabilityThreshold"/>
+            <Dependency path="/actcLine20Multiplier"/>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/threeOrMoreCtcEligibleDependents">
+      <Name>Three or more CTC-eligible dependents</Name>
+      <Description>Whether the taxpayer has three or more CTC-eligible dependents.</Description>
+      <Derived>
+        <GreaterThanOrEqual>
+          <Left>
+            <Dependency path="/ctcEligibleDependents"/>
+          </Left>
+          <Right>
+            <Int>3</Int>
+          </Right>
+        </GreaterThanOrEqual>
+      </Derived>
+    </Fact>
+    <Fact path="/ficaAndSETaxDeductionExcessOverEITC">
+      <Name>FICA taxes and SE Tax Deduction in excess of EITC claimed</Name>
+      <Description>Schedule 8812 Line 25</Description>
+      <Derived>
+        <Round>
+          <GreaterOf>
+            <Dollar>0</Dollar>
+            <Subtract>
+              <Minuend>
+                <!-- Schedule 8812 Line 23 = Line 21 + Line 22                -->
+                <Dependency path="/additionalMedicareTaxAndFICAAndSETaxDeduction"/>
+              </Minuend>
+              <Subtrahends>
+                <!-- Schedule 8812 Line 24                -->
+                <Dependency path="/earnedIncomeCredit"/>
+              </Subtrahends>
+            </Subtract>
+          </GreaterOf>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/maximumActc">
+      <Name>Maximum additional child tax credit</Name>
+      <Description>The maximum amount of the additional child tax credit that could be refunded to you. Schedule 8812 Line 26
+      </Description>
+      <Derived>
+        <Round>
+          <Switch>
+            <Case>
+              <When>
+                <Dependency path="/threeOrMoreCtcEligibleDependents"/>
+              </When>
+              <Then>
+                <GreaterOf>
+                  <Dependency path="/regularMaximumActc"/>
+                  <Dependency path="/ficaAndSETaxDeductionExcessOverEITC"/>
+                </GreaterOf>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Dependency path="/regularMaximumActc"/>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/totalCtc">
+      <Name>Total CTC from the CTC/ODC</Name>
+      <Description>Total amount of CTC the TP will receive after the phaseout. It is derived and used for us to help the taxpayer make sense of how much of their credit comes from ctc, but it does not exist directly on schedule 8812. CTC credits are applied after ODC credits as per the IRM and when there is a phase out are reduced after ODC credits.</Description>
+      <Derived>
+        <Switch>
+          <!-- Switch statement is necessary to avoid divide by zero when total is zero -->
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/totalCtcAndOdc"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="/totalCtcAndOdc"/>
+                </Minuend>
+                <Subtrahends>
+                  <Dependency path="/totalOdc"/>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/totalOdc">
+      <Name>Total ODC from the CTC/ODC</Name>
+      <Description>Total amount of ODC the TP will receive after the phaseout. It is derived and used for us to help the taxpayer make sense of how much of their credit comes from odc, but it does not exist directly on schedule 8812. ODC credits are applied before CTC credits as per the IRM and is also reduced first if there is a phase out.</Description>
+      <Derived>
+        <Switch>
+          <!-- Switch statement is necessary to avoid divide by zero when total is zero -->
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/totalCtcAndOdc"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <LesserOf>
+                <Dependency path="/maxPotentialOdcAfterPhaseOut"/>
+                <Dependency path="/totalCtcAndOdc"/>
+              </LesserOf>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/totalCtcAndOdc">
+      <Name>Total CTC and ODC</Name>
+      <Description>The total amount of the child tax credit and credit for other dependents. Reported on line 14 of Form 8812 and line 19 of Form 1040.</Description>
+      <Derived>
+        <Round>
+          <LesserOf>
+            <Dependency path="/dependentCreditLessPhaseout"/>
+            <Dependency path="/schedule8812CreditLimit"/>
+          </LesserOf>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalCtc">
+      <Name>Additional child tax credit</Name>
+      <Description>The refundable amount of the additional child tax credit. Entered on line 27 of Form 8812 and line 28 of Form 1040.
+      Schedule 8812 Line 27
+      </Description>
+      <Derived>
+        <Round>
+          <LesserOf>
+            <Dependency path="/remainingPotentialActc"/>
+            <Dependency path="/maximumActc"/>
+          </LesserOf>
+        </Round>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>
