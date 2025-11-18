@@ -49,7 +49,6 @@ jobs:
         repository: IRSDigitalService/${{ env.TWE_PATH }}
         path: ${{ env.TWE_PATH }}
         token: ${{ secrets.SVC_ACCOUNT_PAT }}
-        ref: ${{ GITHUB_REF }}
 
     - name: Checkout Fact Graph
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4

@@ -217,9 +217,7 @@
             <Dependency path="../endDate"/>
           </Left>
           <Right>
-            <Today>
-              <Int>0</Int>
-            </Today>
+            <Dependency path="/today"/>
           </Right>
         </LessThan>
       </Derived>
@@ -229,9 +227,7 @@
         <All>
           <LessThanOrEqual>
             <Left>
-              <Today>
-                <Int>0</Int>
-              </Today>
+              <Dependency path="/today"/>
             </Left>
             <Right>
               <Dependency path="../endDate"/>
@@ -239,9 +235,7 @@
           </LessThanOrEqual>
           <GreaterThanOrEqual>
             <Left>
-              <Today>
-                <Int>0</Int>
-              </Today>
+              <Dependency path="/today"/>
             </Left>
             <Right>
               <Dependency path="../startDate"/>
@@ -254,9 +248,7 @@
       <Derived>
         <LessThan>
           <Left>
-            <Today>
-              <Int>0</Int>
-            </Today>
+            <Dependency path="/today"/>
           </Left>
           <Right>
             <Dependency path="../startDate"/>

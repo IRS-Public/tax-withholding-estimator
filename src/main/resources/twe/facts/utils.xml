@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/overrideDate">
+      <Writable>
+        <Day/>
+      </Writable>
+    </Fact>
+    <!-- Wrapper on top of <Today/> so that we can overwrite it for testing -->
+    <Fact path="/today">
+      <Description>Overwritable today fact</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <IsComplete>
+                <Dependency path="/overrideDate"/>
+              </IsComplete>
+            </When>
+            <Then>
+              <Dependency path="/overrideDate"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Today>
+                <Int>0</Int>
+              </Today>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>
