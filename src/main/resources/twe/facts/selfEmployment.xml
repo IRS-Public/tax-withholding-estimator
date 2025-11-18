@@ -4,10 +4,27 @@
   <Facts>
     <Fact path="/netSelfEmploymentIncomeTotal">
       <Derived>
-        <Add>
-          <Dependency path="/netSelfEmploymentIncomeSelf"/>
-          <Dependency path="/netSelfEmploymentIncomeSpouse"/>
-        </Add>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="/netSelfEmploymentIncomeSelf"/>
+                <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+              </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/netSelfEmploymentIncomeSelf"/>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/netSelfEmploymentIncomeSelf">
@@ -119,10 +136,27 @@
     </Fact>
     <Fact path="/eitherTPHasSelfEmploymentIncome">
       <Derived>
-        <Any>
-          <Dependency path="/primaryHasSelfEmploymentIncome"/>
-          <Dependency path="/secondaryHasSelfEmploymentIncome"/>
-        </Any>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Any>
+                <Dependency path="/primaryHasSelfEmploymentIncome"/>
+                <Dependency path="/secondaryHasSelfEmploymentIncome"/>
+              </Any>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/primaryHasSelfEmploymentIncome"/>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/scheduleSELine2Self">
@@ -654,7 +688,24 @@
     <Fact path="/actualSelfEmploymentHealthInsuranceDeduction">
       <Description>Form 7206 line 14. Self-employed health insurance deduction.</Description>
       <Derived>
-        <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line14"/>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/eitherTPHasSelfEmploymentIncome"/>
+            </When>
+            <Then>
+              <Dependency path="/selfEmploymentHealthInsuranceDeductionForm7206Line14"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/actualSelfEmployedRetirementPlanDeduction">
