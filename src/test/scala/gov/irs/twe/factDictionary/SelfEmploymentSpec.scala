@@ -171,9 +171,9 @@ class SelfEmploymentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         "expectedActualSelfEmployedRetirementPlanDeduction",
       ),
 
-      // contribution is higher than net SE income - SE tax deduction
+      // contribution is higher than (net SE income - SE tax deduction)
       (single, "20000", "19000", "1413", "18587"),
-      // contribution is lower than net SE income - SE tax deduction
+      // contribution is lower than (net SE income - SE tax deduction)
       (single, "20000", "5000", "1413", "5000"),
       (single, "74000", "10000", "5228", "10000"),
       (single, "176100", "10000", "12441", "10000"),

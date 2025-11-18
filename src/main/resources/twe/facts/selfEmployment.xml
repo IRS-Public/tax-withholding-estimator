@@ -136,27 +136,14 @@
     </Fact>
     <Fact path="/eitherTPHasSelfEmploymentIncome">
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/isFilingStatusMFJ"/>
-            </When>
-            <Then>
-              <Any>
-                <Dependency path="/primaryHasSelfEmploymentIncome"/>
-                <Dependency path="/secondaryHasSelfEmploymentIncome"/>
-              </Any>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dependency path="/primaryHasSelfEmploymentIncome"/>
-            </Then>
-          </Case>
-        </Switch>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/netSelfEmploymentIncomeTotal"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
       </Derived>
     </Fact>
     <Fact path="/scheduleSELine2Self">

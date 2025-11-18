@@ -28,7 +28,8 @@ copy-fg:
 
 .PHONY: test
 test:
-	sbt test
+	# This only prints the tests that fail
+	sbt -info 'set Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oC")' test
 
 .PHONY: format
 format:
@@ -57,11 +58,6 @@ validate-xml:
 .PHONY: format-xml
 format-xml:
 	find $(TWE_RESOURCES_DIR) -name '*xml' | xargs -I {} xmllint --format {} --output {}
-
-# These command line flags only output the failed tests, for a simpler CI output
-.PHONY: ci_test
-ci_test:
-	sbt -info 'set Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oC")' test
 
 .PHONY: ci_validate-format
 ci_validate-format:
