@@ -23,7 +23,7 @@
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Child and Dependent Care Credit</h2>
+      <h2 condition="/isFilingStatusMFS" operator="isFalse">Child and Dependent Care Credit</h2>
       <fg-set path="/cdccQualifyingPersons">
         <question>
           How many Child and Dependent Care Credit qualifying person(s) do you have ?
@@ -51,14 +51,14 @@
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Lifetime Learning Credit</h2>
+      <h2 condition="/isFilingStatusMFS" operator="isFalse">Lifetime Learning Credit</h2>
       <fg-set path="/lifetimeLearningTaxCreditAmount">
         <question>
           How much Lifetime Learning Credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>American Opportunity Tax Credit</h2>
+      <h2 condition="/isFilingStatusMFS" operator="isFalse">American Opportunity Tax Credit</h2>
       <fg-set path="/americanOpportunityTaxCreditAmount">
         <question>
           How much American Opportunity tax credit do you expect to claim this
