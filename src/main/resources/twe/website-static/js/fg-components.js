@@ -295,33 +295,28 @@ class FgSet extends HTMLElement {
         break
       }
       case 'text':
-      case 'int':
+      case 'int': {
+        this.querySelector('input').value = value
+        break
+      }
       case 'date': {
-        const dateString = value;
-        if (dateString) {
-          // Fact has a complete date value - set all fields
-          const [year, month, day] = dateString.split('-');
-          this.querySelector('select[name*="-month"]').value = month;
-          this.querySelector('input[name*="-day"]').value = day;
-          this.querySelector('input[name*="-year"]').value = year;
-        } else if (this.inputType === 'date') {
-          // For incomplete date facts, preserve existing input values
-          // Only clear if the inputs are truly empty (not just fact incomplete)
-          const monthSelect = this.querySelector('select[name*="-month"]');
-          const dayInput = this.querySelector('input[name*="-day"]');
-          const yearInput = this.querySelector('input[name*="-year"]');
+        const monthSelect = this.querySelector('select[name*="-month"]')
+        const dayInput = this.querySelector('input[name*="-day"]')
+        const yearInput = this.querySelector('input[name*="-year"]')
 
-          // Only reset to empty if there are no current values
+        if (value) {
+          // When the fact has all three fields filled out, set it up
+          const [year, month, day] = value.split('-')
+          monthSelect.value = month
+          dayInput.value = day
+          yearInput.value = year
+        } else if (!monthSelect.value && !dayInput.value && !yearInput.value) {
+          // Only clear if the inputs are truly empty (not just fact incomplete)
           // This preserves partial user input during fg-update events
-          if (!monthSelect.value && !dayInput.value && !yearInput.value) {
-            monthSelect.value = '';
-            dayInput.value = '';
-            yearInput.value = '';
-          }
+          monthSelect.value = ''
+          dayInput.value = ''
+          yearInput.value = ''
           // If there are existing values, leave them alone
-        } else {
-          // For non-date inputs, clear when fact has no value
-          this.querySelector('input').value = '';
         }
         break
       }
@@ -352,15 +347,14 @@ class FgSet extends HTMLElement {
       case 'select': {
         return this.querySelector('select')?.value
       }
-      case 'text':
       case 'date': {
-        const month = this.querySelector('select[name*="-month"]')?.value;
-        const day = this.querySelector('input[name*="-day"]')?.value;
-        const year = this.querySelector('input[name*="-year"]')?.value;
+        const month = this.querySelector('select[name*="-month"]')?.value
+        const day = this.querySelector('input[name*="-day"]')?.value
+        const year = this.querySelector('input[name*="-year"]')?.value
         // Adding padStart to day changes user's input from 1 to 01
-        const dateString = `${year}-${month}-${day.padStart(2, '0')}`;
-        return dateString;
+        return `${year}-${month}-${day.padStart(2, '0')}`
       }
+      case 'text':
       case 'int':
       case 'dollar': {
         return this.querySelector('input')?.value
