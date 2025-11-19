@@ -14,7 +14,7 @@
     <Fact path="/schedule3Line2">
       <Description>Credit for child and dependent care expenses from Form 2441, line 11.</Description>
       <Derived>
-        <Dependency path="/cdccTotalCredit"/>
+        <Dependency path="/creditForChildAndDependentCareExpenses"/>
       </Derived>
     </Fact>
     <Fact path="/schedule3Line3">
@@ -125,7 +125,7 @@
         <Dollar>0</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/actualAlternativeMinimumTaxCreditAmount">
+    <Fact path="/alternativeMinimumTaxCreditAmount">
       <Description>AMT Credit</Description>
       <Writable>
         <Dollar/>
@@ -138,7 +138,7 @@
       <Description>Other nonrefundable credits.</Description>
       <Derived>
         <Add>
-          <Dependency path="/actualAlternativeMinimumTaxCreditAmount"/>
+          <Dependency path="/alternativeMinimumTaxCreditAmount"/>
           <Dependency path="/contributionsScholarshipGrantingOrganizationsCreditAmount"/>
         </Add>
       </Derived>

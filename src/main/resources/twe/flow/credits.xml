@@ -6,7 +6,7 @@
       <h2>Child Tax Credit</h2>
       <fg-set path="/ctcEligibleDependents">
         <question>
-          How many CTC qualifying children do you have?
+          How many Child Tax Credit qualifying dependents do you have?
         </question>
         <input type="int"/>
       </fg-set>
@@ -17,29 +17,34 @@
         <input type="int"/>
       </fg-set>
       <h2>Earned Income Tax Credit</h2>
-      <fg-set path="/actualEarnedIncomeTaxCreditAmount">
+      <fg-set path="/earnedIncomeTaxCreditAmount">
         <question>
           How much Earned Income Tax credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Child and Dependent Care Credit</h2>
-      <fg-set path="/actualChildAndDependentCareTaxCreditAmount">
+      <fg-set path="/cdccQualifyingPersons">
         <question>
-          How much Child and Dependent Care Credit do you expect to claim this
-          year?
+          How many Child and Dependent Care Credit qualifying person(s) do you have ?
+        </question>
+        <input type="int"/>
+      </fg-set>
+      <fg-set path="/cdccQualifyingExpenses">
+        <question>
+          How much qualifying work-related childcare expenses do you expect to have this year?
         </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Retirement Savings Contribution Credit</h2>
-      <fg-set path="/retirementSavingsCreditAmount">
+      <fg-set path="/retirementSavingsContributionsTaxCreditAmount">
         <question>
           How much Retirement Savings Contribution Credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Credit for the Elderly or the Disabled</h2>
-      <fg-set path="/actualElderlyAndDisabledTaxCreditAmount">
+      <fg-set path="/elderlyAndDisabledTaxCreditAmount">
         <question>
           How much Credit for the Elderly or the Disabled do you expect to claim
           this year?
@@ -47,14 +52,14 @@
         <input type="dollar"/>
       </fg-set>
       <h2>Lifetime Learning Credit</h2>
-      <fg-set path="/actualLifetimeLeariningTaxCreditAmount">
+      <fg-set path="/lifetimeLearningTaxCreditAmount">
         <question>
           How much Lifetime Learning Credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
       <h2>American Opportunity Tax Credit</h2>
-      <fg-set path="/actualAmericanOpportunityTaxCreditAmount">
+      <fg-set path="/americanOpportunityTaxCreditAmount">
         <question>
           How much American Opportunity tax credit do you expect to claim this
           year?
@@ -70,7 +75,7 @@
         <input type="dollar"/>
       </fg-set>
       <h2>Adoption Tax Credit</h2>
-      <fg-set path="/actualAdoptionTaxCreditAmount">
+      <fg-set path="/adoptionTaxCreditAmount">
         <question>
           How much Adoption tax Credit do you expect to claim this year?
         </question>
@@ -98,7 +103,7 @@
         <input type="dollar"/>
       </fg-set>
       <h2>Alternative Minimum Tax Credit</h2>
-      <fg-set path="/actualAlternativeMinimumTaxCreditAmount">
+      <fg-set path="/alternativeMinimumTaxCreditAmount">
         <question>
           How much Alternative minimum tax credit do you expect to claim this
           year?

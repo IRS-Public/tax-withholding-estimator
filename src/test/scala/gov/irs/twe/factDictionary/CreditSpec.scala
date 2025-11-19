@@ -398,4 +398,111 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       s"Completed ${dataTable.length} ACTC, CTC and ODC scenarios for calculating total non-refundable and refundable portions of CTC/ODC with CTC and ODC qualifying dependents",
     )
   }
+  test("test CDCC: derives and phaseouts correctly with varying AGI, qualifying persons and qualifying expenses") {
+    val dataTable = Table(
+      (
+        "status",
+        "cdccQualifyingPersons",
+        "cdccQualifyingExpenses",
+        "agi",
+        "earnedIncomeSelf",
+        "earnedIncomeSpouse",
+        "expectedCdcc",
+      ),
+      (single, 1, "1500", "12000", "15000", "0", "0"),
+      (single, 1, "4000", "12000", "15000", "0", "0"),
+      (single, 2, "7000", "12000", "25000", "0", "0"),
+      (single, 1, "3000", "16500", "25000", "0", "76"),
+      (single, 2, "6000", "23500", "25000", "0", "778"),
+      (single, 1, "3000", "30000", "35000", "0", "810"),
+      (single, 2, "6500", "42000", "55000", "0", "1260"),
+      (single, 2, "5000", "45000", "50000", "0", "1000"),
+      (single, 1, "3000", "45000", "52500", "0", "600"),
+      (single, 2, "1000", "45000", "50000", "0", "200"),
+      (single, 3, "30000", "26000", "35000", "0", "1028"),
+      (single, 1, "1000", "35500", "40000", "0", "240"),
+      (single, 1, "15000", "41500", "55000", "0", "630"),
+      (single, 3, "30000", "50000", "57000", "0", "1200"),
+      (single, 1, "30000", "75000", "82900", "0", "600"),
+      (single, 3, "10000", "100000", "105000", "0", "1200"),
+      (single, 1, "2000", "125000", "129000", "0", "400"),
+      (single, 2, "30000", "150000", "160000", "0", "1200"),
+      (single, 1, "30000", "175000", "185000", "0", "600"),
+      (single, 2, "30000", "200000", "205000", "0", "1200"),
+      //      We do not make any changes for MFS vs. other non-MFJ filing statuses
+      (mfs, 1, "1500", "12000", "15000", "0", "0"),
+      (mfs, 1, "4000", "12000", "15000", "0", "0"),
+      (mfs, 2, "7000", "12000", "25000", "0", "0"),
+      (mfs, 1, "3000", "16500", "25000", "0", "76"),
+      (mfs, 2, "6000", "23500", "25000", "0", "778"),
+      (mfs, 1, "3000", "30000", "35000", "0", "810"),
+      (mfs, 2, "6500", "42000", "55000", "0", "1260"),
+      (mfs, 2, "5000", "45000", "50000", "0", "1000"),
+      (mfs, 1, "3000", "45000", "52500", "0", "600"),
+      (mfs, 2, "1000", "45000", "50000", "0", "200"),
+      (mfs, 3, "30000", "26000", "35000", "0", "1028"),
+      (mfs, 1, "1000", "35500", "40000", "0", "240"),
+      (mfs, 1, "15000", "41500", "55000", "0", "630"),
+      (mfs, 3, "30000", "50000", "57000", "0", "1200"),
+      (mfs, 1, "30000", "75000", "82900", "0", "600"),
+      (mfs, 3, "10000", "100000", "105000", "0", "1200"),
+      (mfs, 1, "2000", "125000", "129000", "0", "400"),
+      (mfs, 2, "30000", "150000", "160000", "0", "1200"),
+      (mfs, 1, "30000", "175000", "185000", "0", "600"),
+      (mfs, 2, "30000", "200000", "205000", "0", "1200"),
+      //      Form 2441 Line 6 chooses the lesser of earned income for self and spouse for deciding the expense cap
+      (mfj, 1, "1500", "12000", "15000", "20000", "0"),
+      (mfj, 1, "4000", "12000", "15000", "10000", "0"),
+      (mfj, 2, "7000", "12000", "25000", "0", "0"),
+      (mfj, 1, "3000", "16500", "25000", "35000", "0"),
+      (mfj, 2, "6000", "23500", "25000", "15000", "0"),
+      (mfj, 1, "3000", "30000", "35000", "25000", "0"),
+      (mfj, 2, "6500", "42000", "55000", "0", "0"),
+      (mfj, 2, "5000", "45000", "50000", "60000", "1000"),
+      (mfj, 1, "3000", "45000", "52500", "60000", "600"),
+      (mfj, 2, "1000", "45000", "50000", "60000", "200"),
+      (mfj, 3, "30000", "26000", "35000", "60000", "0"),
+      (mfj, 1, "1000", "35500", "40000", "60000", "240"),
+      (mfj, 1, "15000", "41500", "55000", "60000", "630"),
+      (mfj, 3, "30000", "50000", "57000", "60000", "1200"),
+      (mfj, 1, "30000", "75000", "82900", "83000", "600"),
+      (mfj, 3, "10000", "100000", "105000", "0", "0"),
+      (mfj, 1, "2000", "125000", "129000", "0", "0"),
+      (mfj, 2, "30000", "150000", "160000", "160000", "1200"),
+      (mfj, 1, "30000", "175000", "185000", "190000", "600"),
+      (mfj, 2, "30000", "200000", "205000", "210000", "1200"),
+    )
+    forAll(dataTable) {
+      (
+          status,
+          cdccQualifyingPersons,
+          cdccQualifyingExpenses,
+          agi,
+          earnedIncomeSelf,
+          earnedIncomeSpouse,
+          expectedCdcc,
+      ) =>
+        val graph = makeGraphWith(
+          factDictionary,
+          Path("/filingStatus") -> status,
+          Path("/agi") -> Dollar(agi),
+          Path("/cdccQualifyingPersons") -> cdccQualifyingPersons,
+          Path("/cdccQualifyingExpenses") -> Dollar(cdccQualifyingExpenses),
+          Path("/earnedIncomeSelf") -> Dollar(earnedIncomeSelf),
+          Path("/earnedIncomeSpouse") -> Dollar(earnedIncomeSpouse),
+          Path("/treatFilersAsDependents") -> false,
+          Path("/primaryFilerIsBlind") -> false,
+          Path("/primaryFilerAge65OrOlder") -> false,
+          Path("/secondaryFilerIsBlind") -> false,
+          Path("/secondaryFilerAge65OrOlder") -> false,
+          Path("/oB3Deductions") -> Dollar(0),
+        )
+
+        val actualCdcc = graph.get("/creditForChildAndDependentCareExpenses")
+        assert(actualCdcc.value.contains(Dollar(expectedCdcc)))
+    }
+    println(
+      s"Completed ${dataTable.length} CDCC scenarios",
+    )
+  }
 }

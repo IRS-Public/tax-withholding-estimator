@@ -2,9 +2,21 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/childAndDependentCareTaxCreditAmount">
-      <Description>Child and Dependent Care tax credit, no logic in place for actually calculating
-        the applicable amount.</Description>
+    <Fact path="/cdccQualifyingPersons">
+      <Name>Number of CDCC qualifying persons</Name>
+      <Description>The number of people who are eligible for the CDCC. Form 2441 Line 2a, aggregated</Description>
+      <Writable>
+        <Int/>
+        <Limit type="Min">
+          <Int>0</Int>
+        </Limit>
+      </Writable>
+      <Placeholder>
+        <Int>0</Int>
+      </Placeholder>
+    </Fact>
+    <Fact path="/cdccQualifyingExpenses">
+      <Description>Child and Dependent Care qualifying expenses. Form 2441 Line 2d, aggregated</Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -12,9 +24,380 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/cdccTotalCredit">
+    <Fact path="/cdccMaxClaimableExpenseWithOneQP">
+      <Name>Maximum Claimable Expense With One Qualifying Person</Name>
       <Derived>
-        <Dependency path="/childAndDependentCareTaxCreditAmount"/>
+        <Dollar>3000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccMaxClaimableExpenseWithTwoQP">
+      <Name>Maximum Claimable Expense With Two or More Qualifying Persons</Name>
+      <Derived>
+        <Dollar>6000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccMaxAllowedCreditWithOneQP">
+      <Name>Maximum Allowed Credit With One Qualifying Person</Name>
+      <Derived>
+        <Dollar>1050</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccMaxAllowedCreditWithTwoQP">
+      <Name>Maximum Allowed Credit With Two or More Qualifying Persons</Name>
+      <Derived>
+        <Dollar>2100</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccMinAllowedPercentageTY2024">
+      <Name>Minimum Allowed Percentage for Tax Year 2024</Name>
+      <Derived>
+        <Int>20</Int>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccMaxAllowedPercentageTY2024">
+      <Name>Maximum Allowed Percentage for Tax Year 2024</Name>
+      <Derived>
+        <Int>35</Int>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccCareExpensesFallOffThreshold">
+      <Name>Care Expenses Fall Off Threshold</Name>
+      <Description>The threshold at which the care expenses decimal amount begins reducing</Description>
+      <Derived>
+        <Dollar>15000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccCareExpensesPlateauThreshold">
+      <Name>Care Expenses Fall Off Threshold</Name>
+      <Description>The threshold at which the care expenses decimal amount stops reducing</Description>
+      <Derived>
+        <Dollar>43000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccQualifyingExpenseCap">
+      <Name>The maximum claimable qualifying expenses</Name>
+      <Description>
+        The maximum claimable qualifying expenses. Also called the Allowed Cared For Amount.
+
+        Form 2441, Line
+        27
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/cdccQualifyingPersons"/>
+                </Left>
+                <Right>
+                  <Int>1</Int>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Dependency path="/cdccMaxClaimableExpenseWithTwoQP"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/cdccQualifyingPersons"/>
+                </Left>
+                <Right>
+                  <Int>1</Int>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dependency path="/cdccMaxClaimableExpenseWithOneQP"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/cdccQualifyingPersons"/>
+                </Left>
+                <Right>
+                  <Int>0</Int>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/cappedCdccQualifyingExpenses">
+      <Name>Qualifying Expenses</Name>
+      <Description>
+        The capped sum of all qualifying expenses. Form 2441, Line 3
+      </Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/cdccQualifyingExpenses"/>
+          <Dependency path="/cdccQualifyingExpenseCap"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/lowerOfCdccEarnedIncomeMfj">
+      <Description>Lowest of Earned income of MFJ filers. Form 2441 Line 5 </Description>
+      <Derived>
+        <LesserOf>
+          <Dependency module="income" path="/earnedIncomeSelf"/>
+          <Dependency module="income" path="/earnedIncomeSpouse"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/lowerOfCdccEarnedIncome">
+      <Description>Lower of earned income (regardless of filing status). Lesser of Form 2441 Line 4 and Line 5</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dependency path="/lowerOfCdccEarnedIncomeMfj"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency module="income" path="/earnedIncomeSelf"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccLowerOfEarnedIncomeAndExpenses">
+      <Description>
+        The lower of the earned income values and capped qualifying expenses
+        Form 2441, Line 6
+      </Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/cappedCdccQualifyingExpenses"/>
+          <Dependency path="/lowerOfCdccEarnedIncome"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccCareExpensesDecimalAmount">
+      <Name>Care Expenses Decimal Amount</Name>
+      <Description>Care Expenses Decimal Amount. Form 2441, Line 8.
+        Line 7 is AGI
+      </Description>
+      <Derived>
+        <!--
+        Note: This fact is returned as a <Dollar> because we don't have a distinct <Decimal> type currently
+        and it is important
+        that precision of these decimal values be preserved
+      -->
+        <Switch>
+          <Case>
+            <When>
+              <LessThanOrEqual>
+                <Left>
+                  <Dependency path="/agi"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </LessThanOrEqual>
+            </When>
+            <Then>
+              <Dollar>0.00</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <!-- The decimal amount never goes lower than .20 -->
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/agi"/>
+                </Left>
+                <Right>
+                  <Dependency path="/cdccCareExpensesPlateauThreshold"/>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Dollar>0.20</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <!-- The decimal amount never goes lower than .35 -->
+              <LessThanOrEqual>
+                <Left>
+                  <Dependency path="/agi"/>
+                </Left>
+                <Right>
+                  <Dependency path="/cdccCareExpensesFallOffThreshold"/>
+                </Right>
+              </LessThanOrEqual>
+            </When>
+            <Then>
+              <Dollar>
+                0.35
+              </Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <!--
+            This formula is emulating the effects of this table from the form 2441 instructions:
+
+            """
+            IF your 2022 adjusted gross income was:	 	THEN the decimal amount is:
+            Over:	 	But not over:
+            $ 0	    —	$15,000	 	0.35
+            15,000	—	17,000	 	0.34
+            17,000	—	19,000	 	0.33
+            19,000	—	21,000	 	0.32
+            21,000	—	23,000	 	0.31
+            23,000	—	25,000	 	0.30
+            25,000	—	27,000	 	0.29
+            27,000	—	29,000	 	0.28
+            29,000	—	31,000	 	0.27
+            31,000	—	33,000	 	0.26
+            33,000	—	35,000	 	0.25
+            35,000	—	37,000	 	0.24
+            37,000	—	39,000	 	0.23
+            39,000	—	41,000	 	0.22
+            41,000	—	43,000	 	0.21
+            43,000	—	No limit	0.20
+            """
+
+            The decimal amount reduces by .01 for every 2K over 15,000.01.
+            -->
+              <Subtract>
+                <Minuend>
+                  <!-- The case statement above handles 15K and down, so we start from the second
+                  row -->
+                  <Dollar>0.34</Dollar>
+                </Minuend>
+                <Subtrahends>
+                  <Divide>
+                    <Dividend>
+                      <StepwiseMultiply>
+                        <Multiplicand>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="/agi"/>
+                            </Minuend>
+                            <Subtrahends>
+                              <!--
+                                The increment steps up at one cent over each 2K threshold,
+                                so we need to take away an extra penny to compensate
+                              -->
+                              <Add>
+                                <Dependency path="/cdccCareExpensesFallOffThreshold"/>
+                                <Dollar>0.01</Dollar>
+                              </Add>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiplicand>
+                        <Rate>
+                          <Rational>1/2000</Rational>
+                          <!-- .01 for every whole $2,000 of income -->
+                        </Rate>
+                      </StepwiseMultiply>
+                    </Dividend>
+                    <Divisors>
+                      <!-- Stepwise multiple doesn't support decimal rates, so we have to convert
+                      from percent to
+                      decimal -->
+                      <Int>100</Int>
+                    </Divisors>
+                  </Divide>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccTentativeExpenseAmount">
+      <Name>Tentative Expense Amount</Name>
+      <Description> Form 2441, Line 9a
+      </Description>
+      <Derived>
+        <Round>
+          <Multiply>
+            <Dependency path="/cdccLowerOfEarnedIncomeAndExpenses"/>
+            <Dependency path="/cdccCareExpensesDecimalAmount"/>
+          </Multiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccCreditForPriorYearExpenses">
+      <Name>Credit For Prior Year Expenses</Name>
+      <Description>
+        Credit for any expenses incurred in the prior tax year. Not currently supported, so this is set as  zero.
+        Form 2441, Line 9b
+      </Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/currentAndLastYearExpenseAmount">
+      <Description>
+        Form 2441, Line 9c
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="/cdccTentativeExpenseAmount"/>
+          <Dependency path="/cdccCreditForPriorYearExpenses"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccCreditLimit">
+      <Name>Tax Liability Credit Limit</Name>
+      <Description>
+        The maximum possible credit the filer can receive for CDCC, calculated using the Credit Limit Worksheet
+      </Description>
+      <!--
+        Calculated using the "Credit Limit Worksheet"
+
+        Credit Limit Worksheet
+        Complete this worksheet to figure the amount to enter on line 10.
+        1.	Enter the amount from Form 1040, 1040-SR, or 1040-NR, line 18	1.	_____
+        2.	Enter the amount from Schedule 3 (Form 1040), line 1 (foreign tax credit) and line 6l (Form
+      8978, line 14)	2.	_____
+        3.	Subtract line 2 from line 1. Also enter this amount on Form 2441, line 10. But if zero or less,
+      stop; you can’t take
+      the credit
+      -->
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/totalTentativeTax"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/schedule3Line1"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/creditForChildAndDependentCareExpenses">
+      <Description>Credit for child and dependent care expenses. Smaller of line 9c or line 10
+
+        Form 2441 Line 11. Input on Schedule 3 Line 2</Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/currentAndLastYearExpenseAmount"/>
+          <Dependency path="/cdccCreditLimit"/>
+        </LesserOf>
       </Derived>
     </Fact>
   </Facts>
