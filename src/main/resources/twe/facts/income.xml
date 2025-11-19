@@ -460,14 +460,6 @@ and car loan interest deduction
         </GreaterOf>
       </Derived>
     </Fact>
-    <Fact path="/netSelfEmploymentIncomeTotal">
-      <Derived>
-        <Add>
-          <Dependency path="/netSelfEmploymentIncomeSelf"/>
-          <Dependency path="/netSelfEmploymentIncomeSpouse"/>
-        </Add>
-      </Derived>
-    </Fact>
     <Fact path="/earnedIncomeSelf">
       <!--      TODO: break this out between self and spouse-->
       <Description>
