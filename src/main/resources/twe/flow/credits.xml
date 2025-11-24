@@ -3,7 +3,30 @@
 <FlowConfig>
   <page title="Credits" route="credits.html">
     <section>
-      <h2>Child Tax Credit</h2>
+      <h1>Refundable Credits</h1>
+      <h2>Child and Dependent Credits</h2>
+      <h3>Earned Income Tax Credit</h3>
+      <fg-set path="/eitcQualifyingChildren">
+        <question>
+          How many EITC qualifying children do you have?
+        </question>
+        <input type="int"/>
+      </fg-set>
+      <fg-set path="/primaryFilerAge25OrOlderForEitc" if-true="/shouldSeeOver25AgeForEitcQuestionBase">
+        <question>
+          Will you be greater than or equal to 25 years old during the tax
+          year, or on January 1 of the next year?
+        </question>
+        <input type="boolean"/>
+      </fg-set>
+      <fg-set path="/secondaryFilerAge25OrOlderForEitc" if-true="/shouldSeeOver25AgeForEitcQuestionSecondary">
+        <question>
+          Will you your spouse greater than or equal to 25 years old during the tax
+          year, or on January 1 of the next year?
+        </question>
+        <input type="boolean"/>
+      </fg-set>
+      <h3>Child Tax Credit</h3>
       <fg-set path="/ctcEligibleDependents">
         <question>
           How many Child Tax Credit qualifying dependents do you have?
@@ -16,14 +39,7 @@
         </question>
         <input type="int"/>
       </fg-set>
-      <h2>Earned Income Tax Credit</h2>
-      <fg-set path="/earnedIncomeTaxCreditAmount">
-        <question>
-          How much Earned Income Tax credit do you expect to claim this year?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <h2 condition="/isFilingStatusMFS" operator="isFalse">Child and Dependent Care Credit</h2>
+      <h3 condition="/isFilingStatusMFS" operator="isFalse">Child and Dependent Care Credit</h3>
       <fg-set path="/cdccQualifyingPersons">
         <question>
           How many Child and Dependent Care Credit qualifying person(s) do you have ?
@@ -36,14 +52,49 @@
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Retirement Savings Contribution Credit</h2>
+      <h3>Adoption Tax Credit</h3>
+      <fg-set path="/adoptionEligibleChildren">
+        <question>
+          How many children have you or do you plan to adopt by the end of this year?
+        </question>
+        <input type="int"/>
+      </fg-set>
+      <fg-set path="/estimatedTotalQualifiedAdoptionExpenses">
+        <question>
+          What is the estimated total qualified adoption expenses for all adopted children you expect to pay by the end of the year?
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Education Credits</h2>
+      <h3 condition="/isFilingStatusMFS" operator="isFalse">American Opportunity Tax Credit</h3>
+      <fg-set path="/aotcQualifyingStudents">
+        <question>
+          How many qualifying students will you claim this year for the American Opportunity Tax Credit?
+        </question>
+        <input type="int"/>
+      </fg-set>
+      <fg-set path="/aotcQualifiedEducationExpenses">
+        <question>
+          What is the qualified education expense eligible for American Opportunity Tax Credit you expect to pay this year?
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+      <h3 condition="/isFilingStatusMFS" operator="isFalse">Lifetime Learning Credit</h3>
+      <fg-set path="/llcQualifiedEducationExpenses">
+        <question>
+          What is the qualified education expense eligible for Lifetime Learning Credit you expect to pay for this year?
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Other non-refundable Credits</h2>
+      <h3>Retirement Savings Contribution Credit</h3>
       <fg-set path="/retirementSavingsContributionsTaxCreditAmount">
         <question>
           How much Retirement Savings Contribution Credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Credit for the Elderly or the Disabled</h2>
+      <h3>Credit for the Elderly or the Disabled</h3>
       <fg-set path="/elderlyAndDisabledTaxCreditAmount">
         <question>
           How much Credit for the Elderly or the Disabled do you expect to claim
@@ -51,62 +102,40 @@
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2 condition="/isFilingStatusMFS" operator="isFalse">Lifetime Learning Credit</h2>
-      <fg-set path="/lifetimeLearningTaxCreditAmount">
-        <question>
-          How much Lifetime Learning Credit do you expect to claim this year?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <h2 condition="/isFilingStatusMFS" operator="isFalse">American Opportunity Tax Credit</h2>
-      <fg-set path="/americanOpportunityTaxCreditAmount">
-        <question>
-          How much American Opportunity tax credit do you expect to claim this
-          year?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <h2> Credit for contributions of individuals to scholarship granting organizations</h2>
-      <fg-set path="/contributionsScholarshipGrantingOrganizationsAmount">
-        <question>
-          How much Credit for contributions of individuals to scholarship
-          granting organizations do you expect to claim this year?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <h2>Adoption Tax Credit</h2>
-      <fg-set path="/adoptionTaxCreditAmount">
-        <question>
-          How much Adoption tax Credit do you expect to claim this year?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <h2>Foreign Tax Credit</h2>
+      <h3>Foreign Tax Credit</h3>
       <fg-set path="/schedule3Line1">
         <question>
           How much Foreign tax credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Mortgage Interest Credit</h2>
+      <h3>Mortgage Interest Credit</h3>
       <fg-set path="/schedule3Line6g">
         <question>
           How much Mortgage Interest credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>General Business Credit</h2>
+      <h3>General Business Credit</h3>
       <fg-set path="/schedule3Line6a">
         <question>
           How much General business credit do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Alternative Minimum Tax Credit</h2>
+      <h3>Alternative Minimum Tax Credit</h3>
       <fg-set path="/alternativeMinimumTaxCreditAmount">
         <question>
           How much Alternative minimum tax credit do you expect to claim this
           year?
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+      <h3> Credit for contributions of individuals to scholarship granting organizations</h3>
+      <fg-set path="/contributionsScholarshipGrantingOrganizationsAmount">
+        <question>
+          How much Credit for contributions of individuals to scholarship
+          granting organizations do you expect to claim this year?
         </question>
         <input type="dollar"/>
       </fg-set>

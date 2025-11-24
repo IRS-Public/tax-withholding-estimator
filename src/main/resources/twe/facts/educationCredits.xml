@@ -2,9 +2,26 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/lifetimeLearningTaxCreditAmount">
-      <Description>Lifetime Learning Tax credit, no logic in place for actually calculating the
-        applicable amount.</Description>
+    <Fact path="/aotcQualifyingStudents">
+      <Name>Number of AOTC qualifying students</Name>
+      <Writable>
+        <Int/>
+        <Limit type="Min">
+          <Int>0</Int>
+        </Limit>
+      </Writable>
+      <Placeholder>
+        <Int>0</Int>
+      </Placeholder>
+    </Fact>
+    <Fact path="/aotcQualifiedEducationExpenses">
+      <Description>
+        Qualified education expenses are amounts paid in TaxYear for tuition and fees required for the student&#x2019;s enrollment or attendance at an eligible educational institution.
+        It doesn&#x2019;t matter whether the expenses were paid in cash, by check, by credit or debit card, or with borrowed funds.For course-related books, supplies, and equipment, only certain expenses qualify.
+        -&gt; American opportunity credit: Qualified education expenses include amounts paid for tuition, fees, and course materials, which include books, supplies, and equipment needed for a course of study, whether or not the materials are purchased from the educational institution as a condition of enrollment or attendance.
+        -&gt; Lifetime learning credit: Qualified education expenses include amounts paid for books, supplies, and equipment only if required to be paid to the institution as a condition of enrollment or attendance.
+        https://www.irs.gov/instructions/i8863#en_US_2025_publink53002gd0e494
+      </Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -12,9 +29,10 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/americanOpportunityTaxCreditAmount">
-      <Description>American opportunity tax credit, no logic in place for actually calculating the
-        applicable amount.</Description>
+    <Fact path="/llcQualifiedEducationExpenses">
+      <Description>
+        Tuition and required enrollment fees (including amounts required to be paid to the institution for course-related books, supplies, and equipment)
+      </Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -22,14 +40,395 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/americanOpportunityTaxCredit">
+    <Fact path="/maxAotcAdjustedQualifiedExpenseCap">
+      <TaxYear>2024</TaxYear>
       <Derived>
-        <Dollar>0</Dollar>
+        <Dollar>4000</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/lifetimeLearningTaxCredit">
+    <Fact path="/aotcAdjustedQualifiedEducationExpenses">
+      <Description>Form 8863 Line 27</Description>
       <Derived>
-        <Dollar>0</Dollar>
+        <LesserOf>
+          <Dependency path="/aotcQualifiedEducationExpenses"/>
+          <Dependency path="/maxAotcAdjustedQualifiedExpenseCap"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/form8863Line28">
+      <Description>Form 8863 Line 28</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/aotcAdjustedQualifiedEducationExpenses"/>
+            </Minuend>
+            <Subtrahends>
+              <Dollar>2000</Dollar>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/form8863Line29">
+      <Description>Form 8863 Line 29</Description>
+      <Derived>
+        <Multiply>
+          <Rational>25/100</Rational>
+          <Dependency path="/form8863Line28"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/form8863Line30">
+      <Description>Form 8863 Line 30</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/form8863Line28"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dependency path="/aotcAdjustedQualifiedEducationExpenses"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="/form8863Line28"/>
+                <Dollar>2000</Dollar>
+              </Add>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/maxAotcPerQualifyingStudent">
+      <Description>Form 8863 Line 1, for all qualifying students</Description>
+      <Derived>
+        <Dollar>2500</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/maxAotcAmountForTaxYear">
+      <Derived>
+        <Multiply>
+          <Dependency path="/aotcQualifyingStudents"/>
+          <Dependency path="/maxAotcPerQualifyingStudent"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/maxLlcAmountForTaxYear">
+      <Derived>
+        <Dollar>2000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/tentativeMaximumAotcAmount">
+      <Description>Form 8863 Line 1, for all qualifying students</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/aotcQualifyingStudents"/>
+          <Dependency path="/form8863Line30"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditPhaseoutThreshold">
+      <Description>Form 8863 Line 2 and line 13, thresholds by filing status</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>180000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <!-- MFS is ineligible            -->
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <!--            Single, HOH, QSS are treated the same-->
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>90000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditPhaseoutBuffer">
+      <Description>Form 8863 Line 4 and Line 15</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/educationCreditPhaseoutThreshold"/>
+            </Minuend>
+            <Subtrahends>
+              <!--                AOTC MAGI = AGI, line 3-->
+              <Dependency path="/agi"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditPhaseoutRange">
+      <Description>Form 8863 Line 5 and 16, by filing status</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>20000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <!-- MFS is ineligible            -->
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <!--            Single, HOH, QSS are treated the same-->
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>10000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditApplicableRatio">
+      <Description>Form 8863 Line 6 and Line 17</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThanOrEqual>
+                <Left>
+                  <Dependency path="/educationCreditPhaseoutBuffer"/>
+                </Left>
+                <Right>
+                  <Dependency path="/educationCreditPhaseoutRange"/>
+                </Right>
+              </GreaterThanOrEqual>
+            </When>
+            <Then>
+              <Dollar>1.000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Round>
+                <Divide>
+                  <Dividend>
+                    <Dependency path="/educationCreditPhaseoutBuffer"/>
+                  </Dividend>
+                  <Divisors>
+                    <Dependency path="/educationCreditPhaseoutRange"/>
+                  </Divisors>
+                </Divide>
+              </Round>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/reducedAotcAfterPhaseout">
+      <Description>Form 8863 Line 7</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/tentativeMaximumAotcAmount"/>
+          <Dependency path="/educationCreditApplicableRatio"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/americanOpportunityCredit">
+      <Description>Form 8863 Line 8. Input on Form 1040 Line 29</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="/treatFilersAsDependents"/>
+                <Dependency path="/isFilingStatusMFS"/>
+              </Any>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <LesserOf>
+                <Dependency path="/maxAotcAmountForTaxYear"/>
+                <Multiply>
+                  <Dependency path="/reducedAotcAfterPhaseout"/>
+                  <Rational>40/100</Rational>
+                </Multiply>
+              </LesserOf>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/llcAdjustedQualifiedEducationExpenses">
+      <Description>Form 8863 Line 31</Description>
+      <Derived>
+        <Dependency path="/llcQualifiedEducationExpenses"/>
+      </Derived>
+    </Fact>
+    <Fact path="/aotcNonRefundablePortion">
+      <Description>Form 8863 Line 9. Input on Line 2 of Credit Limit Worksheet</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/reducedAotcAfterPhaseout"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/americanOpportunityCredit"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/llcCappedExpenses">
+      <Description>Form 8863 Line 11. Lesser of total LLC expenses for all students and $10,000</Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/llcAdjustedQualifiedEducationExpenses"/>
+          <Dollar>10000</Dollar>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/llcTentativeMaxCredit">
+      <Description>Form 8863 Line 12</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/llcCappedExpenses"/>
+          <Rational>20/100</Rational>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/reducedLlcAfterPhaseout">
+      <Description>Form 8863 Line 18</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/educationCreditApplicableRatio"/>
+          <Dependency path="/llcTentativeMaxCredit"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditLimitWorksheetLine1">
+      <Derived>
+        <Dependency path="/reducedLlcAfterPhaseout"/>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditLimitWorksheetLine2">
+      <Derived>
+        <Dependency path="/aotcNonRefundablePortion"/>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditLimitWorksheetLine3">
+      <Derived>
+        <Add>
+          <Dependency path="/educationCreditLimitWorksheetLine1"/>
+          <Dependency path="/educationCreditLimitWorksheetLine2"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditLimitWorksheetLine4">
+      <Derived>
+        <Dependency path="/totalTentativeTax"/>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditLimitWorksheetLine5">
+      <Derived>
+        <Add>
+          <Dependency path="/schedule3Line1"/>
+          <Dependency path="/schedule3Line2"/>
+          <Dependency path="/schedule3Line6d"/>
+          <Dependency path="/schedule3Line6l"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditLimitWorksheetLine6">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/educationCreditLimitWorksheetLine4"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/educationCreditLimitWorksheetLine5"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/educationCreditLimitWorksheetLine7">
+      <Derived>
+        <LesserOf>
+          <Dependency path="/educationCreditLimitWorksheetLine3"/>
+          <Dependency path="/educationCreditLimitWorksheetLine6"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/lifetimeLearningCredit">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="/treatFilersAsDependents"/>
+                <Dependency path="/isFilingStatusMFS"/>
+              </Any>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <LesserOf>
+                <Dependency path="/maxLlcAmountForTaxYear"/>
+                <Dependency path="/educationCreditLimitWorksheetLine7"/>
+              </LesserOf>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
   </Facts>

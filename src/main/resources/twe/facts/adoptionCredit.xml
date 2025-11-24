@@ -2,9 +2,27 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/adoptionTaxCreditAmount">
-      <Description>Adoption tax credit, no logic in place for actually calculating the
-        applicable amount</Description>
+    <!--    TODO: this is based on the draft Form 8839 from https://www.irs.gov/pub/irs-dft/f8839\-\-dft.pdf and related instructions https://www.irs.gov/pub/irs-dft/i8839\-\-dft.pdf
+            We need to ensure the final form and derivation is reflected below
+    -->
+    <Fact path="/estimatedTotalQualifiedAdoptionExpenses">
+      <Description>
+        https://www.irs.gov/credits-deductions/individuals/adoption-credit#qualifiedexpenses
+        Qualified adoption expenses for the credit and exclusion are reasonable and necessary expenses you paid to adopt include:
+        - Adoption fees
+        - Attorney fees
+        - Court costs
+        - Travel expenses including meals and lodging
+        - Other expenses directly for the legal adoption
+        - Expenses you paid before an eligible child has been identified, such as home study fees
+
+        Expenses aren&#x2019;t eligible if they are:
+        - To adopt your spouse&#x2019;s child
+        - For a surrogate parent arrangement
+        - Allowed for another federal tax credit or deduction
+        - Paid by a federal, state or local program
+        - Reimbursed by your employer
+      </Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -12,16 +30,214 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/adoptionCreditNonRefundable">
-      <Description>Non-refundable portion of Adoption Credit</Description>
+    <Fact path="/adoptionEligibleChildren">
+      <Name>Number of Adoption credit eligible children</Name>
+      <Writable>
+        <Int/>
+        <Limit type="Min">
+          <Int>0</Int>
+        </Limit>
+      </Writable>
+      <Placeholder>
+        <Int>0</Int>
+      </Placeholder>
+    </Fact>
+    <Fact path="/adoptionMagiPhaseoutThreshold">
+      <Description>Phaseout threshold for MAGI</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>259190</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/maxRefundableAdoptionCreditAmount">
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>5000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/maxAdoptionCreditPerChild">
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>17280</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditMagi">
+      <Description>Form 8839 Line 7. Maximum total adoption credit = max per child * number of children</Description>
+      <Derived>
+        <!-- n.b. that the MAGI for Line 7 is NOT the same as the MAGI for Line 23, which has a more complex derivation. See instructions for more details          -->
+        <Dependency path="/agi"/>
+      </Derived>
+    </Fact>
+    <!-- We do not ask for the qualified adoption expenses per child as this would require a child-specific expense amount input. Instead, we figure the credit in aggregate, where the taxpayer provides the estimated total adoption expenses for the year for any number of children and we calculate the maximum possible credit based on the number of children alone, rather than if one child's expenses exceed the maximum threshold and should be floored whereas another one didn't    -->
+    <Fact path="/totalMaxAdoptionCredit">
+      <Description>Maximum total adoption credit = max per child * number of children</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/maxAdoptionCreditPerChild"/>
+          <Dependency path="/adoptionEligibleChildren"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/tentativeMaximumAdoptionCredit">
+      <Description>Form 8839 Line 6, aggregated</Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/totalMaxAdoptionCredit"/>
+          <Dependency path="/estimatedTotalQualifiedAdoptionExpenses"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditMagiBuffer">
+      <Description>Form 8839 Line 8</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/adoptionCreditMagi"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/adoptionMagiPhaseoutThreshold"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditMultiplier">
+      <Description>Form 8839 Line 9</Description>
+      <!-- We are required to round our multiplier to three decimals. To do this while
+                respecting that our fact graph system automatically rounds dollar values to
+                two decimal points, we multiply our numerator of dollars by ten and, after
+                we calculate our final phaseout amount, we divide by ten to undo that damage.
+           -->
+      <Derived>
+        <LesserOf>
+          <Dollar>1.000</Dollar>
+          <Round>
+            <Divide>
+              <Dividend>
+                <Dependency path="/adoptionCreditMagiBuffer"/>
+              </Dividend>
+              <Divisors>
+                <Dollar>40000</Dollar>
+              </Divisors>
+            </Divide>
+          </Round>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/tentativeAdoptionCreditAmount">
+      <Description>Form 8839 Line 10</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/tentativeMaximumAdoptionCredit"/>
+          <Dependency path="/adoptionCreditMultiplier"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/tentativeRefundableAdoptionCreditAmount">
+      <Description>Form 8839 Line 12 and 11a (aggregated)</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/tentativeMaximumAdoptionCredit"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/tentativeAdoptionCreditAmount"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditRefundable">
+      <Description>Form 8839 Line 13 and Line 11c (aggregated)</Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/maxRefundableAdoptionCreditAmount"/>
+          <Dependency path="/tentativeRefundableAdoptionCreditAmount"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/tentativeNonRefundableAdoptionCreditAmountWithoutCarryforward">
+      <Description>Form 8839 Line 14</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/tentativeRefundableAdoptionCreditAmount"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/adoptionCreditRefundable"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditCarryforward">
+      <Description>Form 8839 Line 15</Description>
       <Derived>
         <Dollar>0</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/adoptionCreditRefundable">
-      <Description>Refundable portion of Adoption Credit</Description>
+    <Fact path="/tentativeNonRefundableAdoptionCreditAmountWithCarryforward">
+      <Description>Form 8839 Line 16</Description>
       <Derived>
-        <Dollar>0</Dollar>
+        <Add>
+          <Dependency path="/tentativeNonRefundableAdoptionCreditAmountWithoutCarryforward"/>
+          <Dependency path="/adoptionCreditCarryforward"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditLimitWorksheetLine1">
+      <Derived>
+        <Dependency path="/tentativeNonRefundableAdoptionCreditAmountWithoutCarryforward"/>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditLimitWorksheetLine2">
+      <Derived>
+        <Dependency path="/totalTentativeTax"/>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditLimitWorksheetLine3">
+      <Derived>
+        <Add>
+          <Dependency path="/schedule3Line1"/>
+          <Dependency path="/schedule3Line2"/>
+          <Dependency path="/schedule3Line3"/>
+          <Dependency path="/schedule3Line4"/>
+          <Dependency path="/schedule3Line5b"/>
+          <Dependency path="/schedule3Line6d"/>
+          <Dependency path="/schedule3Line6f"/>
+          <Dependency path="/schedule3Line6g"/>
+          <Dependency path="/schedule3Line6l"/>
+          <Dependency path="/schedule3Line6m"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditLimitWorksheetLine4">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/adoptionCreditLimitWorksheetLine2"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/adoptionCreditLimitWorksheetLine3"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditLimitWorksheetLine5">
+      <Derived>
+        <LesserOf>
+          <Dependency path="/adoptionCreditLimitWorksheetLine1"/>
+          <Dependency path="/adoptionCreditLimitWorksheetLine4"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionCreditNonRefundable">
+      <Description>Form 8839 Line 18</Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/adoptionCreditLimitWorksheetLine5"/>
+          <Dependency path="/tentativeNonRefundableAdoptionCreditAmountWithCarryforward"/>
+        </LesserOf>
       </Derived>
     </Fact>
   </Facts>

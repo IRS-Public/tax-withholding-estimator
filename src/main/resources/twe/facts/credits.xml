@@ -24,9 +24,9 @@
       <Description>Form 1040 Line 32. Schedule 3 Line 15 + EITC,ACTC, AOTC, refundable portion of Adoption</Description>
       <Derived>
         <Add>
-          <Dependency path="/earnedIncomeTaxCreditAmount"/>
+          <Dependency path="/earnedIncomeCredit"/>
           <Dependency path="/additionalCtc"/>
-          <Dependency path="/americanOpportunityTaxCredit"/>
+          <Dependency path="/americanOpportunityCredit"/>
           <Dependency path="/adoptionCreditRefundable"/>
           <Dependency path="/schedule3OtherPaymentsAndRefundableCreditsTotal"/>
         </Add>

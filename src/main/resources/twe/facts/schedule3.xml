@@ -20,7 +20,7 @@
     <Fact path="/schedule3Line3">
       <Description>Education credits from Form 8863, line 19</Description>
       <Derived>
-        <Dependency path="/lifetimeLearningTaxCredit"/>
+        <Dependency path="/lifetimeLearningCredit"/>
       </Derived>
     </Fact>
     <Fact path="/schedule3Line4">
