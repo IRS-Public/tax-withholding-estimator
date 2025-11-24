@@ -1,14 +1,13 @@
 # Tax Withholding Estimator (TWE)
 
-An online website for a taxpayer to estimate their tax withholdings for a
-variety of tax situations. For a deep dive into the technical design choices of
-this repository, start [here](./docs/adr/001-twe-architecture.md).
+An online website for a taxpayer to estimate their tax withholdings for a variety of tax situations.
+For a deep dive into the technical design choices of this repository, start [here](./docs/adr/001-twe-architecture.md).
 
 ## Setup
 
-If you are an IRS developer, first follow the instructions in [IRS-ONBOARDING.md](./docs/IRS-ONBOARDING.md).
+If you are an IRS developer, first follow the instructions in [IRS-ONBOARDING.md](./docs/onboarding/onboarding-irs.md).
 
-If you are not a developer, follow the instructions in [NONDEV-ONBOARDING.md](./docs/NONDEV-ONBOARDING.md).
+If you are not a developer, follow the instructions in [NONDEV-ONBOARDING.md](./docs/onboarding/onboarding-nondev.md).
 
 ### Instructions
 
