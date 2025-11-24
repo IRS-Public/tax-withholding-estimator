@@ -251,7 +251,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("5975")))
       assert(graph.get(Path("/totalOwed")).value.contains(Dollar("3975")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("775")))
-      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("283")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("232")))
     }
   }
 
@@ -326,7 +326,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("6546")))
       assert(graph.get(Path("/totalOwed")).value.contains(Dollar("4546")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("346")))
-      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("65")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("40")))
     }
   }
 
@@ -398,7 +398,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("4745")))
       assert(graph.get(Path("/totalOwed")).value.contains(Dollar("2745")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("545")))
-      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("269")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("231")))
     }
   }
 
@@ -638,7 +638,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("22153")))
       assert(graph.get(Path("/totalOwed")).value.contains(Dollar("16153")))
       assert(graph.get(Path("/withholdingGap")).value.contains(Dollar("2453")))
-      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("265")))
+      assert(graph.get(Path("/jobSelectedForExtraWithholding/w4Line4c")).value.contains(Dollar("256")))
     }
   }
 
