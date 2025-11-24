@@ -1097,18 +1097,18 @@
     </Fact>
     <Fact path="/jobs/*/remainingPayPeriods">
       <Description>
-        The number of pay dates remaining in the year.
+        The number of pay periods remaining in the year.
 
         Monthly and semimonthly are computed directly.
 
         Weekly and biweekly are computed using `../tentativeRemainingPayPeriods` and
         `../predictedOrdinalFinalPayDate` to make any necessary adjustment when the tentative
         calculation overflows the end of year.
+
         For example, let's say you are paid weekly every Friday for the previous week, and you're
-        working through EOY.
-        Then (in 2025) you will be paid on the 2nd of January 2026 for 12/21-27, and on the 9th of
-        January 2026 for 12/28-01/03. That's two pay periods that are in 2025 that will be paid for
-        (and taxed in) 2026.
+        working through EOY. Then (in 2025) you will be paid on the 2nd of January 2026 for
+        12/21-27, and on the 9th of January 2026 for 12/28-01/03. That's two pay periods that are in
+        2025 that will be paid for (and taxed in) 2026.
       </Description>
       <Derived>
         <Switch>

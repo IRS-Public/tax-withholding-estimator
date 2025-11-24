@@ -188,41 +188,68 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/committedWithholding">
-      <Description>This job's withholding that cannot change because it's past or within the time
-        lag before W4 changes kick in.</Description>
+      <Description>
+        The total amount that will be withheld from the paycheck if the W-4 is submitted today with
+        no additional withholdings. This is also referred to as the "do-nothing withholding."
+      </Description>
       <Derived>
         <Add>
-          <!-- past withholding -->
           <Dependency path="../yearToDateWithholding"/>
-          <!-- future withholding, too soon to be changed and thus incorporates lag. Does not use Pub 15-T Worksheet 1a calculation -->
-          <Multiply>
-            <Dependency path="../averageWithholdingPerPayPeriod"/>
-            <LesserOf>
-              <Dependency path="../fullPayPeriods"/>
-              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
-            </LesserOf>
-          </Multiply>
-          <!-- future tentative withholding: result from Pub 15-T Worksheet 1A, no lag -->
-          <!-- For now, we treat this as a "given" that won't change. Probably will need to revisit
-          this when we get to reducing below tentative withholding. -->
-          <Multiply>
-            <Dependency path="../tentativeWithholdingAmount"/>
-            <GreaterOf>
-              <Int>0</Int>
-              <Subtract>
-                <Minuend>
-                  <!-- Full pay periods are used here to match QA spreadsheet calculation -->
-                  <Dependency path="../fullPayPeriods"/>
-                </Minuend>
-                <Subtrahends>
-                  <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
-                </Subtrahends>
-              </Subtract>
-            </GreaterOf>
-          </Multiply>
-          <!-- witholding from the bonus, formula is different than for the regular job payments -->
+          <Dependency path="../lagWithholding"/>
+          <Dependency path="../futureTentativeWithholding"/>
           <Dependency path="../withholdingsFromTotalBonusReceived"/>
         </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/lagWithholding">
+      <Description>
+        The amount that will be withheld in the time between today and when the W-4 is expected to
+        be processed.
+      </Description>
+      <Derived>
+        <!-- future withholding, too soon to be changed and thus incorporates lag. Does not use Pub 15-T Worksheet 1a calculation -->
+        <Multiply>
+          <Dependency path="../averageWithholdingPerPayPeriod"/>
+          <LesserOf>
+            <Add>
+              <Dependency path="../fullPayPeriods"/>
+              <Dependency path="../partialPayPeriods"/>
+            </Add>
+            <!-- Casting this value to a rational -->
+            <Multiply>
+              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+              <Rational>1/1</Rational>
+            </Multiply>
+          </LesserOf>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/futureTentativeWithholding">
+      <!-- future tentative withholding: result from Pub 15-T Worksheet 1A -->
+      <!-- For now, we treat this as a "given" that won't change. Probably will need to revisit
+      this when we get to reducing below tentative withholding. -->
+      <Derived>
+        <Multiply>
+          <Dependency path="../tentativeWithholdingAmount"/>
+          <GreaterOf>
+            <Rational>0/1</Rational>
+            <Subtract>
+              <Minuend>
+                <Add>
+                  <Dependency path="../fullPayPeriods"/>
+                  <Dependency path="../partialPayPeriods"/>
+                </Add>
+              </Minuend>
+              <Subtrahends>
+                <!-- Casting this value to a rational -->
+                <Multiply>
+                  <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                  <Rational>1/1</Rational>
+                </Multiply>
+              </Subtrahends>
+            </Subtract>
+          </GreaterOf>
+        </Multiply>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/annualizedIncome">
