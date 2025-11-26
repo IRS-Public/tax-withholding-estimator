@@ -2,6 +2,23 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/pensions/*/filerAssignment">
+      <Description>Whether this pension is attributed to the primary filer or spouse if MFJ</Description>
+      <Override>
+        <Condition>
+          <!--          If the filing status is non-MFJ, the default must be a self assignment-->
+          <Not>
+            <Dependency path="/isFilingStatusMFJ"/>
+          </Not>
+        </Condition>
+        <Default>
+          <Enum optionsPath="/filerAssignment">self</Enum>
+        </Default>
+      </Override>
+      <Writable>
+        <Enum optionsPath="/filerAssignmentOption"/>
+      </Writable>
+    </Fact>
     <Fact path="/pensions/*/w4pLine4a">
       <Description>Total non-job or pension/annuity income.</Description>
       <Derived>
@@ -19,7 +36,7 @@
             </When>
             <Then>
               <Round>
-                <Dependency path="/totalOtherIncome"/>
+                <Dependency path="/otherIncomeTotal"/>
               </Round>
             </Then>
           </Case>
@@ -127,8 +144,8 @@
             <Case>
               <When>
                 <Any>
-                  <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
-                  <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
+                  <Dependency path="/isFilingStatusSingle"/>
+                  <Dependency path="/isFilingStatusMFS"/>
                 </Any>
               </When>
               <Then>
@@ -353,8 +370,8 @@
             <Case>
               <When>
                 <Any>
-                  <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
-                  <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
+                  <Dependency path="/isFilingStatusMFJ"/>
+                  <Dependency path="/isFilingStatusQSS"/>
                 </Any>
               </When>
               <Then>
@@ -579,7 +596,7 @@
             </Case>
             <Case>
               <When>
-                <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
+                <Dependency path="/isFilingStatusHOH"/>
               </When>
               <Then>
                 <Switch>
@@ -884,17 +901,26 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/pensions/*/averageWithholdingPerPayPeriod">
       <Description> Average withholding from a specific pension per pay-period. </Description>
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/pensions/*/yearToDateIncome">
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/pensions/*/income">
       <Derived>
@@ -911,6 +937,9 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/pensions/*/mostRecentPayDate">
       <Writable>
@@ -1000,8 +1029,6 @@
       </Derived>
     </Fact>
     <Fact path="/pensions/*/payPeriodsBeforeW4ChangesAppear">
-      <Description>This is derived from the "2197 Scenarios checks" worksheet of the
-      "TWESprint1_2025_UAT_WHC2197_2200" spreadsheet.</Description>
       <Derived>
         <Switch>
           <Case>
@@ -1623,6 +1650,34 @@
         <CollectionSum>
           <Dependency path="/pensions/*/endOfYearProjectedWithholding"/>
         </CollectionSum>
+      </Derived>
+    </Fact>
+    <Fact path="/pensionsAssignedToSelf">
+      <Derived>
+        <Filter path="/pensions">
+          <Equal>
+            <Left>
+              <Dependency path="filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignment">self</Enum>
+            </Right>
+          </Equal>
+        </Filter>
+      </Derived>
+    </Fact>
+    <Fact path="/pensionsAssignedToSpouse">
+      <Derived>
+        <Filter path="/pensions">
+          <Equal>
+            <Left>
+              <Dependency path="filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignment">spouse</Enum>
+            </Right>
+          </Equal>
+        </Filter>
       </Derived>
     </Fact>
   </Facts>

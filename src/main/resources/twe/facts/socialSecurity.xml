@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/pub915MAGIForBenefitsTaxableAmountLine7">
+      <Description>Sum of adjustments from Form 1044 Schedule 1. Student loan interest deduction
+        should not be included. IRS Pub 915 Worksheet 1, Line 7.
+      </Description>
+      <Derived>
+        <Dependency path="/adjustmentsToIncomeExcludingStudentLoanInterest"/>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915MAGIForBenefitsTaxableAmountLine8">
+      <Description>Modifed AGI used to determine taxable amount of SSA benefits. IRS Pub 915
+        Worksheet 1, Line 8.
+      </Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <!-- Line 6. Sum of incomes received-->
+            <Minuend>
+              <Round>
+                <Add>
+                  <!-- Line 2. Half of the total SSA benefits received -->
+                  <Multiply>
+                    <!-- Line 1. Total amount of SSA benefits received, from all forms SSA-1099 and
+                    RRB-1099 -->
+                    <Dependency path="/socialSecurityBenefitsIncome"/>
+                    <Rational>50/100</Rational>
+                  </Multiply>
+                  <!-- Line 3. 'Combine the amounts from Form 1040 or 1040 SR lines 1z, 2b, 3b, 4b,
+                  5b, 7, and 8'.
+                  This includes job wages, tips, Medicaid waiver payments, taxable dependent care benefits,
+                  employer-provided adoption benefits,
+                  taxable interest (2b), ordinary dividends (3b), IRA distributions taxable amounts (4b), pensions
+                  and annuities taxable amount (5b),
+                  capital gain or loss (7), additional income from Schedule 1 line 10 (8)  -->
+                  <Dependency path="/otherIncomeWithoutSSABenefitsTaxableAmountTotal"/>
+                  <!-- Line 4. Enter the amount from Form 1040 or Form 1040-SR 2a. Non-taxable
+                  interest income, such as interest on municipal bonds -->
+                  <Dependency path="/nonTaxableInterestIncome"/>
+                  <!-- Line 5. Adoption benefits, Foreign earned income or housing, certain income
+                  of bona fide residents of Puerto Rico or American Samoa
+                  NOTE: those income streams are not currently captured by TWE, and also could become a part of
+                  /totalOtherIncomeWithoutSSABenefitsTaxableAmount -->
+                </Add>
+              </Round>
+            </Minuend>
+            <!-- Line 7. Adjustments to income, excluding Student Loan Interest-->
+            <Subtrahends>
+              <Dependency path="/pub915MAGIForBenefitsTaxableAmountLine7"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915BracketZeroLine9">
+      <Description>Threshold when taxable portion of SSA Benefits changes from 0% to 50%. Pub 915
+        Worksheet 1, Line 9.
+        If SSA MAGI (Line 8) is less than $32K for MFJ and $25K for anybody else, 0% of SSA benefits
+        are taxed. This is our bracket zero.
+        Taxable portion of SSA MAGI which is more than bracket zero but less than $32K + $12K for
+        MFJ and $25K + $9K for evereryone else, is 50%, not to exceed 50% of SSA Benefits total.
+        Taxable portion of SSA MAGI which is more than $32K + $12K for MFJ and $25K + $9K for
+        evereryone else, is 85%, not to exceed 85% of SSA Benefits total.
+        If TP is MFS which lived together for any part of the year, all SSA Benefits are taxed at
+        85%.
+      </Description>
+      <Derived>
+        <Switch>
+          <!-- MFJ -->
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>32000</Dollar>
+            </Then>
+          </Case>
+          <!-- MFS who lived together-->
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isMFSLivedTogether"/>
+                <Dependency path="/isFilingStatusMFS"/>
+              </All>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>25000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915IncomeExceedingBracketZeroLine10">
+      <Description>MAGI which exceeds zero threshold. Pub 915 Worksheet 1, Line 10</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/pub915MAGIForBenefitsTaxableAmountLine8"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/pub915BracketZeroLine9"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915Bracket50Line11">
+      <Description>Income bracket where taxable portion is 50%. Pub 915 Worksheet 1, Line 11</Description>
+      <Derived>
+        <Switch>
+          <!-- MFJ -->
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>12000</Dollar>
+            </Then>
+          </Case>
+          <!-- MFS who lived together-->
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isMFSLivedTogether"/>
+                <Dependency path="/isFilingStatusMFS"/>
+              </All>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>9000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915IncomeTaxableAt50Line13">
+      <Description>Amount of MAGI with taxable portion 50%. Pub 915 Worksheet 1, Line 13</Description>
+      <Derived>
+        <LesserOf>
+          <!-- 50% bracket -->
+          <Dependency path="/pub915Bracket50Line11"/>
+          <!-- MAGI minus minimum threshold. Line 10 of Pub 915-->
+          <Dependency path="/pub915IncomeExceedingBracketZeroLine10"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915TaxablePortionFor50Line15">
+      <Description>Taxable amount for 50% bracket. Should not exceed 50% of total SSA Benefits. Pub
+        915 Worksheet 1, Line 15</Description>
+      <Derived>
+        <LesserOf>
+          <!-- 50% of total SSA Benefits. Pub 915 Line 2-->
+          <Multiply>
+            <Dependency path="/socialSecurityBenefitsIncome"/>
+            <Rational>50/100</Rational>
+          </Multiply>
+          <!-- 50% of MAGI within the bracket  -->
+          <Multiply>
+            <Dependency path="/pub915IncomeTaxableAt50Line13"/>
+            <Rational>50/100</Rational>
+          </Multiply>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/line16Pub915TaxablePortionFor85">
+      <Description>Taxable amount for 85% bracket. Pub 915 Worksheet 1, Line 16</Description>
+      <Derived>
+        <Multiply>
+          <GreaterOf>
+            <Dollar>0</Dollar>
+            <!-- Pub 915 Line 12: income exceeding 50% bracket:  -->
+            <Subtract>
+              <Minuend>
+                <!-- Line 10. MAGI over zero threshold-->
+                <Dependency path="/pub915IncomeExceedingBracketZeroLine10"/>
+              </Minuend>
+              <Subtrahends>
+                <!-- Line 11. 50% bracket-->
+                <Dependency path="/pub915Bracket50Line11"/>
+              </Subtrahends>
+            </Subtract>
+          </GreaterOf>
+          <Rational>85/100</Rational>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/ssaBenefitsTaxableAmount">
+      <Description>Taxable amount of Social Security benefits to enter in Form 1040 line 6b. Ranges
+        from 0% to up to 50% to up to 85% of total SSA benefits</Description>
+      <Derived>
+        <LesserOf>
+          <Add>
+            <Dependency path="/pub915TaxablePortionFor50Line15"/>
+            <Dependency path="/line16Pub915TaxablePortionFor85"/>
+          </Add>
+          <Multiply>
+            <Dependency path="/socialSecurityBenefitsIncome"/>
+            <Rational>85/100</Rational>
+          </Multiply>
+        </LesserOf>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

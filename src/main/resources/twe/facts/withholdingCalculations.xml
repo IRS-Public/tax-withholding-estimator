@@ -125,7 +125,7 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/proportionOfYearEndJobsIncome">
-      <!--      TODO: update per spreadsheet from valentina so that we are doing average pay per period * pay periods in the table in worksheet 1A-->
+      <!--      TODO: average pay per period * pay periods in the table in worksheet 1A-->
       <Derived>
         <Switch>
           <Case>
@@ -333,8 +333,6 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/payPeriodsBeforeW4ChangesAppear">
-      <Description>This is derived from the "2197 Scenarios checks" worksheet of the
-        "TWESprint1_2025_UAT_WHC2197_2200" spreadsheet.</Description>
       <Derived>
         <Switch>
           <Case>
@@ -529,8 +527,8 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
-                <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
+                <Dependency path="/isFilingStatusSingle"/>
+                <Dependency path="/isFilingStatusMFS"/>
               </Any>
             </When>
             <Then>
@@ -755,8 +753,8 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
-                <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
+                <Dependency path="/isFilingStatusMFJ"/>
+                <Dependency path="/isFilingStatusQSS"/>
               </Any>
             </When>
             <Then>
@@ -981,7 +979,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
+              <Dependency path="/isFilingStatusHOH"/>
             </When>
             <Then>
               <Switch>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<?xml-model href="./FlowConfig.rng"?>
+<FlowConfig>
+  <page title="Additional Deductions" route="additional-deductions.html">
+    <section>
+      <h2>Car loan interest deduction</h2>
+      <fg-set path="/personalVehicleLoanInterestAmount">
+        <question>
+          How much interest have you paid on the loan during the current taxable year to-date?
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Qualified Business Interest Deduction (199A)</h2>
+      <fg-set path="/estimatedQualifiedBusinessIncomeDeduction">
+        <question>What is your estimated Qualified Business Income (QBI) Deduction for this year? Note that there is a minimum $400 deduction if your QBI is greater than $1,000.</question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2 condition="/couldEitherTaxpayerBeEligibleForSeniorDeduction" operator="isTrue">Senior Deduction</h2>
+      <fg-set path="/primaryTaxpayerElectsForSeniorDeduction" if-true="/primaryFilerAge65OrOlder">
+        <question>
+          Do you plan to take the senior deduction?
+        </question>
+        <input type="boolean"/>
+      </fg-set>
+      <fg-set path="/secondaryTaxpayerElectsForSeniorDeduction" if-true="/couldSecondaryTaxpayerBeEligibleForSeniorDeduction">
+        <question>
+          Does your spouse plan to take the senior deduction?
+        </question>
+        <input type="boolean"/>
+      </fg-set>
+      <fg-set path="/nonItemizerCharitableContributionDeductionAmount" if-true="/tentativelyEligibleForNonItemizerCharitableContributionDeduction">
+        <question>
+          If you take the standard deduction and donate to a qualifying organization, you can deduct those donations up to $<fg-show path="/actualNonItemizerCharitableContributionDeductionMax"/>.Learn more about cash
+            charitable contributions [X]
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+    </section>
+  </page>
+</FlowConfig>

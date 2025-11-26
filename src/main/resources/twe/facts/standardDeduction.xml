@@ -7,10 +7,10 @@
       <Derived>
         <Add>
           <Count>
-            <Dependency module="filers" path="/primaryFilerIsBlind"/>
+            <Dependency path="/primaryFilerIsBlind"/>
           </Count>
           <Count>
-            <Dependency module="filers" path="/primaryFilerAge65OrOlder"/>
+            <Dependency path="/primaryFilerAge65OrOlder"/>
           </Count>
           <Dependency path="/secondaryFilerAdditionalStandardDeductionItems"/>
         </Add>
@@ -23,15 +23,15 @@
         <Switch>
           <Case>
             <When>
-              <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
               <Add>
                 <Count>
-                  <Dependency module="filers" path="/secondaryFilerIsBlind"/>
+                  <Dependency path="/secondaryFilerIsBlind"/>
                 </Count>
                 <Count>
-                  <Dependency module="filers" path="/secondaryFilerAge65OrOlder"/>
+                  <Dependency path="/secondaryFilerAge65OrOlder"/>
                 </Count>
               </Add>
             </Then>
@@ -57,8 +57,8 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
-                <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
+                <Dependency path="/isFilingStatusHOH"/>
+                <Dependency path="/isFilingStatusSingle"/>
               </Any>
             </When>
             <Then>
@@ -68,9 +68,9 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
-                <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
-                <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
+                <Dependency path="/isFilingStatusMFJ"/>
+                <Dependency path="/isFilingStatusQSS"/>
+                <Dependency path="/isFilingStatusMFS"/>
               </Any>
             </When>
             <Then>
@@ -184,8 +184,8 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
-                <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
+                <Dependency path="/isFilingStatusSingle"/>
+                <Dependency path="/isFilingStatusMFS"/>
               </Any>
             </When>
             <Then>
@@ -194,7 +194,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
+              <Dependency path="/isFilingStatusHOH"/>
             </When>
             <Then>
               <Dependency path="/HoHStandardDeduction"/>
@@ -203,8 +203,8 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
-                <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
+                <Dependency path="/isFilingStatusMFJ"/>
+                <Dependency path="/isFilingStatusQSS"/>
               </Any>
             </When>
             <Then>
@@ -234,7 +234,7 @@
           <GreaterOf>
             <Dollar>1350</Dollar>
             <Add>
-              <Dependency module="income" path="/totalIncome"/>
+              <Dependency path="/incomeTotal"/>
               <Dollar>450</Dollar>
             </Add>
           </GreaterOf>
@@ -249,7 +249,7 @@
           <Case>
             <When>
               <Not>
-                <Dependency module="filing" path="/treatFilersAsDependents"/>
+                <Dependency path="/treatFilersAsDependents"/>
               </Not>
             </When>
             <Then>
@@ -258,7 +258,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency module="filingStatus" path="/treatFilersAsDependents"/>
+              <Dependency path="/treatFilersAsDependents"/>
             </When>
             <Then>
               <LesserOf>

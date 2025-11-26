@@ -29,7 +29,7 @@
         <Switch>
           <Case>
             <When>
-              <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
               <Dependency path="/nonItemizerCharitableContributionDeductionMFJMax"/>
@@ -51,6 +51,24 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/tentativelyEligibleForNonItemizerCharitableContributionDeduction">
+      <Description>They are tenatively eligible only if they will take the standard deduction, which we derived by comparing if standard deduction is greater than itemized deduction</Description>
+      <Derived>
+        <GreaterThan>
+          <!--                  Compare against itemizedDeductionTotal because itemizedDeduction creates a
+          circular dependency with OB3 deductions-->
+          <Left>
+            <Dependency path="/standardDeduction"/>
+          </Left>
+          <Right>
+            <Dependency path="/itemizedDeductionTotal"/>
+          </Right>
+        </GreaterThan>
+      </Derived>
     </Fact>
     <Fact path="/nonItemizerCharitableContributionDeduction">
       <Name>Non-itemizer charitable deduction</Name>
@@ -71,16 +89,7 @@
             <When>
               <All>
                 <Dependency path="/isFilingStatusMFJ"/>
-                <GreaterThan>
-                  <!--                  Compare against itemizedDeductionTotal because itemizedDeduction creates a
-                  circular dependency with OB3 deductions-->
-                  <Left>
-                    <Dependency path="/standardDeduction"/>
-                  </Left>
-                  <Right>
-                    <Dependency path="/itemizedDeductionTotal"/>
-                  </Right>
-                </GreaterThan>
+                <Dependency path="/tentativelyEligibleForNonItemizerCharitableContributionDeduction"/>
               </All>
             </When>
             <Then>
@@ -96,14 +105,7 @@
                 <Not>
                   <Dependency path="/isFilingStatusMFJ"/>
                 </Not>
-                <GreaterThan>
-                  <Left>
-                    <Dependency path="/standardDeduction"/>
-                  </Left>
-                  <Right>
-                    <Dependency path="/itemizedDeductionTotal"/>
-                  </Right>
-                </GreaterThan>
+                <Dependency path="/tentativelyEligibleForNonItemizerCharitableContributionDeduction"/>
               </All>
             </When>
             <Then>

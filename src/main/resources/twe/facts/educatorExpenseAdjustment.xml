@@ -7,8 +7,11 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
-    <Fact path="/actualEducatorExpensesAdjustmentAmount">
+    <Fact path="/educatorExpensesAdjustment">
       <Description>Lesser of the amount input by the taxpayer and the filing status limit</Description>
       <Derived>
         <LesserOf>

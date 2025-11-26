@@ -408,10 +408,10 @@
           <Case>
             <When>
               <Any>
-                <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
-                <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
-                <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
-                <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
+                <Dependency path="/isFilingStatusSingle"/>
+                <Dependency path="/isFilingStatusHOH"/>
+                <Dependency path="/isFilingStatusQSS"/>
+                <Dependency path="/isFilingStatusMFS"/>
               </Any>
             </When>
             <Then>
@@ -1013,7 +1013,7 @@
           <Case>
             <!-- if MFJ, you and your spouse must meet these requirements -->
             <When>
-              <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
               <Any>
@@ -1052,7 +1052,7 @@
           <Case>
             <!-- if MFJ, you and your spouse must meet these requirements -->
             <When>
-              <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
               <Any>

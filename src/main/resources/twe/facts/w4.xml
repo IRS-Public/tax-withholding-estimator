@@ -8,7 +8,7 @@
         <Round>
           <Subtract>
             <Minuend>
-              <Dependency path="/totalOtherIncome"/>
+              <Dependency path="/otherIncomeTotal"/>
             </Minuend>
             <Subtrahends>
               <Dependency path="/adjustmentsToIncome"/>

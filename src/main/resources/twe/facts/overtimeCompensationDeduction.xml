@@ -2,6 +2,18 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp">
+      <Name>Overtime Compensation Excluding Qualified Tip Overtime Comp</Name>
+      <Description>OB3 &#xA7;70202 IRC &#xA7;225(c)(2). Overtime compensation excluding all
+        qualified tips
+        defined
+        in IRC &#xA7;224 that were received as part of qualified overtime compensation</Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobs/*/overtimeCompensationExcludingQualifiedTipsOvertimeComp"/>
+        </CollectionSum>
+      </Derived>
+    </Fact>
     <Fact path="/maxOvertimeCompensationDeductionAmountNonMFJ">
       <Name>Maximum overtime compensation deduction for non MFJ filers</Name>
       <TaxYear>2025</TaxYear>
@@ -142,7 +154,7 @@
       </Derived>
     </Fact>
     <Fact path="/phaseOutAmountOvertimeCompensationDeduction">
-      <Name>Qualified Tip Deduction Phase Out</Name>
+      <Name>Qualified Overtime Deduction Phase Out</Name>
       <Description>The amount allowable as a deduction under shall be reduced (but not
         below zero) by $100 for each $1,000 by which the
         taxpayer&#x2019;s MAGI exceeds $150,000 ($300,000 in the case of a joint return).

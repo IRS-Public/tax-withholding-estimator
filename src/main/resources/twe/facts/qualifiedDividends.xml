@@ -288,7 +288,7 @@
       </Derived>
     </Fact>
     <Fact path="/totalQualifiedDividendsWithholding">
-      <Description>Sum of all tax withholding for qualified dividends</Description>
+      <Description>Line 23 - Sum of all tax withholding for qualified dividends</Description>
       <Derived>
         <Add>
           <Dependency path="/totalQualifiedDividends15Tax"/>

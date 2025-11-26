@@ -122,28 +122,27 @@
         </GreaterThan>
       </Derived>
     </Fact>
-    <Fact path="/secondaryHasSelfEmploymentIncome">
+    <Fact path="/spouseHasSelfEmploymentIncome">
       <Derived>
-        <GreaterThan>
-          <Left>
-            <Dependency path="/netSelfEmploymentIncomeSpouse"/>
-          </Left>
-          <Right>
-            <Dollar>0</Dollar>
-          </Right>
-        </GreaterThan>
+        <All>
+          <Dependency path="/isFilingStatusMFJ"/>
+          <GreaterThan>
+            <Left>
+              <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+            </Left>
+            <Right>
+              <Dollar>0</Dollar>
+            </Right>
+          </GreaterThan>
+        </All>
       </Derived>
     </Fact>
     <Fact path="/eitherTPHasSelfEmploymentIncome">
       <Derived>
-        <GreaterThan>
-          <Left>
-            <Dependency path="/netSelfEmploymentIncomeTotal"/>
-          </Left>
-          <Right>
-            <Dollar>0</Dollar>
-          </Right>
-        </GreaterThan>
+        <Any>
+          <Dependency path="/primaryHasSelfEmploymentIncome"/>
+          <Dependency path="/spouseHasSelfEmploymentIncome"/>
+        </Any>
       </Derived>
     </Fact>
     <Fact path="/scheduleSELine2Self">
@@ -260,8 +259,7 @@
         8c) Wages subject to social security tax from Form 8919, line 10
       </Description>
       <Derived>
-        <!--        TODO: Confirm that this is the right aggregate fact, update once we split out income by self and spouse-->
-        <Dependency path="/totalJobsIncome"/>
+        <Dependency path="/jobsIncomeSelf"/>
       </Derived>
     </Fact>
     <Fact path="/scheduleSELine9Self">
@@ -444,8 +442,7 @@
         8c) Wages subject to social security tax from Form 8919, line 10
       </Description>
       <Derived>
-        <!--        TODO: CHANGE TO SPOUSAL VERSION + Confirm that this is the right aggregate fact, update once we split out income by self and spouse-->
-        <Dependency path="/totalJobsIncome"/>
+        <Dependency path="/jobsIncomeSpouse"/>
       </Derived>
     </Fact>
     <Fact path="/scheduleSELine9Spouse">
@@ -623,7 +620,7 @@
     <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line9">
       <Description>SE SEP SIMPLE or qualified plans under the insurance plan is established</Description>
       <Derived>
-        <Dependency path="/actualSelfEmployedRetirementPlanDeduction"/>
+        <Dependency path="/selfEmploymentRetirementPlanDeduction"/>
       </Derived>
     </Fact>
     <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line10">
@@ -672,7 +669,7 @@
         </LesserOf>
       </Derived>
     </Fact>
-    <Fact path="/actualSelfEmploymentHealthInsuranceDeduction">
+    <Fact path="/selfEmploymentHealthInsuranceDeduction">
       <Description>Form 7206 line 14. Self-employed health insurance deduction.</Description>
       <Derived>
         <Switch>
@@ -695,7 +692,7 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/actualSelfEmployedRetirementPlanDeduction">
+    <Fact path="/selfEmploymentRetirementPlanDeduction">
       <Description>Self-employed retirement plan deduction. SEP SIMPLE or other qualified plan
         (Schedule C net profit - deductible portion of SE tax) x (plan contribution rate/ 100% + plan contribution rate)
         Because we don't know what the plan contribution rate is, for all intents and purposes, the max SE retirement plan deduction is
@@ -704,7 +701,7 @@
       </Description>
       <Derived>
         <LesserOf>
-          <Dependency path="/selfEmployedRetirementPlanContributions"/>
+          <Dependency path="/selfEmploymentRetirementPlanContributions"/>
           <Subtract>
             <Minuend>
               <Dependency path="/netSelfEmploymentIncomeTotal"/>

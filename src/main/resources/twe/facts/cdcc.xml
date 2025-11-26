@@ -148,8 +148,8 @@
       <Description>Lowest of Earned income of MFJ filers. Form 2441 Line 5 </Description>
       <Derived>
         <LesserOf>
-          <Dependency module="income" path="/earnedIncomeSelf"/>
-          <Dependency module="income" path="/earnedIncomeSpouse"/>
+          <Dependency path="/earnedIncomeSelf"/>
+          <Dependency path="/earnedIncomeSpouse"/>
         </LesserOf>
       </Derived>
     </Fact>
@@ -170,7 +170,7 @@
               <True/>
             </When>
             <Then>
-              <Dependency module="income" path="/earnedIncomeSelf"/>
+              <Dependency path="/earnedIncomeSelf"/>
             </Then>
           </Case>
         </Switch>

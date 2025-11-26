@@ -9,6 +9,9 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/hsaTotalDeductibleAmountMax">
       <Description>Maximum annual deductible and other out-of-pocket expenses for family</Description>
@@ -17,7 +20,7 @@
         <Dollar>16600</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/actualHsaTotalDeductibleAmount">
+    <Fact path="/hsaDeduction">
       <Description>HSA total deductible amount, no logic in place for actually calculating the
         applicable
         amount</Description>
@@ -33,6 +36,9 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/deductionForTraditionalIRAContributionMax">
       <Description>Max contribution for traditional IRAs (excluding payroll deductions) is $8000 per year. $7000 is the limit for those under 50, but we only know if someone is under 65 or not
@@ -42,7 +48,7 @@
         <Dollar>16000</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/actualDeductionForTraditionalIRAContribution">
+    <Fact path="/traditionalIRAContributionDeduction">
       <Description>Deduction for contributions to traditional IRAs (excluding payroll deductions)</Description>
       <Derived>
         <LesserOf>
@@ -51,26 +57,35 @@
         </LesserOf>
       </Derived>
     </Fact>
-    <Fact path="/actualMovingExpensesForArmedServicesMembers">
+    <Fact path="/movingExpensesForArmedServicesMembers">
       <Description>Moving expenses for members of armed services</Description>
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
-    <Fact path="/actualAlimonyPaid">
+    <Fact path="/alimonyPaid">
       <Description>Alimony paid (pre 2019 divorce)</Description>
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
-    <Fact path="/actualPenaltyForEarlySavingsWithdrawal">
+    <Fact path="/penaltyForEarlySavingsWithdrawal">
       <Description>Penalty for early withdrawal of savings</Description>
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
-    <Fact path="/selfEmploymentHealthInsuranceContributions">
-      <Description>Self-employed health insurance contributions. Implements Form 7206</Description>
+    <Fact path="/selfEmploymentHealthInsuranceContributionsSelf">
+      <Description>Self-employed health insurance contributions for self</Description>
       <Override>
         <Condition>
           <Not>
@@ -84,16 +99,59 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
-    <Fact path="/actualBusinessCreditsForEligible">
+    <Fact path="/selfEmploymentHealthInsuranceContributionsSpouse">
+      <Description>Self-employed health insurance contributions for spouse.</Description>
+      <Override>
+        <Condition>
+          <Not>
+            <Dependency path="/eitherTPHasSelfEmploymentIncome"/>
+          </Not>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/selfEmploymentHealthInsuranceContributions">
+      <Description>Self-employed health insurance contributions for both self and spouse. Implements Form 7206</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/selfEmploymentHealthInsuranceContributionsSelf"/>
+          <Dependency path="/selfEmploymentHealthInsuranceContributionsSpouse"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/businessCreditsForEligible">
       <Description>Business credits for reservists, performing artists, and fee-based government
         officials</Description>
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
-    <Fact path="/selfEmployedRetirementPlanContributions">
+    <Fact path="/selfEmploymentRetirementPlanContributions">
       <Description>Self-employed contributions to eligible retirement plans.</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/selfEmploymentHealthInsuranceContributionsSelf"/>
+          <Dependency path="/selfEmploymentHealthInsuranceContributionsSpouse"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentRetirementPlanContributionsSelf">
+      <Description>Self-employed contributions to eligible retirement plans for self.</Description>
       <Override>
         <Condition>
           <Not>
@@ -107,6 +165,28 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/selfEmploymentRetirementPlanContributionsSpouse">
+      <Description>Self-employed contributions to eligible retirement plans for spouse.</Description>
+      <Override>
+        <Condition>
+          <Not>
+            <Dependency path="/eitherTPHasSelfEmploymentIncome"/>
+          </Not>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/adjustmentsToIncomeExcludingStudentLoanInterest">
       <Description>The adjustments to income used in the calculation of non-IRA deduction MAGIs to determine deducible
@@ -114,16 +194,16 @@
         include be a sum of Schedule 1, lines 11 through 20, and 23 and 25</Description>
       <Derived>
         <Add>
-          <Dependency path="/actualEducatorExpensesAdjustmentAmount"/>
-          <Dependency path="/actualBusinessCreditsForEligible"/>
-          <Dependency path="/actualHsaTotalDeductibleAmount"/>
+          <Dependency path="/educatorExpensesAdjustment"/>
+          <Dependency path="/businessCreditsForEligible"/>
+          <Dependency path="/hsaDeduction"/>
           <Dependency path="/selfEmploymentTaxDeduction"/>
-          <Dependency path="/actualMovingExpensesForArmedServicesMembers"/>
-          <Dependency path="/actualSelfEmployedRetirementPlanDeduction"/>
-          <Dependency path="/actualSelfEmploymentHealthInsuranceDeduction"/>
-          <Dependency path="/actualPenaltyForEarlySavingsWithdrawal"/>
-          <Dependency path="/actualAlimonyPaid"/>
-          <Dependency path="/actualDeductionForTraditionalIRAContribution"/>
+          <Dependency path="/movingExpensesForArmedServicesMembers"/>
+          <Dependency path="/selfEmploymentRetirementPlanDeduction"/>
+          <Dependency path="/selfEmploymentHealthInsuranceDeduction"/>
+          <Dependency path="/penaltyForEarlySavingsWithdrawal"/>
+          <Dependency path="/alimonyPaid"/>
+          <Dependency path="/traditionalIRAContributionDeduction"/>
         </Add>
       </Derived>
     </Fact>
@@ -134,7 +214,7 @@
           <Round>
             <Add>
               <Dependency path="/adjustmentsToIncomeExcludingStudentLoanInterest"/>
-              <Dependency path="/actualStudentLoanInterestAdjustmentAmount"/>
+              <Dependency path="/studentLoanInterestDeduction"/>
             </Add>
           </Round>
           <Dollar>0</Dollar>

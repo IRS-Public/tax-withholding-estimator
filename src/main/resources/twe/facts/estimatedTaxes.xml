@@ -7,6 +7,9 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
   </Facts>
 </FactDictionaryModule>

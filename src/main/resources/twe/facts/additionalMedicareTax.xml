@@ -25,8 +25,7 @@
     <Fact path="/medicareWagesAndTipsForm8959Line1">
       <Description> Form 8959 Part I Line 1. Per the Form instructions, this should include the total Medicare wages and tips plus your self-employment income, if any (including the Medicare wages and tips and self-employment income of your spouse, if married filing jointly), are greater than the threshold amount for your filing status. See example 5 https://www.irs.gov/instructions/i8959</Description>
       <Derived>
-        <!--        TODO: Confirm that this is the right aggregate fact-->
-        <Dependency path="/totalJobsIncomeSelfAndSpouse"/>
+        <Dependency path="/jobsIncomeTotal"/>
       </Derived>
     </Fact>
     <Fact path="/unreportedTipsForm8959Line2">
@@ -110,7 +109,7 @@
       </Derived>
     </Fact>
     <Fact path="/selfEmploymentIncomeForm8959Line8">
-      <Description> Form 8959 Part I Line 1. Per the Form instructions, this should include the total Medicare wages and tips plus your self-employment income, if any (including the Medicare wages and tips and self-employment income of your spouse, if married filing jointly), are greater than the threshold amount for your filing status</Description>
+      <Description> Form 8959 Part I Line 8. Per the Form instructions, this should include the total Medicare wages and tips plus your self-employment income, if any (including the Medicare wages and tips and self-employment income of your spouse, if married filing jointly), are greater than the threshold amount for your filing status</Description>
       <Derived>
         <Add>
           <Dependency path="/scheduleSELine6Self"/>
@@ -181,7 +180,7 @@
       </Derived>
     </Fact>
     <Fact path="/additionalMedicareTax">
-      <Description>Form8959 Line17</Description>
+      <Description>Form8959 Line 17</Description>
       <Derived>
         <Add>
           <Dependency path="/additionalMedicareTaxOnMedicareWagesForm5969Line7"/>

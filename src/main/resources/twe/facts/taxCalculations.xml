@@ -9,7 +9,7 @@
         <Round>
           <Subtract>
             <Minuend>
-              <Dependency path="/totalIncome"/>
+              <Dependency path="/incomeTotal"/>
             </Minuend>
             <Subtrahends>
               <Dependency path="/adjustmentsToIncome"/>
@@ -208,8 +208,8 @@
             <Case>
               <When>
                 <Any>
-                  <Dependency module="filingStatus" path="/isFilingStatusMFJ"/>
-                  <Dependency module="filingStatus" path="/isFilingStatusQSS"/>
+                  <Dependency path="/isFilingStatusMFJ"/>
+                  <Dependency path="/isFilingStatusQSS"/>
                 </Any>
               </When>
               <Then>
@@ -418,7 +418,7 @@
             <!-- HEAD OF HOUSEHOLD -->
             <Case>
               <When>
-                <Dependency module="filingStatus" path="/isFilingStatusHOH"/>
+                <Dependency path="/isFilingStatusHOH"/>
               </When>
               <Then>
                 <Switch>
@@ -625,7 +625,7 @@
             <!-- SINGLE -->
             <Case>
               <When>
-                <Dependency module="filingStatus" path="/isFilingStatusSingle"/>
+                <Dependency path="/isFilingStatusSingle"/>
               </When>
               <Then>
                 <Switch>
@@ -833,7 +833,7 @@
             <!-- MARRIED FILING SEPARATELY -->
             <Case>
               <When>
-                <Dependency module="filingStatus" path="/isFilingStatusMFS"/>
+                <Dependency path="/isFilingStatusMFS"/>
               </When>
               <Then>
                 <Switch>
@@ -1172,7 +1172,7 @@
       <Derived>
         <Subtract>
           <Minuend>
-            <Dependency path="/totalIncome"/>
+            <Dependency path="/incomeTotal"/>
           </Minuend>
           <Subtrahends>
             <Dependency path="/adjustmentsToIncomeExcludingStudentLoanInterest"/>

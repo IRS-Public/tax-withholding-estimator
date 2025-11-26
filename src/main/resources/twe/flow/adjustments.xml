@@ -96,19 +96,19 @@
         <input type="dollar"/>
       </fg-set>
       <h2>Moving expenses for members of armed services and intelligence community</h2>
-      <fg-set path="/actualMovingExpensesForArmedServicesMembers">
+      <fg-set path="/movingExpensesForArmedServicesMembers">
         <question>
           Moving expenses for members of armed services and intelligence community
         </question>
         <input type="dollar"/>
       </fg-set>
       <h2>Alimony paid</h2>
-      <fg-set path="/actualAlimonyPaid">
+      <fg-set path="/alimonyPaid">
         <question>Alimony paid (pre 2019 divorce)</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Penalty for early withdrawal of savings</h2>
-      <fg-set path="/actualPenaltyForEarlySavingsWithdrawal">
+      <fg-set path="/penaltyForEarlySavingsWithdrawal">
         <question>Penalty for early withdrawal of savings</question>
         <input type="dollar"/>
       </fg-set>
@@ -119,25 +119,28 @@
       </fg-set>
       <p/>
       <h2>Certain business expenses</h2>
-      <fg-set path="/actualBusinessCreditsForEligible">
+      <fg-set path="/businessCreditsForEligible">
         <question>
           Business credits for reservists, performing artists, and fee-based government officials
         </question>
         <input type="dollar"/>
       </fg-set>
       <h2 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Self-employed health insurance deduction</h2>
-      <fg-set path="/selfEmploymentHealthInsuranceContributions" if-true="/eitherTPHasSelfEmploymentIncome">
-        <question>Self-employed health insurance deduction</question>
+      <fg-set path="/selfEmploymentHealthInsuranceContributionsSelf" if-true="/primaryHasSelfEmploymentIncome">
+        <question>What is your self-employment health insurance contributions for this year?</question>
+        <input type="dollar"/>
+      </fg-set>
+      <fg-set path="/selfEmploymentHealthInsuranceContributionsSpouse" if-true="/spouseHasSelfEmploymentIncome">
+        <question>What is your spouse's self-employment health insurance contributions for this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Self-employed retirement plan deduction</h2>
-      <fg-set path="/selfEmployedRetirementPlanContributions" if-true="/eitherTPHasSelfEmploymentIncome">
-        <question>Self-employed retirement plan deduction</question>
+      <fg-set path="/selfEmploymentRetirementPlanContributionsSelf" if-true="/primaryHasSelfEmploymentIncome">
+        <question>What is your self-employment retirement plan contributions for this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Estimated taxes paid</h2>
-      <fg-set path="/totalEstimatedTaxesPaid">
-        <question>If you [and your spouse] made any estimated tax payments this year, you may deduct those. This does not include taxes withheld from your paycheck .</question>
+      <fg-set path="/selfEmploymentRetirementPlanContributionsSpouse" if-true="/spouseHasSelfEmploymentIncome">
+        <question>What is your spouse's self-employment retirement plan contributions for this year?</question>
         <input type="dollar"/>
       </fg-set>
     </section>

@@ -101,7 +101,7 @@ class StandardDeductionSpec extends AnyFunSpec {
             Path("/primaryFilerIsClaimedOnAnotherReturn") -> filerIsClaimed,
             Path("/primaryFilerIsBlind") -> filerIsBlind,
             Path("/primaryFilerAge65OrOlder") -> filerIsSenior,
-            Path("/totalIncome") -> totalIncome,
+            Path("/incomeTotal") -> totalIncome,
           )
 
           if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {

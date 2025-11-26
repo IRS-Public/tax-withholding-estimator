@@ -9,11 +9,60 @@
         <Collection/>
       </Writable>
     </Fact>
+    <Fact path="/filerAssignmentOption">
+      <Name>Filer Assignment Option</Name>
+      <Derived>
+        <EnumOptions>
+          <String>self</String>
+          <String>spouse</String>
+        </EnumOptions>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/filerAssignment">
+      <Description>Whether this job is attributed to the primary filer or spouse if MFJ</Description>
+      <Override>
+        <Condition>
+          <!--          If the filing status is non-MFJ, the default must be a self assignment-->
+          <Not>
+            <Dependency path="/isFilingStatusMFJ"/>
+          </Not>
+        </Condition>
+        <Default>
+          <Enum optionsPath="/filerAssignment">self</Enum>
+        </Default>
+      </Override>
+      <Writable>
+        <Enum optionsPath="/filerAssignmentOption"/>
+      </Writable>
+    </Fact>
     <Fact path="/jobs/*/isAllYear">
       <Description>Whether this job was held for the entire tax year.</Description>
       <Writable>
         <Boolean/>
       </Writable>
+    </Fact>
+    <Fact path="/jobs/*/overtimeCompensationExcludingQualifiedTipsOvertimeComp">
+      <Name>Overtime Compensation Excluding Qualified Tip Overtime Comp</Name>
+      <Description>OB3 &#xA7;70202 IRC &#xA7;225(c)(2). Overtime compensation excluding all
+        qualified tips
+        defined
+        in IRC &#xA7;224 that were received as part of qualified overtime compensation</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/qualifiedTipIncome">
+      <Name>Qualified Tip Income</Name>
+      <Description>OB3 &#xA7;70201; IRC &#xA7;224. Qualified tip income</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/writableStartDate">
       <Description>The first date the job was held in the current calendar year, if not an all year
@@ -66,23 +115,35 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/yearToDateIncome">
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/yearToDateWithholding">
       <Description>The year-to-date withholding from a specific job</Description>
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/averageWithholdingPerPayPeriod">
       <Description>The average withholding from a specific job per pay period</Description>
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/payFrequency">
       <Name>Pay Frequency</Name>
@@ -96,21 +157,33 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/retirementPlanContributions">
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/healthInsuranceContributions">
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/hsaOrFsaContributions">
       <Writable>
         <Dollar/>
       </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <!--    DERIVATION LOGIC STARTS HERE. payPeriodCalculations.xml does the heavy lifting for calculating
     remaining pay periods. withholdingCalculations.xml does the heavy lifting for W4 results and recommendations
@@ -123,6 +196,8 @@
             <Add>
               <Dependency path="../restOfYearIncome"/>
               <Dependency path="../yearToDateIncome"/>
+              <Dependency path="../overtimeCompensationExcludingQualifiedTipsOvertimeComp"/>
+              <Dependency path="../qualifiedTipIncome"/>
             </Add>
           </Minuend>
           <Subtrahends>
@@ -430,6 +505,34 @@
       <Derived>
         <Filter path="/jobs">
           <Dependency path="isHeldToYearEnd"/>
+        </Filter>
+      </Derived>
+    </Fact>
+    <Fact path="/jobsAssignedToSelf">
+      <Derived>
+        <Filter path="/jobs">
+          <Equal>
+            <Left>
+              <Dependency path="filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignment">self</Enum>
+            </Right>
+          </Equal>
+        </Filter>
+      </Derived>
+    </Fact>
+    <Fact path="/jobsAssignedToSpouse">
+      <Derived>
+        <Filter path="/jobs">
+          <Equal>
+            <Left>
+              <Dependency path="filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignment">spouse</Enum>
+            </Right>
+          </Equal>
         </Filter>
       </Derived>
     </Fact>

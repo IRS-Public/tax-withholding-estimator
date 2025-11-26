@@ -23,8 +23,8 @@ class AdditionalMedicareTaxSpec extends AnyFunSuite with TableDrivenPropertyChec
       "status",
       "netSelfEmploymentIncomeSelf",
       "netSelfEmploymentIncomeSpouse",
-      "totalJobsIncome",
-      "totalJobsIncomeSpouse",
+      "jobsIncomeSelf",
+      "jobsIncomeSpouse",
       "expectedScheduleSELine6Self",
       "expectedScheduleSELine6Spouse",
       "expectedAdditionalMedicareTaxOnMedicareWagesForm5969Line7",
@@ -130,8 +130,8 @@ class AdditionalMedicareTaxSpec extends AnyFunSuite with TableDrivenPropertyChec
           status,
           netSelfEmploymentIncomeSelf,
           netSelfEmploymentIncomeSpouse,
-          totalJobsIncome,
-          totalJobsIncomeSpouse,
+          jobsIncomeSelf,
+          jobsIncomeSpouse,
           expectedScheduleSELine6Self,
           expectedScheduleSELine6Spouse,
           expectedAdditionalMedicareTaxOnMedicareWagesForm5969Line7,
@@ -143,8 +143,8 @@ class AdditionalMedicareTaxSpec extends AnyFunSuite with TableDrivenPropertyChec
           Path("/filingStatus") -> status,
           Path("/netSelfEmploymentIncomeSelf") -> Dollar(netSelfEmploymentIncomeSelf),
           Path("/netSelfEmploymentIncomeSpouse") -> Dollar(netSelfEmploymentIncomeSpouse),
-          Path("/totalJobsIncome") -> Dollar(totalJobsIncome),
-          Path("/totalJobsIncomeSpouse") -> Dollar(totalJobsIncomeSpouse),
+          Path("/jobsIncomeSelf") -> Dollar(jobsIncomeSelf),
+          Path("/jobsIncomeSpouse") -> Dollar(jobsIncomeSpouse),
         )
         val actualScheduleSELine6Self = graph.get("/scheduleSELine6Self")
         val actualScheduleSELine6Spouse = graph.get("/scheduleSELine6Spouse")

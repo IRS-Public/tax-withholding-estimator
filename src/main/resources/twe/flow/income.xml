@@ -14,6 +14,13 @@
         </p>
       </fg-alert>
       <fg-collection path="/jobs" item-name="Income source">
+        <fg-set path="/jobs/*/filerAssignment" if-true="/isFilingStatusMFJ">
+          <question>Who is this income for?</question>
+          <select options-path="/jobs/*/filerAssignmentOption">
+            <option value="self">Myself</option>
+            <option value="spouse">My spouse</option>
+          </select>
+        </fg-set>
         <fg-set path="/jobs/*/isAllYear">
           <question>
             Do you expect to have this job all year, from January 1 - December 31, 2025?
@@ -75,6 +82,14 @@
         </fg-set>
         <fg-set path="/jobs/*/hsaOrFsaContributions">
           <question>What HSA or FSA contributions have you made for this job?</question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/qualifiedTipIncome">
+          <question>How much qualified tips did you make for this job?</question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/overtimeCompensationExcludingQualifiedTipsOvertimeComp">
+          <question>How much was the half portion of time and a half of overtime compensation did you make for this job?</question>
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
@@ -173,6 +188,11 @@
           How much Social Security Benefits you received this year? (total amount from forms
           SSA-1099 and RRB-1099)
         </question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Estimated taxes paid</h2>
+      <fg-set path="/totalEstimatedTaxesPaid">
+        <question>If you [and your spouse] made any estimated tax payments this year, you may deduct those. This does not include taxes withheld from your paycheck .</question>
         <input type="dollar"/>
       </fg-set>
     </section>

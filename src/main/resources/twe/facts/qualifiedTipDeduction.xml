@@ -2,6 +2,15 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/qualifiedTipIncome">
+      <Name>Qualified Tip Income</Name>
+      <Description>OB3 &#xA7;70201; IRC &#xA7;224. Qualified tip income</Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobs/*/qualifiedTipIncome"/>
+        </CollectionSum>
+      </Derived>
+    </Fact>
     <Fact path="/maxQualifiedTipDeductionAmount">
       <Name>Maximum qualified tip deduction</Name>
       <Description>The maximum amount one is allowed to deduct of their tip income </Description>

@@ -217,7 +217,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/isPastJob") -> false,
       Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
@@ -277,6 +277,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("3000"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/filerAssignment") -> Enum("self", "/filerAssignment"),
+      Path(s"/jobs/#${job1Id}/overtimeCompensationExcludingQualifiedTipsOvertimeComp") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/qualifiedTipIncome") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
@@ -286,6 +289,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("100"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/filerAssignment") -> Enum("spouse", "/filerAssignment"),
+      Path(s"/jobs/#${job2Id}/overtimeCompensationExcludingQualifiedTipsOvertimeComp") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/qualifiedTipIncome") -> Dollar("0"),
       Path("/totalCtcAndOdc") -> Dollar("2000"),
       Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       Path("/netSelfEmploymentIncomeTotal") -> Dollar("0"),
@@ -293,7 +299,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/isPastJob") -> false,
       Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
       Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
@@ -349,6 +355,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("100"),
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("1000"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/filerAssignment") -> Enum("self", "/filerAssignment"),
+      Path(s"/jobs/#${job1Id}/overtimeCompensationExcludingQualifiedTipsOvertimeComp") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/qualifiedTipIncome") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
@@ -358,6 +367,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("100"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("900"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/filerAssignment") -> Enum("spouse", "/filerAssignment"),
+      Path(s"/jobs/#${job2Id}/overtimeCompensationExcludingQualifiedTipsOvertimeComp") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/qualifiedTipIncome") -> Dollar("0"),
       Path("/totalCtcAndOdc") -> Dollar("2000"),
       Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       Path("/netSelfEmploymentIncomeTotal") -> Dollar("0"),
@@ -365,7 +377,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/isPastJob") -> false,
       Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
       Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
@@ -421,6 +433,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("5700"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/filerAssignment") -> Enum("self", "/filerAssignment"),
+      Path(s"/jobs/#${job1Id}/overtimeCompensationExcludingQualifiedTipsOvertimeComp") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/qualifiedTipIncome") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-09-30"),
@@ -430,6 +445,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("400"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/filerAssignment") -> Enum("self", "/filerAssignment"),
+      Path(s"/jobs/#${job2Id}/overtimeCompensationExcludingQualifiedTipsOvertimeComp") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/qualifiedTipIncome") -> Dollar("0"),
       Path("/totalCtcAndOdc") -> Dollar("4000"),
       Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       Path("/netSelfEmploymentIncomeTotal") -> Dollar("0"),
@@ -437,7 +455,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/isPastJob") -> false,
       Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
       Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
@@ -520,7 +538,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       // Path("/usePreOb3StandardDeduction") -> true,
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/isPastJob") -> false,
@@ -604,7 +622,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/isPastJob") -> false,
       Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
@@ -907,7 +925,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val _job3Id = "697b03f6-2f2b-4fe0-be56-356e7695a677"
     // Derived overrides
     graph.set(Path("/adjustmentsToIncome"), Dollar(0))
-    graph.set(Path("/totalOtherIncome"), Dollar(0))
+    graph.set(Path("/otherIncomeTotal"), Dollar(0))
     graph.set(Path("/totalCredits"), Dollar(0))
     graph.set(Path("/nonItemizerCharitableContributionDeductionAmount"), Dollar("0"))
     graph.set(Path("/netSelfEmploymentIncomeTotal"), Dollar("0"))
@@ -1098,7 +1116,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
     // Derived overrides
     graph.set(Path("/adjustmentsToIncome"), Dollar(0))
-    graph.set(Path("/totalOtherIncome"), Dollar(0))
+    graph.set(Path("/otherIncomeTotal"), Dollar(0))
     graph.set(Path("/totalCredits"), Dollar(0))
     graph.set(Path("/nonItemizerCharitableContributionDeductionAmount"), Dollar("0"))
     graph.set(Path("/netSelfEmploymentIncomeTotal"), Dollar("0"))
@@ -1293,7 +1311,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val _job2Id = "b961fe59-0caf-4463-b8f6-e7955be1ae89"
     // Derived overrides
     graph.set(Path("/adjustmentsToIncome"), Dollar(0))
-    graph.set(Path("/totalOtherIncome"), Dollar(0))
+    graph.set(Path("/otherIncomeTotal"), Dollar(0))
     graph.set(Path("/totalCredits"), Dollar(0))
     graph.set(Path("/nonItemizerCharitableContributionDeductionAmount"), Dollar("0"))
     graph.set(Path("/netSelfEmploymentIncomeTotal"), Dollar("0"))
@@ -1346,7 +1364,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
   //     // Derived overrides
   //     Path("/adjustmentsToIncome") -> Dollar("0"),
-  //     Path("/totalOtherIncome") -> Dollar("0"),
+  //     Path("/otherIncomeTotal") -> Dollar("0"),
   //   )
 
   //   assert(graph.get(Path(s"/jobs/#${job1Id}/income")).value.contains(Dollar("84857.14")))
@@ -1387,7 +1405,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
       // Derived overrides
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path("/totalCredits") -> Dollar("0"),
       Path(s"/pensions/#${pension1Id}/remainingPayDates") -> 4,
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
@@ -1406,7 +1424,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2j")).value.contains(Dollar("5162")))
     assert(graph.get(Path(s"/pensions/#${pension1Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.17")))
 
-    assert(graph.get(Path("/totalPensionsIncome")).value.contains(Dollar("60000")))
+    assert(graph.get(Path("/pensionsIncomeTotal")).value.contains(Dollar("60000")))
     assert(graph.get(Path("/taxableIncome")).value.contains(Dollar("44250")))
     assert(graph.get(Path("/roundedTaxableIncome")).value.contains(Dollar("44275")))
     assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("5075")))
@@ -1442,7 +1460,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
       // Derived overrides
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path("/totalCredits") -> Dollar("0"),
       Path(s"/pensions/#${pension1Id}/remainingPayDates") -> 4,
       Path(s"/pensions/#${pension2Id}/remainingPayDates") -> 4,
@@ -1465,7 +1483,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     assert(graph.get(Path(s"/pensions/#${pension1Id}/pub15Worksheet1bLine2j")).value.contains(Dollar("5162")))
     assert(graph.get(Path(s"/pensions/#${pension1Id}/tentativeWithholdingAmount")).value.contains(Dollar("430.17")))
 
-    assert(graph.get(Path("/totalPensionsIncome")).value.contains(Dollar("120000")))
+    assert(graph.get(Path("/pensionsIncomeTotal")).value.contains(Dollar("120000")))
     assert(graph.get(Path("/taxableIncome")).value.contains(Dollar("104250")))
     assert(graph.get(Path("/roundedTaxableIncome")).value.contains(Dollar("104250")))
     assert(graph.get(Path("/tentativeTaxFromTaxableIncome")).value.contains(Dollar("17867")))
@@ -1498,7 +1516,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
       // Derived overrides
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path("/totalCredits") -> Dollar("0"),
       Path(s"/pensions/#${pension1Id}/remainingPayDates") -> 8,
       // Don't matters
@@ -1547,7 +1565,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path(s"/jobs/#${job1Id}/isPastJob") -> false,
       Path(s"/jobs/#${job1Id}/isCurrentJob") -> true,
       Path(s"/jobs/#${job1Id}/isFutureJob") -> false,
@@ -1598,7 +1616,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   //     // Derived overrides
   //     Path("/totalNonJobsIncome") -> Dollar("5204"), // spreadsheet row 248
   //     Path("/adjustmentsToIncome") -> Dollar("495"), // row 275
-  //     Path("/totalOtherIncome") -> Dollar("7000"),
+  //     Path("/otherIncomeTotal") -> Dollar("7000"),
   //   )
 
   //   if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
@@ -1659,8 +1677,8 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("20000"),
-      Path("/totalOtherIncome") -> Dollar("20000"),
+      Path("/otherIncomeTotal") -> Dollar("20000"),
+      Path("/otherIncomeTotal") -> Dollar("20000"),
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
@@ -1716,6 +1734,9 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/averageWithholdingPerPayPeriod") -> Dollar("500"),
       Path(s"/jobs/#${job1Id}/yearToDateWithholding") -> Dollar("2000"),
       Path(s"/jobs/#${job1Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/filerAssignment") -> Enum("self", "/filerAssignment"),
+      Path(s"/jobs/#${job1Id}/overtimeCompensationExcludingQualifiedTipsOvertimeComp") -> Dollar("0"),
+      Path(s"/jobs/#${job1Id}/qualifiedTipIncome") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/isAllYear") -> true,
       Path(s"/jobs/#${job2Id}/payFrequency") -> Enum("biWeekly", "/payFrequencyOptions"),
       Path(s"/jobs/#${job2Id}/mostRecentPayPeriodEnd") -> Day("2025-05-10"),
@@ -1725,13 +1746,16 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job2Id}/averageWithholdingPerPayPeriod") -> Dollar("300"),
       Path(s"/jobs/#${job2Id}/yearToDateWithholding") -> Dollar("3000"),
       Path(s"/jobs/#${job2Id}/totalBonusReceived") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/filerAssignment") -> Enum("spouse", "/filerAssignment"),
+      Path(s"/jobs/#${job2Id}/overtimeCompensationExcludingQualifiedTipsOvertimeComp") -> Dollar("0"),
+      Path(s"/jobs/#${job2Id}/qualifiedTipIncome") -> Dollar("0"),
       Path("/totalEstimatedTaxesPaid") -> Dollar("0"),
       Path("/netSelfEmploymentIncomeTotal") -> Dollar("0"),
       // Derived overrides
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
@@ -1797,7 +1821,7 @@ class TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       Path(s"/jobs/#${job1Id}/preTaxDeductions") -> Dollar("0"),
       Path(s"/jobs/#${job2Id}/preTaxDeductions") -> Dollar("0"),
       Path("/adjustmentsToIncome") -> Dollar("0"),
-      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/otherIncomeTotal") -> Dollar("0"),
       Path("/nonItemizerCharitableContributionDeductionAmount") -> Dollar("0"),
     )
 
