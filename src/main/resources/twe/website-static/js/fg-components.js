@@ -584,7 +584,6 @@ customElements.define('fg-collection-item', FgCollectionItem)
 class FgShow extends HTMLElement {
   constructor() {
     super()
-
     this.updateListener = () => this.render()
   }
 

@@ -1,4 +1,5 @@
 const parser = new DOMParser()
+const XML_SERIALIZER = new XMLSerializer()
 
 const res = await fetch('/twe/resources/fact-dictionary.xml')
 const text = await res.text()
@@ -33,49 +34,45 @@ function trackSelectedFact() {
 }
 
 function trackFact(path, collectionId) {
-  const auditedFact = document.createElement('audited-fact')
-
   const factPath = makeCollectionIdPath(path, collectionId)
-  if (AuditedFact.selectedFacts.has(factPath)) {
-    console.debug(`Already tracking ${factPath}`)
-    return
-  } else {
-    console.debug(`Tracking ${factPath}`)
-  }
 
+  const existingFact = auditedFactsList.querySelector(`audited-fact[path="${factPath}"]`)
+  if (existingFact) {
+    return existingFact.scrollIntoView()
+  }
+  console.debug(`Tracking ${factPath}`)
+
+  const auditedFact = document.createElement('audited-fact')
   auditedFact.setAttribute('path', path)
   auditedFact.setAttribute('collectionId', collectionId)
 
-  const listItem = document.createElement('li')
-  listItem.appendChild(auditedFact)
-  auditedFactsList.appendChild(listItem)
+  auditedFactsList.appendChild(auditedFact)
+  auditedFact.scrollIntoView()
 }
 
 function loadPaths() {
   const paths = factGraph.paths().sort()
-
-  pathOptions.append(...paths.map((path) => {
-    const option = document.createElement('option')
-    option.text = option.value = path
-    return option
-  }))
+  const options = paths.map((path) => `<option path=${path}>${path}</option>`)
+  pathOptions.innerHTML += options
 }
 
 class AuditedFact extends HTMLElement {
-  static selectedFacts = new Set()
-  static xmlSerializer = new XMLSerializer()
-  static dependencyClassName= 'audit-panel__fact__definition__dependency'
+  static factLinkClass = 'audit-panel__fact__definition__dependency'
 
   constructor() {
     super()
 
-    this.deleteListener = () => this.parentElement.remove()
+    this.deleteListener = () => this.remove()
     this.renderListener = () => this.render()
+    this.handleLinksListener = (e) => {
+      if (e.target?.classList.contains(AuditedFact.factLinkClass)) {
+        return this.trackDependencyListener(e)
+      }
+    }
+
     this.trackDependencyListener = (e) => {
-      trackFact(e.target.href.replace(/.*#\//, '/'), this.getAttribute('collectionid'))
-
       e.preventDefault()
-
+      trackFact(e.target.href.replace(/.*#\//, '/'), this.getAttribute('collectionid'))
       return false
     }
 
@@ -94,63 +91,72 @@ class AuditedFact extends HTMLElement {
   connectedCallback() {
     this.abstractPath = this.getAttribute('path')
     this.collectionId = this.getAttribute('collectionid')
-
     this.factPath = makeCollectionIdPath(this.abstractPath, this.collectionId)
+
     this.removeButton.addEventListener('click', this.deleteListener)
+    this.addEventListener('click', this.handleLinksListener)
     document.addEventListener(`fg-update`, this.renderListener)
 
-    AuditedFact.selectedFacts.add(this.factPath)
-
     this.render()
-    // The dependency links are added by `render`
-    for(const dependencyLink of this.querySelectorAll(`.${AuditedFact.dependencyClassName}`)) {
-      dependencyLink.addEventListener('click', this.trackDependencyListener)
-    }
   }
 
   disconnectedCallback() {
     this.removeButton.removeEventListener('click', this.deleteListener)
+    this.removeEventListener('click', this.handleLinksListener)
     document.removeEventListener(`fg-update`, this.renderListener)
-
-    for(const dependencyLink of this.querySelectorAll(`.${AuditedFact.dependencyClassName}`)) {
-      dependencyLink.removeEventListener('click', this.trackDependencyListener)
-    }
-
-    AuditedFact.selectedFacts.delete(this.factPath)
   }
 
   render() {
     const definition = factGraph.dictionary.getDefinition(this.factPath)
     const fact = factGraph.get(this.factPath)
 
+    // Fill out the data fields
     this.factPathElem.innerText = this.factPath
     this.factTypeElem.innerText = definition.typeNode
-    this.factValueElem.innerText = `${fact.hasValue ? fact.get.toString() + ' ' : ''}${fact.complete ? `[Complete]` : `[Incomplete]`}`;
+    const factValueString = fact.hasValue ? fact.get.toString() + ' ' : ''
+    const factCompleteString = fact.complete ? `[Complete]` : `[Incomplete]`
+    this.factValueElem.innerText = `${factValueString} ${factCompleteString}`;
 
+    // Serialize and sanitizie the fact definition for inclusion as HTML
+    // We do this because the definition will have live <a> links in it
     const xmlDefinition = factDictionaryXml.querySelector(`Fact[path="${this.abstractPath}"]`)
-    const dependencyNodes = Array.from(xmlDefinition.querySelectorAll('Dependency'))
-    const stringDefinition = AuditedFact.xmlSerializer.serializeToString(xmlDefinition).replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    const stringDefinition = XML_SERIALIZER.serializeToString(xmlDefinition)
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
 
-    const renderedDefinition = document.createElement('div')
-    renderedDefinition.setAttribute('slot', 'definition')
-    renderedDefinition.innerHTML = dependencyNodes.reduce((result, dependencyNode) => {
+    // Enhance the definition by adding links to dependencies
+    const dependencyNodes = Array.from(xmlDefinition.querySelectorAll('Dependency'))
+    const fullDefinition = dependencyNodes.reduce((result, dependencyNode) => {
       const rawPath = dependencyNode.getAttribute('path')
 
-      // If the dependency path is relative, expand it to the current collection
-      const dependencyPath = rawPath.replace('..', this.abstractPath.replace(/\*\/.*/, `*`))
-
-      if(rawPath.includes('*')) {
-        // We can't automatically follow non-relative, abstract paths
-        return result;
-      } else {
-        return result.replace(
-          `path="${rawPath}"`,
-          `path="<a class="${AuditedFact.dependencyClassName}" href="#${dependencyPath}">${rawPath}</a>"`
-        )
+      // For now, we can't resolve abstract collection paths ("/jobs/*/income")
+      if (rawPath.includes('*')) {
+        return result
       }
+      // but we can resolve relative paths ("../income")
+      const resolvedPath = rawPath.replace('..', this.abstractPath.replace(/\*\/.*/, `*`))
+
+      const link = `<a class="${AuditedFact.factLinkClass}" href="#${resolvedPath}">${rawPath}</a>`
+      return result.replace(`path="${rawPath}"`, `path="${link}"`)
     }, stringDefinition)
-    this.append(renderedDefinition)
+
+    const definitionElement = document.createElement('div')
+    definitionElement.setAttribute('slot', 'definition')
+    definitionElement.innerHTML = fullDefinition
+
+    this.append(definitionElement)
   }
 }
 customElements.define('audited-fact', AuditedFact)
 
+// Add links to all the <fg-show>s
+const fgShows = document.querySelectorAll('fg-show')
+for (const fgShow of fgShows) {
+  const link = document.createElement('a')
+  link.classList.add(AuditedFact.factLinkClass)
+  link.href = `#${fgShow.path}`
+  link.onclick = (e) => { e.preventDefault(); trackFact(fgShow.path) }
+
+  fgShow.parentElement.replaceChild(link, fgShow)
+  link.append(fgShow)
+}

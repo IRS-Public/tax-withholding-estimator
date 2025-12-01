@@ -1,3 +1,7 @@
 #audit-panel {
   /* Deliberately left empty for now */
 }
+
+fg-show {
+  background-color: lightyellow;
+}

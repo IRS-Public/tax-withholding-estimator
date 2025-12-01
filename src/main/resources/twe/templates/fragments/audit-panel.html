@@ -30,7 +30,7 @@
   </div>
 
   <div><button id="add-fact-button" type="button">Add fact</button> </div>
-  <ul id="audit-panel__fact-list"></ul>
+  <div id="audit-panel__fact-list"></div>
 </section>
 
 <template id="audit-panel__fact">
@@ -41,12 +41,12 @@
 
     <dt th:text="#{audit.fact.value}"></dt>
     <dd class="audit-panel__fact__value"></dd>
-
-    <dt th:text="#{audit.fact.definition}"></dt>
-    <dd class="audit-panel__fact__definition">
-      <pre><code><slot name="definition"></slot></code></pre>
-    </dd>
   </dl>
+
+  <div class="audit-panel__fact__definition">
+    <pre><code><slot name="definition"></slot></code></pre>
+  </div>
+
   <div class="audit-panel__fact__controls">
     <button class="audit-panel__fact__remove" th:text="#{audit.fact.remove}" type="button"></button>
   </div>
