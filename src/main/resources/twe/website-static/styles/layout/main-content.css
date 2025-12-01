@@ -4,7 +4,7 @@ body {
   }
 }
 
-main {
+main, #audit-panel {
   background-color: white;
 
   margin: 0 auto var(--units-6);

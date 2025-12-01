@@ -115,3 +115,13 @@ errors:
   # to the end of the string
   Max: Enter an amount less than
   Min: Enter an amount more than
+audit:
+  fact-select:
+    question: Fact Path
+    blank: -- Select a path --
+  collection-id-label: Collection ID
+  fact:
+    type: "Fact Type:"
+    value: "Value:"
+    remove: "Remove fact:"
+    definition: "XML Definition"
