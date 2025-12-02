@@ -14,7 +14,7 @@
     <Fact path="/maxQualifiedTipDeductionAmount">
       <Name>Maximum qualified tip deduction</Name>
       <Description>The maximum amount one is allowed to deduct of their tip income </Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>25000</Dollar>
       </Derived>
@@ -209,7 +209,6 @@
         below zero) by $100 for each $1,000 by which the
         taxpayer&#x2019;s MAGI exceeds $150,000 ($300,000 in the case of a joint return).
       </Description>
-      <TaxYear>2025</TaxYear>
       <Derived>
         <!-- Example: Single filer with MAGI of $160,500. This amount exceeds the relevant
           threshold

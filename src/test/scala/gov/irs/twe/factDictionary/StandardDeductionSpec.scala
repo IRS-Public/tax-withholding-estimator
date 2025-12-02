@@ -17,17 +17,17 @@ class StandardDeductionSpec extends AnyFunSpec {
     // Hopefully you will only need to update these values for a change in tax year.
     // <TaxYear>2025</TaxYear> TY25 TY2025
     object standardDeduction:
-      val single = 15750
-      val mfs = 15750
-      val qss = 31500
-      val hoh = 23625
-      val mfj = 31500
+      val single = 16100
+      val mfs = 16100
+      val qss = 32200
+      val hoh = 24150
+      val mfj = 32200
     object additionalStandardDeduction:
-      val single = 2000
-      val mfs = 1600
-      val qss = 1600
-      val hoh = 2000
-      val mfj = 1600
+      val single = 2050
+      val mfs = 1650
+      val qss = 1650
+      val hoh = 2050
+      val mfj = 1650
     object dependentStandardDeduction:
       // cannot exceed the greater of ...
       val baseLimit = 1350 // ... and ...

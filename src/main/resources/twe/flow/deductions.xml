@@ -21,6 +21,11 @@
         <question>Qualified interest</question>
         <input type="dollar"/>
       </fg-set>
+      <h2>Educator expenses</h2>
+      <fg-set path="/educatorExpensesAdjustmentTotal/">
+        <question>How much have you paid this year in educator expenses?</question>
+        <input type="dollar"/>
+      </fg-set>
       <h2>State and Local Taxes</h2>
       <p>There are four types of State and Local Taxes: 1) State, local, and foreign income taxes;
       2) State and local general sales taxes; 3) State and local real estate taxes; 4) State and
@@ -34,7 +39,7 @@
       <p>Total expenses that exceed 7.5% of your Estimated medical and dental expenses Can include
       the total estimated amount paid for health insurance premiums, not including any amount the
         employer pays</p>
-      <fg-set path="/medicalAndDentalExpenses/">
+      <fg-set path="/medicalAndDentalExpensesTotal/">
         <question>Total amount for a single medical or dental expense category</question>
         <input type="dollar"/>
       </fg-set>
@@ -46,13 +51,13 @@
       <h2>Casualty losses</h2>
       <p>Casualty and theft losses relating to your home, household items, and vehicles if
         the loss took place in a federally declared disaster area</p>
-      <fg-set path="/casualtyLosses">
+      <fg-set path="/casualtyLossesTotal">
         <question>Total casualty loss from a specific loss event</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Other itemized deductions</h2>
       <p>You can deduct any of these expenses...</p>
-      <fg-set path="/otherDeductions/">
+      <fg-set path="/otherDeductionsTotal/">
         <question>Other deductions</question>
         <input type="dollar"/>
       </fg-set>

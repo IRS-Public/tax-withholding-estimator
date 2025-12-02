@@ -50,8 +50,8 @@
     <Fact path="/additionalStandardDeductionMultiplier">
       <Name>Additional standard deduction multiplier</Name>
       <Description>The amount to add to the standard deduction for each additional item. Rev Proc
-        .15 Standard Deduction &#xA7;63(f)</Description>
-      <TaxYear>2025</TaxYear>
+        .14 Standard Deduction &#xA7;63(f)</Description>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -62,7 +62,7 @@
               </Any>
             </When>
             <Then>
-              <Dollar>2000</Dollar>
+              <Dollar>2050</Dollar>
             </Then>
           </Case>
           <Case>
@@ -74,7 +74,7 @@
               </Any>
             </When>
             <Then>
-              <Dollar>1600</Dollar>
+              <Dollar>1650</Dollar>
             </Then>
           </Case>
         </Switch>
@@ -103,7 +103,7 @@
       <Name>Married Filing Jointly Standard Deduction</Name>
       <Description>Standard Deduction for filers who are married filing jointly. Rev Proc .15
         Standard Deduction &#xA7;1(j)(2)(A)</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -119,7 +119,7 @@
               <True/>
             </When>
             <Then>
-              <Dollar>31500</Dollar>
+              <Dollar>32200</Dollar>
             </Then>
           </Case>
         </Switch>
@@ -129,7 +129,7 @@
       <Name>Single or Married Filing Separately Standard Deduction</Name>
       <Description>Standard Deduction for filers who are married filing separately or single. Rev
         Proc .15 Standard Deduction &#xA7;1(j)(2)(C) &#xA7;1(j)(2)(D)</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -145,7 +145,7 @@
               <True/>
             </When>
             <Then>
-              <Dollar>15750</Dollar>
+              <Dollar>16100</Dollar>
             </Then>
           </Case>
         </Switch>
@@ -155,7 +155,7 @@
       <Name>HoH Standard Deduction</Name>
       <Description>Standard Deduction for filers who are filing HoH. Rev Proc .15 Standard Deduction
         &#xA7;1(j)(2)(B)</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -171,7 +171,7 @@
               <True/>
             </When>
             <Then>
-              <Dollar>23625</Dollar>
+              <Dollar>24150</Dollar>
             </Then>
           </Case>
         </Switch>
@@ -228,7 +228,7 @@
       <Description>The alternative amount to use as the standard deduction if a filer can be claimed
         as a dependent. This amount is not used if it exceeds the normal amount of the standard
         deduction.</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Add>
           <GreaterOf>

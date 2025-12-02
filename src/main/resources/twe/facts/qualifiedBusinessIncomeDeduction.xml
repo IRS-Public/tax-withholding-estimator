@@ -33,7 +33,7 @@
         greater of&#x2014;(A) the amount of such deduction determined without regard to this
         subsection,
         or (B) $400.</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>400</Dollar>
       </Derived>
@@ -46,7 +46,7 @@
         taxable year, a taxpayer
         whose aggregate qualified business income with respect to all active qualified trades or
         businesses of the taxpayer for such taxable year is at least $1,000.</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>1000</Dollar>
       </Derived>

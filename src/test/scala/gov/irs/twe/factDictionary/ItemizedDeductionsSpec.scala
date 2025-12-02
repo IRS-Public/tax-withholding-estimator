@@ -31,7 +31,7 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // slightly above threshold, but not enough to trigger reduction
     (single, "626351", "5000", "5000"),
     // slightly above threshold with minimal reduction
-    (single, "626364", "5000", "4999"),
+    (single, "657000", "5000", "4730"),
     // well above threshold with no itemized
     (single, "1000000", "0", "0"),
     // well above threshold with itemized less than excess - 2/37 * itemized total (5000)
@@ -39,7 +39,7 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // well above threshold with itemized less than excess - 2/37 * itemized total (1000)
     (single, "1000000", "10000", "9459"),
     // slightly above threshold with itemized greater than excess - 2/37 * excess total (100)
-    (single, "626450", "1000", "995"),
+    (single, "657000", "1000", "946"),
 
     /////////// MFS/////////////////////////////////////////////////////////
     // low income, no itemized deductions
@@ -55,7 +55,7 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // slightly above threshold, but not enough to trigger reduction
     (hoh, "626351", "5000", "5000"),
     // slightly above threshold with minimal reduction
-    (hoh, "626364", "5000", "4999"),
+    (hoh, "657000", "5000", "4730"),
     // well above threshold with no itemized
     (hoh, "1000000", "0", "0"),
     // well above threshold with itemized less than excess - 2/37 * itemized total (5000)
@@ -63,7 +63,7 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // well above threshold with itemized less than excess - 2/37 * itemized total (1000)
     (hoh, "1000000", "10000", "9459"),
     // slightly above threshold with itemized greater than excess - 2/37 * excess total (100)
-    (hoh, "626450", "1000", "995"),
+    (hoh, "657000", "1000", "946"),
 
     /////////// MFS/////////////////////////////////////////////////////////
     // low income, no itemized deductions
@@ -79,7 +79,7 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // slightly above threshold, but not enough to trigger reduction
     (mfs, "375801", "5000", "5000"),
     // slightly above threshold with minimal reduction
-    (mfs, "375814", "5000", "4999"),
+    (mfs, "657000", "5000", "4730"),
     // well above threshold with no itemized
     (mfs, "1000000", "0", "0"),
     // well above threshold with itemized less than excess - 2/37 * itemized total (5000)
@@ -87,7 +87,7 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // well above threshold with itemized less than excess - 2/37 * itemized total (1000)
     (mfs, "1000000", "10000", "9459"),
     // slightly above threshold with itemized greater than excess - 2/37 * excess total (100)
-    (mfs, "375914", "1000", "994"),
+    (mfs, "657000", "1000", "946"),
 
     /////////// QSS/////////////////////////////////////////////////////////
     // low income, no itemized deductions
@@ -103,7 +103,7 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // slightly above threshold, but not enough to trigger reduction
     (qss, "751601", "5000", "5000"),
     // slightly above threshold with minimal reduction
-    (qss, "751614", "5000", "4999"),
+    (qss, "771614", "5000", "4842"),
     // well above threshold with no itemized
     (qss, "1000000", "0", "0"),
     // well above threshold with itemized less than excess - 2/37 * itemized total (5000)
@@ -111,7 +111,7 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // well above threshold with itemized less than excess - 2/37 * itemized total (1000)
     (qss, "1000000", "10000", "9459"),
     // slightly above threshold with itemized greater than excess - 2/37 * excess total (100)
-    (qss, "751700", "1000", "995"),
+    (qss, "771614", "1000", "946"),
 
     /////////// MFJ/////////////////////////////////////////////////////////
     // low income, no itemized deductions
@@ -127,7 +127,7 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // slightly above threshold, but not enough to trigger reduction
     (mfj, "751601", "5000", "5000"),
     // slightly above threshold with minimal reduction
-    (mfj, "751614", "5000", "4999"),
+    (mfj, "771614", "5000", "4842"),
     // well above threshold with no itemized
     (mfj, "1000000", "0", "0"),
     // well above threshold with itemized less than excess - 2/37 * itemized total (5000)
@@ -135,7 +135,7 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // well above threshold with itemized less than excess - 2/37 * itemized total (1000)
     (mfj, "1000000", "10000", "9459"),
     // slightly above threshold with itemized greater than excess - 2/37 * excess total (100)
-    (mfj, "751700", "1000", "995"),
+    (mfj, "771614", "1000", "946"),
   )
 
   test("test OB3: 70111 itemized deduction limitations calculation reduction correctly") {

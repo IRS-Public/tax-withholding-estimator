@@ -16,21 +16,20 @@
     </Fact>
     <Fact path="/maxOvertimeCompensationDeductionAmountNonMFJ">
       <Name>Maximum overtime compensation deduction for non MFJ filers</Name>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>12500</Dollar>
       </Derived>
     </Fact>
     <Fact path="/maxOvertimeCompensationDeductionAmountMFJ">
       <Name>Maximum overtime compensation deduction for MFJ filers</Name>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>25000</Dollar>
       </Derived>
     </Fact>
     <Fact path="/applicableMaxOvertimeCompensationDeductionAmount">
       <Name>Maximum overtime compensation deduction </Name>
-      <TaxYear>2025</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -159,7 +158,6 @@
         below zero) by $100 for each $1,000 by which the
         taxpayer&#x2019;s MAGI exceeds $150,000 ($300,000 in the case of a joint return).
       </Description>
-      <TaxYear>2025</TaxYear>
       <Derived>
         <!-- Example: Single filer with MAGI of $160,500. This amount exceeds the relevant
           threshold

@@ -41,7 +41,7 @@
       </Placeholder>
     </Fact>
     <Fact path="/maxAotcAdjustedQualifiedExpenseCap">
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>4000</Dollar>
       </Derived>

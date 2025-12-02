@@ -44,21 +44,21 @@
     </Fact>
     <Fact path="/adoptionMagiPhaseoutThreshold">
       <Description>Phaseout threshold for MAGI</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>259190</Dollar>
+        <Dollar>265080</Dollar>
       </Derived>
     </Fact>
     <Fact path="/maxRefundableAdoptionCreditAmount">
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>5000</Dollar>
+        <Dollar>5120</Dollar>
       </Derived>
     </Fact>
     <Fact path="/maxAdoptionCreditPerChild">
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>17280</Dollar>
+        <Dollar>17670</Dollar>
       </Derived>
     </Fact>
     <Fact path="/adoptionCreditMagi">

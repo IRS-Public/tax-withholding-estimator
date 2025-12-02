@@ -37,27 +37,6 @@
       </details>
       <details open="true">
         <summary>
-          <h2>Educator expenses</h2>
-        </summary>
-        <div class="usa-prose">
-          <p>If you're a K-12 educator, you can deduct up to $300 of unreimbursed expenses. If
-          you're filing a joint tax return and both of you are educators, you can deduct up to
-            $600.</p>
-          <p>Qualified expenses include:</p>
-          <ul>
-            <li>Professional development courses</li>
-            <li>Books, supplies, computer equipment (including related software and services)</li>
-            <li>Other equipment, and supplementary materials that you use in the classroom</li>
-          </ul>
-          <p>Learn more about educator expenses [X].</p>
-        </div>
-        <fg-set path="/educatorExpenses">
-          <question>How much have you paid this year in educator expenses?</question>
-          <input type="dollar"/>
-        </fg-set>
-      </details>
-      <details open="true">
-        <summary>
           <h2>Cash charitable contributions</h2>
         </summary>
         <div class="usa-prose">
@@ -80,7 +59,7 @@
         <input type="dollar"/>
       </fg-set>
       <h2>Health Savings Account Contributions</h2>
-      <fg-set path="/hsaTotalDeductibleAmount">
+      <fg-set path="/hsaContributionAmount">
         <question>
           What&#x2019;s the total amount of deductible Health Savings Account contributions you made
           this year?

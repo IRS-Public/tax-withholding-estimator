@@ -2,10 +2,7 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/hsaTotalDeductibleAmount">
-      <Description>HSA total deductible amount, no logic in place for actually calculating the
-        applicable
-        amount</Description>
+    <Fact path="/hsaContributionAmount">
       <Writable>
         <Dollar/>
       </Writable>
@@ -14,19 +11,17 @@
       </Placeholder>
     </Fact>
     <Fact path="/hsaTotalDeductibleAmountMax">
-      <Description>Maximum annual deductible and other out-of-pocket expenses for family</Description>
-      <TaxYear>2025</TaxYear>
+      <Description>Maximum annual deductible and other out-of-pocket expenses for family. We are agnostic to filing status so double to 17000 and do not take MAGI into account for simplified computation</Description>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>16600</Dollar>
+        <Dollar>17000</Dollar>
       </Derived>
     </Fact>
     <Fact path="/hsaDeduction">
-      <Description>HSA total deductible amount, no logic in place for actually calculating the
-        applicable
-        amount</Description>
+      <Description>HSA total deductible amount</Description>
       <Derived>
         <LesserOf>
-          <Dependency path="/hsaTotalDeductibleAmount"/>
+          <Dependency path="/hsaContributionAmount"/>
           <Dependency path="/hsaTotalDeductibleAmountMax"/>
         </LesserOf>
       </Derived>
@@ -194,7 +189,6 @@
         include be a sum of Schedule 1, lines 11 through 20, and 23 and 25</Description>
       <Derived>
         <Add>
-          <Dependency path="/educatorExpensesAdjustment"/>
           <Dependency path="/businessCreditsForEligible"/>
           <Dependency path="/hsaDeduction"/>
           <Dependency path="/selfEmploymentTaxDeduction"/>

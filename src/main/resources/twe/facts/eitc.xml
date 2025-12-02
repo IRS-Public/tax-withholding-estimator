@@ -184,9 +184,9 @@
         Rev Proc .06 Earned
         Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>8260</Dollar>
+        <Dollar>8680</Dollar>
       </Derived>
     </Fact>
     <Fact path="/phaseInEndsFor1QualifyingChild">
@@ -195,9 +195,9 @@
         Rev Proc .06 Earned
         Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>12390</Dollar>
+        <Dollar>13020</Dollar>
       </Derived>
     </Fact>
     <Fact path="/phaseInEndsFor2OrMoreQualifyingChildren">
@@ -206,9 +206,9 @@
         Rev Proc .06
         Earned Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>17400</Dollar>
+        <Dollar>18290</Dollar>
       </Derived>
     </Fact>
     <Fact path="/maxEitcWith0QualifyingChildren">
@@ -402,7 +402,7 @@
         Rev Proc .06 Earned Income
         Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -428,7 +428,7 @@
                     </Equal>
                   </When>
                   <Then>
-                    <Dollar>10330</Dollar>
+                    <Dollar>10860</Dollar>
                   </Then>
                 </Case>
                 <Case>
@@ -443,7 +443,7 @@
                     </GreaterThanOrEqual>
                   </When>
                   <Then>
-                    <Dollar>22720</Dollar>
+                    <Dollar>23890</Dollar>
                   </Then>
                 </Case>
               </Switch>
@@ -467,7 +467,7 @@
                     </Equal>
                   </When>
                   <Then>
-                    <Dollar>17250</Dollar>
+                    <Dollar>18140</Dollar>
                   </Then>
                 </Case>
                 <Case>
@@ -482,7 +482,7 @@
                     </GreaterThanOrEqual>
                   </When>
                   <Then>
-                    <Dollar>29640</Dollar>
+                    <Dollar>31160</Dollar>
                   </Then>
                 </Case>
               </Switch>
@@ -496,9 +496,9 @@
       <Description>EITC limit with 3 or more children when filing as MFJ
         Rev Proc .06 Earned Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>66819</Dollar>
+        <Dollar>70244</Dollar>
       </Derived>
     </Fact>
     <Fact path="/eitcSelfLimitWithThreeOrMoreChildren">
@@ -506,9 +506,9 @@
       <Description>EITC limit with 3 or more children when not filing as MFJ
         Rev Proc .06 Earned Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>59899</Dollar>
+        <Dollar>62974</Dollar>
       </Derived>
     </Fact>
     <Fact path="/eitcMfjLimitWithTwoChildren">
@@ -516,9 +516,9 @@
       <Description>EITC limit with 2 children when filing as MFJ
         Rev Proc .06 Earned Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>62688</Dollar>
+        <Dollar>65899</Dollar>
       </Derived>
     </Fact>
     <Fact path="/eitcSelfLimitWithTwoChildren">
@@ -526,9 +526,9 @@
       <Description>EITC limit with 2 children when not filing as MFJ
         Rev Proc .06 Earned Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>55768</Dollar>
+        <Dollar>58629</Dollar>
       </Derived>
     </Fact>
     <Fact path="/eitcMfjLimitWithOneChild">
@@ -536,9 +536,9 @@
       <Description>EITC limit with 1 child when filing as MFJ
         Rev Proc .06 Earned Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>56004</Dollar>
+        <Dollar>58863</Dollar>
       </Derived>
     </Fact>
     <Fact path="/eitcSelfLimitWithOneChild">
@@ -546,9 +546,9 @@
       <Description>EITC limit with 1 child when not filing as MFJ
         Rev Proc .06 Earned Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>49084</Dollar>
+        <Dollar>51593</Dollar>
       </Derived>
     </Fact>
     <Fact path="/eitcMfjLimitWithZeroChildren">
@@ -556,9 +556,9 @@
       <Description>EITC limit with 0 children when filing as MFJ
         Rev Proc .06 Earned Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>25511</Dollar>
+        <Dollar>26820</Dollar>
       </Derived>
     </Fact>
     <Fact path="/eitcSelfLimitWithZeroChildren">
@@ -566,9 +566,9 @@
       <Description>EITC limit with 0 children when not filing as MFJ
         Rev Proc .06 Earned Income Credit &#xA7;32(b)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>18591</Dollar>
+        <Dollar>19540</Dollar>
       </Derived>
     </Fact>
     <Fact path="/eitcCompletedPhaseoutAmount">
@@ -1159,7 +1159,7 @@
       <Description>Whether the TP's Investment Income is low enough for the EITC
         Rev Proc .06 Earned Income Credit &#xA7;32(i)
       </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <LessThanOrEqual>
           <Left>
@@ -1179,8 +1179,8 @@
             </Add>
           </Left>
           <Right>
-            <!-- Limit for 2024 -->
-            <Dollar>11600</Dollar>
+            <!-- Limit for 2026 -->
+            <Dollar>12200</Dollar>
           </Right>
         </LessThanOrEqual>
       </Derived>

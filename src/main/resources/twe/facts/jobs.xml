@@ -67,25 +67,25 @@
     <Fact path="/jobs/*/writableStartDate">
       <Description>The first date the job was held in the current calendar year, if not an all year
         job.</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <!-- Note that the limits on dates may be more restrictive in the future based on component
            implementation -->
       <!-- E.g., a future job cannot start before tomorrow -->
       <Writable>
         <Day/>
         <Limit type="Max">
-          <Day>2025-12-31</Day>
+          <Day>2026-12-31</Day>
         </Limit>
       </Writable>
     </Fact>
     <Fact path="/jobs/*/writableEndDate">
       <Description>The last date the job was held in the current calendar year, if not an all year
         job.</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Writable>
         <Day/>
         <Limit type="Max">
-          <Day>2025-12-31</Day>
+          <Day>2026-12-31</Day>
         </Limit>
       </Writable>
     </Fact>
@@ -96,7 +96,7 @@
       <Writable>
         <Day/>
         <Limit type="Max">
-          <Day>2025-12-31</Day>
+          <Day>2026-12-31</Day>
         </Limit>
       </Writable>
     </Fact>
@@ -107,7 +107,7 @@
       <Writable>
         <Day/>
         <Limit type="Max">
-          <Day>2025-12-31</Day>
+          <Day>2026-12-31</Day>
         </Limit>
       </Writable>
     </Fact>
@@ -226,7 +226,7 @@
     </Fact>
     <Fact path="/jobs/*/startDate">
       <Description>The first date the job was held in the current calendar year.</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -234,7 +234,7 @@
               <Dependency path="../isAllYear"/>
             </When>
             <Then>
-              <Day>2025-01-01</Day>
+              <Day>2026-01-01</Day>
             </Then>
           </Case>
           <Case>
@@ -250,7 +250,7 @@
     </Fact>
     <Fact path="/jobs/*/endDate">
       <Description>The last date the job was held in the current calendar year.</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -258,7 +258,7 @@
               <Dependency path="../isAllYear"/>
             </When>
             <Then>
-              <Day>2025-12-31</Day>
+              <Day>2026-12-31</Day>
             </Then>
           </Case>
           <Case>
@@ -444,7 +444,7 @@
     </Fact>
     <Fact path="/totalBonusReceivedThreshold">
       <Description>Threshold for changing bonus withholdings from 22% to 37%</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>1000000</Dollar>
       </Derived>

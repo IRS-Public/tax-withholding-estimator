@@ -144,7 +144,6 @@
         eligible for the deduction, the deduction amount is $10,740 ($5,370 per qualified individual
         multiplied by 2 qualified individuals).
       </Description>
-      <TaxYear>2025</TaxYear>
       <Derived>
         <Multiply>
           <Dollar>0.06</Dollar>
@@ -201,7 +200,6 @@
       <Description>The maximum amount a single taxpayer can deduct. Doubled for MFJ if both
         taxpayers are eligible
       </Description>
-      <TaxYear>2025</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -250,7 +248,7 @@
       <Description>The maximum amount a single taxpayer can deduct. Doubled for MFJ if both
         taxpayers are eligible
       </Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>6000</Dollar>
       </Derived>
@@ -260,12 +258,13 @@
       <Description>The maximum amount both filers can deduct when they are eligible for senior
         deduction. Must be MFJ
       </Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>12000</Dollar>
       </Derived>
     </Fact>
     <Fact path="/excessAmountSeniorDeductionForMFJFilerBothTaxpayersEligible">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <GreaterOf>
           <Subtract>
@@ -302,9 +301,9 @@
         on
         eligibility)- (excess * 0.06)
       </Description>
-      <TaxYear>2025</TaxYear>
       <Derived>
         <GreaterOf>
+          <Dollar>0</Dollar>
           <Subtract>
             <Minuend>
               <Dependency path="/applicableMaxSeniorDeductionAmount"/>
@@ -313,7 +312,6 @@
               <Dependency path="/phaseOutAmountSeniorDeduction"/>
             </Subtrahends>
           </Subtract>
-          <Dollar>0</Dollar>
         </GreaterOf>
       </Derived>
     </Fact>

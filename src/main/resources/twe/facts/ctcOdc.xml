@@ -62,9 +62,9 @@
     <Fact path="/maxCtcAmount">
       <Name>Maximum child tax credit amount</Name>
       <Description>The maximum child tax credit per child</Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>2000</Dollar>
+        <Dollar>2200</Dollar>
       </Derived>
     </Fact>
     <Fact path="/totalPotentialCtc">
@@ -130,7 +130,7 @@
     <Fact path="/maxOdcAmount">
       <Name>Maximum credit amount for other dependents</Name>
       <Description>The maximum credit for other dependents, per dependent</Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>500</Dollar>
       </Derived>
@@ -184,7 +184,7 @@
       <Name>Dependent credit phaseout threshold</Name>
       <Description>The MAGI threshold at which the dependent credits begin to phaseout.
         Reported on line 9 of Schedule 8812.</Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -443,7 +443,7 @@
       <Description>The maximum additional tax credit per child
             Rev Proc .05 Child Tax Credit &#xA7;24(d)(1)(A)
           </Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>1700</Dollar>
       </Derived>
@@ -467,7 +467,7 @@
       <Description>The amount of earned income that must be exceeded in order to receive the
             refundable additional child
             tax credit.</Description>
-      <TaxYear>2024</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>2500</Dollar>
       </Derived>

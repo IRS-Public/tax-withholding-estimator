@@ -102,14 +102,6 @@
         <Rational>1847/2000</Rational>
       </Derived>
     </Fact>
-    <Fact path="/maxNetSelfEmploymentIncomeSubjectToSocialSecurityTax">
-      <Description> Schedule SE Line 7. Maximum amount of combined wages and self-employment earnings subject to social security tax or
-        the 6.2% portion of the 7.65% railroad retirement (tier 1) tax for 2025</Description>
-      <TaxYear>2025</TaxYear>
-      <Derived>
-        <Dollar>176100</Dollar>
-      </Derived>
-    </Fact>
     <Fact path="/primaryHasSelfEmploymentIncome">
       <Derived>
         <GreaterThan>

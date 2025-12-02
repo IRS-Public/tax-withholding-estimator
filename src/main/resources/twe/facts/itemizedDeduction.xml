@@ -31,6 +31,7 @@
           <Dependency path="/charitableContributionsTotal"/>
           <Dependency path="/casualtyLossesTotal"/>
           <Dependency path="/otherDeductionsTotal"/>
+          <Dependency path="/educatorExpensesAdjustmentTotal"/>
         </Add>
       </Derived>
     </Fact>
@@ -60,6 +61,15 @@
         </Round>
       </Derived>
     </Fact>
+    <Fact path="/educatorExpensesAdjustmentTotal">
+      <Description>If you're a K-12 educator, you can deduct unreimbursed expenses only if you itemized (starting in TY2026 per OB3 Sec. 70110).Qualified expenses include: Professional development courses Books, supplies, computer equipment (including related software and services) Other equipment, and supplementary materials that you use in the classroom </Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
     <Fact path="/qualifiedMortgageInterestAndInvestmentInterestExpenses">
       <Name>Qualified mortgage interest and investment interest expenses </Name>
       <Description>Qualified mortgage interest including points (if you're the buyer) and Investment interest (limited to your net investment income)
@@ -83,41 +93,9 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/medicalAndDentalExpenses">
-      <Name>Estimated medical and dental expenses</Name>
-      <Description>Total expenses that exceed 7.5% of your adjusted gross income. Can include the
-        total estimated amount paid for health insurance premiums, not including any amount the
-        employer pays</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
     <Fact path="/charitableContributions">
       <Name>Charitable Contributions</Name>
       <Description>Charitable contributions to qualified organizations</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/casualtyLosses">
-      <Name>Casualty Losses</Name>
-      <Description>Casualty and theft losses relating to your home, household items, and vehicles if
-        the loss took place in a federally declared disaster area</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/otherDeductions">
-      <Name>Other Deductions</Name>
       <Writable>
         <Dollar/>
       </Writable>
@@ -133,7 +111,7 @@
     <Fact path="/stateAndLocalTaxPaymentsApplicableLimitationAmount">
       <Name>SALT tax payment applicable limitation amount</Name>
       <Description>Maximum amount that can be itemized for SALT</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>40000</Dollar>
       </Derived>
@@ -141,7 +119,6 @@
     <Fact path="/stateAndLocalTaxPaymentsTotal">
       <Name>Total of all SALT payments </Name>
       <Description>Total of all SALT payment items, up to $40,000 limit </Description>
-      <TaxYear>2025</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -172,10 +149,15 @@
     </Fact>
     <Fact path="/medicalAndDentalExpensesTotal">
       <Name>Total of all medical and dental expenses </Name>
-      <Description>Aggregated total of all medical and dental expense items </Description>
-      <Derived>
-        <Dependency path="/medicalAndDentalExpenses"/>
-      </Derived>
+      <Description>Total expenses that exceed 7.5% of your adjusted gross income. Can include the
+        total estimated amount paid for health insurance premiums, not including any amount the
+        employer pays</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/charitableContributionsTotal">
       <Name>Total of all charitable contributions </Name>
@@ -241,17 +223,23 @@
     </Fact>
     <Fact path="/casualtyLossesTotal">
       <Name>Total of all casualty loss items </Name>
-      <Description>Total of all /casualtyLosses items </Description>
-      <Derived>
-        <Dependency path="/casualtyLosses"/>
-      </Derived>
+      <Description>Casualty and theft losses relating to your home, household items, and vehicles if
+        the loss took place in a federally declared disaster area</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/otherDeductionsTotal">
       <Name> Total of all other itemized deductions </Name>
-      <Description>Total of all /otherDeductions items </Description>
-      <Derived>
-        <Dependency path="/otherDeductions"/>
-      </Derived>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
   </Facts>
 </FactDictionaryModule>

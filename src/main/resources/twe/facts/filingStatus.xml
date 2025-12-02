@@ -4,14 +4,13 @@
   <Facts>
     <Fact path="/taxYear">
       <Description>Current tax year</Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Int>2025</Int>
+        <Int>2026</Int>
       </Derived>
     </Fact>
     <Fact path="/lastTaxYear">
       <Description>Previous tax year</Description>
-      <TaxYear>2025</TaxYear>
       <Derived>
         <Subtract>
           <Minuend>
@@ -25,7 +24,6 @@
     </Fact>
     <Fact path="/taxYearMinusTwo">
       <Description>Tax year minus two years</Description>
-      <TaxYear>2025</TaxYear>
       <Derived>
         <Subtract>
           <Minuend>
