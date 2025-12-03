@@ -93,6 +93,53 @@
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
+      <h2>Pensions</h2>
+      <fg-collection path="/pensions" item-name="Pensions source">
+        <fg-set path="/pensions/*/filerAssignment" if-true="/isFilingStatusMFJ">
+          <question>Who is this pension for?</question>
+          <select options-path="/pensions/*/filerAssignmentOption">
+            <option value="self">Myself</option>
+            <option value="spouse">My spouse</option>
+          </select>
+        </fg-set>
+        <fg-set path="/pensions/*/startDate">
+          <question>What&#x2019;s the start date?</question>
+          <input type="date"/>
+        </fg-set>
+        <fg-set path="/pensions/*/endDate">
+          <question>What&#x2019;s the end date?</question>
+          <input type="date"/>
+        </fg-set>
+        <fg-set path="/pensions/*/mostRecentPayDate">
+          <question>When was your most recent pay date?</question>
+          <input type="date"/>
+        </fg-set>
+        <fg-set path="/pensions/*/averagePayPerPayPeriod">
+          <question>What&#x2019;s the average amount you get paid each pay period?</question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/pensions/*/yearToDateIncome">
+          <question>What&#x2019;s your year-to-date income for this pension?</question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/pensions/*/averageWithholdingPerPayPeriod">
+          <question>What&#x2019;s the average amount of federal withholding each pay period?</question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/pensions/*/yearToDateWithholding">
+          <question>What&#x2019;s your year-to-date federal withholding for this pension?</question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/pensions/*/payFrequency">
+          <question>How frequently are you paid?</question>
+          <select options-path="/pensions/*/payFrequency">
+            <option value="weekly">Weekly</option>
+            <option value="biWeekly">Biweekly</option>
+            <option value="semiMonthly">Semimonthly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+        </fg-set>
+      </fg-collection>
       <h2>Trump Account Distribution</h2>
       <fg-set path="/trumpAccountDistribution">
         <question>Distributions from Trump Account</question>

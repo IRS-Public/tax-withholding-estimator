@@ -79,6 +79,15 @@
               <Dollar>0</Dollar>
             </Then>
           </Case>
+          <Case>
+            <!--Not MFJ-->
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
         </Switch>
       </Derived>
     </Fact>
