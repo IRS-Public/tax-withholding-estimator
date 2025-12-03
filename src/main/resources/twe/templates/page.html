@@ -43,8 +43,12 @@
     </div>
   </main>
 
-  <div th:if="${flags.auditMode}">
-    <div th:replace="fragments/audit-panel"></div>
+  <div th:if="${flags.auditMode}" th:remove="tag">
+    <div th:replace="fragments/audit-panel" class="hidden"></div>
+    <script type="module">
+      import { enable } from '/twe/resources/js/audit-panel.js'
+      enable()
+    </script>
   </div>
 
   <footer th:aria-label="#{layout.title}" class="footer">

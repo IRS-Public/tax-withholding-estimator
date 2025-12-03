@@ -1,6 +1,3 @@
-<script type="module" src="/twe/resources/js/audit-panel.js"></script>
-<link rel="stylesheet" href="/twe/resources/styles/audit-panel.css">
-
 <section id="audit-panel">
   <h2>Fact Graph Audit Panel</h2>
   <div class="usa-form-group">
@@ -9,10 +6,12 @@
        th:for="fact-select"
        th:text="#{audit.fact-select.question}">
     </label>
-    <input list="fact-options" class="usa-input" id="fact-select">
-    <datalist id="fact-options" aria-invalid="false">
-      <option value="" th:text="#{audit.fact-select.blank}"></option>
-    </datalist>
+    <input
+      list="fact-options"
+      class="usa-input"
+      onkeydown="pathSelectListener()"
+      id="fact-select">
+    <datalist id="fact-options" aria-invalid="false"></datalist>
   </div>
 
   <div class="usa-form-group">
@@ -29,7 +28,7 @@
       aria-invalid="false">
   </div>
 
-  <div><button id="add-fact-button" type="button">Add fact</button> </div>
+  <div><button id="add-fact-button" type="button">Add fact</button></div>
   <div id="audit-panel__fact-list"></div>
 </section>
 
@@ -48,6 +47,11 @@
   </div>
 
   <div class="audit-panel__fact__controls">
-    <button class="audit-panel__fact__remove" th:text="#{audit.fact.remove}" type="button"></button>
+    <button
+      class="audit-panel__fact__remove"
+      onlick="trackSelectedFact()"
+      th:text="#{audit.fact.remove}"
+      type="button">
+    </button>
   </div>
 </template>

@@ -41,6 +41,11 @@ If you make changes to the Fact Graph, and you want to propapage those changes, 
 
 Note that the `make copy-fg` target assumes that the Fact Graph repo is located in `../fact-graph`.
 
+## Audit Mode
+
+In the developer build, TWE comes bundled with an "Audit Mode" that lets users see how TWE arrives at its calculations.
+It can be toggled by running `enableAduitMode()` and `disabledAuditMode()` in the browser console.
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.

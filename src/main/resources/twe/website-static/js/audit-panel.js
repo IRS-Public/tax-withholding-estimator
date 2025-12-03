@@ -5,55 +5,11 @@ const res = await fetch('/twe/resources/fact-dictionary.xml')
 const text = await res.text()
 const factDictionaryXml = parser.parseFromString(text, "application/xml")
 
-const auditedFactsList = document.querySelector('#audit-panel__fact-list')
-const pathSelect = document.querySelector('#fact-select')
-const pathOptions = document.querySelector('#fact-options')
-const addFactButton = document.querySelector('#add-fact-button')
-
-addFactButton.addEventListener('click', trackSelectedFact)
-pathSelect.addEventListener('keydown', (event) => {
+window.enableAuditMode = enable
+window.disableAuditMode = disable
+window.trackSelectedFact = trackSelectedFact
+window.pathSelectListener = (event) => {
   if (event.key === 'Enter') trackSelectedFact()
-})
-
-if (document.readyState !== 'complete') {
-  document.addEventListener('DOMContentLoaded', loadPaths)
-} else {
-  loadPaths()
-}
-
-function makeCollectionIdPath(abstractPath, id) {
-  return abstractPath.replace('*', `#${id}`);
-}
-
-function trackSelectedFact() {
-  const factPath = pathSelect.value;
-  const collectionId = document.querySelector('#fact-collection-id').value
-  if (factPath) {
-    trackFact(factPath, collectionId)
-  }
-}
-
-function trackFact(path, collectionId) {
-  const factPath = makeCollectionIdPath(path, collectionId)
-
-  const existingFact = auditedFactsList.querySelector(`audited-fact[path="${factPath}"]`)
-  if (existingFact) {
-    return existingFact.scrollIntoView()
-  }
-  console.debug(`Tracking ${factPath}`)
-
-  const auditedFact = document.createElement('audited-fact')
-  auditedFact.setAttribute('path', path)
-  auditedFact.setAttribute('collectionId', collectionId)
-
-  auditedFactsList.appendChild(auditedFact)
-  auditedFact.scrollIntoView()
-}
-
-function loadPaths() {
-  const paths = factGraph.paths().sort()
-  const options = paths.map((path) => `<option path=${path}>${path}</option>`)
-  pathOptions.innerHTML += options
 }
 
 class AuditedFact extends HTMLElement {
@@ -149,14 +105,73 @@ class AuditedFact extends HTMLElement {
 }
 customElements.define('audited-fact', AuditedFact)
 
-// Add links to all the <fg-show>s
-const fgShows = document.querySelectorAll('fg-show')
-for (const fgShow of fgShows) {
-  const link = document.createElement('a')
-  link.classList.add(AuditedFact.factLinkClass)
-  link.href = `#${fgShow.path}`
-  link.onclick = (e) => { e.preventDefault(); trackFact(fgShow.path) }
+function trackSelectedFact() {
+  const factPath = document.querySelector('#fact-select').value
+  const collectionId = document.querySelector('#fact-collection-id').value
+  if (factPath) {
+    trackFact(factPath, collectionId)
+  }
+}
 
-  fgShow.parentElement.replaceChild(link, fgShow)
-  link.append(fgShow)
+function trackFact(path, collectionId) {
+  const factPath = makeCollectionIdPath(path, collectionId)
+  const auditedFactsList = document.querySelector('#audit-panel__fact-list')
+
+  const existingFact = auditedFactsList.querySelector(`audited-fact[path="${factPath}"]`)
+  if (existingFact) {
+    return existingFact.scrollIntoView()
+  }
+  console.debug(`Tracking ${factPath}`)
+
+  const auditedFact = document.createElement('audited-fact')
+  auditedFact.setAttribute('path', path)
+  auditedFact.setAttribute('collectionId', collectionId)
+
+  auditedFactsList.appendChild(auditedFact)
+  auditedFact.scrollIntoView()
+}
+
+function setFactOptions() {
+  const paths = factGraph.paths().sort()
+  const options = paths.map((path) => `<option path=${path}>${path}</option>`)
+  document.querySelector('#fact-options').innerHTML = options
+}
+
+function makeCollectionIdPath(abstractPath, id) {
+  return abstractPath.replace('*', `#${id}`);
+}
+
+export function enable() {
+  document.querySelector('#audit-panel-styles').disabled = false
+  document.querySelector('#audit-panel').classList.remove('hidden')
+
+  // Add links to all the <fg-show>s
+  const fgShows = document.querySelectorAll('fg-show')
+  for (const fgShow of fgShows) {
+    const link = document.createElement('a')
+    link.classList.add(AuditedFact.factLinkClass)
+    link.href = `#${fgShow.path}`
+    link.onclick = (e) => { e.preventDefault(); trackFact(fgShow.path) }
+    fgShow.parentElement.replaceChild(link, fgShow)
+    link.append(fgShow)
+  }
+
+  // Load paths once the document is ready (if it isn't already)
+  if (document.readyState !== 'complete') {
+    document.addEventListener('DOMContentLoaded', setFactOptions)
+  } else {
+    setFactOptions()
+  }
+}
+
+export function disable() {
+  document.querySelector('#audit-panel-styles').disabled = true
+  document.querySelector('#audit-panel').classList.add('hidden')
+
+  // Remove links from all the <fg-show>s
+  const fgShows = document.querySelectorAll('fg-show')
+  for (const fgShow of fgShows) {
+    const link = fgShow.parentElement
+    link.parentElement.replaceChild(fgShow, link)
+  }
 }
