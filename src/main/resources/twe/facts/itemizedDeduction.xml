@@ -31,7 +31,6 @@
           <Dependency path="/charitableContributionsTotal"/>
           <Dependency path="/casualtyLossesTotal"/>
           <Dependency path="/otherDeductionsTotal"/>
-          <Dependency path="/educatorExpensesAdjustmentTotal"/>
         </Add>
       </Derived>
     </Fact>
@@ -60,15 +59,6 @@
           </GreaterOf>
         </Round>
       </Derived>
-    </Fact>
-    <Fact path="/educatorExpensesAdjustmentTotal">
-      <Description>If you're a K-12 educator, you can deduct unreimbursed expenses only if you itemized (starting in TY2026 per OB3 Sec. 70110).Qualified expenses include: Professional development courses Books, supplies, computer equipment (including related software and services) Other equipment, and supplementary materials that you use in the classroom </Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/qualifiedMortgageInterestAndInvestmentInterestExpenses">
       <Name>Qualified mortgage interest and investment interest expenses </Name>

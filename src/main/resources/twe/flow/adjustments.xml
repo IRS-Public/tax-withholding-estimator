@@ -50,6 +50,11 @@
           <input type="dollar"/>
         </fg-set>
       </details>
+      <h2>Educator expenses</h2>
+      <fg-set path="/educatorExpenses/">
+        <question>How much have you paid this year in educator expenses?</question>
+        <input type="dollar"/>
+      </fg-set>
       <h2>Deduction for contributions to Traditional IRAs</h2>
       <fg-set path="/deductionForTraditionalIRAContribution">
         <question>

@@ -21,11 +21,6 @@
         <question>Qualified interest</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Educator expenses</h2>
-      <fg-set path="/educatorExpensesAdjustmentTotal/">
-        <question>How much have you paid this year in educator expenses?</question>
-        <input type="dollar"/>
-      </fg-set>
       <h2>State and Local Taxes</h2>
       <p>There are four types of State and Local Taxes: 1) State, local, and foreign income taxes;
       2) State and local general sales taxes; 3) State and local real estate taxes; 4) State and

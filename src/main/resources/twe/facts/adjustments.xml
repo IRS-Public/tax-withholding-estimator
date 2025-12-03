@@ -189,6 +189,7 @@
         include be a sum of Schedule 1, lines 11 through 20, and 23 and 25</Description>
       <Derived>
         <Add>
+          <Dependency path="/educatorExpensesAdjustment"/>
           <Dependency path="/businessCreditsForEligible"/>
           <Dependency path="/hsaDeduction"/>
           <Dependency path="/selfEmploymentTaxDeduction"/>
