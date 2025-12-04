@@ -18,7 +18,6 @@
           <!-- Line 3-->
           <Dependency path="/pensionsIncomeTotal"/>
           <!-- Line 4a-->
-          <Dependency path="/netSelfEmploymentIncomeTotal"/>
           <Dependency path="/sCorpNonPassiveIncome"/>
           <Dependency path="/netScheduleEIncome"/>
           <Dependency path="/rentalIncome"/>
