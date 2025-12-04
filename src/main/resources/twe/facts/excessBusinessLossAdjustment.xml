@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/limitationThreshold">
+      <Description>Form 461 line 15</Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Not>
+                <Dependency path="/isFilingStatusMFJ"/>
+              </Not>
+            </When>
+            <Then>
+              <Dollar>626000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>313000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line2">
+      <Derived>
+        <Dependency path="/netSelfEmploymentIncomeTotal"/>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line3">
+      <Derived>
+        <Add>
+          <Dependency path="/shortTermCapitalGainsIncome"/>
+          <Dependency path="/longTermCapitalGainsIncome"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line4">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line5">
+      <Derived>
+        <Add>
+          <Dependency path="/sCorpNonPassiveIncome"/>
+          <Dependency path="/rentalIncome"/>
+          <Dependency path="/royaltyIncome"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line6">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line8">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line9">
+      <Derived>
+        <Add>
+          <!-- Line 1 RESERVED-->
+          <Dependency path="/form461Line2"/>
+          <Dependency path="/form461Line3"/>
+          <Dependency path="/form461Line4"/>
+          <Dependency path="/form461Line5"/>
+          <Dependency path="/form461Line6"/>
+          <!-- Line 7 RESERVED-->
+          <Dependency path="/form461Line8"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line10">
+      <Derived>
+        <Dependency path="/netScheduleEIncome"/>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line11">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line12">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/form461Line10"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/form461Line11"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line13">
+      <Description>If line 12 is a negative number, enter it here as a positive number. If line 12 is a positive number, enter it
+        here as a negative number</Description>
+      <Derived>
+        <Multiply>
+          <Dollar>-1</Dollar>
+          <Dependency path="/form461Line12"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/form461Line14">
+      <Derived>
+        <Add>
+          <Dependency path="/form461Line9"/>
+          <Dependency path="/form461Line13"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/tentativeLimitationOnLosses">
+      <Derived>
+        <Add>
+          <Dependency path="/form461Line14"/>
+          <Dependency path="/limitationThreshold"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/excessBusinessLossAdjustment">
+      <Description>Form 461 Line 16. Form 1040 Schedule 1 line 8p</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <!-- If negative value, return positive value for excess loss and include as part of AGI-->
+            <When>
+              <LessThan>
+                <Left>
+                  <Dependency path="/tentativeLimitationOnLosses"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </LessThan>
+            </When>
+            <Then>
+              <Multiply>
+                <Dollar>-1</Dollar>
+                <Dependency path="/tentativeLimitationOnLosses"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <!-- If positive value, 0-->
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

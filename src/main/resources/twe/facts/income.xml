@@ -433,6 +433,7 @@ and car loan interest deduction
       </Derived>
     </Fact>
     <Fact path="/incomeTotal">
+      <Description>Form 1040 Line 9</Description>
       <Derived>
         <Round>
           <Add>
@@ -440,6 +441,7 @@ and car loan interest deduction
             <Dependency path="/pensionsIncomeTotal"/>
             <Dependency path="/otherIncomeTotal"/>
             <Dependency path="/netSelfEmploymentIncomeTotal"/>
+            <Dependency path="/excessBusinessLossAdjustment"/>
           </Add>
         </Round>
       </Derived>
