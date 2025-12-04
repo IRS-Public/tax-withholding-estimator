@@ -39,7 +39,7 @@
                   <Dependency path="/otherIncomeWithoutSSABenefitsTaxableAmountTotal"/>
                   <!-- Line 4. Enter the amount from Form 1040 or Form 1040-SR 2a. Non-taxable
                   interest income, such as interest on municipal bonds -->
-                  <Dependency path="/nonTaxableInterestIncome"/>
+                  <Dependency path="/taxExemptInterestIncome"/>
                   <!-- Line 5. Adoption benefits, Foreign earned income or housing, certain income
                   of bona fide residents of Puerto Rico or American Samoa
                   NOTE: those income streams are not currently captured by TWE, and also could become a part of

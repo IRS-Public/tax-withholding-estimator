@@ -2,9 +2,114 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/netInvestmentIncomeTax">
+    <Fact path="/netInvestmentIncomeTaxRate">
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>0</Dollar>
+        <Rational>38/1000</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/totalInvestmentIncomeForm8960Line8">
+      <Derived>
+        <Add>
+          <!-- Line 1-->
+          <Dependency path="/taxableInterestIncome"/>
+          <!-- Line 2-->
+          <Dependency path="/ordinaryDividendsIncome"/>
+          <!-- Line 3-->
+          <Dependency path="/pensionsIncomeTotal"/>
+          <!-- Line 4a-->
+          <Dependency path="/netSelfEmploymentIncomeTotal"/>
+          <Dependency path="/sCorpNonPassiveIncome"/>
+          <Dependency path="/netScheduleEIncome"/>
+          <Dependency path="/rentalIncome"/>
+          <Dependency path="/royaltyIncome"/>
+          <!-- Line 5a-->
+          <Dependency path="/shortTermCapitalGainsIncome"/>
+          <Dependency path="/longTermCapitalGainsIncome"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/form8960Line12">
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Dependency path="/totalInvestmentIncomeForm8960Line8"/>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/form8960Line13">
+      <Derived>
+        <Dependency path="/agi"/>
+      </Derived>
+    </Fact>
+    <Fact path="/form8960Line14">
+      <Description>NIIT Filing Status Income Threshold</Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="/isFilingStatusSingle"/>
+                <Dependency path="/isFilingStatusHOH"/>
+              </Any>
+            </When>
+            <Then>
+              <Dollar>200000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="/isFilingStatusMFJ"/>
+                <Dependency path="/isFilingStatusQSS"/>
+              </Any>
+            </When>
+            <Then>
+              <Dollar>250000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dollar>125000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/form8960Line15">
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/form8960Line13"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/form8960Line14"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/form8960Line16">
+      <Derived>
+        <LesserOf>
+          <Dependency path="/form8960Line12"/>
+          <Dependency path="/form8960Line15"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/netInvestmentIncomeTax">
+      <Description>Form 8960 Line 17</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/netInvestmentIncomeTaxRate"/>
+          <Dependency path="/form8960Line16"/>
+        </Multiply>
       </Derived>
     </Fact>
   </Facts>

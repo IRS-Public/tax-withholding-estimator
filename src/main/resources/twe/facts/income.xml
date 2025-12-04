@@ -10,7 +10,7 @@
     </Fact>
     <!-- This is a temporary definition, kind of circular with other facts. -->
     <Fact path="/ordinaryDividendsIncome">
-      <Description>Ordinary dividends income</Description>
+      <Description>Form 1040 Line 3b. Ordinary dividends income</Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -27,8 +27,17 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/interestExcludingNonTaxableIncome">
-      <Description>Interest income excluding non-taxable interest</Description>
+    <Fact path="/taxExemptInterestIncome">
+      <Description>Form 1040 Line 2a. Non-taxable interest</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/taxableInterestIncome">
+      <Description>Form 1040 Line 2b. Interest income excluding non-taxable interest</Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -55,7 +64,7 @@
       </Placeholder>
     </Fact>
     <Fact path="/qualifiedDividendsIncome">
-      <Description>Amount of qualified dividends estimated by tax payer.</Description>
+      <Description>Form 1040 Line 3a. Amount of qualified dividends estimated by tax payer.</Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -117,9 +126,17 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/nonTaxableInterestIncome">
-      <Description>Non-taxable interest income. Used to calculate modified AGI for calculating
-        taxable amount of SSA benefits</Description>
+    <Fact path="/rentalIncome">
+      <Description>Schedule E Line 21</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/royaltyIncome">
+      <Description>Schedule E Line 23b</Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -393,13 +410,15 @@ and car loan interest deduction
         <Add>
           <Dependency path="/ordinaryDividendsIncome"/>
           <Dependency path="/unemploymentInsuranceIncome"/>
-          <Dependency path="/interestExcludingNonTaxableIncome"/>
+          <Dependency path="/taxableInterestIncome"/>
           <Dependency path="/shortTermCapitalGainsIncome"/>
           <Dependency path="/longTermCapitalGainsIncome"/>
           <Dependency path="/taxableScholarshipIncome"/>
           <Dependency path="/alimonyReceivedIncome"/>
           <Dependency path="/sCorpNonPassiveIncome"/>
           <Dependency path="/netScheduleEIncome"/>
+          <Dependency path="/rentalIncome"/>
+          <Dependency path="/royaltyIncome"/>
           <Dependency path="/nonSpecificOtherIncome"/>
           <Dependency path="/trumpAccountDistribution"/>
         </Add>

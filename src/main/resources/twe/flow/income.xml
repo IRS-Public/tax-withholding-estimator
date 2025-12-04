@@ -186,12 +186,12 @@
         <input type="dollar"/>
       </fg-set>
       <h2>Interest Income (excluding non-taxable interest)</h2>
-      <fg-set path="/interestExcludingNonTaxableIncome">
+      <fg-set path="/taxableInterestIncome">
         <question>How much other income have you made this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h2>Non-taxable Interest Income</h2>
-      <fg-set path="/nonTaxableInterestIncome">
+      <fg-set path="/taxExemptInterestIncome">
         <question>How much non-taxable interest income have you received this year?</question>
         <input type="dollar"/>
       </fg-set>
@@ -221,6 +221,19 @@
       <fg-set path="/netScheduleEIncome">
         <question>
           How much Net Schedule E income from passive activities have you received this year?
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+      <h2>Rental and Royalty Income </h2>
+      <fg-set path="/rentalIncome">
+        <question>
+          How much rental income have you made this year?
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+      <fg-set path="/royaltyIncome">
+        <question>
+          How much royalty income have you made this year?
         </question>
         <input type="dollar"/>
       </fg-set>
