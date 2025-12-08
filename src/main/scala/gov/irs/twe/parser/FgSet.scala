@@ -78,10 +78,6 @@ object FgSet {
       Some(hintNode.head.child.mkString.trim)
     }
 
-    FgSet(path, question, condition, input, hint, isOptional)
-  }
-
-  private def validateFgSet(path: String, input: Input, factDictionary: FactDictionary): Unit = {
     validateFact(path, factDictionary)
     val typeNode = factDictionary.getDefinition(path).typeNode
     val inputAndNodeTypeMismatch = input match {
@@ -96,6 +92,7 @@ object FgSet {
       case Input.multiEnumInput(_, _, _) => typeNode != "MultiEnumNode"
     }
     if (inputAndNodeTypeMismatch) throw InvalidFormConfig(s"Path $path must be of type $input")
-  }
 
+    FgSet(path, question, condition, input, hint, isOptional)
+  }
 }
