@@ -3,7 +3,7 @@ const XML_SERIALIZER = new XMLSerializer()
 
 const res = await fetch('/twe/resources/fact-dictionary.xml')
 const text = await res.text()
-const factDictionaryXml = parser.parseFromString(text, "application/xml")
+const factDictionaryXml = parser.parseFromString(text, 'application/xml')
 
 window.enableAuditMode = enable
 window.disableAuditMode = disable
@@ -15,7 +15,7 @@ window.pathSelectListener = (event) => {
 class AuditedFact extends HTMLElement {
   static factLinkClass = 'audit-panel__fact__definition__dependency'
 
-  constructor() {
+  constructor () {
     super()
 
     this.deleteListener = () => this.remove()
@@ -33,36 +33,36 @@ class AuditedFact extends HTMLElement {
     }
 
     const templateContent = document.querySelector('#audit-panel__fact').content.cloneNode(true)
-    this.attachShadow({mode: 'open'})
+    this.attachShadow({ mode: 'open' })
     this.shadowRoot.append(templateContent)
 
     this.factPathElem = this.shadowRoot.querySelector('.audit-panel__fact__path')
     this.factTypeElem = this.shadowRoot.querySelector('.audit-panel__fact__type')
     this.factValueElem = this.shadowRoot.querySelector('.audit-panel__fact__value')
-    this.factDefinitionElem = this.shadowRoot.querySelector(`.audit-panel__fact__definition`)
+    this.factDefinitionElem = this.shadowRoot.querySelector('.audit-panel__fact__definition')
 
     this.removeButton = this.shadowRoot.querySelector('.audit-panel__fact__remove')
   }
 
-  connectedCallback() {
+  connectedCallback () {
     this.abstractPath = this.getAttribute('path')
     this.collectionId = this.getAttribute('collectionid')
     this.factPath = makeCollectionIdPath(this.abstractPath, this.collectionId)
 
     this.removeButton.addEventListener('click', this.deleteListener)
     this.addEventListener('click', this.handleLinksListener)
-    document.addEventListener(`fg-update`, this.renderListener)
+    document.addEventListener('fg-update', this.renderListener)
 
     this.render()
   }
 
-  disconnectedCallback() {
+  disconnectedCallback () {
     this.removeButton.removeEventListener('click', this.deleteListener)
     this.removeEventListener('click', this.handleLinksListener)
-    document.removeEventListener(`fg-update`, this.renderListener)
+    document.removeEventListener('fg-update', this.renderListener)
   }
 
-  render() {
+  render () {
     const definition = factGraph.dictionary.getDefinition(this.factPath)
     const fact = factGraph.get(this.factPath)
 
@@ -70,8 +70,8 @@ class AuditedFact extends HTMLElement {
     this.factPathElem.innerText = this.factPath
     this.factTypeElem.innerText = definition.typeNode
     const factValueString = fact.hasValue ? fact.get.toString() + ' ' : ''
-    const factCompleteString = fact.complete ? `[Complete]` : `[Incomplete]`
-    this.factValueElem.innerText = `${factValueString} ${factCompleteString}`;
+    const factCompleteString = fact.complete ? '[Complete]' : '[Incomplete]'
+    this.factValueElem.innerText = `${factValueString} ${factCompleteString}`
 
     // Serialize and sanitizie the fact definition for inclusion as HTML
     // We do this because the definition will have live <a> links in it
@@ -90,7 +90,7 @@ class AuditedFact extends HTMLElement {
         return result
       }
       // but we can resolve relative paths ("../income")
-      const resolvedPath = rawPath.replace('..', this.abstractPath.replace(/\*\/.*/, `*`))
+      const resolvedPath = rawPath.replace('..', this.abstractPath.replace(/\*\/.*/, '*'))
 
       const link = `<a class="${AuditedFact.factLinkClass}" href="#${resolvedPath}">${rawPath}</a>`
       return result.replace(`path="${rawPath}"`, `path="${link}"`)
@@ -105,7 +105,7 @@ class AuditedFact extends HTMLElement {
 }
 customElements.define('audited-fact', AuditedFact)
 
-function trackSelectedFact() {
+function trackSelectedFact () {
   const factPath = document.querySelector('#fact-select').value
   const collectionId = document.querySelector('#fact-collection-id').value
   if (factPath) {
@@ -113,7 +113,7 @@ function trackSelectedFact() {
   }
 }
 
-function trackFact(path, collectionId) {
+function trackFact (path, collectionId) {
   const factPath = makeCollectionIdPath(path, collectionId)
   const auditedFactsList = document.querySelector('#audit-panel__fact-list')
 
@@ -131,17 +131,17 @@ function trackFact(path, collectionId) {
   auditedFact.scrollIntoView()
 }
 
-function setFactOptions() {
+function setFactOptions () {
   const paths = factGraph.paths().sort()
   const options = paths.map((path) => `<option path=${path}>${path}</option>`)
   document.querySelector('#fact-options').innerHTML = options
 }
 
-function makeCollectionIdPath(abstractPath, id) {
-  return abstractPath.replace('*', `#${id}`);
+function makeCollectionIdPath (abstractPath, id) {
+  return abstractPath.replace('*', `#${id}`)
 }
 
-export function enable() {
+export function enable () {
   document.querySelector('#audit-panel-styles').disabled = false
   document.querySelector('#audit-panel').classList.remove('hidden')
 
@@ -164,7 +164,7 @@ export function enable() {
   }
 }
 
-export function disable() {
+export function disable () {
   document.querySelector('#audit-panel-styles').disabled = true
   document.querySelector('#audit-panel').classList.add('hidden')
 

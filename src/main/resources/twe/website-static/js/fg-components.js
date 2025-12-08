@@ -15,7 +15,7 @@ if (serializedGraphJSON) {
 }
 window.factGraph = factGraph
 
-function saveFactGraph() {
+function saveFactGraph () {
   sessionStorage.setItem('factGraph', factGraph.toJSON())
 }
 
@@ -23,22 +23,22 @@ function saveFactGraph() {
  * Debug utility to load a fact graph from the console
  * @param {string} factGraphAsString - stringified version of a JSON object
  */
-function loadFactGraph(factGraphAsString) {
+function loadFactGraph (factGraphAsString) {
   factGraph = fg.GraphFactory.fromJSON(factDictionary, factGraphAsString)
   saveFactGraph()
   window.location.reload()
 }
 window.loadFactGraph = loadFactGraph
 
-function makeCollectionIdPath(abstractPath, id) {
-  return abstractPath.replace('*', `#${id}`);
+function makeCollectionIdPath (abstractPath, id) {
+  return abstractPath.replace('*', `#${id}`)
 }
 
 /*
  * <fg-set> - An input that sets a fact
  */
 class FgSet extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
 
     this.DEFAULT_ERROR_ELEMENT_ID = 'errors.Default'
@@ -46,7 +46,7 @@ class FgSet extends HTMLElement {
     this.tabListener = (event) => {
       // Conditions must be re-evaluated before the keydown event resolves, so that focusable elements are updated
       // before the focus moves. The `blur` and `change` events don't fire until *after* the focus has already moved.
-      if(event.key === 'Tab') {
+      if (event.key === 'Tab') {
         // TODO: Prevent these from being called twice (once here, once through onChange)
         this.setFact()
         showOrHideAllElements()
@@ -54,7 +54,7 @@ class FgSet extends HTMLElement {
     }
   }
 
-  connectedCallback() {
+  connectedCallback () {
     this.condition = this.getAttribute('condition')
     this.operator = this.getAttribute('operator')
     this.inputType = this.getAttribute('inputtype')
@@ -66,21 +66,21 @@ class FgSet extends HTMLElement {
       case 'date': {
         this.addEventListener('change', () => {
           const allFilled = Array.from(this.inputs).every(input => {
-            return input.value.trim() !== '' && input.value !== '- Select -';
-          });
+            return input.value.trim() !== '' && input.value !== '- Select -'
+          })
 
           if (allFilled) {
-            this.onChange();
+            this.onChange()
           }
-        });
+        })
 
         break
       }
       case 'dollar':
         this.addEventListener('change', () => {
-            this.onChange()
-          });
-        break;
+          this.onChange()
+        })
+        break
       case 'select':
       case 'boolean':
       case 'enum':
@@ -89,14 +89,14 @@ class FgSet extends HTMLElement {
           input.addEventListener('change', () => {
             this.onChange()
             // Clear validation error once user makes a selection
-            this.clearValidationError();
-          });
+            this.clearValidationError()
+          })
         }
-        break;
+        break
       default:
         for (const input of this.inputs) {
-          input.addEventListener('blur', () => this.onChange());
-          input.addEventListener(`keydown`, this.tabListener)
+          input.addEventListener('blur', () => this.onChange())
+          input.addEventListener('keydown', this.tabListener)
         }
     }
 
@@ -107,99 +107,98 @@ class FgSet extends HTMLElement {
 
     // This is done with bind, rather than an arrow function, so that it can be removed later
     this.clear = this.clear.bind(this)
-    document.addEventListener('fg-clear', this.clear);
+    document.addEventListener('fg-clear', this.clear)
 
     this.render()
   }
 
-  disconnectedCallback() {
+  disconnectedCallback () {
     console.debug(`Removing fg-set with path ${this.path}`)
-    document.removeEventListener('fg-clear', this.clear);
+    document.removeEventListener('fg-clear', this.clear)
   }
 
-  clearAlerts() {
+  clearAlerts () {
     this.querySelector('div.alert--warning')?.remove()
   }
 
-  clearValidationError() {
-    const errorElement = this.querySelector('.usa-error-message');
-    const errorId = errorElement?.id;
+  clearValidationError () {
+    const errorElement = this.querySelector('.usa-error-message')
+    const errorId = errorElement?.id
 
     // Remove errorId from aria-describedby
-    const elementWithDescription = this.querySelector('[aria-describedby]');
-    const ariaDescription = elementWithDescription?.getAttribute('aria-describedby');
+    const elementWithDescription = this.querySelector('[aria-describedby]')
+    const ariaDescription = elementWithDescription?.getAttribute('aria-describedby')
 
     if (elementWithDescription) {
-    const updatedIds = ariaDescription
-      .split(' ')
-      .filter(id => id.trim() && id !== errorId)
-      .join(' ');
+      const updatedIds = ariaDescription
+        .split(' ')
+        .filter(id => id.trim() && id !== errorId)
+        .join(' ')
 
-    updatedIds
-      ? elementWithDescription.setAttribute('aria-describedby', updatedIds)
-      : elementWithDescription.removeAttribute('aria-describedby');
+      updatedIds
+        ? elementWithDescription.setAttribute('aria-describedby', updatedIds)
+        : elementWithDescription.removeAttribute('aria-describedby')
     }
 
-    //Remove the error treatment
+    // Remove the error treatment
     errorElement?.remove()
     this.querySelector('.validate-alert')?.remove()
     this.querySelector('.usa-form-group')?.classList.remove('usa-form-group--error')
     this.querySelector('.usa-label--error')?.classList.remove('usa-label--error')
     this.querySelectorAll('.usa-input-group, .usa-select, .usa-input').forEach(item => {
-      item.classList.remove('usa-input--error');
-      item.removeAttribute('aria-describedby');
-    });
-    this.querySelectorAll('.usa-input[aria-invalid="true"], .usa-select[aria-invalid="true"]').forEach(item => item?.setAttribute('aria-invalid', 'false'));
-
+      item.classList.remove('usa-input--error')
+      item.removeAttribute('aria-describedby')
+    })
+    this.querySelectorAll('.usa-input[aria-invalid="true"], .usa-select[aria-invalid="true"]').forEach(item => item?.setAttribute('aria-invalid', 'false'))
   }
 
-  setValidationError(errorText) {
-    this.clearValidationError();
-    const errorId = `${this.path}-error`; // Keep the slash for primary filer
+  setValidationError (errorText) {
+    this.clearValidationError()
+    const errorId = `${this.path}-error` // Keep the slash for primary filer
 
     // Set up the error div
-    const errorDiv = document.createElement('div');
-    errorDiv.classList.add('usa-error-message');
-    errorDiv.setAttribute('id', errorId);
+    const errorDiv = document.createElement('div')
+    errorDiv.classList.add('usa-error-message')
+    errorDiv.setAttribute('id', errorId)
     errorDiv.textContent = errorText
 
-    const elementWithDescription = this.querySelector('.usa-fieldset, .usa-select, .usa-input');
-    const errorLocation = this.querySelector('.usa-radio, .usa-memorable-date, .usa-checkbox, .usa-select, .usa-input-group, .usa-input');
+    const elementWithDescription = this.querySelector('.usa-fieldset, .usa-select, .usa-input')
+    const errorLocation = this.querySelector('.usa-radio, .usa-memorable-date, .usa-checkbox, .usa-select, .usa-input-group, .usa-input')
 
     // Place the error div just before the invalid field location
-    errorLocation.insertAdjacentElement('beforebegin', errorDiv);
+    errorLocation.insertAdjacentElement('beforebegin', errorDiv)
 
     // Set aria-description
-    const existingAriaDescribedby = elementWithDescription.getAttribute('aria-describedby');
-    elementWithDescription.setAttribute('aria-describedby', `${existingAriaDescribedby || ''} ${errorId}`.trim());
+    const existingAriaDescribedby = elementWithDescription.getAttribute('aria-describedby')
+    elementWithDescription.setAttribute('aria-describedby', `${existingAriaDescribedby || ''} ${errorId}`.trim())
 
     // Set the modifier classes for errors
-    this.querySelector('.usa-form-group')?.classList.add('usa-form-group--error');
-    this.querySelector('.usa-legend, .usa-label')?.classList.add('usa-label--error');
+    this.querySelector('.usa-form-group')?.classList.add('usa-form-group--error')
+    this.querySelector('.usa-legend, .usa-label')?.classList.add('usa-label--error')
     this.querySelectorAll('.usa-input-group, .usa-select, .usa-input').forEach(item => {
-      item.classList.add('usa-input--error');
-      item.setAttribute('aria-describedby', `${errorId}`);
-    });
+      item.classList.add('usa-input--error')
+      item.setAttribute('aria-describedby', `${errorId}`)
+    })
     this.querySelectorAll('.usa-input[aria-invalid="false"], .usa-select[aria-invalid="false"]').forEach(item => {
-      item.setAttribute('aria-invalid', 'true');
-    });
+      item.setAttribute('aria-invalid', 'true')
+    })
   }
 
-  validateRequiredFields() {
-    const isMissing = !this.isComplete();
+  validateRequiredFields () {
+    const isMissing = !this.isComplete()
     if (isMissing) {
-        this.setValidationError("This field is required");
+      this.setValidationError('This field is required')
     } else {
-        this.clearValidationError();
+      this.clearValidationError()
     }
-    return isMissing;
+    return isMissing
   }
 
-  render() {
+  render () {
     this.setInputValueFromFactValue()
   }
 
-  onChange() {
+  onChange () {
     try {
       const res = this.setFact()
       if (res.errorType) {
@@ -215,22 +214,22 @@ class FgSet extends HTMLElement {
     }
   }
 
-  isComplete() {
+  isComplete () {
     return factGraph.get(this.path).complete
   }
 
-  clear() {
+  clear () {
     switch (this.inputType) {
       case 'boolean':
       case 'enum': {
-        const checkedRadio = this.querySelector(`input:checked`)
+        const checkedRadio = this.querySelector('input:checked')
         if (checkedRadio) {
-          checkedRadio.checked = false;
+          checkedRadio.checked = false
         };
         break
       }
       case 'multi-enum': {
-        const checkedBoxes = this.querySelectorAll(`input:checked`)
+        const checkedBoxes = this.querySelectorAll('input:checked')
         for (const checkbox of checkedBoxes) {
           checkbox.checked = false
         }
@@ -242,9 +241,10 @@ class FgSet extends HTMLElement {
       }
       case 'text':
       case 'date': {
-        this.querySelector('select[name*="-month"]').value = '';
-        this.querySelector('input[name*="-day"]').value = '';
-        this.querySelector('input[name*="-year"]').value = '';
+        this.querySelector('select[name*="-month"]').value = ''
+        this.querySelector('input[name*="-day"]').value = ''
+        this.querySelector('input[name*="-year"]').value = ''
+        break
       }
       case 'int':
       case 'dollar': {
@@ -257,18 +257,18 @@ class FgSet extends HTMLElement {
     }
 
     // Clear error and alerts
-    this.error = null;
+    this.error = null
     this.clearAlerts()
     this.clearValidationError()
   }
 
-  setInputValueFromFactValue() {
+  setInputValueFromFactValue () {
     console.debug(`Setting input value for ${this.path} of type ${this.inputType}`)
-    let fact = factGraph.get(this.path)
+    const fact = factGraph.get(this.path)
 
     let value
     if (fact.complete === false) {
-      value = ""
+      value = ''
     } else {
       value = fact.get?.toString()
     }
@@ -276,10 +276,10 @@ class FgSet extends HTMLElement {
     switch (this.inputType) {
       case 'boolean':
       case 'enum': {
-        if (value !== "") {
+        if (value !== '') {
           this.querySelector(`input[value=${value}]`).checked = true
         }
-        break;
+        break
       }
       case 'multi-enum': {
         // MultiEnum stores Set of values - convert from Scala Set to JS Set
@@ -288,7 +288,7 @@ class FgSet extends HTMLElement {
         for (const checkbox of checkboxes) {
           checkbox.checked = selectedValues.has(checkbox.value)
         }
-        break;
+        break
       }
       case 'select': {
         this.querySelector('select').value = value
@@ -330,8 +330,8 @@ class FgSet extends HTMLElement {
     }
   }
 
-  getFactValueFromInputValue() {
-    console.debug(`Getting input value for ${this.path} of type ${this.inputType}`);
+  getFactValueFromInputValue () {
+    console.debug(`Getting input value for ${this.path} of type ${this.inputType}`)
     switch (this.inputType) {
       case 'boolean':
       case 'enum': {
@@ -342,7 +342,7 @@ class FgSet extends HTMLElement {
         const checkboxes = this.querySelectorAll('input[type="checkbox"]:checked')
         const values = new Set(Array.from(checkboxes).map(cb => cb.value))
         // Return null if empty (not empty Set) to match optional field semantics
-        return values.size > 0 ? fg.MultiEnum(fg.jsSetToScalaSet(values), "") : null
+        return values.size > 0 ? fg.MultiEnum(fg.jsSetToScalaSet(values), '') : null
       }
       case 'select': {
         return this.querySelector('select')?.value
@@ -366,16 +366,16 @@ class FgSet extends HTMLElement {
     }
   }
 
-  setFact() {
+  setFact () {
     console.debug(`Setting fact ${this.path}`)
     const value = this.getFactValueFromInputValue()
 
     let res = {}
-    if (value === "" || value === null) {
-      console.debug(`Value was blank, deleting fact`);
-      factGraph.delete(this.path);
+    if (value === '' || value === null) {
+      console.debug('Value was blank, deleting fact')
+      factGraph.delete(this.path)
     } else {
-      res = factGraph.set(this.path, value);
+      res = factGraph.set(this.path, value)
     }
 
     saveFactGraph()
@@ -394,7 +394,7 @@ class FgSet extends HTMLElement {
    * At present, it is impossible for users to delete facts, so deleting a fact should never trigger
    * a new UI update.
    */
-  deleteFactNoUpdate() {
+  deleteFactNoUpdate () {
     console.debug(`Deleting fact ${this.path}`)
 
     switch (this.inputType) {
@@ -402,17 +402,18 @@ class FgSet extends HTMLElement {
       case 'enum': {
         const input = this.querySelector('input:checked')
         if (input) input.checked = false
-        break;
+        break
       }
       case 'multi-enum': {
         const checkboxes = this.querySelectorAll('input[type="checkbox"]:checked')
         for (const checkbox of checkboxes) {
           checkbox.checked = false
         }
-        break;
+        break
       }
       case 'select': {
         this.querySelector('select').value = ''
+        break
       }
       case 'text':
       case 'date':
@@ -427,7 +428,6 @@ class FgSet extends HTMLElement {
     factGraph.delete(this.path)
     saveFactGraph()
   }
-
 }
 customElements.define('fg-set', FgSet)
 
@@ -435,11 +435,11 @@ customElements.define('fg-set', FgSet)
  * <fg-collection> - Expandable collection list
  */
 class FgCollection extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
 
     // Make listener a persistent function so we can remove it later
-    this.addItemListener = () => this.addItem();
+    this.addItemListener = () => this.addItem()
 
     /*
     * Set item numbers for items in `<fg-collection>`
@@ -447,17 +447,17 @@ class FgCollection extends HTMLElement {
     */
 
     this.setCollectionItemNumbers = () => {
-      const collectionItems = this.querySelectorAll('fg-collection-item');
+      const collectionItems = this.querySelectorAll('fg-collection-item')
       collectionItems.forEach((item, index) => {
-        const itemNumberSlot = item.querySelectorAll('.collection-item-number');
+        const itemNumberSlot = item.querySelectorAll('.collection-item-number')
         if (itemNumberSlot) {
-          itemNumberSlot.forEach(slot => slot.textContent = `${index + 1}`);
+          itemNumberSlot.forEach(slot => slot.textContent = `${index + 1}`)
         }
-      });
-    };
+      })
+    }
   }
 
-  connectedCallback() {
+  connectedCallback () {
     this.path = this.getAttribute('path')
     this.addItemButton = this.querySelector('.fg-collection__add-item')
     this.addItemButton.addEventListener('click', this.addItemListener)
@@ -468,15 +468,15 @@ class FgCollection extends HTMLElement {
 
     // If disallowempty="true" and no items, add one
     if (this.getAttribute('disallowempty') === 'true' && this.querySelectorAll('fg-collection-item').length === 0) {
-      this.addItem();
+      this.addItem()
     }
   }
 
-  disconnectedCallback() {
+  disconnectedCallback () {
     this.addItemButton.removeEventListener('click', this.addItemListener)
   }
 
-  addItem(id) {
+  addItem (id) {
     const collectionId = id ?? crypto.randomUUID()
 
     if (!id) {
@@ -485,20 +485,19 @@ class FgCollection extends HTMLElement {
     }
 
     const collectionItem = document.createElement('fg-collection-item')
-    collectionItem.setAttribute(`collectionPath`, this.path)
-    collectionItem.setAttribute(`collectionId`, collectionId)
+    collectionItem.setAttribute('collectionPath', this.path)
+    collectionItem.setAttribute('collectionId', collectionId)
     const collectionItemsContainer = this.querySelector('.usa-accordion')
     collectionItemsContainer.appendChild(collectionItem)
-    const collectionAccordionButton = collectionItem.querySelector('.usa-accordion__button');
-    collectionAccordionButton?.focus();
+    const collectionAccordionButton = collectionItem.querySelector('.usa-accordion__button')
+    collectionAccordionButton?.focus()
     document.dispatchEvent(new CustomEvent('fg-update'))
   }
-
 }
 customElements.define('fg-collection', FgCollection)
 
 class FgCollectionItem extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
 
     // Make listener a persistent function so we can remove it later
@@ -506,13 +505,13 @@ class FgCollectionItem extends HTMLElement {
     this.removeItemListener = () => {
       const fgCollection = this.closest('fg-collection')
       const addButton = fgCollection.querySelector('.fg-collection__add-item')
-      this.clear();
-      addButton.focus();
-      this.dispatchEvent(new CustomEvent('fg-update'));
+      this.clear()
+      addButton.focus()
+      this.dispatchEvent(new CustomEvent('fg-update'))
     }
   }
 
-  connectedCallback() {
+  connectedCallback () {
     console.debug('Connecting', this)
 
     // Get our template from the parent fg-collection
@@ -520,7 +519,7 @@ class FgCollectionItem extends HTMLElement {
     const templateContent = fgCollection.querySelector('.fg-collection__item-template').content.cloneNode(true)
 
     // Update all abstract paths in the template to include the collection id
-    const collectionId = this.getAttribute('collectionId');
+    const collectionId = this.getAttribute('collectionId')
 
     const attributes = ['path', 'condition', 'id', 'for', 'name', 'aria-describedby']
     const nodesWithAbstractPaths = templateContent.querySelectorAll(attributes.map(attr => `[${attr}*="/*/"]`).join(','))
@@ -533,13 +532,13 @@ class FgCollectionItem extends HTMLElement {
       }
     }
 
-    this.append(templateContent);
+    this.append(templateContent)
 
     // Set up accordion ids to enable interactions
-    const collectionAccordionButton = this.querySelector('.usa-accordion__button');
-    const collectionItemContent = this.querySelector('.usa-accordion__content');
-    collectionAccordionButton.setAttribute('aria-controls', `collection-item-${collectionId}`);
-    collectionItemContent.setAttribute('id', `collection-item-${collectionId}`);
+    const collectionAccordionButton = this.querySelector('.usa-accordion__button')
+    const collectionItemContent = this.querySelector('.usa-accordion__content')
+    collectionAccordionButton.setAttribute('aria-controls', `collection-item-${collectionId}`)
+    collectionItemContent.setAttribute('id', `collection-item-${collectionId}`)
 
     this.removeButton = this.querySelector('.fg-collection-item__remove-item')
     this.removeButton.addEventListener('click', this.removeItemListener)
@@ -550,7 +549,7 @@ class FgCollectionItem extends HTMLElement {
     fgCollection.setCollectionItemNumbers()
   }
 
-  disconnectedCallback() {
+  disconnectedCallback () {
     console.debug('Disconnecting', this)
 
     this.removeButton.removeEventListener('click', this.removeItemListener)
@@ -560,19 +559,19 @@ class FgCollectionItem extends HTMLElement {
     this.innerHTML = ''
   }
 
-  clear() {
+  clear () {
     for (const fgSet of this.querySelectorAll(customElements.getName(FgSet))) {
-      fgSet.remove();
+      fgSet.remove()
     }
 
     const fgCollection = this.closest('fg-collection')
-    const collectionPath = this.getAttribute(`collectionPath`)
-    const collectionId = this.getAttribute(`collectionId`)
-    factGraph.delete(makeCollectionIdPath(`${collectionPath}/*`, collectionId));
+    const collectionPath = this.getAttribute('collectionPath')
+    const collectionId = this.getAttribute('collectionId')
+    factGraph.delete(makeCollectionIdPath(`${collectionPath}/*`, collectionId))
     saveFactGraph()
 
     // Remove this element and its parent fieldset from the DOM after removing the item from the fact graph
-    this.remove();
+    this.remove()
     fgCollection.setCollectionItemNumbers()
   }
 }
@@ -582,22 +581,22 @@ customElements.define('fg-collection-item', FgCollectionItem)
  * <fg-show> - Display the current value and/or status of a fact.
  */
 class FgShow extends HTMLElement {
-  constructor() {
+  constructor () {
     super()
     this.updateListener = () => this.render()
   }
 
-  connectedCallback() {
+  connectedCallback () {
     this.path = this.getAttribute('path')
     document.addEventListener('fg-update', this.updateListener)
     this.render()
   }
 
-  disconnectedCallback() {
+  disconnectedCallback () {
     document.removeEventListener('fg-update', this.updateListener)
   }
 
-  render() {
+  render () {
     // TODO: Eventually remove as part of https://github.com/IRSDigitalService/tax-withholding-estimator/issues/414
     // This is a temporary enhancement to allow showing all values of a fact without knowing the collection id
     const results = (this.path.indexOf('*') !== -1)
@@ -615,7 +614,7 @@ class FgShow extends HTMLElement {
           outputHtml += `${value}`
         }
       } else {
-        outputHtml += `<span class="text-base">-</span>`
+        outputHtml += '<span class="text-base">-</span>'
       }
     }
     this.innerHTML = outputHtml
@@ -627,11 +626,11 @@ customElements.define('fg-show', FgShow)
  * <fg-reset> - button to reset the Fact Graph.
  */
 class FgReset extends HTMLElement {
-  connectedCallback() {
+  connectedCallback () {
     this.addEventListener('click', this)
   }
 
-  handleEvent() {
+  handleEvent () {
     factGraph = fg.GraphFactory.apply(factDictionary)
     window.factGraph = factGraph
     saveFactGraph()
@@ -642,7 +641,7 @@ class FgReset extends HTMLElement {
 }
 customElements.define('fg-reset', FgReset)
 
-function checkCondition(condition, operator) {
+function checkCondition (condition, operator) {
   const value = factGraph.get(condition)
 
   switch (operator) {
@@ -665,7 +664,7 @@ function checkCondition(condition, operator) {
  *
  * This method will delete facts that are hidden, making them incomplete.
  */
-function showOrHideAllElements() {
+function showOrHideAllElements () {
   // At present, this naive implementation relies on <fg-set>s not having conditions on facts that
   // are set after them in the DOM order. This is a deliberate choice to limit complexity at this
   // stage, but it is not set in stone. If you see bugs related to showing/hiding, this is the place
@@ -680,7 +679,7 @@ function showOrHideAllElements() {
     if (!meetsCondition && !element.classList.contains('hidden')) {
       element.classList.add('hidden')
       // Only delete facts for <fg-set>, not other elements that might have conditions
-      if (element.tagName === 'FG-SET'){
+      if (element.tagName === 'FG-SET') {
         element?.deleteFactNoUpdate()
       }
     } else if (meetsCondition && element.classList.contains('hidden')) {
@@ -689,81 +688,79 @@ function showOrHideAllElements() {
   }
 }
 
-function handleSectionContinue(event) {
+function handleSectionContinue (event) {
   if (!validateSectionForNavigation()) {
-    event.preventDefault();
-    return false;
+    event.preventDefault()
+    return false
   }
-  return true;
+  return true
 }
 
-function handleSectionComplete(event) {
-  event.preventDefault();
+function handleSectionComplete (event) {
+  event.preventDefault()
   if (validateSectionForNavigation()) {
-    alert("You've completed filling out the Tax Withholding Estimator");
+    alert("You've completed filling out the Tax Withholding Estimator")
   }
-  return false;
+  return false
 }
 
-function validateSectionForNavigation() {
-  const fgSets = document.querySelectorAll('fg-set:not(.hidden)');
-  const missingFields = [];
-  let hasValidationErrors = false;
+function validateSectionForNavigation () {
+  const fgSets = document.querySelectorAll('fg-set:not(.hidden)')
+  const missingFields = []
+  let hasValidationErrors = false
 
   // Loop through fields and mark incomplete if empty and required
   for (const fgSet of fgSets) {
     if (!(fgSet.isComplete() || fgSet.optional)) {
-      const fieldName = fgSet.path;
-      missingFields.push(fieldName);
+      const fieldName = fgSet.path
+      missingFields.push(fieldName)
       if (!fgSet.validateRequiredFields()) {
-        hasValidationErrors = false;
+        hasValidationErrors = false
       }
     }
   }
   // Display validation error if there are missing fields/incomplete
   if (missingFields.length > 0 || hasValidationErrors) {
-    showValidationError();
-    return false;
+    showValidationError()
+    return false
   }
 
-  return true;
+  return true
 }
 
-function showValidationError() {
+function showValidationError () {
   // Target custom class validate-alert
-  const existingAlert = document.querySelector('.validate-alert');
+  const existingAlert = document.querySelector('.validate-alert')
   if (existingAlert) {
-    existingAlert.remove();
+    existingAlert.remove()
   }
   // Clone the alert
-  const template = document.getElementById('validate-alert-template');
-  const alertElement = template.content.cloneNode(true);
-  const mainContent = document.getElementById('main-content');
+  const template = document.getElementById('validate-alert-template')
+  const alertElement = template.content.cloneNode(true)
+  const mainContent = document.getElementById('main-content')
   // Place the alert at the top of the main content
-  mainContent.insertBefore(alertElement, mainContent.firstChild);
+  mainContent.insertBefore(alertElement, mainContent.firstChild)
 
   // Focus the first invalid field
   const firstErrorFocusTarget = document.querySelector(
-    'fg-alert[blocking]:not(.hidden) :is(.usa-alert__heading, .usa-alert__text),'
-    + 'fg-set:not([inputtype="date"], .hidden) .usa-form-group--error .usa-fieldset,'
-    + 'fg-set:not(.hidden) [aria-invalid="true"]'
-  );
+    'fg-alert[blocking]:not(.hidden) :is(.usa-alert__heading, .usa-alert__text),' +
+    'fg-set:not([inputtype="date"], .hidden) .usa-form-group--error .usa-fieldset,' +
+    'fg-set:not(.hidden) [aria-invalid="true"]'
+  )
 
-  if (firstErrorFocusTarget instanceof HTMLFieldSetElement || firstErrorFocusTarget.closest(`fg-alert`)) {
-    firstErrorFocusTarget.setAttribute('tabindex', '-1');
-    firstErrorFocusTarget.focus();
+  if (firstErrorFocusTarget instanceof HTMLFieldSetElement || firstErrorFocusTarget.closest('fg-alert')) {
+    firstErrorFocusTarget.setAttribute('tabindex', '-1')
+    firstErrorFocusTarget.focus()
 
     // Remove tabindex after focus to prevent outline from appearing on subsequent clicks
     firstErrorFocusTarget.addEventListener('blur', () => {
-      firstErrorFocusTarget.removeAttribute('tabindex');
-    }, { once: true });
-  }
-  else {firstErrorFocusTarget.focus();}
-
+      firstErrorFocusTarget.removeAttribute('tabindex')
+    }, { once: true })
+  } else { firstErrorFocusTarget.focus() }
 }
 
-window.handleSectionContinue = handleSectionContinue;
-window.handleSectionComplete = handleSectionComplete;
+window.handleSectionContinue = handleSectionContinue
+window.handleSectionComplete = handleSectionComplete
 
 // Add show/hide functionality to all elements
 document.addEventListener('fg-update', showOrHideAllElements)

@@ -1,11 +1,10 @@
-
 /**
  * Template paths for each form type
  */
 const FORM_TEMPLATES = {
-    w4: "resources/w4-templates/fw4.pdf",
-    w4sp: "resources/w4-templates/fw4-es.pdf",
-    w4p: "resources/w4-templates/fw4p.pdf"
+  w4: 'resources/w4-templates/fw4.pdf',
+  w4sp: 'resources/w4-templates/fw4-es.pdf',
+  w4p: 'resources/w4-templates/fw4p.pdf'
 }
 
 /**
@@ -17,31 +16,31 @@ const FORM_FIELDS = {
   // W-4 and W-4SP share field IDs
   w4: {
     filingStatus: {
-      single: "topmostSubform[0].Page1[0].c1_1[0]",
-      marriedFilingJointly: "topmostSubform[0].Page1[0].c1_1[1]",
-      marriedFilingSeparately: "topmostSubform[0].Page1[0].c1_1[0]", // Equivalent to Single
-      headOfHousehold: "topmostSubform[0].Page1[0].c1_1[2]",
-      qualifiedSurvivingSpouse: "topmostSubform[0].Page1[0].c1_1[1]" // Equivalent to Married
+      single: 'topmostSubform[0].Page1[0].c1_1[0]',
+      marriedFilingJointly: 'topmostSubform[0].Page1[0].c1_1[1]',
+      marriedFilingSeparately: 'topmostSubform[0].Page1[0].c1_1[0]', // Equivalent to Single
+      headOfHousehold: 'topmostSubform[0].Page1[0].c1_1[2]',
+      qualifiedSurvivingSpouse: 'topmostSubform[0].Page1[0].c1_1[1]' // Equivalent to Married
     },
-    credits: "topmostSubform[0].Page1[0].f1_09[0]",
-    nonJobIncome: "topmostSubform[0].Page1[0].f1_10[0]",
-    deductions: "topmostSubform[0].Page1[0].f1_11[0]",
-    extraWithholding: "topmostSubform[0].Page1[0].f1_12[0]"
+    credits: 'topmostSubform[0].Page1[0].f1_09[0]',
+    nonJobIncome: 'topmostSubform[0].Page1[0].f1_10[0]',
+    deductions: 'topmostSubform[0].Page1[0].f1_11[0]',
+    extraWithholding: 'topmostSubform[0].Page1[0].f1_12[0]'
   },
   // W-4P has different field IDs
   w4p: {
     filingStatus: {
-      single: "topmostSubform[0].Page1[0].c1_1[0]",
-      marriedFilingJointly: "topmostSubform[0].Page1[0].c1_1[1]",
-      marriedFilingSeparately: "topmostSubform[0].Page1[0].c1_1[0]", // Equivalent to Single
-      headOfHousehold: "topmostSubform[0].Page1[0].c1_1[2]",
-      qualifiedSurvivingSpouse: "topmostSubform[0].Page1[0].c1_1[1]" // Equivalent to Married
+      single: 'topmostSubform[0].Page1[0].c1_1[0]',
+      marriedFilingJointly: 'topmostSubform[0].Page1[0].c1_1[1]',
+      marriedFilingSeparately: 'topmostSubform[0].Page1[0].c1_1[0]', // Equivalent to Single
+      headOfHousehold: 'topmostSubform[0].Page1[0].c1_1[2]',
+      qualifiedSurvivingSpouse: 'topmostSubform[0].Page1[0].c1_1[1]' // Equivalent to Married
     },
-    pensionIncome: "topmostSubform[0].Page1[0].f1_07[0]", // Only exists in W-4P
-    credits: "topmostSubform[0].Page1[0].f1_12[0]",
-    nonJobIncome: "topmostSubform[0].Page1[0].f1_13[0]",
-    deductions: "topmostSubform[0].Page1[0].f1_14[0]",
-    extraWithholding: "topmostSubform[0].Page1[0].f1_15[0]"
+    pensionIncome: 'topmostSubform[0].Page1[0].f1_07[0]', // Only exists in W-4P
+    credits: 'topmostSubform[0].Page1[0].f1_12[0]',
+    nonJobIncome: 'topmostSubform[0].Page1[0].f1_13[0]',
+    deductions: 'topmostSubform[0].Page1[0].f1_14[0]',
+    extraWithholding: 'topmostSubform[0].Page1[0].f1_15[0]'
   }
 }
 
@@ -50,8 +49,7 @@ const FORM_FIELDS = {
  * Form type decided by data: pensionIncome means W-4P. Otherwise language determines W-4 vs W-4SP.
  * @param {Object} factGraph - Fact graph instance
  */
-async function downloadW4(factGraph) {
-
+async function downloadW4 (factGraph) {
   // Get all fact values from the Fact Graph
   const filingStatus = factGraph.get('/filingStatus').get.toString()                                // Line 1(c)
   const pensionIncome = factGraph.get('/totalPensionsIncome').get.toString()                        // Line 2(b)(i) amount (W-4P only)
