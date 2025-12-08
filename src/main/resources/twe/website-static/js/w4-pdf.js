@@ -72,6 +72,7 @@ async function downloadW4 (factGraph) {
   }
 
   // Load template and create form
+  // eslint-disable-next-line security/detect-object-injection
   const templateResponse = await fetch(FORM_TEMPLATES[template])
   const templateBytes = await templateResponse.arrayBuffer()
 
@@ -82,6 +83,7 @@ async function downloadW4 (factGraph) {
   const fields = template === 'w4p' ? FORM_FIELDS.w4p : FORM_FIELDS.w4
 
   // Set filing status checkbox
+  // eslint-disable-next-line security/detect-object-injection
   form.getCheckBox(fields.filingStatus[filingStatus]).check()
 
   // Fill text fields

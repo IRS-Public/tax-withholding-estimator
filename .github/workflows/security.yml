@@ -86,13 +86,11 @@ jobs:
 
     - name: Install validators from npm
       working-directory: ${{ env.TWE_PATH }}
-      run: |
-        npm install --save-dev html-validate@10.0.0 eslint@9.35.0 eslint-plugin-security@3.0.1
+      run: make ci_setup
 
     - name: HTML security validation
       working-directory: ${{ env.TWE_PATH }}
-      run: |
-        make ci_validate-html
+      run: make ci_validate-html
 
     - name: JavaScript security linting
       working-directory: ${{ env.TWE_PATH }}

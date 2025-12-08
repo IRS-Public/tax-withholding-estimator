@@ -42,7 +42,8 @@ ci:
 	make validate-xml
 	make ci_validate-format
 	make ci_validate-html
-	# Skipping eslint and semgrep (locally) for now
+	make ci_validate-js
+	# Skipping semgrep (locally) for now
 
 .PHONY: clean
 clean:
@@ -59,6 +60,10 @@ validate-xml:
 format-xml:
 	find $(TWE_RESOURCES_DIR) -name '*xml' | xargs -I {} xmllint --format {} --output {}
 
+.PHONY: ci_setup
+ci_setup:
+	npm --prefix $(TWE_RESOURCES_DIR) install
+
 .PHONY: ci_validate-format
 ci_validate-format:
 	find $(TWE_RESOURCES_DIR) -name '*xml' | \
@@ -72,7 +77,7 @@ ci_validate-html:
 
 .PHONY: ci_validate-js
 ci_validate-js:
-	npx eslint --config .github/eslint.config.mjs
+	npm --prefix $(TWE_RESOURCES_DIR) run lint
 
 .PHONY: ci_semgrep
 ci_semgrep:

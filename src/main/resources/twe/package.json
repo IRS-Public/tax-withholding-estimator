@@ -1,0 +1,17 @@
+{
+  "name": "static-pdf-lib",
+  "version": "1.0.0",
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  },
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^9.39.1",
+    "eslint-plugin-security": "^3.0.1",
+    "neostandard": "^0.12.2"
+  },
+  "scripts": {
+    "lint": "eslint",
+    "fix": "eslint --fix"
+  }
+}

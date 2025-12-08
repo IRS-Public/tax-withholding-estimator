@@ -451,7 +451,7 @@ class FgCollection extends HTMLElement {
       collectionItems.forEach((item, index) => {
         const itemNumberSlot = item.querySelectorAll('.collection-item-number')
         if (itemNumberSlot) {
-          itemNumberSlot.forEach(slot => slot.textContent = `${index + 1}`)
+          itemNumberSlot.forEach(slot => { slot.textContent = `${index + 1}` })
         }
       })
     }
