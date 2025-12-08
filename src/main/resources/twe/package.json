@@ -8,9 +8,11 @@
   "devDependencies": {
     "eslint": "^9.39.1",
     "eslint-plugin-security": "^3.0.1",
+    "html-validate": "^10.4.0",
     "neostandard": "^0.12.2"
   },
   "scripts": {
+    "html-validate": "html-validate --config htmlvalidate.json ./**/*.html ../../../../out/**.html",
     "lint": "eslint",
     "fix": "eslint --fix"
   }

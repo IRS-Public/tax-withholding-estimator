@@ -72,8 +72,7 @@ ci_validate-format:
 
 .PHONY: ci_validate-html
 ci_validate-html:
-	npx html-validate --config $(TWE_RESOURCES_DIR)/security/.htmlvalidate.json \
-		"$(TWE_RESOURCES_DIR)/templates/fragments/*.html" "out/*.html"
+	npm --prefix $(TWE_RESOURCES_DIR) run html-validate
 
 .PHONY: ci_validate-js
 ci_validate-js:

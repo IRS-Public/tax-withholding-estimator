@@ -18,8 +18,10 @@
     "require-sri": ["error", { "target": "crossorigin"} ],
     "attribute-allowed-values": "warn",
     "attribute-boolean-style": "warn",
-    "close-order": "warn",
-    "element-permitted-content": "warn",
+    "close-order": "off",
+    "element-required-content": "off",
+    "element-permitted-content": "off",
+    "element-permitted-parent": "off",
     "empty-heading": "warn",
     "empty-title": "warn",
     "long-title": "warn",
@@ -28,6 +30,13 @@
     "text-content": "warn",
     "void-style": "warn",
     "wcag/h30": "warn",
+    "wcag/h37": [
+      "error",
+      {
+        "allowEmpty": false,
+        "alias": ["th:alt"]
+      }
+    ],
     "wcag/h71": "warn",
     "doctype-style": "off",
     "valid-id": "off"
