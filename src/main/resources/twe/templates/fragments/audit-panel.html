@@ -9,7 +9,7 @@
     <input
       list="fact-options"
       class="usa-input"
-      onkeydown="pathSelectListener()"
+      onkeydown="pathSelectListener(event)"
       id="fact-select">
     <datalist id="fact-options" aria-invalid="false"></datalist>
   </div>
@@ -28,7 +28,13 @@
       aria-invalid="false">
   </div>
 
-  <div><button id="add-fact-button" type="button">Add fact</button></div>
+  <div>
+    <button id="add-fact-button"
+            type="button"
+            onclick="trackSelectedFact">
+      Add fact
+    </button>
+  </div>
   <div id="audit-panel__fact-list"></div>
 </section>
 
