@@ -111,13 +111,105 @@
         </Limit>
       </Writable>
     </Fact>
-    <Fact path="/jobs/*/averagePayPerPayPeriod">
+    <Fact path="/jobs/*/inconsistentPay">
+      <Writable>
+        <Boolean/>
+      </Writable>
+      <Placeholder>
+        <False/>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/amountLastPaycheck">
       <Writable>
         <Dollar/>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/averagePayPerPayPeriod">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../inconsistentPay"/>
+            </When>
+            <Then>
+              <Dependency path="../inconsistentPayAverage"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../amountLastPaycheck"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/inconsistentPayAverage">
+      <Derived>
+        <Switch>
+          <!--
+            There are only two cases here: two past paychecks, or three.
+            Entering at least two paycheks is required if you select "inconsistent pay"
+          -->
+          <Case>
+            <When>
+              <IsComplete>
+                <Dependency path="../pastPaycheckIncome3"/>
+              </IsComplete>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Add>
+                    <Dependency path="../pastPaycheckIncome1"/>
+                    <Dependency path="../pastPaycheckIncome2"/>
+                    <Dependency path="../pastPaycheckIncome3"/>
+                  </Add>
+                </Dividend>
+                <Divisors>
+                  <Int>3</Int>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Add>
+                    <Dependency path="../pastPaycheckIncome1"/>
+                    <Dependency path="../pastPaycheckIncome2"/>
+                  </Add>
+                </Dividend>
+                <Divisors>
+                  <Int>2</Int>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/pastPaycheckIncome1">
+      <!-- This is the most recent paycheck -->
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/pastPaycheckIncome2">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/pastPaycheckIncome3">
+      <Writable>
+        <Dollar/>
+      </Writable>
     </Fact>
     <Fact path="/jobs/*/yearToDateIncome">
       <Writable>
@@ -138,6 +230,40 @@
     </Fact>
     <Fact path="/jobs/*/averageWithholdingPerPayPeriod">
       <Description>The average withholding from a specific job per pay period</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../inconsistentPay"/>
+            </When>
+            <Then>
+              <Multiply>
+                <!-- Get the percentage withheld from the most recent paycheck -->
+                <Divide>
+                  <Dividend>
+                    <Dependency path="../amountWithheldLastPaycheck"/>
+                  </Dividend>
+                  <Divisors>
+                    <Dependency path="../pastPaycheckIncome1"/>
+                  </Divisors>
+                </Divide>
+                <!-- Multiply it by the average pay to estimate the average withholding -->
+                <Dependency path="../inconsistentPayAverage"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../amountWithheldLastPaycheck"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/amountWithheldLastPaycheck">
       <Writable>
         <Dollar/>
       </Writable>

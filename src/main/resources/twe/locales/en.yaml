@@ -1,4 +1,6 @@
 components:
+  fg-set:
+    required: "(Required)"
   fg-collection:
     buttons:
       item-name-default: Item
@@ -115,6 +117,7 @@ errors:
   # to the end of the string
   Max: Enter an amount less than
   Min: Enter an amount more than
+
 audit:
   fact-select:
     question: Fact Path

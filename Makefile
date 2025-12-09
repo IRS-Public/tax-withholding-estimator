@@ -31,6 +31,11 @@ test:
 	# This only prints the tests that fail
 	sbt -info 'set Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oC")' test
 
+.PHONY: test-watch
+test-watch:
+	# This only prints the tests that fail
+	sbt -info 'set Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oC")' '~test'
+
 .PHONY: format
 format:
 	make format-xml

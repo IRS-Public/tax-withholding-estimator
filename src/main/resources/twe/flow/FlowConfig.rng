@@ -116,20 +116,17 @@
         <attribute name="type">
           <value>boolean</value>
         </attribute>
-        <optional>
+        <zeroOrMore>
           <element name="option">
             <attribute name="value">
-              <value>true</value>
+              <choice>
+                <value>false</value>
+                <value>true</value>
+              </choice>
             </attribute>
             <text/>
           </element>
-          <element name="option">
-            <attribute name="value">
-              <value>false</value>
-            </attribute>
-            <text/>
-          </element>
-        </optional>
+        </zeroOrMore>
       </element>
       <element name="input">
         <attribute name="type">
