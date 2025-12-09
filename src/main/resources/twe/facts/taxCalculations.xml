@@ -36,6 +36,24 @@
         </GreaterOf>
       </Derived>
     </Fact>
+    <Fact path="/taxableIncomeForQBIDeduction">
+      <Description>Taxable income without the QBI Deduction, with coordination with OB3 70111 to exclude limitation on itemized deduction</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Round>
+            <Subtract>
+              <Minuend>
+                <Dependency path="/agi"/>
+              </Minuend>
+              <Subtrahends>
+                <Dependency path="/totalDeductionsForQBIDeduction"/>
+              </Subtrahends>
+            </Subtract>
+          </Round>
+        </GreaterOf>
+      </Derived>
+    </Fact>
     <Fact path="/magiForOB3BelowLineDeductions">
       <Name>Modified Adjusted Gross Income for OB3 Below Line Deductions</Name>
       <Description>Adjusted gross income of the taxpayer for the taxable year increased by any

@@ -2,28 +2,61 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/isApplicableTaxpayerForQBIDeduction">
-      <Description>Has estimated QBI over applicable taxpayer threshold of $1,000</Description>
+    <Fact path="/qbiComponentMultiplier">
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <GreaterThanOrEqual>
-          <Left>
-            <Dependency path="/estimatedQualifiedBusinessIncomeDeduction"/>
-          </Left>
-          <Right>
-            <Dependency path="/minimumQBIThresholdForApplicableTaxpayer"/>
-          </Right>
-        </GreaterThanOrEqual>
+        <Rational>20/100</Rational>
       </Derived>
     </Fact>
-    <Fact path="/estimatedQualifiedBusinessIncomeDeduction">
-      <Name>Estimated qualified business income deduction</Name>
-      <Description>Qualified business income deductions for line 13 of Form 1040</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
+    <Fact path="/qbiPhaseInStartThreshold">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Not>
+                <Dependency path="/isFilingStatusMFJ"/>
+              </Not>
+            </When>
+            <Then>
+              <Dollar>394600</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>197300</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/qbiPhaseInRange">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Not>
+                <Dependency path="/isFilingStatusMFJ"/>
+              </Not>
+            </When>
+            <Then>
+              <Dollar>100000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>50000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
     </Fact>
     <Fact path="/minimumDeductionForActiveQBIAmount">
       <Name>Minimum Deduction for Active QBI</Name>
@@ -51,28 +84,370 @@
         <Dollar>1000</Dollar>
       </Derived>
     </Fact>
+    <Fact path="/eligibleIncomeForQualifiedBusinessIncomeDeduction">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Add>
+          <Dependency path="/netSelfEmploymentIncomeTotal"/>
+          <Dependency path="/selfEmploymentTaxDeduction"/>
+          <Dependency path="/selfEmploymentRetirementPlanDeduction"/>
+          <Dependency path="/sCorpNonPassiveIncome"/>
+          <Dependency path="/rentalIncome"/>
+          <Dependency path="/royaltyIncome"/>
+          <Dependency path="/netScheduleEIncome"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedBusinessIncome">
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/eligibleIncomeForQualifiedBusinessIncomeDeduction"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/selfEmploymentHealthInsuranceDeduction"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/tentativeQualifiedBusinessIncomeComponent">
+      <Description> Form 8995-A Line 3</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/qualifiedBusinessIncome"/>
+          <Dependency path="/qbiComponentMultiplier"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine4">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine5">
+      <Derived>
+        <Multiply>
+          <Dependency path="/form8995aLine4"/>
+          <Rational>50/100</Rational>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine6">
+      <Derived>
+        <Multiply>
+          <Dependency path="/form8995aLine5"/>
+          <Rational>25/100</Rational>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine7">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine8">
+      <Derived>
+        <Multiply>
+          <Dependency path="/form8995aLine7"/>
+          <Rational>25/1000</Rational>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine9">
+      <Derived>
+        <Add>
+          <Dependency path="/form8995aLine6"/>
+          <Dependency path="/form8995aLine8"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine10">
+      <Derived>
+        <GreaterOf>
+          <Dependency path="/form8995aLine5"/>
+          <Dependency path="/form8995aLine9"/>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine11">
+      <Derived>
+        <LesserOf>
+          <Dependency path="/tentativeQualifiedBusinessIncomeComponent"/>
+          <Dependency path="/form8995aLine10"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine13">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <!-- If taxable income is greater than the threshold, take the greater of the phased in QBI and Line 11              -->
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/taxableIncomeForQBIDeduction"/>
+                </Left>
+                <Right>
+                  <Dependency path="/qbiPhaseInStartThreshold"/>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <GreaterOf>
+                <Dependency path="/form8995aLine11"/>
+                <!-- Line 26 and Line 12-->
+                <Dependency path="/phasedInQualifiedBusinessIncome"/>
+              </GreaterOf>
+            </Then>
+          </Case>
+          <Case>
+            <!-- else just take the QBI components (QBI * multiplier)-->
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <!-- /form8995aLine11, but we just call the Line 3 fact directly instead-->
+              <Dependency path="/tentativeQualifiedBusinessIncomeComponent"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine14">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedBusinessIncomeComponent">
+      <Description>Form 8995-A Line 15 (aggregated) and Line 16</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/form8995aLine13"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/form8995aLine14"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine17">
+      <Derived>
+        <Dependency path="/tentativeQualifiedBusinessIncomeComponent"/>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine18">
+      <Derived>
+        <Dependency path="/form8995aLine10"/>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine19">
+      <Description>Form 8995-A Line 19 = Line 17- Line 18 = Line 3 - Line 10</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/form8995aLine17"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/form8995aLine18"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine20">
+      <Derived>
+        <Dependency path="/taxableIncomeForQBIDeduction"/>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine21">
+      <Derived>
+        <Dependency path="/qbiPhaseInStartThreshold"/>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine22">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/form8995aLine20"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/form8995aLine21"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine23">
+      <Derived>
+        <Dependency path="/qbiPhaseInRange"/>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine24">
+      <Description> QBI Phase In Percentage, rounded to 2 decimals</Description>
+      <Derived>
+        <Round>
+          <Divide>
+            <Dividend>
+              <Dependency path="/form8995aLine22"/>
+            </Dividend>
+            <Divisors>
+              <Dependency path="/form8995aLine23"/>
+            </Divisors>
+          </Divide>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine25">
+      <Derived>
+        <Multiply>
+          <Dependency path="/form8995aLine19"/>
+          <Dependency path="/form8995aLine24"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/phasedInQualifiedBusinessIncome">
+      <Description>Form 8895-A Line 26</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/form8995aLine17"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/form8995aLine25"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine27">
+      <Derived>
+        <Dependency path="/qualifiedBusinessIncomeComponent"/>
+      </Derived>
+    </Fact>
+    <!-- We don't capture REIT or PTP information, so these are all zero'd out    -->
+    <Fact path="/form8995aLine28">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine29">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine30">
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Add>
+            <Dependency path="/form8995aLine28"/>
+            <Dependency path="/form8995aLine29"/>
+          </Add>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine31">
+      <Derived>
+        <Multiply>
+          <Dependency path="/form8995aLine30"/>
+          <Dependency path="/qbiComponentMultiplier"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine32">
+      <Derived>
+        <Add>
+          <Dependency path="/form8995aLine27"/>
+          <Dependency path="/form8995aLine31"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine33">
+      <Derived>
+        <Dependency path="/taxableIncomeForQBIDeduction"/>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine34">
+      <Derived>
+        <Dependency path="/netCapitalGains"/>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine35">
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/form8995aLine33"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/form8995aLine34"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine36">
+      <Derived>
+        <Multiply>
+          <Dependency path="/form8995aLine35"/>
+          <Dependency path="/qbiComponentMultiplier"/>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine37">
+      <Derived>
+        <LesserOf>
+          <Dependency path="/form8995aLine32"/>
+          <Dependency path="/form8995aLine36"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine38">
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/tentativeQualifiedBusinessIncomeDeduction">
+      <Description>Form 8895-A Line 39.</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/form8995aLine37"/>
+          <Dependency path="/form8995aLine38"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/isEligibleForQBIDeduction">
+      <Description>Tentative QBI is over applicable taxpayer threshold of $1,000</Description>
+      <Derived>
+        <GreaterThanOrEqual>
+          <Left>
+            <Dependency path="/tentativeQualifiedBusinessIncomeDeduction"/>
+          </Left>
+          <Right>
+            <Dependency path="/minimumQBIThresholdForApplicableTaxpayer"/>
+          </Right>
+        </GreaterThanOrEqual>
+      </Derived>
+    </Fact>
     <Fact path="/qualifiedBusinessIncomeDeduction">
       <Name>Qualified Business Income Deduction</Name>
       <Description>Section 199A: qualified business income deduction. The deduction allows eligible
-        taxpayers to deduct up to 20 percent of their QBI, plus 20 percent of qualified real estate
-        investment trust (REIT) dividends and qualified publicly traded partnership (PTP) income.
-        Income earned through a C corporation or by providing services as an employee is not
-        eligible for the deduction. For more information on what qualifies as a trade or business,
-        see Determining your qualified trades or businesses in the Instructions for Form 8995-A or
-        Form 8995.
-
-        Currently, we do minimal derivation of QBI based on income and tax calculations, and
-        instead take an estimate from the taxpayer of their deduction and apply some basic logic in
-        accordance with OB3. The more complex version of this would look at various income sources
-        and calculate it all behind the scenes.</Description>
+            taxpayers to deduct up to 20 percent of their QBI, plus 20 percent of qualified real estate
+            investment trust (REIT) dividends and qualified publicly traded partnership (PTP) income.
+            Income earned through a C corporation or by providing services as an employee is not
+            eligible for the deduction. For more information on what qualifies as a trade or business,
+            see Determining your qualified trades or businesses in the Instructions for Form 8995-A or
+            Form 8995.</Description>
       <Derived>
         <Switch>
           <Case>
             <!-- When the taxpayer isn't an applicable taxpayer for QBI Deduction and doesn't have
-            at least $1,000 in QBI, the deduction is $0 -->
+                at least $1,000 in QBI, the deduction is $0 -->
             <When>
               <Not>
-                <Dependency path="/isApplicableTaxpayerForQBIDeduction"/>
+                <Dependency path="/isEligibleForQBIDeduction"/>
               </Not>
             </When>
             <Then>
@@ -81,15 +456,14 @@
           </Case>
           <Case>
             <!-- Otherwise, take the greater of the minimum deduction ($400) or the estimated
-            deduction provided by the taxpayer
-             Note that until we implement Form 8995, this will always default to $1000-->
+                deduction provided by the taxpayer-->
             <When>
               <True/>
             </When>
             <Then>
               <GreaterOf>
                 <Dependency path="/minimumDeductionForActiveQBIAmount"/>
-                <Dependency path="/estimatedQualifiedBusinessIncomeDeduction"/>
+                <Dependency path="/tentativeQualifiedBusinessIncomeDeduction"/>
               </GreaterOf>
             </Then>
           </Case>

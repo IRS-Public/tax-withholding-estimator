@@ -446,5 +446,63 @@ and car loan interest deduction
         </Round>
       </Derived>
     </Fact>
+    <Fact path="/grossCapitalGains">
+      <Derived>
+        <Add>
+          <Dependency path="/shortTermCapitalGainsIncome"/>
+          <Dependency path="/longTermCapitalGainsIncome"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/netCapitalGainsWithoutQualifiedDividends">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <GreaterThanOrEqual>
+                  <Left>
+                    <Dollar>0</Dollar>
+                  </Left>
+                  <Right>
+                    <Dependency path="/longTermCapitalGainsIncome"/>
+                  </Right>
+                </GreaterThanOrEqual>
+                <GreaterThanOrEqual>
+                  <Left>
+                    <Dollar>0</Dollar>
+                  </Left>
+                  <Right>
+                    <Dependency path="/grossCapitalGains"/>
+                  </Right>
+                </GreaterThanOrEqual>
+              </Any>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <LesserOf>
+                <Dependency path="/longTermCapitalGainsIncome"/>
+                <Dependency path="/grossCapitalGains"/>
+              </LesserOf>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/netCapitalGains">
+      <Derived>
+        <Add>
+          <Dependency path="/qualifiedDividendsIncome"/>
+          <Dependency path="/netCapitalGainsWithoutQualifiedDividends"/>
+        </Add>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>

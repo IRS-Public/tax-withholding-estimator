@@ -44,7 +44,8 @@
         (2) so much of the taxable income of the taxpayer for the taxable
         year (determined without regard to this section and increased by such amount of itemized
         deductions) as exceeds the dollar amount at which the 37 percent rate bracket under section
-        1 begins with respect to the taxpayer.</Description>
+        1 begins with respect to the taxpayer.
+        n.b. this definition is ignored for purposes of QBI deduction calculation per OB3</Description>
       <Derived>
         <Round>
           <GreaterOf>
