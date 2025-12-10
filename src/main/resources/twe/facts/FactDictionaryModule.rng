@@ -990,6 +990,9 @@
       <optional>
         <ref name="IntContent"/>
       </optional>
+      <optional>
+        <ref name="EnumContent"/>
+      </optional>
     </element>
   </define>
   <define name="FalseContent">

@@ -2,7 +2,7 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp">
+    <Fact path="/overtimeCompensation">
       <Name>Overtime Compensation Excluding Qualified Tip Overtime Comp</Name>
       <Description>OB3 &#xA7;70202 IRC &#xA7;225(c)(2). Overtime compensation excluding all
         qualified tips
@@ -10,7 +10,7 @@
         in IRC &#xA7;224 that were received as part of qualified overtime compensation</Description>
       <Derived>
         <CollectionSum>
-          <Dependency path="/jobs/*/overtimeCompensationExcludingQualifiedTipsOvertimeComp"/>
+          <Dependency path="/jobs/*/overtimeCompensation"/>
         </CollectionSum>
       </Derived>
     </Fact>
@@ -91,7 +91,7 @@
           </Any>
           <GreaterThan>
             <Left>
-              <Dependency path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp"/>
+              <Dependency path="/overtimeCompensation"/>
             </Left>
             <Right>
               <Dollar>0</Dollar>
@@ -196,7 +196,7 @@
               <Then>
                 <Subtract>
                   <Minuend>
-                    <Dependency path="/overtimeCompensationExcludingQualifiedTipsOvertimeComp"/>
+                    <Dependency path="/overtimeCompensation"/>
                   </Minuend>
                   <Subtrahends>
                     <Dependency path="/phaseOutAmountOvertimeCompensationDeduction"/>

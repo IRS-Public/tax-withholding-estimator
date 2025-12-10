@@ -110,9 +110,16 @@
           <question>How much qualified tips did you make for this job?</question>
           <input type="dollar"/>
         </fg-set>
-        <fg-set path="/jobs/*/overtimeCompensationExcludingQualifiedTipsOvertimeComp">
-          <question>How much was the half portion of time and a half of overtime compensation did you make for this job?</question>
+        <fg-set path="/jobs/*/overtimeCompensationTotal">
+          <question>How much overtime compensation did you make this year?</question>
           <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/overtimeCompensationRate">
+          <question>What is the rate at which you get paid overtime?</question>
+          <select options-path="/jobs/*/overtimeCompensationRate">
+            <option value="onePointFive">Time and a half (1.5x)</option>
+            <option value="two">Double time (2x)</option>
+          </select>
         </fg-set>
       </fg-collection>
       <h2>Pensions</h2>

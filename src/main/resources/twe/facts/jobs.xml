@@ -41,17 +41,85 @@
         <Boolean/>
       </Writable>
     </Fact>
-    <Fact path="/jobs/*/overtimeCompensationExcludingQualifiedTipsOvertimeComp">
+    <Fact path="/overTimeCompensationRates">
+      <Derived>
+        <EnumOptions>
+          <String>onePointFive</String>
+          <String>two</String>
+        </EnumOptions>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/overtimeCompensation">
       <Name>Overtime Compensation Excluding Qualified Tip Overtime Comp</Name>
       <Description>OB3 &#xA7;70202 IRC &#xA7;225(c)(2). Overtime compensation excluding all
-        qualified tips
-        defined
-        in IRC &#xA7;224 that were received as part of qualified overtime compensation</Description>
+        qualified tips defined in IRC &#xA7;224 that were received as part of qualified overtime compensation</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="../overtimeCompensationRate"/>
+                </Left>
+                <Right>
+                  <Enum optionsPath="/overTimeCompensationRates">onePointFive</Enum>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Multiply>
+                <!-- Reduce by 1/3-->
+                <Dollar>0.67</Dollar>
+                <Dependency path="../overtimeCompensationTotal"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="../overtimeCompensationRate"/>
+                </Left>
+                <Right>
+                  <Enum optionsPath="/overTimeCompensationRates">two</Enum>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <!-- Reduce by 1/2-->
+              <Multiply>
+                <Dollar>0.50</Dollar>
+                <Dependency path="../overtimeCompensationTotal"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../overtimeCompensationTotal"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/overtimeCompensationTotal">
+      <Description>Total amount of overtime paid to the taxpayer, with no regard to the excess over normal wages</Description>
       <Writable>
         <Dollar/>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/overtimeCompensationRate">
+      <Description>Multiplier provided by the taxpayer that indicates whether they are paid at a time and a half (1.5) or double time (2.0) overtime rate</Description>
+      <Writable>
+        <Enum optionsPath="/overTimeCompensationRates"/>
+      </Writable>
+      <Placeholder>
+        <Enum optionsPath="/overTimeCompensationRates">onePointFive</Enum>
       </Placeholder>
     </Fact>
     <Fact path="/jobs/*/qualifiedTipIncome">
@@ -322,7 +390,7 @@
             <Add>
               <Dependency path="../restOfYearIncome"/>
               <Dependency path="../yearToDateIncome"/>
-              <Dependency path="../overtimeCompensationExcludingQualifiedTipsOvertimeComp"/>
+              <Dependency path="../overtimeCompensation"/>
               <Dependency path="../qualifiedTipIncome"/>
             </Add>
           </Minuend>
