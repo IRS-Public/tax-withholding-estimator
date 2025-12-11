@@ -53,7 +53,3 @@ jobs:
     - name: Validate XML schemas
       working-directory: ${{ env.TWE_PATH }}
       run: make validate-xml
-
-    - name: Format Scala and XML files
-      working-directory: ${{ env.TWE_PATH }}
-      run: make ci_validate-format

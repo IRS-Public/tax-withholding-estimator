@@ -29,7 +29,7 @@ copy-fg:
 .PHONY: test
 test:
 	# This only prints the tests that fail
-	sbt -info 'set Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oC")' test
+	sbt -info 'set Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oC")' test scalafmtCheckAll
 
 .PHONY: test-watch
 test-watch:
@@ -38,14 +38,13 @@ test-watch:
 
 .PHONY: format
 format:
-	make format-xml
 	sbt scalafmtAll
+	npm --prefix $(TWE_RESOURCES_DIR) run format
 
 # Run most of the CI checks locally
 .PHONY: ci
 ci:
 	make validate-xml
-	make ci_validate-format
 	make ci_validate-html
 	make ci_validate-js
 	# Skipping semgrep (locally) for now
@@ -61,19 +60,9 @@ validate-xml:
 	find $(FLOW_DIR) -name '*xml' | xargs xmllint --quiet --relaxng $(FLOW_CONFIG) > /dev/null
 	find $(FACTS_DIR) -name '*xml' | xargs xmllint --quiet --relaxng $(FACTS_CONFIG) > /dev/null
 
-.PHONY: format-xml
-format-xml:
-	find $(TWE_RESOURCES_DIR) -name '*xml' | xargs -I {} xmllint --format {} --output {}
-
 .PHONY: ci_setup
 ci_setup:
 	npm --prefix $(TWE_RESOURCES_DIR) install
-
-.PHONY: ci_validate-format
-ci_validate-format:
-	find $(TWE_RESOURCES_DIR) -name '*xml' | \
-		xargs -I {} bash -c "diff {} <(xmllint --format {})"
-	sbt -warn scalafmtCheckAll
 
 .PHONY: ci_validate-html
 ci_validate-html:
