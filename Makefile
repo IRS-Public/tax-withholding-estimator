@@ -41,38 +41,39 @@ format:
 	sbt scalafmtAll
 	npm --prefix $(TWE_RESOURCES_DIR) run format
 
-# Run most of the CI checks locally
-.PHONY: ci
-ci:
-	make validate-xml
-	make ci_validate-html
-	make ci_validate-js
-	# Skipping semgrep (locally) for now
-
 .PHONY: clean
 clean:
 	rm -rf ./target/
 	find ./project -name target | xargs rm -rf
 	rm -rf ./out/
 
+.PHONY: ci-setup
+ci-setup:
+	npm --prefix $(TWE_RESOURCES_DIR) install
+
+# Run most of the CI checks locally
+.PHONY: ci
+ci:
+	make validate-xml
+	make validate-html
+	make validate-js
+	# Skip semgrep (locally) for now
+
 .PHONY: validate-xml
 validate-xml:
 	find $(FLOW_DIR) -name '*xml' | xargs xmllint --quiet --relaxng $(FLOW_CONFIG) > /dev/null
 	find $(FACTS_DIR) -name '*xml' | xargs xmllint --quiet --relaxng $(FACTS_CONFIG) > /dev/null
 
-.PHONY: ci_setup
-ci_setup:
-	npm --prefix $(TWE_RESOURCES_DIR) install
-
-.PHONY: ci_validate-html
-ci_validate-html:
+.PHONY: validate-html
+validate-html:
 	npm --prefix $(TWE_RESOURCES_DIR) run html-validate
 
-.PHONY: ci_validate-js
-ci_validate-js:
+.PHONY: validate-js
+validate-js:
 	npm --prefix $(TWE_RESOURCES_DIR) run lint
 
-.PHONY: ci_semgrep
-ci_semgrep:
+# Semgrep setup is not handled by ci-setup, but done separately in the GHA files
+.PHONY:
+semgrep:
 	semgrep scan --verbose --metrics off --severity WARNING --error \
 		--config p/security-audit --config p/scala

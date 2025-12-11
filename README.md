@@ -5,9 +5,9 @@ For a deep dive into the technical design choices of this repository, start [her
 
 ## Setup
 
-If you are an IRS developer, first follow the instructions in [IRS-ONBOARDING.md](./docs/onboarding/onboarding-irs.md).
+If you are an IRS developer, first follow the instructions in the [IRS Onboarding Docs](./docs/onboarding/onboarding-irs.md).
 
-If you are not a developer, follow the instructions in [NONDEV-ONBOARDING.md](./docs/onboarding/onboarding-nondev.md).
+If you are not a developer, follow the instructions in the [Non-Dev Onboarding Docs](./docs/onboarding/onboarding-nondev.md).
 
 ### Instructions
 
@@ -16,9 +16,9 @@ You may choose install these with Coursier, sdkman, or some other method of your
 it shouldn't make a difference.
 2. Download the [Fact Graph](https://github.com/IRS-Public/fact-graph) and run `make publish` in that repository
 3. Return to this repository and run `make`
-4. (Optional) Ensure that you have local installations of `xmllint` (via `libxml2`) and `npx` (via `npm`) command line tools, which are used in the `make ci` checks.
+4. (Optional) Ensure that you have local installations of `xmllint` (via `libxml2`) and `npx` (via `npm`) command line tools, then run  `make ci-setup` to install the tools required for running the validations; this is useful if you plan to submit a PR.
 
-Additional developer notes and tips for installing LSP integrations and the like can be found in [DEVELOPER-TIPS.md](./docs/DEVELOPER-TIPS.md).
+Additional developer notes and tips for installing LSP integrations and the like can be found in the [Dev Onboarding Docs](./docs/onboarding/onboarding-dev.md).
 
 ## Development
 
