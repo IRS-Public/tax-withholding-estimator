@@ -2,6 +2,22 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/wantsQBIDeductionOverride">
+      <Writable>
+        <Boolean/>
+      </Writable>
+      <Placeholder>
+        <False/>
+      </Placeholder>
+    </Fact>
+    <Fact path="/qBIDeductionOverrideAmount">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
     <Fact path="/qbiComponentMultiplier">
       <TaxYear>2026</TaxYear>
       <Derived>
@@ -469,8 +485,8 @@
         </GreaterThanOrEqual>
       </Derived>
     </Fact>
-    <Fact path="/qualifiedBusinessIncomeDeduction">
-      <Name>Qualified Business Income Deduction</Name>
+    <Fact path="/derivedQualifiedBusinessIncomeDeduction">
+      <Name>Derived Qualified Business Income Deduction</Name>
       <Description>Section 199A: qualified business income deduction. The deduction allows eligible
             taxpayers to deduct up to 20 percent of their QBI, plus 20 percent of qualified real estate
             investment trust (REIT) dividends and qualified publicly traded partnership (PTP) income.
@@ -503,6 +519,32 @@
                 <Dependency path="/minimumDeductionForActiveQBIAmount"/>
                 <Dependency path="/tentativeQualifiedBusinessIncomeDeduction"/>
               </GreaterOf>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedBusinessIncomeDeduction">
+      <Name>Qualified Business Income Deduction</Name>
+      <Description>Taxpayer provided QBID if they want to override the derived amount, else the derived amount</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <!--Use override amount if selected by the taxpayer-->
+            <When>
+              <Dependency path="/wantsQBIDeductionOverride"/>
+            </When>
+            <Then>
+              <Dependency path="/qBIDeductionOverrideAmount"/>
+            </Then>
+          </Case>
+          <Case>
+            <!-- Otherwise, use the derived amount-->
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/derivedQualifiedBusinessIncomeDeduction"/>
             </Then>
           </Case>
         </Switch>

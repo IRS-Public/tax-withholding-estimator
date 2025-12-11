@@ -3,6 +3,26 @@
 <FlowConfig>
   <page title="Additional Deductions" route="additional-deductions.html">
     <section>
+      <h2>Qualified Business Income (QBI) Deduction</h2>
+      <p>If you/you or your spouse own a partnership, S corporation, or are self-employed, you may be able to deduct a portion of your qualified business income (QBI) for {taxyear}</p>
+      <p>Based on your answers, you/your spouse had qualified business income of <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/></p>
+      <p>Choose if you want to use the QBI amount we calculated from your answers or if you want to enter a different amount</p>
+      <fg-set path="/wantsQBIDeductionOverride">
+        <question>
+          Would you like to estimate your QBI Deduction?
+        </question>
+        <input type="boolean"/>
+      </fg-set>
+      <fg-set path="/qBIDeductionOverrideAmount" if-true="/wantsQBIDeductionOverride">
+        <question>
+          To estimate QBI, calculate
+          1. Expected business income for {taxyear}
+          2. Minus ordinary business expenses (like rent, supplies, and employee benefits
+          3. Minus self-employment-related deductions (like self-employed health insurance premium,s contributions to self-employed retirement plans, and half of your self-employment tax)
+          Estimated qualified business income for you/you and your spouse for {TY}
+        </question>
+        <input type="dollar"/>
+      </fg-set>
       <h2>Car loan interest deduction</h2>
       <fg-set path="/personalVehicleLoanInterestAmount">
         <question>
