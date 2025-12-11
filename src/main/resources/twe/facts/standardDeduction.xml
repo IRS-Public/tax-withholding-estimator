@@ -224,18 +224,32 @@
         </Add>
       </Derived>
     </Fact>
-    <Fact path="/minimumStandardDeduction">
+    <Fact path="/earnedIncomeBump">
       <Description>The alternative amount to use as the standard deduction if a filer can be claimed
         as a dependent. This amount is not used if it exceeds the normal amount of the standard
         deduction.</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
+        <Dollar>450</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/tentativeMinimumStandardDeduction">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>1350</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/minimumStandardDeduction">
+      <Description>The alternative amount to use as the standard deduction if a filer can be claimed
+        as a dependent. This amount is not used if it exceeds the normal amount of the standard
+        deduction.</Description>
+      <Derived>
         <Add>
           <GreaterOf>
-            <Dollar>1350</Dollar>
+            <Dependency path="/tentativeMinimumStandardDeduction"/>
             <Add>
               <Dependency path="/incomeTotal"/>
-              <Dollar>450</Dollar>
+              <Dependency path="/earnedIncomeBump"/>
             </Add>
           </GreaterOf>
           <Dependency path="/additionalStandardDeduction"/>

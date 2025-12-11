@@ -36,9 +36,9 @@
         <Dollar>205000</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/studentLoanPhaseOutStart">
+    <Fact path="/studentLoanPhaseOutStartNonMFJ">
       <Name>Student Loan Phase Out Start</Name>
-      <Description>The income at which the student loan interest deduction begins to phase out for non-MFJ filers Rev Proc 30 Interest on Education Loans &#xA7;221(b)(2)(B)
+      <Description>The MAGI at which the student loan interest deduction begins to phase out for non-MFJ filers Rev Proc 30 Interest on Education Loans &#xA7;221(b)(2)(B)
       </Description>
       <TaxYear>2026</TaxYear>
       <Derived>
@@ -47,7 +47,7 @@
     </Fact>
     <Fact path="/studentLoanPhaseOutStartMFJ">
       <Name>Student Loan Phase Out Start for MFJ filers</Name>
-      <Description>The income at which the student loan interest deduction begins to phase out for MFJ filers. Rev Proc 30 Interest on Education Loans &#xA7;221(b)(2)(B)
+      <Description>The MAGI at which the student loan interest deduction begins to phase out for MFJ filers. Rev Proc 30 Interest on Education Loans &#xA7;221(b)(2)(B)
       </Description>
       <TaxYear>2026</TaxYear>
       <Derived>
@@ -111,7 +111,7 @@
             <Dependency path="/maxIncomeForNonMFJStudentLoanInterestDeduction"/>
           </Minuend>
           <Subtrahends>
-            <Dependency path="/studentLoanPhaseOutStart"/>
+            <Dependency path="/studentLoanPhaseOutStartNonMFJ"/>
           </Subtrahends>
         </Subtract>
       </Derived>
@@ -176,7 +176,7 @@
                                 <Dependency path="/magiForStudentLoanInterestDeduction"/>
                               </Minuend>
                               <Subtrahends>
-                                <Dependency path="/studentLoanPhaseOutStart"/>
+                                <Dependency path="/studentLoanPhaseOutStartNonMFJ"/>
                               </Subtrahends>
                             </Subtract>
                           </Then>

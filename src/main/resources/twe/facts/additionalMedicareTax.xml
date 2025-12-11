@@ -3,21 +3,25 @@
 <FactDictionaryModule>
   <Facts>
     <Fact path="/additionalMedicareTaxThresholdForMFJ">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>250000</Dollar>
       </Derived>
     </Fact>
     <Fact path="/additionalMedicareTaxThresholdForAllOtherTPs">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>200000</Dollar>
       </Derived>
     </Fact>
     <Fact path="/additionalMedicareTaxThresholdForMFS">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>125000</Dollar>
       </Derived>
     </Fact>
     <Fact path="/additionalMedicareTaxMultiplier">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Rational>9/1000</Rational>
       </Derived>

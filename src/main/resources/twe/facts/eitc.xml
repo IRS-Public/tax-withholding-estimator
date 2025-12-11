@@ -253,24 +253,28 @@
     </Fact>
     <Fact path="/phaseInRatesFor0Qc">
       <Name>Phase in rate for 0 qualifying children</Name>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Rational>765/10000</Rational>
       </Derived>
     </Fact>
     <Fact path="/phaseInRatesFor1Qc">
       <Name>Phase in rate for 1 qualifying child</Name>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Rational>34/100</Rational>
       </Derived>
     </Fact>
     <Fact path="/phaseInRatesFor2Qc">
       <Name>Phase in rate for 2 qualifying children</Name>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Rational>40/100</Rational>
       </Derived>
     </Fact>
     <Fact path="/phaseInRatesFor3OrMoreQc">
       <Name>Phase in rate for 3 or more qualifying children</Name>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Rational>45/100</Rational>
       </Derived>
@@ -346,6 +350,7 @@
     <Fact path="/eitcPhaseOutRate">
       <Name>EITC phase out rate</Name>
       <Description>The rate at which EITC phases out as income exceeds the threshold amount.</Description>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -1154,12 +1159,21 @@
         </LessThan>
       </Derived>
     </Fact>
-    <Fact path="/belowEitcInvestmentIncomeLimit">
+    <Fact path="/eitcInvestmentIncomeLimit">
       <Name>Below EITC Investment Income Limit</Name>
       <Description>Whether the TP's Investment Income is low enough for the EITC
         Rev Proc .06 Earned Income Credit &#xA7;32(i)
       </Description>
       <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>12200</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/belowEitcInvestmentIncomeLimit">
+      <Name>Below EITC Investment Income Limit</Name>
+      <Description>Whether the TP's Investment Income is low enough for the EITC
+        Rev Proc .06 Earned Income Credit &#xA7;32(i)
+      </Description>
       <Derived>
         <LessThanOrEqual>
           <Left>
@@ -1179,8 +1193,7 @@
             </Add>
           </Left>
           <Right>
-            <!-- Limit for 2026 -->
-            <Dollar>12200</Dollar>
+            <Dependency path="/eitcInvestmentIncomeLimit"/>
           </Right>
         </LessThanOrEqual>
       </Derived>

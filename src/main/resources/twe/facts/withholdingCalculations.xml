@@ -68,6 +68,26 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/bonusWithholdingPrimaryRate">
+      <Description>
+        Bonus withholdings are 22% if less than 1,000,000 and 37% on the sum exceeding
+        1,000,000. Ref: Pub 15, Section 7.
+      </Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Rational>22/100</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/bonusWithholdingExcessRate">
+      <Description>
+        Bonus withholdings are 22% if less than 1,000,000 and 37% on the sum exceeding
+        1,000,000. Ref: Pub 15, Section 7.
+      </Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Rational>37/100</Rational>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/withholdingsFromTotalBonusReceived">
       <Description>
         Bonus withholdings are 22% if less than 1,000,000 and 37% on the sum exceeding
@@ -89,7 +109,7 @@
               </When>
               <Then>
                 <Multiply>
-                  <Rational>22/100</Rational>
+                  <Dependency path="/bonusWithholdingPrimaryRate"/>
                   <Dependency path="../totalBonusReceived"/>
                 </Multiply>
               </Then>
@@ -102,12 +122,12 @@
                 <Add>
                   <!-- 22% on the first $1,000,000-->
                   <Multiply>
-                    <Rational>22/100</Rational>
+                    <Dependency path="/bonusWithholdingPrimaryRate"/>
                     <Dependency path="/totalBonusReceivedThreshold"/>
                   </Multiply>
                   <!-- 37% on the amount exceeding $1,000,000-->
                   <Multiply>
-                    <Rational>37/100</Rational>
+                    <Dependency path="/bonusWithholdingExcessRate"/>
                     <Subtract>
                       <Minuend>
                         <Dependency path="../totalBonusReceived"/>

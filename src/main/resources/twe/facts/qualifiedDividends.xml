@@ -7,7 +7,7 @@
         Choose correct upper income limit for 0% calculations based on filing
         status. Line 6 - Qualified Dividends and Capital Gain Worksheet
       </Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -18,7 +18,7 @@
               </Any>
             </When>
             <Then>
-              <Dollar>48350.00</Dollar>
+              <Dollar>49450.00</Dollar>
             </Then>
           </Case>
           <Case>
@@ -29,7 +29,7 @@
               </Any>
             </When>
             <Then>
-              <Dollar>96700.00</Dollar>
+              <Dollar>98900.00</Dollar>
             </Then>
           </Case>
           <Case>
@@ -37,7 +37,7 @@
               <Dependency path="/isFilingStatusHOH"/>
             </When>
             <Then>
-              <Dollar>64750.00</Dollar>
+              <Dollar>66200.00</Dollar>
             </Then>
           </Case>
         </Switch>
@@ -48,7 +48,7 @@
         Choose correct upper income limit for 15% calculations based on filing status.
         Line 13 - Qualified Dividends and Capital Gain Worksheet
       </Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
@@ -56,7 +56,7 @@
               <Dependency path="/isFilingStatusSingle"/>
             </When>
             <Then>
-              <Dollar>533400.00</Dollar>
+              <Dollar>545500.00</Dollar>
             </Then>
           </Case>
           <Case>
@@ -67,7 +67,7 @@
               </Any>
             </When>
             <Then>
-              <Dollar>600050.00</Dollar>
+              <Dollar>613700.00</Dollar>
             </Then>
           </Case>
           <Case>
@@ -75,7 +75,7 @@
               <Dependency path="/isFilingStatusHOH"/>
             </When>
             <Then>
-              <Dollar>566700.00</Dollar>
+              <Dollar>579600.00</Dollar>
             </Then>
           </Case>
           <Case>
@@ -83,7 +83,7 @@
               <Dependency path="/isFilingStatusMFS"/>
             </When>
             <Then>
-              <Dollar>300000.00</Dollar>
+              <Dollar>306850.00</Dollar>
             </Then>
           </Case>
         </Switch>

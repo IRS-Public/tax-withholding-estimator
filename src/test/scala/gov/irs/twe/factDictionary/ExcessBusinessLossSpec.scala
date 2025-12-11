@@ -27,42 +27,42 @@ class ExcessBusinessLossSpec extends AnyFunSuite with TableDrivenPropertyChecks 
       "netScheduleEIncome",
       "expectedExcessBusinessLossAdjustment",
     ),
-    (mfj, "-50000", "0", "0"),
-    (mfj, "0", "300000", "0"),
-    (mfj, "-313000", "0", "0"),
-    (mfj, "0", "313000", "0"),
-    (mfj, "-314000", "0", "1000"),
-    (mfj, "0", "314000", "1000"),
-    (mfj, "-200000", "100000", "0"),
-    (mfj, "-200000", "113000", "0"),
-    (mfj, "-300000", "300000", "287000"),
-    (mfj, "-350000", "-10000", "27000"),
-    (single, "-100000", "0", "0"),
-    (single, "0", "600000", "0"),
-    (single, "-626000", "0", "0"),
-    (single, "0", "626000", "0"),
-    (single, "-627000", "0", "1000"),
-    (single, "0", "627000", "1000"),
-    (single, "-300000", "300000", "0"),
-    (single, "-400000", "226000", "0"),
-    (single, "-500000", "500000", "374000"),
-    (single, "-700000", "-50000", "24000"),
+    (mfj, "-50000", "0", "0.00"),
+    (mfj, "0", "300000", "44000.00"),
+    (mfj, "-313000", "0", "57000.00"),
+    (mfj, "0", "313000", "57000.00"),
+    (mfj, "-314000", "0", "58000.00"),
+    (mfj, "0", "314000", "58000.00"),
+    (mfj, "-200000", "100000", "44000.00"),
+    (mfj, "-200000", "113000", "57000.00"),
+    (mfj, "-300000", "300000", "344000.00"),
+    (mfj, "-350000", "-10000", "84000.00"),
+    (single, "-100000", "0", "0.00"),
+    (single, "0", "600000", "88000.00"),
+    (single, "-626000", "0", "114000.00"),
+    (single, "0", "626000", "114000.00"),
+    (single, "-627000", "0", "115000.00"),
+    (single, "0", "627000", "115000.00"),
+    (single, "-300000", "300000", "88000.00"),
+    (single, "-400000", "226000", "114000.00"),
+    (single, "-500000", "500000", "488000.00"),
+    (single, "-700000", "-50000", "138000.00"),
 
     // large SE income losses
-    (single, "-600000", "0", "0"),
-    (single, "-800000", "0", "174000"),
-    (single, "-300000", "400000", "74000"),
-    (mfj, "-300000", "0", "0"),
-    (mfj, "-313000", "0", "0"),
-    (mfj, "-500000", "0", "187000"),
+    (single, "-600000", "0", "88000.00"),
+    (single, "-800000", "0", "288000.00"),
+    (single, "-300000", "400000", "188000.00"),
+    (mfj, "-300000", "0", "44000.00"),
+    (mfj, "-313000", "0", "57000.00"),
+    (mfj, "-500000", "0", "244000.00"),
 
     // large SE income loss with large Schedule E income
-    (mfj, "-200000", "300000", "187000"),
+    (mfj, "-200000", "300000", "244000.00"),
 
     //    large schedule E income, large SE income
-    (mfj, "100000", "50000", "0"),
+    (mfj, "100000", "50000", "0.00"),
     //    large schedule E income, no SE income
-    (mfj, "0", "400000", "87000"),
+    (mfj, "0", "400000", "144000.00"),
   )
 
   test("test excess business loss scenarios for Form 461") {
@@ -87,7 +87,6 @@ class ExcessBusinessLossSpec extends AnyFunSuite with TableDrivenPropertyChecks 
           Path("/royaltyIncome") -> Dollar("0"),
         )
         val actual = graph.get("/excessBusinessLossAdjustment")
-
         assert(actual.value.contains(Dollar(expectedExcessBusinessLossAdjustment)))
 
     }

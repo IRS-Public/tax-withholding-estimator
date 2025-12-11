@@ -154,13 +154,13 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     println(s"Completed ${dataTable.length} tests for calculating itemized deduction limits")
   }
 
-  test("test OB3 70120: SALT cap") {
+  test("test OB3 70120: simple SALT cap") {
     val dataTable = Table(
       ("stateAndLocalTaxPaymentsTotal", "expectedStateAndLocalTaxPaymentsTotal"),
       ("10000", "10000"),
       ("30000", "30000"),
-      ("40000", "40000"),
-      ("50000", "40000"),
+      ("40400", "40400"),
+      ("50000", "40400"),
     )
     forAll(dataTable) { (stateAndLocalTaxPaymentsTotal, expectedStateAndLocalTaxPaymentsTotal) =>
       val graph = makeGraphWith(
@@ -173,6 +173,55 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
       assert(actualSALT.value.contains(Dollar(expectedStateAndLocalTaxPaymentsTotal)))
     }
     println(s"Completed ${dataTable.length} tests for calculating SALT cap")
+  }
+
+  test("test OB3 70120: SALT phase down for high earners") {
+    val dataTable = Table(
+      ("status", "agi", "stateAndLocalTaxPayments", "expectedStateAndLocalTaxPaymentsTotal"),
+      // Initial Examples (No Phase-out)
+      (single, "100000", "10000", "10000"), // Below AGI threshold, below SALT Cap
+      (mfs, "100000", "30000", "20200"), // Below AGI threshold, capped at MFS limit ($20,200)
+
+      // **NON-MFS (Threshold: $505,000, Cap: $40,400, Floor: $10,000)**
+      // Just under threshold: Should deduct full cap or actual payments
+      (single, "500000", "50000", "40400"), // Capped at $40,400
+      (single, "500000", "30000", "30000"), // Deduct full $30,000
+
+      // AGI exceeds threshold, phase-down begins (Reduction: $13,500)
+      // AGI: $550,000. Reduction = (550,000 - 505,000) * 0.30 = $13,500
+      (single, "550000", "40400", "26900"), // $40,400 - $13,500 = $26,900
+      (single, "550000", "50000", "26900"), // Cap of $40,400 used for phase-down base
+
+      // AGI exceeds threshold, deduction is phased down to above the floor (Reduction: $28,500)
+      // AGI: $600,000. Reduction = (600,000 - 505,000) * 0.30 = $28,500
+      (single, "600000", "40400", "11900"), // $40,400 - $28,500 = $11,900
+
+      // AGI exceeds threshold, deduction is phased down below the floor (Reduction: $39,000)
+      // AGI: $635,000. Reduction = (635,000 - 505,000) * 0.30 = $39,000
+      (single, "635000", "40400", "10000"), // Max($10,000, $40,400 - $39,000 = $1,400) = $10,000
+      (single, "650000", "40400", "10000"), // AGI where deduction hits minimum floor and stays there
+
+      // **MFS (Threshold: $505,000, Cap: $20,200, Floor: $5,000)**
+      // AGI: $550,000. Reduction = $13,500
+      (mfs, "550000", "20200", "6700"), // $20,200 - $13,500 = $6,700
+
+      // AGI exceeds threshold, deduction is phased down below the floor (Reduction: $28,500)
+      // AGI: $600,000. Reduction = $28,500
+      (mfs, "600000", "20200", "5000"), // Max($5,000, $20,200 - $28,500 = -$8,300) = $5,000
+    )
+    forAll(dataTable) { (status, agi, stateAndLocalTaxPayments, expectedStateAndLocalTaxPaymentsTotal) =>
+      val graph = makeGraphWith(
+        factDictionary,
+        Path("/filingStatus") -> status,
+        Path("/agi") -> Dollar(agi),
+        Path("/stateAndLocalTaxPayments") -> Dollar(stateAndLocalTaxPayments),
+      )
+
+      val actualSALT = graph.get("/stateAndLocalTaxPaymentsTotal")
+
+      assert(actualSALT.value.contains(Dollar(expectedStateAndLocalTaxPaymentsTotal)))
+    }
+    println(s"Completed ${dataTable.length} tests for calculating phase down")
   }
 
 }

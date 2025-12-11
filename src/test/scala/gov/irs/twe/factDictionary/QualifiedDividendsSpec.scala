@@ -23,69 +23,65 @@ class QualifiedDividendsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     // Single tp with qualified dividends, income at 0% threshhold
     (single, "48350", "5000", "0", "5000", "0", "0", "0"),
     // Single tp with qualified dividends taxed at 0% and 15%
-    (single, "53000", "5000", "3000", "3350", "697.50", "0", "697.50"),
+    (single, "53000", "5000", "3000", "4450", "532.5", "0", "532.5"),
     // Single tp with qualified dividends, income at 15% threshhold
     (single, "533400", "15000", "0", "0", "2250", "0", "2250"),
     // Single tp with qualified dividends taxed at 15%
     (single, "87000", "10000", "2000", "0", "1800", "0", "1800"),
     // Single tp with qualified dividends taxed at 15% and 20%
-    (single, "540000", "14000", "1000", "0", "1260", "1320", "2580"),
+    (single, "540000", "14000", "1000", "0", "2250", "0", "2250"),
     // Single tp with qualified dividends taxed at 20%,
     (single, "625000", "20000", "5000", "0", "0", "5000", "5000"),
-
     // MFS tp with qualified dividends taxed at 0%
     (mfs, "45000", "5000", "0", "5000", "0", "0", "0"),
     // MFS tp with qualified dividends, income at 0% threshhold
     (mfs, "48350", "5000", "0", "5000", "0", "0", "0"),
     // MFS tp with qualified dividends taxed at 0% and 15%
-    (mfs, "53000", "5000", "3000", "3350", "697.50", "0", "697.50"),
+    (mfs, "53000", "5000", "3000", "4450", "532.5", "0", "532.5"),
     // MFS tp with qualified dividends taxed at 15%
     (mfs, "87000", "10000", "2000", "0", "1800", "0", "1800"),
     // MFS tp with qualified dividends, income at 15% threshhold
     (mfs, "300000", "15000", "0", "0", "2250", "0", "2250"),
-    // // MFS tp with qualified dividends taxed at 15% and 20%
-    (mfs, "307500", "14000", "1000", "0", "1125", "1500", "2625"),
-    // // MFS tp with qualified dividends taxed at 20%,
+    // MFS tp with qualified dividends taxed at 15% and 20%
+    (mfs, "307500", "14000", "1000", "0", "2152.5", "130", "2282.5"),
+    // MFS tp with qualified dividends taxed at 20%,
     (mfs, "400000", "20000", "5000", "0", "0", "5000", "5000"),
-
     // MFJ tp with qualified dividends taxed at 0%
     (mfj, "90000", "3000", "7000", "10000", "0", "0", "0"),
     // MFS tp with qualified dividends, income at 0% threshhold
     (mfj, "96700", "10000", "0", "10000", "0", "0", "0"),
     // MFJ tp with qualified dividends taxed at 0% and 15%
-    (mfj, "105000", "14500", "500", "6700", "1245", "0", "1245"),
+    (mfj, "105000", "14500", "500", "8900", "915", "0", "915"),
     // MFJ tp with qualified dividends taxed at 15%
     (mfj, "170000", "19000", "1000", "0", "3000", "0", "3000"),
     // MFJ tp with qualified dividends, income at 15% threshold
     (mfj, "600050", "25000", "0", "0", "3750", "0", "3750"),
     // MFJ tp with qualified dividends taxed at 15% and 20%
-    (mfj, "615000", "15000", "10000", "0", "1507.50", "2990", "4497.50"), // run through this
+    (mfj, "615000", "15000", "10000", "0", "3555", "260", "3815"),
     // MFJ tp with qualified dividends taxed at 20%
     (mfj, "785000", "15000", "20000", "0", "0", "7000", "7000"),
-
     // QSS tp with qualified dividends taxed at 0%
     (qss, "90000", "3000", "7000", "10000", "0", "0", "0"),
     // QSS tp with qualified dividends taxed at 0% and 15%
-    (qss, "105000", "14500", "500", "6700", "1245", "0", "1245"),
+    (qss, "105000", "14500", "500", "8900", "915", "0", "915"),
     // QSS tp with qualified dividends taxed at 15%
     (qss, "170000", "19000", "1000", "0", "3000", "0", "3000"),
     // QSS tp with qualified dividends taxed at 15% and 20%
-    (qss, "615000", "15000", "10000", "0", "1507.50", "2990", "4497.50"), // run through this
+    (qss, "615000", "15000", "10000", "0", "3555", "260", "3815"),
     // QSS tp with qualified dividends taxed at 20%
     (qss, "785000", "15000", "20000", "0", "0", "7000", "7000"),
-
     // HoH tp with qualified dividends taxed at 0%
     (hoh, "62000", "2000", "5000", "7000", "0", "0", "0"),
     // HoH tp with qualified dividends, income at 0% threshold
     (hoh, "64750", "2000", "5000", "7000", "0", "0", "0"),
     // HoH tp with qualified dividends taxed at 0% and 15%
-    (hoh, "70000", "10000", "0", "4750", "787.50", "0", "787.50"),
+    (hoh, "70000", "10000", "0", "6200", "570", "0", "570"),
     // HoH tp with qualified dividends taxed at 15%
     (hoh, "115000", "15000", "0", "0", "2250", "0", "2250"),
     // HoH tp with qualified dividends, income at 15% threshold
     (hoh, "566700", "15000", "0", "0", "2250", "0", "2250"),
     // HoH tp with qualified dividends taxed at 15% and 20%
-    (hoh, "580000", "10000", "10000", "0", "1005", "2660", "3665"),
+    (hoh, "580000", "10000", "10000", "0", "2940", "80", "3020"),
     // HoH tp with qualified dividends taxed at 20%
     (hoh, "680000", "30000", "0", "0", "0", "6000", "6000"),
   )

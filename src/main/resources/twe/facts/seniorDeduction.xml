@@ -280,6 +280,7 @@
       </Derived>
     </Fact>
     <Fact path="/excessAmountSeniorDeductionOneTaxpayerEligible">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <GreaterOf>
           <Subtract>

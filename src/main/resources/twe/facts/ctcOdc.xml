@@ -197,9 +197,7 @@
           </Case>
           <Case>
             <When>
-              <Not>
-                <Dependency path="/isFilingStatusMFJ"/>
-              </Not>
+              <True/>
             </When>
             <Then>
               <Dollar>200000</Dollar>

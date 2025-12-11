@@ -34,7 +34,7 @@
       <p>Total expenses that exceed 7.5% of your Estimated medical and dental expenses Can include
       the total estimated amount paid for health insurance premiums, not including any amount the
         employer pays</p>
-      <fg-set path="/medicalAndDentalExpensesTotal/">
+      <fg-set path="/medicalAndDentalExpenses/">
         <question>Total amount for a single medical or dental expense category</question>
         <input type="dollar"/>
       </fg-set>

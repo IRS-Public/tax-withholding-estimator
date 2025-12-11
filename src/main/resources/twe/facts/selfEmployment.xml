@@ -91,22 +91,32 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/seIncomeThreshold">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>400</Dollar>
+      </Derived>
+    </Fact>
     <Fact path="/socialSecuritySelfEmploymentTaxPortion">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Rational>31/250</Rational>
       </Derived>
     </Fact>
     <Fact path="/medicareSelfEmploymentTaxPortion">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Rational>29/1000</Rational>
       </Derived>
     </Fact>
     <Fact path="/selfEmploymentTaxDeductionMultiplier">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Rational>1/2</Rational>
       </Derived>
     </Fact>
-    <Fact path="/scheduleSELine4aLine5bMultiplier">
+    <Fact path="/percentageOfSEIncomeSubjectToTax">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Rational>1847/2000</Rational>
       </Derived>
@@ -171,7 +181,7 @@
               <Then>
                 <Multiply>
                   <Dependency path="/netSelfEmploymentIncomeSelf"/>
-                  <Dependency path="/scheduleSELine4aLine5bMultiplier"/>
+                  <Dependency path="/percentageOfSEIncomeSubjectToTax"/>
                 </Multiply>
               </Then>
             </Case>
@@ -206,7 +216,7 @@
                   </Add>
                 </Left>
                 <Right>
-                  <Dollar>400</Dollar>
+                  <Dependency path="/seIncomeThreshold"/>
                 </Right>
               </GreaterThan>
             </When>
@@ -239,7 +249,7 @@
       <Derived>
         <Multiply>
           <Dependency path="/scheduleSELine5aSelf"/>
-          <Dependency path="/scheduleSELine4aLine5bMultiplier"/>
+          <Dependency path="/percentageOfSEIncomeSubjectToTax"/>
         </Multiply>
       </Derived>
     </Fact>
@@ -355,7 +365,7 @@
             <Then>
               <Multiply>
                 <Dependency path="/netSelfEmploymentIncomeSpouse"/>
-                <Dependency path="/scheduleSELine4aLine5bMultiplier"/>
+                <Dependency path="/percentageOfSEIncomeSubjectToTax"/>
               </Multiply>
             </Then>
           </Case>
@@ -389,7 +399,7 @@
                   </Add>
                 </Left>
                 <Right>
-                  <Dollar>400</Dollar>
+                  <Dependency path="/seIncomeThreshold"/>
                 </Right>
               </GreaterThan>
             </When>
@@ -422,7 +432,7 @@
       <Derived>
         <Multiply>
           <Dependency path="/scheduleSELine5aSpouse"/>
-          <Dependency path="/scheduleSELine4aLine5bMultiplier"/>
+          <Dependency path="/percentageOfSEIncomeSubjectToTax"/>
         </Multiply>
       </Derived>
     </Fact>

@@ -934,7 +934,12 @@
 
   <define name="RateContent">
     <element name="Rate">
+      <optional>
       <ref name="RationalContent"/>
+      </optional>
+      <optional>
+        <ref name="DependencyContent"/>
+      </optional>
     </element>
   </define>
   <define name="PasteContent">
@@ -1114,6 +1119,7 @@
         <ref name="DollarContent"/>
         <ref name="StringContent"/>
         <ref name="DayContent"/>
+        <ref name="DependencyContent"/>
       </choice>
       <attribute name="type"/>
     </element>

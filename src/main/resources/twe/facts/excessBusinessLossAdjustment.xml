@@ -2,7 +2,7 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/limitationThreshold">
+    <Fact path="/excessBusinessLossThreshold">
       <Description>Form 461 line 15</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
@@ -14,7 +14,7 @@
               </Not>
             </When>
             <Then>
-              <Dollar>626000</Dollar>
+              <Dollar>512000</Dollar>
             </Then>
           </Case>
           <Case>
@@ -22,7 +22,7 @@
               <True/>
             </When>
             <Then>
-              <Dollar>313000</Dollar>
+              <Dollar>256000</Dollar>
             </Then>
           </Case>
         </Switch>
@@ -123,7 +123,7 @@
       <Derived>
         <Add>
           <Dependency path="/form461Line14"/>
-          <Dependency path="/limitationThreshold"/>
+          <Dependency path="/excessBusinessLossThreshold"/>
         </Add>
       </Derived>
     </Fact>

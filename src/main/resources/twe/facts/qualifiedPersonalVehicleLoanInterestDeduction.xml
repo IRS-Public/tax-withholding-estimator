@@ -43,6 +43,7 @@
       </Derived>
     </Fact>
     <Fact path="/excessAmountQPVLIDForMFJFiler">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <GreaterOf>
           <Subtract>
@@ -58,6 +59,7 @@
       </Derived>
     </Fact>
     <Fact path="/excessAmountQpvlidForNonMFJFiler">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <GreaterOf>
           <Subtract>
@@ -105,6 +107,7 @@
         Phaseout amount for the qualified personal vehicle loan deduction:
         phaseOutAmount= 200*(filing= 200*(filing status specific MAGI/1000)status specific MAGI/1000)
       </Description>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <StepwiseMultiply>
           <Multiplicand>

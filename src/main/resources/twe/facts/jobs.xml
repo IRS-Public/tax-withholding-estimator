@@ -142,7 +142,7 @@
       <Writable>
         <Day/>
         <Limit type="Max">
-          <Day>2026-12-31</Day>
+          <Dependency path="/yearEndDate"/>
         </Limit>
       </Writable>
     </Fact>
@@ -153,7 +153,7 @@
       <Writable>
         <Day/>
         <Limit type="Max">
-          <Day>2026-12-31</Day>
+          <Dependency path="/yearEndDate"/>
         </Limit>
       </Writable>
     </Fact>
@@ -164,7 +164,7 @@
       <Writable>
         <Day/>
         <Limit type="Max">
-          <Day>2026-12-31</Day>
+          <Dependency path="/yearEndDate"/>
         </Limit>
       </Writable>
     </Fact>
@@ -175,7 +175,7 @@
       <Writable>
         <Day/>
         <Limit type="Max">
-          <Day>2026-12-31</Day>
+          <Dependency path="/yearEndDate"/>
         </Limit>
       </Writable>
     </Fact>
@@ -428,7 +428,7 @@
               <Dependency path="../isAllYear"/>
             </When>
             <Then>
-              <Day>2026-01-01</Day>
+              <Dependency path="/yearStartDate"/>
             </Then>
           </Case>
           <Case>

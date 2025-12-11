@@ -8,18 +8,24 @@
         <Rational>20/100</Rational>
       </Derived>
     </Fact>
-    <Fact path="/qbiPhaseInStartThreshold">
+    <Fact path="/qbiPhaseInThreshold">
       <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Not>
-                <Dependency path="/isFilingStatusMFJ"/>
-              </Not>
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Dollar>394600</Dollar>
+              <Dollar>403500</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dollar>201775</Dollar>
             </Then>
           </Case>
           <Case>
@@ -27,35 +33,53 @@
               <True/>
             </When>
             <Then>
-              <Dollar>197300</Dollar>
+              <Dollar>201750</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/qbiPhaseOutThreshold">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>553500</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dollar>276775</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>276750</Dollar>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
     <Fact path="/qbiPhaseInRange">
-      <TaxYear>2026</TaxYear>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Not>
-                <Dependency path="/isFilingStatusMFJ"/>
-              </Not>
-            </When>
-            <Then>
-              <Dollar>100000</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>50000</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/qbiPhaseOutThreshold"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/qbiPhaseInThreshold"/>
+          </Subtrahends>
+        </Subtract>
       </Derived>
     </Fact>
     <Fact path="/minimumDeductionForActiveQBIAmount">
@@ -176,44 +200,22 @@
       <Derived>
         <LesserOf>
           <Dependency path="/tentativeQualifiedBusinessIncomeComponent"/>
-          <Dependency path="/form8995aLine10"/>
+          <!-- Because Line 4 (Allocable share of W-2 wages from the trade, business, or aggregation) is zero'd out, Line 10 will always be zero. We don't collect or derive this information in TWE today so we ignore it here and always take the tentative QBI component        -->
+          <!--          <Dependency path="/form8995aLine10"/>-->
         </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/form8995aLine12">
+      <Derived>
+        <Dependency path="/form8995aLine26"/>
       </Derived>
     </Fact>
     <Fact path="/form8995aLine13">
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <!-- If taxable income is greater than the threshold, take the greater of the phased in QBI and Line 11              -->
-              <GreaterThan>
-                <Left>
-                  <Dependency path="/taxableIncomeForQBIDeduction"/>
-                </Left>
-                <Right>
-                  <Dependency path="/qbiPhaseInStartThreshold"/>
-                </Right>
-              </GreaterThan>
-            </When>
-            <Then>
-              <GreaterOf>
-                <Dependency path="/form8995aLine11"/>
-                <!-- Line 26 and Line 12-->
-                <Dependency path="/phasedInQualifiedBusinessIncome"/>
-              </GreaterOf>
-            </Then>
-          </Case>
-          <Case>
-            <!-- else just take the QBI components (QBI * multiplier)-->
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <!-- /form8995aLine11, but we just call the Line 3 fact directly instead-->
-              <Dependency path="/tentativeQualifiedBusinessIncomeComponent"/>
-            </Then>
-          </Case>
-        </Switch>
+        <GreaterOf>
+          <Dependency path="/form8995aLine11"/>
+          <Dependency path="/form8995aLine12"/>
+        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/form8995aLine14">
@@ -264,7 +266,7 @@
     </Fact>
     <Fact path="/form8995aLine21">
       <Derived>
-        <Dependency path="/qbiPhaseInStartThreshold"/>
+        <Dependency path="/qbiPhaseInThreshold"/>
       </Derived>
     </Fact>
     <Fact path="/form8995aLine22">
@@ -307,17 +309,53 @@
         </Multiply>
       </Derived>
     </Fact>
-    <Fact path="/phasedInQualifiedBusinessIncome">
-      <Description>Form 8895-A Line 26</Description>
+    <Fact path="/form8995aLine26">
+      <Description>Form 8895-A Line 26, flows into Line 12</Description>
       <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/form8995aLine17"/>
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="/form8995aLine25"/>
-          </Subtrahends>
-        </Subtract>
+        <Switch>
+          <Case>
+            <!-- taxable income is below the phase in threshold or above the phase out threshold, return 0 so that Line 13 (greater of line 11 and Line 12) always returns Line 11 because Line 12 = Line 26  -->
+            <When>
+              <Any>
+                <LessThan>
+                  <Left>
+                    <Dependency path="/taxableIncomeForQBIDeduction"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/qbiPhaseInThreshold"/>
+                  </Right>
+                </LessThan>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/taxableIncomeForQBIDeduction"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/qbiPhaseOutThreshold"/>
+                  </Right>
+                </GreaterThan>
+              </Any>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <!-- taxable income is within the phase in threshold, go through all the derivations of Part III -->
+              <True/>
+            </When>
+            <Then>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="/form8995aLine17"/>
+                </Minuend>
+                <Subtrahends>
+                  <Dependency path="/form8995aLine25"/>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/form8995aLine27">
