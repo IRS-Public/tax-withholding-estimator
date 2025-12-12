@@ -6,7 +6,7 @@ import gov.irs.factgraph.Path
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.TableDrivenPropertyChecks
 
-class QualifiedDividendsSpec extends AnyFunSuite with TableDrivenPropertyChecks {
+class QualifiedDividendsCapitalGainsWorksheetSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   val factDictionary = setupFactDictionary()
   val single = Enum("single", "/filingStatusOptions")
   val mfj = Enum("marriedFilingJointly", "/filingStatusOptions")
@@ -19,71 +19,71 @@ class QualifiedDividendsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
     ("status", "taxableIncome", "qualDiv", "ltCapitalGains", "amtAt0", "totalAt15", "totalAt20", "totalTax"),
 
     // Single tp with qualified dividends taxed at 0%
-    (single, "40000", "4000", "1000", "5000", "0", "0", "0"),
+    (single, "40000", "4000", "1000", "5000", "0", "0", "3955.00"),
     // Single tp with qualified dividends, income at 0% threshhold
-    (single, "48350", "5000", "0", "5000", "0", "0", "0"),
+    (single, "48350", "5000", "0", "5000", "0", "0", "4957.00"),
     // Single tp with qualified dividends taxed at 0% and 15%
-    (single, "53000", "5000", "3000", "4450", "532.5", "0", "532.5"),
+    (single, "53000", "5000", "3000", "4450", "532.5", "0", "5687.50"),
     // Single tp with qualified dividends, income at 15% threshhold
-    (single, "533400", "15000", "0", "0", "2250", "0", "2250"),
+    (single, "533400", "15000", "0", "0", "2250", "0", "152459.00"),
     // Single tp with qualified dividends taxed at 15%
-    (single, "87000", "10000", "2000", "0", "1800", "0", "1800"),
+    (single, "87000", "10000", "2000", "0", "1800", "0", "13018.00"),
     // Single tp with qualified dividends taxed at 15% and 20%
-    (single, "540000", "14000", "1000", "0", "2250", "0", "2250"),
+    (single, "540000", "14000", "1000", "0", "2250", "0", "154769.00"),
     // Single tp with qualified dividends taxed at 20%,
-    (single, "625000", "20000", "5000", "0", "0", "5000", "5000"),
+    (single, "625000", "20000", "5000", "0", "0", "5000", "183769.00"),
     // MFS tp with qualified dividends taxed at 0%
-    (mfs, "45000", "5000", "0", "5000", "0", "0", "0"),
+    (mfs, "45000", "5000", "0", "5000", "0", "0", "4555.00"),
     // MFS tp with qualified dividends, income at 0% threshhold
-    (mfs, "48350", "5000", "0", "5000", "0", "0", "0"),
+    (mfs, "48350", "5000", "0", "5000", "0", "0", "4957.00"),
     // MFS tp with qualified dividends taxed at 0% and 15%
-    (mfs, "53000", "5000", "3000", "4450", "532.5", "0", "532.5"),
+    (mfs, "53000", "5000", "3000", "4450", "532.5", "0", "5687.50"),
     // MFS tp with qualified dividends taxed at 15%
-    (mfs, "87000", "10000", "2000", "0", "1800", "0", "1800"),
+    (mfs, "87000", "10000", "2000", "0", "1800", "0", "13018.00"),
     // MFS tp with qualified dividends, income at 15% threshhold
-    (mfs, "300000", "15000", "0", "0", "2250", "0", "2250"),
+    (mfs, "300000", "15000", "0", "0", "2250", "0", "70769.00"),
     // MFS tp with qualified dividends taxed at 15% and 20%
-    (mfs, "307500", "14000", "1000", "0", "2152.5", "130", "2282.5"),
+    (mfs, "307500", "14000", "1000", "0", "2152.5", "130", "73426.50"),
     // MFS tp with qualified dividends taxed at 20%,
-    (mfs, "400000", "20000", "5000", "0", "0", "5000", "5000"),
+    (mfs, "400000", "20000", "5000", "0", "0", "5000", "105019.00"),
     // MFJ tp with qualified dividends taxed at 0%
-    (mfj, "90000", "3000", "7000", "10000", "0", "0", "0"),
+    (mfj, "90000", "3000", "7000", "10000", "0", "0", "9107.00"),
     // MFS tp with qualified dividends, income at 0% threshhold
-    (mfj, "96700", "10000", "0", "10000", "0", "0", "0"),
+    (mfj, "96700", "10000", "0", "10000", "0", "0", "9911.00"),
     // MFJ tp with qualified dividends taxed at 0% and 15%
-    (mfj, "105000", "14500", "500", "8900", "915", "0", "915"),
+    (mfj, "105000", "14500", "500", "8900", "915", "0", "11222.00"),
     // MFJ tp with qualified dividends taxed at 15%
-    (mfj, "170000", "19000", "1000", "0", "3000", "0", "3000"),
+    (mfj, "170000", "19000", "1000", "0", "3000", "0", "25424.00"),
     // MFJ tp with qualified dividends, income at 15% threshold
-    (mfj, "600050", "25000", "0", "0", "3750", "0", "3750"),
+    (mfj, "600050", "25000", "0", "0", "3750", "0", "142556.00"),
     // MFJ tp with qualified dividends taxed at 15% and 20%
-    (mfj, "615000", "15000", "10000", "0", "3555", "260", "3815"),
+    (mfj, "615000", "15000", "10000", "0", "3555", "260", "147854.00"),
     // MFJ tp with qualified dividends taxed at 20%
-    (mfj, "785000", "15000", "20000", "0", "0", "7000", "7000"),
+    (mfj, "785000", "15000", "20000", "0", "0", "7000", "207039.00"),
     // QSS tp with qualified dividends taxed at 0%
-    (qss, "90000", "3000", "7000", "10000", "0", "0", "0"),
+    (qss, "90000", "3000", "7000", "10000", "0", "0", "9107.00"),
     // QSS tp with qualified dividends taxed at 0% and 15%
-    (qss, "105000", "14500", "500", "8900", "915", "0", "915"),
+    (qss, "105000", "14500", "500", "8900", "915", "0", "11222.00"),
     // QSS tp with qualified dividends taxed at 15%
-    (qss, "170000", "19000", "1000", "0", "3000", "0", "3000"),
+    (qss, "170000", "19000", "1000", "0", "3000", "0", "25424.00"),
     // QSS tp with qualified dividends taxed at 15% and 20%
-    (qss, "615000", "15000", "10000", "0", "3555", "260", "3815"),
+    (qss, "615000", "15000", "10000", "0", "3555", "260", "147854.00"),
     // QSS tp with qualified dividends taxed at 20%
-    (qss, "785000", "15000", "20000", "0", "0", "7000", "7000"),
+    (qss, "785000", "15000", "20000", "0", "0", "7000", "207039.00"),
     // HoH tp with qualified dividends taxed at 0%
-    (hoh, "62000", "2000", "5000", "7000", "0", "0", "0"),
+    (hoh, "62000", "2000", "5000", "7000", "0", "0", "6249.00"),
     // HoH tp with qualified dividends, income at 0% threshold
-    (hoh, "64750", "2000", "5000", "7000", "0", "0", "0"),
+    (hoh, "64750", "2000", "5000", "7000", "0", "0", "6579.00"),
     // HoH tp with qualified dividends taxed at 0% and 15%
-    (hoh, "70000", "10000", "0", "6200", "570", "0", "570"),
+    (hoh, "70000", "10000", "0", "6200", "570", "0", "7419.00"),
     // HoH tp with qualified dividends taxed at 15%
-    (hoh, "115000", "15000", "0", "0", "2250", "0", "2250"),
+    (hoh, "115000", "15000", "0", "0", "2250", "0", "17151.00"),
     // HoH tp with qualified dividends, income at 15% threshold
-    (hoh, "566700", "15000", "0", "0", "2250", "0", "2250"),
+    (hoh, "566700", "15000", "0", "0", "2250", "0", "162306.00"),
     // HoH tp with qualified dividends taxed at 15% and 20%
-    (hoh, "580000", "10000", "10000", "0", "2940", "80", "3020"),
+    (hoh, "580000", "10000", "10000", "0", "2940", "80", "165981.00"),
     // HoH tp with qualified dividends taxed at 20%
-    (hoh, "680000", "30000", "0", "0", "0", "6000", "6000"),
+    (hoh, "680000", "30000", "0", "0", "0", "6000", "200649.00"),
   )
 
   // Set up shorthand for facts to check against our table data
@@ -91,10 +91,10 @@ class QualifiedDividendsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
   val taxableIncome = Path("/taxableIncome")
   val qualifiedDividends = Path("/qualifiedDividendsIncome")
   val longTermCapitalGains = Path("/longTermCapitalGainsIncome")
-  val amountAt0 = Path("/amountOfDividendsTaxedAt0")
-  val totalQualifiedDividends15Tax = Path("/totalQualifiedDividends15Tax")
-  val totalQualifiedDividends20Tax = Path("/totalQualifiedDividends20Tax")
-  val totalQualifiedDividendsTax = Path("/totalQualifiedDividendsWithholding")
+  val amountAt0 = Path("/amountOfNetGainsTaxedAt0")
+  val totalNetGainsWith15PercentTax = Path("/totalNetGainsWith15PercentTax")
+  val totalNetGainsWith20PercentTax = Path("/totalNetGainsWith20PercentTax")
+  val tentativeTaxFromTaxableIncomeWithNetCapitalGains = Path("/tentativeTaxFromTaxableIncomeWithNetCapitalGains")
 
   test("Qualified Dividends calculates appropriate tax withholding for single, mfj, and hoh filers") {
     forAll(dataTable) { (status, income, qDiv, ltGains, totalAt0, taxDueAt15, taxDueAt20, totalTax) =>
@@ -108,10 +108,10 @@ class QualifiedDividendsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
       )
 
       // Get calculated values based on test data
-      val taxTotal = graph.get(totalQualifiedDividendsTax)
+      val taxTotal = graph.get(tentativeTaxFromTaxableIncomeWithNetCapitalGains)
       val amountTaxedAt0 = graph.get(amountAt0)
-      val taxTotal15 = graph.get(totalQualifiedDividends15Tax)
-      val taxTotal20 = graph.get(totalQualifiedDividends20Tax)
+      val taxTotal15 = graph.get(totalNetGainsWith15PercentTax)
+      val taxTotal20 = graph.get(totalNetGainsWith20PercentTax)
 
       assert(amountTaxedAt0.value.contains(Dollar(totalAt0)))
       assert(taxTotal15.value.contains(Dollar(taxDueAt15)))

@@ -72,6 +72,66 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/grossCapitalGainOrLoss">
+      <Description> Form 1040 Line 7</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/shortTermCapitalGainsIncome"/>
+          <Dependency path="/longTermCapitalGainsIncome"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/netCapitalGainsWithoutQualifiedDividends">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Any>
+                <GreaterThanOrEqual>
+                  <Left>
+                    <Dollar>0</Dollar>
+                  </Left>
+                  <Right>
+                    <Dependency path="/longTermCapitalGainsIncome"/>
+                  </Right>
+                </GreaterThanOrEqual>
+                <GreaterThanOrEqual>
+                  <Left>
+                    <Dollar>0</Dollar>
+                  </Left>
+                  <Right>
+                    <Dependency path="/grossCapitalGainOrLoss"/>
+                  </Right>
+                </GreaterThanOrEqual>
+              </Any>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <LesserOf>
+                <Dependency path="/longTermCapitalGainsIncome"/>
+                <Dependency path="/grossCapitalGainOrLoss"/>
+              </LesserOf>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/netCapitalGains">
+      <Description>Qualified Dividends + lesser of long term and gross capital gains. Used in QBI Deduction and QDCG Worksheet</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/qualifiedDividendsIncome"/>
+          <Dependency path="/netCapitalGainsWithoutQualifiedDividends"/>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/taxableScholarshipIncome">
       <Description>Taxable income from scholarships</Description>
       <Writable>
@@ -411,8 +471,7 @@ and car loan interest deduction
           <Dependency path="/ordinaryDividendsIncome"/>
           <Dependency path="/unemploymentInsuranceIncome"/>
           <Dependency path="/taxableInterestIncome"/>
-          <Dependency path="/shortTermCapitalGainsIncome"/>
-          <Dependency path="/longTermCapitalGainsIncome"/>
+          <Dependency path="/grossCapitalGainOrLoss"/>
           <Dependency path="/taxableScholarshipIncome"/>
           <Dependency path="/alimonyReceivedIncome"/>
           <Dependency path="/sCorpNonPassiveIncome"/>
@@ -444,64 +503,6 @@ and car loan interest deduction
             <Dependency path="/excessBusinessLossAdjustment"/>
           </Add>
         </Round>
-      </Derived>
-    </Fact>
-    <Fact path="/grossCapitalGains">
-      <Derived>
-        <Add>
-          <Dependency path="/shortTermCapitalGainsIncome"/>
-          <Dependency path="/longTermCapitalGainsIncome"/>
-        </Add>
-      </Derived>
-    </Fact>
-    <Fact path="/netCapitalGainsWithoutQualifiedDividends">
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Any>
-                <GreaterThanOrEqual>
-                  <Left>
-                    <Dollar>0</Dollar>
-                  </Left>
-                  <Right>
-                    <Dependency path="/longTermCapitalGainsIncome"/>
-                  </Right>
-                </GreaterThanOrEqual>
-                <GreaterThanOrEqual>
-                  <Left>
-                    <Dollar>0</Dollar>
-                  </Left>
-                  <Right>
-                    <Dependency path="/grossCapitalGains"/>
-                  </Right>
-                </GreaterThanOrEqual>
-              </Any>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <LesserOf>
-                <Dependency path="/longTermCapitalGainsIncome"/>
-                <Dependency path="/grossCapitalGains"/>
-              </LesserOf>
-            </Then>
-          </Case>
-        </Switch>
-      </Derived>
-    </Fact>
-    <Fact path="/netCapitalGains">
-      <Derived>
-        <Add>
-          <Dependency path="/qualifiedDividendsIncome"/>
-          <Dependency path="/netCapitalGainsWithoutQualifiedDividends"/>
-        </Add>
       </Derived>
     </Fact>
   </Facts>
