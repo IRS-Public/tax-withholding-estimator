@@ -72,6 +72,11 @@ validate-html:
 validate-js:
 	npm --prefix $(TWE_RESOURCES_DIR) run lint
 
+.PHONY: format-local
+format-local:
+	find $(TWE_RESOURCES_DIR) -name '*xml' | xargs -I {} xmllint --format {} --output {}
+	sbt scalafmtAll
+
 # Semgrep setup is not handled by ci-setup, but done separately in the GHA files
 .PHONY:
 semgrep:

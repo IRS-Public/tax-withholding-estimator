@@ -240,7 +240,7 @@
         </LesserOf>
       </Derived>
     </Fact>
-    <Fact path="/totalNetGainsWith15PercentTax">
+    <Fact path="/netGainTaxAmountWith15PercentTax">
       <Description>Tax withholding based on 15% tax of eligible qualified dividends.
         Line 18 - Qualified Dividends and Capital Gain Worksheet
       </Description>
@@ -277,9 +277,9 @@
         </Subtract>
       </Derived>
     </Fact>
-    <Fact path="/totalNetGainsWith20PercentTax">
+    <Fact path="/netGainTaxAmountWith20PercentTax">
       <Description>Tax withholding based on 20% tax of eligible qualified dividends.
-        Line 21 - Qualified Dividends and Capital Gain Worksheet
+        Line 21 -Qualified Dividends and Capital Gain Worksheet
       </Description>
       <Derived>
         <Multiply>

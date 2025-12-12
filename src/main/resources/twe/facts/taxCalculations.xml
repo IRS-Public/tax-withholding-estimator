@@ -2037,11 +2037,11 @@
         Line 23 - Qualified Dividends and Capital Gain Worksheet</Description>
       <Derived>
         <Add>
-          <!-- Line 18-->
-          <Dependency path="/totalNetGainsWith15PercentTax"/>
-          <!-- Line 21-->
-          <Dependency path="/totalNetGainsWith20PercentTax"/>
-          <!-- Line 22-->
+          <!-- QDCG Worksheet Line 18-->
+          <Dependency path="/netGainTaxAmountWith15PercentTax"/>
+          <!-- QDCG Worksheet Line 21-->
+          <Dependency path="/netGainTaxAmountWith20PercentTax"/>
+          <!-- QDCG Worksheet Line 22-->
           <Dependency path="/tentativeTaxFromTaxableIncomeMinusNetGains"/>
         </Add>
       </Derived>

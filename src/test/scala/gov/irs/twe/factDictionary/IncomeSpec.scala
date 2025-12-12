@@ -29,101 +29,134 @@ class IncomeSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
   val dataTable = Table(
     ("status", "aawa", "expectedStandardAnnualWithholdingAmount"),
-    ///////////////////////////////////////////////////////////////////////////////
-    // Single, MFS
-    // Less than $6,400: no withholding
-    (single, "6399", "0"),
-    (mfs, "6399", "0"),
-    // At least $6,400 but less than $18,325: $0 plus 10% of the excess over $6,400
-    (single, "6400", "0"),
-    (single, "6410", "1"),
-    (mfs, "18324", "1192.40"),
-    // At least $18,325 but less than $54,875: $1,192.50 plus 12% of the excess over $18,325
-    (single, "18325", "1192.50"),
-    (single, "18335", "1193.70"),
-    (mfs, "54874", "5578.38"),
-    // At least $54,875 but less than $109,750: $5,578.50 plus 22% of the excess over $54,875
-    (mfs, "54875", "5578.50"),
-    (mfs, "54880", "5579.60"),
-    (single, "109749", "17650.78"),
-    // At least $109,750 but less than $203,700: $17,651 plus 24% of the excess over $109,750
-    (mfs, "109750", "17651"),
-    (mfs, "183210", "35281.40"),
-    (single, "203699", "40198.76"),
-    // At least $203,700 but less than $256,925: $40,199 plus 32% of the excess over $203,700
-    (single, "203700", "40199"),
-    (single, "203749", "40214.68"),
-    (mfs, "225225", "47087"),
-    (mfs, "256924", "57230.68"),
-    // At least $256,925 but less than $632,750: $57,231 plus 35% of the excess over $256,925
-    (single, "256925", "57231"),
-    (single, "555555", "161751.50"),
-    (mfs, "632749", "188769.40"),
-    // $632,750 and above: $188,769.75 plus 37% of the excess over $632,750
-    (single, "632750", "188769.75"),
-    (mfs, "1000000", "324652.25"),
-    ///////////////////////////////////////////////////////////////////////////////
-    // MFJ, QSS
-    // Less than $17,100: no withholding
-    (mfj, "17099", "0"),
-    // At least $17,100, but less than $40,950: $0 plus 10% of the excess over $17,100
-    (mfj, "17100", "0"),
-    (qss, "25000", "790"),
-    (mfj, "40949", "2384.90"),
-    // At least $40,950 but less than $114,050: $2,385 plus 12% of the excess over $40,950
-    (qss, "40950", "2385"),
-    (mfj, "73000", "6231"),
-    (mfj, "114049", "11156.88"),
-    // At least $114,050 but less than $223,800: $11,157 plus 22% of the excess over $114,050
-    (mfj, "114050", "11157"),
-    (mfj, "183210", "26372.20"),
-    (qss, "223799", "35301.78"),
-    // At least $223,800 but less than $411,700: $35,302 plus 24% of the excess over $223,800
-    (mfj, "223800", "35302"),
-    (qss, "333333", "61589.92"),
-    (mfj, "411699", "80397.76"),
-    // At least $411,700 but less than $518,150: $80,398 plus 32% of the excess over $411,700
-    (qss, "411700", "80398"),
-    (mfj, "498765", "108258.80"),
-    (mfj, "518149", "114461.68"),
-    // At least $518,150 but less than $768,700: $114,462 plus 35% of the excess over $518,150
-    (mfj, "518150", "114462"),
-    (mfj, "677777", "170331.45"),
-    (qss, "768699", "202154.15"),
-    // $768,700 and above: $202,154.50 plus 37% of the excess over $768,700
-    (mfj, "768700", "202154.50"),
-    (qss, "900000", "250735.50"),
-    ///////////////////////////////////////////////////////////////////////////////
-    // HoH
-    // Less than $13,900: no withholding
-    (hoh, "13899", "0"),
-    // At least $13,900 but less than $30,900: $0 plus 10% of the excess over $13,900
-    (hoh, "13900", "0"),
-    (hoh, "13910", "1"),
-    (hoh, "30899", "1699.90"),
-    // At least $30,900 but less than $78,750: $1,700 plus 12% of the excess over $30,900
-    (hoh, "30900", "1700"),
-    (hoh, "55000", "4592"),
-    (hoh, "78749", "7441.88"),
-    // At least $78,750 but less than $117,250: $7,442 plus 22% of the excess over $78,750
-    (hoh, "78750", "7442"),
-    (hoh, "100000", "12117"),
-    (hoh, "117249", "15911.78"),
-    // At least $117,250 but less than $211,200: $15,912 plus 24% of the excess over $117,250
-    (hoh, "117250", "15912"),
-    (hoh, "153210", "24542.40"),
-    (hoh, "211199", "38459.76"),
-    // At least $211,200 but less than $264,400: $38,460 plus 32% of the excess over $211,200
-    (hoh, "211200", "38460"),
-    (hoh, "225225", "42948"),
-    (hoh, "264399", "55483.68"),
-    // At least $264,400 but less than $640,250: $55,484 plus 35% of the excess over $264,400
-    (hoh, "264400", "55484"),
-    (hoh, "555555", "157388.25"),
-    (hoh, "640249", "187031.15"),
-    // $640,250 and above: $187,031.50 plus 37% of the excess over $640,250
-    (hoh, "640250", "187031.50"),
-    (hoh, "1000000", "320139"),
+    // Less than $7,500: no withholding
+    (single, "7499", "0.00"),
+    // Less than $7,500: no withholding
+    (mfs, "7499", "0.00"),
+    // At least $7,500 but less than $19,900: $0 plus 10% of the excess over $7,500
+    (single, "7500", "0.00"),
+    // At least $7,500 but less than $19,900: $0 plus 10% of the excess over $7,500
+    (single, "7510", "1.00"),
+    // At least $7,500 but less than $19,900: $0 plus 10% of the excess over $7,500
+    (mfs, "19899", "1239.90"),
+    // At least $19,900 but less than $57,900: $1,240 plus 12% of the excess over $19,900
+    (single, "19900", "1240.00"),
+    // At least $19,900 but less than $57,900: $1,240 plus 12% of the excess over $19,900
+    (single, "19910", "1241.20"),
+    // At least $19,900 but less than $57,900: $1,240 plus 12% of the excess over $19,900
+    (mfs, "57899", "5799.88"),
+    // At least $57,900 but less than $113,200: $5,800.00 plus 22% of the excess over $57,900
+    (mfs, "57900", "5800.00"),
+    // At least $57,900 but less than $113,200: $5,800.00 plus 22% of the excess over $57,900
+    (mfs, "57905", "5801.10"),
+    // At least $57,900 but less than $113,200: $5,800.00 plus 22% of the excess over $57,900
+    (single, "113199", "17965.78"),
+    // At least $113,200 but less than $209,275: $17,966 plus 24% of the excess over $113,200
+    (mfs, "113200", "17966.00"),
+    // At least $113,200 but less than $209,275: $17,966 plus 24% of the excess over $113,200
+    (mfs, "113210", "17968.40"),
+    // At least $113,200 but less than $209,275: $17,966 plus 24% of the excess over $113,200
+    (single, "209274", "41023.76"),
+    // At least $209,275 but less than $263,725: $41,024.00 plus 32% of the excess over $209,275
+    (single, "209275", "41024.00"),
+    // At least $209,275 but less than $263,725: $41,024.00 plus 32% of the excess over $209,275
+    (single, "209276", "41024.32"),
+    // At least $209,275 but less than $263,725: $41,024.00 plus 32% of the excess over $209,275
+    (mfs, "263724", "58447.68"),
+    // At least $263,725 but less than $648,100: $58,448 plus 35% of the excess over $263,725
+    (single, "263725", "58448.00"),
+    // At least $263,725 but less than $648,100: $58,448 plus 35% of the excess over $263,725
+    (single, "555555", "160588.50"),
+    // At least $263,725 but less than $648,100: $58,448 plus 35% of the excess over $263,725
+    (mfs, "648099", "192978.90"),
+    // $648,100 and above: $192,979.25 plus 37% of the excess over $648,100
+    (single, "648100", "192979.25"),
+    // $648,100 and above: $192,979.25 plus 37% of the excess over $648,100
+    (mfs, "1000000", "323182.25"),
+    // Less than $19,300: no withholding
+    (mfj, "19299", "0.00"),
+    // At least $19,300, but less than $44,100: $0 plus 10% of the excess over $19,300
+    (mfj, "19300", "0.00"),
+    // At least $19,300, but less than $44,100: $0 plus 10% of the excess over $19,300
+    (qss, "25000", "570.00"),
+    // At least $19,300, but less than $44,100: $0 plus 10% of the excess over $19,300
+    (mfj, "44099", "2479.90"),
+    // At least $44,100 but less than $120,100: $2,480 plus 12% of the excess over $44,100
+    (qss, "44100", "2480.00"),
+    // At least $44,100 but less than $120,100: $2,480 plus 12% of the excess over $44,100
+    (mfj, "73000", "5948.00"),
+    // At least $44,100 but less than $120,100: $2,480 plus 12% of the excess over $44,100
+    (mfj, "120099", "11599.88"),
+    // At least $120,100 but less than $230,700: $11,600 plus 22% of the excess over $120,100
+    (mfj, "120100", "11600.00"),
+    // At least $120,100 but less than $230,700: $11,600 plus 22% of the excess over $120,100
+    (mfj, "183210", "25484.20"),
+    // At least $120,100 but less than $230,700: $11,600 plus 22% of the excess over $120,100
+    (qss, "230699", "35931.78"),
+    // At least $230,700 but less than $422,850: $35,932 plus 24% of the excess over $230,700
+    (mfj, "230700", "35932.00"),
+    // At least $230,700 but less than $422,850: $35,932 plus 24% of the excess over $230,700
+    (qss, "333333", "60563.92"),
+    // At least $230,700 but less than $422,850: $35,932 plus 24% of the excess over $230,700
+    (mfj, "422849", "82047.76"),
+    // At least $422,850 but less than $531,750: $82,048 plus 32% of the excess over $422,850
+    (qss, "422850", "82048.00"),
+    // At least $422,850 but less than $531,750: $82,048 plus 32% of the excess over $422,850
+    (mfj, "498765", "106340.80"),
+    // At least $422,850 but less than $531,750: $82,048 plus 32% of the excess over $422,850
+    (mfj, "531749", "116895.68"),
+    // At least $531,750 but less than $788,000: $116,896 plus 35% of the excess over $531,750
+    (mfj, "531750", "116896.00"),
+    // At least $531,750 but less than $788,000: $116,896 plus 35% of the excess over $531,750
+    (mfj, "677777", "168005.45"),
+    // At least $531,750 but less than $788,000: $116,896 plus 35% of the excess over $531,750
+    (qss, "787999", "206583.15"),
+    // $788,000 and above: $206,583.50 plus 37% of the excess over $788,000
+    (mfj, "788000", "206583.50"),
+    // $788,000 and above: $206,583.50 plus 37% of the excess over $788,000
+    (qss, "900000", "248023.50"),
+    // Less than $15,550: no withholding
+    (hoh, "15549", "0.00"),
+    // At least $15,550 but less than $33,250: $0 plus 10% of the excess over $15,550
+    (hoh, "15550", "0.00"),
+    // At least $15,550 but less than $33,250: $0 plus 10% of the excess over $15,550
+    (hoh, "15560", "1.00"),
+    // At least $15,550 but less than $33,250: $0 plus 10% of the excess over $15,550
+    (hoh, "33249", "1769.90"),
+    // At least $33,250 but less than $83,000: $1,770 plus 12% of the excess over $33,250
+    (hoh, "33250", "1770.00"),
+    // At least $33,250 but less than $83,000: $1,770 plus 12% of the excess over $33,250
+    (hoh, "55000", "4380.00"),
+    // At least $33,250 but less than $83,000: $1,770 plus 12% of the excess over $33,250
+    (hoh, "82999", "7739.88"),
+    // At least $83,000 but less than $121,250: $7,740 plus 22% of the excess over $83,000
+    (hoh, "83000", "7740.00"),
+    // At least $83,000 but less than $121,250: $7,740 plus 22% of the excess over $83,000
+    (hoh, "100000", "11480.00"),
+    // At least $83,000 but less than $121,250: $7,740 plus 22% of the excess over $83,000
+    (hoh, "121249", "16154.78"),
+    // At least $121,250 but less than $217,300: $16,155 plus 24% of the excess over $121,250
+    (hoh, "121250", "16155.00"),
+    // At least $121,250 but less than $217,300: $16,155 plus 24% of the excess over $121,250
+    (hoh, "153210", "23825.40"),
+    // At least $121,250 but less than $217,300: $16,155 plus 24% of the excess over $121,250
+    (hoh, "217299", "39206.76"),
+    // At least $217,300 but less than $271,750: $39,207 plus 32% of the excess over $217,300
+    (hoh, "217300", "39207.00"),
+    // At least $217,300 but less than $271,750: $39,207 plus 32% of the excess over $217,300
+    (hoh, "225225", "41743.00"),
+    // At least $217,300 but less than $271,750: $39,207 plus 32% of the excess over $217,300
+    (hoh, "271749", "56630.68"),
+    // At least $271,750 but less than $656,150: $56,631 plus 35% of the excess over $271,750
+    (hoh, "271750", "56631.00"),
+    // At least $271,750 but less than $656,150: $56,631 plus 35% of the excess over $271,750
+    (hoh, "555555", "155962.75"),
+    // At least $271,750 but less than $656,150: $56,631 plus 35% of the excess over $271,750
+    (hoh, "656149", "191170.65"),
+    // $656,150 and above: $191,171.00 plus 37% of the excess over $656,150
+    (hoh, "656150", "191171.00"),
+    // $656,150 and above: $191,171.00 plus 37% of the excess over $656,150
+    (hoh, "1000000", "318395.50"),
   )
 
   test("test standardAnnualWithholdingAmount") {

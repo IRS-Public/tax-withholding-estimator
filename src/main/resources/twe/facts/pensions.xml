@@ -136,7 +136,7 @@
       Since we don't enter Part II of Step 2, this is effectively also representing
       Line 2u of Pub. 15-T Worksheet 1B.
     </Description>
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Round>
           <Switch>
@@ -150,7 +150,7 @@
               </When>
               <Then>
                 <Switch>
-                  <!-- Less than $6,400: no withholding -->
+                  <!-- Less than $7,500: no withholding -->
                   <Case>
                     <When>
                       <LessThan>
@@ -158,7 +158,7 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>6400</Dollar>
+                          <Dollar>7500</Dollar>
                         </Right>
                       </LessThan>
                     </When>
@@ -166,7 +166,7 @@
                       <Dollar>0</Dollar>
                     </Then>
                   </Case>
-                  <!-- At least $6,400 but less than $18,325: $0 plus 10% of the excess over $6,400 -->
+                  <!-- At least $7,500 but less than $19,900: $0 plus 10% of the excess over $7,500 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -174,7 +174,7 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>18325</Dollar>
+                          <Dollar>19,900</Dollar>
                         </Right>
                       </LessThan>
                     </When>
@@ -186,14 +186,14 @@
                             <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                           </Minuend>
                           <Subtrahends>
-                            <Dollar>6400</Dollar>
+                            <Dollar>7500</Dollar>
                           </Subtrahends>
                         </Subtract>
                       </Multiply>
                     </Then>
                   </Case>
-                  <!-- At least $18,325 but less than $54,875: $1,192.50 plus 12% of the excess over
-          $18,325 -->
+                  <!-- At least $19,900 but less than $57,900: $1,240 plus 12% of the excess over
+          $19,900 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -201,13 +201,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>54875</Dollar>
+                          <Dollar>57900</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>1192.50</Dollar>
+                        <Dollar>1240</Dollar>
                         <Multiply>
                           <Rational>12/100</Rational>
                           <Subtract>
@@ -215,15 +215,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>18325</Dollar>
+                              <Dollar>19900</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $54,875 but less than $109,750: $5,578.50 plus 22% of the excess
-                over $54,875 -->
+                  <!-- At least $57,900 but less than $113,200: $5,800.00 plus 22% of the excess
+                over $57,900 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -231,13 +231,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>109750</Dollar>
+                          <Dollar>113200</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>5578.50</Dollar>
+                        <Dollar>5800.00</Dollar>
                         <Multiply>
                           <Rational>22/100</Rational>
                           <Subtract>
@@ -245,15 +245,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>54875</Dollar>
+                              <Dollar>57900</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $109,750 but less than $203,700: $17,651 plus 24% of the excess over
-                $109,750 -->
+                  <!-- At least $113,200 but less than $209,275: $17,966 plus 24% of the excess over
+                $113,200 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -261,13 +261,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>203700</Dollar>
+                          <Dollar>209275</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>17651</Dollar>
+                        <Dollar>17966.00</Dollar>
                         <Multiply>
                           <Rational>24/100</Rational>
                           <Subtract>
@@ -275,15 +275,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>109750</Dollar>
+                              <Dollar>113200</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $203,700 but less than $256,925: $40,199 plus 32% of the excess over
-                $203,700 -->
+                  <!-- At least $209,275 but less than $263,725: $41,024.00 plus 32% of the excess over
+                $209,275 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -291,13 +291,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>256925</Dollar>
+                          <Dollar>263725</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>40199</Dollar>
+                        <Dollar>41024.00</Dollar>
                         <Multiply>
                           <Rational>32/100</Rational>
                           <Subtract>
@@ -305,15 +305,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>203700</Dollar>
+                              <Dollar>209275.00</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $256,925 but less than $632,750: $57,231 plus 35% of the excess over
-                $256,925 -->
+                  <!-- At least $263,726 but less than $648,100: $58,448 plus 35% of the excess over
+                $263,725 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -321,13 +321,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>632750</Dollar>
+                          <Dollar>648100</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>57231</Dollar>
+                        <Dollar>58448.00</Dollar>
                         <Multiply>
                           <Rational>35/100</Rational>
                           <Subtract>
@@ -335,21 +335,21 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>256925</Dollar>
+                              <Dollar>263725</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- $632,750 and above: $188,769.75 plus 37% of the excess over $632,750 -->
+                  <!-- 648,100 and above: 192,979.25 plus 37% of the excess over $648,100 -->
                   <Case>
                     <When>
                       <True/>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>188769.75</Dollar>
+                        <Dollar>192979.25</Dollar>
                         <Multiply>
                           <Rational>37/100</Rational>
                           <Subtract>
@@ -357,7 +357,7 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>632750</Dollar>
+                              <Dollar>648100</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -376,7 +376,7 @@
               </When>
               <Then>
                 <Switch>
-                  <!-- Less than $17,100: no withholding -->
+                  <!-- Less than $19,300: no withholding -->
                   <Case>
                     <When>
                       <LessThan>
@@ -384,7 +384,7 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>17100</Dollar>
+                          <Dollar>19300</Dollar>
                         </Right>
                       </LessThan>
                     </When>
@@ -392,8 +392,8 @@
                       <Dollar>0</Dollar>
                     </Then>
                   </Case>
-                  <!-- At least $17,100 but less than $40,950: $0 plus 10% of the excess over
-                $17,100 -->
+                  <!-- At least $19,300 but less than $44,100: $0 plus 10% of the excess over
+                $19,300 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -401,7 +401,7 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>40950</Dollar>
+                          <Dollar>44100</Dollar>
                         </Right>
                       </LessThan>
                     </When>
@@ -413,14 +413,14 @@
                             <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                           </Minuend>
                           <Subtrahends>
-                            <Dollar>17100</Dollar>
+                            <Dollar>19300</Dollar>
                           </Subtrahends>
                         </Subtract>
                       </Multiply>
                     </Then>
                   </Case>
-                  <!-- At least $40,950 but less than $114,050: $2,385 plus 12% of the excess over
-                $40,950 -->
+                  <!-- At least $44,100 but less than $120,100: $2,480.00 plus 12% of the excess over
+                $44,100 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -428,13 +428,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>114050</Dollar>
+                          <Dollar>120100</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>2385</Dollar>
+                        <Dollar>2480.00</Dollar>
                         <Multiply>
                           <Rational>12/100</Rational>
                           <Subtract>
@@ -442,15 +442,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>40950</Dollar>
+                              <Dollar>44100</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $114,050 but less than $223,800: $11,157 plus 22% of the excess over
-                $114,050 -->
+                  <!-- At least $120,100 but less than 230,700: $11,600 plus 22% of the excess over
+                $120,100 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -458,13 +458,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>223800</Dollar>
+                          <Dollar>230700</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>11157</Dollar>
+                        <Dollar>11600.00</Dollar>
                         <Multiply>
                           <Rational>22/100</Rational>
                           <Subtract>
@@ -472,15 +472,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>114050</Dollar>
+                              <Dollar>120100</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $223,800 but less than $411,700: $35,302 plus 24% of the excess over
-                $223,800 -->
+                  <!-- At least $230,700 but less than $422,850: $35,932 plus 24% of the excess over
+                $230,700 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -488,13 +488,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>411700</Dollar>
+                          <Dollar>422850</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>35302</Dollar>
+                        <Dollar>35932</Dollar>
                         <Multiply>
                           <Rational>24/100</Rational>
                           <Subtract>
@@ -502,15 +502,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>223800</Dollar>
+                              <Dollar>230700</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $411,700 but less than $518,150: $80,398 plus 32% of the excess over
-                $411,700 -->
+                  <!-- At least $422,850 but less than $531,750: $82,048 plus 32% of the excess over
+                $422,850 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -518,13 +518,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>518150</Dollar>
+                          <Dollar>531750</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>80398</Dollar>
+                        <Dollar>82048</Dollar>
                         <Multiply>
                           <Rational>32/100</Rational>
                           <Subtract>
@@ -532,15 +532,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>411700</Dollar>
+                              <Dollar>422850</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $518,150 but less than $768,700: $114,462 plus 35% of the excess
-                over $518,150 -->
+                  <!-- At least $531,750 but less than $788,000: $116,896 plus 35% of the excess
+                over $531,750 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -548,13 +548,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>768700</Dollar>
+                          <Dollar>788000</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>114462</Dollar>
+                        <Dollar>116896</Dollar>
                         <Multiply>
                           <Rational>35/100</Rational>
                           <Subtract>
@@ -562,21 +562,21 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>518150</Dollar>
+                              <Dollar>531750</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- $768,700 and above: $202,154.50 plus 37% of the excess over $768,700 -->
+                  <!-- $788,00 and above: $206,583.50 plus 37% of the excess over $788,000 -->
                   <Case>
                     <When>
                       <True/>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>202154.50</Dollar>
+                        <Dollar>206583.50</Dollar>
                         <Multiply>
                           <Rational>37/100</Rational>
                           <Subtract>
@@ -584,7 +584,7 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>768700</Dollar>
+                              <Dollar>788000</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
@@ -600,7 +600,7 @@
               </When>
               <Then>
                 <Switch>
-                  <!-- Less than $13,900: no withholding -->
+                  <!-- Less than $15,550: no withholding -->
                   <Case>
                     <When>
                       <LessThan>
@@ -608,7 +608,7 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>13900</Dollar>
+                          <Dollar>15550</Dollar>
                         </Right>
                       </LessThan>
                     </When>
@@ -616,8 +616,8 @@
                       <Dollar>0</Dollar>
                     </Then>
                   </Case>
-                  <!-- At least $13,900 but less than $30,900: $0 plus 10% of the excess over
-                $13,900 -->
+                  <!-- At least $15,550 but less than $33,250: $0 plus 10% of the excess over
+                $15,550 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -625,7 +625,7 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>30900</Dollar>
+                          <Dollar>33250</Dollar>
                         </Right>
                       </LessThan>
                     </When>
@@ -637,14 +637,14 @@
                             <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                           </Minuend>
                           <Subtrahends>
-                            <Dollar>13900</Dollar>
+                            <Dollar>15550</Dollar>
                           </Subtrahends>
                         </Subtract>
                       </Multiply>
                     </Then>
                   </Case>
-                  <!-- At least $30,900 but less than $78,750: $1,700 plus 12% of the excess over
-                $30,900 -->
+                  <!-- At least $33,250 but less than $83,000: $1,770 plus 12% of the excess over
+                $33,250 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -652,13 +652,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>78750</Dollar>
+                          <Dollar>83000</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>1700</Dollar>
+                        <Dollar>1770</Dollar>
                         <Multiply>
                           <Rational>12/100</Rational>
                           <Subtract>
@@ -666,15 +666,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>30900</Dollar>
+                              <Dollar>33250</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $78,750 but less than $117,250: $7,442 plus 22% of the excess over
-                $78,750 -->
+                  <!-- At least $83,000 but less than 121,250: $7,740 plus 22% of the excess over
+                $83,000 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -682,13 +682,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>117250</Dollar>
+                          <Dollar>121250</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>7442</Dollar>
+                        <Dollar>7740</Dollar>
                         <Multiply>
                           <Rational>22/100</Rational>
                           <Subtract>
@@ -696,15 +696,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>78750</Dollar>
+                              <Dollar>83000</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $117,250 but less than $211,200: $15,912 plus 24% of the excess over
-                $117,250 -->
+                  <!-- At least $121,250 but less than $217,300: $16,155 plus 24% of the excess over
+                $121,250 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -712,13 +712,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>211200</Dollar>
+                          <Dollar>217300</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>15912</Dollar>
+                        <Dollar>16155</Dollar>
                         <Multiply>
                           <Rational>24/100</Rational>
                           <Subtract>
@@ -726,15 +726,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>117250</Dollar>
+                              <Dollar>121250</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $211,200 but less than $264,400: $38,460 plus 32% of the excess over
-                $211,200 -->
+                  <!-- At least $217,300 but less than $271,750: $39,207 plus 32% of the excess over
+                $217,300 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -742,13 +742,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>264400</Dollar>
+                          <Dollar>271750</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>38460</Dollar>
+                        <Dollar>39207</Dollar>
                         <Multiply>
                           <Rational>32/100</Rational>
                           <Subtract>
@@ -756,15 +756,15 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>211200</Dollar>
+                              <Dollar>217300</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- At least $264,400 but less than $640,250: $55,484 plus 35% of the excess over
-                $264,400 -->
+                  <!-- At least $271,750 but less than $656,150: $56,631 plus 35% of the excess over
+                $271,750 -->
                   <Case>
                     <When>
                       <LessThan>
@@ -772,13 +772,13 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>640250</Dollar>
+                          <Dollar>656150</Dollar>
                         </Right>
                       </LessThan>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>55484</Dollar>
+                        <Dollar>56631</Dollar>
                         <Multiply>
                           <Rational>35/100</Rational>
                           <Subtract>
@@ -786,21 +786,21 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>264400</Dollar>
+                              <Dollar>271750</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
                       </Add>
                     </Then>
                   </Case>
-                  <!-- $640,250 and above: $187,031.50 plus 37% of the excess over $640,250 -->
+                  <!-- $656,150 and above: $191,171 plus 37% of the excess over $656,150 -->
                   <Case>
                     <When>
                       <True/>
                     </When>
                     <Then>
                       <Add>
-                        <Dollar>187031.50</Dollar>
+                        <Dollar>191171.00</Dollar>
                         <Multiply>
                           <Rational>37/100</Rational>
                           <Subtract>
@@ -808,7 +808,7 @@
                               <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                             </Minuend>
                             <Subtrahends>
-                              <Dollar>640250</Dollar>
+                              <Dollar>656150</Dollar>
                             </Subtrahends>
                           </Subtract>
                         </Multiply>
