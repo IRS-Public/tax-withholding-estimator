@@ -2,7 +2,7 @@
 
 An online website for a taxpayer to estimate their tax withholdings for a variety of tax situations.
 For a deep dive into the technical design of this repository, start [here](./docs/adr/001-twe-architecture.md).
-To better understand how the math behind tax withholdings, go [here](./docs/taxes/withholdings-basics.md).
+To better understand the math behind tax withholdings, go [here](./docs/taxes/withholdings-basics.md).
 
 ## Setup
 
