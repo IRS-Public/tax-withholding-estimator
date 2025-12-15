@@ -1,4 +1,4 @@
-# ARD-001: TWE 2.0 Architecture
+# ADR-001: TWE 2.0 Architecture
 
 - Created: August 27, 2025
 - Published:
