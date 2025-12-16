@@ -21,7 +21,6 @@ env:
   TWE_RESOURCES_PATH: src/main/resources/twe
 
 jobs:
-
   call-publish-fact-graph:
     if: vars.build == 'false'
     uses: ./.github/workflows/publish-factgraph.yml
@@ -75,7 +74,7 @@ jobs:
         distribution: 'temurin'
         java-version: ${{ env.JAVA_VERSION }}
 
-   - name: Install xmllint (libxml2-utils) # v2.9.14+dfsg-1.3ubuntu3
+    - name: Install xmllint (libxml2-utils)  # v2.9.14+dfsg-1.3ubuntu3
       run: |
         sudo apt-get update
         sudo apt-get install -y libxml2-utils=2.9.14+dfsg-1.3ubuntu3

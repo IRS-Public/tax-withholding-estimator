@@ -28,16 +28,17 @@ copy-fg:
 
 .PHONY: test
 test:
-	# This only prints the tests that fail
+	@# This only prints the tests that fail
 	sbt -info 'set Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oC")' test scalafmtCheckAll
 
 .PHONY: test-watch
 test-watch:
-	# This only prints the tests that fail
 	sbt -info 'set Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oC")' '~test'
 
 .PHONY: format
 format:
+	@# We only automatically format the fact configs
+	find $(FACTS_DIR) -name '*xml' | xargs -I {} xmllint --format {} --output {}
 	sbt scalafmtAll
 	npm --prefix $(TWE_RESOURCES_DIR) run format
 
@@ -71,11 +72,6 @@ validate-html:
 .PHONY: validate-js
 validate-js:
 	npm --prefix $(TWE_RESOURCES_DIR) run lint
-
-.PHONY: format-local
-format-local:
-	find $(TWE_RESOURCES_DIR) -name '*xml' | xargs -I {} xmllint --format {} --output {}
-	sbt scalafmtAll
 
 # Semgrep setup is not handled by ci-setup, but done separately in the GHA files
 .PHONY:
