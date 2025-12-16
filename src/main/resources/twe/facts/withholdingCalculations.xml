@@ -577,7 +577,7 @@
                         <Dependency path="../adjustedAnnualWageAmount"/>
                       </Left>
                       <Right>
-                        <Dollar>19,900</Dollar>
+                        <Dollar>19900</Dollar>
                       </Right>
                     </LessThan>
                   </When>

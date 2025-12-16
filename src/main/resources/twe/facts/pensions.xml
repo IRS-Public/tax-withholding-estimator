@@ -174,7 +174,7 @@
                           <Dependency path="../pub15Worksheet1bLine2cOr2d"/>
                         </Left>
                         <Right>
-                          <Dollar>19,900</Dollar>
+                          <Dollar>19900</Dollar>
                         </Right>
                       </LessThan>
                     </When>
