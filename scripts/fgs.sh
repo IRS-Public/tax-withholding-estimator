@@ -40,7 +40,8 @@ format() {
 }
 
 deps() {
-  all-facts | xpath -q -e "//Fact[.//Dependency[@path=\"$1\"]]/@path" | extract-path
+  relative_path=${fact/**\//../}
+  all-facts | xpath -q -e "//Fact[.//Dependency[@path=\"$1\" or @path=\"$relative_path\"]]/@path" | extract-path
 }
 
 defn() {
