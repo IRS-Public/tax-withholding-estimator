@@ -281,7 +281,7 @@
       </fg-set>
       <fg-set path="/totalTaxesPaidOnSocialSecurityIncome">
         <question>
-          How much federal income tax has been withheld YTD for Social Security Benefits you will receive this year? (total amount from forms
+          How much federal income tax will be withheld for Social Security Benefits this year? (total amount from forms
           SSA-1099 and RRB-1099)
         </question>
         <input type="dollar"/>
