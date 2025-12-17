@@ -2,7 +2,76 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/pub915MAGIForBenefitsTaxableAmountLine7">
+    <Fact path="/totalTaxesPaidOnSocialSecurityIncome">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/netSocialSecurityBenefitsIncome">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/socialSecurityBenefitsIncome"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/totalTaxesPaidOnSocialSecurityIncome"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915Worksheet1Line1">
+      <Description>Total amount from box 5 of ALL your Forms SSA-1099 and RRB-1099. Form 1040  line 6a.  Pub 915 Worksheet 1, Line 1.</Description>
+      <Derived>
+        <Dependency path="/netSocialSecurityBenefitsIncome"/>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915Worksheet1Line2">
+      <Description> Pub 915 Worksheet 1, Line 2. </Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/pub915Worksheet1Line1"/>
+          <Rational>50/100</Rational>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915Worksheet1Line3">
+      <Description> Pub 915 Worksheet 1, Line 3. Combine the amounts from Form 1040 or 1040 SR lines 1z, 2b, 3b, 4b, 5b, 7, and 8'.
+                  This includes job wages, tips, Medicaid waiver payments, taxable dependent care benefits,
+                  employer-provided adoption benefits,
+                  taxable interest (2b), ordinary dividends (3b), IRA distributions taxable amounts (4b), pensions
+                  and annuities taxable amount (5b),
+                  capital gain or loss (7), additional income from Schedule 1 line 10 (8) </Description>
+      <Derived>
+        <Dependency path="/incomeTotalMinusTaxableSSABenefits"/>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915Worksheet1Line4">
+      <Description> Pub 915 Worksheet 1, Line 4. Enter the amount from Form 1040 or Form 1040-SR 2a. Non-taxable
+        interest income, such as interest on municipal bonds</Description>
+      <Derived>
+        <Dependency path="/taxExemptInterestIncome"/>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915Worksheet1Line5">
+      <Description> Pub 915 Worksheet 1, Line 5. Enter the total of any exclusions/adjustments for: &#x2022; Adoption benefits (Form 8839, line 30), &#x2022; Foreign earned income or housing (Form 2555, lines 45 and 50), and &#x2022; Certain income of bona fide residents of American Samoa (Form 4563, line 15) or Puerto Rico</Description>
+      <Derived>
+        <Dollar>0</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915Worksheet1Line6">
+      <Description> Pub 915 Worksheet 1, Line 6.</Description>
+      <Derived>
+        <Round>
+          <Add>
+            <Dependency path="/pub915Worksheet1Line2"/>
+            <Dependency path="/pub915Worksheet1Line3"/>
+            <Dependency path="/pub915Worksheet1Line4"/>
+            <Dependency path="/pub915Worksheet1Line5"/>
+          </Add>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/pub915Worksheet1Line7">
       <Description>Sum of adjustments from Form 1044 Schedule 1. Student loan interest deduction
         should not be included. IRS Pub 915 Worksheet 1, Line 7.
       </Description>
@@ -18,38 +87,11 @@
         <GreaterOf>
           <Dollar>0</Dollar>
           <Subtract>
-            <!-- Line 6. Sum of incomes received-->
             <Minuend>
-              <Round>
-                <Add>
-                  <!-- Line 2. Half of the total SSA benefits received -->
-                  <Multiply>
-                    <!-- Line 1. Total amount of SSA benefits received, from all forms SSA-1099 and
-                    RRB-1099 -->
-                    <Dependency path="/socialSecurityBenefitsIncome"/>
-                    <Rational>50/100</Rational>
-                  </Multiply>
-                  <!-- Line 3. 'Combine the amounts from Form 1040 or 1040 SR lines 1z, 2b, 3b, 4b,
-                  5b, 7, and 8'.
-                  This includes job wages, tips, Medicaid waiver payments, taxable dependent care benefits,
-                  employer-provided adoption benefits,
-                  taxable interest (2b), ordinary dividends (3b), IRA distributions taxable amounts (4b), pensions
-                  and annuities taxable amount (5b),
-                  capital gain or loss (7), additional income from Schedule 1 line 10 (8)  -->
-                  <Dependency path="/otherIncomeWithoutSSABenefitsTaxableAmountTotal"/>
-                  <!-- Line 4. Enter the amount from Form 1040 or Form 1040-SR 2a. Non-taxable
-                  interest income, such as interest on municipal bonds -->
-                  <Dependency path="/taxExemptInterestIncome"/>
-                  <!-- Line 5. Adoption benefits, Foreign earned income or housing, certain income
-                  of bona fide residents of Puerto Rico or American Samoa
-                  NOTE: those income streams are not currently captured by TWE, and also could become a part of
-                  /totalOtherIncomeWithoutSSABenefitsTaxableAmount -->
-                </Add>
-              </Round>
+              <Dependency path="/pub915Worksheet1Line6"/>
             </Minuend>
-            <!-- Line 7. Adjustments to income, excluding Student Loan Interest-->
             <Subtrahends>
-              <Dependency path="/pub915MAGIForBenefitsTaxableAmountLine7"/>
+              <Dependency path="/pub915Worksheet1Line7"/>
             </Subtrahends>
           </Subtract>
         </GreaterOf>

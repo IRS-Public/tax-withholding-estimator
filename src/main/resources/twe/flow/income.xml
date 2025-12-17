@@ -271,10 +271,17 @@
         <question>How much non-specific other income have you made this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Net SSA income from Forms SSA-1099 and RRB-1099</h2>
+      <h2>SSA income from Forms SSA-1099 and RRB-1099</h2>
       <fg-set path="/socialSecurityBenefitsIncome">
         <question>
           How much Social Security Benefits you received this year? (total amount from forms
+          SSA-1099 and RRB-1099)
+        </question>
+        <input type="dollar"/>
+      </fg-set>
+      <fg-set path="/totalTaxesPaidOnSocialSecurityIncome">
+        <question>
+          How much federal income tax has been withheld YTD for Social Security Benefits you will receive this year? (total amount from forms
           SSA-1099 and RRB-1099)
         </question>
         <input type="dollar"/>

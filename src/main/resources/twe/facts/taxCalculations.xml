@@ -2114,10 +2114,10 @@
     </Fact>
     <Fact path="/totalPayments">
       <Description>Form 1040 Line 33</Description>
-      <!--      TODO: do we need to include line 25d for FIT withheld?-->
       <Derived>
         <Add>
           <Dependency path="/totalEstimatedTaxesPaid"/>
+          <Dependency path="/totalTaxesPaidOnSocialSecurityIncome"/>
           <Dependency path="/totaRefundableCredits"/>
         </Add>
       </Derived>

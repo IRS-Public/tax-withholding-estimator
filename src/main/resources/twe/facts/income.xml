@@ -178,7 +178,7 @@
       </Placeholder>
     </Fact>
     <Fact path="/socialSecurityBenefitsIncome">
-      <Description>SSA Income from forms SSA-1099 and RRB-1099</Description>
+      <Description> Gross SSA Income from forms SSA-1099 and RRB-1099</Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -484,10 +484,23 @@ and car loan interest deduction
       </Derived>
     </Fact>
     <Fact path="/otherIncomeTotal">
+      <Description>Used for W-4 calculations</Description>
       <Derived>
         <Add>
           <Dependency path="/otherIncomeWithoutSSABenefitsTaxableAmountTotal"/>
           <Dependency path="/ssaBenefitsTaxableAmount"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/incomeTotalMinusTaxableSSABenefits">
+      <Description>Sum of 1z, 2b, 3b, 4b, 5b, 7, and 8 on the 1040 (Line 9 - 6b) </Description>
+      <Derived>
+        <Add>
+          <Dependency path="/jobsIncomeTotal"/>
+          <Dependency path="/pensionsIncomeTotal"/>
+          <Dependency path="/otherIncomeWithoutSSABenefitsTaxableAmountTotal"/>
+          <Dependency path="/netSelfEmploymentIncomeTotal"/>
+          <Dependency path="/excessBusinessLossAdjustment"/>
         </Add>
       </Derived>
     </Fact>
@@ -496,11 +509,8 @@ and car loan interest deduction
       <Derived>
         <Round>
           <Add>
-            <Dependency path="/jobsIncomeTotal"/>
-            <Dependency path="/pensionsIncomeTotal"/>
-            <Dependency path="/otherIncomeTotal"/>
-            <Dependency path="/netSelfEmploymentIncomeTotal"/>
-            <Dependency path="/excessBusinessLossAdjustment"/>
+            <Dependency path="/incomeTotalMinusTaxableSSABenefits"/>
+            <Dependency path="/ssaBenefitsTaxableAmount"/>
           </Add>
         </Round>
       </Derived>
