@@ -74,10 +74,22 @@ def main(args: Array[String]): Unit = {
   try
     val server = smol.Smol.start(config)
     sys.addShutdownHook(server.stop(0))
-    println(s"Serving TWE at http://${host}:${port}/twe")
+    val url = s"http://${host}:${port}/twe"
+    val green = "\u001b[32m"
+    val cyan = "\u001b[36m"
+    val bold = "\u001b[1m"
+    val reset = "\u001b[0m"
+    println(s"\n${green}${bold}✓${reset} ${bold}TWE Server${reset} ${cyan}ready${reset}")
+    println(s"  ${bold}Local:${reset}   ${cyan}${url}${reset}\n")
   catch
     case _: java.net.BindException =>
-      println(s"Server is already running on port http://${host}:${port}/twe")
+      val url = s"http://${host}:${port}/twe"
+      val yellow = "\u001b[33m"
+      val cyan = "\u001b[36m"
+      val bold = "\u001b[1m"
+      val reset = "\u001b[0m"
+      println(s"\n${yellow}${bold}⚠${reset} ${bold}Server${reset} ${yellow}already running${reset}")
+      println(s"  ${bold}Local:${reset}   ${cyan}${url}${reset}\n")
 }
 
 object FileLoaderHelper:
