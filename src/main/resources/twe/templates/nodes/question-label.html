@@ -1,4 +1,4 @@
-<label th:if="#{${contentKey} + .question}" class="usa-label twe-question" th:for="${path}">
-    <div th:text="#{${contentKey} + .question}" th:remove="tag"></div>
+<label class="usa-label twe-question" th:for="${path}">
+    <div th:utext="${question}" th:remove="tag"></div>
     <span th:if="${!optional}" aria-hidden="true" class="usa-hint" th:text="#{components.fg-set.required}"></span>
 </label>

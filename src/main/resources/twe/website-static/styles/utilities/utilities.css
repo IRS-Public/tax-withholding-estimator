@@ -13,3 +13,19 @@
 .usa-prose a:visited {
   color: var(--primary);
 }
+
+/* External link icon for links that open in new tab */
+.usa-link--external::after {
+  content: '';
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: 0.25rem;
+  background-image: url("/twe/resources/vendor/uswds-3.13.0/img/usa-icons/launch.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  vertical-align: baseline;
+  position: relative;
+  top: 0.15em;
+}

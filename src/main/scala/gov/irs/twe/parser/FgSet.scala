@@ -31,6 +31,7 @@ case class FgSet(
 
     val contentKey = "fg-sets." + path
     context.setVariable("contentKey", contentKey)
+    context.setVariable("question", this.question)
 
     input match {
       case Input.select(options, optionsPath, _) =>
@@ -66,7 +67,11 @@ case class FgSet(
 object FgSet {
   def parse(node: xml.Node, factDictionary: FactDictionary): FgSet = {
     val path = node \@ "path"
-    val question = (node \ "question").text
+    // Use .child.mkString instead of .text to preserve XML tags (e.g., <span>, <fg-show>) in mixed content
+    val question = (node \ "question").head.child.mkString.trim
+    if (question.isEmpty) {
+      throw InvalidFormConfig(s"fg-set at path: $path has an empty question tag. This is required.")
+    }
     val isOptional = !(node \@ "optional").isEmpty()
     val condition = Condition.getCondition(node, factDictionary)
     val input = Input.extractFromFgSet(node, isOptional, factDictionary)

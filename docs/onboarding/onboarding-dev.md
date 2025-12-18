@@ -35,7 +35,7 @@ inside of the global object to the existing global object._
 _Note 2: the editorconfig.* settings are in here because Editor Config is a suggested extension for this project._
 
 ```json
-    {
+{
   "[scala]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "scalameta.metals",

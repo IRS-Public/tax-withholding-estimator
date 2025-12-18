@@ -437,6 +437,19 @@
               <text/>
             </attribute>
           </optional>
+          <optional>
+            <group>
+              <attribute name="condition">
+                <data type="anyURI"/>
+              </attribute>
+              <attribute name="operator">
+                <choice>
+                  <value>isTrue</value>
+                  <value>isFalse</value>
+                </choice>
+              </attribute>
+            </group>
+          </optional>
           <oneOrMore>
             <element name="li">
               <optional>
@@ -480,8 +493,34 @@
       <zeroOrMore>
         <choice>
           <element name="strong"><ref name="FlowConfigModuleInlineContent"/></element>
+          <element name="span">
+            <optional>
+              <attribute name="class">
+                <text/>
+              </attribute>
+            </optional>
+            <optional>
+              <group>
+                <attribute name="condition">
+                  <data type="anyURI"/>
+                </attribute>
+                <attribute name="operator">
+                  <choice>
+                    <value>isTrue</value>
+                    <value>isFalse</value>
+                  </choice>
+                </attribute>
+              </group>
+            </optional>
+            <ref name="FlowConfigModuleInlineContent"/>
+          </element>
           <element name="a">
             <attribute name="href"/>
+            <optional>
+              <attribute name="class">
+                <text/>
+              </attribute>
+            </optional>
             <optional>
               <attribute name="target">
                 <value>_blank</value>

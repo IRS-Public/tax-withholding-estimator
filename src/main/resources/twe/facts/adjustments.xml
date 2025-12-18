@@ -140,8 +140,8 @@
       <Description>Self-employed contributions to eligible retirement plans.</Description>
       <Derived>
         <Add>
-          <Dependency path="/selfEmploymentHealthInsuranceContributionsSelf"/>
-          <Dependency path="/selfEmploymentHealthInsuranceContributionsSpouse"/>
+          <Dependency path="/selfEmploymentRetirementPlanContributionsSelf"/>
+          <Dependency path="/selfEmploymentRetirementPlanContributionsSpouse"/>
         </Add>
       </Derived>
     </Fact>
