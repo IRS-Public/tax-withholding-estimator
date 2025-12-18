@@ -7,7 +7,7 @@
 
     <div class="usa-radio" th:each="option : ${options}">
         <input th:id="${path} + '-' + ${option.value}"
-               class="usa-radio__input usa-radio__input--tile"
+               class="usa-radio__input"
                type="radio"
                th:value="${option.value}"
                th:name="${path}"

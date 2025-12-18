@@ -6,7 +6,7 @@
     <div th:replace="nodes/hint"></div>
     <div class="usa-radio">
         <input th:id="${path}+'-yes'"
-               class="usa-radio__input usa-radio__input--tile"
+               class="usa-radio__input"
                type="radio"
                value="true"
                th:name="${path}"
@@ -17,7 +17,7 @@
                th:text="${trueLabel != null} ? ${trueLabel} : #{components.boolean.yes}"></label>
     </div>
     <div class="usa-radio">
-        <input th:id="${path}+'-no'" class="usa-radio__input usa-radio__input--tile"
+        <input th:id="${path}+'-no'" class="usa-radio__input"
                type="radio" value="false" th:name="${path}" th:required="${not optional}" aria-invalid="false"/>
         <label th:for="${path}+'-no'" class="usa-radio__label" th:text="${falseLabel != null} ? ${falseLabel} : #{components.boolean.no}"></label>
     </div>
