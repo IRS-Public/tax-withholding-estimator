@@ -355,7 +355,7 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/jobs/*/retirementPlanContributions">
+    <Fact path="/jobs/*/retirementPlanContributionsToDate">
       <Writable>
         <Dollar/>
       </Writable>
@@ -363,7 +363,7 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/jobs/*/healthInsuranceContributions">
+    <Fact path="/jobs/*/healthInsuranceContributionsToDate">
       <Writable>
         <Dollar/>
       </Writable>
@@ -371,7 +371,31 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/jobs/*/hsaOrFsaContributions">
+    <Fact path="/jobs/*/hsaOrFsaContributionsToDate">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/retirementPlanContributionsPerPayPeriod">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/healthInsuranceContributionsPerPayPeriod">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/hsaOrFsaContributionsPerPayPeriod">
       <Writable>
         <Dollar/>
       </Writable>
@@ -407,6 +431,56 @@
           <Dependency path="../retirementPlanContributions"/>
           <Dependency path="../healthInsuranceContributions"/>
           <Dependency path="../hsaOrFsaContributions"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/retirementPlanContributions">
+      <Description>Pre-tax deductions from a specific job</Description>
+      <Derived>
+        <Add>
+          <Dependency path="../retirementPlanContributionsToDate"/>
+          <Multiply>
+            <Dependency path="../retirementPlanContributionsPerPayPeriod"/>
+            <Dependency path="../remainingPayPeriods"/>
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/healthInsuranceContributions">
+      <Description>Pre-tax deductions from a specific job</Description>
+      <Derived>
+        <Add>
+          <Dependency path="../healthInsuranceContributionsToDate"/>
+          <Multiply>
+            <Dependency path="../healthInsuranceContributionsPerPayPeriod"/>
+            <Dependency path="../remainingPayPeriods"/>
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/hsaOrFsaContributions">
+      <Description>Pre-tax deductions from a specific job</Description>
+      <Derived>
+        <Add>
+          <Dependency path="../hsaOrFsaContributionsToDate"/>
+          <Multiply>
+            <Dependency path="../hsaOrFsaContributionsPerPayPeriod"/>
+            <Dependency path="../remainingPayPeriods"/>
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/preTaxDeductionsPerPayPeriod">
+      <Description>
+        The pre-tax deductions being taken out of a particular paycheck.
+        These are used to get an accurate calculation on the Pub15T withholding tables, not to
+        calculate overall tax burden.
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="../retirementPlanContributionsPerPayPeriod"/>
+          <Dependency path="../healthInsuranceContributionsPerPayPeriod"/>
+          <Dependency path="../hsaOrFsaContributionsPerPayPeriod"/>
         </Add>
       </Derived>
     </Fact>

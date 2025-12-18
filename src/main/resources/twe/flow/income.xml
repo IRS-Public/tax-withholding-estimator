@@ -94,16 +94,28 @@
           <question>What bonus amount were you paid for this job?</question>
           <input type="dollar"/>
         </fg-set>
-        <fg-set path="/jobs/*/retirementPlanContributions">
-          <question>What retirement plan contributions have you made for this job?</question>
+        <fg-set path="/jobs/*/retirementPlanContributionsToDate">
+          <question>What retirement plan contributions have you made for this job to date?</question>
           <input type="dollar"/>
         </fg-set>
-        <fg-set path="/jobs/*/healthInsuranceContributions">
+        <fg-set path="/jobs/*/retirementPlanContributionsPerPayPeriod">
+          <question>What retirement plan contributions do you make per pay period for this job?</question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/healthInsuranceContributionsToDate">
           <question>What health insurance contributions have you made for this job?</question>
           <input type="dollar"/>
         </fg-set>
-        <fg-set path="/jobs/*/hsaOrFsaContributions">
+        <fg-set path="/jobs/*/healthInsuranceContributionsPerPayPeriod">
+          <question>What health insurance contributions do you make per pay period for this job?</question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/hsaOrFsaContributionsToDate">
           <question>What HSA or FSA contributions have you made for this job?</question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/jobs/*/hsaOrFsaContributionsPerPayPeriod">
+          <question>What HSA or FSA plan contributions do you make per pay period for this job?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/qualifiedTipIncome">

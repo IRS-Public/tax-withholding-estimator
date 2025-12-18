@@ -516,6 +516,22 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/averageTaxablePayPerPayPeriod">
+      <Description>Line 1a of Pub 15-T Worksheet 1A</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="../averagePayPerPayPeriod"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="../preTaxDeductionsPerPayPeriod"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/adjustedAnnualWageAmount">
       <Description>Line 1i of Pub 15-T Worksheet 1A</Description>
       <Derived>
@@ -524,7 +540,7 @@
           <Subtract>
             <Minuend>
               <Multiply>
-                <Dependency path="../averagePayPerPayPeriod"/>
+                <Dependency path="../averageTaxablePayPerPayPeriod"/>
                 <Dependency path="../payPeriodsPerYear"/>
               </Multiply>
             </Minuend>
