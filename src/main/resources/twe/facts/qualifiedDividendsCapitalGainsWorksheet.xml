@@ -246,10 +246,7 @@
       </Description>
       <Derived>
         <Multiply>
-          <LesserOf>
-            <Dependency path="/qdcgWorksheetLine12"/>
-            <Dependency path="/remainingTaxableFor15"/>
-          </LesserOf>
+          <Dependency path="/qdcgWorksheetLine17"/>
           <Dependency path="/fifteenPercentTaxRate"/>
         </Multiply>
       </Derived>
