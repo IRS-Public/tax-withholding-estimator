@@ -10,7 +10,7 @@
         <p>
           To continue using the estimator, you need to have at least one job or pension that regularly withholds federal
           income taxes. If you don&#x2019;t pay any taxes on your income through withholding, you may want to plan to
-          <a href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">pay estimated taxes.</a>
+          <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
         </p>
       </fg-alert>
       <fg-collection path="/jobs" item-name="Income source">

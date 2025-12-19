@@ -100,7 +100,7 @@
           <li>You can't be married</li>
         </ul>
         <p>
-          <a target="_blank" href="https://www.irs.gov/filing/filing-status">Learn more about filing statuses</a>
+          <a target="_blank" href="https://www.irs.gov/filing/filing-status">Learn more about filing statuses<span class="usa-sr-only"> (opens in a new tab)</span></a>
         </p>
       </modal-content>
     </modal-dialog>

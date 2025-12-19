@@ -14,8 +14,8 @@
   color: var(--primary);
 }
 
-/* External link icon for links that open in new tab */
-.usa-link--external::after {
+/* Automatically style external links (those with http:// or https://) */
+a[href^="http"]::after {
   content: '';
   display: inline-block;
   width: 0.75rem;
@@ -28,4 +28,9 @@
   vertical-align: baseline;
   position: relative;
   top: 0.15em;
+}
+
+/* Use white icon for external links in dark backgrounds (e.g., identifier section) */
+.usa-identifier a[href^="http"]::after {
+  background-image: url("/twe/resources/vendor/uswds-3.13.0/img/usa-icons-bg/launch--white.svg");
 }
