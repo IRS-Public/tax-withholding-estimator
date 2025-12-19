@@ -26,7 +26,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
   val recentPayPeriodEnd = Path(s"/jobs/#$dummyUUID/mostRecentPayPeriodEnd")
   val recentPayDate = Path(s"/jobs/#$dummyUUID/mostRecentPayDate")
   val tentativeRemainingPayPeriods = Path(s"/jobs/#$dummyUUID/tentativeRemainingPayPeriods")
-  val remainingPayPeriods = Path(s"/jobs/#$dummyUUID/remainingPayPeriods")
+  val remainingPayPeriodsInteger = Path(s"/jobs/#$dummyUUID/remainingPayPeriodsInteger")
   val ordinalEffectiveEndDate = Path(s"/jobs/#$dummyUUID/ordinalEffectiveEndDate")
   val restOfYearIncome = Path(s"/jobs/#$dummyUUID/restOfYearIncome")
   val averagePayPerPayPeriod = Path(s"/jobs/#$dummyUUID/averagePayPerPayPeriod")
@@ -491,7 +491,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
     ),
   )
   test(
-    "test tentativeRemainingPayPeriods, remainingPayPeriods, restOfYearIncome and ordinalEffectiveEndDate",
+    "test tentativeRemainingPayPeriods, remainingPayPeriodsInteger, restOfYearIncome and ordinalEffectiveEndDate",
   ) {
     forAll(dataTable) {
       (
@@ -522,7 +522,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
         )
 
         val tentativePayPeriods = graph.get(tentativeRemainingPayPeriods)
-        val trueRemainingPayPeriods = graph.get(remainingPayPeriods)
+        val trueRemainingPayPeriods = graph.get(remainingPayPeriodsInteger)
         val royIncome = graph.get(restOfYearIncome)
         val effectiveLastDay = graph.get(ordinalEffectiveEndDate)
 

@@ -102,7 +102,7 @@
           <tr>
             <th scope="row">Remaining pay periods</th>
             <td>
-              <fg-show path="/jobs/*/remainingPayPeriods"/>
+              <fg-show path="/jobs/*/remainingPayPeriodsInteger"/>
             </td>
           </tr>
         </tbody>

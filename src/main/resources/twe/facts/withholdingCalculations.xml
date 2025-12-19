@@ -58,10 +58,7 @@
             <Then>
               <Multiply>
                 <Dependency path="../averagePayPerPayPeriod"/>
-                <Add>
-                  <Dependency path="../fullPayPeriods"/>
-                  <Dependency path="../partialPayPeriods"/>
-                </Add>
+                <Dependency path="../remainingPayPeriodsRational"/>
               </Multiply>
             </Then>
           </Case>
@@ -255,10 +252,7 @@
             <Rational>0/1</Rational>
             <Subtract>
               <Minuend>
-                <Add>
-                  <Dependency path="../fullPayPeriods"/>
-                  <Dependency path="../partialPayPeriods"/>
-                </Add>
+                <Dependency path="../remainingPayPeriodsRational"/>
               </Minuend>
               <Subtrahends>
                 <!-- Casting this value to a rational -->
@@ -407,7 +401,7 @@
         <Filter path="/jobs">
           <GreaterThan>
             <Left>
-              <Dependency path="/jobs/*/remainingPayPeriods"/>
+              <Dependency path="/jobs/*/remainingPayPeriodsInteger"/>
             </Left>
             <Right>
               <Dependency path="/jobs/*/payPeriodsBeforeW4ChangesAppear"/>

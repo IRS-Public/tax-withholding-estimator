@@ -441,7 +441,7 @@
           <Dependency path="../retirementPlanContributionsToDate"/>
           <Multiply>
             <Dependency path="../retirementPlanContributionsPerPayPeriod"/>
-            <Dependency path="../remainingPayPeriods"/>
+            <Dependency path="../remainingPayPeriodsInteger"/>
           </Multiply>
         </Add>
       </Derived>
@@ -453,7 +453,7 @@
           <Dependency path="../healthInsuranceContributionsToDate"/>
           <Multiply>
             <Dependency path="../healthInsuranceContributionsPerPayPeriod"/>
-            <Dependency path="../remainingPayPeriods"/>
+            <Dependency path="../remainingPayPeriodsInteger"/>
           </Multiply>
         </Add>
       </Derived>
@@ -465,7 +465,7 @@
           <Dependency path="../hsaOrFsaContributionsToDate"/>
           <Multiply>
             <Dependency path="../hsaOrFsaContributionsPerPayPeriod"/>
-            <Dependency path="../remainingPayPeriods"/>
+            <Dependency path="../remainingPayPeriodsInteger"/>
           </Multiply>
         </Add>
       </Derived>

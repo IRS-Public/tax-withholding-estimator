@@ -359,7 +359,7 @@
             <Then>
               <AddPayrollMonths>
                 <Dependency path="../mostRecentPayPeriodEnd"/>
-                <Dependency path="../remainingPayPeriods"/>
+                <Dependency path="../remainingPayPeriodsInteger"/>
               </AddPayrollMonths>
             </Then>
           </Case>
@@ -388,7 +388,7 @@
                             <Equal>
                               <Left>
                                 <Modulo>
-                                  <Dependency path="../remainingPayPeriods"/>
+                                  <Dependency path="../remainingPayPeriodsInteger"/>
                                   <Int>2</Int>
                                 </Modulo>
                               </Left>
@@ -413,7 +413,7 @@
                       <Floor>
                         <Divide>
                           <Dividend>
-                            <Dependency path="../remainingPayPeriods"/>
+                            <Dependency path="../remainingPayPeriodsInteger"/>
                           </Dividend>
                           <Divisors>
                             <Int>2</Int>
@@ -442,7 +442,7 @@
                             <Equal>
                               <Left>
                                 <Modulo>
-                                  <Dependency path="../remainingPayPeriods"/>
+                                  <Dependency path="../remainingPayPeriodsInteger"/>
                                   <Int>2</Int>
                                 </Modulo>
                               </Left>
@@ -467,7 +467,7 @@
                       <Ceiling>
                         <Divide>
                           <Dividend>
-                            <Dependency path="../remainingPayPeriods"/>
+                            <Dependency path="../remainingPayPeriodsInteger"/>
                           </Dividend>
                           <Divisors>
                             <Int>2</Int>
@@ -531,7 +531,7 @@
                   </Case>
                 </Switch>
                 <Multiply>
-                  <Dependency path="../remainingPayPeriods"/>
+                  <Dependency path="../remainingPayPeriodsInteger"/>
                   <Dependency path="../payPeriodLength"/>
                 </Multiply>
               </Add>
@@ -561,7 +561,7 @@
             </When>
             <Then>
               <!-- Same formula as effectiveEndDate but using fullPayPeriods instead of
-              remainingPayPeriods -->
+              remainingPayPeriodsInteger -->
               <Switch>
                 <Case>
                   <When>
@@ -752,7 +752,7 @@
       <Derived>
         <Subtract>
           <Minuend>
-            <Dependency path="../remainingPayPeriods"/>
+            <Dependency path="../remainingPayPeriodsInteger"/>
           </Minuend>
           <Subtrahends>
             <Count>
@@ -760,6 +760,24 @@
             </Count>
           </Subtrahends>
         </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/remainingPayPeriodsRational">
+      <Description>
+        # of full pay periods that are left to be paid this year, including as a decimal the last,
+        partial pay period (if there is one).
+
+        For instance, if the taxpayer has three weeks of work left, and they are paid biweekly:
+
+        /jobs/*/fullPayPeriods = 1
+        /jobs/*/remainingPayPeriodsRational = 1.5
+        /jobs/*/remainingPayPeriodsInteger = 2
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="../fullPayPeriods"/>
+          <Dependency path="../partialPayPeriods"/>
+        </Add>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/currentPartialPayPeriods">
@@ -1095,9 +1113,10 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/jobs/*/remainingPayPeriods">
+    <Fact path="/jobs/*/remainingPayPeriodsInteger">
       <Description>
-        The number of pay periods remaining in the year.
+        The number of pay periods remaining in the year. If the taxpayer is only working for part of
+        their final pay period, that pay period is included
 
         Monthly and semimonthly are computed directly.
 
