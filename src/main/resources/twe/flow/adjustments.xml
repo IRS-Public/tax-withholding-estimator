@@ -61,12 +61,8 @@
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
         <a target="_blank" href="https://www.irs.gov/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction" class="usa-link usa-link--external">Learn more about self-employed retirement contributions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
-      <fg-set path="/selfEmploymentRetirementPlanContributionsSelf" if-true="/primaryHasSelfEmploymentIncome">
-        <question>What is your self-employment retirement plan contributions for this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <fg-set path="/selfEmploymentRetirementPlanContributionsSpouse" if-true="/spouseHasSelfEmploymentIncome">
-        <question>What is your spouse's self-employment retirement plan contributions for this year?</question>
+      <fg-set path="/selfEmploymentRetirementPlanContributions" if-true="/eitherTPHasSelfEmploymentIncome">
+        <question>What is <span condition="/isFilingStatusMFJ" operator="isFalse">your</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse's</span> self-employment retirement plan contributions for this year?</question>
         <input type="dollar"/>
       </fg-set>
 
@@ -131,12 +127,8 @@
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
         <a target="_blank" href="https://www.irs.gov/instructions/i7206" class="usa-link usa-link--external">Learn more about self-employed health insurance.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
-      <fg-set path="/selfEmploymentHealthInsuranceContributionsSelf" if-true="/primaryHasSelfEmploymentIncome">
-        <question>Health insurance premiums you expect to pay in <fg-show path="/taxYear"/></question>
-        <input type="dollar"/>
-      </fg-set>
-      <fg-set path="/selfEmploymentHealthInsuranceContributionsSpouse" if-true="/spouseHasSelfEmploymentIncome">
-        <question>Health insurance premiums your spouse expects to pay in <fg-show path="/taxYear"/></question>
+      <fg-set path="/selfEmploymentHealthInsuranceContributions" if-true="/eitherTPHasSelfEmploymentIncome">
+        <question>Health insurance premiums <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
     </section>

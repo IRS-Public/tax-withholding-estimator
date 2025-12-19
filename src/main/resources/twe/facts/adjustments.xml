@@ -37,7 +37,7 @@
     </Fact>
     <Fact path="/deductionForTraditionalIRAContributionMax">
       <Description>Max contribution for traditional IRAs (excluding payroll deductions) is $8000 per year. $7000 is the limit for those under 50, but we only know if someone is under 65 or not
-      We are agnostic to filing status so double to 16000 and do not take MAGI into account for simplified computation
+        We are agnostic to filing status so double to 16000 and do not take MAGI into account for simplified computation
       </Description>
       <Derived>
         <Dollar>16000</Dollar>
@@ -79,52 +79,24 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/selfEmploymentHealthInsuranceContributionsSelf">
-      <Description>Self-employed health insurance contributions for self</Description>
-      <Override>
-        <Condition>
-          <Not>
-            <Dependency path="/eitherTPHasSelfEmploymentIncome"/>
-          </Not>
-        </Condition>
-        <Default>
-          <Dollar>0</Dollar>
-        </Default>
-      </Override>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/selfEmploymentHealthInsuranceContributionsSpouse">
-      <Description>Self-employed health insurance contributions for spouse.</Description>
-      <Override>
-        <Condition>
-          <Not>
-            <Dependency path="/eitherTPHasSelfEmploymentIncome"/>
-          </Not>
-        </Condition>
-        <Default>
-          <Dollar>0</Dollar>
-        </Default>
-      </Override>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
     <Fact path="/selfEmploymentHealthInsuranceContributions">
       <Description>Self-employed health insurance contributions for both self and spouse. Implements Form 7206</Description>
-      <Derived>
-        <Add>
-          <Dependency path="/selfEmploymentHealthInsuranceContributionsSelf"/>
-          <Dependency path="/selfEmploymentHealthInsuranceContributionsSpouse"/>
-        </Add>
-      </Derived>
+      <Override>
+        <Condition>
+          <Not>
+            <Dependency path="/eitherTPHasSelfEmploymentIncome"/>
+          </Not>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/businessCreditsForEligible">
       <Description>Business credits for reservists, performing artists, and fee-based government
@@ -138,34 +110,6 @@
     </Fact>
     <Fact path="/selfEmploymentRetirementPlanContributions">
       <Description>Self-employed contributions to eligible retirement plans.</Description>
-      <Derived>
-        <Add>
-          <Dependency path="/selfEmploymentRetirementPlanContributionsSelf"/>
-          <Dependency path="/selfEmploymentRetirementPlanContributionsSpouse"/>
-        </Add>
-      </Derived>
-    </Fact>
-    <Fact path="/selfEmploymentRetirementPlanContributionsSelf">
-      <Description>Self-employed contributions to eligible retirement plans for self.</Description>
-      <Override>
-        <Condition>
-          <Not>
-            <Dependency path="/eitherTPHasSelfEmploymentIncome"/>
-          </Not>
-        </Condition>
-        <Default>
-          <Dollar>0</Dollar>
-        </Default>
-      </Override>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/selfEmploymentRetirementPlanContributionsSpouse">
-      <Description>Self-employed contributions to eligible retirement plans for spouse.</Description>
       <Override>
         <Condition>
           <Not>
