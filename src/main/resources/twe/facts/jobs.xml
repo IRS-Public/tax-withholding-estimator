@@ -22,13 +22,13 @@
       <Description>Whether this job is attributed to the primary filer or spouse if MFJ</Description>
       <Override>
         <Condition>
-          <!--          If the filing status is non-MFJ, the default must be a self assignment-->
+          <!-- If the filing status is non-MFJ, the default must be a self assignment -->
           <Not>
             <Dependency path="/isFilingStatusMFJ"/>
           </Not>
         </Condition>
         <Default>
-          <Enum optionsPath="/filerAssignment">self</Enum>
+          <Enum optionsPath="/filerAssignmentOption">self</Enum>
         </Default>
       </Override>
       <Writable>
@@ -784,7 +784,7 @@
               <Dependency path="filerAssignment"/>
             </Left>
             <Right>
-              <Enum optionsPath="/filerAssignment">self</Enum>
+              <Enum optionsPath="/filerAssignmentOption">self</Enum>
             </Right>
           </Equal>
         </Filter>
@@ -798,7 +798,7 @@
               <Dependency path="filerAssignment"/>
             </Left>
             <Right>
-              <Enum optionsPath="/filerAssignment">spouse</Enum>
+              <Enum optionsPath="/filerAssignmentOption">spouse</Enum>
             </Right>
           </Equal>
         </Filter>
