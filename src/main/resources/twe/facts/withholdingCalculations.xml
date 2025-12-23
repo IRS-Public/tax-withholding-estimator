@@ -346,6 +346,15 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/projectedW4EffectDate">
+      <Description>Date when we expect the W4 chagnes to take effect. 15 days after the current date</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/today"/>
+          <Days>15</Days>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/payPeriodsBeforeW4ChangesAppear">
       <Derived>
         <Switch>
@@ -354,18 +363,105 @@
               <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>
-              <Int>2</Int>
+              <Switch>
+                <Case>
+                  <When>
+                    <GreaterThanOrEqual>
+                      <Left>
+                        <Dependency path="../projectedW4EffectDate"/>
+                      </Left>
+                      <Right>
+                        <Add>
+                          <Dependency path="../mostRecentPayDate"/>
+                          <Days>21</Days>
+                        </Add>
+                      </Right>
+                    </GreaterThanOrEqual>
+                  </When>
+                  <Then>
+                    <Int>3</Int>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Int>2</Int>
+                  </Then>
+                </Case>
+              </Switch>
             </Then>
           </Case>
           <Case>
             <When>
-              <Any>
-                <Dependency path="../isPayFrequencyBiWeekly"/>
-                <Dependency path="../isPayFrequencySemiMonthly"/>
-              </Any>
+              <Dependency path="../isPayFrequencyBiWeekly"/>
             </When>
             <Then>
-              <Int>1</Int>
+              <Switch>
+                <Case>
+                  <When>
+                    <GreaterThanOrEqual>
+                      <Left>
+                        <Dependency path="../projectedW4EffectDate"/>
+                      </Left>
+                      <Right>
+                        <Add>
+                          <Dependency path="../mostRecentPayDate"/>
+                          <Days>28</Days>
+                        </Add>
+                      </Right>
+                    </GreaterThanOrEqual>
+                  </When>
+                  <Then>
+                    <Int>2</Int>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Int>1</Int>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencySemiMonthly"/>
+            </When>
+            <Then>
+              <Switch>
+                <!-- Handle scenario when there are 2 pay periods. Only happens in the middle of Feb -->
+                <Case>
+                  <When>
+                    <GreaterThanOrEqual>
+                      <Left>
+                        <Dependency path="../projectedW4EffectDate"/>
+                      </Left>
+                      <Right>
+                        <AddPayrollMonths>
+                          <Dependency path="../mostRecentPayDate"/>
+                          <Int>1</Int>
+                        </AddPayrollMonths>
+                      </Right>
+                    </GreaterThanOrEqual>
+                  </When>
+                  <Then>
+                    <Int>2</Int>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Int>1</Int>
+                  </Then>
+                </Case>
+              </Switch>
             </Then>
           </Case>
           <Case>
@@ -373,7 +469,19 @@
               <Dependency path="../isPayFrequencyMonthly"/>
             </When>
             <Then>
-              <Int>0</Int>
+              <Count>
+                <GreaterThanOrEqual>
+                  <Left>
+                    <Dependency path="../projectedW4EffectDate"/>
+                  </Left>
+                  <Right>
+                    <AddPayrollMonths>
+                      <Dependency path="../mostRecentPayDate"/>
+                      <Int>1</Int>
+                    </AddPayrollMonths>
+                  </Right>
+                </GreaterThanOrEqual>
+              </Count>
             </Then>
           </Case>
         </Switch>
