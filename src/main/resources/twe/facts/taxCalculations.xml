@@ -2086,7 +2086,10 @@
       </Derived>
     </Fact>
     <Fact path="/tentativeTaxNetNonRefundableCredits">
-      <Name>Total tentative tax - non refundable credits</Name>
+      <Name>
+        Total tentative tax after applying non-refundable credits, but before applying refundable
+        credits.
+      </Name>
       <Description>Form 1040 Line 22. </Description>
       <Derived>
         <!--          Form 1040 Line 22-->
