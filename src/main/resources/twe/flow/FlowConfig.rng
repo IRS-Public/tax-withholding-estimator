@@ -67,15 +67,15 @@
   <define name="fg-set-module">
     <element name="fg-set">
       <attribute name="path">
-          <data type="anyURI"/>
+        <data type="anyURI"/>
       </attribute>
       <optional>
         <choice>
           <attribute name="if-false">
-              <data type="anyURI"/>
+            <data type="anyURI"/>
           </attribute>
           <attribute name="if-true">
-              <data type="anyURI"/>
+            <data type="anyURI"/>
           </attribute>
         </choice>
       </optional>
@@ -84,7 +84,9 @@
   </define>
 
   <define name="ContentKey">
-    <attribute name="content-key"><text /></attribute>
+    <attribute name="content-key">
+      <text/>
+    </attribute>
   </define>
 
   <define name="fg-set-content">
@@ -94,7 +96,7 @@
       </attribute>
     </optional>
     <element name="question">
-        <ref name="FlowConfigModuleInlineContent"/>
+      <ref name="FlowConfigModuleInlineContent"/>
     </element>
     <optional>
       <element name="hint">
@@ -102,16 +104,16 @@
       </element>
     </optional>
     <choice>
-        <element name="input">
-          <attribute name="type">
-            <choice>
-              <value>dollar</value>
-              <value>text</value>
-              <value>date</value>
-              <value>int</value>
-            </choice>
-          </attribute>
-        </element>
+      <element name="input">
+        <attribute name="type">
+          <choice>
+            <value>dollar</value>
+            <value>text</value>
+            <value>date</value>
+            <value>int</value>
+          </choice>
+        </attribute>
+      </element>
       <element name="input">
         <attribute name="type">
           <value>boolean</value>
@@ -189,11 +191,11 @@
   <define name="fg-collection-module">
     <element name="fg-collection">
       <attribute name="path">
-          <data type="anyURI"/>
+        <data type="anyURI"/>
       </attribute>
       <optional>
         <attribute name="item-name">
-          <text />
+          <text/>
         </attribute>
       </optional>
       <optional>
@@ -254,15 +256,19 @@
       </attribute>
       <element name="summary">
         <choice>
-          <element name="h1"><ref name="FlowConfigModuleInlineContent"/></element>
-          <element name="h2"><ref name="FlowConfigModuleInlineContent"/></element>
+          <element name="h1">
+            <ref name="FlowConfigModuleInlineContent"/>
+          </element>
+          <element name="h2">
+            <ref name="FlowConfigModuleInlineContent"/>
+          </element>
           <ref name="FlowConfigModuleInlineContent"/>
         </choice>
       </element>
       <optional>
         <element name="div">
           <attribute name="class">
-          <text/>
+            <text/>
           </attribute>
           <ref name="HtmlBlockContent"/>
         </element>
@@ -281,7 +287,7 @@
     <element name="fg-reset">
       <element name="button">
         <attribute name="class">
-         <text/>
+          <text/>
         </attribute>
         <attribute name="type">
           <value>reset</value>
@@ -294,14 +300,16 @@
   <define name="fg-show-module">
     <element name="fg-show">
       <attribute name="path">
-          <data type="anyURI"/>
+        <data type="anyURI"/>
       </attribute>
     </element>
   </define>
 
   <define name="fg-alert-module">
     <element name="fg-alert">
-      <attribute name="alert-key"> <text/> </attribute>
+      <attribute name="alert-key">
+        <text/>
+      </attribute>
       <attribute name="alert-type">
         <choice>
           <value>info</value>
@@ -324,24 +332,28 @@
       <optional>
         <choice>
           <attribute name="if-false">
-              <data type="anyURI"/>
+            <data type="anyURI"/>
           </attribute>
           <attribute name="if-true">
-              <data type="anyURI"/>
+            <data type="anyURI"/>
           </attribute>
         </choice>
       </optional>
 
-      <element name="heading"><ref name="FlowConfigModuleInlineContent"/></element>
+      <element name="heading">
+        <ref name="FlowConfigModuleInlineContent"/>
+      </element>
       <oneOrMore>
-        <element name="p"><ref name="FlowConfigModuleInlineContent" /></element>
+        <element name="p">
+          <ref name="FlowConfigModuleInlineContent"/>
+        </element>
       </oneOrMore>
     </element>
   </define>
   <define name="modal-link-module">
     <element name="modal-link">
       <attribute name="for">
-          <data type="anyURI"/>
+        <data type="anyURI"/>
       </attribute>
       <ref name="FlowConfigModuleInlineContent"/>
     </element>
@@ -350,12 +362,14 @@
   <define name="HtmlBlockContent">
     <zeroOrMore>
       <choice>
-        <element name="h1"><ref name="FlowConfigModuleInlineContent"/></element>
+        <element name="h1">
+          <ref name="FlowConfigModuleInlineContent"/>
+        </element>
         <element name="h2">
           <optional>
             <group>
               <attribute name="condition">
-                  <data type="anyURI"/>
+                <data type="anyURI"/>
               </attribute>
               <attribute name="operator">
                 <choice>
@@ -376,7 +390,7 @@
           <optional>
             <group>
               <attribute name="condition">
-                  <data type="anyURI"/>
+                <data type="anyURI"/>
               </attribute>
               <attribute name="operator">
                 <choice>
@@ -397,7 +411,7 @@
           <optional>
             <group>
               <attribute name="condition">
-                  <data type="anyURI"/>
+                <data type="anyURI"/>
               </attribute>
               <attribute name="operator">
                 <choice>
@@ -467,7 +481,7 @@
         </element>
         <element name="table">
           <attribute name="class">
-          <text/>
+            <text/>
           </attribute>
           <ref name="TableContent"/>
         </element>
@@ -491,7 +505,9 @@
     <mixed>
       <zeroOrMore>
         <choice>
-          <element name="strong"><ref name="FlowConfigModuleInlineContent"/></element>
+          <element name="strong">
+            <ref name="FlowConfigModuleInlineContent"/>
+          </element>
           <element name="span">
             <optional>
               <attribute name="class">
@@ -530,7 +546,7 @@
           <ref name="fg-show-module"/>
           <element name="a">
             <attribute name="href"></attribute>
-            <text />
+            <text/>
           </element>
           <ref name="modal-link-module"/>
         </choice>
@@ -540,62 +556,74 @@
 
   <define name="TableContent">
     <optional>
-      <element name="caption"><ref name="FlowConfigModuleInlineContent"/></element>
+      <element name="caption">
+        <ref name="FlowConfigModuleInlineContent"/>
+      </element>
     </optional>
     <choice>
       <!-- Table with explicit sections -->
       <group>
         <optional>
-          <element name="thead"><ref name="TableRowGroup"/></element>
+          <element name="thead">
+            <ref name="TableRowGroup"/>
+          </element>
         </optional>
         <optional>
-          <element name="tfoot"><ref name="TableRowGroup"/></element>
+          <element name="tfoot">
+            <ref name="TableRowGroup"/>
+          </element>
         </optional>
         <zeroOrMore>
-          <element name="tbody"><ref name="TableRowGroup"/></element>
+          <element name="tbody">
+            <ref name="TableRowGroup"/>
+          </element>
         </zeroOrMore>
       </group>
       <!-- Table with direct rows (implicit tbody) -->
       <oneOrMore>
-        <element name="tr"><ref name="TableRow"/></element>
+        <element name="tr">
+          <ref name="TableRow"/>
+        </element>
       </oneOrMore>
     </choice>
   </define>
 
   <define name="TableRowGroup">
     <oneOrMore>
-      <element name="tr"><ref name="TableRow"/></element>
+      <element name="tr">
+        <ref name="TableRow"/>
+      </element>
     </oneOrMore>
   </define>
 
   <define name="TableRow">
-  <oneOrMore>
-    <choice>
-      <element name="th">
-        <optional>
-          <attribute name="scope">
-            <choice>
-              <value>row</value>
-              <value>col</value>
-            </choice>
-          </attribute>
-        </optional>
-        <ref name="TableCellContent"/>
-      </element>
-      <element name="td">
-        <optional>
-          <attribute name="scope">
-            <choice>
-              <value>row</value>
-              <value>col</value>
-            </choice>
-          </attribute>
-        </optional>
-        <ref name="TableCellContent"/>
-      </element>
-    </choice>
-  </oneOrMore>
-</define>
+    <oneOrMore>
+      <choice>
+        <element name="th">
+          <optional>
+            <attribute name="scope">
+              <choice>
+                <value>row</value>
+                <value>col</value>
+              </choice>
+            </attribute>
+          </optional>
+          <ref name="TableCellContent"/>
+        </element>
+        <element name="td">
+          <optional>
+            <attribute name="scope">
+              <choice>
+                <value>row</value>
+                <value>col</value>
+              </choice>
+            </attribute>
+          </optional>
+          <ref name="TableCellContent"/>
+        </element>
+      </choice>
+    </oneOrMore>
+  </define>
 
   <define name="TableCellContent">
     <ref name="FlowConfigModuleInlineContent"/>
