@@ -156,21 +156,21 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
 
   test("test OB3 70120: simple SALT cap") {
     val dataTable = Table(
-      ("stateAndLocalTaxPaymentsTotal", "expectedStateAndLocalTaxPaymentsTotal"),
+      ("stateAndLocalTaxPayments", "expectedStateAndLocalTaxPayments"),
       ("10000", "10000"),
       ("30000", "30000"),
       ("40400", "40400"),
       ("50000", "40400"),
     )
-    forAll(dataTable) { (stateAndLocalTaxPaymentsTotal, expectedStateAndLocalTaxPaymentsTotal) =>
+    forAll(dataTable) { (stateAndLocalTaxPayments, expectedStateAndLocalTaxPayments) =>
       val graph = makeGraphWith(
         factDictionary,
-        Path("/stateAndLocalTaxPayments") -> Dollar(stateAndLocalTaxPaymentsTotal),
+        Path("/stateAndLocalTaxPayments") -> Dollar(stateAndLocalTaxPayments),
       )
 
-      val actualSALT = graph.get("/stateAndLocalTaxPaymentsTotal")
+      val actualSALT = graph.get("/stateAndLocalTaxDeduction")
 
-      assert(actualSALT.value.contains(Dollar(expectedStateAndLocalTaxPaymentsTotal)))
+      assert(actualSALT.value.contains(Dollar(expectedStateAndLocalTaxPayments)))
     }
     println(s"Completed ${dataTable.length} tests for calculating SALT cap")
   }
@@ -217,9 +217,9 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
         Path("/stateAndLocalTaxPayments") -> Dollar(stateAndLocalTaxPayments),
       )
 
-      val actualSALT = graph.get("/stateAndLocalTaxPaymentsTotal")
+      val actualSALTDeduction = graph.get("/stateAndLocalTaxDeduction")
 
-      assert(actualSALT.value.contains(Dollar(expectedStateAndLocalTaxPaymentsTotal)))
+      assert(actualSALTDeduction.value.contains(Dollar(expectedStateAndLocalTaxPaymentsTotal)))
     }
     println(s"Completed ${dataTable.length} tests for calculating phase down")
   }

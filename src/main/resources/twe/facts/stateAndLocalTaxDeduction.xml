@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/saltAGIPhaseOutStart">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>505000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/saltPhaseDownRate">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <!-- Reduce by a rate of $30 for each $100 of AGI exceeding the relevant threshold -->
+        <Rational>30/100</Rational>
+      </Derived>
+    </Fact>
+    <Fact path="/stateAndLocalTaxPaymentsApplicableThreshold">
+      <Name>SALT tax payment applicable threshold</Name>
+      <Description>Maximum amount that can be itemized for SALT deduction</Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dollar>20200</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>40400</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/stateAndLocalTaxPaymentsDeductionFloor">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dollar>5000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>10000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/excessAGIOverPhaseOutThreshold">
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <!-- SALT MAGI = AGI for purposes of TWE              -->
+              <Dependency path="/agi"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/saltAGIPhaseOutStart"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/stateAndLocalTaxPaymentsCapped">
+      <Description>Total of all SALT payment items, up to MFS and non-MFS thresholds</Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/stateAndLocalTaxPayments"/>
+          <Dependency path="/stateAndLocalTaxPaymentsApplicableThreshold"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/phasedDownSALTPayments">
+      <Description>Phased down the SALT cap for taxpayers making above $500,000, at a 30% rate. Floor the phase down to $10k (non-MFS) or $5k (MFS), which is the max high earners can deduct</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/stateAndLocalTaxPaymentsCapped"/>
+            </Minuend>
+            <Subtrahends>
+              <StepwiseMultiply>
+                <Multiplicand>
+                  <Dependency path="/excessAGIOverPhaseOutThreshold"/>
+                </Multiplicand>
+                <Rate>
+                  <Dependency path="/saltPhaseDownRate"/>
+                </Rate>
+              </StepwiseMultiply>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/stateAndLocalTaxApplicableLimitationAmount">
+      <Description> Maximum possible deduction of SALT payment items, with applicable limits and phase downs
+        Applicable limitation amount = max{40K &#x2013; (0.3 * max{MAGI &#x2013; (filing status specific threshold amount), 0 }, 10K}
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <!-- When AGI is over the Phase out start, phase down the amount of SALT payments that can be deducted-->
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/agi"/>
+                </Left>
+                <Right>
+                  <Dependency path="/saltAGIPhaseOutStart"/>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <GreaterOf>
+                <Dependency path="/stateAndLocalTaxPaymentsDeductionFloor"/>
+                <Dependency path="/phasedDownSALTPayments"/>
+              </GreaterOf>
+            </Then>
+          </Case>
+          <Case>
+            <!-- Otherwise, deduct the full SALT payments up to the applicable cap-->
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/stateAndLocalTaxPaymentsCapped"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/stateAndLocalTaxDeduction">
+      <Description>Total deduction of SALT payment items, with applicable limits and phase downs
+        SALT deduction = min{SALT taxes, filing status specific applicable limitation amount}
+      </Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/stateAndLocalTaxPayments"/>
+          <Dependency path="/stateAndLocalTaxApplicableLimitationAmount"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>
