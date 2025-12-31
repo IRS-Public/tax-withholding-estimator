@@ -5,11 +5,11 @@
       class="usa-accordion__button"
       aria-expanded="true"
       th:attr="aria-controls=${gateCondition}+'-'+${gateOperator}"
-      th:utext="#{${gateHeading}}"
+      th:utext="#{${gateId} + .heading}"
     >
     </button>
   </h2>
-  <div th:id="${gateCondition}+'-'+${gateOperator}" class="usa-accordion__content usa-prose" th:utext="#{${gateContent}}">
+  <div th:id="${gateCondition}+'-'+${gateOperator}" class="usa-accordion__content usa-prose" th:utext="#{${gateId} + .content}">
 
   </div>
 </div>

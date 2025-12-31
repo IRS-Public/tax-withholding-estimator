@@ -75,7 +75,15 @@ def generateFlowLocalFile(flowConfig: xml.Node): Unit = {
     (((pageNode \@ "route").split("\\.")(0)) -> (if (hasAlerts) Some(FlowContent(alerts)) else None))
   }.toMap
 
-  val contentJson = Json.obj("flow" -> flowContent.asJson, "fg-sets" -> fgSets.asJson)
+  val sectionGateContent = (flowConfig \\ "fg-section-gate").map { sectionGate =>
+    val heading = (sectionGate \ "heading").head.child.mkString.trim
+    val content = (sectionGate \ "content").head.child.mkString.trim
+    val id = sectionGate \@ "condition" + "-" + sectionGate \@ "operator"
+    (id -> Map("heading" -> heading, "content" -> content))
+  }.toMap
+
+  val contentJson =
+    Json.obj("flow" -> flowContent.asJson, "fg-sets" -> fgSets.asJson, "section-gates" -> sectionGateContent.asJson)
   val contentYaml = Printer(dropNullKeys = true, preserveOrder = true)
     .pretty(contentJson)
 

@@ -209,6 +209,9 @@
           <ref name="fg-set-module"></ref>
         </oneOrMore>
         <zeroOrMore>
+          <ref name="fg-section-gate-module"/>
+        </zeroOrMore>
+        <zeroOrMore>
           <ref name="HtmlBlockContent"/>
         </zeroOrMore>
       </interleave>
@@ -219,7 +222,7 @@
     <element name="fg-section-gate">
       <group>
         <attribute name="condition">
-            <data type="anyURI"/>
+          <data type="anyURI"/>
         </attribute>
         <attribute name="operator">
           <choice>
@@ -235,16 +238,12 @@
           </choice>
         </attribute>
       </group>
-      <element name="fg-section-gate-heading">
-          <attribute name="content-key">
-            <text />
-          </attribute>
-        </element>
-        <element name="fg-section-gate-content">
-          <attribute name="content-key">
-            <text />
-          </attribute>
-        </element>
+      <element name="heading">
+        <ref name="FlowConfigModuleInlineContent"/>
+      </element>
+      <element name="content">
+        <ref name="FlowConfigModuleInlineContent"/>
+      </element>
     </element>
   </define>
 

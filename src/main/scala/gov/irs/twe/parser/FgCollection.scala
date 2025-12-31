@@ -8,6 +8,7 @@ import org.thymeleaf.context.Context
 
 enum FgCollectionNode {
   case fgSet(fact: FgSet)
+  case fgSectionGate(fgSectionGate: FgSectionGate)
   case rawHTML(node: xml.Node)
 }
 
@@ -21,8 +22,9 @@ case class FgCollection(
   def html(templateEngine: TweTemplateEngine): String = {
     val collectionFacts = this.nodes
       .map {
-        case FgCollectionNode.fgSet(x)   => x.html(templateEngine)
-        case FgCollectionNode.rawHTML(x) => x
+        case FgCollectionNode.fgSet(x)         => x.html(templateEngine)
+        case FgCollectionNode.fgSectionGate(x) => x.html(templateEngine)
+        case FgCollectionNode.rawHTML(x)       => x
       }
       .mkString("\n")
 
@@ -50,8 +52,9 @@ object FgCollection {
     val nodes = (node \ "_")
       .map(node =>
         node.label match {
-          case "fg-set" => FgCollectionNode.fgSet(FgSet.parse(node, factDictionary))
-          case _        => FgCollectionNode.rawHTML(node)
+          case "fg-set"          => FgCollectionNode.fgSet(FgSet.parse(node, factDictionary))
+          case "fg-section-gate" => FgCollectionNode.fgSectionGate(FgSectionGate.parse(node))
+          case _                 => FgCollectionNode.rawHTML(node)
         },
       )
       .toList
