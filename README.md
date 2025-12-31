@@ -25,11 +25,14 @@ Additional developer notes and tips for installing LSP integrations and the like
 
 Basic development commands are declared via Makefile.
 
+The following commands are particularly useful for most development flows: 
 * `make` - Build TWE and start a static file server; automatically rebuild on changes
 * `make twe` - Build and output TWE to the `/out` directory
 * `make clean` - Clean all the build artifacts
 * `make format` - Format the Scala and XML code
 * `make ci` - Run CI checks locally
+
+To see a list of _all_ available commands, run `make help`.
 
 ### Updating the vendored copy of the Fact Graph
 
