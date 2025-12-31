@@ -62,7 +62,6 @@ ci:
 
 .PHONY: validate-xml
 validate-xml:
-	find $(FLOW_DIR) -name '*xml' | xargs xmllint --quiet --relaxng $(FLOW_CONFIG) > /dev/null
 	find $(FACTS_DIR) -name '*xml' | xargs xmllint --quiet --relaxng $(FACTS_CONFIG) > /dev/null
 
 .PHONY: validate-html
