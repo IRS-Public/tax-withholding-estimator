@@ -124,7 +124,7 @@
                 <value>true</value>
               </choice>
             </attribute>
-            <text/>
+            <ref name="FlowConfigModuleInlineContent"/>
           </element>
         </zeroOrMore>
       </element>
@@ -333,7 +333,7 @@
         </choice>
       </optional>
 
-      <element name="heading"><text /></element>
+      <element name="heading"><ref name="FlowConfigModuleInlineContent"/></element>
       <oneOrMore>
         <element name="p"><ref name="FlowConfigModuleInlineContent" /></element>
       </oneOrMore>

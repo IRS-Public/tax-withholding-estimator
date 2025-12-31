@@ -35,7 +35,7 @@ object FgAlert {
     val slim = node.attribute("slim").getOrElse("false")
     val icon = node.attribute("icon").getOrElse("true")
 
-    val defaultKeyBase = s"flow.${pageRoute}.alerts.${node \@ "alert-key"}"
+    val defaultKeyBase = s"flow.${pageRoute.split("\\.")(0)}.alerts.${node \@ "alert-key"}"
 
     val headingKey = (node \ "heading").head
       .attribute("content-key")

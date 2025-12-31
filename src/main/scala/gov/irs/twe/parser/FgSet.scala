@@ -31,7 +31,6 @@ case class FgSet(
 
     val contentKey = "fg-sets." + path
     context.setVariable("contentKey", contentKey)
-    context.setVariable("question", this.question)
 
     input match {
       case Input.select(options, optionsPath, _) =>
@@ -49,7 +48,7 @@ case class FgSet(
         }
         context.setVariable("options", javaOptions.asJava)
         context.setVariable("optionsPath", optionsPath)
-      case Input.boolean(_, _, options) =>
+      case Input.boolean(_, options) =>
         if (options.nonEmpty) {
           val trueOption = options.find(_.value == "true")
           val falseOption = options.find(_.value == "false")
@@ -86,11 +85,11 @@ object FgSet {
     validateFact(path, factDictionary)
     val typeNode = factDictionary.getDefinition(path).typeNode
     val inputAndNodeTypeMismatch = input match {
-      case Input.text(_)          => typeNode != "StringNode"
-      case Input.int(_)           => typeNode != "IntNode"
-      case Input.boolean(_, _, _) => typeNode != "BooleanNode"
-      case Input.dollar(_)        => typeNode != "DollarNode"
-      case Input.date(_, _)       => typeNode != "DayNode"
+      case Input.text(_)       => typeNode != "StringNode"
+      case Input.int(_)        => typeNode != "IntNode"
+      case Input.boolean(_, _) => typeNode != "BooleanNode"
+      case Input.dollar(_)     => typeNode != "DollarNode"
+      case Input.date(_)       => typeNode != "DayNode"
       // We could make this more strict
       case Input.select(_, _, _)         => typeNode != "EnumNode"
       case Input.enumInput(_, _, _)      => typeNode != "EnumNode"

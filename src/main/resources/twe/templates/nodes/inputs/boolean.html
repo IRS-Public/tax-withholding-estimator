@@ -1,6 +1,6 @@
 <fieldset class="usa-fieldset" th:attr="aria-describedby=${hintId}">
     <legend class="usa-legend twe-question">
-        <div th:text="#{${contentKey} + .question}" th:remove="tag"></div>
+        <div th:utext="#{${contentKey} + .question}" th:remove="tag"></div>
         <span th:if="${!optional}" aria-hidden="true" class="usa-hint" th:text="#{components.fg-set.required}"></span>
     </legend>
     <div th:replace="nodes/hint"></div>
@@ -14,11 +14,11 @@
                aria-invalid="false"/>
         <label th:for="${path}+'-yes'"
                class="usa-radio__label"
-               th:text="${trueLabel != null} ? ${trueLabel} : #{components.boolean.yes}"></label>
+               th:utext="${trueLabel != null} ? #{${contentKey} + .options.true.name} : #{components.boolean.yes}"></label>
     </div>
     <div class="usa-radio">
         <input th:id="${path}+'-no'" class="usa-radio__input"
                type="radio" value="false" th:name="${path}" th:required="${not optional}" aria-invalid="false"/>
-        <label th:for="${path}+'-no'" class="usa-radio__label" th:text="${falseLabel != null} ? ${falseLabel} : #{components.boolean.no}"></label>
+        <label th:for="${path}+'-no'" class="usa-radio__label" th:utext="${falseLabel != null} ? #{${contentKey} + .options.false.name} : #{components.boolean.no}"></label>
     </div>
 </fieldset>

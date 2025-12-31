@@ -526,7 +526,7 @@
               <Dependency path="../isAllYear"/>
             </When>
             <Then>
-              <Day>2026-12-31</Day>
+              <Dependency path="/yearEndDate"/>
             </Then>
           </Case>
           <Case>

@@ -45,10 +45,11 @@ def generateFlowLocalFile(flowConfig: xml.Node): Unit = {
   // TODO: Move these to page groupings
   val fgSets = (flowConfig \\ "fg-set").map { fgSet =>
     val path = fgSet \@ "path"
-    val question = (fgSet \ "question").text.trim
+    // We use mkString to preserve other tags, we trim to remove whitespace and new line characters when tags and content are on differnt lines
+    val question = (fgSet \ "question").head.child.mkString.trim
     val optionsList = (fgSet \\ "option").map { option =>
       val value = option \@ "value"
-      val name = option.text.trim
+      val name = option.head.child.mkString.trim
       val description = None
       (value -> OptionContent(name, description))
     }
@@ -60,7 +61,7 @@ def generateFlowLocalFile(flowConfig: xml.Node): Unit = {
   val flowContent = (flowConfig \\ "page").map { pageNode =>
     val alerts = (pageNode \\ "fg-alert").map { alertNode =>
       val alertKey = (alertNode \@ "alert-key")
-      val headingContent = (alertNode \\ "heading").text.trim()
+      val headingContent = (alertNode \\ "heading").head.child.mkString.trim
       val bodyNodes = FgAlert.getBodyNodes(alertNode)
       var bodyContent = bodyNodes.zipWithIndex
         .map((node, index) => s"${index}-${node.label}" -> node.descendant.mkString(" ").trim)
@@ -71,7 +72,7 @@ def generateFlowLocalFile(flowConfig: xml.Node): Unit = {
 
     val hasAlerts = alerts.nonEmpty
 
-    ((pageNode \@ "route") -> (if (hasAlerts) Some(FlowContent(alerts)) else None))
+    (((pageNode \@ "route").split("\\.")(0)) -> (if (hasAlerts) Some(FlowContent(alerts)) else None))
   }.toMap
 
   val contentJson = Json.obj("flow" -> flowContent.asJson, "fg-sets" -> fgSets.asJson)

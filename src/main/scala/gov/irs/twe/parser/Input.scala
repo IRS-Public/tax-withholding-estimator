@@ -12,28 +12,27 @@ enum Input {
   case select(options: List[HtmlOption], optionsPath: Option[String], optional: Boolean = false)
   case text(optional: Boolean = false)
   case int(optional: Boolean = false)
-  case boolean(question: String, optional: Boolean = false, options: List[HtmlOption] = List.empty)
+  case boolean(optional: Boolean = false, options: List[HtmlOption] = List.empty)
   case enumInput(options: List[HtmlOption], optionsPath: String, optional: Boolean = false)
   case multiEnumInput(options: List[HtmlOption], optionsPath: String, optional: Boolean = false)
   case dollar(optional: Boolean = false)
-  case date(question: String, optional: Boolean = false)
+  case date(optional: Boolean = false)
 
   def typeString: String = this match {
     case Input.text(_)                 => "text"
     case Input.int(_)                  => "int"
-    case Input.boolean(_, _, _)        => "boolean"
+    case Input.boolean(_, _)           => "boolean"
     case Input.enumInput(_, _, _)      => "enum"
     case Input.multiEnumInput(_, _, _) => "multi-enum"
     case Input.dollar(_)               => "dollar"
     case Input.select(_, _, _)         => "select"
-    case Input.date(_, _)              => "date"
+    case Input.date(_)                 => "date"
   }
 }
 
 object Input {
   def extractFromFgSet(node: xml.Node, isOptional: Boolean, factDictionary: FactDictionary): Input = {
     val path = node \@ "path"
-    val question = (node \ "question").text.trim
 
     // Handle the <select> as a special case
     val selectNode = node \ "select"
@@ -65,7 +64,7 @@ object Input {
       case "int"     => Input.int(isOptional)
       case "boolean" =>
         val options = (inputNode \ "option").map { node =>
-          val name = node.text.trim
+          val name = node.mkString.trim
           val value = node \@ "value"
 
           if (value != "true" && value != "false") {
@@ -74,7 +73,7 @@ object Input {
           HtmlOption(name, value)
         }.toList
 
-        Input.boolean(question, isOptional, options)
+        Input.boolean(isOptional, options)
       case "enum" =>
         val optionsPath = inputNode \@ "optionsPath"
         val options = (inputNode \ "option").map { node =>
@@ -98,7 +97,7 @@ object Input {
         }.toList
         Input.multiEnumInput(options, optionsPath, isOptional)
       case "dollar" => Input.dollar(isOptional)
-      case "date"   => Input.date(question, isOptional)
+      case "date"   => Input.date(isOptional)
       case x        => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
     }
   }
