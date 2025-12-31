@@ -43,6 +43,7 @@ case class Section(nodes: List[SectionNode], factDictionary: FactDictionary) {
         case SectionNode.fgCollection(x)  => x.html(templateEngine)
         case SectionNode.fgSet(x)         => x.html(templateEngine)
         case SectionNode.fgSectionGate(x) => x.html(templateEngine)
+        case SectionNode.fgAlert(x)       => x.html(templateEngine)
         case SectionNode.rawHTML(x)       => renderNode(x, templateEngine)
       }.mkString
 
