@@ -19,18 +19,16 @@ case class OptionContent(name: String, description: Option[String])
 case class FgSetContent(question: String, options: Option[Map[String, OptionContent]])
 case class FgAlertContent(heading: String, body: Map[String, String])
 
-def main(args: Array[String]): Unit = {
+@main def main(args: String*): Unit = {
   val flags = Map.from(
-    args.map(flag =>
-      flag match
-        case flagRegex(name) => (name, true)
-        case _               =>
-          throw new Error(s"Unable to recognize parameter: $flag"),
-    ),
+    args.map {
+      case flagRegex(name) => (name, true)
+      case flag            =>
+        throw new Error(s"Unable to recognize parameter: $flag")
+    },
   )
 
   // Processing for handling multiple xml files for facts
-  val dictionaryConfig = FileLoaderHelper.getAllFacts()
 
   // Get flow root
   val flowFile = Source.fromResource(s"$FlowResourceRoot/index.xml").getLines().mkString("\n")
@@ -49,9 +47,9 @@ def main(args: Array[String]): Unit = {
   val resolvedConfig = <FlowConfig>{resolvedChildren}</FlowConfig>
   generateFlowLocalFile(resolvedConfig)
 
-  val factDictionary = FactDictionary.fromXml(dictionaryConfig)
-  val flow = Flow.fromXmlConfig(resolvedConfig, factDictionary)
-  val site = Website.generate(flow, dictionaryConfig, flags)
+  val tweFactDictionary = loadTweFactDictionary()
+  val flow = Flow.fromXmlConfig(resolvedConfig, tweFactDictionary.factDictionary)
+  val site = Website.generate(flow, tweFactDictionary.xml, flags)
 
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"
@@ -91,27 +89,6 @@ def main(args: Array[String]): Unit = {
       println(s"\n${yellow}${bold}⚠${reset} ${bold}Server${reset} ${yellow}already running${reset}")
       println(s"  ${bold}Local:${reset}   ${cyan}${url}${reset}\n")
 }
-
-object FileLoaderHelper:
-  def getAllFacts(): Elem = {
-    val factDirectoryPath = os.pwd / "src" / "main" / "resources" / "twe" / "facts"
-    val factsDirectory = new File(factDirectoryPath.toString)
-    val listOfFiles = if (factsDirectory.exists && factsDirectory.isDirectory) {
-      factsDirectory.listFiles.filter(_.isFile).filter(_.getName.endsWith(".xml")).toList
-    } else {
-      List.empty[File]
-    }
-
-    val facts = new NodeBuffer()
-    for (file <- listOfFiles) {
-      val fileName = file.getName()
-      val factsFile = Source.fromResource(s"twe/facts/$fileName").getLines().mkString("\n")
-      val factDictionary = xml.XML.loadString(factsFile)
-      val factNodes = factDictionary \ "Facts" \ "_"
-      facts ++= factNodes
-    }
-    <FactDictionaryModule><Facts>{facts}</Facts></FactDictionaryModule>
-  }
 
 def resolveModule(node: xml.Node): xml.NodeSeq = {
   val src = node \@ "src"

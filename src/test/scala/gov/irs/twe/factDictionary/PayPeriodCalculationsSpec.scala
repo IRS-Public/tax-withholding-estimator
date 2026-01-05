@@ -7,7 +7,6 @@ import gov.irs.factgraph.types.Enum
 import gov.irs.factgraph.types.Rational
 import gov.irs.factgraph.FactDictionaryForTests
 import gov.irs.factgraph.Path
-import gov.irs.twe.FileLoaderHelper
 import java.util.UUID
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.TableDrivenPropertyChecks

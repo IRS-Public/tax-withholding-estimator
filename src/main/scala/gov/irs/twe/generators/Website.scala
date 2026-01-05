@@ -54,7 +54,7 @@ case class Website(pages: List[WebsitePage], factDictionary: xml.Elem) {
 object Website {
   private val templateEngine = new TweTemplateEngine()
 
-  def generate(flow: Flow, dictionaryConfig: xml.Elem, flags: Map[String, Boolean]): Website = {
+  def generate(flow: Flow, dictionaryXml: xml.Elem, flags: Map[String, Boolean]): Website = {
     val templateEngine = new TweTemplateEngine()
     val navPages = flow.pages.filter(p => p.exclude == false)
     val excludedPageLength = flow.pages.length - navPages.size
@@ -94,9 +94,6 @@ object Website {
       WebsitePage(page.route, content)
     }
 
-    Website(
-      AllScreens.generate(flow, dictionaryConfig) +: pages,
-      dictionaryConfig,
-    )
+    Website(AllScreens.generate(flow) +: pages, dictionaryXml)
   }
 }

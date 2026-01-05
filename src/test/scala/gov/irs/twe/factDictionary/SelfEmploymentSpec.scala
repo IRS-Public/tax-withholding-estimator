@@ -4,7 +4,6 @@ import gov.irs.factgraph.types.Dollar
 import gov.irs.factgraph.types.Enum
 import gov.irs.factgraph.FactDictionaryForTests
 import gov.irs.factgraph.Path
-import gov.irs.twe.FileLoaderHelper
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.TableDrivenPropertyChecks
 

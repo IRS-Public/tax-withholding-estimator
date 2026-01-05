@@ -6,7 +6,6 @@ import io.circe.generic.auto.deriveEncoder
 import io.circe.syntax.*
 import io.circe.yaml.Printer
 import scala.io.Source
-import scala.util.matching.Regex
 
 // This is in /target for now, but I will figure out an idiomatic place for it to go where we can commit it.
 // It isn't in /resources because that triggers a rebuild loop.

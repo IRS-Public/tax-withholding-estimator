@@ -6,7 +6,6 @@ import gov.irs.factgraph.types.Dollar
 import gov.irs.factgraph.types.Enum
 import gov.irs.factgraph.FactDictionaryForTests
 import gov.irs.factgraph.Path
-import gov.irs.twe.FileLoaderHelper
 import org.scalatest.exceptions.DuplicateTestNameException
 import org.scalatest.funspec.AnyFunSpec
 import scala.math.Numeric.Implicits.infixNumericOps

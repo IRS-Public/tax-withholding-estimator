@@ -29,7 +29,7 @@ case class AllScreens(pages: List[WebsitePage], factDictionary: xml.Elem) {
 }
 
 object AllScreens {
-  def generate(flow: Flow, dictionaryConfig: xml.Elem): WebsitePage = {
+  def generate(flow: Flow): WebsitePage = {
     val templateEngine = new TweTemplateEngine()
     val context = new Context()
     context.setVariable("title", "All Screens")

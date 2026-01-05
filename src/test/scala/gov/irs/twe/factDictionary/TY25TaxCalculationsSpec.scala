@@ -10,7 +10,6 @@ import gov.irs.factgraph.types.Rational
 import gov.irs.factgraph.FactDictionaryForTests
 import gov.irs.factgraph.Graph
 import gov.irs.factgraph.Path
-import gov.irs.twe.FileLoaderHelper
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.TableDrivenPropertyChecks
 import org.scalatest.Ignore
