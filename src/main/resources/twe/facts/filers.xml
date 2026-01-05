@@ -12,6 +12,48 @@
         <Boolean/>
       </Writable>
     </Fact>
+    <Fact path="/onlyPrimaryFilerIsBlind">
+      <Derived>
+        <All>
+          <Dependency path="/primaryFilerIsBlind"/>
+          <Any>
+            <Not>
+              <IsComplete>
+                <Dependency path="/secondaryFilerIsBlind"/>
+              </IsComplete>
+            </Not>
+            <Not>
+              <Dependency path="/secondaryFilerIsBlind"/>
+            </Not>
+          </Any>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/onlySecondaryFilerIsBlind">
+      <Derived>
+        <All>
+          <Any>
+            <Not>
+              <IsComplete>
+                <Dependency path="/primaryFilerIsBlind"/>
+              </IsComplete>
+            </Not>
+            <Not>
+              <Dependency path="/primaryFilerIsBlind"/>
+            </Not>
+          </Any>
+          <Dependency path="/secondaryFilerIsBlind"/>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/primaryAndSecondaryFilersAreBlind">
+      <Derived>
+        <All>
+          <Dependency path="/primaryFilerIsBlind"/>
+          <Dependency path="/secondaryFilerIsBlind"/>
+        </All>
+      </Derived>
+    </Fact>
     <Fact path="/primaryFilerIsClaimedOnAnotherReturn">
       <Writable>
         <Boolean/>
@@ -21,6 +63,48 @@
       <Writable>
         <Boolean/>
       </Writable>
+    </Fact>
+    <Fact path="/onlyPrimaryFilerIsClaimedOnAnotherReturn">
+      <Derived>
+        <All>
+          <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
+          <Any>
+            <Not>
+              <IsComplete>
+                <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
+              </IsComplete>
+            </Not>
+            <Not>
+              <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
+            </Not>
+          </Any>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/onlySecondaryFilerIsClaimedOnAnotherReturn">
+      <Derived>
+        <All>
+          <Any>
+            <Not>
+              <IsComplete>
+                <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
+              </IsComplete>
+            </Not>
+            <Not>
+              <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
+            </Not>
+          </Any>
+          <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/primaryAndSecondaryFilersAreClaimedOnAnotherReturn">
+      <Derived>
+        <All>
+          <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
+          <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
+        </All>
+      </Derived>
     </Fact>
     <Fact path="/primaryFilerIsClaimingDependents">
       <Writable>
@@ -63,6 +147,48 @@
       <Writable>
         <Boolean/>
       </Writable>
+    </Fact>
+    <Fact path="/onlyPrimaryFilerAge65OrOlder">
+      <Derived>
+        <All>
+          <Dependency path="/primaryFilerAge65OrOlder"/>
+          <Any>
+            <Not>
+              <IsComplete>
+                <Dependency path="/secondaryFilerAge65OrOlder"/>
+              </IsComplete>
+            </Not>
+            <Not>
+              <Dependency path="/secondaryFilerAge65OrOlder"/>
+            </Not>
+          </Any>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/onlySecondaryFilerAge65OrOlder">
+      <Derived>
+        <All>
+          <Any>
+            <Not>
+              <IsComplete>
+                <Dependency path="/primaryFilerAge65OrOlder"/>
+              </IsComplete>
+            </Not>
+            <Not>
+              <Dependency path="/primaryFilerAge65OrOlder"/>
+            </Not>
+          </Any>
+          <Dependency path="/secondaryFilerAge65OrOlder"/>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/primaryAndSecondaryFilersAge65OrOlder">
+      <Derived>
+        <All>
+          <Dependency path="/primaryFilerAge65OrOlder"/>
+          <Dependency path="/secondaryFilerAge65OrOlder"/>
+        </All>
+      </Derived>
     </Fact>
     <Fact path="/primaryFilerAge25OrOlderForEitc">
       <Description>Whether the primary filer will greater than or equal to 25 at the end of the tax year.</Description>

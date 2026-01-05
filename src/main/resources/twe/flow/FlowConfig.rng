@@ -230,6 +230,8 @@
           <choice>
             <value>isTrue</value>
             <value>isFalse</value>
+            <value>isZero</value>
+            <value>isGreaterThanZero</value>
             <value>isIncomplete</value>
           </choice>
         </attribute>
@@ -375,6 +377,9 @@
                 <choice>
                   <value>isTrue</value>
                   <value>isFalse</value>
+                  <value>isZero</value>
+                  <value>isGreaterThanZero</value>
+                  <value>isIncomplete</value>
                 </choice>
               </attribute>
             </group>
@@ -396,6 +401,9 @@
                 <choice>
                   <value>isTrue</value>
                   <value>isFalse</value>
+                  <value>isZero</value>
+                  <value>isGreaterThanZero</value>
+                  <value>isIncomplete</value>
                 </choice>
               </attribute>
             </group>
@@ -417,6 +425,9 @@
                 <choice>
                   <value>isTrue</value>
                   <value>isFalse</value>
+                  <value>isZero</value>
+                  <value>isGreaterThanZero</value>
+                  <value>isIncomplete</value>
                 </choice>
               </attribute>
             </group>

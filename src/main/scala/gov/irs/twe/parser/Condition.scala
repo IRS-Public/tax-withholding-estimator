@@ -9,6 +9,10 @@ import gov.irs.twe.parser.Utils.validateFact
 enum ConditionOperator {
   case isTrue
   case isFalse
+  case isTrueAndComplete
+  case isZero
+  case isGreaterThanZero
+  case isIncomplete
 }
 
 case class Condition(path: String, operator: ConditionOperator)

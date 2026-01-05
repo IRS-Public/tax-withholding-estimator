@@ -100,10 +100,20 @@
         <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpenses"/>
       </Derived>
     </Fact>
+    <Fact path="/medicalAndDentalExpensesRate">
+      <Derived>
+        <Rational>75/1000</Rational>
+      </Derived>
+    </Fact>
     <Fact path="/medicalAndDentalExpensesFloor">
       <TaxYear>2026</TaxYear>
       <Derived>
-        <Rational>75/1000</Rational>
+        <Round>
+          <Multiply>
+            <Dependency path="/medicalAndDentalExpensesRate"/>
+            <Dependency path="/agi"/>
+          </Multiply>
+        </Round>
       </Derived>
     </Fact>
     <Fact path="/medicalAndDentalExpensesTotal">
@@ -119,12 +129,7 @@
               <Dependency path="/medicalAndDentalExpenses"/>
             </Minuend>
             <Subtrahends>
-              <Round>
-                <Multiply>
-                  <Dependency path="/agi"/>
-                  <Dependency path="/medicalAndDentalExpensesFloor"/>
-                </Multiply>
-              </Round>
+              <Dependency path="/medicalAndDentalExpensesFloor"/>
             </Subtrahends>
           </Subtract>
         </GreaterOf>

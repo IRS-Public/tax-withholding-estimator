@@ -51,12 +51,11 @@
     <Fact path="/wantsItemizedDeduction">
       <Name>Wants itemized deduction</Name>
       <Description>Will the taxpayer take the itemized deduction?</Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-      <Placeholder>
-        <False/>
-      </Placeholder>
+      <Derived>
+        <Not>
+          <Dependency path="/wantsStandardDeduction"/>
+        </Not>
+      </Derived>
     </Fact>
     <Fact path="/standardOrItemizedDeduction">
       <Name>Standard or itemized deductions</Name>

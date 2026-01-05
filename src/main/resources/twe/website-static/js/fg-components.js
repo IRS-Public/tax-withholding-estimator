@@ -645,11 +645,17 @@ function checkCondition (condition, operator) {
   const value = factGraph.get(condition)
 
   switch (operator) {
-    // We need to expliticly check for true/false to account for incompletes
+    // We need to explicitly check for true/false to account for incompletes
     case 'isTrue': {
       return value.hasValue && (value.get === true)
     } case 'isFalse': {
       return value.hasValue && (value.get === false)
+    } case 'isTrueAndComplete': {
+      return value.complete === true && value.hasValue && (value.get === true)
+    } case 'isZero': {
+      return value.hasValue && (value.get === 0)
+    } case 'isGreaterThanZero': {
+      return value.hasValue && (value.get > 0)
     } case 'isIncomplete': {
       return value.complete === false
     } default: {
