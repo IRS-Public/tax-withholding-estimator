@@ -975,7 +975,7 @@
     </Fact>
     <Fact path="/filersOver25AgeTestForEitcWithNoQC">
       <Name>TP(s) over 25 age test for EITC with no QC</Name>
-      <Description>TP(s) age test for EITC with no qualifying children if they are greater or equal to 25 at the end of the tax year</Description>
+      <Description>TP(s) are eligible EITC with no qualifying children if they are greater or equal to 25 at the end of the tax year</Description>
       <Derived>
         <Switch>
           <Case>
@@ -984,14 +984,10 @@
               <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Any>
-                <Not>
-                  <Dependency path="/primaryFilerAge25OrOlderForEitc"/>
-                </Not>
-                <Not>
-                  <Dependency path="/secondaryFilerAge25OrOlderForEitc"/>
-                </Not>
-              </Any>
+              <All>
+                <Dependency path="/primaryFilerAge25OrOlderForEitc"/>
+                <Dependency path="/secondaryFilerAge25OrOlderForEitc"/>
+              </All>
             </Then>
           </Case>
           <Case>
@@ -1000,9 +996,7 @@
               <True/>
             </When>
             <Then>
-              <Not>
-                <Dependency path="/primaryFilerAge25OrOlderForEitc"/>
-              </Not>
+              <Dependency path="/primaryFilerAge25OrOlderForEitc"/>
             </Then>
           </Case>
         </Switch>
