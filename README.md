@@ -25,7 +25,7 @@ Additional developer notes and tips for installing LSP integrations and the like
 
 Basic development commands are declared via Makefile.
 
-The following commands are particularly useful for most development flows: 
+The following commands are particularly useful for most development flows:
 * `make` - Build TWE and start a static file server; automatically rebuild on changes
 * `make twe` - Build and output TWE to the `/out` directory
 * `make clean` - Clean all the build artifacts
@@ -41,10 +41,10 @@ The Fact Graph is used in two places: first as a declared Scala dependency in `b
 If you make changes to the Fact Graph, and you want to propagate those changes, you need to do two things:
 
 1. Run `make publish` in the Fact Graph repo
-   
-   Note: Scala.js compilation occurs during `make publish`. It can produce slightly different output even with identical source code. As a result, the vendored files (`factgraph-3.1.0.js` and `main.mjs.map`) may change after running this command even if no Fact Graph source was modified. If you haven't made any Fact Graph changes, these don't need to be committed. 
+
+   Note: Scala.js compilation occurs during `make publish`. It can produce slightly different output even with identical source code. As a result, the vendored files (`factgraph-3.1.0.js` and `main.mjs.map`) may change after running this command even if no Fact Graph source was modified. If you haven't made any Fact Graph changes, these don't need to be committed.
 2. Run `make copy-fg` in this repo
-   
+
    Note: `make copy-fg` target assumes that the Fact Graph repo is located in `../fact-graph`.
 
 ## Audit Mode

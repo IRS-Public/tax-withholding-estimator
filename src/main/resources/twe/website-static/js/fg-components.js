@@ -477,7 +477,7 @@ class FgCollection extends HTMLElement {
   }
 
   addItem (id) {
-    const collectionId = id ?? crypto.randomUUID()
+    const collectionId = id ?? generateUUID()
 
     if (!id) {
       factGraph.addToCollection(this.path, collectionId)
@@ -765,3 +765,17 @@ window.handleSectionComplete = handleSectionComplete
 // Add show/hide functionality to all elements
 document.addEventListener('fg-update', showOrHideAllElements)
 showOrHideAllElements()
+
+// Generate UUID function for collections with fallback
+// in non-secure contexts, where crypto.randomUUID is not available,
+// for example, local development on a Windows VM
+// See: https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID
+function generateUUID () {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID()
+  }
+  // 0 is the placeholder, 1 and - are static
+  return '00000000-0000-1000-0000-000000000000'.replace(/0/g, () => {
+    return (Math.random() * 16 | 0).toString(16)
+  })
+}

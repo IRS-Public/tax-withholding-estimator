@@ -104,6 +104,30 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 ```
 
+## Running on a Windows VM (Parallels)
+
+`crypto.randomUUID` has wide support but requires secure contexts in some browsers or operating systems ([more on crypto.randomUUID](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID)). This is the case with doing local development with Windows on a virtual machine.
+
+Running the app in Windows on a VM also requires a few extra steps involving a `socat` relay.
+
+**1. Install socat with homebrew**
+```bash
+brew install socat
+```
+
+**2. Run the app**
+In a terminal window, run the app as you normally would with `make`
+
+**3. Set up the proxy in project root folder in another terminal window**
+```bash
+socat TCP-LISTEN:3000,bind=10.211.55.2,fork TCP:127.0.0.1:3000
+```
+
+**4. Visit this URL in Windows on Parallels**
+```
+http://10.211.55.2:3000/twe
+```
+
 ## Pre-commit Hooks
 
 Install and initialize pre-commit with
