@@ -1,7 +1,6 @@
 package gov.irs.twe.factDictionary
 
-import gov.irs.factgraph.types.{ Dollar, Dollar as status, Enum }
-import gov.irs.factgraph.FactDictionaryForTests
+import gov.irs.factgraph.types.{ Dollar, Enum }
 import gov.irs.factgraph.Path
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.TableDrivenPropertyChecks

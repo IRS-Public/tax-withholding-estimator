@@ -5,10 +5,8 @@ import gov.irs.factgraph.{ types, FactDefinition, Graph }
 import gov.irs.factgraph.compnodes.{ EnumNode, MultiEnumNode }
 import gov.irs.factgraph.types.{ Day, Dollar }
 import gov.irs.twe.loadTweFactDictionary
-import java.nio.file.Paths
 
 val INPUT_NAME_COL = 0
-val INPUT_VALUE_COL = 1 // This will end up being dynamic for multi-scenario sheets
 
 val PREVIOUS_SELF_JOB_ID = "9A21FD95-1CE1-4AEE-957C-109443A646BC"
 val PREVIOUS_SPOUSE_JOB_ID = "78CCB2A9-6A0C-4918-B88C-8A1A87CE1FC8"
@@ -19,19 +17,34 @@ val JOB_4_ID = "9141223F-AF3D-42EF-8AA7-3EC454D5CCBC" // Spouse job 2
 val ALL_JOBS = List(PREVIOUS_SELF_JOB_ID, PREVIOUS_SPOUSE_JOB_ID, JOB_1_ID, JOB_2_ID, JOB_3_ID, JOB_4_ID)
 
 @main def convertSpreadsheet(file: String): Unit = {
-  val path = Paths.get(file)
-  val reader = CSVReader.open(path.toFile)
+  val path = os.Path(file)
+  val scenario = loadScenarioFromCsv(path, 1)
+  println(scenario.graph.persister.toJson(2))
+}
+
+case class Scenario(csv: Map[String, String], graph: Graph) {
+  def getFact(path: String): Any = {
+    this.graph.get(path).get
+  }
+
+  def getInput(rowName: String): String = {
+    this.csv(rowName).replace("$", "").strip()
+  }
+}
+
+def loadScenarioFromCsv(path: os.ReadablePath, scenarioColumn: Integer): Scenario = {
+  val reader = CSVReader.open(path.toString)
   val rows = reader.all()
 
-  val spreadsheetData: Map[String, String] = rows.foldLeft(Map()) { (dict, row) =>
+  val csv: Map[String, String] = rows.foldLeft(Map()) { (dict, row) =>
     val inputName = row(INPUT_NAME_COL)
-    val inputValue = row(INPUT_VALUE_COL)
+    val inputValue = row(scenarioColumn)
     dict + (inputName -> inputValue)
   }
   reader.close()
 
   // Get each row of the scenario and map it to a specific fact
-  val spreadsheetFacts = SHEET_ROW_FACT_MAPPINGS.map((sheetKey, factName) => factName -> spreadsheetData(sheetKey))
+  val spreadsheetFacts = SHEET_ROW_FACT_MAPPINGS.map((sheetKey, factName) => factName -> csv(sheetKey))
 
   // Create the fact graph
   val tweFactDictionary = loadTweFactDictionary()
@@ -72,7 +85,7 @@ val ALL_JOBS = List(PREVIOUS_SELF_JOB_ID, PREVIOUS_SPOUSE_JOB_ID, JOB_1_ID, JOB_
       case "BooleanNode" => convertBoolean(value)
       case "DayNode"     => convertDate(value)
       case "EnumNode"    => convertEnum(value, definition)
-      case "DollarNode"  => Dollar(value.replace("$", ""))
+      case "DollarNode"  => Dollar(value.replace("$", "").strip())
       case "IntNode"     => value.toInt
       case _             => value
     }
@@ -85,9 +98,11 @@ val ALL_JOBS = List(PREVIOUS_SELF_JOB_ID, PREVIOUS_SPOUSE_JOB_ID, JOB_1_ID, JOB_
   factGraph.set("/totalTaxesPaidOnSocialSecurityIncome", Dollar(0))
 
   // Calculated facts
-  factGraph.set("/primaryFilerAge25OrOlderForEitc", spreadsheetData("User Age").toInt >= 25)
-  val spouseAge = spreadsheetData("Spouse Age").toInt
-  if (spouseAge > 0) { factGraph.set("/secondaryFilerAge25OrOlderForEitc", spouseAge >= 25) }
+  factGraph.set("/primaryFilerAge25OrOlderForEitc", csv("User Age").toInt >= 25)
+  val spouseAge = csv("Spouse Age").toInt
+  if (spouseAge > 0) {
+    factGraph.set("/secondaryFilerAge25OrOlderForEitc", spouseAge >= 25)
+  }
 
   // Remove jobs that have no income
   ALL_JOBS.foreach(jobId => {
@@ -98,7 +113,7 @@ val ALL_JOBS = List(PREVIOUS_SELF_JOB_ID, PREVIOUS_SPOUSE_JOB_ID, JOB_1_ID, JOB_
   })
 
   factGraph.save()
-  println(factGraph.persister.toJson(2))
+  Scenario(csv, factGraph)
 }
 
 def convertBoolean(raw: String): Boolean = {
