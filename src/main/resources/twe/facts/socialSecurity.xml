@@ -2,10 +2,146 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/totalTaxesPaidOnSocialSecurityIncome">
+    <Fact path="/socialSecuritySources">
+      <Writable>
+        <Collection/>
+      </Writable>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/isAllYear">
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/flowIsAllYearComplete">
+      <Derived>
+        <IsComplete>
+          <Dependency path="../isAllYear"/>
+        </IsComplete>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/startDate">
+      <Override>
+        <Condition>
+          <Dependency path="../isAllYear"/>
+        </Condition>
+        <Default>
+          <Dependency path="/yearStartDate"/>
+        </Default>
+      </Override>
+      <Writable>
+        <Day/>
+        <Limit type="Max">
+          <Dependency path="/yearEndDate"/>
+        </Limit>
+      </Writable>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/endDate">
+      <Override>
+        <Condition>
+          <Dependency path="../isAllYear"/>
+        </Condition>
+        <Default>
+          <Dependency path="/yearEndDate"/>
+        </Default>
+      </Override>
+      <Writable>
+        <Day/>
+        <Limit type="Max">
+          <Dependency path="/yearEndDate"/>
+        </Limit>
+      </Writable>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/monthlyIncome">
       <Writable>
         <Dollar/>
       </Writable>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/allFederalTaxesAlreadyCollected">
+      <Description>If all federal taxes have already been collected for this income source</Description>
+      <Derived>
+        <GreaterThanOrEqual>
+          <Left>
+            <Dependency path="/today"/>
+          </Left>
+          <Right>
+            <Dependency path="../endDate"/>
+          </Right>
+        </GreaterThanOrEqual>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/flowIsAllYearCompleteAndTaxesStillBeingCollected">
+      <Derived>
+        <All>
+          <Dependency path="../flowIsAllYearComplete"/>
+          <Not>
+            <Dependency path="../allFederalTaxesAlreadyCollected"/>
+          </Not>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/federalTaxesWithheldThisPayment">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/federalTaxesWithheldYtd">
+      <Writable>
+        <Dollar/>
+      </Writable>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/totalIncome">
+      <Derived>
+        <Multiply>
+          <Dependency path="../monthlyIncome"/>
+          <PayrollMonthsBetween>
+            <StartDate>
+              <Dependency path="../startDate"/>
+            </StartDate>
+            <EndDate>
+              <Dependency path="../endDate"/>
+            </EndDate>
+          </PayrollMonthsBetween>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/totalFederalTaxesPaid">
+      <Derived>
+        <Add>
+          <Dependency path="../federalTaxesWithheldYtd"/>
+          <Multiply>
+            <Dependency path="../federalTaxesWithheldThisPayment"/>
+            <PayrollMonthsBetween>
+              <StartDate>
+                <GreaterOf>
+                  <Dependency path="../startDate"/>
+                  <Dependency path="/today"/>
+                </GreaterOf>
+              </StartDate>
+              <EndDate>
+                <Dependency path="../endDate"/>
+              </EndDate>
+            </PayrollMonthsBetween>
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecurityBenefitsIncome">
+      <Description>Gross SSA Income from forms SSA-1099 and RRB-1099</Description>
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/socialSecuritySources/*/totalIncome"/>
+        </CollectionSum>
+      </Derived>
+    </Fact>
+    <Fact path="/totalTaxesPaidOnSocialSecurityIncome">
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/socialSecuritySources/*/totalFederalTaxesPaid"/>
+        </CollectionSum>
+      </Derived>
     </Fact>
     <Fact path="/netSocialSecurityBenefitsIncome">
       <Derived>
@@ -20,7 +156,7 @@
       </Derived>
     </Fact>
     <Fact path="/pub915Worksheet1Line1">
-      <Description>Total amount from box 5 of ALL your Forms SSA-1099 and RRB-1099. Form 1040  line 6a.  Pub 915 Worksheet 1, Line 1.</Description>
+      <Description>Total amount from box 5 of ALL your Forms SSA-1099 and RRB-1099. Form 1040 line 6a. Pub 915 Worksheet 1, Line 1.</Description>
       <Derived>
         <Dependency path="/netSocialSecurityBenefitsIncome"/>
       </Derived>

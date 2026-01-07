@@ -146,6 +146,9 @@
     <optional>
       <ref name="FloorContent"></ref>
     </optional>
+    <optional>
+      <ref name="PayrollMonthsBetweenContent"></ref>
+    </optional>
   </define>
   <define name="LogicalContent">
     <optional>
@@ -356,6 +359,9 @@
     </optional>
     <optional>
       <ref name="FloorContent"></ref>
+    </optional>
+    <optional>
+      <ref name="PayrollMonthsBetweenContent"/>
     </optional>
   </define>
   <define name="DerivedContent">
@@ -711,6 +717,32 @@
       </choice>
     </element>
   </define>
+  <define name="PayrollMonthsBetweenContent">
+    <element name="PayrollMonthsBetween">
+      <ref name="StartDateContent"/>
+      <ref name="EndDateContent"/>
+    </element>
+  </define>
+  <define name="StartDateContent">
+    <element name="StartDate">
+      <choice>
+        <ref name="DayContent"/>
+        <ref name="DependencyContent"/>
+        <ref name="SwitchContent"/>
+        <ref name="CalculationContent"/>
+      </choice>
+    </element>
+  </define>
+  <define name="EndDateContent">
+    <element name="EndDate">
+      <choice>
+        <ref name="DayContent"/>
+        <ref name="DependencyContent"/>
+        <ref name="SwitchContent"/>
+        <ref name="CalculationContent"/>
+      </choice>
+    </element>
+  </define>
   <define name="LastDayOfMonthContent">
     <element name="LastDayOfMonth">
       <choice>
@@ -935,7 +967,7 @@
   <define name="RateContent">
     <element name="Rate">
       <optional>
-      <ref name="RationalContent"/>
+        <ref name="RationalContent"/>
       </optional>
       <optional>
         <ref name="DependencyContent"/>

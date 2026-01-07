@@ -177,15 +177,6 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/socialSecurityBenefitsIncome">
-      <Description> Gross SSA Income from forms SSA-1099 and RRB-1099</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
     <Fact path="/rentalIncome">
       <Description>Schedule E Line 21</Description>
       <Writable>

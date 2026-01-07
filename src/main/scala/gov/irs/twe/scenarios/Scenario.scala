@@ -93,9 +93,7 @@ def loadScenarioFromCsv(path: os.ReadablePath, scenarioColumn: Integer): Scenari
     factGraph.set(factPath, convertedValue)
   }
 
-  // Manually setting social security until it's implemented
-  factGraph.set("/socialSecurityBenefitsIncome", Dollar(0))
-  factGraph.set("/totalTaxesPaidOnSocialSecurityIncome", Dollar(0))
+  // TODO: Handle setting social security once implementation is finalized (https://github.com/IRSDigitalService/tax-withholding-estimator/issues/1054)
 
   // Calculated facts
   factGraph.set("/primaryFilerAge25OrOlderForEitc", csv("User Age").toInt >= 25)

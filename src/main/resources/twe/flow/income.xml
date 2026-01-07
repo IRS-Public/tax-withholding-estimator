@@ -181,6 +181,59 @@
           </select>
         </fg-set>
       </fg-collection>
+      <h2>Social Security income</h2>
+      <p>Enter any Social Security income <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to receive in <fg-show path="/taxYear"/>. </p>
+      <p>
+        <modal-link for="modal-what-counts-social-security">What counts as Social Security income?</modal-link>
+      </p>
+      <fg-collection path="/socialSecuritySources" item-name="Social Security income">
+        <h3>Timing</h3>
+        <fg-set path="/socialSecuritySources/*/isAllYear">
+          <question>Do <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to have this income all year or only part of the year?</question>
+          <input type="boolean">
+            <option value="true">All year (January 1–December 31, <fg-show path="/taxYear"/>)</option>
+            <option value="false">Part of the year</option>
+          </input>
+        </fg-set>
+        <fg-set path="/socialSecuritySources/*/startDate" if-false="/socialSecuritySources/*/isAllYear">
+          <question>What’s the first day in <fg-show path="/taxYear"/> <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to receive Social Security?</question>
+          <input type="date"/>
+          <hint>It’s okay to estimate.</hint>
+        </fg-set>
+        <fg-set path="/socialSecuritySources/*/endDate" if-false="/socialSecuritySources/*/isAllYear">
+          <question>What’s the last day in <fg-show path="/taxYear"/> <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to receive Social Security?</question>
+          <input type="date"/>
+          <hint>It’s okay to estimate.</hint>
+        </fg-set>
+        <fg-section-gate condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isFalse" state="pending">
+          <heading>Social Security details</heading>
+          <content>Once we know more about your income, we’ll ask you additional questions.</content>
+        </fg-section-gate>
+        <h3 class="form-actions" condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Income</h3>
+        <p condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Use the most recent Social Security statement to enter the following information.</p>
+        <fg-set path="/socialSecuritySources/*/monthlyIncome" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
+          <question>What’s the total amount of Social Security benefits <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> receive each month?</question>
+          <input type="dollar"/>
+        </fg-set>
+        <h3 class="form-actions" condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Federal taxes</h3>
+        <p condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Use the most recent Social Security statement to enter the following information.</p>
+        <fg-set path="/socialSecuritySources/*/federalTaxesWithheldThisPayment" if-true="/socialSecuritySources/*/flowIsAllYearCompleteAndTaxesStillBeingCollected">
+          <question>How much federal tax has been withheld (paid) for this Social Security payment?</question>
+          <input type="dollar"/>
+          <hint>Don’t include state and local taxes or Medicare.</hint>
+        </fg-set>
+        <p>
+          <modal-link for="modal-fed-tax-social-security-pay-period">Where do I find federal taxes per pay period?</modal-link>
+        </p>
+        <fg-set path="/socialSecuritySources/*/federalTaxesWithheldYtd" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
+          <question>How much federal tax has been withheld (paid) year-to-date?</question>
+          <input type="dollar"/>
+          <hint>Don’t include state and local taxes or Medicare.</hint>
+        </fg-set>
+        <p>
+          <modal-link for="modal-fed-social-security-tax-ytd">Where do I find federal taxes year-to-date?</modal-link>
+        </p>
+      </fg-collection>
       <h2>Trump Account Distribution</h2>
       <fg-set path="/trumpAccountDistribution">
         <question>Distributions from Trump Account</question>
@@ -284,25 +337,43 @@
         <input type="dollar"/>
       </fg-set>
       <h2>SSA income from Forms SSA-1099 and RRB-1099</h2>
-      <fg-set path="/socialSecurityBenefitsIncome">
-        <question>
-          How much Social Security Benefits you received this year? (total amount from forms
-          SSA-1099 and RRB-1099)
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <fg-set path="/totalTaxesPaidOnSocialSecurityIncome">
-        <question>
-          How much federal income tax will be withheld for Social Security Benefits this year? (total amount from forms
-          SSA-1099 and RRB-1099)
-        </question>
-        <input type="dollar"/>
-      </fg-set>
       <h2>Estimated taxes paid</h2>
       <fg-set path="/totalEstimatedTaxesPaid">
         <question>If you [and your spouse] made any estimated tax payments this year, you may deduct those. This does not include taxes withheld from your paycheck .</question>
         <input type="dollar"/>
       </fg-set>
     </section>
+
+    <modal-dialog id="modal-what-counts-social-security">
+      <modal-heading>What counts as Social Security income?</modal-heading>
+      <modal-content>
+        <p>Social security is benefit payments made to retirees, people with disabilities, and their families through the Social Security Administration (SSA). To report this income at the end of the year, the SSA sends Form SSA-1099.</p>
+        <p><strong>Don’t include</strong> Supplemental Security Income (SSI) payments. The estimator doesn’t currently support SSI payments.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-fed-tax-social-security-pay-period">
+      <modal-heading>Where do I find federal taxes per pay period?</modal-heading>
+      <modal-content>
+        <p>These are amounts withheld, or taken out of a Social Security payment to pay for federal taxes throughout the year.</p>
+        <p>Where to find the federal taxes paid <strong>per pay period</strong>:</p>
+        <ul>
+          <li>Log in to your <a target="_blank" href="https://www.ssa.gov/myaccount/" class="usa-link">“my Social Security” account<span class="usa-sr-only"/></a> to review your Social Security payments and check for the federal taxes paid for each payment (if you elected to withhold federal taxes).</li>
+          <li>You can also call the Social Security Administration at 1-800-772-1213 to request your federal tax withholding amount.</li>
+        </ul>
+        <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, or other amounts withheld.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-fed-social-security-tax-ytd">
+      <modal-heading>Where do I find federal taxes year-to-date?</modal-heading>
+      <modal-content>
+        <p>These are amounts withheld, or taken out of a Social Security payment to pay for federal taxes throughout the year.</p>
+        <p>Where to find the federal taxes paid <strong>year-to-date</strong>:</p>
+        <ul>
+          <li>Log in to your <a target="_blank" href="https://www.ssa.gov/myaccount/" class="usa-link">“my Social Security” account<span class="usa-sr-only"/></a> to review your Social Security payments and check for the federal taxes paid so far for the year (if you elected to withhold federal taxes).</li>
+          <li>You can also call the Social Security Administration at 1-800-772-1213 to request your federal tax withholding amount.</li>
+        </ul>
+        <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, or other amounts withheld.</p>
+      </modal-content>
+    </modal-dialog>
   </page>
 </FlowConfig>
