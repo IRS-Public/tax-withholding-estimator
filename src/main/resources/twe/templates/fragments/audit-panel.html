@@ -1,15 +1,28 @@
 <section id="audit-panel">
 
-  <h2>Date Override</h2>
-  <p>
-  Override date: <fg-show path="/overrideDate"></fg-show>
-  </p>
-  <p>
-  <fg-set path="/overrideDate" inputtype="text" optional="true">
-    <label for="">Set override date (YYYY-MM-DD):</label>
-    <input type="text">
-  </fg-set>
-  </p>
+  <h2>Override Date</h2>
+
+  <div class="usa-form-group">
+    <p>Override date: <fg-show path="/overrideDate"></fg-show></p>
+    <p>
+      <fg-set path="/overrideDate" inputtype="text" optional="true">
+        <label class="usa-label" for="override-date-input">Set override date (YYYY-MM-DD):</label>
+        <input id="override-date-input" type="text">
+      </fg-set>
+    </p>
+  </div>
+
+  <h2>Load Fact Graph</h2>
+
+  <div class="usa-form-group">
+    <label class="usa-label" for="load-fact-graph">Load Fact Graph</label>
+    <textarea class="usa-textarea" id="load-fact-graph"></textarea>
+    <button
+      class="usa-button"
+      onclick="loadFactGraph(document.querySelector('#load-fact-graph').value)">
+      Set
+    </button>
+  </div>
 
   <h2>Fact Graph Audit Panel</h2>
   <div class="usa-form-group">
@@ -40,13 +53,13 @@
       aria-invalid="false">
   </div>
 
-  <div>
-    <button id="add-fact-button"
-            type="button"
-            onclick="trackSelectedFact">
-      Add fact
-    </button>
-  </div>
+  <button
+      class="usa-button"
+      id="add-fact-button"
+      type="button"
+      onclick="trackSelectedFact">
+    Add fact
+  </button>
   <div id="audit-panel__fact-list"></div>
 </section>
 
@@ -66,7 +79,7 @@
 
   <div class="audit-panel__fact__controls">
     <button
-      class="audit-panel__fact__remove"
+      class="usa-button audit-panel__fact__remove"
       onlick="trackSelectedFact()"
       th:text="#{audit.fact.remove}"
       type="button">
