@@ -1,4 +1,4 @@
-<section id="audit-panel">
+<aside id="audit-panel" aria-label="Audit Panel">
 
   <h2>Override Date</h2>
 
@@ -6,8 +6,8 @@
     <p>Override date: <fg-show path="/overrideDate"></fg-show></p>
     <p>
       <fg-set path="/overrideDate" inputtype="text" optional="true">
-        <label class="usa-label" for="override-date-input">Set override date (YYYY-MM-DD):</label>
-        <input id="override-date-input" type="text">
+        <label class="usa-label twe-question" for="override-date-input">Set override date (YYYY-MM-DD):</label>
+        <input id="override-date-input" class="usa-input" type="text">
       </fg-set>
     </p>
   </div>
@@ -61,7 +61,7 @@
     Add fact
   </button>
   <div id="audit-panel__fact-list"></div>
-</section>
+</aside>
 
 <template id="audit-panel__fact">
   <h3 class="audit-panel__fact__path"></h3>
