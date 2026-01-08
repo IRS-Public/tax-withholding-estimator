@@ -2,13 +2,20 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/wantsQBIDeductionOverride">
+    <Fact path="/wantsDerivedQBIDeduction">
       <Writable>
         <Boolean/>
       </Writable>
       <Placeholder>
-        <False/>
+        <True/>
       </Placeholder>
+    </Fact>
+    <Fact path="/wantsQBIDeductionOverride">
+      <Derived>
+        <Not>
+          <Dependency path="/wantsDerivedQBIDeduction"/>
+        </Not>
+      </Derived>
     </Fact>
     <Fact path="/qBIDeductionOverrideAmount">
       <Writable>

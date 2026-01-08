@@ -62,7 +62,7 @@
         </ul>
         <p><a target="_blank" href="https://www.irs.gov/taxtopics/tc503" class="usa-link">Learn more about state and local taxes.</a></p>
       </div>
-      <fg-set path="/stateAndLocalTaxPayments/" if-true="/wantsItemizedDeduction">
+      <fg-set path="/stateAndLocalTaxPayments" if-true="/wantsItemizedDeduction">
         <question>State and local taxes you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
         <input type="dollar" hintId="stateAndLocalTaxPaymentsHintId"/>
         <hint>(max <fg-show path="/stateAndLocalTaxPaymentsApplicableThreshold" />)</hint>
@@ -70,18 +70,18 @@
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">Medical and dental expenses deduction</h4>
       <div condition="/wantsItemizedDeduction" operator="isTrue">
         <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> pay out-of-pocket for medical and dental expenses or premiums, you can deduct the amount of your total expenses over <fg-show path="/medicalAndDentalExpensesFloor" />.</p>
-        <p><a target="_blank" href="https://www.irs.gov/taxtopics/tc502" class="usa-link">Learn more about metical and dental expenses.</a></p>
+        <p><a target="_blank" href="https://www.irs.gov/taxtopics/tc502" class="usa-link">Learn more about medical and dental expenses.</a></p>
       </div>
-      <fg-set path="/medicalAndDentalExpenses/" if-true="/wantsItemizedDeduction">
+      <fg-set path="/medicalAndDentalExpenses" if-true="/wantsItemizedDeduction">
         <question>Medical and dental expenses you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">Gifts to charity</h4>
       <div condition="/wantsItemizedDeduction" operator="isTrue">
         <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> donate to a qualifying organization, you can deduct those donations.</p>
-        <p><a target="_blank" href="https://www.irs.gov/charities-non-profits/charitable-organizations/" class="usa-link">Learn more about metical and dental expenses.</a></p>
+        <p><a target="_blank" href="https://www.irs.gov/charities-non-profits/charitable-organizations/" class="usa-link">Learn more about gifts to charity.</a></p>
       </div>
-      <fg-set path="/charitableContributions/" if-true="/wantsItemizedDeduction">
+      <fg-set path="/charitableContributions" if-true="/wantsItemizedDeduction">
         <question>Gifts to charity you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
@@ -115,7 +115,7 @@
         </ul>
         <p><a target="_blank" href="https://www.irs.gov/publications/p529" class="usa-link">Learn more about other deductions.</a></p>
       </div>
-      <fg-set path="/otherDeductionsTotal/" if-true="/wantsItemizedDeduction">
+      <fg-set path="/otherDeductionsTotal" if-true="/wantsItemizedDeduction">
         <question>Estimated other deductions in <fg-show path="/taxYear" /></question>
         <input type="dollar"/>
       </fg-set>

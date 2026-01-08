@@ -57,6 +57,40 @@
         </Not>
       </Derived>
     </Fact>
+    <Fact path="/standardDeductionWillBeUsed">
+      <Description>
+        Whether the standard deduction is used, based on the taxpayer's choice and net benefit.
+
+        Effectively, the only time we will *not* use the standard deduction is when the taxpayer wants to itemize,
+        and their itemized deduction amount is greater than the standard deduction amount that they are eligible for.
+
+        In all other cases, the standard deduction will be used.
+      </Description>
+      <Derived>
+        <Not>
+          <All>
+            <Dependency path="/wantsItemizedDeduction"/>
+            <GreaterThan>
+              <Left>
+                <Dependency path="/itemizedDeduction"/>
+              </Left>
+              <Right>
+                <Dependency path="/standardDeduction"/>
+              </Right>
+            </GreaterThan>
+          </All>
+        </Not>
+      </Derived>
+    </Fact>
+    <Fact path="/standardDeductionOverridesItemizedDeduction">
+      <Description>Whether the taxpayer wanted to itemize, but the standard deduction was determined to be of greater benefit</Description>
+      <Derived>
+        <All>
+          <Dependency path="/wantsItemizedDeduction"/>
+          <Dependency path="/standardDeductionWillBeUsed"/>
+        </All>
+      </Derived>
+    </Fact>
     <Fact path="/standardOrItemizedDeduction">
       <Name>Standard or itemized deductions</Name>
       <Description>The taxpayer's choice of standard or itemized deductions as reported on line 12
@@ -67,28 +101,18 @@
           <Switch>
             <Case>
               <When>
-                <All>
-                  <Dependency path="/wantsItemizedDeduction"/>
-                  <GreaterThan>
-                    <Left>
-                      <Dependency path="/itemizedDeduction"/>
-                    </Left>
-                    <Right>
-                      <Dependency path="/standardDeduction"/>
-                    </Right>
-                  </GreaterThan>
-                </All>
+                <Dependency path="/standardDeductionWillBeUsed"/>
               </When>
               <Then>
-                <Dependency path="/itemizedDeduction"/>
+                <Dependency path="/standardDeduction"/>
               </Then>
             </Case>
             <Case>
               <When>
-                <Dependency path="/wantsStandardDeduction"/>
+                <True/>
               </When>
               <Then>
-                <Dependency path="/standardDeduction"/>
+                <Dependency path="/itemizedDeduction"/>
               </Then>
             </Case>
           </Switch>

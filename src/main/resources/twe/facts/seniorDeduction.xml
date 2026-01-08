@@ -15,23 +15,33 @@
       </Writable>
     </Fact>
     <Fact path="/couldEitherTaxpayerBeEligibleForSeniorDeduction">
-      <Description>Secondary taxpayer self-certifies their eligibility for the senior deduction</Description>
+      <Description>Either the primary or secondary taxpayer could be eligible for the senior deduction</Description>
       <Derived>
         <Any>
-          <Dependency path="/primaryFilerAge65OrOlder"/>
-          <All>
-            <Dependency path="/isFilingStatusMFJ"/>
-            <Dependency path="/secondaryFilerAge65OrOlder"/>
-          </All>
+          <Dependency path="/couldPrimaryTaxpayerBeEligibleForSeniorDeduction"/>
+          <Dependency path="/couldSecondaryTaxpayerBeEligibleForSeniorDeduction"/>
         </Any>
       </Derived>
     </Fact>
+    <Fact path="/couldPrimaryTaxpayerBeEligibleForSeniorDeduction">
+      <Description>Whether the primary taxpayer could be eligible for the senior deduction</Description>
+      <Derived>
+        <All>
+          <Not>
+            <Dependency path="/isFilingStatusMFS"/>
+          </Not>
+          <Dependency path="/primaryFilerAge65OrOlder"/>
+          <!-- TODO: /MAGI check based on filing status -->
+        </All>
+      </Derived>
+    </Fact>
     <Fact path="/couldSecondaryTaxpayerBeEligibleForSeniorDeduction">
-      <Description>Secondary taxpayer self-certifies their eligibility for the senior deduction</Description>
+      <Description>Whether the secondary taxpayer could be eligible for the senior deduction</Description>
       <Derived>
         <All>
           <Dependency path="/isFilingStatusMFJ"/>
           <Dependency path="/secondaryFilerAge65OrOlder"/>
+          <!-- TODO: /MAGI check based on filing status -->
         </All>
       </Derived>
     </Fact>

@@ -2,7 +2,6 @@ package gov.irs.twe.factDictionary
 
 import gov.irs.factgraph.types.Dollar
 import gov.irs.factgraph.types.Enum
-import gov.irs.factgraph.Expression.Writable
 import gov.irs.factgraph.Path
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.prop.TableDrivenPropertyChecks

@@ -3,51 +3,99 @@
 <FlowConfig>
   <page title="Additional Deductions" route="additional-deductions.html">
     <section>
-      <h2>Qualified Business Income (QBI) Deduction</h2>
-      <p>If you/you or your spouse own a partnership, S corporation, or are self-employed, you may be able to deduct a portion of your qualified business income (QBI) for {taxyear}</p>
-      <p>Based on your answers, you/your spouse had qualified business income of <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/></p>
-      <p>Choose if you want to use the QBI amount we calculated from your answers or if you want to enter a different amount</p>
-      <fg-set path="/wantsQBIDeductionOverride">
-        <question>
-          Would you like to estimate your QBI Deduction?
-        </question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/qBIDeductionOverrideAmount" if-true="/wantsQBIDeductionOverride">
-        <question>
-          To estimate QBI, calculate
-          1. Expected business income for {taxyear}
-          2. Minus ordinary business expenses (like rent, supplies, and employee benefits
-          3. Minus self-employment-related deductions (like self-employed health insurance premium,s contributions to self-employed retirement plans, and half of your self-employment tax)
-          Estimated qualified business income for you/you and your spouse for {TY}
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <h2>Car loan interest deduction</h2>
-      <fg-set path="/personalVehicleLoanInterestAmount">
-        <question>
-          How much interest have you paid on the loan during the current taxable year to-date?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <h2 condition="/couldEitherTaxpayerBeEligibleForSeniorDeduction" operator="isTrue">Senior Deduction</h2>
-      <fg-set path="/primaryTaxpayerElectsForSeniorDeduction" if-true="/primaryFilerAge65OrOlder">
-        <question>
-          Do you plan to take the senior deduction?
-        </question>
-        <input type="boolean"/>
+      <h2>Additional deductions</h2>
+      <p>Estimate the amount of additional deductions that you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> plan to take this year.</p>
+      <p>Whether you take the standard deduction or itemize, these deductions can further reduce how much of your income gets taxed.</p>
+
+      <h3 condition="/couldEitherTaxpayerBeEligibleForSeniorDeduction" operator="isTrue">Additional senior deduction</h3>
+      <div condition="/couldEitherTaxpayerBeEligibleForSeniorDeduction" operator="isTrue">
+        <p>Effective 2025 through 2028, taxpayers who are age 65 and older can claim an additional deduction.</p>
+        <p><a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" class="usa-link">Learn more about the additional senior deduction.</a></p>
+      </div>
+      <fg-set path="/primaryTaxpayerElectsForSeniorDeduction" if-true="/couldPrimaryTaxpayerBeEligibleForSeniorDeduction">
+        <question>Do you plan to take the additional senior deduction?</question>
+        <hint>Select "No" if you don't have a Social Security number (SSN)</hint>
+        <input type="boolean" />
       </fg-set>
       <fg-set path="/secondaryTaxpayerElectsForSeniorDeduction" if-true="/couldSecondaryTaxpayerBeEligibleForSeniorDeduction">
-        <question>
-          Does your spouse plan to take the senior deduction?
-        </question>
-        <input type="boolean"/>
+        <question>Does your spouse plan to take the additional senior deduction?</question>
+        <hint>Select "No" if they don't have an SSN</hint>
+        <input type="boolean" />
       </fg-set>
+
+      <h3 condition="/tentativelyEligibleForNonItemizerCharitableContributionDeduction" operator="isTrue">Cash charitable contributions</h3>
+      <div condition="/tentativelyEligibleForNonItemizerCharitableContributionDeduction" operator="isTrue">
+        <p>When you take the standard deduction and donate to a qualifying organization in <fg-show path="/taxYear"/>, you can deduct those donations up to <fg-show path="/actualNonItemizerCharitableContributionDeductionMax" />.</p>
+        <p>Cash contributions include payments made by:</p>
+        <ul>
+          <li>Cash</li>
+          <li>Check</li>
+          <li>Electronic funds transfer or online payment service</li>
+          <li>Debit or credit card</li>
+          <li>Payroll deduction</li>
+          <li>Transfer of gift card redeemable for cash</li>
+        </ul>
+        <!-- TODO: Make fg-alert flexible enough to do a more basic alert like this as well: -->
+        <div condition="/standardDeductionOverridesItemizedDeduction" operator="isTrue" class="usa-alert usa-alert--info usa-alert--no-icon">
+          <div class="usa-alert__body">
+            <p class="usa-alert__text">
+              <strong>Your calculation is using the standard deduction</strong> because it's higher than the total itemized deductions you entered.
+            </p>
+          </div>
+        </div>
+        <p><a target="_blank" href="https://www.irs.gov/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance" class="usa-link">Learn more cash charitable contributions.</a></p>
+      </div>
       <fg-set path="/nonItemizerCharitableContributionDeductionAmount" if-true="/tentativelyEligibleForNonItemizerCharitableContributionDeduction">
-        <question>
-          If you take the standard deduction and donate to a qualifying organization, you can deduct those donations up to $<fg-show path="/actualNonItemizerCharitableContributionDeductionMax"/>.Learn more about cash
-            charitable contributions [X]
-        </question>
+        <question>Cash charitable contributions you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
+        <input type="dollar"/>
+        <hint>(max <fg-show path="/actualNonItemizerCharitableContributionDeductionMax" />)</hint>
+      </fg-set>
+
+      <h3>Car loan interest deduction</h3>
+      <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> purchase a qualifying new vehicle in <fg-show path="/taxYear"/>, you can deduct $10,000 of the car loan interest.</p>
+      <p>A qualifying vehicle is a car, minivan, van, sport utility vehicle (SUV), pickup truck, or motorcycle that’s:</p>
+      <ul>
+        <li>New (not used)</li>
+        <li>Purchased in <fg-show path="/taxYear"/></li>
+        <li>For personal use</li>
+        <li>Went through final assembly in the U.S.</li>
+        <li>A gross vehicle weight of less than 14,000 lbs.</li>
+        <li>Manufactured primarily for use on public streets, roads, and highways</li>
+        <li>Secured by a loan on the vehicle</li>
+      </ul>
+      <p><a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" class="usa-link">Learn more about car loan interest.</a></p>
+      <p><a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Check if your vehicle was assembled in the United States.</a></p>
+      <fg-set path="/personalVehicleLoanInterestAmount">
+        <question>Car loan interest you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
+        <input type="dollar"/>
+      </fg-set>
+
+      <h3>Qualified business income</h3>
+      <p>
+        If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> own a partnership, S corporation, or are self employed, you may be able to claim a deduction if you have qualified business income (QBI) in <fg-show path="/taxYear"/>.
+        This deduction may be reduced or eliminated for some service businesses.
+      </p>
+      <p><strong>Based on your answers, you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> had qualified business income of <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/></strong></p>
+      <fg-set path="/wantsDerivedQBIDeduction">
+        <question>Choose if you want to use the QBI amount we calculated from your answers or if you want to enter a different amount.</question>
+        <input type="boolean">
+          <option value="true">Use <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/> for this estimate)</option>
+          <option value="false">Enter a different amount for this estimate</option>
+        </input>
+      </fg-set>
+
+      <h3 condition="/wantsQBIDeductionOverride" operator="isTrue">Qualified business income estimate</h3>
+      <div condition="/wantsQBIDeductionOverride" operator="isTrue">
+        <p>To estimate QBI, calculate</p>
+        <ol>
+          <li>Expected business for <fg-show path="/taxYear"/></li>
+          <li>Minus ordinary business expenses (like rent, supplies, and employee benefits)</li>
+          <li>Minus self-employment-related deductions (like self-employed health insurance premiums, contributions to self-employed retirement plans, and half of your self-employment tax)</li>
+        </ol>
+        <p><a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction" class="usa-link">Learn more about qualified business income.</a></p>
+      </div>
+      <fg-set path="/qBIDeductionOverrideAmount" if-true="/wantsQBIDeductionOverride">
+        <question>Estimate qualified business income for you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
     </section>
