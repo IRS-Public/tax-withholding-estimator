@@ -19,6 +19,18 @@ class ComplexScenarioSpec extends AnyFunSuite {
     assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == expectedLine4c)
   }
 
+  test("Single, SS, part time, senior deduction") {
+    val scenario = loadScenarioFromCsv(BATCH_ONE, 2)
+
+    val expectedAgi = Dollar(scenario.getInput("AGI"))
+    val expectedLine4c = Dollar(scenario.getInput("W-4 Line4cAmount1"))
+    val expectedSeniorDeduction = Dollar(scenario.getInput("Additional Elder Deduction (70103)"))
+
+    assert(scenario.getFact("/agi") == expectedAgi)
+    assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == expectedLine4c)
+    assert(scenario.getFact("/seniorDeduction") == expectedSeniorDeduction)
+  }
+
   test("Single, low wages, EITC, no dependents") {
     val scenario = loadScenarioFromCsv(BATCH_ONE, 3)
 

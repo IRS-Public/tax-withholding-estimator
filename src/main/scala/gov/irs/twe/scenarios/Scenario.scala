@@ -16,10 +16,14 @@ val JOB_3_ID = "20B48125-6DB6-4719-8FD3-96C9DAA17E57" // Spouse job 1
 val JOB_4_ID = "9141223F-AF3D-42EF-8AA7-3EC454D5CCBC" // Spouse job 2
 val ALL_JOBS = List(PREVIOUS_SELF_JOB_ID, PREVIOUS_SPOUSE_JOB_ID, JOB_1_ID, JOB_2_ID, JOB_3_ID, JOB_4_ID)
 
+val SS_ID = "9f5e25b9-5f6c-4c93-b327-27b1c21a4ff3"
+val SS_SPOUSE_ID = "2e4b8107-f72b-4ea0-8081-8012d256373f"
+val ALL_SS_SOURCES = List(SS_ID, SS_SPOUSE_ID)
+
 @main def convertSpreadsheet(file: String): Unit = {
   val path = os.Path(file)
   val scenario = loadScenarioFromCsv(path, 1)
-  println(scenario.graph.persister.toJson(2))
+  println(scenario.graphToJson())
 }
 
 case class Scenario(csv: Map[String, String], graph: Graph) {
@@ -30,14 +34,26 @@ case class Scenario(csv: Map[String, String], graph: Graph) {
   def getInput(rowName: String): String = {
     this.csv(rowName).replace("$", "").strip()
   }
+
+  def graphToJson(): String = {
+    this.graph.persister.toJson(2)
+  }
 }
 
 def loadScenarioFromCsv(path: os.ReadablePath, scenarioColumn: Integer): Scenario = {
   val reader = CSVReader.open(path.toString)
   val rows = reader.all()
 
+  // We don't support SS benefit YTD
+  val socialSecurityOverrideFields =
+    List("Start date", "End date", "SS monthly benefit", "SS monthly withholding", "SS withholding YTD")
+
   val csv: Map[String, String] = rows.foldLeft(Map()) { (dict, row) =>
-    val inputName = row(INPUT_NAME_COL)
+    var inputName = row(INPUT_NAME_COL)
+    // work around for handling Social security labels, since they aren't unique
+    if (socialSecurityOverrideFields.contains(inputName) && dict.contains(inputName)) {
+      inputName = inputName + "2"
+    }
     val inputValue = row(scenarioColumn)
     dict + (inputName -> inputValue)
   }
@@ -52,6 +68,10 @@ def loadScenarioFromCsv(path: os.ReadablePath, scenarioColumn: Integer): Scenari
 
   // Add the 5 jobs to the fact graph
   ALL_JOBS.foreach(job => factGraph.addToCollection("/jobs", job))
+
+  // Set social security collection
+  ALL_SS_SOURCES.foreach(source => factGraph.addToCollection("/socialSecuritySources", source))
+
   factGraph.set(s"/jobs/#$PREVIOUS_SELF_JOB_ID/filerAssignment", new types.Enum(Some("self"), "/filerAssignmentOption"))
   factGraph.set(
     s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/filerAssignment",
@@ -93,7 +113,13 @@ def loadScenarioFromCsv(path: os.ReadablePath, scenarioColumn: Integer): Scenari
     factGraph.set(factPath, convertedValue)
   }
 
-  // TODO: Handle setting social security once implementation is finalized (https://github.com/IRSDigitalService/tax-withholding-estimator/issues/1054)
+  // Stopgap to add senior deduction, we should update the FG to automate this
+  if (factGraph.get("/primaryFilerAge65OrOlder").value.get == true) {
+    factGraph.set("/primaryTaxpayerElectsForSeniorDeduction", true)
+  }
+  if (factGraph.get("/secondaryFilerAge65OrOlder").value.get == true) {
+    factGraph.set("/secondaryTaxpayerElectsForSeniorDeduction", true)
+  }
 
   // Calculated facts
   factGraph.set("/primaryFilerAge25OrOlderForEitc", csv("User Age").toInt >= 25)
@@ -213,6 +239,18 @@ val SHEET_ROW_FACT_MAPPINGS = Map(
   "paymentYTD4" -> s"/jobs/#$JOB_4_ID/yearToDateIncome",
   "taxWhPerPPd4" -> s"/jobs/#$JOB_4_ID/amountWithheldLastPaycheck",
   "taxWhYTD4" -> s"/jobs/#$JOB_4_ID/yearToDateWithholding",
+  // Social Security #1
+  "Start date" -> s"/socialSecuritySources/#$SS_ID/startDate",
+  "End date" -> s"/socialSecuritySources/#$SS_ID/endDate",
+  "SS monthly benefit" -> s"/socialSecuritySources/#$SS_ID/monthlyIncome",
+  "SS monthly withholding" -> s"/socialSecuritySources/#$SS_ID/federalTaxesWithheldThisPayment",
+  "SS withholding YTD" -> s"/socialSecuritySources/#$SS_ID/federalTaxesWithheldYtd",
+  // Social Security #2
+  "Start date2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/startDate",
+  "End date2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/endDate",
+  "SS monthly benefit2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/monthlyIncome",
+  "SS monthly withholding2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/federalTaxesWithheldThisPayment",
+  "SS withholding YTD2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/federalTaxesWithheldYtd",
   // Supported Credits and Deductions
   "Car loan interest" -> "/personalVehicleLoanInterestAmount",
   "qualChildrenCDCC" -> "/ctcEligibleDependents",
