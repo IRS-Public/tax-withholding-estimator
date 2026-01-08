@@ -3,14 +3,14 @@
 <FlowConfig>
   <page title="Adjustments" route="adjustments.html">
     <section>
-      <h1>Adjustments</h1>
+      <h2>Adjustments</h2>
       <p>Estimate the amount for any adjustments <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> plan to take this year.</p>
       <p>
         <modal-link for="modal-what-are-adjustments">What are adjustments?</modal-link>
       </p>
       <p>This estimator only supports some adjustments. There may be other adjustments that you qualify for, which could impact your estimate.</p>
 
-      <h2>Student loan interest deduction</h2>
+      <h3>Student loan interest deduction</h3>
       <p>If you pay interest in <fg-show path="/taxYear"/>, on a qualified student loan for yourself, your spouse, or a person who was your dependent when you took out the loan, you can deduct up to $2,500</p>
       <p> This includes both required and voluntarily pre-paid interest payments. </p>
       <p>
@@ -21,7 +21,7 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h2>Educator expense deduction</h2>
+      <h3>Educator expense deduction</h3>
       <p>If you're a K-12 educator, you can deduct up to $300 of unreimbursed expenses in <fg-show path="/taxYear"/>.<span condition="/isFilingStatusMFJ" operator="isTrue"> If you're filing a joint tax return and both of you are educators, you can deduct up to $600.</span></p>
       <p>Qualified expenses include:</p>
       <ul>
@@ -37,7 +37,7 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h2>Traditional (pre-tax) IRA deduction</h2>
+      <h3>Traditional (pre-tax) IRA deduction</h3>
       <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> contribute to a traditional (pre-tax) IRA outside of your payroll contributions in <fg-show path="/taxYear"/>, you may be able to claim a deduction.</p>
       <p>Don't already include amounts that you included on one of your jobs, contributions to other IRAs, or contributions to other retirement plans.</p>
       <p>
@@ -49,7 +49,7 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h2 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Self-employed retirement plan deduction</h2>
+      <h3 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Self-employed retirement plan deduction</h3>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> are self-employed and make contributions to an SEP, SIMPLE, solo-401(k), or other qualified retirement plan in <fg-show path="/taxYear"/>, you may be eligible for the self-employed retirement plan deduction.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">To qualify, <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> must:</p>
       <ul condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
@@ -66,7 +66,7 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h2>Health Savings Account (HSA) deduction</h2>
+      <h3>Health Savings Account (HSA) deduction</h3>
       <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> contributed to an HSA outside of your payroll contributions in <fg-show path="/taxYear"/>, you can claim a deduction.</p>
       <p>Don't include amounts that you already included on one of your jobs.</p>
       <p>
@@ -77,7 +77,7 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h2>Alimony paid deduction</h2>
+      <h3>Alimony paid deduction</h3>
       <p>If you're divorced or separated, you can deduct alimony paid in <fg-show path="/taxYear"/> to a spouse or a former spouse under a divorce or separation instrument made before 2019.</p>
       <p>
         <a target="_blank" href="https://www.irs.gov/taxtopics/tc452" class="usa-link">Learn more about alimony.<span class="usa-sr-only"> (opens in a new tab)</span></a>
@@ -87,7 +87,7 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h2>Penalty for early withdrawal of savings</h2>
+      <h3>Penalty for early withdrawal of savings</h3>
       <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> withdrew funds from a certificate of deposit or other deferred interest account before maturity, you may have been charged a penalty by your financial institution in <fg-show path="/taxYear"/>. You can deduct the penalty amount.</p>
       <p>
         <a target="_blank" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-exceptions-to-tax-on-early-distributions" class="usa-link">Learn more about penalties for early withdrawals.<span class="usa-sr-only"> (opens in a new tab)</span></a>
@@ -97,7 +97,7 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h2>Military and intelligence community moving expenses for members of armed forces deduction</h2>
+      <h3>Military and intelligence community moving expenses for members of armed forces deduction</h3>
       <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you're</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse are</span> a member of the Armed Forces or intelligence community and your move was due to a change of station, you can deduct unreimbursed <fg-show path="/taxYear"/> moving expenses.</p>
       <p>
         <a target="_blank" href="https://www.irs.gov/taxtopics/tc455" class="usa-link">Learn more about moving expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
@@ -107,7 +107,7 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h2 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Certain business expenses</h2>
+      <h3 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Certain business expenses</h3>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">If <span condition="/isFilingStatusMFJ" operator="isFalse">you're</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse are</span> an Armed Forces reservist, qualified performing artist, fee-basis state or local government official, or employee with a disability and impairment-related work expenses, you can deduct expenses in <fg-show path="/taxYear"/> that are:</p>
       <ul condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
         <li>Common and accepted in your field of trade, business, or profession</li>
@@ -121,7 +121,7 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h2 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Self-employed health insurance deduction</h2>
+      <h3 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Self-employed health insurance deduction</h3>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">If <span condition="/isFilingStatusMFJ" operator="isFalse">you're</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse are</span> self-employed and have a net profit for the year, you can deduct your <fg-show path="/taxYear"/> health insurance premiums.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Eligible premiums are medical, dental, vision, and long-term care insurance. The policy can be for yourself, your spouse, and your dependents. The policy can also cover your child who is under the age of 27 at the end of the year even if the child wasn't your dependent.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">

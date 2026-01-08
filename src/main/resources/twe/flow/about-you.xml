@@ -42,7 +42,7 @@
         <question>Can anyone else claim you as a dependent on their tax return?</question>
         <input type="boolean"/>
       </fg-set>
-      <h2 condition="/isFilingStatusMFJ" operator="isTrue">Spouse</h2>
+      <h3 condition="/isFilingStatusMFJ" operator="isTrue">Spouse</h3>
       <fg-set path="/secondaryFilerAge65OrOlder" if-true="/isFilingStatusMFJ">
         <question>Will your spouse be 65 years old or older on December 31, 2025?</question>
         <input type="boolean"/>

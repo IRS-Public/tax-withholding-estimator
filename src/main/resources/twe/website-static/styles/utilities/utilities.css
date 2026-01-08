@@ -6,7 +6,7 @@
 .back-link {
   display: flex;
   align-items: center;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
 }
 
 .usa-prose a,

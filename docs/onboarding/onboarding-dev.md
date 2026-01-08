@@ -149,3 +149,19 @@ process that data and eventually pass the processed data to functions that retur
 `fg-components.js` is where all of our Web Components are written and is the core js for our app outside of the
 factgraph.js. This is also where we mount the factGraph object to the browser/window.
 
+## U.S. Web Design System (USWDS)
+
+TWE uses the minimized USWDS v3.13.0 CSS file. However, some changes to the default setup are necessary, and therefore we cannot use the zip file provided on the design system’s documentation site. TWE uses semibold font weights, which are not turned on by default.
+
+If the USWDS needs to be updated, you will need clone the USWDS repo and recompile it to make the following changes to typography settings in `_settings-typography.scss`.
+
+```
+$theme-font-weight-semibold: false !default;
+```
+changes to:
+```
+$theme-font-weight-semibold: 600 !default;
+```
+Then run `npm run build`.
+
+Make sure the minimized CSS file is placed reflects the correct version number.

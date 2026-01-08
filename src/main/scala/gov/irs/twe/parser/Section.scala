@@ -23,7 +23,7 @@ case class Section(nodes: List[SectionNode], factDictionary: FactDictionary) {
       }
       .mkString("\n")
 
-    "<section class=\"flow\">" + sectionHtml + "</section>"
+    "<section class=\"flow usa-prose\">" + sectionHtml + "</section>"
   }
 
   private def renderNode(node: xml.Node, templateEngine: TweTemplateEngine): String =

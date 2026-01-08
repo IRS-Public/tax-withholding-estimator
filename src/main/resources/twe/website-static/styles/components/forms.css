@@ -24,7 +24,11 @@ h2 + fg-set {
 }
 
 .twe-question {
-  font-size: var(--font-size-md-lg);
+  font-weight: bold;
+
+  .usa-hint {
+    font-weight: normal;
+  }
 }
 
 .usa-radio {

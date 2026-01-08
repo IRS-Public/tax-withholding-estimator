@@ -131,4 +131,17 @@
   --font-size-xl: 2rem;       /* 32px */
   --font-size-2xl: 2.5rem;    /* 40px */
   --font-size-3xl: 3rem;      /* 48px */
+
+  /* System token sizes */
+  --font-size-8: 1.25rem;    /* 20px */
+  --font-size-9: 1.375rem;   /* 22px */
+  --font-size-10: 1.5rem;    /* 24px */
+  --font-size-11: 1.75rem;   /* 28px */
+  --font-size-12: 2rem;      /* 32px */
+
+  /* Font families
+    - Based on https://designsystem.digital.gov/design-tokens/typesetting/font-family/
+  */
+
+  --font-sans: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
 }

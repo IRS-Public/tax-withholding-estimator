@@ -30,7 +30,7 @@
   </ol>
 
   <div class="usa-step-indicator__header">
-    <h2 class="usa-step-indicator__heading">
+    <div class="usa-step-indicator__heading">
       <span class="usa-sr-only">
         <th:block th:text="#{step-indicator.step}"></th:block>
         <th:block th:text="${stepIndex + 1}"></th:block>
@@ -46,6 +46,6 @@
             <span th:text="${stepTotal}"></span>
         </span><span class="usa-step-indicator__heading-text" th:text="${stepTitle}"></span
       >
-    </h2>
+    </div>
   </div>
 </div>

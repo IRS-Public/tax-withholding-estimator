@@ -3,6 +3,7 @@
 <FlowConfig>
   <page title="Results" route="results.html">
     <section>
+      <h2>Results</h2>
       <table class="usa-table width-full usa-table--borderless usa-table--flush">
         <caption>Income and taxes</caption>
         <thead>

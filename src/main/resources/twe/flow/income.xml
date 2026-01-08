@@ -3,8 +3,8 @@
 <FlowConfig>
   <page title="Income" route="income.html">
     <section>
-      <h1>Income</h1>
-      <h2>Jobs</h2>
+      <h2>Income</h2>
+      <h3>Jobs</h3>
       <fg-alert alert-type="error" alert-key="at-least-one-job" if-true="/declaredDoneAddingIncome">
         <heading>You need to have a job or pension to continue</heading>
         <p>
@@ -134,7 +134,7 @@
           </select>
         </fg-set>
       </fg-collection>
-      <h2>Pensions</h2>
+      <h3>Pensions</h3>
       <fg-collection path="/pensions" item-name="Pensions source">
         <fg-set path="/pensions/*/filerAssignment" if-true="/isFilingStatusMFJ">
           <question>Who is this pension for?</question>
@@ -239,7 +239,7 @@
         <question>Distributions from Trump Account</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Self-Employment Income</h2>
+      <h3>Self-Employment Income</h3>
       <fg-set path="/grossSelfEmploymentIncomeSelf">
         <question>How much was your gross self-employment income this year?</question>
         <input type="dollar"/>
@@ -248,7 +248,7 @@
         <question>How much was your self-employment expenses this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2 condition="/isFilingStatusMFJ" operator="isTrue">Spouse Self-Employment Income</h2>
+      <h3 condition="/isFilingStatusMFJ" operator="isTrue">Spouse Self-Employment Income</h3>
       <fg-set path="/grossSelfEmploymentIncomeSpouse" if-true="/isFilingStatusMFJ">
         <question>How much was your spouses' gross self-employment income this year?</question>
         <input type="dollar"/>
@@ -257,68 +257,68 @@
         <question>How much was your spouses' self-employment expenses this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Ordinary Dividends Income</h2>
+      <h3>Ordinary Dividends Income</h3>
       <fg-set path="/ordinaryDividendsIncome">
         <question>How much have you made in ordinary dividends income so far this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Qualified Dividends Income</h2>
+      <h3>Qualified Dividends Income</h3>
       <fg-set path="/qualifiedDividendsIncome">
         <question>How much qualified dividends income do you estimate for this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Long-Term Capital Gains Income</h2>
+      <h3>Long-Term Capital Gains Income</h3>
       <fg-set path="/longTermCapitalGainsIncome">
         <question>How much long-term capital gains income do you estimate for this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Unemployment Insurance Income</h2>
+      <h3>Unemployment Insurance Income</h3>
       <fg-set path="/unemploymentInsuranceIncome">
         <question>
           How much have you received in employment insurance income so far this year?
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Interest Income (excluding non-taxable interest)</h2>
+      <h3>Interest Income (excluding non-taxable interest)</h3>
       <fg-set path="/taxableInterestIncome">
         <question>How much other income have you made this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Non-taxable Interest Income</h2>
+      <h3>Non-taxable Interest Income</h3>
       <fg-set path="/taxExemptInterestIncome">
         <question>How much non-taxable interest income have you received this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Short term capital gains</h2>
+      <h3>Short term capital gains</h3>
       <fg-set path="/shortTermCapitalGainsIncome">
         <question>How much short term capital gains have you received this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Taxable Scholarship Income</h2>
+      <h3>Taxable Scholarship Income</h3>
       <fg-set path="/taxableScholarshipIncome">
         <question>How much taxable scholarship income have you received this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Alimony Received</h2>
+      <h3>Alimony Received</h3>
       <fg-set path="/alimonyReceivedIncome">
         <question>How much alimony (pre-2019 divorce) have you received this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>S-corp non-passive Income (Schedule K1)</h2>
+      <h3>S-corp non-passive Income (Schedule K1)</h3>
       <fg-set path="/sCorpNonPassiveIncome">
         <question>
           How much S-corp non-passive income (Schedule K1) have you made this year?
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Net Schedule E Income</h2>
+      <h3>Net Schedule E Income</h3>
       <fg-set path="/netScheduleEIncome">
         <question>
           How much Net Schedule E income from passive activities have you received this year?
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Rental and Royalty Income </h2>
+      <h3>Rental and Royalty Income </h3>
       <fg-set path="/rentalIncome">
         <question>
           How much rental income have you made this year?
@@ -331,7 +331,7 @@
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h2>Non-specific Other Income</h2>
+      <h3>Non-specific Other Income</h3>
       <fg-set path="/nonSpecificOtherIncome">
         <question>How much non-specific other income have you made this year?</question>
         <input type="dollar"/>
