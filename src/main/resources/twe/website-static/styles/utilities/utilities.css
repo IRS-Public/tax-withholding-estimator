@@ -14,8 +14,8 @@
   color: var(--primary);
 }
 
-/* Automatically style external links (those with http:// or https://) */
-a[href^="http"]::after {
+/* Automatically style external links (those with http:// or https:// that are not on the irs.gov domain) */
+a[href^="http"]:not([href*="irs.gov"])::after {
   content: '';
   display: inline-block;
   width: 0.75rem;
