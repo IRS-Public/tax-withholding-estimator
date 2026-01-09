@@ -103,6 +103,9 @@
         <ref name="FlowConfigModuleInlineContent"/>
       </element>
     </optional>
+    <optional>
+      <ref name="modal-link-module"/>
+    </optional>
     <choice>
       <element name="input">
         <attribute name="type">

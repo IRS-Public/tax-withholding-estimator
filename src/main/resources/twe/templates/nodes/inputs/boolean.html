@@ -4,6 +4,7 @@
         <span th:if="${!optional}" aria-hidden="true" class="usa-hint" th:text="#{components.fg-set.required}"></span>
     </legend>
     <div th:replace="nodes/hint"></div>
+    <div th:replace="nodes/modal-link"></div>
     <div class="usa-radio">
         <input th:id="${path}+'-yes'"
                class="usa-radio__input"

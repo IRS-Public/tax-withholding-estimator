@@ -15,6 +15,7 @@ case class FgSet(
     input: Input,
     hint: Option[String],
     optional: Boolean,
+    modalLink: Option[String],
 ) {
   def html(templateEngine: TweTemplateEngine): String = {
     val usesFieldset =
@@ -28,6 +29,7 @@ case class FgSet(
     context.setVariable("optional", optional)
     context.setVariable("usesFieldset", usesFieldset)
     context.setVariable("hint", hint.orNull)
+    context.setVariable("modalLink", modalLink.orNull)
 
     val contentKey = "fg-sets." + path
     context.setVariable("contentKey", contentKey)
@@ -81,6 +83,12 @@ object FgSet {
     } else {
       Some(hintNode.head.child.mkString.trim)
     }
+    val modalLinkNode = node \ "modal-link"
+    val modalLink = if (modalLinkNode.isEmpty) {
+      None
+    } else {
+      Some(modalLinkNode.head.toString.trim)
+    }
 
     validateFact(path, factDictionary)
     val typeNode = factDictionary.getDefinition(path).typeNode
@@ -97,6 +105,6 @@ object FgSet {
     }
     if (inputAndNodeTypeMismatch) throw InvalidFormConfig(s"Path $path must be of type $input")
 
-    FgSet(path, question, condition, input, hint, isOptional)
+    FgSet(path, question, condition, input, hint, isOptional, modalLink)
   }
 }

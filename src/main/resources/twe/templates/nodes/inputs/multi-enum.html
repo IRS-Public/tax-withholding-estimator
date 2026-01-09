@@ -4,7 +4,7 @@
         <span th:if="${!optional}" aria-hidden="true" class="usa-hint" th:text="#{components.fg-set.required}"></span>
     </legend>
     <div th:replace="nodes/hint"></div>
-
+    <div th:replace="nodes/modal-link"></div>
     <div class="usa-checkbox" th:each="option : ${options}">
         <input th:id="${path} + '-' + ${option.value}"
                class="usa-checkbox__input usa-checkbox__input--tile"

@@ -5,6 +5,7 @@
     <th th:unless="${usesFieldset}">
       <span th:replace="~{nodes/question-label}"></span>
       <span th:replace="~{nodes/hint}"></span>
+      <span th:replace="~{nodes/modal-link}"></span>
     </th>
     <th th:replace="~{'nodes/inputs/' + ${typeString}}"></th>
   </div>

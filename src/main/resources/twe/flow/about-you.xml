@@ -10,6 +10,7 @@
       </fg-set>
       <fg-set path="/filingStatus">
         <question>What filing status will you use for your tax return?</question>
+        <modal-link for="modal-filing-status">Which filing status should I use?</modal-link>
         <input type="enum" options-path="/filingStatusOptions">
           <option value="single">Single</option>
           <option value="marriedFilingJointly">Married filing jointly</option>
@@ -18,9 +19,6 @@
           <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
         </input>
       </fg-set>
-      <p>
-        <modal-link for="modal-filing-status">Which filing status should I use?</modal-link>
-      </p>
       <h3 class="form-actions">Your Household</h3>
       <fg-set path="/isMFSLivedTogether" if-true="/isFilingStatusMFS">
         <question>Did you and your spouse live together in 2025?</question>
