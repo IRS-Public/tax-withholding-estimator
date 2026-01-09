@@ -197,13 +197,13 @@
         </fg-set>
         <fg-set path="/socialSecuritySources/*/startDate" if-false="/socialSecuritySources/*/isAllYear">
           <question>What’s the first day in <fg-show path="/taxYear"/> <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to receive Social Security?</question>
-          <input type="date"/>
           <hint>It’s okay to estimate.</hint>
+          <input type="date"/>
         </fg-set>
         <fg-set path="/socialSecuritySources/*/endDate" if-false="/socialSecuritySources/*/isAllYear">
           <question>What’s the last day in <fg-show path="/taxYear"/> <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to receive Social Security?</question>
-          <input type="date"/>
           <hint>It’s okay to estimate.</hint>
+          <input type="date"/>
         </fg-set>
         <fg-section-gate condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isFalse" state="pending">
           <heading>Social Security details</heading>
@@ -219,20 +219,16 @@
         <p condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Use the most recent Social Security statement to enter the following information.</p>
         <fg-set path="/socialSecuritySources/*/federalTaxesWithheldThisPayment" if-true="/socialSecuritySources/*/flowIsAllYearCompleteAndTaxesStillBeingCollected">
           <question>How much federal tax has been withheld (paid) for this Social Security payment?</question>
-          <input type="dollar"/>
           <hint>Don’t include state and local taxes or Medicare.</hint>
-        </fg-set>
-        <p>
           <modal-link for="modal-fed-tax-social-security-pay-period">Where do I find federal taxes per pay period?</modal-link>
-        </p>
+          <input type="dollar"/>
+        </fg-set>
         <fg-set path="/socialSecuritySources/*/federalTaxesWithheldYtd" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
           <question>How much federal tax has been withheld (paid) year-to-date?</question>
-          <input type="dollar"/>
           <hint>Don’t include state and local taxes or Medicare.</hint>
-        </fg-set>
-        <p>
           <modal-link for="modal-fed-social-security-tax-ytd">Where do I find federal taxes year-to-date?</modal-link>
-        </p>
+          <input type="dollar"/>
+        </fg-set>
       </fg-collection>
       <h2>Trump Account Distribution</h2>
       <fg-set path="/trumpAccountDistribution">
