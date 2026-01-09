@@ -158,40 +158,31 @@
         <Multiply>
           <Dollar>0.06</Dollar>
           <Dependency path="/excessOverThresholdSeniorDeduction"/>
+          <Dependency path="/eligibleTaxpayersForSeniorDeduction"/>
         </Multiply>
       </Derived>
     </Fact>
-    <Fact path="/excessOverThresholdSeniorDeduction">
+    <Fact path="/seniorDeductionPhaseOutStartThresholdMFJ">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>150000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/seniorDeductionPhaseOutStartThresholdNonMFJ">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>75000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/seniorDeductionPhaseOutStart">
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Equal>
-                <Left>
-                  <Dependency path="/eligibleTaxpayersForSeniorDeduction"/>
-                </Left>
-                <Right>
-                  <Int>2</Int>
-                </Right>
-              </Equal>
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Dependency path="/excessAmountSeniorDeductionForMFJFilerBothTaxpayersEligible"/>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <Equal>
-                <Left>
-                  <Dependency path="/eligibleTaxpayersForSeniorDeduction"/>
-                </Left>
-                <Right>
-                  <Int>1</Int>
-                </Right>
-              </Equal>
-            </When>
-            <Then>
-              <Dependency path="/excessAmountSeniorDeductionOneTaxpayerEligible"/>
+              <Dependency path="/seniorDeductionPhaseOutStartThresholdMFJ"/>
             </Then>
           </Case>
           <Case>
@@ -199,10 +190,25 @@
               <True/>
             </When>
             <Then>
-              <Dollar>0</Dollar>
+              <Dependency path="/seniorDeductionPhaseOutStartThresholdNonMFJ"/>
             </Then>
           </Case>
         </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/excessOverThresholdSeniorDeduction">
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/magiForOB3BelowLineDeductions"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/seniorDeductionPhaseOutStart"/>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/applicableMaxSeniorDeductionAmount">
@@ -211,49 +217,13 @@
         taxpayers are eligible
       </Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Equal>
-                <Left>
-                  <Dependency path="/eligibleTaxpayersForSeniorDeduction"/>
-                </Left>
-                <Right>
-                  <Int>2</Int>
-                </Right>
-              </Equal>
-            </When>
-            <Then>
-              <Dependency path="/maxSeniorDeductionAmountForTwoEligibleTaxpayers"/>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <Equal>
-                <Left>
-                  <Dependency path="/eligibleTaxpayersForSeniorDeduction"/>
-                </Left>
-                <Right>
-                  <Int>1</Int>
-                </Right>
-              </Equal>
-            </When>
-            <Then>
-              <Dependency path="/maxSeniorDeductionAmountForOneEligibleTaxpayer"/>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <Multiply>
+          <Dependency path="/eligibleTaxpayersForSeniorDeduction"/>
+          <Dependency path="/maxSeniorDeductionAmountPerEligibleTaxpayer"/>
+        </Multiply>
       </Derived>
     </Fact>
-    <Fact path="/maxSeniorDeductionAmountForOneEligibleTaxpayer">
+    <Fact path="/maxSeniorDeductionAmountPerEligibleTaxpayer">
       <Name>Maximum senior deduction amount</Name>
       <Description>The maximum amount a single taxpayer can deduct. Doubled for MFJ if both
         taxpayers are eligible
@@ -261,48 +231,6 @@
       <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>6000</Dollar>
-      </Derived>
-    </Fact>
-    <Fact path="/maxSeniorDeductionAmountForTwoEligibleTaxpayers">
-      <Name>Maximum senior deduction amount</Name>
-      <Description>The maximum amount both filers can deduct when they are eligible for senior
-        deduction. Must be MFJ
-      </Description>
-      <TaxYear>2026</TaxYear>
-      <Derived>
-        <Dollar>12000</Dollar>
-      </Derived>
-    </Fact>
-    <Fact path="/excessAmountSeniorDeductionForMFJFilerBothTaxpayersEligible">
-      <TaxYear>2026</TaxYear>
-      <Derived>
-        <GreaterOf>
-          <Subtract>
-            <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions"/>
-            </Minuend>
-            <Subtrahends>
-              <Dollar>150000</Dollar>
-            </Subtrahends>
-          </Subtract>
-          <Dollar>0</Dollar>
-        </GreaterOf>
-      </Derived>
-    </Fact>
-    <Fact path="/excessAmountSeniorDeductionOneTaxpayerEligible">
-      <TaxYear>2026</TaxYear>
-      <Derived>
-        <GreaterOf>
-          <Subtract>
-            <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions"/>
-            </Minuend>
-            <Subtrahends>
-              <Dollar>75000</Dollar>
-            </Subtrahends>
-          </Subtract>
-          <Dollar>0</Dollar>
-        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/seniorDeduction">

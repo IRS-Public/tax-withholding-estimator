@@ -309,11 +309,8 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         "eligibleTaxpayersForSeniorDeduction",
         "expectedSeniorDeduction",
       ),
-      //      Single, $75,000 threshold start, $175,000 threshold end, each $10,000 more of MAGI reduces deduction by $300
+      //      Single, $75,000 threshold start, $175,000 threshold end, each $10,000 more of MAGI reduces deduction by $600
       (single, "74000", 0, "0"),
-      (single, "74000", 1, "6000"),
-      (single, "74000", 1, "6000"),
-      (single, "74000", 1, "6000"),
       (single, "74000", 1, "6000"),
       (single, "75000", 1, "6000"),
       (single, "80000", 1, "5700"),
@@ -329,11 +326,8 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (single, "175000", 1, "0"),
       (single, "175000", 0, "0"),
 
-      //      Single, $75,000 threshold start, $175,000 threshold end, each $10,000 more of MAGI reduces deduction by $300
+      //      Single, $75,000 threshold start, $175,000 threshold end, each $10,000 more of MAGI reduces deduction by $600
       (single, "74000", 0, "0"),
-      (single, "74000", 1, "6000"),
-      (single, "74000", 1, "6000"),
-      (single, "74000", 1, "6000"),
       (single, "74000", 1, "6000"),
       (single, "75000", 1, "6000"),
       (single, "80000", 1, "5700"),
@@ -349,11 +343,8 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (single, "175000", 1, "0"),
       (single, "175000", 0, "0"),
 
-      //      MFS, $75,000 threshold start, $175,000 threshold end, each $10,000 more of MAGI reduces deduction by $300
+      //      MFS, $75,000 threshold start, $175,000 threshold end, each $10,000 more of MAGI reduces deduction by $600
       (mfs, "74000", 0, "0"),
-      (mfs, "74000", 1, "6000"),
-      (mfs, "74000", 1, "6000"),
-      (mfs, "74000", 1, "6000"),
       (mfs, "74000", 1, "6000"),
       (mfs, "75000", 1, "6000"),
       (mfs, "80000", 1, "5700"),
@@ -369,11 +360,8 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (mfs, "175000", 1, "0"),
       (mfs, "175000", 0, "0"),
 
-      //      HOH, $75,000 threshold start, $175,000 threshold end, each $10,000 more of MAGI reduces deduction by $300
+      //      HOH, $75,000 threshold start, $175,000 threshold end, each $10,000 more of MAGI reduces deduction by $600
       (hoh, "74000", 0, "0"),
-      (hoh, "74000", 1, "6000"),
-      (hoh, "74000", 1, "6000"),
-      (hoh, "74000", 1, "6000"),
       (hoh, "74000", 1, "6000"),
       (hoh, "75000", 1, "6000"),
       (hoh, "80000", 1, "5700"),
@@ -389,11 +377,8 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (hoh, "175000", 1, "0"),
       (hoh, "175000", 0, "0"),
 
-      //      QSS, $75,000 threshold start, $175,000 threshold end, each $10,000 more of MAGI reduces deduction by $300
+      //      QSS, $75,000 threshold start, $175,000 threshold end, each $10,000 more of MAGI reduces deduction by $600
       (qss, "74000", 0, "0"),
-      (qss, "74000", 1, "6000"),
-      (qss, "74000", 1, "6000"),
-      (qss, "74000", 1, "6000"),
       (qss, "74000", 1, "6000"),
       (qss, "75000", 1, "6000"),
       (qss, "80000", 1, "5700"),
@@ -409,27 +394,36 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (qss, "175000", 1, "0"),
       (qss, "175000", 0, "0"),
 
-      //      MFJ, $150,000 threshold start, $250,000 threshold end, each $10,000 more of MAGI reduces deduction by $300
-      (mfj, "74000", 0, "0"),
-      (mfj, "74000", 1, "6000"),
-      (mfj, "74000", 1, "6000"),
-      (mfj, "74000", 1, "6000"),
-      (qss, "74000", 1, "6000"),
-      (mfj, "75000", 1, "6000"),
-      (mfj, "74000", 2, "12000"),
-      (mfj, "74000", 2, "12000"),
-      (mfj, "74000", 2, "12000"),
-      (qss, "74000", 2, "12000"),
-      (mfj, "75000", 2, "12000"),
+      //      MFJ, $150,000 threshold start, $250,000 threshold end, each $10,000 more of MAGI reduces deduction by $600 (per taxpayer)
+      (mfj, "140000", 0, "0"),
+      //      1 eligible taxpayer
+      (mfj, "140000", 1, "6000"),
+      (mfj, "150000", 1, "6000"),
+      (mfj, "160000", 1, "5400"),
+      (mfj, "170000", 1, "4800"),
+      (mfj, "180000", 1, "4200"),
+      (mfj, "190000", 1, "3600"),
+      (mfj, "200000", 1, "3000"),
+      (mfj, "210000", 1, "2400"),
+      (mfj, "220000", 1, "1800"),
+      (mfj, "230000", 1, "1200"),
+      (mfj, "240000", 1, "600"),
+      (mfj, "250000", 1, "0"),
+      (mfj, "260000", 1, "0"),
+      //      2 eligible taxpayers
+      (mfj, "140000", 2, "12000"),
       (mfj, "150000", 2, "12000"),
-      (mfj, "180000", 2, "10200"),
-      (mfj, "210000", 2, "8400"),
-      (mfj, "240000", 2, "6600"),
-      (mfj, "250000", 2, "6000"),
-      (mfj, "300000", 2, "3000"),
-      (mfj, "340000", 2, "600"),
-      (mfj, "350000", 2, "0"),
-      (mfj, "360000", 2, "0"),
+      (mfj, "160000", 2, "10800"),
+      (mfj, "170000", 2, "9600"),
+      (mfj, "180000", 2, "8400"),
+      (mfj, "190000", 2, "7200"),
+      (mfj, "200000", 2, "6000"),
+      (mfj, "210000", 2, "4800"),
+      (mfj, "220000", 2, "3600"),
+      (mfj, "230000", 2, "2400"),
+      (mfj, "240000", 2, "1200"),
+      (mfj, "250000", 2, "0"),
+      (mfj, "260000", 2, "0"),
     )
     forAll(dataTable) {
       (
