@@ -25,6 +25,7 @@ h2 + fg-set {
 
 .twe-question {
   font-weight: bold;
+  margin-top: 0;
 
   .usa-hint {
     font-weight: normal;
