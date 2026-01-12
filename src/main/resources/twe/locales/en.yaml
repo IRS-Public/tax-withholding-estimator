@@ -36,8 +36,7 @@ components:
 
 layout:
   title: Tax Withholding Estimator
-  skip:
-    to-main: Skip to main content
+  skip-to-main: Skip to main content
   identifier:
     agency-identifier: Agency identifier
     disclaimer: An official website of the <a class="usa-link" target="_blank" href="https://irs.gov">IRS<span class="usa-sr-only"> (opens in a new tab)</span></a>
