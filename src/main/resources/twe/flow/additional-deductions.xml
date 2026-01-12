@@ -14,12 +14,12 @@
       </div>
       <fg-set path="/primaryTaxpayerElectsForSeniorDeduction" if-true="/couldPrimaryTaxpayerBeEligibleForSeniorDeduction">
         <question>Do you plan to take the additional senior deduction?</question>
-        <hint>Select "No" if you don't have a Social Security number (SSN)</hint>
+        <hint>Select "No" if you don't have a Social Security number.</hint>
         <input type="boolean" />
       </fg-set>
       <fg-set path="/secondaryTaxpayerElectsForSeniorDeduction" if-true="/couldSecondaryTaxpayerBeEligibleForSeniorDeduction">
         <question>Does your spouse plan to take the additional senior deduction?</question>
-        <hint>Select "No" if they don't have an SSN</hint>
+        <hint>Select "No" if they don't have a Social Security number.</hint>
         <input type="boolean" />
       </fg-set>
 
