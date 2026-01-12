@@ -199,6 +199,8 @@ val SHEET_ROW_FACT_MAPPINGS = Map(
   // Previous jobs
   "Previous job income-User" -> s"/jobs/#$PREVIOUS_SELF_JOB_ID/yearToDateIncome",
   "Withholding from previous job-User" -> s"/jobs/#$PREVIOUS_SELF_JOB_ID/yearToDateWithholding",
+  "Previous job income-Spouse" -> s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/yearToDateIncome",
+  "Withholding from previous job-Spouse" -> s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/yearToDateWithholding",
   // Job 1
   "Job start1" -> s"/jobs/#$JOB_1_ID/writableStartDate",
   "Job end1" -> s"/jobs/#$JOB_1_ID/writableEndDate",
