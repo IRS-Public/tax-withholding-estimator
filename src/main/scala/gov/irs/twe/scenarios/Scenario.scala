@@ -22,7 +22,7 @@ val ALL_SS_SOURCES = List(SS_ID, SS_SPOUSE_ID)
 
 @main def convertSpreadsheet(file: String): Unit = {
   val path = os.Path(file)
-  val scenario = loadScenarioFromCsv(path, 1)
+  val scenario = loadScenarioByColumnLetter(path, "B")
   println(scenario.graphToJson())
 }
 
@@ -40,10 +40,31 @@ case class Scenario(csv: Map[String, String], graph: Graph) {
   }
 }
 
-def loadScenarioFromCsv(path: os.ReadablePath, scenarioColumn: Integer): Scenario = {
+def loadScenarioByColumnLetter(path: os.ReadablePath, columnLetter: String): Scenario = {
   val reader = CSVReader.open(path.toString)
   val rows = reader.all()
+  reader.close()
 
+  // Convert column letter into a row index
+  var column = 0
+  val length = columnLetter.length
+  for (i <- 0.until(length))
+    column += ((columnLetter(i).toInt - 64) * Math.pow(26, length - i - 1)).toInt
+
+  parseScenario(rows, column - 1)
+}
+
+def loadScenarioByName(path: os.ReadablePath, scenarioName: String): Scenario = {
+  val reader = CSVReader.open(path.toString)
+  val rows = reader.all()
+  reader.close()
+
+  val namesRow = rows(1)
+  val col = namesRow.indexOf(scenarioName)
+  parseScenario(rows, col)
+}
+
+private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenario = {
   // We don't support SS benefit YTD
   val socialSecurityOverrideFields =
     List("Start date", "End date", "SS monthly benefit", "SS monthly withholding", "SS withholding YTD")
@@ -57,7 +78,6 @@ def loadScenarioFromCsv(path: os.ReadablePath, scenarioColumn: Integer): Scenari
     val inputValue = row(scenarioColumn)
     dict + (inputName -> inputValue)
   }
-  reader.close()
 
   // Get each row of the scenario and map it to a specific fact
   val spreadsheetFacts = SHEET_ROW_FACT_MAPPINGS.map((sheetKey, factName) => factName -> csv(sheetKey))

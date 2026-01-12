@@ -1,27 +1,40 @@
 package gov.irs.twe.factDictionary.scenarios
 
 import gov.irs.factgraph.types.Dollar
-import gov.irs.twe.scenarios.loadScenarioFromCsv
+import gov.irs.twe.scenarios
+import org.scalatest.{ funsuite, TestData }
 import org.scalatest.funsuite.AnyFunSuite
 import os.Path
 
-class ComplexScenarioSpec extends AnyFunSuite {
+// UAT testing scenarios
+// Each tests pulls a specific scenario from the UAT testing sheet and asserts key values
+// The test name must exactly match the "Key scenario feature" row of the spreadsheet
+class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   val CSV_ROOT: Path = os.pwd / "src" / "test" / "resources" / "csv"
-  val BATCH_ONE: Path = CSV_ROOT / "complex-scenarios-batch-1.csv"
+  val UAT_SHEET: Path = CSV_ROOT / "twe-2026-uat-dec-31-2025.csv"
 
-  test("MFJ, High Income, 1 child, Multi, Car loan") {
-    val scenario = loadScenarioFromCsv(BATCH_ONE, 1)
+  case class FixtureParam(scenario: scenarios.Scenario)
 
+  // Calls each test with a "fixture" parameter that contains the scenario named by the test
+  // https://www.scalatest.org/scaladoc/3.2.19/org/scalatest/funsuite/AnyFunSuite.html
+  def withFixture(test: OneArgTest) = {
+    val scenario = scenarios.loadScenarioByName(UAT_SHEET, test.name)
+    val fixture = FixtureParam(scenario)
+    withFixture(test.toNoArgTest(fixture))
+  }
+
+  // Column Z
+  test("MFJ, High Income, 1 child, Multi, Car loan") { td =>
+    val scenario = td.scenario
     val expectedAgi = Dollar(scenario.getInput("AGI"))
     val expectedLine4c = Dollar(scenario.getInput("W-4 Line4cAmount1"))
 
     assert(scenario.getFact("/agi") == expectedAgi)
     assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == expectedLine4c)
   }
-
-  test("Single, SS, part time, senior deduction") {
-    val scenario = loadScenarioFromCsv(BATCH_ONE, 2)
-
+  // Column AA
+  test("Single, SS, part time, senior deduction") { td =>
+    val scenario = td.scenario
     val expectedAgi = Dollar(scenario.getInput("AGI"))
     val expectedLine4c = Dollar(scenario.getInput("W-4 Line4cAmount1"))
     val expectedSeniorDeduction = Dollar(scenario.getInput("Additional Elder Deduction (70103)"))
@@ -31,9 +44,9 @@ class ComplexScenarioSpec extends AnyFunSuite {
     assert(scenario.getFact("/seniorDeduction") == expectedSeniorDeduction)
   }
 
-  test("Single, low wages, EITC, no dependents") {
-    val scenario = loadScenarioFromCsv(BATCH_ONE, 3)
-
+  // Column AB
+  test("Single, low wages, EITC, no dependents") { td =>
+    val scenario = td.scenario
     val expectedAgi = Dollar(scenario.getInput("AGI"))
     val expectedTax = Dollar(scenario.getInput("anticipatedTaxB4RefundableCredits"))
 
@@ -43,8 +56,8 @@ class ComplexScenarioSpec extends AnyFunSuite {
     assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == Dollar(0))
   }
 
-  test("Married filing jointly, salary, 1 child, multiple incomes, car loan interest") {
-    val scenario = loadScenarioFromCsv(BATCH_ONE, 7)
+  test("Married filing jointly, salary, 1 child, multiple incomes, car loan interest") { td =>
+    val scenario = td.scenario
 
     val expectedIncomeTotal = Dollar(scenario.getInput("Net pre-tax income"))
     val expectedAdjustmentsToIncome = Dollar(scenario.getInput("Total Adjustments"))
