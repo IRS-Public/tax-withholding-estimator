@@ -41,9 +41,6 @@ class AdjustmentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
       assert(actualAmt.value.contains(Dollar(actual)))
     }
-    println(
-      s"Completed ${dataTable.length} HSA deduction scenarios",
-    )
   }
   test("test IRA deduction: applies correct limit") {
     val dataTable = Table(
@@ -74,9 +71,6 @@ class AdjustmentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
         assert(actual.value.contains(Dollar(actualDeductionForTraditionalIRAContribution)))
     }
-    println(
-      s"Completed ${dataTable.length} IRA deduction scenarios",
-    )
   }
 
   test("test student loan interest adjustment: applies correct limit depending on filing status") {
@@ -193,8 +187,5 @@ class AdjustmentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         assert(actualAdjustments.value.contains(Dollar(actualStudentLoanInterestAdjustment)))
         assert(agi.value.contains(Dollar(expectedAgi)))
     }
-    println(
-      s"Completed ${dataTable.length} student loan interest adjustments for calculating agi and total adjustments",
-    )
   }
 }

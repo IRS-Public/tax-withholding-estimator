@@ -33,7 +33,6 @@ class QBIDeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
       assert(actualQBID.value.contains(Dollar(qualifiedBusinessIncomeDeduction)))
     }
-    println(s"Completed ${dataTable.length} tests for calculating QBI floor")
   }
   test("test QBI derivation") {
     val dataTable = Table(
@@ -126,6 +125,5 @@ class QBIDeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         val actualQBID = graph.get("/qualifiedBusinessIncomeDeduction")
         assert(actualQBID.value.contains(Dollar(expectedQBID)))
     }
-    println(s"Completed ${dataTable.length} tests for deriving QBI")
   }
 }

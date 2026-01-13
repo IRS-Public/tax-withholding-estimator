@@ -160,7 +160,6 @@ class SelfEmploymentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         assert(actualSelfEmploymentTaxTotal.value.contains(Dollar(expectedSelfEmploymentTaxTotal)))
         assert(actualSelfEmploymentTaxDeductionTotal.value.contains(Dollar(expectedSelfEmploymentTaxDeductionTotal)))
     }
-    println(s"Completed ${dataTable.length} tests for calculating self-employment tax and SE tax deduction")
   }
 
   test("test IRA deduction: applies correct limit") {
@@ -203,9 +202,6 @@ class SelfEmploymentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
         assert(actualRetirementPlanDeduction.value.contains(Dollar(expectedActualSelfEmployedRetirementPlanDeduction)))
     }
-    println(
-      s"Completed ${dataTable.length} SE retirement plan deduction scenarios",
-    )
   }
 
   test("test SE health insurance deduction: applies correct limit") {
@@ -249,9 +245,6 @@ class SelfEmploymentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
         assert(actual.value.contains(Dollar(expectedSelfEmploymentHealthInsuranceDeduction)))
     }
-    println(
-      s"Completed ${dataTable.length} SE health insuracne deduction scenarios",
-    )
   }
 
 }

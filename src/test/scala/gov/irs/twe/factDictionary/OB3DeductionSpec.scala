@@ -119,7 +119,6 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
         assert(actual.value.contains(Dollar(nonItemizerCharitableContributionDeduction)))
     }
-    println(s"Completed ${dataTable.length} tests for non-itemizer charitable deduction")
   }
 
   test("test OB3 70203: car loan interest limit and phase out") {
@@ -205,7 +204,6 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
         assert(actual.value.contains(Dollar(qualifiedPersonalVehicleLoanInterestDeduction)))
     }
-    println(s"Completed ${dataTable.length} tests for car loan interest limit and phase out")
   }
 
   test("test OB3 70103: senior deduction eligibility") {
@@ -298,7 +296,6 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
         assert(actual.value.contains(eligibleTaxpayers))
     }
-    println(s"Completed ${dataTable.length} tests for senior deduction eligibility based on filing status")
   }
 
   test("test OB3 70103: senior deduction phase out and limit") {
@@ -443,6 +440,5 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
         assert(actual.value.contains(Dollar(expectedSeniorDeduction)))
     }
-    println(s"Completed ${dataTable.length} tests for senior deduction phase out ")
   }
 }

@@ -63,6 +63,5 @@ class NetInvestmentIncomeTaxSpec extends AnyFunSuite with TableDrivenPropertyChe
         assert(actual.value.contains(Dollar(netInvestmentIncomeTax)))
 
     }
-    println(s"Completed ${dataTable.length} tests for calculating net investment income tax ")
   }
 }

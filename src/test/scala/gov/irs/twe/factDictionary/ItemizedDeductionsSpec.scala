@@ -151,7 +151,6 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
 
       assert(actual.value.contains(Dollar(expectedItemized)))
     }
-    println(s"Completed ${dataTable.length} tests for calculating itemized deduction limits")
   }
 
   test("test OB3 70120: simple SALT cap") {
@@ -172,7 +171,6 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
 
       assert(actualSALT.value.contains(Dollar(expectedStateAndLocalTaxPayments)))
     }
-    println(s"Completed ${dataTable.length} tests for calculating SALT cap")
   }
 
   test("test OB3 70120: SALT phase down for high earners") {
@@ -221,7 +219,6 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
 
       assert(actualSALTDeduction.value.contains(Dollar(expectedStateAndLocalTaxPaymentsTotal)))
     }
-    println(s"Completed ${dataTable.length} tests for calculating phase down")
   }
 
 }

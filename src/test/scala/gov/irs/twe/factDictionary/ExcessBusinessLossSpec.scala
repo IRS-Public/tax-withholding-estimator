@@ -90,6 +90,5 @@ class ExcessBusinessLossSpec extends AnyFunSuite with TableDrivenPropertyChecks 
         assert(actual.value.contains(Dollar(expectedExcessBusinessLossAdjustment)))
 
     }
-    println(s"Completed ${dataTable.length} tests for calculating excess business loss adjustment ")
   }
 }

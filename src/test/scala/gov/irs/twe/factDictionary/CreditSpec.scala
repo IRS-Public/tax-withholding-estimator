@@ -95,9 +95,6 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       val actualCtc = graph.get("/totalCtc")
       assert(actualCtc.value.contains(Dollar(expectedTotalCtc)))
     }
-    println(
-      s"Completed ${dataTable.length} CTC scenarios for calculating total non-refundable CTC",
-    )
   }
 
   test("test ODC: derives and phaseouts correctly") {
@@ -179,9 +176,6 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       assert(actualOdc.value.contains(Dollar(expectedTotalOdc)))
 
     }
-    println(
-      s"Completed ${dataTable.length} ODC scenarios for calculating total non-refundable ODC",
-    )
   }
 
   test("test ACTC: derives and phaseouts correctly with no ODC dependents") {
@@ -280,9 +274,6 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         assert(actualRemainingCtcAndOdc.value.contains(Dollar(remainingCtcAndOdc)))
         assert(actualTotalPotentialActc.value.contains(Dollar(totalPotentialActc)))
     }
-    println(
-      s"Completed ${dataTable.length} ACTC scenarios for calculating total non-refundable CTC",
-    )
   }
 
   test("test ACTC and total CDC/ODC: derives and phaseouts correctly with both CTC and ODC dependents") {
@@ -393,9 +384,6 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         assert(actualRemainingCtcAndOdc.value.contains(Dollar(remainingCtcAndOdc)))
         assert(actualTotalPotentialActc.value.contains(Dollar(totalPotentialActc)))
     }
-    println(
-      s"Completed ${dataTable.length} ACTC, CTC and ODC scenarios for calculating total non-refundable and refundable portions of CTC/ODC with CTC and ODC qualifying dependents",
-    )
   }
   test("test CDCC: derives and phaseouts correctly with varying AGI, qualifying persons and qualifying expenses") {
     val dataTable = Table(
@@ -499,9 +487,6 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         val actualCdcc = graph.get("/creditForChildAndDependentCareExpenses")
         assert(actualCdcc.value.contains(Dollar(expectedCdcc)))
     }
-    println(
-      s"Completed ${dataTable.length} CDCC scenarios",
-    )
   }
   test("test adoption credit: applies refundability and thresholds correctly") {
     val dataTable = Table(
@@ -564,9 +549,6 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         assert(adoptionCreditRefundable.value.contains(Dollar(expectedAdoptionCreditRefundable)))
         assert(adoptionCreditNonRefundable.value.contains(Dollar(expectedAdoptionCreditNonRefundable)))
     }
-    println(
-      s"Completed ${dataTable.length} adoption credit scenarios",
-    )
   }
 
   test("test education credits: applies refundability and thresholds correctly") {
@@ -662,9 +644,6 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         assert(americanOpportunityCredit.value.contains(Dollar(expectedAmericanOpportunityCredit)))
         assert(lifetimeLearningCredit.value.contains(Dollar(expectedLifetimeLearningCredit)))
     }
-    println(
-      s"Completed ${dataTable.length} education credit eligibility and calculation scenarios",
-    )
   }
 
   test("test education credit: $0 credit when filers are ineligible") {
@@ -756,9 +735,6 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         assert(americanOpportunityCredit.value.contains(Dollar(expectedAmericanOpportunityCredit)))
         assert(lifetimeLearningCredit.value.contains(Dollar(expectedLifetimeLearningCredit)))
     }
-    println(
-      s"Completed ${dataTable.length} education credit ineligibility scenarios",
-    )
   }
 
   test("test EITC: calculation and phase out are calculated correctly") {
@@ -925,9 +901,6 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
 
         assert(actualEitc.value.contains(Dollar(expectedEitc)))
     }
-    println(
-      s"Completed ${dataTable.length} EITC calculation scenarios",
-    )
   }
 
   test("test EITC: ineligible taxpayers do not receive EITC") {
@@ -1050,8 +1023,5 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         val actualEitc = graph.get("/earnedIncomeCredit")
         assert(actualEitc.value.contains(Dollar(expectedEitc)))
     }
-    println(
-      s"Completed ${dataTable.length} EITC ineligibility scenarios",
-    )
   }
 }

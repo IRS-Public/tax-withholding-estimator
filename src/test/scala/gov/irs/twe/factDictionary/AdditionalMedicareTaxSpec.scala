@@ -167,6 +167,5 @@ class AdditionalMedicareTaxSpec extends AnyFunSuite with TableDrivenPropertyChec
         assert(actualAdditionalMedicareTax.value.contains(Dollar(expectedAdditionalMedicareTax)))
 
     }
-    println(s"Completed ${dataTable.length} tests for calculating additional medicare tax ")
   }
 }
