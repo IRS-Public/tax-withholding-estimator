@@ -259,6 +259,9 @@ val SHEET_ROW_FACT_MAPPINGS = Map(
   "paymentYTD4" -> s"/jobs/#$JOB_4_ID/yearToDateIncome",
   "taxWhPerPPd4" -> s"/jobs/#$JOB_4_ID/amountWithheldLastPaycheck",
   "taxWhYTD4" -> s"/jobs/#$JOB_4_ID/yearToDateWithholding",
+  // Self employment income
+  "selfEmploymentAmount-User" -> s"/grossSelfEmploymentIncomeSelf",
+  "selfEmploymentAmount-Spouse" -> s"/grossSelfEmploymentIncomeSpouse",
   // Social Security #1
   "Start date" -> s"/socialSecuritySources/#$SS_ID/startDate",
   "End date" -> s"/socialSecuritySources/#$SS_ID/endDate",
@@ -275,4 +278,11 @@ val SHEET_ROW_FACT_MAPPINGS = Map(
   "Car loan interest" -> "/personalVehicleLoanInterestAmount",
   "qualChildrenCDCC" -> "/ctcEligibleDependents",
   "How many QC for EITC" -> "/eitcQualifyingChildren",
+  // Itemized Deductions
+  "Interest you Paid" -> "/qualifiedMortgageInterestAndInvestmentInterestExpenses",
+  "SALT you paid" -> "/stateAndLocalTaxPayments",
+  "MedicalExpenses" -> "/medicalAndDentalExpenses",
+  "Gifts to Charity" -> "/charitableContributions",
+  "Casualty Lossess" -> "/casualtyLossesTotal",
+  "Other Itemized Deductions" -> "/otherDeductionsTotal",
 )
