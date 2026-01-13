@@ -56,6 +56,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == Dollar(0))
   }
 
+  // Column D
   test("Married filing jointly, salary, 1 child, multiple incomes, car loan interest") { td =>
     val scenario = td.scenario
 
@@ -80,5 +81,32 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     assert(scenario.getFact("/totalTax") == Dollar(34662)) // note: this is off by $2 from spreadsheet
     assert(scenario.getFact("/totalOwed") == expectedTotalOwed)
     assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == Dollar(595)) // note: $1 off
+  }
+
+  // Column AF
+  test("Single, salary, full deduction") { td =>
+    val scenario = td.scenario
+
+    val expectedIncomeTotal = Dollar(scenario.getInput("Net pre-tax income"))
+    val expectedAdjustmentsToIncome = Dollar(scenario.getInput("Total Adjustments"))
+    val expectedAgi = Dollar(scenario.getInput("AGI"))
+    val expectedTotalDeductions = Dollar(scenario.getInput("Total standard or itemized deductions"))
+    val expectedTaxableIncome = Dollar(scenario.getInput("Taxable income"))
+    val expectedTotalNonRefundableCredits = Dollar(scenario.getInput("Total non-refundable credits"))
+    val expectedTotalRefundableCredits = Dollar(scenario.getInput("Total refundable credits"))
+    val expectedTotalTax = Dollar(scenario.getInput("Income tax before refundable credits"))
+    val expectedTotalOwed = Dollar(scenario.getInput("Total tax after refundable credits"))
+    val expectedLine4c = Dollar(scenario.getInput("W-4 Line4cAmount1"))
+
+    assert(scenario.getFact("/incomeTotal") == expectedIncomeTotal)
+    assert(scenario.getFact("/adjustmentsToIncome") == expectedAdjustmentsToIncome)
+    assert(scenario.getFact("/agi") == expectedAgi)
+    assert(scenario.getFact("/totalDeductions") == expectedTotalDeductions)
+    assert(scenario.getFact("/taxableIncome") == expectedTaxableIncome)
+    assert(scenario.getFact("/totalNonRefundableCredits") == expectedTotalNonRefundableCredits)
+    assert(scenario.getFact("/totaRefundableCredits") == expectedTotalRefundableCredits)
+    assert(scenario.getFact("/totalTax") == expectedTotalTax)
+    assert(scenario.getFact("/totalOwed") == expectedTotalOwed)
+    assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == expectedLine4c)
   }
 }
