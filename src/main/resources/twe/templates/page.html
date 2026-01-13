@@ -9,7 +9,7 @@
   <a class="usa-skipnav" href="#main-content" th:text="#{layout.skip-to-main}"></a>
   <header>
     <div th:replace="fragments/usa-banner"></div>
-    <div class="logo-banner"><img src="/twe/resources/img/irs-logo.svg" alt="IRS Logo"></div>
+    <div class="logo-banner"><img src="/twe/resources/img/irs-logo.svg" th:alt="#{layout.irs.logo-alt-text}"></div>
   </header>
 
   <main id="main-content">
@@ -60,8 +60,8 @@
       <section data-testid="identifierMasthead" class="usa-identifier__section usa-identifier__section--masthead" th:aria-label="#{layout.identifier.agency-identifier}">
         <div class="usa-identifier__container">
           <div data-testid="identifierLogos" class="usa-identifier__logos">
-            <a class="usa-identifier__logo" href="https://irs.gov">
-              <img src="/twe/resources/img/irs_logo_bk.svg" class="usa-identifier__logo-img" th:alt="#{layout.irs.logo-alt-text}">
+            <a class="usa-identifier__logo" href="https://irs.gov" th:aria-label="#{layout.irs.domain}">
+              <img src="/twe/resources/img/irs_logo_bk.svg" class="usa-identifier__logo-img" alt="">
             </a>
           </div>
           <div data-testid="identifierIdentity" class="usa-identifier__identity">

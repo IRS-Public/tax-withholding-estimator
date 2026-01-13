@@ -33,7 +33,7 @@
     "wcag/h37": [
       "error",
       {
-        "allowEmpty": false,
+        "allowEmpty": true,
         "alias": ["th:alt"]
       }
     ],
