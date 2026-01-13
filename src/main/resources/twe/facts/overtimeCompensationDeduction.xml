@@ -86,8 +86,6 @@
           <Any>
             <Dependency path="/hasOvertimeCompThisTaxYear"/>
             <Dependency path="/isFlsaNonExempt"/>
-            <Dependency path="/primaryFilerHasSSN"/>
-            <Dependency path="/secondaryFilerHasSSN"/>
           </Any>
           <GreaterThan>
             <Left>

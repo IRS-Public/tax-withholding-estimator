@@ -187,7 +187,7 @@ class FgSet extends HTMLElement {
   validateRequiredFields () {
     const isMissing = !this.isComplete()
     if (isMissing) {
-      this.setValidationError('This field is required')
+      this.setValidationError('This question is required')
     } else {
       this.clearValidationError()
     }

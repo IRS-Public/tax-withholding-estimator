@@ -61,10 +61,6 @@
       <Derived>
         <All>
           <Dependency path="/doTipsExceedSelfEmploymentIncome"/>
-          <Any>
-            <Dependency path="/primaryFilerHasSSN"/>
-            <Dependency path="/secondaryFilerHasSSN"/>
-          </Any>
           <GreaterThan>
             <Left>
               <Dependency path="/qualifiedTipIncome"/>

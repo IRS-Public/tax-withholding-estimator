@@ -784,10 +784,6 @@ class TY25TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks
     "$type": "DollarWrapper",
     "item": "0.00"
   },
-  "/primaryFilerHasSSN": {
-    "$type": "BooleanWrapper",
-    "item": true
-  },
   "/primaryFilerIsBlind": {
     "$type": "BooleanWrapper",
     "item": false
@@ -1033,10 +1029,6 @@ class TY25TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks
     "$type": "DollarWrapper",
     "item": "0.00"
   },
-  "/primaryFilerHasSSN": {
-    "$type": "BooleanWrapper",
-    "item": true
-  },
   "/primaryFilerIsBlind": {
     "$type": "BooleanWrapper",
     "item": false
@@ -1232,10 +1224,6 @@ class TY25TaxCalculationsSpec extends AnyFunSuite with TableDrivenPropertyChecks
   "/jobs/#968b66ab-a22f-469b-93e7-d5f3e78cc36a/hsaOrFsaContributions": {
     "$type": "DollarWrapper",
     "item": "0.00"
-  },
-  "/primaryFilerHasSSN": {
-    "$type": "BooleanWrapper",
-    "item": true
   },
   "/primaryFilerIsBlind": {
     "$type": "BooleanWrapper",

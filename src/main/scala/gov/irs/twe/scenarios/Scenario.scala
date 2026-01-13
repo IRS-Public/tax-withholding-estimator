@@ -212,8 +212,6 @@ val SHEET_ROW_FACT_MAPPINGS = Map(
   "Spouse 65 or Older (1=yes)" -> "/secondaryFilerAge65OrOlder",
   "Blind (1=yes)" -> "/primaryFilerIsBlind",
   "Spouse Blind (1=yes)" -> "/secondaryFilerIsBlind",
-  "Valid SSN (self)" -> "/primaryFilerHasSSN",
-  "Valid SSN (spouse)" -> "/secondaryFilerHasSSN",
   "Claimed as a Dependent" -> "/primaryFilerIsClaimedOnAnotherReturn",
   "Plan to claim dependents?" -> "/primaryFilerIsClaimingDependents",
   // Previous jobs

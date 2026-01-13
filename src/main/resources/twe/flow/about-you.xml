@@ -4,64 +4,89 @@
   <page title="About you" route="about-you.html">
     <section>
       <h2>About You</h2>
+      <p>Tell us about yourself. Your responses will help us learn which tax benefits you could be eligible for, which can impact how much tax you withhold.</p>
+
       <fg-set path="/primaryFilerAge65OrOlder">
-        <question>Will you be 65 years old or older on December 31, 2025?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/filingStatus">
-        <question>What filing status will you use for your tax return?</question>
-        <modal-link for="modal-filing-status">Which filing status should I use?</modal-link>
-        <input type="enum" options-path="/filingStatusOptions">
-          <option value="single">Single</option>
-          <option value="marriedFilingJointly">Married filing jointly</option>
-          <option value="marriedFilingSeparately">Married filing separately</option>
-          <option value="headOfHousehold">Head of Household</option>
-          <option value="qualifiedSurvivingSpouse">Qualifying Widow</option>
-        </input>
-      </fg-set>
-      <h3 class="form-actions">Your Household</h3>
-      <fg-set path="/isMFSLivedTogether" if-true="/isFilingStatusMFS">
-        <question>Did you and your spouse live together in 2025?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/primaryFilerIsClaimingDependents">
-        <question>Do you plan to claim dependents on your 2025 tax return?</question>
+        <question>Will you be 65 years old or older on December 31, <fg-show path="/taxYear" />?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/primaryFilerIsBlind">
         <question>Are you blind?</question>
         <input type="boolean"/>
       </fg-set>
-      <fg-set path="/primaryFilerHasSSN">
-        <question>Do you have an SSN?</question>
+      <fg-set path="/primaryFilerIsClaimingDependents">
+        <question>Do you plan to claim dependents on your <fg-show path="/taxYear"/> tax return?</question>
+        <modal-link for="modal-claiming-dependents">Who can I claim as a dependent?</modal-link>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/primaryFilerIsClaimedOnAnotherReturn">
-        <question>Can anyone else claim you as a dependent on their tax return?</question>
+        <question>Can you be claimed as a dependent on someone else’s tax return?</question>
+        <modal-link for="modal-primary-claimed-as-dependent">How do I know if I’m someone’s dependent?</modal-link>
         <input type="boolean"/>
       </fg-set>
-      <h3 condition="/isFilingStatusMFJ" operator="isTrue">Spouse</h3>
+      <fg-set path="/filingStatus">
+        <question>Which filing status will you use to file federal taxes in <fg-show path="/taxYear"/>?</question>
+        <modal-link for="modal-filing-status">Which filing status should I use?</modal-link>
+        <input type="enum" options-path="/filingStatusOptions">
+          <option value="single">Single</option>
+          <option value="marriedFilingJointly">Married Filing Jointly</option>
+          <option value="marriedFilingSeparately">Married Filing Separately</option>
+          <option value="headOfHousehold">Head of Household</option>
+          <option value="qualifiedSurvivingSpouse">Qualifying Widow(er)</option>
+        </input>
+      </fg-set>
+
+      <h3>Spouse</h3>
+      <p condition="/filingStatus" operator="isIncomplete">If you plan to file using Married Filing Jointly, we may need to ask more questions about your spouse.</p>
+      <p condition="/isFilingStatusMFJ" operator="isFalse">You can continue. Since you don't plan to file using Married Filing Jointly, we don't need to ask any more questions.</p>
+      <p condition="/isFilingStatusMFJ" operator="isTrue">If you plan to file using Married Filing Jointly, we may need to ask more questions about your spouse.</p>
       <fg-set path="/secondaryFilerAge65OrOlder" if-true="/isFilingStatusMFJ">
-        <question>Will your spouse be 65 years old or older on December 31, 2025?</question>
+        <question>Will your spouse be 65 years old or older on December 31, <fg-show path="/taxYear"/>?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/secondaryFilerIsBlind" if-true="/isFilingStatusMFJ">
         <question>Is your spouse blind?</question>
         <input type="boolean"/>
       </fg-set>
-      <fg-set path="/secondaryFilerHasSSN" if-true="/isFilingStatusMFJ">
-        <question>Does your spouse have an SSN?</question>
-        <input type="boolean"/>
-      </fg-set>
       <fg-set path="/secondaryFilerIsClaimedOnAnotherReturn" if-true="/isFilingStatusMFJ">
-        <question>Can anyone else claim your spouse as a dependent on their tax return?</question>
+        <question>Can your spouse be claimed as a dependent on someone else's tax return?</question>
+        <modal-link for="modal-secondary-claimed-as-dependent">How do I know if my spouse could be a dependent?</modal-link>
         <input type="boolean"/>
       </fg-set>
       <h2>Start over</h2>
+      <!--// TODO: Move to dev panel-->
       <fg-reset>
         <button class="usa-button usa-button--outline" type="reset">Start over</button>
       </fg-reset>
+      <!--// /TODO -->
     </section>
+    <modal-dialog id="modal-claiming-dependents">
+      <modal-heading>Who can I claim as a dependent?</modal-heading>
+      <modal-content>
+        <p>Dependents are typically:</p>
+        <ul>
+          <li>Children under the age of 19</li>
+          <li>Students under the age of 24 who live with their parents</li>
+          <li>Relatives or members of your household who get more than half of their financial support from you and who have a gross income under $5,050</li>
+        </ul>
+        <p>You can’t claim your spouse as a dependent if you file jointly.</p>
+        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/dependents">Learn more about dependents.</a></p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-primary-claimed-as-dependent">
+      <modal-heading>How do I know if I’m someone’s dependent?</modal-heading>
+      <modal-content>
+        <p>If you relied on someone else (other than you spouse) for support in <fg-show path="/taxYear"/>, they might be able to claim you as a dependent on their federal tax return.</p>
+        <p>There are a few factors that determine whether someone can claim you as a dependent, including:</p>
+        <ul>
+          <li>Your relationship to that person</li>
+          <li>How much they supported you, financially and in other ways</li>
+          <li>If you lived with them and for how long</li>
+        </ul>
+        <p>Review Table 5 in <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">IRS Publication 501</a> to determine if someone else might be able to claim you.</p>
+        <p>Keep in mind that you aren’t someone else’s dependent if you paid for more than half of your own support (or if your spouse did).</p>
+      </modal-content>
+    </modal-dialog>
     <modal-dialog id="modal-filing-status">
       <modal-heading>Which filing status should I use?</modal-heading>
       <modal-content>
@@ -69,21 +94,33 @@
         <p>If you had a change in your martial status or household in the past year, you may need to use a different filing status for a more accurate estimate.</p>
         <p>Each filing status has different requirements.</p>
         <p>
-          <strong>Married Filing Jointly and Married Filing Separately:</strong>
+          <strong>Single:</strong>
         </p>
         <ul>
-          <li>You must be married</li>
-          <li>You must meet specific citizenship or residency requirements</li>
+          <li>You can't be married</li>
+        </ul>
+        <p>
+          <strong>Married Filing Jointly:</strong>
+        </p>
+        <ul>
+          <li>You're married or your spouse died during the year</li>
+        </ul>
+        <p>
+          <strong>Married Filing Separately:</strong>
+        </p>
+        <ul>
+          <li>You're married</li>
+          <li>You don't plan to file together with your spouse (most couples save money by filing jointly)</li>
         </ul>
         <p>
           <strong>Head of Household:</strong>
         </p>
         <ul>
           <li>You can't be married (or you're considered unmarried for tax purposes)</li>
-          <li>You must have paid more than half the cost of keeping up a home for a family member or member of your household for a specific amount of time, and they must meet certain requirements</li>
+          <li>You paid more than half the cost of keeping up a home for a family member or member of your household for a specific amount of time, and they must meet certain requirements</li>
         </ul>
         <p>
-          <strong>Surviving Spouse:</strong>
+          <strong>Qualifying Widow(er):</strong>
         </p>
         <ul>
           <li>Your spouse must have died in <fg-show path="/lastTaxYear"/> or <fg-show path="/taxYearMinusTwo"/></li>
@@ -92,14 +129,23 @@
           <li>You pay more than half the cost of keeping up your home</li>
         </ul>
         <p>
-          <strong>Single</strong>
-        </p>
-        <ul>
-          <li>You can't be married</li>
-        </ul>
-        <p>
           <a target="_blank" href="https://www.irs.gov/filing/filing-status">Learn more about filing statuses<span class="usa-sr-only"> (opens in a new tab)</span></a>
         </p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-secondary-claimed-as-dependent">
+      <modal-heading>How do I know if my spouse could be a dependent?</modal-heading>
+      <modal-content>
+        <p>You can’t claim your spouse as a dependent, even if they relied on you financially.</p>
+        <p>If your spouse relied on someone else (other than you) for support in <fg-show path="/taxYear"/>, the other person might be able to claim your spouse as a dependent on their federal tax return.</p>
+        <p>There are a few factors that determine whether someone can claim your spouse as a dependent, including:</p>
+        <ul>
+          <li>Your spouse's relationship to that person</li>
+          <li>How much they supported your spouse, financially and in other ways</li>
+          <li>If your spouse lived with them and for how long</li>
+        </ul>
+        <p>Review Table 5 in <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">IRS Publication 501</a> to determine if someone else might be able to claim your spouse.</p>
+        <p>Keep in mind that your spouse isn’t someone else’s dependent if your spouse paid for more than half of their own support (or if you did).</p>
       </modal-content>
     </modal-dialog>
   </page>
