@@ -9,3 +9,10 @@
   margin: var(--units-2);
   vertical-align: middle;
 }
+
+.gtm-noscript {
+  display: none;
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
