@@ -1,5 +1,7 @@
 PORT ?= 3000
 TWE_RESOURCES_DIR := ./src/main/resources/twe
+TWE_OUTPUT_DIR := ./out
+HTML_VALIDATE_TARGET := ../../../../out/**/*.html
 
 FLOW_DIR := $(TWE_RESOURCES_DIR)/flow
 FLOW_CONFIG := $(FLOW_DIR)/FlowConfig.rng
@@ -47,7 +49,7 @@ format: ## Format the Scala and XML code
 clean: ## Clean all the build artifacts
 	rm -rf ./target/
 	find ./project -name target | xargs rm -rf
-	rm -rf ./out/
+	rm -rf $(TWE_OUTPUT_DIR)
 
 .PHONY: ci-setup
 ci-setup: ## Install validation and linting tools
@@ -67,7 +69,7 @@ validate-xml: ## Validate .xml files
 
 .PHONY: validate-html
 validate-html: ## Validate .html files
-	npm --prefix $(TWE_RESOURCES_DIR) run html-validate
+	npm --prefix $(TWE_RESOURCES_DIR) run html-validate -- "$(HTML_VALIDATE_TARGET)"
 
 .PHONY: validate-js
 validate-js: ## Run javascript linter

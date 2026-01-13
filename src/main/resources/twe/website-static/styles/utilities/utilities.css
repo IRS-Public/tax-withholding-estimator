@@ -34,3 +34,8 @@ a[href^="http"]:not([href*="irs.gov"])::after {
 .usa-identifier a[href^="http"]::after {
   background-image: url("/twe/resources/vendor/uswds-3.13.0/img/usa-icons-bg/launch--white.svg");
 }
+
+.usa-identifier__logo-img {
+  height: 3rem;
+  width: 3rem;
+}

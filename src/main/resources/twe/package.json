@@ -12,7 +12,7 @@
     "neostandard": "^0.12.2"
   },
   "scripts": {
-    "html-validate": "html-validate --config htmlvalidate.json ./**/*.html ../../../../out/**.html",
+    "html-validate": "html-validate --config htmlvalidate.json",
     "lint": "eslint",
     "format": "eslint --fix"
   }

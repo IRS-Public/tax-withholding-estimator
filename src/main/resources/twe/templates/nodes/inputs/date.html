@@ -11,7 +11,7 @@
             <select class="usa-select" th:id="${path} +'-month'" th:name="${path} +'-month'"
                     aria-invalid="false" th:required="${not optional}"
             >
-            <option value="" disabled="true" selected="true" th:text="#{components.date.select}"></option>
+            <option value="" disabled selected th:text="#{components.date.select}"></option>
             <option value="01" th:text="#{components.date.january}"></option>
             <option value="02" th:text="#{components.date.february}"></option>
             <option value="03" th:text="#{components.date.march}"></option>
