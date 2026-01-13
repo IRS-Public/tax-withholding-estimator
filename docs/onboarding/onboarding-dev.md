@@ -6,9 +6,13 @@ You can access the current Fact Graph in the developer console, as `factGraph`.
 
 ### IntelliJ
 
+#### Exclude generated code
+
 You will want to mark `/out` as excluded.
 
-Open the Project/File Explorer tab, right click on the `/out` directory then select `Mark Directory as` -> `Excluded`
+Open the Project/File Explorer tab, right-click on the `/out` directory then select `Mark Directory as` -> `Excluded`
+
+#### Scala extension configuration
 
 With the scala extension installed, IntelliJ will give you a note to enable "nightly" mode to take advantage of the
 latest features.
@@ -17,11 +21,17 @@ You should do this.
 If you run into issues, running `sbt compile` from "Run Anything" and then clicking "Sync all sbt Projects" typically
 resolves things.
 
+#### Automatic code formatting
+
 To enable format on save:
 1. Open Preferences and search for `scalafmt`. Go to `Editor` -> `Code Style` -> `Scala`.
 2. Select `Scalafmt` in the `Formatter` menu.
 3. Within the same Preferences window, search for `actions on save`. Go to `Tools` -> `Actions on Save`.
 4. Ensure `Reformat code` is selected.
+
+#### Live templates
+
+See the [Live Templates README](./ide/intellij/live-templates/README.md) for more information on how to configure Live Templates to simplify common boilerplate additions to TWE development.
 
 ### VSCode
 

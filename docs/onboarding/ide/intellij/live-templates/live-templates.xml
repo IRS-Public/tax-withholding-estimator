@@ -1,0 +1,28 @@
+<template name="fgel" value="&lt;a target=&quot;_blank&quot; class=&quot;usa-link&quot; href=&quot;$URL$&quot;&gt;$LINK_TEXT$&lt;/a&gt;" description="Shortcut for external link" toReformat="false" toShortenFQNames="true">
+  <variable name="URL" expression="" defaultValue="" alwaysStopAt="true" />
+  <variable name="LINK_TEXT" expression="" defaultValue="" alwaysStopAt="true" />
+  <context>
+    <option name="XML" value="true" />
+  </context>
+</template>
+<template name="fgs" value="&lt;fg-show path=&quot;$FACT_PATH$&quot;/&gt;" description="Shortcut for unspecified fg-show" toReformat="false" toShortenFQNames="true">
+  <variable name="FACT_PATH" expression="" defaultValue="" alwaysStopAt="true" />
+  <context>
+    <option name="XML" value="true" />
+  </context>
+</template>
+<template name="fgty" value="&lt;fg-show path=&quot;/taxYear&quot;/&gt;" description="Shortcut for &quot;/taxYear&quot; fg-show" toReformat="false" toShortenFQNames="true">
+  <context>
+    <option name="XML" value="true" />
+  </context>
+</template>
+<template name="fgyays" value="you &lt;span condition=&quot;/isFilingStatusMFJ&quot; operator=&quot;isTrue&quot;&gt;and your spouse&lt;/span&gt;" description="Shortcut for &quot;You {and your spouse}&quot;" toReformat="false" toShortenFQNames="true">
+  <context>
+    <option name="XML" value="true" />
+  </context>
+</template>
+<template name="fgyoys" value="you &lt;span condition=&quot;/isFilingStatusMFJ&quot; operator=&quot;isTrue&quot;&gt;or your spouse&lt;/span&gt;" description="Shortcut for &quot;You {or your spouse}&quot;" toReformat="false" toShortenFQNames="true">
+  <context>
+    <option name="XML" value="true" />
+  </context>
+</template>
