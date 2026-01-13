@@ -125,5 +125,5 @@ audit:
   fact:
     type: "Fact Type:"
     value: "Value:"
-    remove: "Remove fact:"
+    remove: "Remove fact"
     definition: "XML Definition"
