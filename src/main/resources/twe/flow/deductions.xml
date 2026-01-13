@@ -12,12 +12,10 @@
       <p condition="/additionalStandardDeductionItems" operator="isZero">Based on your answers, your standard deduction amount is <fg-show path="/standardDeduction" />.</p>
       <p>If you choose to itemize <a target="_blank" href="https://www.irs.gov/newsroom/tax-basics-understanding-the-difference-between-standard-and-itemized-deductions" class="usa-link">deductions<span class="usa-sr-only"> (opens in a new tab)</span></a>, we'll ask you about your expenses later and calculate the total amount for you.</p>
       <!-- TODO: Make fg-alert flexible enough to do a more basic alert like this as well: -->
-      <div condition="/isFilingStatusMFS" operator="isTrue" class="usa-alert usa-alert--info usa-alert--no-icon">
+      <div condition="/isFilingStatusMFS" operator="isTrue" class="usa-alert usa-alert--info">
         <div class="usa-alert__body">
           <p class="usa-alert__text">
-            If your filing status is Married filing separately, you’re required to take the standard deduction if your spouse does.
-          </p>
-          <p class="usa-alert__text">
+            If your filing status is Married Filing Separately, you’re required to take the standard deduction if your spouse does.
             If your spouse itemizes their deductions, you’re required to itemize your deductions, too.
           </p>
         </div>
