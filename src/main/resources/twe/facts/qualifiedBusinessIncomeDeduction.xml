@@ -134,15 +134,21 @@
     <Fact path="/eligibleIncomeForQualifiedBusinessIncomeDeduction">
       <TaxYear>2026</TaxYear>
       <Derived>
-        <Add>
-          <Dependency path="/netSelfEmploymentIncomeTotal"/>
-          <Dependency path="/selfEmploymentTaxDeduction"/>
-          <Dependency path="/selfEmploymentRetirementPlanDeduction"/>
-          <Dependency path="/sCorpNonPassiveIncome"/>
-          <Dependency path="/rentalIncome"/>
-          <Dependency path="/royaltyIncome"/>
-          <Dependency path="/netScheduleEIncome"/>
-        </Add>
+        <Subtract>
+          <Minuend>
+            <Add>
+              <Dependency path="/netSelfEmploymentIncomeTotal"/>
+              <Dependency path="/selfEmploymentRetirementPlanDeduction"/>
+              <Dependency path="/sCorpNonPassiveIncome"/>
+              <Dependency path="/rentalIncome"/>
+              <Dependency path="/royaltyIncome"/>
+              <Dependency path="/netScheduleEIncome"/>
+            </Add>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/selfEmploymentTaxDeduction"/>
+          </Subtrahends>
+        </Subtract>
       </Derived>
     </Fact>
     <Fact path="/qualifiedBusinessIncome">
