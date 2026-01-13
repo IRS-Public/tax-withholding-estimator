@@ -19,6 +19,7 @@
     <textarea class="usa-textarea" id="load-fact-graph"></textarea>
     <button
       class="usa-button"
+      type="button"
       onclick="loadFactGraph(document.querySelector('#load-fact-graph').value)">
       Set
     </button>
@@ -64,7 +65,7 @@
 </aside>
 
 <template id="audit-panel__fact">
-  <h3 class="audit-panel__fact__path"></h3>
+  <h3 class="audit-panel__fact__path">REPLACE_ME_WITH_FACT_PATH</h3>
   <dl>
     <dt th:text="#{audit.fact.type}"></dt>
     <dd class="audit-panel__fact__type"></dd>

@@ -58,6 +58,7 @@ ci-setup: ## Install validation and linting tools
 
 .PHONY: ci
 ci: ## Run most of the CI checks locally
+	make twe
 	make validate-xml
 	make validate-html
 	make validate-js
