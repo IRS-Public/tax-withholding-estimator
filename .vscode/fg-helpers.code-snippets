@@ -1,0 +1,66 @@
+{
+  // Each snippet is defined under a snippet name and has a prefix, body and description. The prefix is what
+  // is used to trigger the snippet and the body will be expanded and inserted. Possible variables are: $1,
+  // $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+  // Placeholders with the same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+  "Add external link": {
+    "scope": "xml",
+    "prefix": "fgel",
+    "body": [
+      "<a target=\"_blank\" class=\"usa-link\" href=\"${1}\">${2}</a>",
+    ],
+    "description": "Shortcut for external link"
+  },
+  "Add fg-show": {
+    "scope": "xml",
+    "prefix": "fgs",
+    "body": [
+      "<fg-show path=\"${1}\"/>",
+    ],
+    "description": "Shortcut for unspecified fg-show"
+  },
+  "Add fg-show with /taxYear": {
+    "scope": "xml",
+    "prefix": "fgty",
+    "body": [
+      "<fg-show path=\"/taxYear\"/>",
+    ],
+    "description": "Shortcut for fg-show with the fact /taxYear"
+  },
+  "You {and your spouse}": {
+    "scope": "xml",
+    "prefix": "fgyays",
+    "body": [
+      "you <span condition=\"/isFilingStatusMFJ\" operator=\"isTrue\">and your spouse</span>",
+    ],
+    "description": "Shortcut for the text \"You {and your spouse}\" based on filing status",
+  },
+  "You {or your spouse}": {
+    "scope": "xml",
+    "prefix": "fgyoys",
+    "body": [
+      "you <span condition=\"/isFilingStatusMFJ\" operator=\"isTrue\">or your spouse</span>",
+    ],
+    "description": "Shortcut for the text \"You {or your spouse}\" based on filing status",
+  },
+    "Create derived fact": {
+    "prefix": "qq",
+    "body": [
+      "<Fact path=\"/${1:qq}\">",
+      "  <Description>${1:qq}</Description>",
+      "  <Derived>",
+      "    $0",
+      "  </Derived>",
+      "</Fact>"
+    ]
+  }
+}

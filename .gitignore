@@ -24,6 +24,7 @@ metals.sbt
 # vscode
 .vscode/*
 !.vscode/extensions.json
+!.vscode/fg-helpers.code-snippets
 
 # macOS
 .DS_STORE

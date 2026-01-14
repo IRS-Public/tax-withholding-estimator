@@ -59,6 +59,10 @@ _Note 2: the editorconfig.* settings are in here because Editor Config is a sugg
 }
 ```
 
+#### Snippets
+
+We have snippets to simplify common boilerplate additions to TWE development. These snippets are setup automatically through the workspace snippets and they can be found in [fg-helpers.code-snippets](../../.vscode/fg-helpers.code-snippets).
+
 ### Vim / Nvim
 
 1. Install Coursier
