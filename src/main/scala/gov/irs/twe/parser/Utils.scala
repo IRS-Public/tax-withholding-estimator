@@ -14,6 +14,9 @@ object Utils {
     * @param factDictionary
     */
   def validateFact(path: String, factDictionary: FactDictionary): Unit = {
+    if (path.isEmpty) {
+      throw InvalidFormConfig("A fact path for validation was expected but not provided")
+    }
     val factDefinition = factDictionary.getDefinition(path)
     if (factDefinition == null) {
       throw InvalidFormConfig(s"$path not found in the fact dictionary")

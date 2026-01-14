@@ -68,6 +68,9 @@ case class FgSet(
 object FgSet {
   def parse(node: xml.Node, factDictionary: FactDictionary): FgSet = {
     val path = node \@ "path"
+    if (path.isEmpty) {
+      throw InvalidFormConfig("fg-set attribute `path` is required but was missing or empty")
+    }
     // Use .child.mkString instead of .text to preserve XML tags (e.g., <span>, <fg-show>) in mixed content
     val question = (node \ "question").head.child.mkString.trim
     if (question.isEmpty) {
