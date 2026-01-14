@@ -28,7 +28,7 @@
             </When>
             <Then>
               <Today>
-                <Int>0</Int>
+                <Int>-5</Int>
               </Today>
             </Then>
           </Case>

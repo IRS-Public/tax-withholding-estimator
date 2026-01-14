@@ -12,6 +12,42 @@
         <Boolean/>
       </Writable>
     </Fact>
+    <Fact path="/socialSecuritySources/*/filerAssignment">
+      <Description>Whether this is attributed to the primary filer or spouse if MFJ</Description>
+      <Override>
+        <Condition>
+          <Not>
+            <Dependency path="/isFilingStatusMFJ"/>
+          </Not>
+        </Condition>
+        <Default>
+          <Enum optionsPath="/filerAssignmentOption">self</Enum>
+        </Default>
+      </Override>
+      <Writable>
+        <Enum optionsPath="/filerAssignmentOption"/>
+      </Writable>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/notSpouses">
+      <Description>The income doesn't belong to the spouse</Description>
+      <Derived>
+        <Any>
+          <Not>
+            <IsComplete>
+              <Dependency path="../filerAssignment"/>
+            </IsComplete>
+          </Not>
+          <NotEqual>
+            <Left>
+              <Dependency path="../filerAssignment"></Dependency>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignmentOption">spouse</Enum>
+            </Right>
+          </NotEqual>
+        </Any>
+      </Derived>
+    </Fact>
     <Fact path="/socialSecuritySources/*/flowIsAllYearComplete">
       <Derived>
         <IsComplete>
@@ -56,8 +92,108 @@
         <Dollar/>
       </Writable>
     </Fact>
-    <Fact path="/socialSecuritySources/*/allFederalTaxesAlreadyCollected">
-      <Description>If all federal taxes have already been collected for this income source</Description>
+    <Fact path="/socialSecurityWithheldTaxesOptions">
+      <Description>Options for social security federal taxes withheld</Description>
+      <Derived>
+        <EnumOptions>
+          <String>zero</String>
+          <String>seven</String>
+          <String>ten</String>
+          <String>twelve</String>
+          <String>twentyTwo</String>
+        </EnumOptions>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/withheldRate">
+      <Description>The rate at which taxes are withheld</Description>
+      <Writable>
+        <Enum optionsPath="/socialSecurityWithheldTaxesOptions"/>
+      </Writable>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/withheldRateAsRationale">
+      <Description>The rate at which taxes are withheld as a rationale</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="../withheldRate"/>
+                </Left>
+                <Right>
+                  <Enum optionsPath="/socialSecurityWithheldTaxesOptions">zero</Enum>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Rational>0/1</Rational>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="../withheldRate"/>
+                </Left>
+                <Right>
+                  <Enum optionsPath="/socialSecurityWithheldTaxesOptions">seven</Enum>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Rational>7/100</Rational>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="../withheldRate"/>
+                </Left>
+                <Right>
+                  <Enum optionsPath="/socialSecurityWithheldTaxesOptions">ten</Enum>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Rational>1/10</Rational>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="../withheldRate"/>
+                </Left>
+                <Right>
+                  <Enum optionsPath="/socialSecurityWithheldTaxesOptions">twelve</Enum>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Rational>3/25</Rational>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="../withheldRate"/>
+                </Left>
+                <Right>
+                  <Enum optionsPath="/socialSecurityWithheldTaxesOptions">twentyTwo</Enum>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Rational>11/50</Rational>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/hasEnded">
+      <Description>If the social secuirty source has already ended or ended today</Description>
       <Derived>
         <GreaterThanOrEqual>
           <Left>
@@ -69,28 +205,20 @@
         </GreaterThanOrEqual>
       </Derived>
     </Fact>
-    <Fact path="/socialSecuritySources/*/flowIsAllYearCompleteAndTaxesStillBeingCollected">
+    <Fact path="/socialSecuritySources/*/isFutureOrUnknown">
+      <Description>Whether the social security income is still continues into the future or we don't know yet</Description>
       <Derived>
-        <All>
-          <Dependency path="../flowIsAllYearComplete"/>
+        <Any>
           <Not>
-            <Dependency path="../allFederalTaxesAlreadyCollected"/>
+            <IsComplete>
+              <Dependency path="../endDate"/>
+            </IsComplete>
           </Not>
-        </All>
+          <Not>
+            <Dependency path="../hasEnded"/>
+          </Not>
+        </Any>
       </Derived>
-    </Fact>
-    <Fact path="/socialSecuritySources/*/federalTaxesWithheldThisPayment">
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/socialSecuritySources/*/federalTaxesWithheldYtd">
-      <Writable>
-        <Dollar/>
-      </Writable>
     </Fact>
     <Fact path="/socialSecuritySources/*/totalIncome">
       <Derived>
@@ -109,23 +237,10 @@
     </Fact>
     <Fact path="/socialSecuritySources/*/totalFederalTaxesPaid">
       <Derived>
-        <Add>
-          <Dependency path="../federalTaxesWithheldYtd"/>
-          <Multiply>
-            <Dependency path="../federalTaxesWithheldThisPayment"/>
-            <PayrollMonthsBetween>
-              <StartDate>
-                <GreaterOf>
-                  <Dependency path="../startDate"/>
-                  <Dependency path="/today"/>
-                </GreaterOf>
-              </StartDate>
-              <EndDate>
-                <Dependency path="../endDate"/>
-              </EndDate>
-            </PayrollMonthsBetween>
-          </Multiply>
-        </Add>
+        <Multiply>
+          <Dependency path="../withheldRateAsRationale"/>
+          <Dependency path="../totalIncome"/>
+        </Multiply>
       </Derived>
     </Fact>
     <Fact path="/socialSecurityBenefitsIncome">

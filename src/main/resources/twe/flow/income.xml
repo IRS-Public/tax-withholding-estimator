@@ -7,10 +7,7 @@
       <h3>Jobs</h3>
       <fg-alert alert-type="error" alert-key="at-least-one-job" if-true="/declaredDoneAddingIncome">
         <heading>You need to have a job or pension to continue</heading>
-        <p>
-          To continue using the estimator, you need to have at least one job or pension that regularly withholds federal
-          income taxes. If you don&#x2019;t pay any taxes on your income through withholding, you may want to plan to
-          <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <p> To continue using the estimator, you need to have at least one job or pension that regularly withholds federal income taxes. If you don&#x2019;t pay any taxes on your income through withholding, you may want to plan to <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
         </p>
       </fg-alert>
       <fg-collection path="/jobs" item-name="Income source">
@@ -181,27 +178,34 @@
           </select>
         </fg-set>
       </fg-collection>
-      <h3>Social Security income</h3>
-      <p>Enter any Social Security income <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to receive in <fg-show path="/taxYear"/>. </p>
+      <h2>Social Security income</h2>
+      <p>Enter any Social Security income you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> expect to receive in <fg-show path="/taxYear"/>. </p>
       <p>
         <modal-link for="modal-what-counts-social-security">What counts as Social Security income?</modal-link>
       </p>
       <fg-collection path="/socialSecuritySources" item-name="Social Security income">
-        <h3>Timing</h3>
+        <fg-set path="/socialSecuritySources/*/filerAssignment" if-true="/isFilingStatusMFJ">
+          <question>Who is this Social Security income paid to?</question>
+          <input type="enum" options-path="/filerAssignmentOption">
+            <option value="self">Myself</option>
+            <option value="spouse">My spouse</option>
+          </input>
+        </fg-set>
+        <h3 class="form-actions">Timing</h3>
         <fg-set path="/socialSecuritySources/*/isAllYear">
-          <question>Do <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to have this income all year or only part of the year?</question>
+          <question>Do <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> expect to have this income all year or only part of the year?</question>
           <input type="boolean">
             <option value="true">All year (January 1–December 31, <fg-show path="/taxYear"/>)</option>
             <option value="false">Part of the year</option>
           </input>
         </fg-set>
         <fg-set path="/socialSecuritySources/*/startDate" if-false="/socialSecuritySources/*/isAllYear">
-          <question>What’s the first day in <fg-show path="/taxYear"/> <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to receive Social Security?</question>
+          <question>What’s the first day in <fg-show path="/taxYear"/> <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> expect to receive Social Security?</question>
           <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
         <fg-set path="/socialSecuritySources/*/endDate" if-false="/socialSecuritySources/*/isAllYear">
-          <question>What’s the last day in <fg-show path="/taxYear"/> <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to receive Social Security?</question>
+          <question>What’s the last day in <fg-show path="/taxYear"/> <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> expect to receive Social Security?</question>
           <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
@@ -210,24 +214,22 @@
           <content>Once we know more about your income, we’ll ask you additional questions.</content>
         </fg-section-gate>
         <h3 class="form-actions" condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Income</h3>
-        <p condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Use the most recent Social Security statement to enter the following information.</p>
         <fg-set path="/socialSecuritySources/*/monthlyIncome" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
-          <question>What’s the total amount of Social Security benefits <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> receive each month?</question>
+          <question>What’s the monthly benefit amount <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">receive</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">received</span> from Social Security?</question>
+          <modal-link for="modal-fed-tax-social-security-pay-period">What’s the monthly benefit amount and where do I find it?</modal-link>
           <input type="dollar"/>
         </fg-set>
         <h3 class="form-actions" condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Federal taxes</h3>
-        <p condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Use the most recent Social Security statement to enter the following information.</p>
-        <fg-set path="/socialSecuritySources/*/federalTaxesWithheldThisPayment" if-true="/socialSecuritySources/*/flowIsAllYearCompleteAndTaxesStillBeingCollected">
-          <question>How much federal tax has been withheld (paid) for this Social Security payment?</question>
-          <hint>Don’t include state and local taxes or Medicare.</hint>
-          <modal-link for="modal-fed-tax-social-security-pay-period">Where do I find federal taxes per pay period?</modal-link>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/socialSecuritySources/*/federalTaxesWithheldYtd" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
-          <question>How much federal tax has been withheld (paid) year-to-date?</question>
-          <hint>Don’t include state and local taxes or Medicare.</hint>
-          <modal-link for="modal-fed-social-security-tax-ytd">Where do I find federal taxes year-to-date?</modal-link>
-          <input type="dollar"/>
+        <fg-set path="/socialSecuritySources/*/withheldRate" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
+          <question>How much federal tax <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">is</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">was</span> withheld from the Social Security payment each month?</question>
+          <hint>If <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> haven’t chosen to withhold federal taxes, select 0%.</hint>
+          <modal-link for="modal-fed-social-security-tax-withheld">How do I know if I have taxes withheld?</modal-link> modal-fed-tax-social-security-pay-period-en <input type="enum" options-path="/socialSecurityWithheldTaxesOptions">
+            <option value="zero">0%</option>
+            <option value="seven">7%</option>
+            <option value="ten">10%</option>
+            <option value="twelve">12%</option>
+            <option value="twentyTwo">22%</option>
+          </input>
         </fg-set>
       </fg-collection>
       <h3>Trump Account Distribution</h3>
@@ -348,27 +350,30 @@
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-fed-tax-social-security-pay-period">
-      <modal-heading>Where do I find federal taxes per pay period?</modal-heading>
+      <modal-heading>What’s the monthly benefit amount and where do I find it?</modal-heading>
       <modal-content>
-        <p>These are amounts withheld, or taken out of a Social Security payment to pay for federal taxes throughout the year.</p>
-        <p>Where to find the federal taxes paid <strong>per pay period</strong>:</p>
-        <ul>
-          <li>Log in to your <a target="_blank" href="https://www.ssa.gov/myaccount/" class="usa-link">“my Social Security” account<span class="usa-sr-only"/></a> to review your Social Security payments and check for the federal taxes paid for each payment (if you elected to withhold federal taxes).</li>
-          <li>You can also call the Social Security Administration at 1-800-772-1213 to request your federal tax withholding amount.</li>
-        </ul>
-        <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, or other amounts withheld.</p>
+        <p>The monthly benefit amount is the total you receive from Social Security each month before any deductions, Medicare premiums, or taxes are taken out.</p>
+        <p>It’s okay to estimate. To find the exact amount:</p>
+        <ol>
+          <li>Log into <a target="_blank" href="https://www.ssa.gov/myaccount/" class="usa-link">my Social Security account<span class="usa-sr-only"/></a></li>
+          <li>Scroll to the <strong>Benefits and Payments</strong> section</li>
+          <li>Under <strong>Benefit Summary</strong>, use the total monthly benefit before deductions</li>
+        </ol>
+        <p>If you need help finding the monthly benefit amount, call the Social Security Administration at 1-800-772-1213.</p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-fed-social-security-tax-ytd">
-      <modal-heading>Where do I find federal taxes year-to-date?</modal-heading>
+    <modal-dialog id="modal-fed-social-security-tax-withheld">
+      <modal-heading>How do I know if I have taxes withhheld?</modal-heading>
       <modal-content>
-        <p>These are amounts withheld, or taken out of a Social Security payment to pay for federal taxes throughout the year.</p>
-        <p>Where to find the federal taxes paid <strong>year-to-date</strong>:</p>
-        <ul>
-          <li>Log in to your <a target="_blank" href="https://www.ssa.gov/myaccount/" class="usa-link">“my Social Security” account<span class="usa-sr-only"/></a> to review your Social Security payments and check for the federal taxes paid so far for the year (if you elected to withhold federal taxes).</li>
-          <li>You can also call the Social Security Administration at 1-800-772-1213 to request your federal tax withholding amount.</li>
-        </ul>
-        <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, or other amounts withheld.</p>
+        <p>The Social Security Administration doesn’t automatically withhold federal taxes from your Social Security income.</p>
+        <p>You can request to withhold federal taxes from your Social Security income.</p>
+        <p>How to check if you have taxes withheld:</p>
+        <ol>
+          <li>Log into <a target="_blank" href="https://www.ssa.gov/myaccount/" class="usa-link">my Social Security account<span class="usa-sr-only"/></a></li>
+          <li>Select <strong>Voluntary Tax Withholding</strong> to check the percentage withheld</li>
+        </ol>
+        <p>If you didn’t request to withhold taxes, the percentage will be 0%.</p>
+        <p>If you don’t have a my Social Security account, or need help checking your federal withholdings, call the Social Security Administration at 1-800-772-1213.</p>
       </modal-content>
     </modal-dialog>
   </page>

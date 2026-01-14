@@ -65,9 +65,9 @@ def loadScenarioByName(path: os.ReadablePath, scenarioName: String): Scenario = 
 }
 
 private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenario = {
-  // We don't support SS benefit YTD
+  // We don't support SS benefit YTD or SS withholding YTD
   val socialSecurityOverrideFields =
-    List("Start date", "End date", "SS monthly benefit", "SS monthly withholding", "SS withholding YTD")
+    List("Start date", "End date", "SS monthly benefit", "SS monthly withholding")
 
   val csv: Map[String, String] = rows.foldLeft(Map()) { (dict, row) =>
     var inputName = row(INPUT_NAME_COL)
@@ -80,7 +80,36 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   }
 
   // Get each row of the scenario and map it to a specific fact
-  val spreadsheetFacts = SHEET_ROW_FACT_MAPPINGS.map((sheetKey, factName) => factName -> csv(sheetKey))
+  var spreadsheetFacts = SHEET_ROW_FACT_MAPPINGS.map((sheetKey, factName) => factName -> csv(sheetKey))
+
+  // convert SS monthly withholding to a percent and handle as an enum
+  val monthlyBenefit1 = csv("SS monthly benefit").replace("$", "").replace(",", "").toDouble
+  val monthlyWithholding1 = csv("SS monthly withholding").replace("$", "").replace(",", "").toDouble
+  val withholdingEnum1 =
+    if (monthlyWithholding1 == 0.0) "zero"
+    else
+      monthlyWithholding1 / monthlyBenefit1 match {
+        case 0.07 => "seven"
+        case 0.1  => "ten"
+        case 0.12 => "twelve"
+        case 0.22 => "twentyTwo"
+        case _    => throw Exception("Invalid ratio for self social security tax withholdings")
+      }
+  spreadsheetFacts = spreadsheetFacts + (s"/socialSecuritySources/#$SS_ID/withheldRate" -> withholdingEnum1)
+
+  val monthlyBenefit2 = csv("SS monthly benefit2").replace("$", "").replace(",", "").toDouble
+  val monthlyWithholding2 = csv("SS monthly withholding2").replace("$", "").replace(",", "").toDouble
+  val withholdingEnum2 =
+    if (monthlyWithholding2 == 0.0) "zero"
+    else
+      monthlyWithholding2 / monthlyBenefit2 match {
+        case 0.07 => "seven"
+        case 0.1  => "ten"
+        case 0.12 => "twelve"
+        case 0.22 => "twentyTwo"
+        case _    => throw Exception("Invalid ratio for spouse social security tax withholdings")
+      }
+  spreadsheetFacts = spreadsheetFacts + (s"/socialSecuritySources/#$SS_SPOUSE_ID/withheldRate" -> withholdingEnum2)
 
   // Create the fact graph
   val tweFactDictionary = loadTweFactDictionary()
@@ -201,6 +230,15 @@ def convertEnum(value: String, factDefinition: FactDefinition): types.Enum = {
         case "4" => new types.Enum(Some("monthly"), "/payFrequencyOptions")
         case _   => throw Exception(s"$value is not a known enum for /payFrequencyOptions")
       }
+    case "/socialSecurityWithheldTaxesOptions" =>
+      value match {
+        case "zero"      => new types.Enum(Some("zero"), "/socialSecurityWithheldTaxesOptions")
+        case "seven"     => new types.Enum(Some("seven"), "/socialSecurityWithheldTaxesOptions")
+        case "ten"       => new types.Enum(Some("ten"), "/socialSecurityWithheldTaxesOptions")
+        case "twelve"    => new types.Enum(Some("twelve"), "/socialSecurityWithheldTaxesOptions")
+        case "twentyTwo" => new types.Enum(Some("twentyTwo"), "/socialSecurityWithheldTaxesOptions")
+        case _           => throw Exception(s"$value is not a known enum for /socialSecurityWithheldTaxesOptions")
+      }
     case _ => throw Exception(s"Unknown enum path: $factPath")
   }
 }
@@ -266,14 +304,12 @@ val SHEET_ROW_FACT_MAPPINGS = Map(
   "Start date" -> s"/socialSecuritySources/#$SS_ID/startDate",
   "End date" -> s"/socialSecuritySources/#$SS_ID/endDate",
   "SS monthly benefit" -> s"/socialSecuritySources/#$SS_ID/monthlyIncome",
-  "SS monthly withholding" -> s"/socialSecuritySources/#$SS_ID/federalTaxesWithheldThisPayment",
-  "SS withholding YTD" -> s"/socialSecuritySources/#$SS_ID/federalTaxesWithheldYtd",
+  "SS monthly withholding" -> s"/socialSecuritySources/#$SS_ID/withheldRate",
   // Social Security #2
   "Start date2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/startDate",
   "End date2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/endDate",
   "SS monthly benefit2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/monthlyIncome",
-  "SS monthly withholding2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/federalTaxesWithheldThisPayment",
-  "SS withholding YTD2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/federalTaxesWithheldYtd",
+  "SS monthly withholding2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/withheldRate",
   // Supported Credits and Deductions
   "Car loan interest" -> "/personalVehicleLoanInterestAmount",
   "qualChildrenCDCC" -> "/ctcEligibleDependents",
