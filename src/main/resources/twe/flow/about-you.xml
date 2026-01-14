@@ -36,6 +36,14 @@
         </input>
       </fg-set>
 
+      <fg-set path="/isMFSLivedTogether" if-true="/isFilingStatusMFS">
+        <question>Will you and your spouse live together all year in <fg-show path="/taxYear"/>?</question>
+        <input type="boolean">
+          <option value="true">Yes, we'll live together all year</option>
+          <option value="false">No, we won't live together all year</option>
+        </input>
+      </fg-set>
+
       <h3>Spouse</h3>
       <p condition="/filingStatus" operator="isIncomplete">If you plan to file using Married Filing Jointly, we may need to ask more questions about your spouse.</p>
       <p condition="/isFilingStatusMFJ" operator="isFalse">You can continue. Since you don't plan to file using Married Filing Jointly, we don't need to ask any more questions.</p>

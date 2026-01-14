@@ -196,10 +196,13 @@
       </Placeholder>
     </Fact>
     <Fact path="/isMFSLivedTogether">
-      <Description>If TP has MFS filing status and lived with their spouse at any time during the TY</Description>
+      <Description>If TP has MFS filing status and lived with their spouse for the entirety of the TY</Description>
       <Writable>
         <Boolean/>
       </Writable>
+      <Placeholder>
+        <False/>
+      </Placeholder>
     </Fact>
     <Fact path="/trumpAccountDistribution">
       <Name>OB3 70204: Distribution from Trump Account as defined by IRC 530A</Name>
