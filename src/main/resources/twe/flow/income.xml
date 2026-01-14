@@ -181,7 +181,7 @@
           </select>
         </fg-set>
       </fg-collection>
-      <h2>Social Security income</h2>
+      <h3>Social Security income</h3>
       <p>Enter any Social Security income <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to receive in <fg-show path="/taxYear"/>. </p>
       <p>
         <modal-link for="modal-what-counts-social-security">What counts as Social Security income?</modal-link>
@@ -230,7 +230,7 @@
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
-      <h2>Trump Account Distribution</h2>
+      <h3>Trump Account Distribution</h3>
       <fg-set path="/trumpAccountDistribution">
         <question>Distributions from Trump Account</question>
         <input type="dollar"/>
@@ -332,8 +332,8 @@
         <question>How much non-specific other income have you made this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h2>SSA income from Forms SSA-1099 and RRB-1099</h2>
-      <h2>Estimated taxes paid</h2>
+      <h3>SSA income from Forms SSA-1099 and RRB-1099</h3>
+      <h4>Estimated taxes paid</h4>
       <fg-set path="/totalEstimatedTaxesPaid">
         <question>If you [and your spouse] made any estimated tax payments this year, you may deduct those. This does not include taxes withheld from your paycheck .</question>
         <input type="dollar"/>
