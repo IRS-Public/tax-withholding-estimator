@@ -174,4 +174,37 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     assert(scenario.getFact("/totalOwed") == expectedTotalOwed)
     assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == expectedLine4c)
   }
+
+  // Column AJ
+  test("MFJ, salary, full deduction, standard") { td =>
+    val scenario = td.scenario
+
+    val expectedIncomeTotal = Dollar(scenario.getInput("Net pre-tax income"))
+    val expectedAdjustmentsToIncome = Dollar(scenario.getInput("Total Adjustments"))
+    val expectedAgi = Dollar(scenario.getInput("AGI"))
+    val expectedTotalDeductions = Dollar(scenario.getInput("Total standard or itemized deductions"))
+    val expectedTaxableIncome = Dollar(scenario.getInput("Taxable income"))
+    val expectedTotalNonRefundableCredits = Dollar(scenario.getInput("Total non-refundable credits"))
+    val expectedTotalRefundableCredits = Dollar(scenario.getInput("Total refundable credits"))
+    val expectedTotalTax = Dollar(scenario.getInput("Income tax before refundable credits"))
+    val expectedTotalOwed = Dollar(scenario.getInput("Total tax after refundable credits"))
+    val expectedLine3Job1 = Dollar(scenario.getInput("W-4 Line3Amount1"))
+    val expectedLine4aJob1 = Dollar(scenario.getInput("W-4 Line4aAmount1"))
+    val expectedLine4bJob1 = Dollar(scenario.getInput("W-4 Line4bAmount1"))
+    val expectedLine4c = Dollar(scenario.getInput("W-4 Line4cAmount1"))
+
+    assert(scenario.getFact("/incomeTotal") == expectedIncomeTotal)
+    assert(scenario.getFact("/adjustmentsToIncome") == expectedAdjustmentsToIncome)
+    assert(scenario.getFact("/agi") == expectedAgi)
+    assert(scenario.getFact("/totalDeductions") == expectedTotalDeductions)
+    assert(scenario.getFact("/taxableIncome") == expectedTaxableIncome)
+    assert(scenario.getFact("/totalNonRefundableCredits") == expectedTotalNonRefundableCredits)
+    assert(scenario.getFact("/totaRefundableCredits") == expectedTotalRefundableCredits)
+    assert(scenario.getFact("/totalTax") == expectedTotalTax)
+    assert(scenario.getFact("/totalOwed") == expectedTotalOwed)
+    assert(scenario.getFact(s"/jobs/#${scenarios.JOB_1_ID}/w4Line3") == expectedLine3Job1)
+    assert(scenario.getFact(s"/jobs/#${scenarios.JOB_1_ID}/w4Line4a") == expectedLine4aJob1)
+    assert(scenario.getFact(s"/jobs/#${scenarios.JOB_1_ID}/w4Line4b") == expectedLine4bJob1)
+    assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == expectedLine4c)
+  }
 }

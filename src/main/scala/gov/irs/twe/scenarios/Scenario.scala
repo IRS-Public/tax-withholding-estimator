@@ -311,6 +311,7 @@ val SHEET_ROW_FACT_MAPPINGS = Map(
   "SS monthly benefit2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/monthlyIncome",
   "SS monthly withholding2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/withheldRate",
   // Supported Credits and Deductions
+  "studentLoanInterest" -> "/studentLoanInterestAmount",
   "Car loan interest" -> "/personalVehicleLoanInterestAmount",
   "qualChildrenCDCC" -> "/ctcEligibleDependents",
   "How many QC for EITC" -> "/eitcQualifyingChildren",
