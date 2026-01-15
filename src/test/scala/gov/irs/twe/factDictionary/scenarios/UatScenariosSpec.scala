@@ -11,7 +11,7 @@ import os.Path
 // The test name must exactly match the "Key scenario feature" row of the spreadsheet
 class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   val CSV_ROOT: Path = os.pwd / "src" / "test" / "resources" / "csv"
-  val UAT_SHEET: Path = CSV_ROOT / "twe-2026-uat-jan-13-2026.csv"
+  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-01-13.csv"
 
   case class FixtureParam(scenario: scenarios.Scenario)
 
