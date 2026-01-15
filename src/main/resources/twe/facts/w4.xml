@@ -11,6 +11,7 @@
               <Dependency path="/otherIncomeTotal"/>
             </Minuend>
             <Subtrahends>
+              <Dependency path="/qualifiedBusinessIncomeDeduction"/>
               <Dependency path="/adjustmentsToIncome"/>
             </Subtrahends>
           </Subtract>

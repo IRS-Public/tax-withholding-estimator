@@ -3,7 +3,6 @@ package gov.irs.twe.factDictionary.scenarios
 import gov.irs.factgraph.types.Dollar
 import gov.irs.twe.scenarios
 import org.scalatest.{ funsuite, TestData }
-import org.scalatest.funsuite.AnyFunSuite
 import os.Path
 
 // UAT testing scenarios
@@ -81,6 +80,18 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     assert(scenario.getFact("/totalTax") == Dollar(34662)) // note: this is off by $2 from spreadsheet
     assert(scenario.getFact("/totalOwed") == expectedTotalOwed)
     assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == Dollar(595)) // note: $1 off
+  }
+
+  // Column AC
+  test("SE, Wages, QBI") { td =>
+    val scenario = td.scenario
+    val expectedAgi = Dollar(scenario.getInput("AGI"))
+    val expectedTax = Dollar(scenario.getInput("anticipatedTaxB4RefundableCredits"))
+
+    assert(scenario.getFact("/agi") == expectedAgi)
+    assert(scenario.getFact("/qualifiedBusinessIncomeDeduction") == Dollar(5576.20)) // Off by $0.20
+    assert(scenario.getFact("/totalTax") == Dollar(11760)) // Off by $1 from the spreadsheet
+    assert(scenario.getFact("/jobSelectedForExtraWithholding/w4Line4c") == Dollar(209))
   }
 
   // Column AF

@@ -321,18 +321,18 @@
               <True/>
             </When>
             <Then>
-              <!-- When there are no year end jobs, use the job with highest proportion of rest-of-year standard withholding. -->
+              <!-- When there are no year end jobs, use non-past job with highest income. -->
               <IndexOf>
                 <Collection>
                   <Filter path="/jobs">
                     <Equal>
                       <Left>
                         <Maximum>
-                          <Dependency path="/jobs/*/proportionOfRestOfYearStandardWithholding"/>
+                          <Dependency path="/possibleW4Jobs/*/income"/>
                         </Maximum>
                       </Left>
                       <Right>
-                        <Dependency path="proportionOfRestOfYearStandardWithholding"/>
+                        <Dependency path="income"/>
                       </Right>
                     </Equal>
                   </Filter>
@@ -634,6 +634,53 @@
         </GreaterOf>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/pub15Worksheet1aLine1e">
+      <Derived>
+        <Add>
+          <!-- Line 1c -->
+          <Multiply>
+            <Dependency path="../averageTaxablePayPerPayPeriod"/>
+            <Dependency path="../payPeriodsPerYear"/>
+          </Multiply>
+          <!-- Line 1d -->
+          <Switch>
+            <Case>
+              <When>
+                <Equal>
+                  <Left>
+                    <Dependency path=".."/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/jobSelectedForW4Line4a"/>
+                  </Right>
+                </Equal>
+              </When>
+              <Then>
+                <Dependency path="/w4Line4NetChange"/>
+                <!-- <Dollar>0</Dollar> -->
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+          </Switch>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/pub15Worksheet1aLine1h">
+      <Derived>
+        <Add>
+          <Dependency path="../pub15Worksheet1aLine1g"/>
+          <!-- Line 1f -->
+          <!-- <Dependency path="../w4Line4b"/> -->
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/adjustedAnnualWageAmount">
       <Description>Line 1i of Pub 15-T Worksheet 1A</Description>
       <Derived>
@@ -641,13 +688,10 @@
           <Dollar>0</Dollar>
           <Subtract>
             <Minuend>
-              <Multiply>
-                <Dependency path="../averageTaxablePayPerPayPeriod"/>
-                <Dependency path="../payPeriodsPerYear"/>
-              </Multiply>
+              <Dependency path="../pub15Worksheet1aLine1e"/>
             </Minuend>
             <Subtrahends>
-              <Dependency path="../pub15Worksheet1aLine1g"/>
+              <Dependency path="../pub15Worksheet1aLine1h"/>
             </Subtrahends>
           </Subtract>
         </GreaterOf>

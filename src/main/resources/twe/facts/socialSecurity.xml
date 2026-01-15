@@ -257,6 +257,10 @@
           <Dependency path="/socialSecuritySources/*/totalFederalTaxesPaid"/>
         </CollectionSum>
       </Derived>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+
     </Fact>
     <Fact path="/netSocialSecurityBenefitsIncome">
       <Derived>

@@ -769,6 +769,15 @@
         </LastDayOfMonth>
       </Derived>
     </Fact>
+    <Fact path="/possibleW4Jobs">
+      <Derived>
+        <Filter path="/jobs">
+          <Not>
+            <Dependency path="isPastJob"/>
+          </Not>
+        </Filter>
+      </Derived>
+    </Fact>
     <Fact path="/yearEndJobs">
       <Derived>
         <Filter path="/jobs">

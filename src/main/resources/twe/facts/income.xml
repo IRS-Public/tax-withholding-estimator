@@ -463,6 +463,7 @@ and car loan interest deduction
       <Derived>
         <Add>
           <Dependency path="/ordinaryDividendsIncome"/>
+          <Dependency path="/netSelfEmploymentIncomeTotal"/>
           <Dependency path="/unemploymentInsuranceIncome"/>
           <Dependency path="/taxableInterestIncome"/>
           <Dependency path="/grossCapitalGainOrLoss"/>
@@ -493,7 +494,6 @@ and car loan interest deduction
           <Dependency path="/jobsIncomeTotal"/>
           <Dependency path="/pensionsIncomeTotal"/>
           <Dependency path="/otherIncomeWithoutSSABenefitsTaxableAmountTotal"/>
-          <Dependency path="/netSelfEmploymentIncomeTotal"/>
           <Dependency path="/excessBusinessLossAdjustment"/>
         </Add>
       </Derived>
