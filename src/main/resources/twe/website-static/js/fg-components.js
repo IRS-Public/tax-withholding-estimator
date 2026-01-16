@@ -168,6 +168,13 @@ class FgSet extends HTMLElement {
     // Place the error div just before the invalid field location
     errorLocation.insertAdjacentElement('beforebegin', errorDiv)
 
+    // If the element is inside of a closed accordion, open it
+    const accordionContent = this.closest('.usa-accordion__content')
+    if (accordionContent && accordionContent.getAttribute('hidden') !== null) {
+      accordionContent.removeAttribute('hidden')
+      accordionContent.previousElementSibling.querySelector('.usa-accordion__button').setAttribute('aria-expanded', 'true')
+    }
+
     // Set aria-description
     const existingAriaDescribedby = elementWithDescription.getAttribute('aria-describedby')
     elementWithDescription.setAttribute('aria-describedby', `${existingAriaDescribedby || ''} ${errorId}`.trim())
