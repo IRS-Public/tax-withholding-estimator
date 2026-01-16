@@ -4,9 +4,13 @@
 }
 
 .back-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   font-size: var(--font-size-md);
+}
+
+.back-link:visited {
+  color: var(--primary);
 }
 
 .usa-prose a,
