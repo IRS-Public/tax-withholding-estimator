@@ -23,8 +23,11 @@
                         </svg>
                         <th th:if="${itemName == ''}" th:text="#{components.fg-collection.buttons.remove-item}"></th>
                         <th th:if="${itemName != ''}">
+                          <span>
                           <th:block th:text="#{components.fg-collection.buttons.remove}"></th:block>
                           <th:block th:text="${itemName}"></th:block>
+                          <span class="collection-item-number"></span>
+                          </span>
                         </th>
                     </button>
                 </div>
