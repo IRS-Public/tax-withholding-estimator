@@ -73,7 +73,7 @@ object Website {
       context.setVariable("flags", flags.asJava)
 
       // Add a link for the next page if it's not the last one
-      if (index + 1 < navPages.size) {
+      if (index < flow.pages.size - 1) {
         val nextPageHref = flow.pages(index + 1).route
         context.setVariable("nextPageHref", nextPageHref)
       }
