@@ -18,7 +18,7 @@ concurrency:
 jobs:
   build-deploy-twe:
     if: vars.build == 'true'
-    uses: IRSDigitalService/shared-actions/.github/workflows/build-deploy-twe.yml@22748b01c44bf92eb077508a919258f0ac3b8ef6
+    uses: IRSDigitalService/shared-actions/.github/workflows/build-deploy-twe.yml@980edf715ef825d6a760491a9fd57e540581669b
     permissions:
       id-token: write
       contents: read
