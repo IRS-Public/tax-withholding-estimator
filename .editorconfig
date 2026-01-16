@@ -4,3 +4,6 @@ trim_trailing_whitespace = true
 
 [*.xml]
 indent_size = 2
+
+[*.js]
+indent_size = 2
