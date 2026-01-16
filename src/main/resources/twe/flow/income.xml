@@ -178,7 +178,7 @@
           </select>
         </fg-set>
       </fg-collection>
-      <h2>Social Security income</h2>
+      <h3>Social Security income</h3>
       <p>Enter any Social Security income you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> expect to receive in <fg-show path="/taxYear"/>. </p>
       <p>
         <modal-link for="modal-what-counts-social-security">What counts as Social Security income?</modal-link>
@@ -191,7 +191,7 @@
             <option value="spouse">My spouse</option>
           </input>
         </fg-set>
-        <h3 class="form-actions">Timing</h3>
+        <h5>Timing</h5>
         <fg-set path="/socialSecuritySources/*/isAllYear">
           <question>Do <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> expect to have this income all year or only part of the year?</question>
           <input type="boolean">
@@ -213,13 +213,13 @@
           <heading>Social Security details</heading>
           <content>Once we know more about your income, we’ll ask you additional questions.</content>
         </fg-section-gate>
-        <h3 class="form-actions" condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Income</h3>
+        <h5 condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Income</h5>
         <fg-set path="/socialSecuritySources/*/monthlyIncome" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
           <question>What’s the monthly benefit amount <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">receive</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">received</span> from Social Security?</question>
           <modal-link for="modal-fed-tax-social-security-pay-period">What’s the monthly benefit amount and where do I find it?</modal-link>
           <input type="dollar"/>
         </fg-set>
-        <h3 class="form-actions" condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Federal taxes</h3>
+        <h5 condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Federal taxes</h5>
         <fg-set path="/socialSecuritySources/*/withheldRate" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
           <question>How much federal tax <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">is</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">was</span> withheld from the Social Security payment each month?</question>
           <hint>If <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> haven’t chosen to withhold federal taxes, select 0%.</hint>

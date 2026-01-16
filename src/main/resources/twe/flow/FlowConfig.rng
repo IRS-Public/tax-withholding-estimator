@@ -437,6 +437,30 @@
           </optional>
           <ref name="FlowConfigModuleInlineContent"/>
         </element>
+        <element name="h5">
+          <optional>
+            <attribute name="class">
+              <text/>
+            </attribute>
+          </optional>
+          <optional>
+            <group>
+              <attribute name="condition">
+                <data type="anyURI"/>
+              </attribute>
+              <attribute name="operator">
+                <choice>
+                  <value>isTrue</value>
+                  <value>isFalse</value>
+                  <value>isZero</value>
+                  <value>isGreaterThanZero</value>
+                  <value>isIncomplete</value>
+                </choice>
+              </attribute>
+            </group>
+          </optional>
+          <ref name="FlowConfigModuleInlineContent"/>
+        </element>
         <element name="p">
           <optional>
             <attribute name="class">

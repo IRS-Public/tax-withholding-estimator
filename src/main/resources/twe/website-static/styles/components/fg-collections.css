@@ -1,3 +1,7 @@
+fg-collection {
+  display: block;
+}
+
 fg-collection-item {
   display: block;
   margin: var(--units-1) 0;

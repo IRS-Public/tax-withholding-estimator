@@ -35,14 +35,15 @@ main h1 {
   opacity: 1;
 }
 
-.flow > h2,
-.flow > h3,
-.flow > h4 {
+.flow h2,
+.flow h3:not(.usa-accordion__heading),
+.flow h4:not(.usa-accordion__heading),
+.flow h5 {
   font-family: var(--font-sans);
   font-weight: 600;
 }
 
-.flow > h2 {
+.flow h2 {
   font-size: var(--font-size-10);
 
   @media (min-width: 640px) {
@@ -54,7 +55,8 @@ main h1 {
   }
 }
 
-.flow > h3 {
+.flow h3:not(.usa-accordion__heading),
+.fg-collection-item__fields h5 {
   border-top: 2px solid var(--base-lighter);
   font-size: var(--font-size-8);
   padding-top: var(--units-5);
@@ -68,8 +70,16 @@ main h1 {
   }
 }
 
-/* We can likely remove h4 once the design is further implemented */
-.flow > h4 {
+/* This makes it so if there a conditional fg-set that is hidden before the first h4
+   in a fg-collection-item, the h4 does not get the top border and padding */
+.fg-collection-item__fields fg-set.hidden:first-child + h5:first-of-type {
+  border: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.flow h4:not(.usa-accordion__heading),
+.flow h5 {
   font-size: var(--font-size-8);
 
   @media (min-width: 640px) {

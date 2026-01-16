@@ -1,7 +1,7 @@
 <fg-collection th:attr="path=${path}, condition=${condition}, operator=${operator}, itemName=${itemName}, disallowEmpty=${disallowEmpty}">
     <div class="usa-accordion usa-accordion--bordered usa-accordion--multiselectable margin-bottom-3" data-allow-multiple>
         <template class="fg-collection__item-template">
-            <h3 class="usa-accordion__heading">
+            <h4 class="usa-accordion__heading">
             <button class="usa-accordion__button usa-accordion__button--highlight" type="button" aria-expanded="true">
               <th th:if="${itemName == ''}">
                 <span th:text="#{components.fg-collection.item-name-default}"></span>
@@ -12,7 +12,7 @@
                 <span class="collection-item-number"></span>
               </th>
             </button>
-            </h3>
+            </h4>
             <div class="usa-accordion__content">
                 <div class="fg-collection-item__fields" th:utext="${collectionFacts}"></div>
                 <div class="fg-collection-item__controls">
