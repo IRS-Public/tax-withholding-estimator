@@ -35,6 +35,12 @@ case class Scenario(csv: Map[String, String], graph: Graph) {
     this.csv(rowName).replace("$", "").strip()
   }
 
+  def getExpectedSheetValueByFactPath(factPath: String): (String, String) = {
+    val rowName = DERIVED_FACT_TO_SHEET_ROW(factPath)
+    val input = getInput(rowName)
+    (rowName, input)
+  }
+
   def graphToJson(): String = {
     this.graph.persister.toJson(2)
   }
@@ -80,7 +86,8 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   }
 
   // Get each row of the scenario and map it to a specific fact
-  var spreadsheetFacts = SHEET_ROW_FACT_MAPPINGS.map((sheetKey, factName) => factName -> csv(sheetKey))
+  // The resulting map is factPath -> spreadsheetRowValue
+  var spreadsheetFacts = SHEET_ROW_TO_WRITABLE_FACT.map((sheetKey, factPath) => factPath -> csv(sheetKey))
 
   // convert SS monthly withholding to a percent and handle as an enum
   val monthlyBenefit1 = csv("SS monthly benefit").replace("$", "").replace(",", "").toDouble
@@ -243,7 +250,7 @@ def convertEnum(value: String, factDefinition: FactDefinition): types.Enum = {
   }
 }
 
-val SHEET_ROW_FACT_MAPPINGS = Map(
+private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "DateRun" -> "/overrideDate",
   "F-Status (1=S; 2=MJ; 3=MS; 4=HH; 5=QW)" -> "/filingStatus",
   "65 or Older (1=yes)" -> "/primaryFilerAge65OrOlder",
@@ -322,4 +329,20 @@ val SHEET_ROW_FACT_MAPPINGS = Map(
   "Gifts to Charity" -> "/charitableContributions",
   "Casualty Lossess" -> "/casualtyLossesTotal",
   "Other Itemized Deductions" -> "/otherDeductionsTotal",
+)
+
+// Note that this is the opposite direction of the writable fact mappings
+private val DERIVED_FACT_TO_SHEET_ROW = Map(
+  "/agi" -> "AGI",
+  "/totalTax" -> "Income tax before refundable credits",
+  "/totalOwed" -> "Total tax after refundable credits",
+  "/earnedIncomeCredit" -> "EITC",
+  "/qualifiedPersonalVehicleLoanInterestDeduction" -> "No tax on car loan interest deduction",
+  "/seniorDeduction" -> "Additional Elder Deduction (70103)",
+  "/qualifiedBusinessIncomeDeduction" -> "QBI deduction",
+  // TODO: This is not going to scale when the jobs that aren't Job 1 have withholdings
+  "/jobSelectedForExtraWithholding/w4Line3" -> "W-4 Line3Amount1",
+  "/jobSelectedForExtraWithholding/w4Line4a" -> "W-4 Line4aAmount1",
+  "/jobSelectedForExtraWithholding/w4Line4b" -> "W-4 Line4bAmount1",
+  "/jobSelectedForExtraWithholding/w4Line4c" -> "W-4 Line4cAmount1",
 )

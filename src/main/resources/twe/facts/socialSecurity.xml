@@ -39,7 +39,7 @@
           </Not>
           <NotEqual>
             <Left>
-              <Dependency path="../filerAssignment"></Dependency>
+              <Dependency path="../filerAssignment"/>
             </Left>
             <Right>
               <Enum optionsPath="/filerAssignmentOption">spouse</Enum>
@@ -260,7 +260,6 @@
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
-
     </Fact>
     <Fact path="/netSocialSecurityBenefitsIncome">
       <Derived>
