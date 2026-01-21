@@ -2121,7 +2121,7 @@
         <Add>
           <Dependency path="/totalEstimatedTaxesPaid"/>
           <Dependency path="/totalTaxesPaidOnSocialSecurityIncome"/>
-          <Dependency path="/totaRefundableCredits"/>
+          <Dependency path="/totalRefundableCredits"/>
         </Add>
       </Derived>
     </Fact>
