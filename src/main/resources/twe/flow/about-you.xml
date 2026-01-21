@@ -7,7 +7,7 @@
       <p>Tell us about yourself. Your responses will help us learn which tax benefits you could be eligible for, which can impact how much tax you withhold.</p>
 
       <fg-set path="/primaryFilerAge65OrOlder">
-        <question>Will you be 65 years old or older on December 31, <fg-show path="/taxYear" />?</question>
+        <question>Will you be 65 years old or older on January 1, <fg-show path="/nextTaxYear" />?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/primaryFilerIsBlind">
@@ -49,7 +49,7 @@
       <p condition="/isFilingStatusMFJ" operator="isFalse">You can continue. Since you don't plan to file using Married Filing Jointly, we don't need to ask any more questions.</p>
       <p condition="/isFilingStatusMFJ" operator="isTrue">If you plan to file using Married Filing Jointly, we may need to ask more questions about your spouse.</p>
       <fg-set path="/secondaryFilerAge65OrOlder" if-true="/isFilingStatusMFJ">
-        <question>Will your spouse be 65 years old or older on December 31, <fg-show path="/taxYear"/>?</question>
+        <question>Will your spouse be 65 years old or older on January 1, <fg-show path="/nextTaxYear"/>?</question>
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/secondaryFilerIsBlind" if-true="/isFilingStatusMFJ">

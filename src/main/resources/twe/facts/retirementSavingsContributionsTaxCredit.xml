@@ -11,6 +11,43 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>2000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/retirementSavingsContributionsCreditSpouseMaximumAmount">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>2000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/retirementSavingsContributionsMaximumAmount">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount"/>
+                <Dependency path="/retirementSavingsContributionsCreditSpouseMaximumAmount"/>
+              </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/retirementSavingsContributionsCredit">
       <Derived>
         <Dependency path="/retirementSavingsContributionsTaxCreditAmount"/>

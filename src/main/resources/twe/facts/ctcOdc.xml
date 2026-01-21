@@ -127,6 +127,14 @@
         </GreaterThan>
       </Derived>
     </Fact>
+    <Fact path="/odcDependentGrossIncomeThreshold">
+      <!-- TODO: Update with the 2026 value once known -->
+      <Description>Dependent income threshold to for odc qualification</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>5200</Dollar>
+      </Derived>
+    </Fact>
     <Fact path="/maxOdcAmount">
       <Name>Maximum credit amount for other dependents</Name>
       <Description>The maximum credit for other dependents, per dependent</Description>

@@ -9,6 +9,15 @@
         <Int>2026</Int>
       </Derived>
     </Fact>
+    <Fact path="/nextTaxYear">
+      <Description>Next tax year</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/taxYear"/>
+          <Int>1</Int>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/lastTaxYear">
       <Description>Previous tax year</Description>
       <Derived>
