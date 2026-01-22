@@ -47,8 +47,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column AA
-  // TODO Fix Line 3 - Ticket #1148
-  ignore("Single, SS, part time, senior deduction") { td =>
+  test("Single, SS, part time, senior deduction") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 32880)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1207)
@@ -124,6 +123,16 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1214)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 2500)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
+  // Column AN
+  test("MFS, wage, partial deduction, itemized") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 168000)
+    scenario.assertEquals("/seniorDeduction", 420)
+    // this scenario expects users to choose their deduction method in spite of deduction values.
+    // user selection of dediction method is not supported in TWE 2.0.
+    // this scenario is effectively out of scope, and therfore assertions on W4 values cannot be made.
   }
 }
 
