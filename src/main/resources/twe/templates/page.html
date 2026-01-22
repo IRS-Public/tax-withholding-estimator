@@ -47,13 +47,12 @@
     </div>
   </main>
 
-  <div th:if="${flags.auditMode}" th:remove="tag">
-    <div th:replace="fragments/audit-panel" class="hidden"></div>
-    <script type="module">
-      import { enable } from '/twe/resources/js/audit-panel.js'
-      enable()
-    </script>
-  </div>
+  <div th:replace="fragments/audit-panel"></div>
+  <script type="module" th:if="${flags.auditMode}">
+    // If configured, automatically enable Audit Mode on startup
+    import { enable } from '/twe/resources/js/audit-panel.js'
+    enable()
+  </script>
 
   <footer th:aria-label="#{layout.title}" class="footer">
     <div data-testid="identifier" class="usa-identifier">

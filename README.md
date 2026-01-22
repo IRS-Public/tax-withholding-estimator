@@ -49,8 +49,8 @@ If you make changes to the Fact Graph, and you want to propagate those changes, 
 
 ## Audit Mode
 
-In the developer build, TWE comes bundled with an "Audit Mode" that lets users see how TWE arrives at its calculations.
-It can be toggled by running `enableAduitMode()` and `disabledAuditMode()` in the browser console.
+TWE comes bundled with an "Audit Mode" that lets users see how TWE arrives at its calculations.
+It can be toggled by running `enableAduitMode()` and `disableAuditMode()` in the browser console.
 
 ## Contributing
 
