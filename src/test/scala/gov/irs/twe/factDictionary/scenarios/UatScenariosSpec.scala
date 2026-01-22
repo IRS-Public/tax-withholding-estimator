@@ -134,6 +134,68 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     // user selection of dediction method is not supported in TWE 2.0.
     // this scenario is effectively out of scope, and therfore assertions on W4 values cannot be made.
   }
+
+  // Column BE
+  test("Single, phasedout deduction") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 104000)
+    scenario.assertEquals("/totalTax", 12472)
+    scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 7200)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    // scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0) // incomplete fact. resolved by #1186
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 550)
+  }
+
+  // Column BF
+  test("Single, zero deduction") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 152000)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 25214)
+    scenario.assertEquals("/studentLoanInterestDeduction", 0)
+    scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 3512)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 2000)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
+  // Column BG
+  test("MFS, phased out, no SSN, CTC") { td =>
+    val scenario = td.scenario
+    scenario.graph.set("/ctcEligibleDependents", 0)
+    scenario.assertEquals("/agi", 104000)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 12472)
+    scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 7200)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 283)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    // scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0) // incomplete fact. resolved by #1186
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
+  // Column BH
+  test("MFJ, max amount deduction") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 104000)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 6923)
+    scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 10000)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1829)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    // scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0) // incomplete fact. resolved by #1186
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
+  // Column BI
+  test("HH,  phased out deduction, CTC, QBI") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 172587)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 25520)
+    scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
+    scenario.assertOffset("/qualifiedBusinessIncomeDeduction", 3717.40, -0.4)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 14870)
+    // scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0) // incomplete fact. resolved by #1186
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 260)
+  }
 }
 
 /*

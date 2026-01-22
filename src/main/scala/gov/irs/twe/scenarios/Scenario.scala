@@ -322,6 +322,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "Car loan interest" -> "/personalVehicleLoanInterestAmount",
   "qualChildrenCDCC" -> "/ctcEligibleDependents",
   "How many QC for EITC" -> "/eitcQualifyingChildren",
+  "movingExpense" -> "/movingExpensesForArmedServicesMembers",
   // Itemized Deductions
   "Interest you Paid" -> "/qualifiedMortgageInterestAndInvestmentInterestExpenses",
   "SALT you paid" -> "/stateAndLocalTaxPayments",
@@ -334,12 +335,14 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
 // Note that this is the opposite direction of the writable fact mappings
 private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/agi" -> "AGI",
+  "/tentativeTaxFromTaxableIncomeWithoutNetGains" -> "Income tax before credits",
   "/totalTax" -> "Income tax before refundable credits",
   "/totalOwed" -> "Total tax after refundable credits",
   "/earnedIncomeCredit" -> "EITC",
   "/qualifiedPersonalVehicleLoanInterestDeduction" -> "No tax on car loan interest deduction",
   "/seniorDeduction" -> "Additional Elder Deduction (70103)",
   "/qualifiedBusinessIncomeDeduction" -> "QBI deduction",
+  "/studentLoanInterestDeduction" -> "studentLoanInterest allowed",
   // TODO: This is not going to scale when the jobs that aren't Job 1 have withholdings
   "/jobSelectedForExtraWithholding/w4Line3" -> "W-4 Line3Amount1",
   "/jobSelectedForExtraWithholding/w4Line4a" -> "W-4 Line4aAmount1",
