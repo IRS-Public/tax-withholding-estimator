@@ -26,7 +26,7 @@ import scala.math.Fractional.Implicits.infixFractionalOps
  */
 class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   val CSV_ROOT: Path = os.pwd / "src" / "test" / "resources" / "csv"
-  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-01-13.csv"
+  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-01-22.csv"
 
   case class FixtureParam(scenario: scenarios.Scenario)
 
