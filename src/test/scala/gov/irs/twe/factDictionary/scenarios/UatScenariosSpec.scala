@@ -144,7 +144,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalTax", 12472)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 7200)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    // scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0) // incomplete fact. resolved by #1186
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 550)
   }
 
@@ -170,7 +170,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 7200)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 283)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    // scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0) // incomplete fact. resolved by #1186
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
@@ -182,7 +182,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 10000)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1829)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    // scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0) // incomplete fact. resolved by #1186
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
@@ -195,7 +195,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 3717)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 14870)
-    // scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0) // incomplete fact. resolved by #1186
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 260)
   }
 
