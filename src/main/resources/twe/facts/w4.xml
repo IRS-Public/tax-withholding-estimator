@@ -12,6 +12,7 @@
             </Minuend>
             <Subtrahends>
               <Dependency path="/qualifiedBusinessIncomeDeduction"/>
+              <Dependency path="/excessItemizedOverStandard"/>
               <Dependency path="/adjustmentsToIncome"/>
             </Subtrahends>
           </Subtract>
@@ -90,7 +91,8 @@
                     <Multiply>
                       <Dependency path="/w4Line4NetChange"/>
                       <Dollar>-1</Dollar>
-                      <Dependency path="../proportionOfYearEndJobsIncome"/>
+                      <!-- We might need to include this proportion when we start doing split withholdings and multiple W4-->
+                      <!--                      <Dependency path="../proportionOfYearEndJobsIncome"/>-->
                     </Multiply>
                   </Then>
                 </Case>
@@ -126,6 +128,14 @@
                   </Then>
                 </Case>
               </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
             </Then>
           </Case>
         </Switch>

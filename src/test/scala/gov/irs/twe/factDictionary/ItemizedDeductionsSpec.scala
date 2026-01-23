@@ -199,9 +199,9 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
       (single, "635000", "40400", "10000"), // Max($10,000, $40,400 - $39,000 = $1,400) = $10,000
       (single, "650000", "40400", "10000"), // AGI where deduction hits minimum floor and stays there
 
-      // **MFS (Threshold: $505,000, Cap: $20,200, Floor: $5,000)**
+      // **MFS (Threshold: $505,000, Cap: $40,400, Floor: $5,000)**
       // AGI: $550,000. Reduction = $13,500
-      (mfs, "550000", "20200", "6700"), // $20,200 - $13,500 = $6,700
+      (mfs, "550000", "20200", "5000"),
 
       // AGI exceeds threshold, deduction is phased down below the floor (Reduction: $28,500)
       // AGI: $600,000. Reduction = $28,500

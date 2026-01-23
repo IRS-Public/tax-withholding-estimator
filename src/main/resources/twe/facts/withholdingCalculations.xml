@@ -160,6 +160,14 @@
               </Divide>
             </Then>
           </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
         </Switch>
       </Derived>
     </Fact>
@@ -601,7 +609,11 @@
         <Switch>
           <Case>
             <When>
-              <Dependency path="/isFilingStatusMFJ"/>
+              <!-- Pub 15T specifies just MFJ, but W-4 doesn't differentiate between MFJ and QSS -->
+              <Any>
+                <Dependency path="/isFilingStatusMFJ"/>
+                <Dependency path="/isFilingStatusQSS"/>
+              </Any>
             </When>
             <Then>
               <Dollar>12900</Dollar>

@@ -336,6 +336,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
 private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/agi" -> "AGI",
   "/tentativeTaxFromTaxableIncomeWithoutNetGains" -> "Income tax before credits",
+  "/taxableIncome" -> "Taxable income",
   "/totalTax" -> "Income tax before refundable credits",
   "/totalOwed" -> "Total tax after refundable credits",
   "/earnedIncomeCredit" -> "EITC",
@@ -343,7 +344,14 @@ private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/seniorDeduction" -> "Additional Elder Deduction (70103)",
   "/qualifiedBusinessIncomeDeduction" -> "QBI deduction",
   "/studentLoanInterestDeduction" -> "studentLoanInterest allowed",
+  "/standardOrItemizedDeduction" -> "Total standard or itemized deductions",
+  "/stateAndLocalTaxDeduction" -> "SALT deduction allowed",
+  "/additionalMedicareTax" -> "Additional Medicare Tax:",
+  "/selfEmploymentTax" -> "Self-Employment Tax",
+  "/netInvestmentIncomeTax" -> "NetInvestmentIncomeTax",
+  "/totalEndOfYearProjectedWithholding" -> "do-nothingTaxWithholding",
   // TODO: This is not going to scale when the jobs that aren't Job 1 have withholdings
+  // TODO: This doesn't work if Job 1 isn't the highest paying job and is selected for extra withholdings
   "/jobSelectedForExtraWithholding/w4Line3" -> "W-4 Line3Amount1",
   "/jobSelectedForExtraWithholding/w4Line4a" -> "W-4 Line4aAmount1",
   "/jobSelectedForExtraWithholding/w4Line4b" -> "W-4 Line4bAmount1",

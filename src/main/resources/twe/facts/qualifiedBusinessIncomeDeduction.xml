@@ -541,26 +541,28 @@
       <Name>Qualified Business Income Deduction</Name>
       <Description>Taxpayer provided QBID if they want to override the derived amount, else the derived amount</Description>
       <Derived>
-        <Switch>
-          <Case>
-            <!--Use override amount if selected by the taxpayer-->
-            <When>
-              <Dependency path="/wantsQBIDeductionOverride"/>
-            </When>
-            <Then>
-              <Dependency path="/qBIDeductionOverrideAmount"/>
-            </Then>
-          </Case>
-          <Case>
-            <!-- Otherwise, use the derived amount-->
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dependency path="/derivedQualifiedBusinessIncomeDeduction"/>
-            </Then>
-          </Case>
-        </Switch>
+        <Round>
+          <Switch>
+            <Case>
+              <!--Use override amount if selected by the taxpayer-->
+              <When>
+                <Dependency path="/wantsQBIDeductionOverride"/>
+              </When>
+              <Then>
+                <Dependency path="/qBIDeductionOverrideAmount"/>
+              </Then>
+            </Case>
+            <Case>
+              <!-- Otherwise, use the derived amount-->
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Dependency path="/derivedQualifiedBusinessIncomeDeduction"/>
+              </Then>
+            </Case>
+          </Switch>
+        </Round>
       </Derived>
     </Fact>
   </Facts>
