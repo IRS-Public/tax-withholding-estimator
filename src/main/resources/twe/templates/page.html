@@ -25,26 +25,31 @@
       </a>
     </div>
 
-    <div th:utext="${pageXml}" th:remove="tag" class=""></div>
-
-    <div class="form-actions" th:if="${nextPageHref}">
-      <a class="usa-button" th:href="${nextPageHref}" onclick="return handleSectionContinue(event)">
-        [[${first} ? #{buttons.next} : #{buttons.continue}]]
-        <svg th:unless="${first}" aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
-          <use href="/twe/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
-        </svg>
-      </a>
-
-      <!--
-      Commenting out submit button for now since we don't have a form submission
-      <a class="usa-button"
-        th:unless="${nextPageHref}"
-        th:text="#{buttons.submit}"
-        href="#"
-        onclick="return handleSectionComplete(event)">
-      </a>
-      -->
+    <noscript>
+      <p class="alert--warning">
+        JavaScript is required to use the Tax Withholding Estimator.
+        Please enable JavaScript or switch to a browser that is JavaScript-capable.
+      </p>
+    </noscript>
+    <img
+      src="/twe/resources/img/spinner.svg"
+      id="loading-spinner"
+      alt="Loading spinner"
+      class="hidden"
+      onload="this.classList.remove('hidden')"
+    >
+    <div id="page-content-wrapper" class="hidden">
+      <div th:utext="${pageXml}"></div>
+      <div class="form-actions" th:if="${nextPageHref}">
+        <a class="usa-button" th:href="${nextPageHref}" onclick="return handleSectionContinue(event)">
+          [[${first} ? #{buttons.next} : #{buttons.continue}]]
+          <svg th:unless="${first}" aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
+            <use href="/twe/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
+          </svg>
+        </a>
+      </div>
     </div>
+
   </main>
 
   <div th:replace="fragments/audit-panel"></div>

@@ -23,9 +23,20 @@ main, #audit-panel {
    }
 }
 
+main {
+  min-height: 90vh;
+}
+
 main h1 {
   font-weight: 600;
 }
+
+#loading-spinner {
+  display: block;
+  margin: 2rem auto;
+}
+
+#loading-spinner.hidden { display: none; }
 
 .header-bottom-border {
   border-bottom: 2px solid var(--base-lighter);

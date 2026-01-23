@@ -772,13 +772,6 @@ function showValidationError () {
   } else { firstErrorFocusTarget.focus() }
 }
 
-window.handleSectionContinue = handleSectionContinue
-window.handleSectionComplete = handleSectionComplete
-
-// Add show/hide functionality to all elements
-document.addEventListener('fg-update', showOrHideAllElements)
-showOrHideAllElements()
-
 // Generate UUID function for collections with fallback
 // in non-secure contexts, where crypto.randomUUID is not available,
 // for example, local development on a Windows VM
@@ -792,3 +785,13 @@ function generateUUID () {
     return (Math.random() * 16 | 0).toString(16)
   })
 }
+
+window.handleSectionContinue = handleSectionContinue
+window.handleSectionComplete = handleSectionComplete
+
+// Add show/hide functionality to all elements
+document.addEventListener('fg-update', showOrHideAllElements)
+showOrHideAllElements()
+
+document.querySelector('#page-content-wrapper').classList.remove('hidden')
+document.querySelector('#loading-spinner').classList.add('hidden')
