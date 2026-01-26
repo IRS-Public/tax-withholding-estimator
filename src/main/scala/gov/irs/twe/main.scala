@@ -28,8 +28,6 @@ case class FgAlertContent(heading: String, body: Map[String, String])
     },
   )
 
-  // Processing for handling multiple xml files for facts
-
   // Get flow root
   val flowFile = Source.fromResource(s"$FlowResourceRoot/index.xml").getLines().mkString("\n")
   val flowConfig = xml.XML.loadString(flowFile)

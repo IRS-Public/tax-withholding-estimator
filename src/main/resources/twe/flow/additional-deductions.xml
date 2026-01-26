@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="Additional Deductions" route="additional-deductions.html">
+  <page title="Additional Deductions" route="/additional-deductions">
     <section>
       <h2>Additional deductions</h2>
       <p>Estimate the amount of additional deductions that you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> plan to take this year.</p>

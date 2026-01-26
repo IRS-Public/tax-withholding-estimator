@@ -30,6 +30,10 @@ case class WebsitePage(route: String, content: String) {
 
     html
   }
+
+  def filepath(root: Path): Path = {
+    if (route == "/") root / "index.html" else root / route.substring(1) / "index.html"
+  }
 }
 
 case class Website(pages: List[WebsitePage], factDictionary: xml.Elem) {
@@ -38,7 +42,7 @@ case class Website(pages: List[WebsitePage], factDictionary: xml.Elem) {
 
     // Write the pages
     for (page <- this.pages) {
-      val target = directoryPath / page.route
+      val target = page.filepath(directoryPath)
       os.write(target, page.html(), null, createFolders = true)
     }
 
@@ -74,12 +78,12 @@ object Website {
 
       // Add a link for the next page if it's not the last one
       if (index < flow.pages.size - 1) {
-        val nextPageHref = flow.pages(index + 1).route
+        val nextPageHref = flow.pages(index + 1).href()
         context.setVariable("nextPageHref", nextPageHref)
       }
       // Add a link for the last page if it's not the first one
       if (index > 0) {
-        val lastPageHref = flow.pages(index - 1).route
+        val lastPageHref = flow.pages(index - 1).href()
         context.setVariable("lastPageHref", lastPageHref)
       } else {
         context.setVariable("first", true)

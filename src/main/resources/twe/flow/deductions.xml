@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="Standard deduction choice" route="deductions.html">
+  <page title="Standard deduction choice" route="/deductions">
     <section>
       <h2>Standard deduction or itemize deductions</h2>
       <p>

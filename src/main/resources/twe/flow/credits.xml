@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="Credits" route="credits.html">
+  <page title="Credits" route="/credits">
     <section>
       <!-- TODO: All conditionals -->
       <h2>Credits</h2>

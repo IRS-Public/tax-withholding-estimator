@@ -4,6 +4,8 @@ import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.{ FlowResourceRoot, TweTemplateEngine }
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.Utils.optionString
+import os.Path
+import os.Path.stringPathValidated
 import scala.io.Source
 import scala.util.matching.Regex
 
@@ -19,7 +21,7 @@ case class Page(
     exclude: Boolean,
     nodes: List[PageNode],
 ):
-  def html(templateEngine: TweTemplateEngine) = {
+  def html(templateEngine: TweTemplateEngine): String = {
     val pageContent = nodes
       .map {
         case PageNode.section(x) => x.html(templateEngine)
@@ -36,6 +38,11 @@ case class Page(
     )
 
     pageXml
+  }
+
+  def href(): String = {
+    val trailingSlash = if (route != "/") "/" else ""
+    "/twe" + route + trailingSlash
   }
 
 object Page {

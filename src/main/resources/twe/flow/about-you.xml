@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="About you" route="index.html">
+  <page title="About you" route="/">
     <section>
       <h2>About You</h2>
       <p>Tell us about yourself. Your responses will help us learn which tax benefits you could be eligible for, which can impact how much tax you withhold.</p>

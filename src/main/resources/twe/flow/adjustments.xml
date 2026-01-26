@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="Adjustments" route="adjustments.html">
+  <page title="Adjustments" route="/adjustments">
     <section>
       <h2>Adjustments</h2>
       <p>Estimate the amount for any adjustments <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> plan to take this year.</p>

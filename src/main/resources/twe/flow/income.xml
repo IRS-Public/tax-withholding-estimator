@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="Income" route="income.html">
+  <page title="Income" route="/income">
     <section>
       <h2>Income</h2>
       <h3>Jobs</h3>
