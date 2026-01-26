@@ -21,8 +21,7 @@
             </When>
             <Then>
               <Multiply>
-                <!-- Floor is used here to match QA spreadsheet calculation -->
-                <Dependency path="../fullPayPeriods"/>
+                <Dependency path="../remainingPayPeriodsRational"/>
                 <Dependency path="../averageWithholdingPerPayPeriod"/>
               </Multiply>
             </Then>

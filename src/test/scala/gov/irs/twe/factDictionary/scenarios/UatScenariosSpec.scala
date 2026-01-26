@@ -43,7 +43,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 22786)
     scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 668)
-    scenario.assertOffset("/totalEndOfYearProjectedWithholding", 440, 16) // off by $16
+    scenario.assertOffset("/totalEndOfYearProjectedWithholding", 455.71, .29)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 990)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
