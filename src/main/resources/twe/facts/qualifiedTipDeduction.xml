@@ -72,8 +72,7 @@
         </All>
       </Derived>
     </Fact>
-    <Fact path="/excessAmountQualifiedTipDeductionForMFJFiler">
-      <TaxYear>2026</TaxYear>
+    <Fact path="/qualifiedTipDeductionExcessOverThreshold">
       <Derived>
         <GreaterOf>
           <Subtract>
@@ -81,52 +80,14 @@
               <Dependency path="/magiForOB3BelowLineDeductions"/>
             </Minuend>
             <Subtrahends>
-              <Dollar>300000</Dollar>
+              <Dependency path="/qualifiedTipDeductionPhaseOutThreshold"/>
             </Subtrahends>
           </Subtract>
           <Dollar>0</Dollar>
         </GreaterOf>
       </Derived>
     </Fact>
-    <Fact path="/excessAmountQualifiedTipDeductionForNonMFJFiler">
-      <TaxYear>2026</TaxYear>
-      <Derived>
-        <GreaterOf>
-          <Subtract>
-            <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions"/>
-            </Minuend>
-            <Subtrahends>
-              <Dollar>150000</Dollar>
-            </Subtrahends>
-          </Subtract>
-          <Dollar>0</Dollar>
-        </GreaterOf>
-      </Derived>
-    </Fact>
-    <Fact path="/excessOverThresholdQualifiedTipDeduction">
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/isFilingStatusMFJ"/>
-            </When>
-            <Then>
-              <Dependency path="/excessAmountQualifiedTipDeductionForMFJFiler"/>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dependency path="/excessAmountQualifiedTipDeductionForNonMFJFiler"/>
-            </Then>
-          </Case>
-        </Switch>
-      </Derived>
-    </Fact>
-    <Fact path="/phaseOutAmountQualifiedTipDeduction">
+    <Fact path="/qualifiedTipDeductionPhaseOut">
       <Name>Qualified Tip Deduction Phase Out</Name>
       <Description>The amount allowable as a deduction under shall be reduced (but not
         below zero) by $100 for each $1,000 by which the
@@ -141,7 +102,7 @@
         reduced by $1,000 ($100/increment multiplied by 10 increments). -->
         <StepwiseMultiply>
           <Multiplicand>
-            <Dependency path="/excessOverThresholdQualifiedTipDeduction"/>
+            <Dependency path="/qualifiedTipDeductionExcessOverThreshold"/>
           </Multiplicand>
           <Rate>
             <!-- Reduce by a rate of $100 for each $1000 of MAGI exceeding the relevant threshold -->
@@ -153,41 +114,86 @@
     <Fact path="/qualifiedTipDeduction">
       <Name>Qualified tip deduction</Name>
       <Description>OB3 Section 70201: Qualified tip deductions
+        Maximum annual deduction is $25,000
+
         Example:
         Single filer with 160k MAGI and 20k qualified tips. 150k applicable tip deduction threshold
         (20,000 excess/1000)*100 = 2,000 phase out
         20,000 tip - 2,000 phase out = 18,000 applicable deduction
-
       </Description>
       <Derived>
-        <GreaterOf>
-          <Switch>
-            <Case>
-              <When>
-                <Dependency path="/isEligibleForQualifiedTipDeduction"/>
-              </When>
-              <Then>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isEligibleForQualifiedTipDeduction"/>
+            </When>
+            <Then>
+              <LesserOf>
                 <Subtract>
                   <Minuend>
                     <Dependency path="/qualifiedTipIncome"/>
                   </Minuend>
                   <Subtrahends>
-                    <Dependency path="/phaseOutAmountQualifiedTipDeduction"/>
+                    <Dependency path="/qualifiedTipDeductionPhaseOut"/>
                   </Subtrahends>
                 </Subtract>
-              </Then>
-            </Case>
-            <Case>
-              <When>
-                <True/>
-              </When>
-              <Then>
-                <Dollar>0</Dollar>
-              </Then>
-            </Case>
-          </Switch>
-          <Dollar>0</Dollar>
-        </GreaterOf>
+                <Dollar>25000</Dollar>
+              </LesserOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedTipDeductionLimit">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>25000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>12500</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedTipDeductionPhaseOutThreshold">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>300000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>150000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
   </Facts>

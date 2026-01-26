@@ -122,12 +122,11 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   val tweFactDictionary = loadTweFactDictionary()
   val factGraph = Graph(tweFactDictionary.factDictionary)
 
-  // Add the 5 jobs to the fact graph
-  ALL_JOBS.foreach(job => factGraph.addToCollection("/jobs", job))
-
   // Set social security collection
   ALL_SS_SOURCES.foreach(source => factGraph.addToCollection("/socialSecuritySources", source))
 
+  // Add the 5 jobs to the fact graph
+  ALL_JOBS.foreach(job => factGraph.addToCollection("/jobs", job))
   factGraph.set(s"/jobs/#$PREVIOUS_SELF_JOB_ID/filerAssignment", new types.Enum(Some("self"), "/filerAssignmentOption"))
   factGraph.set(
     s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/filerAssignment",
@@ -182,6 +181,20 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   val spouseAge = csv("Spouse Age").toInt
   if (spouseAge > 0) {
     factGraph.set("/secondaryFilerAge25OrOlderForEitc", spouseAge >= 25)
+  }
+
+  // Set OB3 questions to zero if there's no SSN
+  if (csv("Valid SSN (self)") == "0") {
+    factGraph.set(s"/jobs/#$JOB_1_ID/qualifiedTipIncome", Dollar(0))
+    factGraph.set(s"/jobs/#$JOB_1_ID/overtimeCompensationTotal", Dollar(0))
+    factGraph.set(s"/jobs/#$JOB_2_ID/qualifiedTipIncome", Dollar(0))
+    factGraph.set(s"/jobs/#$JOB_2_ID/overtimeCompensationTotal", Dollar(0))
+  }
+  if (csv("Valid SSN (spouse)") == "Dollar(0") {
+    factGraph.set(s"/jobs/#$JOB_3_ID/qualifiedTipIncome", Dollar(0))
+    factGraph.set(s"/jobs/#$JOB_3_ID/overtimeCompensationTotal", Dollar(0))
+    factGraph.set(s"/jobs/#$JOB_4_ID/qualifiedTipIncome", Dollar(0))
+    factGraph.set(s"/jobs/#$JOB_4_ID/overtimeCompensationTotal", Dollar(0))
   }
 
   // Remove jobs that have no income
@@ -276,6 +289,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "taxWhYTD1" -> s"/jobs/#$JOB_1_ID/yearToDateWithholding",
   "401kYTD1" -> s"/jobs/#$JOB_1_ID/retirementPlanContributionsToDate",
   "401kPerPPd1" -> s"/jobs/#$JOB_1_ID/retirementPlanContributionsPerPayPeriod",
+  "Annual Tip Income from Job 1" -> s"/jobs/#$JOB_1_ID/qualifiedTipIncome",
+  "Annual Overtime Income from Job1" -> s"/jobs/#$JOB_1_ID/overtimeCompensationTotal",
   // Job 2
   "Job start2" -> s"/jobs/#$JOB_2_ID/writableStartDate",
   "Job end2" -> s"/jobs/#$JOB_2_ID/writableEndDate",
@@ -286,6 +301,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "paymentYTD2" -> s"/jobs/#$JOB_2_ID/yearToDateIncome",
   "taxWhPerPPd2" -> s"/jobs/#$JOB_2_ID/amountWithheldLastPaycheck",
   "taxWhYTD2" -> s"/jobs/#$JOB_2_ID/yearToDateWithholding",
+  "Annual Tip Income from Job 2" -> s"/jobs/#$JOB_2_ID/qualifiedTipIncome",
+  "Annual Overtime Income from Job 2" -> s"/jobs/#$JOB_2_ID/overtimeCompensationTotal",
   // Job 3
   "Job start3" -> s"/jobs/#$JOB_3_ID/writableStartDate",
   "Job end3" -> s"/jobs/#$JOB_3_ID/writableEndDate",
@@ -296,6 +313,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "paymentYTD3" -> s"/jobs/#$JOB_3_ID/yearToDateIncome",
   "taxWhPerPPd3" -> s"/jobs/#$JOB_3_ID/amountWithheldLastPaycheck",
   "taxWhYTD3" -> s"/jobs/#$JOB_3_ID/yearToDateWithholding",
+  "Annual Tip Income from Job 3" -> s"/jobs/#$JOB_3_ID/qualifiedTipIncome",
+  "Annual Overtime Income from Job 3" -> s"/jobs/#$JOB_3_ID/overtimeCompensationTotal",
   // Job 4
   "Job start4" -> s"/jobs/#$JOB_4_ID/writableStartDate",
   "Job end4" -> s"/jobs/#$JOB_4_ID/writableEndDate",
@@ -306,6 +325,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "paymentYTD4" -> s"/jobs/#$JOB_4_ID/yearToDateIncome",
   "taxWhPerPPd4" -> s"/jobs/#$JOB_4_ID/amountWithheldLastPaycheck",
   "taxWhYTD4" -> s"/jobs/#$JOB_4_ID/yearToDateWithholding",
+  "Annual Tip Income from Job 4" -> s"/jobs/#$JOB_4_ID/qualifiedTipIncome",
+  "Annual Overtime Income from Job 4" -> s"/jobs/#$JOB_4_ID/overtimeCompensationTotal",
   // Self employment income
   "selfEmploymentAmount-User" -> s"/grossSelfEmploymentIncomeSelf",
   "selfEmploymentAmount-Spouse" -> s"/grossSelfEmploymentIncomeSpouse",
@@ -348,7 +369,6 @@ private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/seniorDeduction" -> "Additional Elder Deduction (70103)",
   "/qualifiedBusinessIncomeDeduction" -> "QBI deduction",
   "/studentLoanInterestDeduction" -> "studentLoanInterest allowed",
-  "/standardOrItemizedDeduction" -> "Total standard or itemized deductions",
   "/stateAndLocalTaxDeduction" -> "SALT deduction allowed",
   "/additionalMedicareTax" -> "Additional Medicare Tax:",
   "/selfEmploymentTax" -> "Self-Employment Tax",

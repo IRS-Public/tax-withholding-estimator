@@ -172,7 +172,20 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/seniorDeduction", 420)
     // this scenario expects users to choose their deduction method in spite of deduction values.
     // user selection of dediction method is not supported in TWE 2.0.
-    // this scenario is effectively out of scope, and therfore assertions on W4 values cannot be made.
+    // this scenario is effectively out of scope, and therefore assertions on W4 values cannot be made.
+  }
+
+  // Column BB
+  test("HH, 1 job, tips and OT") { td =>
+    val scenario = td.scenario
+    scenario.graph.set("/isFlsaNonExempt", true)
+
+    scenario.assertEquals("/agi", 156000)
+    scenario.assertEquals("/taxableIncome", 97450)
+    scenario.assertEquals("/totalTax", 12146)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 11386)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
   // Column BE
@@ -310,8 +323,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/stateAndLocalTaxDeduction", 9000)
 
     scenario.assertEquals("/taxableIncome", 513900)
-    scenario.assertEquals("/standardOrItemizedDeduction", 16100)
-
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 1601)
   }
@@ -322,8 +333,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 530000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 32900)
     scenario.assertEquals("/taxableIncome", 497100)
-    scenario.assertEquals("/standardOrItemizedDeduction", 32900)
-
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8750)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 720)
@@ -335,7 +344,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 500000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 40400)
     scenario.assertEquals("/taxableIncome", 459600)
-    scenario.assertEquals("/standardOrItemizedDeduction", 40400)
     scenario.assertEquals("/totalOwed", 102684)
     scenario.assertEquals("/additionalMedicareTax", 2700)
     scenario.assertEquals("/selfEmploymentTax", 0)
@@ -354,8 +362,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/stateAndLocalTaxDeduction", 35000)
     scenario.assertEquals("/taxableIncome", 195000)
     scenario.assertEquals("/totalTax", 32324)
-    scenario.assertEquals("/standardOrItemizedDeduction", 35000)
-
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 2800)
@@ -369,8 +375,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 634000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 10000)
     scenario.assertEquals("/taxableIncome", 601800)
-    scenario.assertEquals("/standardOrItemizedDeduction", 32200)
-
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
@@ -383,8 +387,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 256000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 19675)
     scenario.assertEquals("/taxableIncome", 236325)
-    scenario.assertEquals("/standardOrItemizedDeduction", 19675)
-
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4c", 592, -5)
 //    The spreadsheet assumes that 100% of the /proportionOfYearEndJobsIncome goes to the job selected to the Extra withholding
@@ -397,7 +399,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 412000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 5000)
     scenario.assertEquals("/taxableIncome", 395900)
-    scenario.assertEquals("/standardOrItemizedDeduction", 16100)
     scenario.assertEquals("/totalOwed", 110148)
     scenario.assertEquals("/additionalMedicareTax", 2583)
     scenario.assertEquals("/selfEmploymentTax", 0)

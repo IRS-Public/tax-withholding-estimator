@@ -68,8 +68,7 @@
             </When>
             <Then>
               <Multiply>
-                <!-- Reduce by 1/3-->
-                <Dollar>0.67</Dollar>
+                <Rational>1/3</Rational>
                 <Dependency path="../overtimeCompensationTotal"/>
               </Multiply>
             </Then>
@@ -86,9 +85,8 @@
               </Equal>
             </When>
             <Then>
-              <!-- Reduce by 1/2-->
               <Multiply>
-                <Dollar>0.50</Dollar>
+                <Rational>1/2</Rational>
                 <Dependency path="../overtimeCompensationTotal"/>
               </Multiply>
             </Then>
@@ -403,19 +401,18 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <!--    DERIVATION LOGIC STARTS HERE. payPeriodCalculations.xml does the heavy lifting for calculating
-    remaining pay periods. withholdingCalculations.xml does the heavy lifting for W4 results and recommendations
-    -->
     <Fact path="/jobs/*/income">
-      <Description>The total income from a specific job</Description>
+      <Description>
+        The total income from a specific job.
+        This is *not* just the base pay: Taxpayers provide their paychecks with tips and overtime included, so those
+        do not need to be added in separately here.
+      </Description>
       <Derived>
         <Subtract>
           <Minuend>
             <Add>
               <Dependency path="../restOfYearIncome"/>
               <Dependency path="../yearToDateIncome"/>
-              <Dependency path="../overtimeCompensation"/>
-              <Dependency path="../qualifiedTipIncome"/>
             </Add>
           </Minuend>
           <Subtrahends>

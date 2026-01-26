@@ -67,13 +67,12 @@
     <Fact path="/isFlsaNonExempt">
       <!-- This fact is writable today to allow content to handle eligibility. Given the complexity
       of FLSA Section 7, in future iterations to create a better taxpayer experience-->
-      <Name>Is the taxpayer non-exempt and eligible for qualified overtime comp under FLSA Section
-        7?</Name>
-      <Description>OB3 Section 70202 temporarily creating &#xA7;225(c)(1): For purposes of this
-        section,
-        the term &#x2018;qualified overtime compensation&#x2019; means overtime compensation paid to
-        an individual
-        required under section 7 of the Fair Labor Standards Act of 1938</Description>
+      <Name>Is the taxpayer non-exempt and eligible for qualified overtime comp under FLSA Section 7?</Name>
+      <Description>
+        OB3 Section 70202 temporarily creating &#xA7;225(c)(1): For purposes of this
+        section, the term &#x2018;qualified overtime compensation&#x2019; means overtime compensation paid to
+        an individual required under section 7 of the Fair Labor Standards Act of 1938
+      </Description>
       <Writable>
         <Boolean/>
       </Writable>
@@ -83,10 +82,7 @@
       <Description>Is the taxpayer eligible for the overtime compensation deduction?</Description>
       <Derived>
         <All>
-          <Any>
-            <Dependency path="/hasOvertimeCompThisTaxYear"/>
-            <Dependency path="/isFlsaNonExempt"/>
-          </Any>
+          <Dependency path="/isFlsaNonExempt"/>
           <GreaterThan>
             <Left>
               <Dependency path="/overtimeCompensation"/>
@@ -98,7 +94,7 @@
         </All>
       </Derived>
     </Fact>
-    <Fact path="/excessAmountOvertimeCompensationDeductionForMFJFiler">
+    <Fact path="/overtimeCompensationDeductionExcessOverThreshold">
       <Derived>
         <GreaterOf>
           <Subtract>
@@ -106,29 +102,14 @@
               <Dependency path="/magiForOB3BelowLineDeductions"/>
             </Minuend>
             <Subtrahends>
-              <Dollar>300000</Dollar>
+              <Dependency path="/overtimeCompensationDeductionPhaseOutThreshold"/>
             </Subtrahends>
           </Subtract>
           <Dollar>0</Dollar>
         </GreaterOf>
       </Derived>
     </Fact>
-    <Fact path="/excessAmountOvertimeCompensationDeductionForNonMFJFiler">
-      <Derived>
-        <GreaterOf>
-          <Subtract>
-            <Minuend>
-              <Dependency path="/magiForOB3BelowLineDeductions"/>
-            </Minuend>
-            <Subtrahends>
-              <Dollar>150000</Dollar>
-            </Subtrahends>
-          </Subtract>
-          <Dollar>0</Dollar>
-        </GreaterOf>
-      </Derived>
-    </Fact>
-    <Fact path="/excessOverThresholdOvertimeCompensationDeduction">
+    <Fact path="/overtimeCompensationDeductionPhaseOutThreshold">
       <Derived>
         <Switch>
           <Case>
@@ -136,7 +117,7 @@
               <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Dependency path="/excessAmountOvertimeCompensationDeductionForMFJFiler"/>
+              <Dollar>300000</Dollar>
             </Then>
           </Case>
           <Case>
@@ -144,27 +125,26 @@
               <True/>
             </When>
             <Then>
-              <Dependency path="/excessAmountOvertimeCompensationDeductionForNonMFJFiler"/>
+              <Dollar>150000</Dollar>
             </Then>
           </Case>
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/phaseOutAmountOvertimeCompensationDeduction">
+    <Fact path="/overtimeCompensationDeductionPhaseOut">
       <Name>Qualified Overtime Deduction Phase Out</Name>
-      <Description>The amount allowable as a deduction under shall be reduced (but not
-        below zero) by $100 for each $1,000 by which the
-        taxpayer&#x2019;s MAGI exceeds $150,000 ($300,000 in the case of a joint return).
+      <Description>
+        The amount allowable as a deduction under shall be reduced (but not below zero) by $100 for each
+        $1,000 by which the taxpayer&#x2019;s MAGI exceeds $150,000 ($300,000 in the case of a joint return).
       </Description>
       <Derived>
         <!-- Example: Single filer with MAGI of $160,500. This amount exceeds the relevant
-          threshold
-        ($150,000) by $10,500. This is 10.5 increments of $1,000 in excess of the threshold, which
+        threshold ($150,000) by $10,500. This is 10.5 increments of $1,000 in excess of the threshold, which
         is rounded down to 10 increments. Therefore, the otherwise allowable deduction amount is
         reduced by $1,000 ($100/increment multiplied by 10 increments). -->
         <StepwiseMultiply>
           <Multiplicand>
-            <Dependency path="/excessOverThresholdOvertimeCompensationDeduction"/>
+            <Dependency path="/overtimeCompensationDeductionExcessOverThreshold"/>
           </Multiplicand>
           <Rate>
             <!-- Reduce by a rate of $100 for each $1000 of MAGI exceeding the relevant threshold -->
@@ -185,34 +165,56 @@
 
       </Description>
       <Derived>
-        <GreaterOf>
-          <Switch>
-            <Case>
-              <When>
-                <Dependency path="/isEligibleForOvertimeCompensationDeduction"/>
-              </When>
-              <Then>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isEligibleForOvertimeCompensationDeduction"/>
+            </When>
+            <Then>
+              <LesserOf>
                 <Subtract>
                   <Minuend>
                     <Dependency path="/overtimeCompensation"/>
                   </Minuend>
                   <Subtrahends>
-                    <Dependency path="/phaseOutAmountOvertimeCompensationDeduction"/>
+                    <Dependency path="/overtimeCompensationDeductionPhaseOut"/>
                   </Subtrahends>
                 </Subtract>
-              </Then>
-            </Case>
-            <Case>
-              <When>
-                <True/>
-              </When>
-              <Then>
-                <Dollar>0</Dollar>
-              </Then>
-            </Case>
-          </Switch>
-          <Dollar>0</Dollar>
-        </GreaterOf>
+                <Dependency path="/overtimeCompensationDeductionMaximum"/>
+              </LesserOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/overtimeCompensationDeductionMaximum">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>25000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>12500</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
   </Facts>
