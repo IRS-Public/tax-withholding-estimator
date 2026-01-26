@@ -38,6 +38,18 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     withFixture(test.toNoArgTest(fixture))
   }
 
+  // Column F
+  test("Single, low wages, 2 dependents") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 22786)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 668)
+    scenario.assertOffset("/totalEndOfYearProjectedWithholding", 440, 16) // off by $16
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 990)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
   // Column Z
   test("MFJ, High Income, 1 child, Multi, Car loan") { td =>
     val scenario = td.scenario
