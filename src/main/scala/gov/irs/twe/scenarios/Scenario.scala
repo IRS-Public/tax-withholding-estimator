@@ -323,6 +323,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "qualChildrenCDCC" -> "/ctcEligibleDependents",
   "How many QC for EITC" -> "/eitcQualifyingChildren",
   "movingExpense" -> "/movingExpensesForArmedServicesMembers",
+  "educatorExpense" -> "/educatorExpenses",
   // Itemized Deductions
   "Interest you Paid" -> "/qualifiedMortgageInterestAndInvestmentInterestExpenses",
   "SALT you paid" -> "/stateAndLocalTaxPayments",
@@ -350,6 +351,9 @@ private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/selfEmploymentTax" -> "Self-Employment Tax",
   "/netInvestmentIncomeTax" -> "NetInvestmentIncomeTax",
   "/totalEndOfYearProjectedWithholding" -> "do-nothingTaxWithholding",
+  "/totalCtcAndOdc" -> "CTC + Credit for Other Dep",
+  "/additionalCtc" -> "Addl CTC",
+  "/totalRefundableCredits" -> "Total refundable credits",
   // TODO: This is not going to scale when the jobs that aren't Job 1 have withholdings
   // TODO: This doesn't work if Job 1 isn't the highest paying job and is selected for extra withholdings
   "/jobSelectedForExtraWithholding/w4Line3" -> "W-4 Line3Amount1",

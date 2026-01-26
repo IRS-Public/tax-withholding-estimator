@@ -211,6 +211,72 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 260)
   }
 
+  // Column BK
+  test("Single, one child, non-refundable") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 52000)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 4063)
+    scenario.assertEquals("/totalCtcAndOdc", 2200)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 4060)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
+  // Column BL
+  test("Single, one child, refundable partial") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 38429)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 2431)
+    scenario.assertEquals("/totalCtcAndOdc", 2200)
+    scenario.assertEquals("/earnedIncomeCredit", 2104)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 4060)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
+  // Column BM
+  test("MFJ, 3 children, one SSN, full refundable") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 31729)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 0)
+    scenario.assertEquals("/totalCtcAndOdc", 0)
+    scenario.assertEquals("/additionalCtc", 5100)
+    scenario.assertEquals("/earnedIncomeCredit", 6700)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1310)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 6700)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
+  // Column BN
+  test("HH,1 child, non-refundable") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 52000)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 2991)
+    scenario.assertEquals("/totalCtcAndOdc", 2200)
+    scenario.assertEquals("/totalRefundableCredits", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2526)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
+  // Column BO
+  test("MFS, 2 child, no SSN") { td =>
+    val scenario = td.scenario
+    scenario.graph.set("/ctcEligibleDependents", 0) // no ssn
+    scenario.assertEquals("/agi", 52000)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 4063)
+    scenario.assertEquals("/totalCtcAndOdc", 0)
+    scenario.assertEquals("/totalRefundableCredits", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 10)
+  }
+
   // Column BZ
   test("Single, SALT under 10k") { td =>
     val scenario = td.scenario
