@@ -102,3 +102,8 @@ main h1 {
   }
 }
 
+.fg-section-gate h5 {
+  padding: var(--units-3) 0;
+  margin-bottom: 0;
+}
+
