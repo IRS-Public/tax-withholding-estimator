@@ -274,6 +274,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "paymentYTD1" -> s"/jobs/#$JOB_1_ID/yearToDateIncome",
   "taxWhPerPPd1" -> s"/jobs/#$JOB_1_ID/amountWithheldLastPaycheck",
   "taxWhYTD1" -> s"/jobs/#$JOB_1_ID/yearToDateWithholding",
+  "401kYTD1" -> s"/jobs/#$JOB_1_ID/retirementPlanContributionsToDate",
+  "401kPerPPd1" -> s"/jobs/#$JOB_1_ID/retirementPlanContributionsPerPayPeriod",
   // Job 2
   "Job start2" -> s"/jobs/#$JOB_2_ID/writableStartDate",
   "Job end2" -> s"/jobs/#$JOB_2_ID/writableEndDate",
@@ -324,6 +326,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "How many QC for EITC" -> "/eitcQualifyingChildren",
   "movingExpense" -> "/movingExpensesForArmedServicesMembers",
   "educatorExpense" -> "/educatorExpenses",
+  "IRAcontribution" -> "/deductionForTraditionalIRAContribution",
   // Itemized Deductions
   "Interest you Paid" -> "/qualifiedMortgageInterestAndInvestmentInterestExpenses",
   "SALT you paid" -> "/stateAndLocalTaxPayments",
