@@ -50,6 +50,19 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
+  // Column G
+  test("Head of Household, wages only") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 31200)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 708)
+    scenario.assertEquals("/additionalCtc", 3400)
+    scenario.assertOffset("/earnedIncomeCredit", 5771, 6)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 705)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
   // Column Z
   test("MFJ, High Income, 1 child, Multi, Car loan") { td =>
     val scenario = td.scenario
