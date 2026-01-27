@@ -568,7 +568,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path("/totalCredits") -> Dollar("0"),
     )
 
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(4))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayPeriodsInteger")).value.contains(4))
   }
 
   test("Verifying monthly pension pay period calculations - recent pay date on end month") {
@@ -594,7 +594,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path("/totalCredits") -> Dollar("0"),
     )
 
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(1))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayPeriodsInteger")).value.contains(1))
   }
 
   test("Verifying monthly pension pay period calculations - recent pay date on end month, when end month is december") {
@@ -620,7 +620,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path("/totalCredits") -> Dollar("0"),
     )
 
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(0))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayPeriodsInteger")).value.contains(0))
   }
 
   test("Verifying semimonthly pension pay period calculations") {
@@ -646,7 +646,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path("/totalCredits") -> Dollar("0"),
     )
 
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(9))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayPeriodsInteger")).value.contains(9))
   }
 
   test("Verifying semimonthly pension pay period calculations - Recent and End are same month") {
@@ -672,7 +672,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path("/totalCredits") -> Dollar("0"),
     )
 
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(1))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayPeriodsInteger")).value.contains(2))
   }
 
   test("Verifying semimonthly pension pay period calculations -- Recent and End are same month, December") {
@@ -685,7 +685,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-12-31"),
     )
 
-    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(1))
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayPeriodsInteger")).value.contains(1))
   }
 
   val pensionDataTable = Table(
@@ -722,6 +722,38 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       21,
       "working for the whole year with eoy overlap on weekly pay",
     ),
+    (
+      weekly,
+      "2025-01-01",
+      "2025-12-30",
+      "2025-06-26",
+      26,
+      "working for part of the year with eoy overlap on weekly pay",
+    ),
+    (
+      weekly,
+      "2025-01-01",
+      "2025-05-22",
+      "2025-01-05",
+      20,
+      "weekly - partial year employment, doesn't handle lagging year",
+    ),
+    (
+      weekly,
+      "2025-01-01",
+      "2025-12-31",
+      "2025-01-05",
+      51,
+      "weekly - full year employment, handles period end dates in upcoming year",
+    ),
+    (
+      weekly,
+      "2025-01-01",
+      "2025-01-02",
+      "2025-01-05",
+      0,
+      "weekly - minimal amount worked this year",
+    ),
     // Biweekly Pay Periods
     (
       biWeekly,
@@ -747,10 +779,188 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       10,
       "working for the whole year with eoy overlap on biweekly pay",
     ),
+    // Semi Monthly Pay Periods
+    (
+      semiMonthly,
+      "2025-02-01",
+      "2025-12-31",
+      "2025-02-19",
+      20,
+      "working for a portion of the year with no eoy overlap on semimonthly pay",
+    ),
+    (
+      semiMonthly,
+      "2025-02-03",
+      "2025-12-31",
+      "2025-03-25",
+      18,
+      "working for a portion of the year with on semimonthly pay",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-12-15",
+      "2025-12-15",
+      0,
+      "working part of the year with final payment already accounted for on semimonthly pay",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-12-15",
+      "2025-12-16",
+      0,
+      "working part of the year with final payment in next period/next year on semimonthly pay",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-10-15",
+      "2025-10-02",
+      1,
+      "working part of the year paid in arrears across month boundary on semimonthly pay",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-12-03",
+      "2025-08-11",
+      8,
+      "working part of the year with one payment in final month on semimonthly pay",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-06-30",
+      "2025-05-31",
+      2,
+      "handles end date edge case",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-12-30",
+      "2025-10-31",
+      4,
+      "working part of the year with two payments in final month on semimonthly pay",
+    ),
+    (
+      semiMonthly,
+      "2025-11-01",
+      "2025-12-15",
+      "2025-11-20",
+      2,
+      "partial year, ignores gap between start date and when paid",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-12-31",
+      "2025-10-23",
+      4,
+      "bug 428",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-09-15",
+      "2025-05-05",
+      9,
+      "semi-monthly handles ignores lagging pay dates",
+    ),
+    (
+      semiMonthly,
+      "2025-01-01",
+      "2025-09-16",
+      "2025-01-05",
+      17,
+      "semi-monthly handles ignores lagging pay date from the previous year",
+    ),
+    // Monthly Pay Periods
+    (
+      monthly,
+      "2025-01-01",
+      "2025-12-31",
+      "2025-08-15",
+      4,
+      "working for example when they have three remaining monthly pay periods",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-12-31",
+      "2025-11-12",
+      1,
+      "working for a portion of the year with eoy overlap on monthly pay",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-06-20",
+      "2025-06-21",
+      0,
+      "ends in the same pay period on monthly pay",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-12-31",
+      "2025-07-02",
+      5,
+      "pay date is in future on monthly pay, ends last day",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-12-30",
+      "2025-07-02",
+      5,
+      "pay date is in future on monthly pay, ends prior to last day",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-02-22",
+      "2025-01-10",
+      2,
+      "need another paycheck to cover lag on monthly pay",
+    ),
+    (
+      monthly,
+      "2025-01-01",
+      "2025-02-09",
+      "2025-01-10",
+      1,
+      "doesn't need another paycheck to cover lag on monthly pay",
+    ),
+    (
+      monthly,
+      "2025-02-01",
+      "2025-03-31",
+      "2025-02-28",
+      1,
+      "doesn't need another paycheck when end date day is after pay period end day",
+    ),
+    (
+      monthly,
+      "2025-02-01",
+      "2025-03-31",
+      "2025-03-05",
+      1,
+      "doesn't need another paycheck when end date day is after pay period end day and paid after period end",
+    ),
+    (
+      monthly,
+      "2025-03-05",
+      "2025-09-15",
+      "2025-03-05",
+      7,
+      "handles extra pay period for extra days after pay period",
+    ),
   )
 
   test(
-    "testing remainingPayDates for pensions",
+    "testing remainingPayPeriodsInteger for pensions",
   ) {
     forAll(pensionDataTable) {
       (
@@ -771,7 +981,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
           Path(s"/pensions/#${pension1Id}/endDate") -> Day(endDateValue),
         )
 
-        assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayDates")).value.contains(expectedTruePayPeriods))
+        assert(
+          graph.get(Path(s"/pensions/#${pension1Id}/remainingPayPeriodsInteger")).value.contains(expectedTruePayPeriods),
+        )
     }
   }
 

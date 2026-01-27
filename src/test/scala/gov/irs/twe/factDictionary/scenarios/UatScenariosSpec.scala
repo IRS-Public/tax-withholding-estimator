@@ -52,7 +52,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("Single, low wages, 2 dependents") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 22786)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 668)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 668)
     scenario.assertOffset("/totalEndOfYearProjectedWithholding", 455.71, .29)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 990)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
@@ -64,7 +64,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("Head of Household, wages only") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 31200)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 708)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 708)
     scenario.assertEquals("/additionalCtc", 3400)
     scenario.assertOffset("/earnedIncomeCredit", 5771, 6)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 705)
@@ -78,7 +78,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 49328)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 3346)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 3337)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 3337)
     scenario.assertEquals("/selfEmploymentTax", 2543)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4a", 12182, 1)
@@ -95,7 +95,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalTaxNetRefundableCredits", 18878)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 15600)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 18878)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 18878)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 18878)
     scenario.assertEquals("/standardOrItemizedDeduction", 16100)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 5400)
     scenario.assertEquals("/selfEmploymentTax", 0)
@@ -138,6 +138,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 32880)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1207)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 6880)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
     // Scenario-specific assertions
     scenario.assertEquals("/seniorDeduction", 6000)
@@ -184,13 +185,26 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 22)
   }
 
+  // Column AH
+  test("Single, pension, SS, partial deduction, standard") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 100800)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 11911)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 3924)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 40800)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
+  }
+
   // Column AM
   test("HH, pension, partial deduction, standard") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 84000)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 1279)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 6493)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 6493)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
   }
 
   // Column AJ
@@ -198,9 +212,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 81500)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 4505)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1214)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 2500)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 1214)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 2500)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
   }
 
   // Column AN
@@ -255,7 +270,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("Single, zero deduction") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 152000)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 25214)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 25214)
     scenario.assertEquals("/studentLoanInterestDeduction", 0)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 3512)
@@ -269,7 +284,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.graph.set("/ctcEligibleDependents", 0)
     scenario.assertEquals("/agi", 104000)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 12472)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 12472)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 7200)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 283)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
@@ -281,7 +296,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("MFJ, max amount deduction") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 104000)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 6923)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 6923)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 10000)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1829)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
@@ -293,7 +308,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("HH,  phased out deduction, CTC, QBI") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 172587)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 25520)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 25520)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 3717)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
@@ -306,7 +321,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("Single, one child, non-refundable") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 52000)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 4063)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 4063)
     scenario.assertEquals("/totalCtcAndOdc", 2200)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 4060)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
@@ -318,7 +333,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("Single, one child, refundable partial") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 38429)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 2431)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 2431)
     scenario.assertEquals("/totalCtcAndOdc", 2200)
     scenario.assertEquals("/earnedIncomeCredit", 2104)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 4060)
@@ -331,7 +346,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("MFJ, 3 children, one SSN, full refundable") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 31729)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 0)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 0)
     scenario.assertEquals("/totalCtcAndOdc", 0)
     scenario.assertEquals("/additionalCtc", 5100)
     scenario.assertEquals("/earnedIncomeCredit", 6700)
@@ -345,7 +360,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("HH,1 child, non-refundable") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 52000)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 2991)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 2991)
     scenario.assertEquals("/totalCtcAndOdc", 2200)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2526)
@@ -359,7 +374,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.graph.set("/ctcEligibleDependents", 0) // no ssn
     scenario.assertEquals("/agi", 52000)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncomeWithoutNetGains", 4063)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 4063)
     scenario.assertEquals("/totalCtcAndOdc", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
@@ -613,7 +628,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
 
     scenario.assertOffset("/tentativeTaxNetNonRefundableCredits", 55870, -3)
-    scenario.assertOffset("/tentativeTaxFromTaxableIncomeWithoutNetGains", 58070, -3)
+    scenario.assertOffset("/tentativeTaxFromTaxableIncome", 58070, -3)
     scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 58069, -2)
   }
 

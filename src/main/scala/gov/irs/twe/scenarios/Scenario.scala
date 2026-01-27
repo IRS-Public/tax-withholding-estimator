@@ -75,6 +75,8 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   val socialSecurityOverrideFields =
     List("Start date", "End date", "SS monthly benefit", "SS monthly withholding")
 
+  var job1IsPension = false
+
   val csv: Map[String, String] = rows.foldLeft(Map()) { (dict, row) =>
     var inputName = row(INPUT_NAME_COL)
     // work around for handling Social security labels, since they aren't unique
@@ -82,6 +84,9 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
       inputName = inputName + "2"
     }
     val inputValue = row(scenarioColumn)
+    if (inputName == "Pension? (1=yes)" && inputValue == "1") {
+      job1IsPension = true
+    }
     dict + (inputName -> inputValue)
   }
 
@@ -127,6 +132,27 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
 
   // Add the 5 jobs to the fact graph
   ALL_JOBS.foreach(job => factGraph.addToCollection("/jobs", job))
+
+  if (job1IsPension) {
+    factGraph.addToCollection("/pensions", JOB_1_ID)
+    factGraph.set(s"/pensions/#$JOB_1_ID/filerAssignment", new types.Enum(Some("self"), "/filerAssignmentOption"))
+
+    // Set job to be deleted and add info as pension
+    spreadsheetFacts = spreadsheetFacts + (s"/jobs/#$JOB_1_ID/amountLastPaycheck" -> "$0")
+    spreadsheetFacts = spreadsheetFacts + (s"/jobs/#$JOB_1_ID/yearToDateIncome" -> "$0")
+
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_1_ID/startDate" -> csv("Job start1"))
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_1_ID/endDate" -> csv("Job end1"))
+    spreadsheetFacts =
+      spreadsheetFacts + (s"/pensions/#$JOB_1_ID/payFrequency" -> csv("payFrequency1 (1=W; 2=BW; 3=SM; 4=M)"))
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_1_ID/mostRecentPayDate" -> csv("recentPayDate1"))
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_1_ID/averagePayPerPayPeriod" -> csv("paymentPerPPd1"))
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_1_ID/yearToDateIncome" -> csv("paymentYTD1"))
+    spreadsheetFacts =
+      spreadsheetFacts + (s"/pensions/#$JOB_1_ID/averageWithholdingPerPayPeriod" -> csv("taxWhPerPPd1"))
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_1_ID/yearToDateWithholding" -> csv("taxWhYTD1"))
+  }
+
   factGraph.set(s"/jobs/#$PREVIOUS_SELF_JOB_ID/filerAssignment", new types.Enum(Some("self"), "/filerAssignmentOption"))
   factGraph.set(
     s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/filerAssignment",
@@ -366,8 +392,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
 // Note that this is the opposite direction of the writable fact mappings
 private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/agi" -> "AGI",
+  "/tentativeTaxFromTaxableIncome" -> "Income tax before credits",
   "/standardOrItemizedDeduction" -> "Total standard or itemized deductions",
-  "/tentativeTaxFromTaxableIncomeWithoutNetGains" -> "Income tax before credits",
   "/taxableIncome" -> "Taxable income",
   "/tentativeTaxNetNonRefundableCredits" -> "Income tax before refundable credits",
   "/totalTaxNetRefundableCredits" -> "Total tax after refundable credits",
@@ -392,4 +418,8 @@ private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/jobSelectedForExtraWithholding/w4Line4a" -> "W-4 Line4aAmount1",
   "/jobSelectedForExtraWithholding/w4Line4b" -> "W-4 Line4bAmount1",
   "/jobSelectedForExtraWithholding/w4Line4c" -> "W-4 Line4cAmount1",
+  "/pensionSelectedForExtraWithholding/w4pLine3" -> "W-4 Line3Amount1",
+  "/pensionSelectedForExtraWithholding/w4pLine4a" -> "W-4 Line4aAmount1",
+  "/pensionSelectedForExtraWithholding/w4pLine4b" -> "W-4 Line4bAmount1",
+  "/pensionSelectedForExtraWithholding/w4pLine4c" -> "W-4 Line4cAmount1",
 )

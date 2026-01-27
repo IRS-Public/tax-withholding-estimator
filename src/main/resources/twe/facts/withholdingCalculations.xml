@@ -235,10 +235,7 @@
         <Multiply>
           <Dependency path="../averageWithholdingPerPayPeriod"/>
           <LesserOf>
-            <Add>
-              <Dependency path="../fullPayPeriods"/>
-              <Dependency path="../partialPayPeriods"/>
-            </Add>
+            <Dependency path="../remainingPayPeriodsRational"/>
             <!-- Casting this value to a rational -->
             <Multiply>
               <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
@@ -353,7 +350,7 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/jobs/*/projectedW4EffectDate">
+    <Fact path="/projectedW4EffectDate">
       <Description>Date when we expect the W4 chagnes to take effect. 15 days after the current date</Description>
       <Derived>
         <Add>
@@ -375,7 +372,7 @@
                   <When>
                     <GreaterThanOrEqual>
                       <Left>
-                        <Dependency path="../projectedW4EffectDate"/>
+                        <Dependency path="/projectedW4EffectDate"/>
                       </Left>
                       <Right>
                         <Add>
@@ -410,7 +407,7 @@
                   <When>
                     <GreaterThanOrEqual>
                       <Left>
-                        <Dependency path="../projectedW4EffectDate"/>
+                        <Dependency path="/projectedW4EffectDate"/>
                       </Left>
                       <Right>
                         <Add>
@@ -446,7 +443,7 @@
                   <When>
                     <GreaterThanOrEqual>
                       <Left>
-                        <Dependency path="../projectedW4EffectDate"/>
+                        <Dependency path="/projectedW4EffectDate"/>
                       </Left>
                       <Right>
                         <AddPayrollMonths>
@@ -479,7 +476,7 @@
               <Count>
                 <GreaterThanOrEqual>
                   <Left>
-                    <Dependency path="../projectedW4EffectDate"/>
+                    <Dependency path="/projectedW4EffectDate"/>
                   </Left>
                   <Right>
                     <AddPayrollMonths>
@@ -514,14 +511,19 @@
       <Derived>
         <!-- TODO: what should we do if no jobs meet this filter? -->
         <Filter path="/jobs">
-          <GreaterThan>
-            <Left>
-              <Dependency path="/jobs/*/remainingPayPeriodsInteger"/>
-            </Left>
-            <Right>
-              <Dependency path="/jobs/*/payPeriodsBeforeW4ChangesAppear"/>
-            </Right>
-          </GreaterThan>
+          <All>
+            <Not>
+              <Dependency path="isPastJob"/>
+            </Not>
+            <GreaterThan>
+              <Left>
+                <Dependency path="/jobs/*/remainingPayPeriodsInteger"/>
+              </Left>
+              <Right>
+                <Dependency path="/jobs/*/payPeriodsBeforeW4ChangesAppear"/>
+              </Right>
+            </GreaterThan>
+          </All>
         </Filter>
       </Derived>
     </Fact>
@@ -596,6 +598,14 @@
       </Derived>
     </Fact>
     <Fact path="/totalCommittedWithholding">
+      <Derived>
+        <Add>
+          <Dependency path="/jobsTotalCommittedWithholding"/>
+          <Dependency path="/pensionsTotalCommittedWithholding"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobsTotalCommittedWithholding">
       <Derived>
         <CollectionSum>
           <Dependency path="/jobs/*/committedWithholding"/>

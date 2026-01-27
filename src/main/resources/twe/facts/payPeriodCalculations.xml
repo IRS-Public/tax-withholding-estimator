@@ -2,61 +2,24 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/jobs/*/futureTentativeRemainingPayPeriods">
-      <Description>
-        The tentative number of remaining pay periods, for a job
-        that will be held later in the year.
-      </Description>
+    <Fact path="/jobs/*/payPeriodLength">
+      <Description>Length of pay periods matching the Floor of Publication 15-T values.</Description>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Any>
-                <Dependency path="../isPayFrequencyWeekly"/>
-                <Dependency path="../isPayFrequencyBiWeekly"/>
-              </Any>
+              <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>
-              <!-- To what degree can we adjust this if we don't know when their pay dates will land? -->
-              <Ceiling>
-                <Divide>
-                  <Dividend>
-                    <Subtract>
-                      <Minuend>
-                        <Dependency path="../endDate/ordinal"/>
-                      </Minuend>
-                      <Subtrahends>
-                        <Dependency path="../mostRecentPayPeriodEnd/ordinal"/>
-                      </Subtrahends>
-                    </Subtract>
-                  </Dividend>
-                  <Divisors>
-                    <Dependency path="../payPeriodLength"/>
-                  </Divisors>
-                </Divide>
-              </Ceiling>
+              <Int>7</Int>
             </Then>
           </Case>
           <Case>
             <When>
-              <Dependency path="../isPayFrequencyMonthly"/>
+              <Dependency path="../isPayFrequencyBiWeekly"/>
             </When>
             <Then>
-              <Add>
-                <Subtract>
-                  <Minuend>
-                    <!-- Assumption: User will not be paid for December until next year -->
-                    <GreaterOf>
-                      <Dependency path="../endDate/month"/>
-                      <Int>11</Int>
-                    </GreaterOf>
-                  </Minuend>
-                  <Subtrahends>
-                    <Dependency path="../startDate/month"/>
-                  </Subtrahends>
-                </Subtract>
-                <Int>1</Int>
-              </Add>
+              <Int>14</Int>
             </Then>
           </Case>
           <Case>
@@ -64,52 +27,15 @@
               <Dependency path="../isPayFrequencySemiMonthly"/>
             </When>
             <Then>
-              <Add>
-                <!-- Pay periods in first month:  3 - ceil(start day/15)-->
-                <Subtract>
-                  <Minuend>
-                    <Int>3</Int>
-                  </Minuend>
-                  <Subtrahends>
-                    <Ceiling>
-                      <Divide>
-                        <Dividend>
-                          <Dependency path="../startDate/day"/>
-                        </Dividend>
-                        <Divisors>
-                          <Dependency path="../payPeriodLength"/>
-                        </Divisors>
-                      </Divide>
-                    </Ceiling>
-                  </Subtrahends>
-                </Subtract>
-                <!-- Pay periods in last month: ceil(start day/15) -->
-                <Ceiling>
-                  <Divide>
-                    <Dividend>
-                      <Dependency path="../endDate/day"/>
-                    </Dividend>
-                    <Divisors>
-                      <Dependency path="../payPeriodLength"/>
-                    </Divisors>
-                  </Divide>
-                </Ceiling>
-                <!-- Pay periods in intermediate months -->
-                <Multiply>
-                  <Int> 2 </Int>
-                  <Add>
-                    <Subtract>
-                      <Minuend>
-                        <Dependency path="../endDate/month"/>
-                      </Minuend>
-                      <Subtrahends>
-                        <Dependency path="../startDate/month"/>
-                      </Subtrahends>
-                    </Subtract>
-                    <Int>1</Int>
-                  </Add>
-                </Multiply>
-              </Add>
+              <Int>15</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isPayFrequencyMonthly"/>
+            </When>
+            <Then>
+              <Int>30</Int>
             </Then>
           </Case>
         </Switch>

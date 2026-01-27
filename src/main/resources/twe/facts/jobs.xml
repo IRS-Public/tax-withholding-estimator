@@ -552,14 +552,14 @@
     </Fact>
     <Fact path="/jobs/*/isPastJob">
       <Derived>
-        <LessThan>
+        <LessThanOrEqual>
           <Left>
             <Dependency path="../endDate"/>
           </Left>
           <Right>
             <Dependency path="/today"/>
           </Right>
-        </LessThan>
+        </LessThanOrEqual>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/isCurrentJob">
@@ -654,45 +654,6 @@
             <Enum optionsPath="/payFrequencyOptions">monthly</Enum>
           </Right>
         </Equal>
-      </Derived>
-    </Fact>
-    <Fact path="/jobs/*/payPeriodLength">
-      <Description>Length of pay periods matching the Floor of Publication 15-T values.</Description>
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="../isPayFrequencyWeekly"/>
-            </When>
-            <Then>
-              <Int>7</Int>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <Dependency path="../isPayFrequencyBiWeekly"/>
-            </When>
-            <Then>
-              <Int>14</Int>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <Dependency path="../isPayFrequencySemiMonthly"/>
-            </When>
-            <Then>
-              <Int>15</Int>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <Dependency path="../isPayFrequencyMonthly"/>
-            </When>
-            <Then>
-              <Int>30</Int>
-            </Then>
-          </Case>
-        </Switch>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/zeroIndexedStartDay">
