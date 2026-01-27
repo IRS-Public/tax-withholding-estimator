@@ -366,6 +366,9 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "End date2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/endDate",
   "SS monthly benefit2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/monthlyIncome",
   "SS monthly withholding2" -> s"/socialSecuritySources/#$SS_SPOUSE_ID/withheldRate",
+  // Other Income
+  "InterestOrdinaryDividends" -> "/ordinaryDividendsIncome",
+  "QualifiedDividends" -> "/qualifiedDividendsIncome",
   // Supported Credits and Deductions
   "studentLoanInterest" -> "/studentLoanInterestAmount",
   "Car loan interest" -> "/personalVehicleLoanInterestAmount",

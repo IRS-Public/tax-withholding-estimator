@@ -475,6 +475,7 @@ and car loan interest deduction
           <Dependency path="/royaltyIncome"/>
           <Dependency path="/nonSpecificOtherIncome"/>
           <Dependency path="/trumpAccountDistribution"/>
+          <Dependency path="/netCapitalGains"/>
         </Add>
       </Derived>
     </Fact>
