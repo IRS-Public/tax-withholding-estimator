@@ -355,6 +355,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "Gifts to Charity" -> "/charitableContributions",
   "Casualty Lossess" -> "/casualtyLossesTotal",
   "Other Itemized Deductions" -> "/otherDeductionsTotal",
+  "alimonyPaid" -> "/alimonyPaid",
 )
 
 // Note that this is the opposite direction of the writable fact mappings

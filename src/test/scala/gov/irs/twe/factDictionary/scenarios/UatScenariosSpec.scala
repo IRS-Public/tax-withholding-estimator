@@ -175,11 +175,27 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     // this scenario is effectively out of scope, and therefore assertions on W4 values cannot be made.
   }
 
+  // Column AX
+  test("Single, 1 job, factor 1.5, partial deduction") { td =>
+    {
+      val scenario = td.scenario
+      scenario.graph.set("/isFlsaNonExempt", true)
+      scenario.assertEquals("/agi", 254650)
+      scenario.assertEquals("/taxableIncome", 228950)
+      // n.b. The spreadsheet doesn't include medicare, SE, or investment tax in "Income tax before refundable credits"
+      // That's why we're not asserting on /totalTax
+      scenario.assertEquals("/totalOwed", 50260)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2803)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 5350)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    }
+  }
+
   // Column BB
   test("HH, 1 job, tips and OT") { td =>
     val scenario = td.scenario
     scenario.graph.set("/isFlsaNonExempt", true)
-
     scenario.assertEquals("/agi", 156000)
     scenario.assertEquals("/taxableIncome", 97450)
     scenario.assertEquals("/totalTax", 12146)
@@ -436,7 +452,7 @@ extension (scenario: Scenario) {
     val fact = scenario.getFact(factPath).asInstanceOf[Dollar]
     val (inputName, inputValue) = scenario.getExpectedSheetValueByFactPath(factPath)
     val sheetInput = Dollar(inputValue)
-    if (fact != sheetInput) throw Exception(s"$factPath ($fact) did not match CSV $inputName ($sheetInput)")
+    if (fact != sheetInput) throw Exception(s"$factPath ($fact) did not match \"$inputName\" ($sheetInput)")
     if (fact != Dollar(expectedValue))
       throw Exception(s"$factPath ($fact) did not match expected value ($expectedValue)")
   }
@@ -451,7 +467,7 @@ extension (scenario: Scenario) {
     val (inputName, inputValue) = scenario.getExpectedSheetValueByFactPath(factPath)
     val sheetInput = Dollar(inputValue)
     if (fact + dollarOffset != sheetInput)
-      throw Exception(s"$factPath ($fact) + offset ($dollarOffset) did not match CSV $inputName ($sheetInput)")
+      throw Exception(s"$factPath ($fact) + offset ($dollarOffset) did not match \"$inputName\" ($sheetInput)")
     if (fact != Dollar(expectedValue))
       throw Exception(s"$factPath ($fact) did not match expected value ($expectedValue)")
   }
