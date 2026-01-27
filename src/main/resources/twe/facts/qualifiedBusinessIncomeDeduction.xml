@@ -28,7 +28,7 @@
     <Fact path="/qbiComponentMultiplier">
       <TaxYear>2026</TaxYear>
       <Derived>
-        <Rational>20/100</Rational>
+        <Rational>2/10</Rational>
       </Derived>
     </Fact>
     <Fact path="/qbiPhaseInThreshold">
@@ -184,7 +184,7 @@
       <Derived>
         <Multiply>
           <Dependency path="/form8995aLine4"/>
-          <Rational>50/100</Rational>
+          <Rational>5/10</Rational>
         </Multiply>
       </Derived>
     </Fact>
@@ -240,11 +240,33 @@
       </Derived>
     </Fact>
     <Fact path="/form8995aLine13">
+      <Description>If there is no phase in, use the tentative QBI Component. If there is any phase in (positive or negative), use that. This deviates from the Form</Description>
       <Derived>
-        <GreaterOf>
-          <Dependency path="/form8995aLine11"/>
-          <Dependency path="/form8995aLine12"/>
-        </GreaterOf>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="/form8995aLine12"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dependency path="/form8995aLine11"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/form8995aLine12"/>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/form8995aLine14">
@@ -316,18 +338,22 @@
       </Derived>
     </Fact>
     <Fact path="/form8995aLine24">
-      <Description> QBI Phase In Percentage, rounded to 2 decimals</Description>
+      <Description> QBI Phase In Percentage. We multiply this by 100 and then divide by 100 at the end of the QBI Deduction calculation to ensure a high level of precision</Description>
+      <!-- TODO: Proper decimal hack to preserve as much precision as possible-->
       <Derived>
-        <Round>
-          <Divide>
-            <Dividend>
+        <Divide>
+          <Dividend>
+            <Multiply>
               <Dependency path="/form8995aLine22"/>
-            </Dividend>
-            <Divisors>
+              <Dollar>100</Dollar>
+            </Multiply>
+          </Dividend>
+          <Divisors>
+            <Multiply>
               <Dependency path="/form8995aLine23"/>
-            </Divisors>
-          </Divide>
-        </Round>
+            </Multiply>
+          </Divisors>
+        </Divide>
       </Derived>
     </Fact>
     <Fact path="/form8995aLine25">
@@ -339,11 +365,10 @@
       </Derived>
     </Fact>
     <Fact path="/form8995aLine26">
-      <Description>Form 8895-A Line 26, flows into Line 12</Description>
+      <Description>Form 8895-A Line 26, flows into Line 12. We always calculate the phase in reduction if the taxable income is above the phase in threshold, even if they are above the phase out threshold</Description>
       <Derived>
         <Switch>
           <Case>
-            <!-- taxable income is below the phase in threshold or above the phase out threshold, return 0 so that Line 13 (greater of line 11 and Line 12) always returns Line 11 because Line 12 = Line 26  -->
             <When>
               <Any>
                 <LessThan>
@@ -354,14 +379,6 @@
                     <Dependency path="/qbiPhaseInThreshold"/>
                   </Right>
                 </LessThan>
-                <GreaterThan>
-                  <Left>
-                    <Dependency path="/taxableIncomeForQBIDeduction"/>
-                  </Left>
-                  <Right>
-                    <Dependency path="/qbiPhaseOutThreshold"/>
-                  </Right>
-                </GreaterThan>
               </Any>
             </When>
             <Then>
@@ -374,14 +391,24 @@
               <True/>
             </When>
             <Then>
-              <Subtract>
-                <Minuend>
-                  <Dependency path="/form8995aLine17"/>
-                </Minuend>
-                <Subtrahends>
-                  <Dependency path="/form8995aLine25"/>
-                </Subtrahends>
-              </Subtract>
+              <Divide>
+                <Dividend>
+                  <Subtract>
+                    <Minuend>
+                      <Multiply>
+                        <Dependency path="/form8995aLine17"/>
+                        <Dollar>100</Dollar>
+                      </Multiply>
+                    </Minuend>
+                    <Subtrahends>
+                      <Dependency path="/form8995aLine25"/>
+                    </Subtrahends>
+                  </Subtract>
+                </Dividend>
+                <Divisors>
+                  <Dollar>100</Dollar>
+                </Divisors>
+              </Divide>
             </Then>
           </Case>
         </Switch>
@@ -477,7 +504,7 @@
       </Derived>
     </Fact>
     <Fact path="/tentativeQualifiedBusinessIncomeDeduction">
-      <Description>Form 8895-A Line 39.</Description>
+      <Description>Form 8895-A Line 39. </Description>
       <Derived>
         <Add>
           <Dependency path="/form8995aLine37"/>
@@ -485,12 +512,12 @@
         </Add>
       </Derived>
     </Fact>
-    <Fact path="/isEligibleForQBIDeduction">
+    <Fact path="/isEligibleForApplicableTaxpayerQBIDeduction">
       <Description>Tentative QBI is over applicable taxpayer threshold of $1,000</Description>
       <Derived>
         <GreaterThanOrEqual>
           <Left>
-            <Dependency path="/tentativeQualifiedBusinessIncomeDeduction"/>
+            <Dependency path="/qualifiedBusinessIncome"/>
           </Left>
           <Right>
             <Dependency path="/minimumQBIThresholdForApplicableTaxpayer"/>
@@ -511,14 +538,14 @@
         <Switch>
           <Case>
             <!-- When the taxpayer isn't an applicable taxpayer for QBI Deduction and doesn't have
-                at least $1,000 in QBI, the deduction is $0 -->
+                at least $1,000 in QBI, they aren't an applicable taxpayer for the $400 floored deduction and instead just get the standard QBI deduction -->
             <When>
               <Not>
-                <Dependency path="/isEligibleForQBIDeduction"/>
+                <Dependency path="/isEligibleForApplicableTaxpayerQBIDeduction"/>
               </Not>
             </When>
             <Then>
-              <Dollar>0</Dollar>
+              <Dependency path="/tentativeQualifiedBusinessIncomeDeduction"/>
             </Then>
           </Case>
           <Case>

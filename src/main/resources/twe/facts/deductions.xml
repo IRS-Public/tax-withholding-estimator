@@ -35,12 +35,15 @@
       </Derived>
     </Fact>
     <Fact path="/totalDeductionsForQBIDeduction">
-      <Description>OB3 deductions + Standard or Itemized, with coordination from OB3 70111 to remove limitation on top bracket for itemizers</Description>
+      <Description>OB3 deductions + Standard or Itemized, with coordination from OB3 70111 to remove limitation on top bracket for itemizers
+      From Form 8995A:
+        Form 1040 or 1040-SR filers: Form 1040 or 1040-SR, line 11a, minus Schedule 1-A (Form 1040), Part II, line 13, and then minus Form 1040 or 1040-SR, line 12e
+      </Description>
       <Derived>
         <Round>
           <Add>
             <Dependency path="/standardOrItemizedDeductionForQBIDeduction"/>
-            <Dependency path="/oB3Deductions"/>
+            <Dependency path="/qualifiedTipDeduction"/>
           </Add>
         </Round>
       </Derived>

@@ -356,15 +356,21 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "Casualty Lossess" -> "/casualtyLossesTotal",
   "Other Itemized Deductions" -> "/otherDeductionsTotal",
   "alimonyPaid" -> "/alimonyPaid",
+  // Other Income
+  "RentsRoyalties (or losses)" -> "/rentalIncome",
+  "SchedEpassive" -> "/netScheduleEIncome",
+  "S-CorpNonPassive" -> "/sCorpNonPassiveIncome",
+  "EstdTaxPymntsToDate" -> "/totalEstimatedTaxesPaid",
 )
 
 // Note that this is the opposite direction of the writable fact mappings
 private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/agi" -> "AGI",
+  "/standardOrItemizedDeduction" -> "Total standard or itemized deductions",
   "/tentativeTaxFromTaxableIncomeWithoutNetGains" -> "Income tax before credits",
   "/taxableIncome" -> "Taxable income",
-  "/totalTax" -> "Income tax before refundable credits",
-  "/totalOwed" -> "Total tax after refundable credits",
+  "/tentativeTaxNetNonRefundableCredits" -> "Income tax before refundable credits",
+  "/totalTaxNetRefundableCredits" -> "Total tax after refundable credits",
   "/earnedIncomeCredit" -> "EITC",
   "/qualifiedPersonalVehicleLoanInterestDeduction" -> "No tax on car loan interest deduction",
   "/seniorDeduction" -> "Additional Elder Deduction (70103)",
@@ -378,6 +384,8 @@ private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/totalCtcAndOdc" -> "CTC + Credit for Other Dep",
   "/additionalCtc" -> "Addl CTC",
   "/totalRefundableCredits" -> "Total refundable credits",
+  "/qualifiedBusinessIncomeDeduction" -> "QBI deduction",
+  "/incomeTotal" -> "Net pre-tax income",
   // TODO: This is not going to scale when the jobs that aren't Job 1 have withholdings
   // TODO: This doesn't work if Job 1 isn't the highest paying job and is selected for extra withholdings
   "/jobSelectedForExtraWithholding/w4Line3" -> "W-4 Line3Amount1",

@@ -2145,6 +2145,22 @@
         </Subtract>
       </Derived>
     </Fact>
+    <Fact path="/totalTaxNetRefundableCredits">
+      <Description>Total Tax - total payments + estimated tax</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Add>
+              <Dependency path="/totalTax"/>
+              <Dependency path="/totalEstimatedTaxesPaid"/>
+            </Add>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/totalPayments"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
     <Fact path="/topTaxRateBracketThresholdByFilingStatus">
       <Description> Threshold at which the top tax bracket (37%) applies by filing status. https://www.irs.gov/pub/irs-drop/rp-25-32.pdf
       </Description>

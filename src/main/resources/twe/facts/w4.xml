@@ -91,8 +91,6 @@
                     <Multiply>
                       <Dependency path="/w4Line4NetChange"/>
                       <Dollar>-1</Dollar>
-                      <!-- We might need to include this proportion when we start doing split withholdings and multiple W4-->
-                      <!--                      <Dependency path="../proportionOfYearEndJobsIncome"/>-->
                     </Multiply>
                   </Then>
                 </Case>

@@ -104,26 +104,27 @@
     <Fact path="/additionalMedicareTaxOnMedicareWagesForm5969Line7">
       <Description> Form 8959 Part I Line 7</Description>
       <Derived>
-        <Round>
-          <Multiply>
-            <Dependency path="/excessAdditionalMedicareTaxForm5969Line6"/>
-            <Dependency path="/additionalMedicareTaxMultiplier"/>
-          </Multiply>
-        </Round>
+        <Multiply>
+          <Dependency path="/excessAdditionalMedicareTaxForm5969Line6"/>
+          <Dependency path="/additionalMedicareTaxMultiplier"/>
+        </Multiply>
       </Derived>
     </Fact>
     <Fact path="/selfEmploymentIncomeForm8959Line8">
-      <Description> Form 8959 Part I Line 8. Per the Form instructions, this should include the total Medicare wages and tips plus your self-employment income, if any (including the Medicare wages and tips and self-employment income of your spouse, if married filing jointly), are greater than the threshold amount for your filing status</Description>
+      <Description> Form 8959 Part I Line 8. Per the Form instructions, this should include the total Medicare wages and tips plus your self-employment income, if any (including the Medicare wages and tips and self-employment income of your spouse, if married filing jointly), are greater than the threshold amount for your filing status
+        The Form calls for Schedule SE (Form 1040), Part I, line 6, but we pass in net SE income</Description>
       <Derived>
         <Add>
-          <Dependency path="/scheduleSELine6Self"/>
+          <!--          <Dependency path="/scheduleSELine6Self"/>-->
+          <Dependency path="/netSelfEmploymentIncomeSelf"/>
           <Switch>
             <Case>
               <When>
                 <Dependency path="/isFilingStatusMFJ"/>
               </When>
               <Then>
-                <Dependency path="/scheduleSELine6Spouse"/>
+                <!--                <Dependency path="/scheduleSELine6Spouse"/>-->
+                <Dependency path="/netSelfEmploymentIncomeSpouse"/>
               </Then>
             </Case>
             <Case>
@@ -170,12 +171,10 @@
     </Fact>
     <Fact path="/additionalMedicareTaxOnSelfEmploymentIncomeForm8959Line13">
       <Derived>
-        <Round>
-          <Multiply>
-            <Dependency path="/excessSelfEmploymentIncomeOfExcessMedicareTaxForm5969Line12"/>
-            <Dependency path="/additionalMedicareTaxMultiplier"/>
-          </Multiply>
-        </Round>
+        <Multiply>
+          <Dependency path="/excessSelfEmploymentIncomeOfExcessMedicareTaxForm5969Line12"/>
+          <Dependency path="/additionalMedicareTaxMultiplier"/>
+        </Multiply>
       </Derived>
     </Fact>
     <Fact path="/additionalMedicareTaxOnRRTAForm8959Line17">
@@ -186,11 +185,13 @@
     <Fact path="/additionalMedicareTax">
       <Description>Form8959 Line 17</Description>
       <Derived>
-        <Add>
-          <Dependency path="/additionalMedicareTaxOnMedicareWagesForm5969Line7"/>
-          <Dependency path="/additionalMedicareTaxOnSelfEmploymentIncomeForm8959Line13"/>
-          <Dependency path="/additionalMedicareTaxOnRRTAForm8959Line17"/>
-        </Add>
+        <Round>
+          <Add>
+            <Dependency path="/additionalMedicareTaxOnMedicareWagesForm5969Line7"/>
+            <Dependency path="/additionalMedicareTaxOnSelfEmploymentIncomeForm8959Line13"/>
+            <Dependency path="/additionalMedicareTaxOnRRTAForm8959Line17"/>
+          </Add>
+        </Round>
       </Derived>
     </Fact>
   </Facts>
