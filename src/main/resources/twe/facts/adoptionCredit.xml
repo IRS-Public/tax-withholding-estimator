@@ -2,9 +2,6 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <!--    TODO: this is based on the draft Form 8839 from https://www.irs.gov/pub/irs-dft/f8839\-\-dft.pdf and related instructions https://www.irs.gov/pub/irs-dft/i8839\-\-dft.pdf
-            We need to ensure the final form and derivation is reflected below
-    -->
     <Fact path="/estimatedTotalQualifiedAdoptionExpenses">
       <Description>
         https://www.irs.gov/credits-deductions/individuals/adoption-credit#qualifiedexpenses
@@ -44,21 +41,21 @@
     </Fact>
     <Fact path="/adoptionMagiPhaseoutThreshold">
       <Description>Phaseout threshold for MAGI</Description>
-      <TaxYear>2026</TaxYear>
+      <TaxYear>2025</TaxYear>
       <Derived>
-        <Dollar>265080</Dollar>
+        <Dollar>259190</Dollar>
       </Derived>
     </Fact>
     <Fact path="/maxRefundableAdoptionCreditAmount">
-      <TaxYear>2026</TaxYear>
+      <TaxYear>2025</TaxYear>
       <Derived>
-        <Dollar>5120</Dollar>
+        <Dollar>5000</Dollar>
       </Derived>
     </Fact>
     <Fact path="/maxAdoptionCreditPerChild">
-      <TaxYear>2026</TaxYear>
+      <TaxYear>2025</TaxYear>
       <Derived>
-        <Dollar>17670</Dollar>
+        <Dollar>17280</Dollar>
       </Derived>
     </Fact>
     <Fact path="/adoptionCreditMagi">
@@ -160,14 +157,17 @@
     <Fact path="/tentativeNonRefundableAdoptionCreditAmountWithoutCarryforward">
       <Description>Form 8839 Line 14</Description>
       <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/tentativeRefundableAdoptionCreditAmount"/>
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="/adoptionCreditRefundable"/>
-          </Subtrahends>
-        </Subtract>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/tentativeRefundableAdoptionCreditAmount"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/adoptionCreditRefundable"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/adoptionCreditCarryforward">
