@@ -40,10 +40,29 @@
       </Placeholder>
     </Fact>
     <Fact path="/adoptionMagiPhaseoutThreshold">
-      <Description>Phaseout threshold for MAGI</Description>
+      <Description>Phaseout threshold start for MAGI</Description>
       <TaxYear>2025</TaxYear>
       <Derived>
         <Dollar>259190</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/adoptionMagiPhaseoutThresholdEnd">
+      <Description>Phaseout threshold end for MAGI</Description>
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>299189</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/isEligibleForAdoptionCredit">
+      <Derived>
+        <LessThanOrEqual>
+          <Left>
+            <Dependency path="/adoptionCreditMagi"/>
+          </Left>
+          <Right>
+            <Dependency path="/adoptionMagiPhaseoutThresholdEnd"/>
+          </Right>
+        </LessThanOrEqual>
       </Derived>
     </Fact>
     <Fact path="/maxRefundableAdoptionCreditAmount">

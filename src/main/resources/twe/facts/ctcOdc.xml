@@ -30,6 +30,19 @@
         <Int>0</Int>
       </Placeholder>
     </Fact>
+    <Fact path="/tentativelyEligibleForCtcOdc">
+      <Derived>
+        <All>
+          <Dependency path="/primaryFilerIsClaimingDependents"/>
+          <Not>
+            <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
+          </Not>
+          <Not>
+            <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
+          </Not>
+        </All>
+      </Derived>
+    </Fact>
     <Fact path="/maybeEligibleForCtc">
       <Name>Whether the TP may be eligible to receive CTC based on dependents</Name>
       <Description>Whether there are dependents who are eligible for the Child Tax Credit.</Description>

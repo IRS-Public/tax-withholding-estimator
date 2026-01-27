@@ -190,17 +190,5 @@
         </All>
       </Derived>
     </Fact>
-    <Fact path="/primaryFilerAge25OrOlderForEitc">
-      <Description>Whether the primary filer will greater than or equal to 25 at the end of the tax year.</Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
-    <Fact path="/secondaryFilerAge25OrOlderForEitc">
-      <Description>Whether the secondary filer will greater than or equal to 25 at the end of the tax year.</Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
   </Facts>
 </FactDictionaryModule>

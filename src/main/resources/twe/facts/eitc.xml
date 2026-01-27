@@ -14,6 +14,107 @@
         <Int>0</Int>
       </Placeholder>
     </Fact>
+    <Fact path="/flowShouldAskForEitcQualifyingChildren">
+      <Derived>
+        <All>
+          <Dependency path="/maybeEligibleForEitcBase"/>
+          <Dependency path="/primaryFilerIsClaimingDependents"/>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/hasNoEitcQualifyingChildren">
+      <Derived>
+        <Any>
+          <Not>
+            <Dependency path="/primaryFilerIsClaimingDependents"/>
+          </Not>
+          <All>
+            <IsComplete>
+              <Dependency path="/eitcQualifyingChildren"/>
+            </IsComplete>
+            <Equal>
+              <Left>
+                <Dependency path="/eitcQualifyingChildren"/>
+              </Left>
+              <Right>
+                <Int>0</Int>
+              </Right>
+            </Equal>
+          </All>
+        </Any>
+      </Derived>
+    </Fact>
+    <Fact path="/primaryFilerAge25OrOlderForEitc">
+      <Description>Whether the primary filer will be greater than or equal to 25 at the end of the tax year.</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+    <Fact path="/flowShouldAskWhetherPrimaryFilerAge25OrOlderForEitc">
+      <Derived>
+        <All>
+          <Dependency path="/maybeEligibleForEitcBase"/>
+          <!-- under 65 -->
+          <Not>
+            <Dependency path="/primaryFilerAge65OrOlder"/>
+          </Not>
+          <!-- aren't a dependent on someone else's return -->
+          <Not>
+            <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
+          </Not>
+          <Not>
+            <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
+          </Not>
+          <!-- is not claiming dependents OR enters 0 qualifying children -->
+          <Dependency path="/hasNoEitcQualifyingChildren"/>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/secondaryFilerAge25OrOlderForEitc">
+      <Description>Whether the secondary filer will be greater than or equal to 25 at the end of the tax year.</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+    <Fact path="/flowShouldAskWhetherSecondaryFilerAge25OrOlderForEitc">
+      <Derived>
+        <All>
+          <Dependency path="/maybeEligibleForEitcBase"/>
+          <!-- are MFJ -->
+          <Dependency path="/isFilingStatusMFJ"/>
+          <!-- spouse is under 65 -->
+          <Not>
+            <Dependency path="/secondaryFilerAge65OrOlder"/>
+          </Not>
+          <!-- Neither filer is claimed on someone else's return -->
+          <Not>
+            <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
+          </Not>
+          <Not>
+            <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
+          </Not>
+          <!-- enter "No" to the self 25+ age question (only 1 taxpayer must certify) -->
+          <Not>
+            <Dependency path="/primaryFilerAge25OrOlderForEitc"/>
+          </Not>
+          <!-- is not claiming dependents OR enters 0 qualifying children -->
+          <Dependency path="/hasNoEitcQualifyingChildren"/>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/flowShouldShowEitcSection">
+      <Description>
+        Whether or not the entire section for EITC questions in the flow should be shown.
+        Effectively, if at least one question within should be shown, this fact evaluates to true.
+      </Description>
+      <Derived>
+        <Any>
+          <Dependency path="/flowShouldAskForEitcQualifyingChildren"/>
+          <Dependency path="/flowShouldAskWhetherPrimaryFilerAge25OrOlderForEitc"/>
+          <Dependency path="/flowShouldAskWhetherSecondaryFilerAge25OrOlderForEitc"/>
+        </Any>
+      </Derived>
+    </Fact>
     <Fact path="/maxEitcFromAGI">
       <Description>
         The maximum amount of EITC that can be received based on the taxpayer's AGI.
@@ -909,7 +1010,7 @@
     </Fact>
     <Fact path="/maybeEligibleForEitcBase">
       <Name>Whether the TP may be eligible for the EITC Base</Name>
-      <Description>Base rules that define whhether the TP passes various tests to be eligible for the Earned Income Tax
+      <Description>Base rules that define whether the TP passes various tests to be eligible for the Earned Income Tax
         Credit (EITC) before running child-specific tests</Description>
       <Derived>
         <All>

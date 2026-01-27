@@ -153,6 +153,18 @@
         </LesserOf>
       </Derived>
     </Fact>
+    <Fact path="/hasCdccEarnedIncome">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/lowerOfCdccEarnedIncome"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
     <Fact path="/lowerOfCdccEarnedIncome">
       <Description>Lower of earned income (regardless of filing status). Lesser of Form 2441 Line 4 and Line 5</Description>
       <Derived>

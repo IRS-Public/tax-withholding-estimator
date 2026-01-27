@@ -11,6 +11,68 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/retirementSavingsContributionsTaxCreditIncomeThreshold">
+      <Description>The maximum income limit to be eligible for the savers credit</Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dependency path="/retirementSavingsContributionsTaxCreditIncomeThresholdMFJ"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusHOH"/>
+            </When>
+            <Then>
+              <Dependency path="/retirementSavingsContributionsTaxCreditIncomeThresholdHOH"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/retirementSavingsContributionsTaxCreditIncomeThresholdSingle"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/retirementSavingsContributionsTaxCreditIncomeThresholdSingle">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>40250</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/retirementSavingsContributionsTaxCreditIncomeThresholdHOH">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>60375</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/retirementSavingsContributionsTaxCreditIncomeThresholdMFJ">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>80500</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/isEligibleForRetirementSavingsContributionsCredit">
+      <Derived>
+        <LessThanOrEqual>
+          <Left>
+            <Dependency path="/agi"/>
+          </Left>
+          <Right>
+            <Dependency path="/retirementSavingsContributionsTaxCreditIncomeThreshold"/>
+          </Right>
+        </LessThanOrEqual>
+      </Derived>
+    </Fact>
     <Fact path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount">
       <TaxYear>2026</TaxYear>
       <Derived>

@@ -272,16 +272,25 @@
         </Multiply>
       </Derived>
     </Fact>
+    <Fact path="/isEligibleForEducationCredits">
+      <Derived>
+        <Not>
+          <Any>
+            <Dependency path="/treatFilersAsDependents"/>
+            <Dependency path="/isFilingStatusMFS"/>
+          </Any>
+        </Not>
+      </Derived>
+    </Fact>
     <Fact path="/americanOpportunityCredit">
       <Description>Form 8863 Line 8. Input on Form 1040 Line 29</Description>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Any>
-                <Dependency path="/treatFilersAsDependents"/>
-                <Dependency path="/isFilingStatusMFS"/>
-              </Any>
+              <Not>
+                <Dependency path="/isEligibleForEducationCredits"/>
+              </Not>
             </When>
             <Then>
               <Dollar>0</Dollar>
@@ -408,10 +417,9 @@
         <Switch>
           <Case>
             <When>
-              <Any>
-                <Dependency path="/treatFilersAsDependents"/>
-                <Dependency path="/isFilingStatusMFS"/>
-              </Any>
+              <Not>
+                <Dependency path="/isEligibleForEducationCredits"/>
+              </Not>
             </When>
             <Then>
               <Dollar>0</Dollar>
