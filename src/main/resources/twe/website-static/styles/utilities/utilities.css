@@ -25,7 +25,7 @@ a[href^="http"]:not([href*="irs.gov"])::after {
   width: 0.75rem;
   height: 0.75rem;
   margin-left: 0.25rem;
-  background-image: url("/twe/resources/vendor/uswds-3.13.0/img/usa-icons/launch.svg");
+  background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/launch.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -36,7 +36,7 @@ a[href^="http"]:not([href*="irs.gov"])::after {
 
 /* Use white icon for external links in dark backgrounds (e.g., identifier section) */
 .usa-identifier a[href^="http"]::after {
-  background-image: url("/twe/resources/vendor/uswds-3.13.0/img/usa-icons-bg/launch--white.svg");
+  background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons-bg/launch--white.svg");
 }
 
 .usa-identifier__logo-img {

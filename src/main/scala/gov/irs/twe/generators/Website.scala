@@ -78,8 +78,7 @@ object Website {
 
       // Add a link for the next page if it's not the last one
       if (index < flow.pages.size - 1) {
-        var nextPageHref = flow.pages(index + 1).href()
-        if (index == 0) nextPageHref = nextPageHref.substring(1) // This turns `../` into `./`
+        val nextPageHref = flow.pages(index + 1).href()
         context.setVariable("nextPageHref", nextPageHref)
       }
       // Add a link for the last page if it's not the first one

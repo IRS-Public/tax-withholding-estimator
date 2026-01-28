@@ -1,7 +1,7 @@
 const parser = new DOMParser()
 const XML_SERIALIZER = new XMLSerializer()
 
-const res = await fetch('/twe/resources/fact-dictionary.xml')
+const res = await fetch('/app/tax-withholding-estimator/resources/fact-dictionary.xml')
 const text = await res.text()
 const factDictionaryXml = parser.parseFromString(text, 'application/xml')
 

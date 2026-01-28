@@ -51,10 +51,7 @@ case class FgAlertContent(heading: String, body: Map[String, String])
 
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"
-
-  // We save everything to a /twe subdirectory so that the CDN team can set up consistent rules
-  // for our application at the /twe subroute.
-  site.save(outDir / "twe")
+  site.save(outDir / "app/tax-withholding-estimator")
 
   if !flags.contains("serve") then return // Only start smol if 'serve' flag is set
 
@@ -70,7 +67,7 @@ case class FgAlertContent(heading: String, body: Map[String, String])
   try
     val server = smol.Smol.start(config)
     sys.addShutdownHook(server.stop(0))
-    val url = s"http://${host}:${port}/twe"
+    val url = s"http://${host}:${port}/app/tax-withholding-estimator"
     val green = "\u001b[32m"
     val cyan = "\u001b[36m"
     val bold = "\u001b[1m"
@@ -79,7 +76,7 @@ case class FgAlertContent(heading: String, body: Map[String, String])
     println(s"  ${bold}Local:${reset}   ${cyan}${url}${reset}\n")
   catch
     case _: java.net.BindException =>
-      val url = s"http://${host}:${port}/twe"
+      val url = s"http://${host}:${port}/app/tax-withholding-estimator"
       val yellow = "\u001b[33m"
       val cyan = "\u001b[36m"
       val bold = "\u001b[1m"

@@ -9,7 +9,7 @@
   <a class="usa-skipnav" href="#main-content" th:text="#{layout.skip-to-main}"></a>
   <header>
     <div th:replace="fragments/usa-banner"></div>
-    <div class="logo-banner"><img src="/twe/resources/img/irs-logo.svg" th:alt="#{layout.irs.logo-alt-text}"></div>
+    <div class="logo-banner"><img src="/app/tax-withholding-estimator/resources/img/irs-logo.svg" th:alt="#{layout.irs.logo-alt-text}"></div>
   </header>
 
   <main id="main-content">
@@ -19,7 +19,7 @@
     <div class="header-bottom-border" th:if="!${first}">
       <a class="usa-link back-link" th:href="${lastPageHref}">
         <svg aria-hidden="true" role="img" focusable="false" class="usa-icon">
-          <use href="/twe/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
+          <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
         </svg>
         <span th:text="#{buttons.back}" th:remove="tag"></span>
       </a>
@@ -32,7 +32,7 @@
       </p>
     </noscript>
     <img
-      src="/twe/resources/img/spinner.svg"
+      src="/app/tax-withholding-estimator/resources/img/spinner.svg"
       id="loading-spinner"
       alt="Loading spinner"
       class="hidden"
@@ -44,7 +44,7 @@
         <a class="usa-button" th:href="${nextPageHref}" onclick="return handleSectionContinue(event)">
           [[${first} ? #{buttons.next} : #{buttons.continue}]]
           <svg th:unless="${first}" aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
-            <use href="/twe/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
+            <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
           </svg>
         </a>
       </div>
@@ -55,7 +55,7 @@
   <div th:replace="fragments/audit-panel"></div>
   <script type="module" th:if="${flags.auditMode}">
     // If configured, automatically enable Audit Mode on startup
-    import { enable } from '/twe/resources/js/audit-panel.js'
+    import { enable } from '/app/tax-withholding-estimator/resources/js/audit-panel.js'
     enable()
   </script>
 
@@ -65,7 +65,7 @@
         <div class="usa-identifier__container">
           <div data-testid="identifierLogos" class="usa-identifier__logos">
             <a class="usa-identifier__logo" href="https://irs.gov" th:aria-label="#{layout.irs.domain}">
-              <img src="/twe/resources/img/irs_logo_bk.svg" class="usa-identifier__logo-img" alt="">
+              <img src="/app/tax-withholding-estimator/resources/img/irs_logo_bk.svg" class="usa-identifier__logo-img" alt="">
             </a>
           </div>
           <div data-testid="identifierIdentity" class="usa-identifier__identity">

@@ -38,19 +38,7 @@ case class Page(
     pageXml
   }
 
-  // The "canonical" URL for each page is described with `../` because at the moment we do not have access to
-  // the domain root, i.e. in some environments are at example.com/twe/ and other we are at example.com/nest/route/twe/
-  // We do guarantee that the route will always end in a trailing slash, so `../` works everywhere except the home page:
-  //
-  // Clicking <a href="../income"> on:
-  //   example.com/twe/             -> example.com/income
-  //   example.com/twe/adjustments/ -> example.com/twe/income
-  //
-  // This is handled in Website.scala by removing a leading dot from the next-page link when it's on the home page.
-  def href(): String = {
-    val trailingSlash = if (route != "/") "/" else ""
-    ".." + route + trailingSlash
-  }
+  def href(): String = "/app/tax-withholding-estimator" + route
 
 object Page {
   def parse(page: xml.Node, factDictionary: FactDictionary): Page = {
