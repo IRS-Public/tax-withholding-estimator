@@ -43,7 +43,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 252000)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 34662)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4c", 595, -1)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 594)
     // Scenario-specific assertions
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 4600)
   }
@@ -516,7 +516,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/standardOrItemizedDeduction", 19675)
 
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4c", 592, -5)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 587)
 //    The spreadsheet assumes that 100% of the /proportionOfYearEndJobsIncome goes to the job selected to the Extra withholding
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3575)
   }
@@ -541,12 +541,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     assert(scenario.graph.get("/jobs/#a3006af1-a040-4235-9d31-68c5830c55fd/w4Line4c").value.get === 0)
 
 //    W-4 Line4cAmount1 = 0 and W-4 Line4cAmount2 = 625. Because /jobSelectedForExtraWithholding maps directly to W-4 Line4cAmount1, this will always be a mismatch until we fix how the mapping occurs
-//     We instead look Job 2 directly
-//    The issue here is that our assumptions on when the W4 change become active in /payPeriodsBeforeW4ChangesAppear do not match up with the spreadsheet.
-//    Last pay date (2/1 + 21 days) < projected W4 effective date (today 2/15 + 15 days = 3/2), but Additional paychecks before new W-4 = 2
-    val offset = 15
-    assert(scenario.graph.get("/jobs/#8955625f-6317-451b-bce9-48893d60e766/w4Line4c").value.get === 625 + offset)
-
+//    We instead look Job 2 directly
+    assert(scenario.graph.get("/jobs/#8955625f-6317-451b-bce9-48893d60e766/w4Line4c").value.get === 625)
   }
 
   // Column BQ

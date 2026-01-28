@@ -273,6 +273,155 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/semimonthlyEarlierPayDate">
+      <Description>For semimonthly pay periods, determines the earlier pay date, we assume pay dates of the 16 correspond to pay dates on the 1st</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="../mostRecentPayDate/day"/>
+                </Left>
+                <Right>
+                  <Int>15</Int>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="../mostRecentPayDate"/>
+                </Minuend>
+                <Subtrahends>
+                  <Days>15</Days>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../mostRecentPayDate"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/semimonthlyLaterPayDate">
+      <Description>For semimonthly pay periods, determines the later pay date</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <LessThanOrEqual>
+                <Left>
+                  <Dependency path="../mostRecentPayDate/day"/>
+                </Left>
+                <Right>
+                  <Int>15</Int>
+                </Right>
+              </LessThanOrEqual>
+            </When>
+            <!-- add 15 days by default if the 14th or 15th of feb get last day of feb -->
+            <Then>
+              <Switch>
+                <Case>
+                  <When>
+                    <All>
+                      <Equal>
+                        <Left>
+                          <Dependency path="../mostRecentPayDate/month"/>
+                        </Left>
+                        <Right>
+                          <Int>2</Int>
+                        </Right>
+                      </Equal>
+                      <Any>
+                        <Equal>
+                          <Left>
+                            <Dependency path="../mostRecentPayDate/day"/>
+                          </Left>
+                          <Right>
+                            <Int>14</Int>
+                          </Right>
+                        </Equal>
+                        <Equal>
+                          <Left>
+                            <Dependency path="../mostRecentPayDate/day"/>
+                          </Left>
+                          <Right>
+                            <Int>15</Int>
+                          </Right>
+                        </Equal>
+                      </Any>
+                    </All>
+                  </When>
+                  <Then>
+                    <LastDayOfMonth>
+                      <Dependency path="../mostRecentPayDate"/>
+                    </LastDayOfMonth>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dependency path="../mostRecentPayDate"/>
+                      <Days>15</Days>
+                    </Add>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../mostRecentPayDate"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/nextPayDay">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="../mostRecentPayDate"/>
+                </Left>
+                <Right>
+                  <Dependency path="../semimonthlyEarlierPayDate"/>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dependency path="../semimonthlyLaterPayDate"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <AddPayrollMonths>
+                <Dependency path="../semimonthlyEarlierPayDate"/>
+                <Int>1</Int>
+              </AddPayrollMonths>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/effectiveEndDate">
       <Description>The month in which the user last worked as far as income counting towards this
         year is concerned, used for semi-monthly and monthly</Description>

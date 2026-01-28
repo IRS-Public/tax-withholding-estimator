@@ -156,6 +156,155 @@
         </Equal>
       </Derived>
     </Fact>
+    <Fact path="/pensions/*/semimonthlyEarlierPayDate">
+      <Description>For semimonthly pay periods, determines the earlier pay date, we assume pay dates of the 16 correspond to pay dates on the 1st</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="../mostRecentPayDate/day"/>
+                </Left>
+                <Right>
+                  <Int>15</Int>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Subtract>
+                <Minuend>
+                  <Dependency path="../mostRecentPayDate"/>
+                </Minuend>
+                <Subtrahends>
+                  <Days>15</Days>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../mostRecentPayDate"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/semimonthlyLaterPayDate">
+      <Description>For semimonthly pay periods, determines the later pay date</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <LessThanOrEqual>
+                <Left>
+                  <Dependency path="../mostRecentPayDate/day"/>
+                </Left>
+                <Right>
+                  <Int>15</Int>
+                </Right>
+              </LessThanOrEqual>
+            </When>
+            <!-- add 15 days by default if the 14th or 15th of feb get last day of feb -->
+            <Then>
+              <Switch>
+                <Case>
+                  <When>
+                    <All>
+                      <Equal>
+                        <Left>
+                          <Dependency path="../mostRecentPayDate/month"/>
+                        </Left>
+                        <Right>
+                          <Int>2</Int>
+                        </Right>
+                      </Equal>
+                      <Any>
+                        <Equal>
+                          <Left>
+                            <Dependency path="../mostRecentPayDate/day"/>
+                          </Left>
+                          <Right>
+                            <Int>14</Int>
+                          </Right>
+                        </Equal>
+                        <Equal>
+                          <Left>
+                            <Dependency path="../mostRecentPayDate/day"/>
+                          </Left>
+                          <Right>
+                            <Int>15</Int>
+                          </Right>
+                        </Equal>
+                      </Any>
+                    </All>
+                  </When>
+                  <Then>
+                    <LastDayOfMonth>
+                      <Dependency path="../mostRecentPayDate"/>
+                    </LastDayOfMonth>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Dependency path="../mostRecentPayDate"/>
+                      <Days>15</Days>
+                    </Add>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../mostRecentPayDate"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/nextPayDay">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="../mostRecentPayDate"/>
+                </Left>
+                <Right>
+                  <Dependency path="../semimonthlyEarlierPayDate"/>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dependency path="../semimonthlyLaterPayDate"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <AddPayrollMonths>
+                <Dependency path="../semimonthlyEarlierPayDate"/>
+                <Int>1</Int>
+              </AddPayrollMonths>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/pensions/*/payPeriodsBeforeW4ChangesAppear">
       <Derived>
         <Switch>
@@ -164,34 +313,7 @@
               <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>
-              <Switch>
-                <Case>
-                  <When>
-                    <GreaterThanOrEqual>
-                      <Left>
-                        <Dependency path="/projectedW4EffectDate"/>
-                      </Left>
-                      <Right>
-                        <Add>
-                          <Dependency path="../mostRecentPayDate"/>
-                          <Days>21</Days>
-                        </Add>
-                      </Right>
-                    </GreaterThanOrEqual>
-                  </When>
-                  <Then>
-                    <Int>3</Int>
-                  </Then>
-                </Case>
-                <Case>
-                  <When>
-                    <True/>
-                  </When>
-                  <Then>
-                    <Int>2</Int>
-                  </Then>
-                </Case>
-              </Switch>
+              <Int>2</Int>
             </Then>
           </Case>
           <Case>
@@ -199,34 +321,7 @@
               <Dependency path="../isPayFrequencyBiWeekly"/>
             </When>
             <Then>
-              <Switch>
-                <Case>
-                  <When>
-                    <GreaterThanOrEqual>
-                      <Left>
-                        <Dependency path="/projectedW4EffectDate"/>
-                      </Left>
-                      <Right>
-                        <Add>
-                          <Dependency path="../mostRecentPayDate"/>
-                          <Days>28</Days>
-                        </Add>
-                      </Right>
-                    </GreaterThanOrEqual>
-                  </When>
-                  <Then>
-                    <Int>2</Int>
-                  </Then>
-                </Case>
-                <Case>
-                  <When>
-                    <True/>
-                  </When>
-                  <Then>
-                    <Int>1</Int>
-                  </Then>
-                </Case>
-              </Switch>
+              <Int>1</Int>
             </Then>
           </Case>
           <Case>
@@ -256,10 +351,25 @@
                 </Case>
                 <Case>
                   <When>
-                    <True/>
+                    <GreaterThanOrEqual>
+                      <Left>
+                        <Dependency path="/projectedW4EffectDate"/>
+                      </Left>
+                      <Right>
+                        <Dependency path="../nextPayDay"/>
+                      </Right>
+                    </GreaterThanOrEqual>
                   </When>
                   <Then>
                     <Int>1</Int>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Int>0</Int>
                   </Then>
                 </Case>
               </Switch>
