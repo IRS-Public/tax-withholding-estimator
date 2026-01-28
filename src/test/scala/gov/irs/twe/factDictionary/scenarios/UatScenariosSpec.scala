@@ -230,6 +230,26 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
   }
 
+  // Column AI
+  test("Single, salary, full deduction, itemized") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/incomeTotal", 60000)
+    scenario.assertEquals("/agi", 60000)
+    assert(scenario.graph.get("/totalDeductionsNetQBI").value.get == 30700)
+    scenario.assertEquals("/taxableIncome", 29300)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 15000)
+    scenario.assertEquals("/seniorDeduction", 6000)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 3271)
+    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 3271)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 3271)
+    scenario.assertEquals("/totalEndOfYearProjectedWithholding", 4800)
+
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 2492)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 6550)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
+  }
+
   // Column AM
   test("HH, pension, partial deduction, standard") { td =>
     val scenario = td.scenario

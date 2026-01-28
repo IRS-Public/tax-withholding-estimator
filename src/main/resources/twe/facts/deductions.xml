@@ -14,6 +14,16 @@
         </Round>
       </Derived>
     </Fact>
+    <Fact path="/totalDeductionsNetQBI">
+      <Derived>
+        <Round>
+          <Add>
+            <Dependency path="/standardOrItemizedDeduction"/>
+            <Dependency path="/oB3Deductions"/>
+          </Add>
+        </Round>
+      </Derived>
+    </Fact>
     <Fact path="/excessItemizedOverStandard">
       <Description>Itemized Deduction - Standard Deduction. Used for calculating Line 4b net change</Description>
       <Derived>
