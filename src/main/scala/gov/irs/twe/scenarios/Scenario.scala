@@ -315,6 +315,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "taxWhYTD1" -> s"/jobs/#$JOB_1_ID/yearToDateWithholding",
   "401kYTD1" -> s"/jobs/#$JOB_1_ID/retirementPlanContributionsToDate",
   "401kPerPPd1" -> s"/jobs/#$JOB_1_ID/retirementPlanContributionsPerPayPeriod",
+  "HSAYTD1" -> s"/jobs/#$JOB_1_ID/hsaOrFsaContributionsToDate",
+  "HSAPerPPd1" -> s"/jobs/#$JOB_1_ID/hsaOrFsaContributionsPerPayPeriod",
   "Annual Tip Income from Job 1" -> s"/jobs/#$JOB_1_ID/qualifiedTipIncome",
   "Annual Overtime Income from Job1" -> s"/jobs/#$JOB_1_ID/overtimeCompensationTotal",
   // Job 2
@@ -369,7 +371,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   // Other Income
   "InterestOrdinaryDividends" -> "/ordinaryDividendsIncome",
   "QualifiedDividends" -> "/qualifiedDividendsIncome",
-  // Supported Credits and Deductions
+  // Adjustments, Deductions, Credits
+  "HSAdeduction" -> "/hsaContributionAmount",
   "studentLoanInterest" -> "/studentLoanInterestAmount",
   "Car loan interest" -> "/personalVehicleLoanInterestAmount",
   "qualChildrenCDCC" -> "/ctcEligibleDependents",
@@ -378,6 +381,11 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "educatorExpense" -> "/educatorExpenses",
   "IRAcontribution" -> "/deductionForTraditionalIRAContribution",
   "AMT Credit" -> "/alternativeMinimumTaxCreditAmount",
+  "Foreign Tax Credit" -> "/schedule3Line1",
+  "Number of students" -> "/aotcQualifyingStudents",
+  "AOTC" -> "/aotcQualifiedEducationExpenses",
+  "LLC" -> "/llcQualifiedEducationExpenses",
+  "Elderly or Disabled Credit" -> "/elderlyAndDisabledTaxCreditAmount",
   // Itemized Deductions
   "Interest you Paid" -> "/qualifiedMortgageInterestAndInvestmentInterestExpenses",
   "SALT you paid" -> "/stateAndLocalTaxPayments",
