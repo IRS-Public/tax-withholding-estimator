@@ -615,11 +615,7 @@ class FgShow extends HTMLElement {
       if (outputHtml !== '') outputHtml += ', '
       if (result.hasValue) {
         const value = result.get.toString()
-        if (result.complete === false) {
-          outputHtml += `${value}&nbsp;<span class="text-base-light">[Placeholder value]</span>`
-        } else {
-          outputHtml += `${value}`
-        }
+        outputHtml += `${value}`
       } else {
         outputHtml += '<span class="text-base">-</span>'
       }
