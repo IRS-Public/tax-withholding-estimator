@@ -127,22 +127,21 @@
                 we calculate our final phaseout amount, we divide by ten to undo that damage.
            -->
       <Derived>
-        <Multiply>
-          <Dollar>10</Dollar>
-          <LesserOf>
-            <Dollar>1.000</Dollar>
-            <Round>
-              <Divide>
-                <Dividend>
-                  <Dependency path="/adoptionCreditMagiBuffer"/>
-                </Dividend>
-                <Divisors>
-                  <Dollar>40000</Dollar>
-                </Divisors>
-              </Divide>
-            </Round>
-          </LesserOf>
-        </Multiply>
+        <LesserOf>
+          <!-- This is also multiplied by 10 -->
+          <Dollar>10.00</Dollar>
+          <Divide>
+            <Dividend>
+              <Multiply>
+                <Dollar>10</Dollar>
+                <Dependency path="/adoptionCreditMagiBuffer"/>
+              </Multiply>
+            </Dividend>
+            <Divisors>
+              <Dollar>40000</Dollar>
+            </Divisors>
+          </Divide>
+        </LesserOf>
       </Derived>
     </Fact>
     <Fact path="/tentativeAdoptionCreditAmount">
