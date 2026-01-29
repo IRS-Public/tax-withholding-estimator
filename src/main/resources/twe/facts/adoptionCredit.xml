@@ -119,36 +119,46 @@
         </GreaterOf>
       </Derived>
     </Fact>
-    <Fact path="/adoptionCreditMultiplier">
-      <Description>Form 8839 Line 9</Description>
+    <Fact path="/adoptionCreditMultiplierx10">
+      <Description>Form 8839 Line 9 (multiplied by 10)</Description>
       <!-- We are required to round our multiplier to three decimals. To do this while
                 respecting that our fact graph system automatically rounds dollar values to
                 two decimal points, we multiply our numerator of dollars by ten and, after
                 we calculate our final phaseout amount, we divide by ten to undo that damage.
            -->
       <Derived>
-        <LesserOf>
-          <Dollar>1.000</Dollar>
-          <Round>
-            <Divide>
-              <Dividend>
-                <Dependency path="/adoptionCreditMagiBuffer"/>
-              </Dividend>
-              <Divisors>
-                <Dollar>40000</Dollar>
-              </Divisors>
-            </Divide>
-          </Round>
-        </LesserOf>
+        <Multiply>
+          <Dollar>10</Dollar>
+          <LesserOf>
+            <Dollar>1.000</Dollar>
+            <Round>
+              <Divide>
+                <Dividend>
+                  <Dependency path="/adoptionCreditMagiBuffer"/>
+                </Dividend>
+                <Divisors>
+                  <Dollar>40000</Dollar>
+                </Divisors>
+              </Divide>
+            </Round>
+          </LesserOf>
+        </Multiply>
       </Derived>
     </Fact>
     <Fact path="/tentativeAdoptionCreditAmount">
       <Description>Form 8839 Line 10</Description>
       <Derived>
-        <Multiply>
-          <Dependency path="/tentativeMaximumAdoptionCredit"/>
-          <Dependency path="/adoptionCreditMultiplier"/>
-        </Multiply>
+        <Divide>
+          <Dividend>
+            <Multiply>
+              <Dependency path="/tentativeMaximumAdoptionCredit"/>
+              <Dependency path="/adoptionCreditMultiplierx10"/>
+            </Multiply>
+          </Dividend>
+          <Divisors>
+            <Dollar>10</Dollar>
+          </Divisors>
+        </Divide>
       </Derived>
     </Fact>
     <Fact path="/tentativeRefundableAdoptionCreditAmount">

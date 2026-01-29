@@ -224,52 +224,62 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/educationCreditApplicableRatio">
-      <Description>Form 8863 Line 6 and Line 17</Description>
+    <Fact path="/educationCreditApplicableRatiox10">
+      <Description>Form 8863 Line 6 and Line 17 (multiplied by 10)</Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <GreaterThanOrEqual>
-                <Left>
-                  <Dependency path="/educationCreditPhaseoutBuffer"/>
-                </Left>
-                <Right>
-                  <Dependency path="/educationCreditPhaseoutRange"/>
-                </Right>
-              </GreaterThanOrEqual>
-            </When>
-            <Then>
-              <Dollar>1.000</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Round>
-                <Divide>
-                  <Dividend>
+        <Multiply>
+          <Dollar>10</Dollar>
+          <Switch>
+            <Case>
+              <When>
+                <GreaterThanOrEqual>
+                  <Left>
                     <Dependency path="/educationCreditPhaseoutBuffer"/>
-                  </Dividend>
-                  <Divisors>
+                  </Left>
+                  <Right>
                     <Dependency path="/educationCreditPhaseoutRange"/>
-                  </Divisors>
-                </Divide>
-              </Round>
-            </Then>
-          </Case>
-        </Switch>
+                  </Right>
+                </GreaterThanOrEqual>
+              </When>
+              <Then>
+                <Dollar>1.000</Dollar>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Round>
+                  <Divide>
+                    <Dividend>
+                      <Dependency path="/educationCreditPhaseoutBuffer"/>
+                    </Dividend>
+                    <Divisors>
+                      <Dependency path="/educationCreditPhaseoutRange"/>
+                    </Divisors>
+                  </Divide>
+                </Round>
+              </Then>
+            </Case>
+          </Switch>
+        </Multiply>
       </Derived>
     </Fact>
     <Fact path="/reducedAotcAfterPhaseout">
       <Description>Form 8863 Line 7</Description>
       <Derived>
-        <Multiply>
-          <Dependency path="/tentativeMaximumAotcAmount"/>
-          <Dependency path="/educationCreditApplicableRatio"/>
-        </Multiply>
+        <Divide>
+          <Dividend>
+            <Multiply>
+              <Dependency path="/tentativeMaximumAotcAmount"/>
+              <Dependency path="/educationCreditApplicableRatiox10"/>
+            </Multiply>
+          </Dividend>
+          <Divisors>
+            <Dollar>10</Dollar>
+          </Divisors>
+        </Divide>
       </Derived>
     </Fact>
     <Fact path="/isEligibleForEducationCredits">
@@ -353,10 +363,17 @@
     <Fact path="/reducedLlcAfterPhaseout">
       <Description>Form 8863 Line 18</Description>
       <Derived>
-        <Multiply>
-          <Dependency path="/educationCreditApplicableRatio"/>
-          <Dependency path="/llcTentativeMaxCredit"/>
-        </Multiply>
+        <Divide>
+          <Dividend>
+            <Multiply>
+              <Dependency path="/educationCreditApplicableRatiox10"/>
+              <Dependency path="/llcTentativeMaxCredit"/>
+            </Multiply>
+          </Dividend>
+          <Divisors>
+            <Dollar>10</Dollar>
+          </Divisors>
+        </Divide>
       </Derived>
     </Fact>
     <Fact path="/educationCreditLimitWorksheetLine1">
