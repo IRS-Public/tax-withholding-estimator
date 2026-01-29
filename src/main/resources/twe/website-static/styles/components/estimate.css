@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     border: var(--units-05) solid var(--base-lightest);
+    border-bottom: none;
 }
 
 .fg-estimate__heading {
@@ -21,27 +22,33 @@
 
 .fg-estimate__disclaimer {
     font-size: var(--font-size-sm);
+    margin-bottom: 1em
 }
 
-.fg-estimate table tbody th,
-.fg-estimate table tbody td {
+/* specificity hack */
+.fg-estimate__details.fg-estimate__details {
+    margin-top: 0;
+}
+
+.fg-estimate__details table tbody th,
+.fg-estimate__details table tbody td {
     border: none;
     padding-left: 0;
     padding-right: 0;
 }
 
-.fg-estimate table tbody tr:last-child {
+.fg-estimate__details table tbody tr:last-child {
     border-top: var(--units-05) solid var(--base-darkest);
 }
 
-.fg-estimate table tbody tr:not(:last-child) th,
-.fg-estimate table tbody tr:not(:last-child) td {
+.fg-estimate__details table tbody tr:not(:last-child) th,
+.fg-estimate__details table tbody tr:not(:last-child) td {
     padding-top: 0;
     padding-bottom: var(--units-2);
 }
 
-.fg-estimate table tbody tr:last-child th,
-.fg-estimate table tbody tr:last-child td {
+.fg-estimate__details table tbody tr:last-child th,
+.fg-estimate__details table tbody tr:last-child td {
     padding-top: var(--units-2);
     font-weight: bold;
 }

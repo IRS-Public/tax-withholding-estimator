@@ -47,9 +47,9 @@ main h1 {
 }
 
 .flow h2,
-.flow h3:not(.usa-accordion__heading, .fg-estimate__heading),
-.flow h4:not(.usa-accordion__heading),
-.flow h5 {
+.flow h3:not(.usa-accordion__heading, .fg-estimate__heading, details > summary > h3),
+.flow h4:not(.usa-accordion__heading, details > summary > h4),
+.flow h5:not(details > summary > h5) {
   font-family: var(--font-sans);
   font-weight: 600;
 }
@@ -66,7 +66,7 @@ main h1 {
   }
 }
 
-.flow h3:not(.usa-accordion__heading, .fg-estimate__heading),
+.flow h3:not(.usa-accordion__heading, .fg-estimate__heading, details > summary > h3),
 .fg-collection-item__fields h5 {
   border-top: 2px solid var(--base-lighter);
   font-size: var(--font-size-8);
@@ -89,8 +89,8 @@ main h1 {
   padding-top: 0;
 }
 
-.flow h4:not(.usa-accordion__heading),
-.flow h5 {
+.flow h4:not(.usa-accordion__heading, details > summary > h4),
+.flow h5:not(details > summary > h5) {
   font-size: var(--font-size-8);
 
   @media (min-width: 640px) {
