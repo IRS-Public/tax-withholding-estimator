@@ -416,6 +416,7 @@ private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/qualifiedBusinessIncomeDeduction" -> "QBI deduction",
   "/incomeTotal" -> "Net pre-tax income",
   "/qualifiedTipDeduction" -> "No tax on tips deduction",
+  "/overtimeCompensationDeduction" -> "No tax on overtime deduction",
   // TODO: This is not going to scale when the jobs that aren't Job 1 have withholdings
   // TODO: This doesn't work if Job 1 isn't the highest paying job and is selected for extra withholdings
   "/jobSelectedForExtraWithholding/w4Line3" -> "W-4 Line3Amount1",
