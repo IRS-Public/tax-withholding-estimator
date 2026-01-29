@@ -8,10 +8,17 @@
         <Round>
           <Add>
             <Dependency path="/standardOrItemizedDeduction"/>
-            <Dependency path="/qualifiedBusinessIncomeDeduction"/>
-            <Dependency path="/oB3Deductions"/>
+            <Dependency path="/additionalDeductions"/>
           </Add>
         </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/additionalDeductions">
+      <Derived>
+        <Add>
+          <Dependency path="/qualifiedBusinessIncomeDeduction"/>
+          <Dependency path="/oB3Deductions"/>
+        </Add>
       </Derived>
     </Fact>
     <Fact path="/totalDeductionsNetQBI">

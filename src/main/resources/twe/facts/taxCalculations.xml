@@ -2106,6 +2106,18 @@
         </GreaterOf>
       </Derived>
     </Fact>
+    <Fact path="/totalTaxObligationBeforeCreditsAndDeductions">
+      <Description>
+        Total federal tax obligations without taking into account any credits or estimated payments.
+        This does not follow any 1040 calculation steps, its purely to be able to show the taxpayer this value.
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="/totalTentativeTax"/>
+          <Dependency path="/totalOtherTaxes"/>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/totalTax">
       <Description>
         Form 1040 Line 24. Taxes from taxable income minus non-refundable credits plus other taxes,
@@ -2145,6 +2157,19 @@
         </Subtract>
       </Derived>
     </Fact>
+    <Fact path="/totalRefund">
+      <Description>
+        The inverse of "/totalOwed" when you need the refund amount to be positive.
+        Positive value = overpayment = refund
+        Negative value = underpayment = balance due
+      </Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/totalOwed"/>
+          <Dollar>-1</Dollar>
+        </Multiply>
+      </Derived>
+    </Fact>
     <Fact path="/totalTaxNetRefundableCredits">
       <Description>Total Tax - total payments + estimated tax</Description>
       <Derived>
@@ -2159,6 +2184,42 @@
             <Dependency path="/totalPayments"/>
           </Subtrahends>
         </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/isOverwithheld">
+      <Derived>
+        <LessThan>
+          <Left>
+            <Dependency path="/totalOwed"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </LessThan>
+      </Derived>
+    </Fact>
+    <Fact path="/isZeroRefund">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="/totalOwed"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+    <Fact path="/isUnderwithheld">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/totalOwed"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
       </Derived>
     </Fact>
     <Fact path="/topTaxRateBracketThresholdByFilingStatus">

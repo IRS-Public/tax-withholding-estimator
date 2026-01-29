@@ -18,6 +18,7 @@
 @import "components/modals.css";
 @import "components/step-indicator.css";
 @import "components/tables.css";
+@import "components/estimate.css";
 
 /* Utilities */
 @import "utilities/utilities.css";

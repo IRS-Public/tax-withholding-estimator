@@ -47,7 +47,7 @@ main h1 {
 }
 
 .flow h2,
-.flow h3:not(.usa-accordion__heading),
+.flow h3:not(.usa-accordion__heading, .fg-estimate__heading),
 .flow h4:not(.usa-accordion__heading),
 .flow h5 {
   font-family: var(--font-sans);
@@ -66,7 +66,7 @@ main h1 {
   }
 }
 
-.flow h3:not(.usa-accordion__heading),
+.flow h3:not(.usa-accordion__heading, .fg-estimate__heading),
 .fg-collection-item__fields h5 {
   border-top: 2px solid var(--base-lighter);
   font-size: var(--font-size-8);
@@ -106,4 +106,3 @@ main h1 {
   padding: var(--units-3) 0;
   margin-bottom: 0;
 }
-

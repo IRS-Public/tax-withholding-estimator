@@ -1,0 +1,47 @@
+.fg-estimate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: var(--units-05) solid var(--base-lightest);
+}
+
+.fg-estimate__heading {
+    margin: var(--units-2) 0 0;
+}
+
+.fg-estimate__amount {
+    font-weight: bold;
+    font-size: var(--font-size-2xl);
+    margin: 0 0 var(--units-2);
+}
+
+.fg-estimate__amount-under-withheld {
+    color: var(--error-dark);
+}
+
+.fg-estimate__disclaimer {
+    font-size: var(--font-size-sm);
+}
+
+.fg-estimate table tbody th,
+.fg-estimate table tbody td {
+    border: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.fg-estimate table tbody tr:last-child {
+    border-top: var(--units-05) solid var(--base-darkest);
+}
+
+.fg-estimate table tbody tr:not(:last-child) th,
+.fg-estimate table tbody tr:not(:last-child) td {
+    padding-top: 0;
+    padding-bottom: var(--units-2);
+}
+
+.fg-estimate table tbody tr:last-child th,
+.fg-estimate table tbody tr:last-child td {
+    padding-top: var(--units-2);
+    font-weight: bold;
+}

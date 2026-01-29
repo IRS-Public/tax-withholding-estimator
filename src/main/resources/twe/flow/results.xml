@@ -3,6 +3,143 @@
 <FlowConfig>
   <page title="Results" route="/results">
     <section>
+      <h2>Your withholding results</h2>
+
+      <p condition="/isOverwithheld" operator="isTrue">Based on what you entered, we estimate that <strong>you're withholding more taxes than you need to.</strong></p>
+      <p condition="/isOverwithheld" operator="isTrue">If you keep your withholding the same, you'll likely get a federal tax refund in <fg-show path="/taxYear"/></p>
+      <p condition="/isOverwithheld" operator="isTrue">If you'd like to get more take-home pay, you can <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust your withholding</a>.</p>
+
+      <p condition="/isUnderwithheld" operator="isTrue">Based on what you entered, we estimate that <strong>you're not withholding enough taxes.</strong></p>
+      <p condition="/isUnderwithheld" operator="isTrue">
+        If you keep your withholding the same, you’ll likely owe taxes in <fg-show path="/taxYear"/>.
+        {{You may have to pay a penalty in addition to what you owe if you owe [at least $1,000/more than 10 percent of your tax bill].}}
+      </p>
+        <!-- TODO: There is also an "underwithheld and can't make up" scenario that adds some content here-->
+      <p condition="/isUnderwithheld" operator="isTrue">If you’d like to get your tax balance closer to $0 {{and avoid paying a penalty}}, you can <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjust your withholding</a>.</p>
+
+      <p condition="/isZeroRefund" operator="isTrue">Based on what you entered, we estimate that <strong>you’re withholding enough to cover your federal taxes.</strong></p>
+      <p condition="/isZeroRefund" operator="isTrue">If you keep your withholding the same, it’s likely you won’t owe federal taxes in <fg-show path="/taxYear"/>.</p>
+      <p condition="/isZeroRefund" operator="isTrue">If you <a class="usa-link" href="#heading-adjust-withholding">adjust your withholding</a>, your federal tax balance and take-home pay will change.</p>
+
+      <div class="fg-estimate">
+        <h3 class="fg-estimate__heading" condition="/isOverwithheld" operator="isTrue">Estimated federal tax refund</h3>
+        <h3 class="fg-estimate__heading" condition="/isOverwithheld" operator="isFalse">Estimated federal tax owed</h3>
+        <p class="fg-estimate__amount fg-estimate__amount-under-withheld" condition="/isUnderwithheld" operator="isTrue">$<fg-show path="/totalOwed"/></p>
+        <p class="fg-estimate__amount" condition="/isUnderwithheld" operator="isFalse">$<fg-show path="/totalRefund"/></p>
+        <div class="usa-accordion">
+          <h4 class="usa-accordion__heading">
+            <button
+              type="button"
+              class="usa-accordion__button"
+              aria-expanded="false"
+              aria-controls="estimate-calculation"
+            >
+              Your calculation
+            </button>
+          </h4>
+          <div id="estimate-calculation" class="usa-accordion__content usa-prose">
+            <p>First, we calculated your taxable income.</p>
+            <table class="usa-table usa-table--borderless width-full">
+              <caption class="usa-sr-only">Taxable income breakdown</caption>
+              <thead class="usa-sr-only">
+                <tr>
+                  <th scope="col">Description</th>
+                  <th scope="col">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Gross income</th>
+                  <td>$<fg-show path="/incomeTotal"/></td>
+                </tr>
+                <tr condition="/adjustmentsToIncome" operator="isGreaterThanZero">
+                  <th scope="row">Adjustments</th>
+                  <td>-$<fg-show path="/adjustmentsToIncome"/></td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    <span condition="/standardDeductionWillBeUsed" operator="isTrue">Standard Deduction</span>
+                    <span condition="/standardDeductionWillBeUsed" operator="isFalse">Itemized Deduction</span>
+                  </th>
+                  <td>-$<fg-show path="/standardOrItemizedDeduction"/></td>
+                </tr>
+                <tr condition="/additionalDeductions" operator="isGreaterThanZero">
+                  <th scope="row">Additional Deductions</th>
+                  <td>-$<fg-show path="/additionalDeductions"/></td>
+                </tr>
+                <tr>
+                  <th scope="row">Taxable income</th>
+                  <td>$<fg-show path="/taxableIncome"/></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>Then, we applied your federal tax bracket to your taxable income to calculate your taxes.</p>
+            <table class="usa-table usa-table--borderless width-full">
+              <caption class="usa-sr-only">Federal tax obligation breakdown</caption>
+              <thead class="usa-sr-only">
+                <tr>
+                  <th scope="col">Description</th>
+                  <th scope="col">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Federal tax obligation</th>
+                  <td>$<fg-show path="/totalTaxObligationBeforeCreditsAndDeductions"/></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>Finally, we applied your credits and subtracted any payments you already made towards your federal taxes.</p>
+            <table class="usa-table usa-table--borderless width-full">
+              <caption class="usa-sr-only">Federal tax balance breakdown</caption>
+              <thead class="usa-sr-only">
+                <tr>
+                  <th scope="col">Description</th>
+                  <th scope="col">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr condition="/totalCredits" operator="isGreaterThanZero">
+                  <th scope="row">Credits</th>
+                  <td>-$<fg-show path="/totalCredits"/></td>
+                </tr>
+                <tr>
+                  <th scope="row">Federal tax withholding</th>
+                  <td>-$<fg-show path="/totalEndOfYearProjectedWithholding"/></td>
+                </tr>
+                <tr condition="/totalEstimatedTaxesPaid" operator="isGreaterThanZero">
+                  <th scope="row">Estimated tax payments</th>
+                  <td>-$<fg-show path="/totalEstimatedTaxesPaid"/></td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    <span condition="/isUnderwithheld" operator="isTrue">Estimated federal tax owed</span>
+                    <span condition="/isUnderwithheld" operator="isFalse">Estimated federal tax refund</span>
+                  </th>
+                  <td>
+                    <span condition="/isUnderwithheld" operator="isTrue">$<fg-show path="/totalOwed"/></span>
+                    <span condition="/isUnderwithheld" operator="isFalse">$<fg-show path="/totalRefund"/></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p class="fg-estimate__disclaimer">Note: The IRS does not guarantee the accuracy of this estimate and accepts no liability resulting from your use of this estimation.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 id="heading-adjust-withholding-for-more-take-home-pay" condition="/isOverwithheld" operator="isTrue">How to adjust your withholding to get more take-home pay</h3>
+      <h3 id="heading-adjust-withholding-for-lower-tax-balance" condition="/isUnderwithheld" operator="isTrue">How to adjust your withholding to get more take-home pay</h3>
+      <h3 id="heading-adjust-withholding" condition="/isZeroRefund" operator="isTrue">How to adjust your withholding</h3>
+
+      <!-- TODO: Remove old content -->
+      <hr/>
+      <p>TODO: OLD CONTENT BELOW</p>
+      <hr/>
+
       <h2>Results</h2>
       <table class="usa-table width-full usa-table--borderless usa-table--flush">
         <caption>Income and taxes</caption>
