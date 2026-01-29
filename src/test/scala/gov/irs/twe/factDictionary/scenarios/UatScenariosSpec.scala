@@ -154,6 +154,23 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 23)
   }
 
+  // Column P
+  test("Single, high wages +Cap Gains + Investment") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 55000)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 1544)
+    scenario.assertEquals("/incomeTotal", 682000)
+    scenario.assertEquals("/agi", 667000)
+    scenario.assertEquals("/taxableIncome", 649900)
+    scenario.assertEquals("/totalNonRefundableCredits", 5000)
+    scenario.assertEquals("/totalRefundableCredits", 0)
+    scenario.assertEquals("/additionalMedicareTax", 3708)
+    scenario.assertEquals("/selfEmploymentTax", 0)
+    scenario.assertEquals("/netInvestmentIncomeTax", 760)
+  }
+
   // Column Q
   test("Q:Single, high wages +Cap Gains + Investment") { td =>
     val scenario = td.scenario
@@ -186,6 +203,23 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 271, 1)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3350)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
+  // Column V
+  test("Single, wages + foreign investment income") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/incomeTotal", 119000)
+    scenario.assertEquals("/agi", 119000)
+    scenario.assertEquals("/taxableIncome", 102900)
+    scenario.assertEquals("/totalNonRefundableCredits", 5000)
+    scenario.assertEquals("/totalRefundableCredits", 0)
+    scenario.assertEquals("/additionalMedicareTax", 0)
+    scenario.assertEquals("/selfEmploymentTax", 0)
+    scenario.assertEquals("/netInvestmentIncomeTax", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 4415)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 15000)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
