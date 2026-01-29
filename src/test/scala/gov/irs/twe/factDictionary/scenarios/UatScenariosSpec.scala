@@ -695,114 +695,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 10)
   }
 
-  // Column BZ
-  test("Single, SALT under 10k") { td =>
-    val scenario = td.scenario
-    scenario.assertEquals("/agi", 530000)
-    scenario.assertEquals("/stateAndLocalTaxDeduction", 9000)
-
-    scenario.assertEquals("/taxableIncome", 513900)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 1601)
-  }
-
-  // Column CA
-  test("HH, SALT, phased out under 40k") { td =>
-    val scenario = td.scenario
-    scenario.assertEquals("/agi", 530000)
-    scenario.assertEquals("/stateAndLocalTaxDeduction", 32900)
-    scenario.assertEquals("/taxableIncome", 497100)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8750)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 720)
-  }
-
-  // Column CB
-  test("QW, SALT, max amount") { td =>
-    val scenario = td.scenario
-    scenario.assertEquals("/agi", 500000)
-    scenario.assertEquals("/stateAndLocalTaxDeduction", 40400)
-    scenario.assertEquals("/taxableIncome", 459600)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 102684)
-    scenario.assertEquals("/standardOrItemizedDeduction", 40400)
-    scenario.assertEquals("/additionalMedicareTax", 2700)
-    scenario.assertEquals("/selfEmploymentTax", 0)
-    scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/totalEndOfYearProjectedWithholding", 109000)
-
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8200)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 711)
-  }
-
-  // Column CC
-  test("MFJ, no phase out") { td =>
-    val scenario = td.scenario
-    scenario.assertEquals("/agi", 230000)
-    scenario.assertEquals("/stateAndLocalTaxDeduction", 35000)
-    scenario.assertEquals("/taxableIncome", 195000)
-    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 32324)
-    scenario.assertEquals("/standardOrItemizedDeduction", 35000)
-
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 2800)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 777)
-
-  }
-
-  // Column CD
-  test("MFj, SALT, phased out down to 10k") { td =>
-    val scenario = td.scenario
-    scenario.assertEquals("/agi", 634000)
-    scenario.assertEquals("/stateAndLocalTaxDeduction", 10000)
-    scenario.assertEquals("/taxableIncome", 601800)
-    scenario.assertEquals("/standardOrItemizedDeduction", 32200)
-
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 820)
-  }
-
-  // Column CE
-  test("MFS, SALT, phased out") { td =>
-    val scenario = td.scenario
-    scenario.assertEquals("/agi", 256000)
-    scenario.assertEquals("/stateAndLocalTaxDeduction", 19675)
-    scenario.assertEquals("/taxableIncome", 236325)
-    scenario.assertEquals("/standardOrItemizedDeduction", 19675)
-
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 587)
-//    The spreadsheet assumes that 100% of the /proportionOfYearEndJobsIncome goes to the job selected to the Extra withholding
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3575)
-  }
-
-  // Column CF
-  test("MFS, SALT, phased out to min") { td =>
-    val scenario = td.scenario
-    scenario.assertEquals("/agi", 412000)
-    scenario.assertEquals("/stateAndLocalTaxDeduction", 5000)
-    scenario.assertEquals("/taxableIncome", 395900)
-    scenario.assertEquals("/standardOrItemizedDeduction", 16100)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 110148)
-    scenario.assertEquals("/additionalMedicareTax", 2583)
-    scenario.assertEquals("/selfEmploymentTax", 0)
-    scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/totalEndOfYearProjectedWithholding", 96000)
-
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-
-    assert(scenario.graph.get("/jobs/#a3006af1-a040-4235-9d31-68c5830c55fd/w4Line4c").value.get === 0)
-
-//    W-4 Line4cAmount1 = 0 and W-4 Line4cAmount2 = 625. Because /jobSelectedForExtraWithholding maps directly to W-4 Line4cAmount1, this will always be a mismatch until we fix how the mapping occurs
-//    We instead look Job 2 directly
-    assert(scenario.graph.get("/jobs/#8955625f-6317-451b-bce9-48893d60e766/w4Line4c").value.get === 625)
-  }
-
   // Column BQ
   test("Single, Full QBI, under threshold") { td =>
     val scenario = td.scenario
@@ -954,6 +846,133 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 48416)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 148930)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
+  // Column BZ
+  test("Single, SALT under 10k") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 530000)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 9000)
+
+    scenario.assertEquals("/taxableIncome", 513900)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 1601)
+  }
+
+  // Column CA
+  test("HH, SALT, phased out under 40k") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 530000)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 32900)
+    scenario.assertEquals("/taxableIncome", 497100)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8750)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 720)
+  }
+
+  // Column CB
+  test("QW, SALT, max amount") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 500000)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 40400)
+    scenario.assertEquals("/taxableIncome", 459600)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 102684)
+    scenario.assertEquals("/standardOrItemizedDeduction", 40400)
+    scenario.assertEquals("/additionalMedicareTax", 2700)
+    scenario.assertEquals("/selfEmploymentTax", 0)
+    scenario.assertEquals("/netInvestmentIncomeTax", 0)
+    scenario.assertEquals("/totalEndOfYearProjectedWithholding", 109000)
+
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8200)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 711)
+  }
+
+  // Column CC
+  test("MFJ, no phase out") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 230000)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 35000)
+    scenario.assertEquals("/taxableIncome", 195000)
+    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 32324)
+    scenario.assertEquals("/standardOrItemizedDeduction", 35000)
+
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 2800)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 777)
+
+  }
+
+  // Column CD
+  test("MFj, SALT, phased out down to 10k") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 634000)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 10000)
+    scenario.assertEquals("/taxableIncome", 601800)
+    scenario.assertEquals("/standardOrItemizedDeduction", 32200)
+
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 820)
+  }
+
+  // Column CE
+  test("MFS, SALT, phased out") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 256000)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 19675)
+    scenario.assertEquals("/taxableIncome", 236325)
+    scenario.assertEquals("/standardOrItemizedDeduction", 19675)
+
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 587)
+//    The spreadsheet assumes that 100% of the /proportionOfYearEndJobsIncome goes to the job selected to the Extra withholding
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3575)
+  }
+
+  // Column CF
+  test("MFS, SALT, phased out to min") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 412000)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 5000)
+    scenario.assertEquals("/taxableIncome", 395900)
+    scenario.assertEquals("/standardOrItemizedDeduction", 16100)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 110148)
+    scenario.assertEquals("/additionalMedicareTax", 2583)
+    scenario.assertEquals("/selfEmploymentTax", 0)
+    scenario.assertEquals("/netInvestmentIncomeTax", 0)
+    scenario.assertEquals("/totalEndOfYearProjectedWithholding", 96000)
+
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+
+    assert(scenario.graph.get("/jobs/#a3006af1-a040-4235-9d31-68c5830c55fd/w4Line4c").value.get === 0)
+
+//    W-4 Line4cAmount1 = 0 and W-4 Line4cAmount2 = 625. Because /jobSelectedForExtraWithholding maps directly to W-4 Line4cAmount1, this will always be a mismatch until we fix how the mapping occurs
+//    We instead look Job 2 directly
+    assert(scenario.graph.get("/jobs/#8955625f-6317-451b-bce9-48893d60e766/w4Line4c").value.get === 625)
+  }
+
+  // Column CK
+  test("HH, 2 jobs") { td =>
+    {
+      val scenario = td.scenario
+      scenario.graph.set("/isFlsaNonExempt", true)
+
+      scenario.assertEquals("/agi", 155000)
+      scenario.assertEquals("/overtimeCompensationDeduction", 7250)
+      assert(scenario.graph.get("/ctcEligibleDependents").value.get === 2) // This is calculated from multiple rows
+      scenario.assertEquals("/taxableIncome", 123600)
+      scenario.assertEquals("/totalTaxNetRefundableCredits", 16051)
+
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 767)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    }
   }
 
 }

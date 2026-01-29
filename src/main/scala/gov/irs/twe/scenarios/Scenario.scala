@@ -31,7 +31,7 @@ case class Scenario(csv: Map[String, String], graph: Graph) {
     this.graph.get(path).get
   }
 
-  def getInput(rowName: String): String = {
+  private def getInput(rowName: String): String = {
     this.csv(rowName).replace("$", "").strip()
   }
 
@@ -193,6 +193,14 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
 
     factGraph.set(factPath, convertedValue)
   }
+
+  // Add children
+  var ctcEligibleChildren = 0
+  if (csv("Child1Age").toInt > 0) ctcEligibleChildren += 1
+  if (csv("Child2Age").toInt > 0) ctcEligibleChildren += 1
+  if (csv("Child3Age").toInt > 0) ctcEligibleChildren += 1
+  if (csv("Child4Age").toInt > 0) ctcEligibleChildren += 1
+  factGraph.set("/ctcEligibleDependents", ctcEligibleChildren)
 
   // Stopgap to add senior deduction, we should update the FG to automate this
   if (factGraph.get("/primaryFilerAge65OrOlder").value.get == true) {
