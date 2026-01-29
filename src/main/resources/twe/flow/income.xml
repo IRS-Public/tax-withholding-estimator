@@ -209,10 +209,8 @@
           <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
-        <fg-section-gate condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isFalse" state="pending">
-          <heading>Social Security details</heading>
-          <content>Once we know more about your income, we’ll ask you additional questions.</content>
-        </fg-section-gate>
+        <h5 condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isFalse">Social Security details</h5>
+        <p condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isFalse">Once we know more about your income, we’ll ask you additional questions.</p>
         <h5 condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Income</h5>
         <fg-set path="/socialSecuritySources/*/monthlyIncome" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
           <question>What’s the monthly benefit amount <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">receive</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">received</span> from Social Security?</question>

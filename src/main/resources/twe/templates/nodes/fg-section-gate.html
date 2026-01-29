@@ -1,3 +1,4 @@
+<!--This is currently not used. We thought we would need it, but currently the semantic HTML is easier -->
 <div th:class="'fg-section-gate fg-section-gate--'+${gateState}" th:attr="condition=${gateCondition}, operator=${gateOperator}">
   <h5 aria-expanded="true"
     th:attr="aria-controls=${gateCondition}+'-'+${gateOperator}"
