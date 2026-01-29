@@ -63,11 +63,20 @@
       <Description>Sum of all OB3 below the line deductions</Description>
       <Derived>
         <Add>
+          <Dependency path="/oB3DeductionsExcludingNonItemizerCharity"/>
+          <Dependency path="/nonItemizerCharitableContributionDeduction"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/oB3DeductionsExcludingNonItemizerCharity">
+      <Description>OB3 Deductions excluding the non-itemizer charity deduction,
+        to avoid circularity when calculating itemized deduction caps.</Description>
+      <Derived>
+        <Add>
           <Dependency path="/qualifiedPersonalVehicleLoanInterestDeduction"/>
           <Dependency path="/seniorDeduction"/>
           <Dependency path="/qualifiedTipDeduction"/>
           <Dependency path="/overtimeCompensationDeduction"/>
-          <Dependency path="/nonItemizerCharitableContributionDeduction"/>
         </Add>
       </Derived>
     </Fact>
@@ -160,7 +169,7 @@
                   <Dependency path="/wantsItemizedDeduction"/>
                   <GreaterThan>
                     <Left>
-                      <Dependency path="/itemizedDeductionTotal"/>
+                      <Dependency path="/itemizedDeductionTotalForQBI"/>
                     </Left>
                     <Right>
                       <Dependency path="/standardDeduction"/>
@@ -169,7 +178,7 @@
                 </All>
               </When>
               <Then>
-                <Dependency path="/itemizedDeductionTotal"/>
+                <Dependency path="/itemizedDeductionTotalForQBI"/>
               </Then>
             </Case>
             <Case>

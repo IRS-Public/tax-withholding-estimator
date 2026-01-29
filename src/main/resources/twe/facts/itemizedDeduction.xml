@@ -26,7 +26,6 @@
       <Derived>
         <Add>
           <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpensesTotal"/>
-          <!--  /stateAndLocalTaxDeduction is derived in stateAndLocalTaxDeduction.xml        -->
           <Dependency path="/stateAndLocalTaxDeduction"/>
           <Dependency path="/medicalAndDentalExpensesTotal"/>
           <Dependency path="/charitableContributionsTotal"/>
@@ -46,14 +45,17 @@
         year (determined without regard to this section and increased by such amount of itemized
         deductions) as exceeds the dollar amount at which the 37 percent rate bracket under section
         1 begins with respect to the taxpayer.
-        n.b. this definition is ignored for purposes of QBI deduction calculation per OB3</Description>
+
+        n.b. this definition is ignored for purposes of QBI deduction calculation per OB3
+       If the taxpayer is not in the tax bracket, /excessTaxableIncomeOverTopTaxBracket will be negative or zero so this fact will always be zero
+      </Description>
       <Derived>
         <Round>
           <GreaterOf>
             <Dollar>0</Dollar>
             <Multiply>
               <LesserOf>
-                <Dependency path="/excessTaxableIncomeOverTopTaxRate"/>
+                <Dependency path="/excessTaxableIncomeOverTopTaxBracket"/>
                 <Dependency path="/itemizedDeductionTotal"/>
               </LesserOf>
               <Rational>2/37</Rational>
@@ -85,15 +87,34 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/charitableContributions">
-      <Name>Charitable Contributions</Name>
-      <Description>Charitable contributions to qualified organizations</Description>
+    <Fact path="/cashCharitableContributions">
+      <Name>Cash Charitable Contributions</Name>
+      <Description>Schedule A Line 11</Description>
       <Writable>
         <Dollar/>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
+    </Fact>
+    <Fact path="/nonCashCharitableContributions">
+      <Name>Non-cash Charitable Contributions</Name>
+      <Description>Schedule A Line 12. Both this fact and /cashCharitableContributions are simple writables, so they are functionally equivalent. The reason we split them out is to match certain testing scenarios</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/charitableContributions">
+      <Name>Gross total of cash Charitable Contributions</Name>
+      <Derived>
+        <Add>
+          <Dependency path="/nonCashCharitableContributions"/>
+          <Dependency path="/cashCharitableContributions"/>
+        </Add>
+      </Derived>
     </Fact>
     <Fact path="/qualifiedMortgageInterestAndInvestmentInterestExpensesTotal">
       <Derived>
@@ -147,22 +168,20 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/charitableContributionsTotal">
-      <Name>Total of all charitable contributions </Name>
+    <Fact path="/charitableContributionsFloored">
       <Description>
         OB3 70425(a) amends IRC 170(b)(1) to only allow this itemized deduction for individuals
         whose aggregate charitable contributions are in excess of %0.5 of their AGI
 
-        MIN of A) Charitable contributions - (0.005 * MAX(contribution base, 0); or B) 0.6 *
-        contribution base
-
+        We first floor the charitable amount by MIN of A) Charitable contributions - (0.005 * MAX(contribution base, 0); or B) 0.6 *
+        contribution base. We then apply take 35% of this amount if the taxpayer is in the top tax bracket, in /charitableContributionsTotal
       </Description>
       <Derived>
         <GreaterOf>
           <LesserOf>
             <Subtract>
               <Minuend>
-                <Dependency path="/charitableContributionsAggregatedAmount"/>
+                <Dependency path="/charitableContributions"/>
               </Minuend>
               <Subtrahends>
                 <Multiply>
@@ -183,19 +202,26 @@
         </GreaterOf>
       </Derived>
     </Fact>
-    <Fact path="/charitableContributionsAggregatedAmount">
-      <Name>Total of all charitable contributions </Name>
-      <Description>Total of all /charitableContributions items </Description>
+    <Fact path="/charitableContributionsTotal">
+      <Description>Application of 35% ceiling for taxpayers in the top tax bracket</Description>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <IsComplete>
-                <Dependency path="/charitableContributions"/>
-              </IsComplete>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/excessTaxableIncomeOverTopTaxBracket"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </GreaterThan>
             </When>
             <Then>
-              <Dependency path="/charitableContributions"/>
+              <Multiply>
+                <Dependency path="/charitableContributionsFloored"/>
+                <Rational>35/100</Rational>
+              </Multiply>
             </Then>
           </Case>
           <Case>
@@ -203,7 +229,7 @@
               <True/>
             </When>
             <Then>
-              <Dollar>0</Dollar>
+              <Dependency path="/charitableContributionsFloored"/>
             </Then>
           </Case>
         </Switch>
@@ -228,6 +254,19 @@
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
+    </Fact>
+    <Fact path="/itemizedDeductionTotalForQBI">
+      <Description>Itemized deduction total without QBI-dependent caps.</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpensesTotal"/>
+          <Dependency path="/stateAndLocalTaxDeduction"/>
+          <Dependency path="/medicalAndDentalExpensesTotal"/>
+          <Dependency path="/charitableContributionsFloored"/>
+          <Dependency path="/casualtyLossesTotal"/>
+          <Dependency path="/otherDeductionsTotal"/>
+        </Add>
+      </Derived>
     </Fact>
   </Facts>
 </FactDictionaryModule>

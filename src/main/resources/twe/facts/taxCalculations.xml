@@ -2228,13 +2228,13 @@
             </Minuend>
             <Subtrahends>
               <Dependency path="/qualifiedBusinessIncomeDeduction"/>
-              <Dependency path="/oB3Deductions"/>
+              <Dependency path="/oB3DeductionsExcludingNonItemizerCharity"/>
             </Subtrahends>
           </Subtract>
         </Round>
       </Derived>
     </Fact>
-    <Fact path="/excessTaxableIncomeOverTopTaxRate">
+    <Fact path="/excessTaxableIncomeOverTopTaxBracket">
       <Description> Excess taxable income over the 37% tax rate. Different brackets apply depending
         on filing status
       </Description>

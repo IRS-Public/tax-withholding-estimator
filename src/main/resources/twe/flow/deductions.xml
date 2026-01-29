@@ -79,7 +79,7 @@
         <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> donate to a qualifying organization, you can deduct those donations.</p>
         <p><a target="_blank" href="https://www.irs.gov/charities-non-profits/charitable-organizations/" class="usa-link">Learn more about gifts to charity.</a></p>
       </div>
-      <fg-set path="/charitableContributions" if-true="/wantsItemizedDeduction">
+      <fg-set path="/cashCharitableContributions" if-true="/wantsItemizedDeduction">
         <question>Gifts to charity you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>

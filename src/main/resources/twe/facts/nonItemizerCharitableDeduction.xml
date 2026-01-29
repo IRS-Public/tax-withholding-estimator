@@ -55,6 +55,40 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/contributionsForNonItemizerCharitableContributionDeduction">
+      <Name>Amount a non-itemizer taxpayer contributed to charitable causes during the tax year</Name>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/nonItemizerCharitableContributionDeductionAmount"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Dependency path="/nonItemizerCharitableContributionDeductionAmount"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <!-- This covers certain automated testing cases, which can't represent the flow based toggling -->
+              <Add>
+                <Dependency path="/nonCashCharitableContributions"/>
+                <Dependency path="/cashCharitableContributions"/>
+              </Add>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/tentativelyEligibleForNonItemizerCharitableContributionDeduction">
       <Description>They are tentatively eligible only if they will take the standard deduction, which we derived by comparing if standard deduction is greater than itemized deduction total</Description>
       <Derived>
@@ -95,7 +129,7 @@
             <Then>
               <LesserOf>
                 <Dependency path="/nonItemizerCharitableContributionDeductionMFJMax"/>
-                <Dependency path="/nonItemizerCharitableContributionDeductionAmount"/>
+                <Dependency path="/contributionsForNonItemizerCharitableContributionDeduction"/>
               </LesserOf>
             </Then>
           </Case>
@@ -111,7 +145,7 @@
             <Then>
               <LesserOf>
                 <Dependency path="/nonItemizerCharitableContributionDeductionNonMFJMax"/>
-                <Dependency path="/nonItemizerCharitableContributionDeductionAmount"/>
+                <Dependency path="/contributionsForNonItemizerCharitableContributionDeduction"/>
               </LesserOf>
             </Then>
           </Case>
