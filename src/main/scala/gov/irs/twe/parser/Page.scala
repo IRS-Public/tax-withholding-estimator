@@ -38,7 +38,7 @@ case class Page(
     pageXml
   }
 
-  def href(): String = "/app/tax-withholding-estimator" + route
+  def href(): String = "/app/tax-withholding-estimator" + route + '/'
 
 object Page {
   def parse(page: xml.Node, factDictionary: FactDictionary): Page = {
