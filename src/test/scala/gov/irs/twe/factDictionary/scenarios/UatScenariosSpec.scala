@@ -214,6 +214,17 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 5576)
   }
 
+  // Column AD
+  test("MFJ, high itemized deductions (mortgage, SALT, charity, medical)") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 269714)
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 31597, 1)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 36622)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 66)
+  }
+
   // Column AF
   test("Single, salary, full deduction") { td =>
     val scenario = td.scenario
