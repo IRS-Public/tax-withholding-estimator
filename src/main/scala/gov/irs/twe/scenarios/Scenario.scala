@@ -328,6 +328,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "Annual Tip Income from Job 1" -> s"/jobs/#$JOB_1_ID/qualifiedTipIncome",
   "Annual Overtime Income from Job1" -> s"/jobs/#$JOB_1_ID/overtimeCompensationTotal",
   "Overtime factor Job 1" -> s"/jobs/#$JOB_1_ID/overtimeCompensationRate",
+  "Tip Income on previous job self" -> s"/jobs/#$PREVIOUS_SELF_JOB_ID/qualifiedTipIncome",
+  "Tip income on previous job - spouse" -> s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/qualifiedTipIncome",
   // Job 2
   "Job start2" -> s"/jobs/#$JOB_2_ID/writableStartDate",
   "Job end2" -> s"/jobs/#$JOB_2_ID/writableEndDate",
