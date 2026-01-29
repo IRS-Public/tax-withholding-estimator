@@ -266,7 +266,7 @@ def convertEnum(value: String, factDefinition: FactDefinition): types.Enum = {
         case "3" => new types.Enum(Some("marriedFilingSeparately"), "/filingStatusOptions")
         case "4" => new types.Enum(Some("headOfHousehold"), "/filingStatusOptions")
         case "5" => new types.Enum(Some("qualifiedSurvivingSpouse"), "/filingStatusOptions")
-        case _   => throw Exception(s"$value is not a known enum for /filingStatusOptions")
+        case _   => throw Exception(s"$value is not a known enum for /$optionsEnumPath")
       }
     case "/payFrequencyOptions" =>
       value match {
@@ -274,7 +274,7 @@ def convertEnum(value: String, factDefinition: FactDefinition): types.Enum = {
         case "2" => new types.Enum(Some("biWeekly"), "/payFrequencyOptions")
         case "3" => new types.Enum(Some("semiMonthly"), "/payFrequencyOptions")
         case "4" => new types.Enum(Some("monthly"), "/payFrequencyOptions")
-        case _   => throw Exception(s"$value is not a known enum for /payFrequencyOptions")
+        case _   => throw Exception(s"$value is not a known enum for /$optionsEnumPath")
       }
     case "/socialSecurityWithheldTaxesOptions" =>
       value match {
@@ -283,9 +283,17 @@ def convertEnum(value: String, factDefinition: FactDefinition): types.Enum = {
         case "ten"       => new types.Enum(Some("ten"), "/socialSecurityWithheldTaxesOptions")
         case "twelve"    => new types.Enum(Some("twelve"), "/socialSecurityWithheldTaxesOptions")
         case "twentyTwo" => new types.Enum(Some("twentyTwo"), "/socialSecurityWithheldTaxesOptions")
-        case _           => throw Exception(s"$value is not a known enum for /socialSecurityWithheldTaxesOptions")
+        case _           => throw Exception(s"$value is not a known enum for /$optionsEnumPath")
       }
-    case _ => throw Exception(s"Unknown enum path: $factPath")
+    case "/overtimeCompensationRateOptions" =>
+      value match {
+        case "1.5" => new types.Enum(Some("onePointFive"), "/overtimeCompensationRateOptions")
+        case "2.0" => new types.Enum(Some("two"), "/overtimeCompensationRateOptions")
+        // 0.0 is not a real overtime factor, it's just a placeholder in the spreadsheet, so this doesn't matter
+        case "0.0" => new types.Enum(Some("onePointFive"), "/overtimeCompensationRateOptions")
+        case _     => throw Exception(s"$value is not a known enum for /$optionsEnumPath")
+      }
+    case _ => throw Exception(s"Unknown options path: $optionsEnumPath")
   }
 }
 
@@ -319,6 +327,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "HSAPerPPd1" -> s"/jobs/#$JOB_1_ID/hsaOrFsaContributionsPerPayPeriod",
   "Annual Tip Income from Job 1" -> s"/jobs/#$JOB_1_ID/qualifiedTipIncome",
   "Annual Overtime Income from Job1" -> s"/jobs/#$JOB_1_ID/overtimeCompensationTotal",
+  "Overtime factor Job 1" -> s"/jobs/#$JOB_1_ID/overtimeCompensationRate",
   // Job 2
   "Job start2" -> s"/jobs/#$JOB_2_ID/writableStartDate",
   "Job end2" -> s"/jobs/#$JOB_2_ID/writableEndDate",
@@ -331,6 +340,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "taxWhYTD2" -> s"/jobs/#$JOB_2_ID/yearToDateWithholding",
   "Annual Tip Income from Job 2" -> s"/jobs/#$JOB_2_ID/qualifiedTipIncome",
   "Annual Overtime Income from Job 2" -> s"/jobs/#$JOB_2_ID/overtimeCompensationTotal",
+  "Overtime factor Job 2" -> s"/jobs/#$JOB_2_ID/overtimeCompensationRate",
   // Job 3
   "Job start3" -> s"/jobs/#$JOB_3_ID/writableStartDate",
   "Job end3" -> s"/jobs/#$JOB_3_ID/writableEndDate",
@@ -343,6 +353,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "taxWhYTD3" -> s"/jobs/#$JOB_3_ID/yearToDateWithholding",
   "Annual Tip Income from Job 3" -> s"/jobs/#$JOB_3_ID/qualifiedTipIncome",
   "Annual Overtime Income from Job 3" -> s"/jobs/#$JOB_3_ID/overtimeCompensationTotal",
+  "Overtime factor Job 3" -> s"/jobs/#$JOB_3_ID/overtimeCompensationRate",
   // Job 4
   "Job start4" -> s"/jobs/#$JOB_4_ID/writableStartDate",
   "Job end4" -> s"/jobs/#$JOB_4_ID/writableEndDate",
@@ -355,6 +366,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "taxWhYTD4" -> s"/jobs/#$JOB_4_ID/yearToDateWithholding",
   "Annual Tip Income from Job 4" -> s"/jobs/#$JOB_4_ID/qualifiedTipIncome",
   "Annual Overtime Income from Job 4" -> s"/jobs/#$JOB_4_ID/overtimeCompensationTotal",
+  "Overtime factor Job 4" -> s"/jobs/#$JOB_4_ID/overtimeCompensationRate",
   // Self employment income
   "selfEmploymentAmount-User" -> s"/grossSelfEmploymentIncomeSelf",
   "selfEmploymentAmount-Spouse" -> s"/grossSelfEmploymentIncomeSpouse",

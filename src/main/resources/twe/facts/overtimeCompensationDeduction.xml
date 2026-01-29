@@ -2,15 +2,11 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/overtimeCompensation">
-      <Name>Overtime Compensation Excluding Qualified Tip Overtime Comp</Name>
-      <Description>OB3 &#xA7;70202 IRC &#xA7;225(c)(2). Overtime compensation excluding all
-        qualified tips
-        defined
-        in IRC &#xA7;224 that were received as part of qualified overtime compensation</Description>
+    <Fact path="/totalDeductibleOvertimeCompensation">
+      <Name>Total deductible overtime from all jobs</Name>
       <Derived>
         <CollectionSum>
-          <Dependency path="/jobs/*/overtimeCompensation"/>
+          <Dependency path="/jobs/*/deductibleOvertimeCompensation"/>
         </CollectionSum>
       </Derived>
     </Fact>
@@ -85,7 +81,7 @@
           <Dependency path="/isFlsaNonExempt"/>
           <GreaterThan>
             <Left>
-              <Dependency path="/overtimeCompensation"/>
+              <Dependency path="/totalDeductibleOvertimeCompensation"/>
             </Left>
             <Right>
               <Dollar>0</Dollar>
@@ -156,13 +152,9 @@
     <Fact path="/overtimeCompensationDeduction">
       <Name>Overtime Compensation Deduction</Name>
       <Description>OB3 Section 70202: Qualified tip deductions
-        Example:
-        Single filer with 160k MAGI and 10k overtime compensations. 150k applicable overtime
-        compensation
-        threshold
-        (20,000 excess/1000)*100 = 2,000 phase out
+        Example: Single filer with 160k MAGI and 10k deductible overtime compensations.
+        150k applicable overtime compensation threshold (20,000 excess/1000)*100 = 2,000 phase out
         10,000 overtime comp - 2,000 phase out = 8,000 applicable deduction
-
       </Description>
       <Derived>
         <Switch>
@@ -174,7 +166,7 @@
               <LesserOf>
                 <Subtract>
                   <Minuend>
-                    <Dependency path="/overtimeCompensation"/>
+                    <Dependency path="/totalDeductibleOvertimeCompensation"/>
                   </Minuend>
                   <Subtrahends>
                     <Dependency path="/overtimeCompensationDeductionPhaseOut"/>
