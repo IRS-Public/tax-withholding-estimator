@@ -507,6 +507,54 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     }
   }
 
+  // Column AY
+  test("Single, 2 jobs,  partial deduction") { td =>
+    {
+      val scenario = td.scenario
+      scenario.graph.set("/isFlsaNonExempt", true)
+      scenario.assertEquals("/agi", 186000)
+      scenario.assertEquals("/overtimeCompensationDeduction", 3900)
+      scenario.assertEquals("/taxableIncome", 166000)
+      scenario.assertEquals("/totalTaxNetRefundableCredits", 32438)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 59)
+    }
+  }
+
+  // Column AZ
+  test("MFj, 2 jobs, maximum deduction") { td =>
+    {
+      val scenario = td.scenario
+      scenario.graph.set("/isFlsaNonExempt", true)
+      scenario.assertEquals("/agi", 186000)
+      scenario.assertEquals("/overtimeCompensationDeduction", 7500)
+      scenario.assertEquals("/taxableIncome", 146300)
+      scenario.assertEquals("/totalTaxNetRefundableCredits", 21610)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1757)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    }
+  }
+
+  // Column BA
+  test("MFj, 2 jobs, phased out deduction, no SSN spouse") { td =>
+    {
+      val scenario = td.scenario
+      scenario.graph.set("/isFlsaNonExempt", true)
+      scenario.assertEquals("/agi", 356000)
+      scenario.assertEquals("/overtimeCompensationDeduction", 14400)
+      scenario.assertEquals("/taxableIncome", 309400)
+      scenario.assertEquals("/totalTaxNetRefundableCredits", 60406)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 560)
+    }
+  }
+
   // Column BB
   test("HH, 1 job, tips and OT") { td =>
     val scenario = td.scenario

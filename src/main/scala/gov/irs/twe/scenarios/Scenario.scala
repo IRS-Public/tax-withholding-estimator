@@ -211,12 +211,16 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
 
   // Set OB3 questions to zero if there's no SSN
   if (csv("Valid SSN (self)") == "0") {
+    factGraph.set(s"/jobs/#$PREVIOUS_SELF_JOB_ID/qualifiedTipIncome", Dollar(0))
+    factGraph.set(s"/jobs/#$PREVIOUS_SELF_JOB_ID/overtimeCompensationTotal", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_1_ID/qualifiedTipIncome", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_1_ID/overtimeCompensationTotal", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_2_ID/qualifiedTipIncome", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_2_ID/overtimeCompensationTotal", Dollar(0))
   }
-  if (csv("Valid SSN (spouse)") == "Dollar(0") {
+  if (csv("Valid SSN (spouse)") == "0") {
+    factGraph.set(s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/qualifiedTipIncome", Dollar(0))
+    factGraph.set(s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/overtimeCompensationTotal", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_3_ID/qualifiedTipIncome", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_3_ID/overtimeCompensationTotal", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_4_ID/qualifiedTipIncome", Dollar(0))
@@ -289,9 +293,11 @@ def convertEnum(value: String, factDefinition: FactDefinition): types.Enum = {
       value match {
         case "1.5" => new types.Enum(Some("onePointFive"), "/overtimeCompensationRateOptions")
         case "2.0" => new types.Enum(Some("two"), "/overtimeCompensationRateOptions")
-        // 0.0 is not a real overtime factor, it's just a placeholder in the spreadsheet, so this doesn't matter
+        case "2"   => new types.Enum(Some("two"), "/overtimeCompensationRateOptions")
+        // 0 is not a real overtime factor, it's just a placeholder in the spreadsheet, so this doesn't matter
         case "0.0" => new types.Enum(Some("onePointFive"), "/overtimeCompensationRateOptions")
-        case _     => throw Exception(s"$value is not a known enum for /$optionsEnumPath")
+        case "0"   => new types.Enum(Some("onePointFive"), "/overtimeCompensationRateOptions")
+        case _     => throw Exception(s"$value is not a known enum for $optionsEnumPath")
       }
     case _ => throw Exception(s"Unknown options path: $optionsEnumPath")
   }
@@ -306,11 +312,18 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "Spouse Blind (1=yes)" -> "/secondaryFilerIsBlind",
   "Claimed as a Dependent" -> "/primaryFilerIsClaimedOnAnotherReturn",
   "Plan to claim dependents?" -> "/primaryFilerIsClaimingDependents",
-  // Previous jobs
+  // Previous self job
   "Previous job income-User" -> s"/jobs/#$PREVIOUS_SELF_JOB_ID/yearToDateIncome",
   "Withholding from previous job-User" -> s"/jobs/#$PREVIOUS_SELF_JOB_ID/yearToDateWithholding",
+  "Tip Income on previous job self" -> s"/jobs/#$PREVIOUS_SELF_JOB_ID/qualifiedTipIncome",
+  "Overtime income on previous job self" -> s"/jobs/#$PREVIOUS_SELF_JOB_ID/overtimeCompensationTotal",
+  "Overtime factor on previous job self" -> s"/jobs/#$PREVIOUS_SELF_JOB_ID/overtimeCompensationRate",
+  // Previous spouse job
   "Previous job income-Spouse" -> s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/yearToDateIncome",
   "Withholding from previous job-Spouse" -> s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/yearToDateWithholding",
+  "Tip income on previous job - spouse" -> s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/qualifiedTipIncome",
+  "Overtime income on previous job - spouse" -> s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/overtimeCompensationTotal",
+  "Overtime factor on previous job -spouse" -> s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/overtimeCompensationRate",
   // Job 1
   "Job start1" -> s"/jobs/#$JOB_1_ID/writableStartDate",
   "Job end1" -> s"/jobs/#$JOB_1_ID/writableEndDate",
@@ -328,8 +341,6 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "Annual Tip Income from Job 1" -> s"/jobs/#$JOB_1_ID/qualifiedTipIncome",
   "Annual Overtime Income from Job1" -> s"/jobs/#$JOB_1_ID/overtimeCompensationTotal",
   "Overtime factor Job 1" -> s"/jobs/#$JOB_1_ID/overtimeCompensationRate",
-  "Tip Income on previous job self" -> s"/jobs/#$PREVIOUS_SELF_JOB_ID/qualifiedTipIncome",
-  "Tip income on previous job - spouse" -> s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/qualifiedTipIncome",
   // Job 2
   "Job start2" -> s"/jobs/#$JOB_2_ID/writableStartDate",
   "Job end2" -> s"/jobs/#$JOB_2_ID/writableEndDate",
