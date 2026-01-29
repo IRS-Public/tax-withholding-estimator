@@ -292,17 +292,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
   }
 
-  // Column AM
-  test("HH, pension, partial deduction, standard") { td =>
-    val scenario = td.scenario
-    scenario.assertEquals("/agi", 84000)
-    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 1279)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 6493)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
-  }
-
   // Column AJ
   test("MFJ, salary, full deduction, standard") { td =>
     val scenario = td.scenario
@@ -314,6 +303,17 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
   }
 
+  // Column AM
+  test("HH, pension, partial deduction, standard") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 84000)
+    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 1279)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 6493)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
+  }
+
   // Column AN
   test("MFS, wage, partial deduction, itemized") { td =>
     val scenario = td.scenario
@@ -322,6 +322,23 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     // this scenario expects users to choose their deduction method in spite of deduction values.
     // user selection of dediction method is not supported in TWE 2.0.
     // this scenario is effectively out of scope, and therefore assertions on W4 values cannot be made.
+  }
+
+  // Column AP
+  test("Single, full tip deduction") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2693)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals("/incomeTotal", 78000)
+    scenario.assertEquals("/agi", 78000)
+    scenario.assertEquals("/taxableIncome", 51900)
+    scenario.assertEquals("/totalNonRefundableCredits", 0)
+    scenario.assertEquals("/totalRefundableCredits", 0)
+    scenario.assertEquals("/additionalMedicareTax", 0)
+    scenario.assertEquals("/selfEmploymentTax", 0)
+    scenario.assertEquals("/netInvestmentIncomeTax", 0)
   }
 
   // Column AX
