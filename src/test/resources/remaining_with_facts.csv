@@ -1,0 +1,355 @@
+Key scenario feature:,Fact,"Single, OB3, itemized","Single, OB3, itemized, no SSN","Single, wages + tips + overtime + car loan interest","X: MFS, SALT, phased out ","Single, Social Security + part-time wages, senior deduction","MFJ, high itemized deductions (mortgage interest, SALT, charity, medical)","MFJ, college student dependent + tuition payments","MFJ,  salary, pension, zero deduction, itemized","MFJ,  salary, pension, phased out deduction, one SSN","MFS, 1 job, tips and OT","Single, No tax on overtime, factor 2, itemized,SSN"
+Column,,B,C,S,X,H,R,U,AK,AL,BC,CJ
+General Topic:,,2026 parameters,2026 parameters,"Wages, OB3 – No Tax on Tips, OB3 – No Tax on Overtime, OB3 – No Tax on Car Loan Interest","No tax on overtime, No tax on tips","Social Security, Wages, Senior Deduction, Standard Deduction","Itemized Deductions, SALT Cap, Mortgage Interest, Charitable Contributions, Medical Expenses","American Opportunity Credit, Dependent Rules, Filing Status MFJ",Additional Elder Deduction,Additional Elder Deduction,No tax on overtime,No tax on overtime
+Scenario:,,1.Parameters,2.Parameters,17. Parameters,22. Parameters,7. Parameters,16. Parameters,19. Parameters,14.WHC-2282,24.WHC-2282,14.WHC-2288,1
+DateRun,,2/10/2026,2/10/2026,3/10/2026,2/15/2026,2/15/2026,4/1/2026,3/10/2026,2/15/2026,2/15/2026,2/5/2026,2/10/2026
+About You,,,,,,,,,,,,
+F-Status (1=S; 2=MJ; 3=MS; 4=HH; 5=QW),,1,1,1,3,1,2,2,2,2,3,1
+Job or pension?,,,,,,,,,,,,
+65 or Older (1=yes),,1,1,0,0,1,0,0,1,1,0,1
+Spouse 65 or Older (1=yes),,0,0,0,0,0,0,0,1,1,0,0
+Blind (1=yes),,0,0,0,0,0,0,0,0,0,0,0
+Spouse Blind (1=yes),,0,0,0,0,0,0,0,1,1,0,0
+Valid SSN (self),,1,0,1,1,1,1,1,1,1,1,1
+Valid SSN (spouse),,0,0,0,0,0,0,1,1,0,0,0
+Claimed as a Dependent,,0,0,0,0,0,0,0,0,0,0,0
+Plan to claim dependents?,,0,0,0,0,0,0,0,0,0,0,0
+Number of jobs,,0,0,0,0,0,0,0,0,0,0,0
+Income,,,,,,,,,,,,
+Previous job income-User,,$0,$0,$0,"$22,000",$0,$0,$0,"$100,000",$0,$0,$0
+Withholding from previous job-User,,$0,$0,$0,"$5,000",$0,$0,$0,"$20,000",$0,$0,$0
+401KYTD0-User,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAYTD0-User,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Tip Income on previous job self,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Overtime income on previous job self,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Overtime factor on previous job self,,0,0,0,0,0,0,0,0,0,0,0
+Previous job income-Spouse,,$0,$0,$0,$0,$0,"$300,000",$0,$0,$0,$0,$0
+Withholding from previous job-Spouse,,$0,$0,$0,$0,$0,"$50,000",$0,$0,$0,$0,$0
+401KYTD0-Spouse,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAYTD0-Spouse,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Tip income on previous job - spouse,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Overtime income on previous job - spouse,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Overtime factor on previous job -spouse,,0,0,0,0,0,0,0,0,0,0,0
+"""Job"" 1",,,,,,,,,,,,
+Pension? (1=yes),,0,0,0,0,0,0,0,1,1,0,0
+What best describes when you earn?,,,,,,,,,,,,
+Job start1,,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026
+Job end1,,10/15/2026,10/15/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,10/15/2026
+payFrequency1 (1=W; 2=BW; 3=SM; 4=M),,1,1,2,2,2,2,2,4,4,2,1
+recentPPd End1,,2/5/2026,2/5/2026,2/28/2026,2/1/2026,2/10/2026,3/30/2026,2/28/2026,1/31/2026,1/31/2026,2/1/2026,2/5/2026
+recentPayDate1,,2/8/2026,2/8/2026,3/1/2026,2/3/2026,2/13/2026,4/1/2026,3/1/2026,2/5/2026,2/5/2026,2/3/2026,2/8/2026
+paymentPerPPd1,,"$2,000","$2,000","$4,000","$5,000","$1,500","$12,000","$4,000","$7,000","$7,000","$6,000","$2,000"
+paymentYTD1,,"$12,000","$12,000","$20,000","$15,000","$6,000","$84,000","$20,000","$14,000","$14,000","$18,000","$12,000"
+Is this correct?,,,,,,,0,,0,,,0
+annualPayment1,,"$84,000","$84,000","$104,000","$130,000","$39,000","$312,000","$104,000","$84,000","$84,000","$156,000","$84,000"
+taxWhPerPPd1,,$200,$200,$500,"$1,500",$20,"$4,000",$200,$500,$500,$700,$200
+taxWhYTD1,,"$1,200","$1,200","$2,500","$4,500",$80,"$28,000","$1,000","$1,000","$1,000","$2,100","$1,200"
+Present,,,,,,,,,,,,
+Past,,,,,,,,,,,,
+Start Date,,,,,,,,,,,,
+End Date,,,,,,,,,,,,
+Enter wages or salary year-to-date,,,,,,,,,,,,
+Enter taxes paid year-to-date,,,,,,,,,,,,
+Future,,,,,,,,,,,,
+Start Date,,,,,,,,,,,,
+End Date,,,,,,,,,,,,
+Select any that apply 1,,,,,,,,,,,,
+401k,,,,,,,,,,,,
+401kPerPPd1,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+401kYTD1,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAPerPPd1,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAYTD1,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+FutureBonusAmount1,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+PastBonusAmount1,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Annual Tip Income from Job 1,,"$10,000","$10,000","$10,000","$20,000",$0,$0,$0,$0,$0,"$30,000","$10,000"
+Annual Overtime Income from Job1,,"$15,000","$15,000","$18,000","$30,000",$0,$0,$0,$0,$0,"$30,000","$15,000"
+Overtime factor Job 1,,1.5,2,1.5,1.5,0,0,0,0,0,1.5,2
+"""Job"" 2",,,,,,,,,,,,
+Pension? (1=yes),,0,0,0,0,0,0,0,0,0,0,0
+What best describes when you earn?,,,,,,,,,,,,
+Job start2,,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2025,1/1/2026
+Job end2,,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2025,12/31/2026
+payFrequency2 (1=W; 2=BW; 3=SM; 4=M),,1,1,1,1,1,1,1,2,2,1,1
+recentPPd End2,,2/8/2026,2/8/2026,12/30/1899,2/1/2026,12/30/1899,12/30/1899,12/30/1899,2/10/2026,2/10/2026,12/30/1899,2/8/2026
+recentPayDate2,,2/8/2026,2/8/2026,12/30/1899,2/1/2026,12/30/1899,12/30/1899,12/30/1899,2/10/2026,2/10/2026,12/30/1899,2/8/2026
+paymentPerPPd2,,"$1,000","$1,000",$0,"$2,000",$0,$0,$0,"$3,000","$3,000",$0,"$1,000"
+paymentYTD2,,"$6,000","$6,000",$0,"$10,000",$0,$0,$0,"$9,000","$9,000",$0,"$6,000"
+Is this correct?,,,,,,,,,,,,
+annualPayment2,,"$52,000","$52,000",$0,"$104,000",$0,$0,$0,"$78,000","$78,000",$0,"$52,000"
+taxWhPerPPd2,,$100,$100,$0,$400,$0,$0,$0,$400,$400,$0,$100
+taxWhYTD2,,$600,$600,$0,"$2,000",$0,$0,$0,"$1,200","$1,200",$0,$600
+Present,,,,,,,,,,,,
+Past,,,,,,,,,,,,
+Start Date,,,,,,,,,,,,
+End Date,,,,,,,,,,,,
+Enter wages or salary year-to-date,,,,,,,,,,,,
+Enter taxes paid year-to-date,,,,,,,,,,,,
+Future,,,,,,,,,,,,
+Start Date,,,,,,,,,,,,
+End Date,,,,,,,,,,,,
+Select any that apply 2,,,,,,,,,,,,
+401k,,,,,,,,,,,,
+401kPerPPd2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+401kYTD2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAPerPPd2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAYTD2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+FutureBonusAmount2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+PastBonusAmount2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Annual Tip Income from Job 2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Annual Overtime Income from Job 2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Overtime factor Job 2,,0,0,0,0,0,0,0,0,0,0,0
+"""Job"" 3 (Spouse)",,,,,,,,,,,,
+Pension? (1=yes),,0,0,0,0,0,0,0,0,0,0,0
+What best describes when you earn?,,,,,,,,,,,,
+Job start3,,1/1/2026,1/1/2026,1/1/2026,1/1/2025,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2025,1/1/2026
+Job end3,,12/31/2026,12/31/2026,12/31/2026,12/31/2025,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2025,12/31/2026
+payFrequency3 (1=W; 2=BW; 3=SM; 4=M),,1,1,1,1,1,1,1,2,2,1,1
+recentPPd End3,,1/1/2026,1/1/2026,12/30/1899,11/1/2025,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,11/1/2025,1/1/2026
+recentPayDate3,,1/1/2026,1/1/2026,12/30/1899,11/1/2025,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,11/1/2025,1/1/2026
+paymentPerPPd3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+paymentYTD3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Is this correct?,,,,,,,,,,,,
+annualPayment3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+taxWhPerPPd3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+taxWhYTD3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Present,,,,,,,,,,,,
+Past,,,,,,,,,,,,
+Start Date,,,,,,,,,,,,
+End Date,,,,,,,,,,,,
+Enter wages or salary year-to-date,,,,,,,,,,,,
+Enter taxes paid year-to-date,,,,,,,,,,,,
+Future,,,,,,,,,,,,
+Start Date,,,,,,,,,,,,
+End Date,,,,,,,,,,,,
+Select any that apply 3,,,,,,,,,,,,
+401k,,,,,,,,,,,,
+401kPerPPd3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+401kYTD3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAPerPPd3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAYTD3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+FutureBonusAmount3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+PastBonusAmount3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Annual Tip Income from Job 3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Annual Overtime Income from Job 3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Overtime factor Job 3,,0,0,0,0,0,0,0,0,0,0,0
+"""Job"" 4 (Spouse)",,,,,,,,,,,,
+Pension? (1=yes),,0,0,0,0,0,0,0,0,0,0,0
+What best describes when you earn?,,,,,,,,,,,,
+Job start4,,1/1/2026,1/1/2026,1/1/2026,1/1/2025,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2026,1/1/2025,1/1/2026
+Job end4,,12/31/2026,12/31/2026,12/31/2026,12/31/2025,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2026,12/31/2025,12/31/2026
+payFrequency4 (1=W; 2=BW; 3=SM; 4=M),,1,1,1,1,1,1,1,1,1,1,1
+recentPPd End4,,1/1/2026,1/1/2026,12/30/1899,1/11/2025,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,1/11/2025,1/1/2026
+recentPayDate4,,1/1/2026,1/1/2026,12/30/1899,1/15/2025,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,1/15/2025,1/1/2026
+paymentPerPPd4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+paymentYTD4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Is this correct?,,,,,,,,,,,,
+annualPayment4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+taxWhPerPPd4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+taxWhYTD4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Present,,,,,,,,,,,,
+Past,,,,,,,,,,,,
+Start Date,,,,,,,,,,,,
+End Date,,,,,,,,,,,,
+Enter wages or salary year-to-date,,,,,,,,,,,,
+Enter taxes paid year-to-date,,,,,,,,,,,,
+Future,,,,,,,,,,,,
+Start Date,,,,,,,,,,,,
+End Date,,,,,,,,,,,,
+Select any that apply 4,,,,,,,,,,,,
+401k,,,,,,,,,,,,
+401kPerPPd4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+401kYTD4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAPerPPd4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAYTD4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+FutureBonusAmount4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+PastBonusAmount4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Annual Tip Income from Job 4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Annual Overtime Income from Job 4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Overtime factor Job 4,,0,0,0,0,0,0,0,0,0,0,0
+Social Security: User,,,,,,,,,,,,
+Start date,,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899
+End date,,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899
+SS monthly benefit,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+SS benefit YTD,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+SS monthly withholding,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+SS withholding YTD,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Social Security: Spouse,,,,,,,,,,,,
+Start date,,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899
+End date,,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899,12/30/1899
+SS monthly benefit,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+SS benefit YTD,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+SS monthly withholding,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+SS withholding YTD,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Other,,,,,,,,,,,,
+scholarshipAmount,,0,0,0,0,0,0,0,0,0,0,0
+scholarshipTaxPaid,,0,0,0,0,0,0,0,0,0,0,0
+unemploymentTaxPaid,,0,0,0,0,0,0,0,0,0,0,0
+selfEmploymentAmount-User,,"$20,000","$20,000",$0,$0,$0,$0,$0,$0,$0,$0,"$20,000"
+Past estimated payments-User,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Planned estimated payments-User,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+selfEmploymentAmount-Spouse,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Past estimated payments-Spouse,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Planned estimated payments-Spouse,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+InterestOrdinaryDividends,/ordinaryDividendsIncome,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+QualifiedDividends,/qualifiedDividendsIncome,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+CapitalGainsDistns,,,,,,,,,,,,
+ShortTermGains(or losses),/shortTermCapitalGainsIncome,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+OtherLongTermGains(or losses),/longTermCapitalGainsIncome,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+RentsRoyalties (or losses),/rentalIncome,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+SchedEpassive,/netScheduleEIncome,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+S-CorpNonPassive,/sCorpNonPassiveIncome,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+unemploymentAmount,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+otherTaxableIncome,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+WithholdingOther,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+EstdTaxPymntsToDate,/totalEstimatedTaxesPaid,$0,"$3,000",$0,$0,$0,$0,$0,$0,$0,$0,"$3,000"
+Adjustments,,,,,,,,,,,,
+studentLoanInterest,/studentLoanInterestAmount,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+educatorExpense,/educatorExpenses,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+IRAcontribution,/deductionForTraditionalIRAContribution,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+HSAdeduction,/hsaContributionAmount,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+movingExpense,/movingExpensesForArmedServicesMembers,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+alimonyPaid,/alimonyPaid,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+penaltyEarlyWithdrawal,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+businessCredits,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Total Adjustments entered,,,,,,,,,,,,
+Deductions,,,,,,,,,,,,
+Interest you Paid,/qualifiedMortgageInterestAndInvestmentInterestExpenses,$0,$0,$0,$0,$0,"$22,000",$0,"$5,000",$0,$0,$0
+SALT you paid,/stateAndLocalTaxPayments,"$30,000","$30,000","$8,000","$35,000",$0,"$45,000",$0,"$35,000","$15,000",$0,"$30,000"
+MedicalExpenses,/medicalAndDentalExpenses,$0,$0,$0,$0,$0,"$65,000",$0,"$30,000",$0,$0,$0
+Gifts to Charity,/nonCashCharitableContributions,$0,$0,$0,$0,$0,"$10,000",$0,"$15,000",$0,$0,$0
+Cash gift to charity,/cashCharitableContributions,$0,$0,$0,$0,$0,"$2,500",$0,$0,$0,$0,$0
+Casualty Lossess,/casualtyLossesTotal,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Other Itemized Deductions,/otherDeductionsTotal,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Car loan interest,/personalVehicleLoanInterestAmount,"$2,000","$2,000","$9,000",$0,$0,$0,$0,$0,$0,$0,"$2,000"
+Itemize even if smaller (1=yes),,0,0,0,0,0,0,0,0,0,0,0
+Tax Credits,,,,,,,,,,,,
+User Age,,66,66,50,40,71,50,50,70,70,40,66
+Spouse Age,,0,0,0,0,0,50,50,70,70,0,0
+Child1Age,,1,1,0,0,0,0,18,0,0,2,1
+Child2Age,,2,2,0,0,0,0,0,0,0,0,2
+Child3Age,,3,3,0,0,0,0,0,0,0,0,3
+Child4Age,,0,0,0,0,0,0,0,0,0,0,0
+qualChildrenCDCC,/ctcEligibleDependents,3,3,0,0,0,0,1,0,0,1,3
+ChildCareExpenses,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+How many QC for EITC,/eitcQualifyingChildren,0,0,0,0,0,0,1,0,0,1,0
+Adoption Tax Credit,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Foreign Tax Credit,/schedule3Line1,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Number of students,/aotcQualifyingStudents,0,0,0,0,0,0,1,0,0,0,0
+AOTC,/aotcQualifiedEducationExpenses,$0,$0,$0,$0,$0,$0,"$3,000",$0,$0,$0,$0
+LLC,/llcQualifiedEducationExpenses,$0,$0,$0,$0,$0,$0,"$3,000",$0,$0,$0,$0
+Retirement Savings Credit,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Residental Energy Credit,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Mortgage Interest Credit,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Elderly or Disabled Credit,/elderlyAndDisabledTaxCreditAmount,$0,$0,$0,$0,"$1,000",$0,$0,$0,$0,$0,$0
+General Business Credit,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+AMT Credit,/alternativeMinimumTaxCreditAmount,$0,$0,$0,$0,$0,"$5,000",$0,$0,$0,$0,$0
+AltMotorVehicleCredit,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+AltFuelVehicleCredit,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Plug-inElectricVehicleCredit,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Results,,Spreadsheet,Spreadsheet,Spreadsheet,Spreadsheet,Spreadsheet,Spreadsheet,Spreadsheet,Spreadsheet,Spreadsheet,Spreadsheet,Spreadsheet
+do-nothingTaxWithholding,/totalEndOfYearProjectedWithholding,"$13,600","$16,600","$13,000","$64,800",$520,"$154,000","$5,200","$36,400","$16,400","$18,200","$16,600"
+anticipatedTaxB4RefundableCredits,,"$14,136","$24,433","$8,732","$53,259",$537,"$131,984","$6,123","$33,539","$15,729","$24,253","$14,431"
+Refundable credits,,$0,$0,$0,$0,$0,$0,"$1,000",$0,$0,$0,$0
+do-nothingRefund (Baldue),,-$536,"-$7,833","$4,268","$11,541",-$17,"$22,016",$77,"$2,861",$671,"-$6,053","$2,169"
+"Slider Position (0, 5, or 15)",,1,1,1,1,1,1,1,1,1,1,1
+"""Job"" 1",,-$536,"-$7,833","$4,268","$11,541",-$17,"$22,016",$77,"$2,861",$671,"-$6,053","$2,169"
+WhNeedPerPPd1,,,,,,,,,,,,
+standardWhAmountPerPPd1,,$270.19,$270.19,$540.38,$766.69,$96.15,"$2,013.38",$312.31,$476.67,$476.67,"$1,006.69",$270.19
+StandardWHAmountPerPPd1_4ab,,$282.97,$282.97,$540.38,$733.69,$96.15,"$1,854.03",$312.31,$207.77,$476.67,"$1,006.69",$282.97
+W4-P Allowances1,,,,,,,,,,,,
+W-4 Line3Amount1,/jobSelectedForExtraWithholding/w4Line3,"$2,020",$0,"$6,598",$0,"$1,959",$0,"$3,020",$0,$0,$820,"$6,157"
+W-4 Line4aAmount1,/jobSelectedForExtraWithholding/w4Line4a,"$3,020","$3,020",$0,$0,$0,$0,$0,$0,$0,$0,"$3,020"
+W-4 Line4bAmount1,/jobSelectedForExtraWithholding/w4Line4b,$0,$0,$0,"$3,575",$0,"$17,263",$0,"$26,890",$0,$0,$0
+W-4 Line4cAmount1,/jobSelectedForExtraWithholding/w4Line4c,$0,$176,$0,$507,$0,$923,$0,$463,$413,$0,$0
+"""Job"" 2",,,,,,,,,,,,
+WhNeedPerPPd2,,,,,,,,,,,,
+standardWhAmount2,,$78.08,$78.08,$0.00,$270.19,$0.00,$0.00,$0.00,$192.31,$192.31,$0.00,$78.08
+StandardWHAmountPerPPd2_4ab,,$78.08,$78.08,$0.00,$270.19,$0.00,$0.00,$0.00,$192.31,$192.31,$0.00,$78.08
+W4-P Allowances2,,,,,,,,,,,,
+W-4 Line3Amount2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+W-4 Line4aAmount2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+W-4 Line4bAmount2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+W-4 Line4cAmount2,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+"""Job"" 3",,,,,,,,,,,,
+WhNeedPerPPd3,,,,,,,,,,,,
+standardWhAmount3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+W4-P Allowances3,,,,,,,,,,,,
+W-4 Line3Amount3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+W-4 Line4aAmount3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+W-4 Line4bAmount3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+W-4 Line4cAmount3,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+"""Job"" 4",,,,,,,,,,,,
+WhNeedPerPPd4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+standardWhAmount4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+,,,,,,,,,,,,
+W4-P Allowances4,,,,,,,,,,,,
+W-4 Line3Amount4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+W-4 Line4aAmount4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+W-4 Line4bAmount4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+W-4 Line4cAmount4,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Summary Table,,,,,,,,,,,,
+Net pre-tax income,/incomeTotal,"$156,000","$156,000","$104,000","$256,000","$39,000","$612,000","$104,000","$262,000","$162,000","$156,000","$156,000"
+Expected total prepaid this yr,,"$13,600","$16,600","$13,000","$64,800",$520,"$154,000","$5,200","$36,400","$16,400","$18,200","$16,600"
+Adjustments,,,,,,,,,,,,
+studentLoanInterest allowed,/studentLoanInterestDeduction,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+educatorExpense allowed,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Total Adjustments,,"$1,413","$1,413",$0,$0,$0,$0,$0,$0,$0,$0,"$1,413"
+AGI,/agi,"$154,587","$154,587","$104,000","$256,000","$39,000","$612,000","$104,000","$262,000","$162,000","$156,000","$154,587"
+Deductions,,,,,,,,,,,,
+medicalExpenses allowed,/medicalAndDentalExpensesTotal,$0,$0,$0,$0,$0,"$19,100",$0,"$10,350",$0,$0,$0
+SALT deduction allowed,/stateAndLocalTaxDeduction,"$30,000","$30,000","$8,000","$19,675",$0,"$10,000",$0,"$35,000","$15,000",$0,"$30,000"
+Additional Elder Deduction (70103),/seniorDeduction,"$1,225",$0,$0,$0,"$6,000",$0,$0,$0,"$5,280",$0,"$1,225"
+Total standard or itemized deductions,/standardOrItemizedDeduction,"$45,425","$30,000","$40,300","$19,675","$24,150","$51,463","$32,200","$64,040","$42,430","$16,100","$44,175"
+QBI deduction,/qualifiedBusinessIncomeDeduction,"$3,717","$3,717",$0,$0,$0,$0,$0,$0,$0,$0,"$3,717"
+No tax on tips deduction,/qualifiedTipDeduction,"$9,600",$0,"$10,000",$0,$0,$0,$0,$0,$0,$0,"$9,600"
+No tax on overtime deduction,/overtimeCompensationDeduction,"$4,600",$0,"$6,000",$0,$0,$0,$0,$0,$0,$0,"$3,350"
+No tax on car loan interest deduction,/qualifiedPersonalVehicleLoanInterestDeduction,$0,$0,"$8,200",$0,$0,$0,$0,$0,$0,$0,$0
+Tax Before Credits,,,,,,,,,,,,
+Taxable income,/taxableIncome,"$105,445","$120,870","$63,700","$236,325","$14,850","$560,537","$71,800","$197,960","$119,570","$139,900","$106,695"
+Income tax before credits,/tentativeTaxFromTaxableIncome,"$17,910","$21,607","$8,732","$52,080","$1,537","$133,726","$8,123","$32,975","$15,729","$26,174","$18,205"
+Tax Credits,,,,,,,,,,,,
+CTC + Credit for Other Dep,/totalCtcAndOdc,"$6,600",$0,$0,$0,$0,$0,$500,$0,$0,"$2,200","$6,600"
+C&DCC,,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Non-Ref Edn credits,,$0,$0,$0,$0,$0,$0,"$1,500",$0,$0,$0,$0
+Total non-refundable credits,/totalNonRefundableCredits,"$6,600",$0,$0,$0,"$1,000","$5,000","$2,000",$0,$0,"$2,200","$6,600"
+Addl CTC,/additionalCtc,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+EITC,/earnedIncomeCredit,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0,$0
+Refundable Edn credits,,$0,$0,$0,$0,$0,$0,"$1,000",$0,$0,$0,$0
+Total refundable credits,/totalRefundableCredits,$0,$0,$0,$0,$0,$0,"$1,000",$0,$0,$0,$0
+Final Summary,,,,,,,,,,,,
+Income tax before refundable credits,/tentativeTaxNetNonRefundableCredits,"$11,310","$21,607","$8,732","$52,080",$537,"$128,726","$6,123","$32,975","$15,729","$23,974","$11,605"
+Additional Medicare Tax:,/additionalMedicareTax,$0,$0,$0,"$1,179",$0,"$3,258",$0,$108,$0,$279,$0
+Self-Employment Tax,/selfEmploymentTax,"$2,826","$2,826",$0,$0,$0,$0,$0,$0,$0,$0,"$2,826"
+NetInvestmentIncomeTax,/netInvestmentIncomeTax,$0,$0,$0,$0,$0,$0,$0,$456,$0,$0,$0
+Refundable credits,,$0,$0,$0,$0,$0,$0,"$1,000",$0,$0,$0,$0
+Total tax after refundable credits,/totalTaxNetRefundableCredits,"$14,136","$24,433","$8,732","$53,259",$537,"$131,984","$5,123","$33,539","$15,729","$24,253","$14,431"
+RecommTaxPaid,,"$14,136","$24,433","$8,732","$53,259",$537,"$131,984","$6,123","$33,539","$15,729",#DIV/0!,"$14,431"
+Recommended refund excl. ref. credits,,$0,$0,$0,$0,$0,$0,$0,$0,$0,#DIV/0!,$0
+Other intermediate values,,$0,$0,$0,$0,$0,$0,$0,$0,$0,#DIV/0!,$0
+Projected refund after credits,,$0,$0,$0,$0,$0,$0,$0,$0,$0,#DIV/0!,$0
+"""Job"" 1",,,,,,,,,,,,
+Partial first paycheck (%),,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%
+Full paychecks to date,,6,6,5,3,4,7,5,2,2,3,6
+Additional paychecks before new W-4,,2,2,1,1,1,1,1,0,0,1,2
+Ppaychecks remaining with new W-4,,34,34,20,22,21,18,20,10,10,22,34
+Partial last paycheck (%),,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%
+"""Job"" 2",,,,,,,,,,,,
+Partial first paycheck (%),,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%
+Full paychecks to date,,6,6,10,5,7,13,10,3,3,57,6
+Additional paychecks before new W-4,,2,2,2,2,2,2,2,1,1,-5,2
+Full paychecks remaining with new W-4,,44,44,41,45,44,38,41,22,22,0,44
+Partial last paycheck (%),,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%
+"""Job"" 3",,,,,,,,,,,,
+Partial first paycheck (%),,0.00%,0.00%,0.00%,57.14%,0.00%,0.00%,0.00%,0.00%,0.00%,57.14%,0.00%
+Full paychecks to date,,,,,,,,,,,,
+Additional paychecks before new W-4,,,,,,,,,,,,
+Full paychecks remaining with new W-4,,,,,,,,,,,,
+Partial last paycheck (%),,0.00%,0.00%,0.00%,25.00%,0.00%,0.00%,0.00%,0.00%,0.00%,25.00%,0.00%
+"""Job"" 4",,,,,,,,,,,,
+Partial first paycheck (%),,0.00%,0.00%,0.00%,78.57%,0.00%,0.00%,0.00%,0.00%,0.00%,78.57%,0.00%
+Full paychecks to date,,,,,,,,,,,,
+Additional paychecks before new W-4,,,,,,,,,,,,
+Full paychecks remaining with new W-4,,,,,,,,,,,,
+Partial last paycheck (%),,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,0.00%,25.00%,0.00%
+Notes:,,,,,,,,,,,,
