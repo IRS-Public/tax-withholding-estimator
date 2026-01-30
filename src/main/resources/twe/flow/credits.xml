@@ -126,16 +126,12 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h3 condition="/isTentativelyEligibleForEdc" operator="isTrue">Credit for the Elderly or the Disabled</h3>
-      <p condition="/isTentativelyEligibleForEdc" operator="isTrue">This credit helps older adults and people with qualifying disabilities lower their taxes.</p>
-      <p condition="/isTentativelyEligibleForEdc" operator="isTrue"><modal-link for="modal-credit-elderly-disabled-who-can-claim">Who can claim the credit for the elderly or the disabled?</modal-link></p>
-      <fg-set path="/primaryFilerIsClaimingEdc" optional="true" if-true="/isTentativelyEligibleForEdc">
-        <question>Do you plan to claim the credit for the elderly or the disabled?</question>
-        <input type="boolean"/>
-      </fg-set>
-      <fg-set path="/secondaryFilerIsClaimingEdc" optional="true" if-true="/isTentativelyEligibleForEdc">
-        <question>Does your spouse plan to claim the credit for the elderly or the disabled?</question>
-        <input type="boolean"/>
+      <h3 condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue">Credit for the Elderly or the Disabled</h3>
+      <p condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue">This credit helps older adults and people with qualifying disabilities lower their taxes.</p>
+      <p condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue"><modal-link for="modal-credit-elderly-disabled-who-can-claim">Who can claim the credit for the elderly or the disabled?</modal-link></p>
+      <fg-set path="/elderlyAndDisabledTaxCreditAmount" optional="true">
+        <question>Elderly and Disabled tax credit you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/></question>
+        <input type="dollar"/>
       </fg-set>
 
       <h3>Foreign Tax Credit</h3>

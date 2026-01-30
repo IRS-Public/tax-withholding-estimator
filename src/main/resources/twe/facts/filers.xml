@@ -190,5 +190,13 @@
         </All>
       </Derived>
     </Fact>
+    <Fact path="/eitherPrimaryOrSecondaryFilersAge65OrOlder">
+      <Derived>
+        <Any>
+          <Dependency path="/primaryFilerAge65OrOlder"/>
+          <Dependency path="/secondaryFilerAge65OrOlder"/>
+        </Any>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>
