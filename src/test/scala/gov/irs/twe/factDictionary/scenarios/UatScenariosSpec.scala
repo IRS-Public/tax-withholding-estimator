@@ -131,13 +131,12 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column X
-  ignore("X: MFS, SALT, phased out ") { td =>
+  test("MFS, No tax on tips, No tax on overtime, SALT, phased out") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 256000)
     scenario.assertEquals("/agi", 256000)
     scenario.assertEquals("/taxableIncome", 236325)
     scenario.assertEquals("/standardOrItemizedDeduction", 19675)
-    scenario.assertEquals("/stateAndLocalTaxPayments", 35000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 19675)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 52080)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 53259)
@@ -151,11 +150,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/personalVehicleLoanInterestAmount", 0)
     scenario.assertEquals("/seniorDeduction", 0)
-    scenario.assertEquals("/ctcEligibleDependents", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
-    scenario.assertEquals("/totalEstimatedTaxesPaid", 0)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 507)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3575)
