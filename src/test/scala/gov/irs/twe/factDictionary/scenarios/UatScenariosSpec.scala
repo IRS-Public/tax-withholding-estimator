@@ -48,6 +48,18 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 4600)
   }
 
+  // Column E
+  test("Single filer, new job") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 124000)
+    scenario.assertEquals("/taxableIncome", 107900)
+    scenario.assertEquals("/standardOrItemizedDeduction", 16100)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3500)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 38)
+  }
+
   // Column F
   test("Single, low wages, 2 dependents") { td =>
     val scenario = td.scenario
