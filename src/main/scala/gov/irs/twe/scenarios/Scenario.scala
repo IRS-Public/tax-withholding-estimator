@@ -16,6 +16,10 @@ val JOB_3_ID = "20B48125-6DB6-4719-8FD3-96C9DAA17E57" // Spouse job 1
 val JOB_4_ID = "9141223F-AF3D-42EF-8AA7-3EC454D5CCBC" // Spouse job 2
 val ALL_JOBS = List(PREVIOUS_SELF_JOB_ID, PREVIOUS_SPOUSE_JOB_ID, JOB_1_ID, JOB_2_ID, JOB_3_ID, JOB_4_ID)
 
+val SE_SELF_ID = "9f5e25b9-5f6c-4c93-b327-27b1c21a4ff3"
+val SE_SPOUSE_ID = "2e4b8107-f72b-4ea0-8081-8012d256373f"
+val ALL_SE_SOURCES = List(SE_SELF_ID, SE_SPOUSE_ID)
+
 val SS_ID = "9f5e25b9-5f6c-4c93-b327-27b1c21a4ff3"
 val SS_SPOUSE_ID = "2e4b8107-f72b-4ea0-8081-8012d256373f"
 val ALL_SS_SOURCES = List(SS_ID, SS_SPOUSE_ID)
@@ -130,6 +134,9 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   // Set social security collection
   ALL_SS_SOURCES.foreach(source => factGraph.addToCollection("/socialSecuritySources", source))
 
+  // Self-employment collection
+  ALL_SE_SOURCES.foreach(source => factGraph.addToCollection("/selfEmploymentSources", source))
+
   // Add the 5 jobs to the fact graph
   ALL_JOBS.foreach(job => factGraph.addToCollection("/jobs", job))
 
@@ -162,6 +169,15 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   factGraph.set(s"/jobs/#$JOB_2_ID/filerAssignment", new types.Enum(Some("self"), "/filerAssignmentOption"))
   factGraph.set(s"/jobs/#$JOB_3_ID/filerAssignment", new types.Enum(Some("spouse"), "/filerAssignmentOption"))
   factGraph.set(s"/jobs/#$JOB_4_ID/filerAssignment", new types.Enum(Some("spouse"), "/filerAssignmentOption"))
+
+  factGraph.set(
+    s"/selfEmploymentSources/#$SE_SELF_ID/filerAssignment",
+    new types.Enum(Some("self"), "/filerAssignmentOption"),
+  )
+  factGraph.set(
+    s"/selfEmploymentSources/#$SE_SPOUSE_ID/filerAssignment",
+    new types.Enum(Some("spouse"), "/filerAssignmentOption"),
+  )
 
   // Set dummy dates for the past jobs
   // This is sort of a hack; we should just ask for spreadsheets that include "previous jobs" as regular jobs
@@ -240,6 +256,14 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
     val income = factGraph.get(s"/jobs/#$jobId/income")
     if (!income.hasValue || income.get == 0) {
       factGraph.delete(s"/jobs/#$jobId")
+    }
+  })
+
+  // Remove self-employment sources that have no gross income
+  ALL_SE_SOURCES.foreach(selfEmployId => {
+    val grossIncome = factGraph.get(s"/selfEmploymentSources/#$selfEmployId/grossIncome")
+    if (!grossIncome.hasValue || grossIncome.get == Dollar("0")) {
+      factGraph.delete(s"/selfEmploymentSources/#$selfEmployId")
     }
   })
 
@@ -389,8 +413,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "Annual Overtime Income from Job 4" -> s"/jobs/#$JOB_4_ID/overtimeCompensationTotal",
   "Overtime factor Job 4" -> s"/jobs/#$JOB_4_ID/overtimeCompensationRate",
   // Self employment income
-  "selfEmploymentAmount-User" -> s"/grossSelfEmploymentIncomeSelf",
-  "selfEmploymentAmount-Spouse" -> s"/grossSelfEmploymentIncomeSpouse",
+  "selfEmploymentAmount-User" -> s"/selfEmploymentSources/#$SE_SELF_ID/grossIncome",
+  "selfEmploymentAmount-Spouse" -> s"/selfEmploymentSources/#$SE_SPOUSE_ID/grossIncome",
   // Social Security #1
   "Start date" -> s"/socialSecuritySources/#$SS_ID/startDate",
   "End date" -> s"/socialSecuritySources/#$SS_ID/endDate",

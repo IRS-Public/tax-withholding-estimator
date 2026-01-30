@@ -18,8 +18,23 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/unemploymentInsuranceIncome">
-      <Description>Unemployment insurance income</Description>
+    <Fact path="/unemploymentIncome">
+      <Description>Unemployment income</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/unemploymentIncomeWithholding">
+      <Description>Whether the taxpayer chose to withhold federal tax from unemployment income</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+    <Fact path="/preTaxRetirementAccountIncome">
+      <Description>Total distributions from pre-tax retirement accounts</Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -254,38 +269,6 @@ and car loan interest deduction
         </Add>
       </Derived>
     </Fact>
-    <Fact path="/grossSelfEmploymentIncomeSelf">
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/grossSelfEmploymentIncomeSpouse">
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/selfEmploymentIncomeExpensesSelf">
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/selfEmploymentIncomeExpensesSpouse">
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
     <Fact path="/pensionsIncomeSelf">
       <Description>Total income for all pensions</Description>
       <Derived>
@@ -464,7 +447,7 @@ and car loan interest deduction
         <Add>
           <Dependency path="/ordinaryDividendsIncome"/>
           <Dependency path="/netSelfEmploymentIncomeTotal"/>
-          <Dependency path="/unemploymentInsuranceIncome"/>
+          <Dependency path="/unemploymentIncome"/>
           <Dependency path="/taxableInterestIncome"/>
           <Dependency path="/grossCapitalGainOrLoss"/>
           <Dependency path="/taxableScholarshipIncome"/>

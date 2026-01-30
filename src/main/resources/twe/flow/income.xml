@@ -1,16 +1,27 @@
 <?xml version="1.0"?>
 <?xml-model href="./FlowConfig.rng"?>
 <FlowConfig>
-  <page title="Income" route="/income">
+  <page title="Income &amp; tax payments" route="/income">
     <section>
-      <h2>Income</h2>
-      <h3>Jobs</h3>
+      <h2><fg-show path="/taxYear" /> Income &amp; tax payments</h2>
+      <p>Tell us about the total income, federal tax withholding, and estimated tax payments you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to have for <fg-show path="/taxYear"/>.</p>
+      <!-- TODO: Make into fg-alert in the future-->
+      <div class="usa-alert usa-alert--info">
+        <div class="usa-alert__body">
+          <p class="usa-alert__text">
+            To use this estimator, you need to have income from a job, pension, or annuity.
+          </p>
+        </div>
+      </div>
+
+      <h3>Jobs with an employer (W-2)</h3>
       <fg-alert alert-type="error" alert-key="at-least-one-job" if-true="/declaredDoneAddingIncome">
         <heading>You need to have a job or pension to continue</heading>
-        <p> To continue using the estimator, you need to have at least one job or pension that regularly withholds federal income taxes. If you don&#x2019;t pay any taxes on your income through withholding, you may want to plan to <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <p> To continue using the estimator, you need to have at least one job or pension that regularly withholds federal income taxes. If you don’t pay any taxes on your income through withholding, you may want to plan to <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
         </p>
       </fg-alert>
-      <fg-collection path="/jobs" item-name="Income source">
+      <p><modal-link for="modal-what-counts-job">What counts as a job?</modal-link></p>
+      <fg-collection path="/jobs" item-name="Job">
         <fg-set path="/jobs/*/filerAssignment" if-true="/isFilingStatusMFJ">
           <question>Who is this income for?</question>
           <select options-path="/jobs/*/filerAssignmentOption">
@@ -25,11 +36,11 @@
           <input type="boolean"/>
         </fg-set>
         <fg-set path="/jobs/*/writableStartDate" if-true="/jobs/*/flowAskPartYearDates">
-          <question>What&#x2019;s the start date?</question>
+          <question>What’s the start date?</question>
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/writableEndDate" if-true="/jobs/*/flowAskPartYearDates">
-          <question>What&#x2019;s the end date?</question>
+          <question>What’s the end date?</question>
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
@@ -67,7 +78,7 @@
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/yearToDateIncome">
-          <question>What&#x2019;s your year-to-date income for this job?</question>
+          <question>What’s your year-to-date income for this job?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/amountWithheldLastPaycheck">
@@ -75,7 +86,7 @@
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/yearToDateWithholding">
-          <question>What&#x2019;s your year-to-date federal withholding for this job?</question>
+          <question>What’s your year-to-date federal withholding for this job?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/jobs/*/payFrequency">
@@ -131,8 +142,10 @@
           </select>
         </fg-set>
       </fg-collection>
-      <h3>Pensions</h3>
-      <fg-collection path="/pensions" item-name="Pensions source">
+
+      <h3>Pension or annuity income</h3>
+      <p><modal-link for="modal-what-counts-pension">What counts as a pension or annuity?</modal-link></p>
+      <fg-collection path="/pensions" item-name="Pension or annuity income">
         <fg-set path="/pensions/*/filerAssignment" if-true="/isFilingStatusMFJ">
           <question>Who is this pension for?</question>
           <select options-path="/pensions/*/filerAssignmentOption">
@@ -141,11 +154,11 @@
           </select>
         </fg-set>
         <fg-set path="/pensions/*/startDate">
-          <question>What&#x2019;s the start date?</question>
+          <question>What’s the start date?</question>
           <input type="date"/>
         </fg-set>
         <fg-set path="/pensions/*/endDate">
-          <question>What&#x2019;s the end date?</question>
+          <question>What’s the end date?</question>
           <input type="date"/>
         </fg-set>
         <fg-set path="/pensions/*/mostRecentPayDate">
@@ -153,19 +166,19 @@
           <input type="date"/>
         </fg-set>
         <fg-set path="/pensions/*/averagePayPerPayPeriod">
-          <question>What&#x2019;s the average amount you get paid each pay period?</question>
+          <question>What’s the average amount you get paid each pay period?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/pensions/*/yearToDateIncome">
-          <question>What&#x2019;s your year-to-date income for this pension?</question>
+          <question>What’s your year-to-date income for this pension?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/pensions/*/averageWithholdingPerPayPeriod">
-          <question>What&#x2019;s the average amount of federal withholding each pay period?</question>
+          <question>What’s the average amount of federal withholding each pay period?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/pensions/*/yearToDateWithholding">
-          <question>What&#x2019;s your year-to-date federal withholding for this pension?</question>
+          <question>What’s your year-to-date federal withholding for this pension?</question>
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/pensions/*/payFrequency">
@@ -178,6 +191,41 @@
           </select>
         </fg-set>
       </fg-collection>
+
+      <h3>Additional income</h3>
+
+      <h4>Self-employment income</h4>
+      <p>This includes income from a partnership, trade, or business that you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> own. It can also include income earned as a freelancer, contractor, or gig worker.</p>
+      <p><modal-link for="modal-what-counts-self-employment">What counts as self-employment income?</modal-link></p>
+      <fg-collection path="/selfEmploymentSources" item-name="Self-employment income">
+        <fg-set path="/selfEmploymentSources/*/filerAssignment" if-true="/isFilingStatusMFJ">
+          <question>Who is this income for?</question>
+          <input type="enum" options-path="/selfEmploymentSources/*/filerAssignmentOption">
+            <option value="self">Myself</option>
+            <option value="spouse">My spouse</option>
+          </input>
+        </fg-set>
+        <fg-set path="/selfEmploymentSources/*/grossIncome">
+          <question>What’s the total gross income <span condition="/selfEmploymentSources/*/notSpouses" operator="isTrue">you</span><span condition="/selfEmploymentSources/*/notSpouses" operator="isFalse">they</span> expect to earn from this self-employment work in <fg-show path="/taxYear"/>?</question>
+          <modal-link for="modal-self-employment-gross-total">What’s total gross income and where do I find it?</modal-link>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/selfEmploymentSources/*/workRelatedExpenses">
+          <question>Total work-related expenses <span condition="/selfEmploymentSources/*/notSpouses" operator="isTrue">you</span><span condition="/selfEmploymentSources/*/notSpouses" operator="isFalse">they</span> plan to deduct in <fg-show path="/taxYear"/></question>
+          <hint>It's okay to estimate or leave this blank.</hint>
+          <modal-link for="modal-self-employment-deductions">What does it mean to deduct expenses?</modal-link>
+          <input type="dollar"/>
+        </fg-set>
+        <div condition="/isFilingStatusMFS" operator="isFalse">
+          <h5>Estimated tips and overtime</h5>
+          <p>For 2025 through 2028, there are new deductions for tips and overtime.</p>
+          <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> meet the eligibility requirements, you may be able to deduct (subtract) tips and overtime pay from your income, so you won’t have to pay tax on it.</p>
+          <p>If this doesn’t apply to <span condition="/isFilingStatusMFJ" operator="isTrue">your spouse</span><span condition="/isFilingStatusMFJ" operator="isFalse">you</span>, it’s okay to leave this blank.</p>
+          <!-- TODO: Add Estimated tips accordion here -->
+          <!-- TODO: Add Estimated overtime accordion here -->
+        </div>
+      </fg-collection>
+
       <h3>Social Security income</h3>
       <p>Enter any Social Security income you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> expect to receive in <fg-show path="/taxYear"/>. </p>
       <p>
@@ -230,27 +278,34 @@
           </input>
         </fg-set>
       </fg-collection>
+
+      <h3>Unemployment income</h3>
+      <p><modal-link for="modal-what-counts-unemployment">What counts as unemployment income?</modal-link></p>
+      <fg-set path="/unemploymentIncome">
+        <question>Total gross unemployment income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/>?</question>
+        <input type="dollar"/>
+      </fg-set>
+      <fg-set path="/unemploymentIncomeWithholding">
+        <question>Did you choose to withhold federal tax from your unemployment income?</question>
+        <modal-link for="modal-fed-unemployment-tax-withheld-en">How do I know if I have taxes withheld?</modal-link>
+        <input type="boolean"/>
+      </fg-set>
+
+      <h3>Pre-tax retirement account income</h3>
+      <p>
+        <modal-link for="modal-what-counts-pre-tax-retirement">
+          What counts as a distribution from pre-tax retirement accounts?
+        </modal-link>
+      </p>
+      <fg-set path="/preTaxRetirementAccountIncome">
+        <question>Total distributions you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive from pre-tax retirement accounts in <fg-show path="/taxYear"/></question>
+        <hint>Don’t include distributions from Roth (post-tax) accounts.</hint>
+        <input type="dollar"/>
+      </fg-set>
+
       <h3>Trump Account Distribution</h3>
       <fg-set path="/trumpAccountDistribution">
         <question>Distributions from Trump Account</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Self-Employment Income</h3>
-      <fg-set path="/grossSelfEmploymentIncomeSelf">
-        <question>How much was your gross self-employment income this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <fg-set path="/selfEmploymentIncomeExpensesSelf">
-        <question>How much was your self-employment expenses this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3 condition="/isFilingStatusMFJ" operator="isTrue">Spouse Self-Employment Income</h3>
-      <fg-set path="/grossSelfEmploymentIncomeSpouse" if-true="/isFilingStatusMFJ">
-        <question>How much was your spouses' gross self-employment income this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <fg-set path="/selfEmploymentIncomeExpensesSpouse" if-true="/isFilingStatusMFJ">
-        <question>How much was your spouses' self-employment expenses this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h3>Ordinary Dividends Income</h3>
@@ -266,13 +321,6 @@
       <h3>Long-Term Capital Gains Income</h3>
       <fg-set path="/longTermCapitalGainsIncome">
         <question>How much long-term capital gains income do you estimate for this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Unemployment Insurance Income</h3>
-      <fg-set path="/unemploymentInsuranceIncome">
-        <question>
-          How much have you received in employment insurance income so far this year?
-        </question>
         <input type="dollar"/>
       </fg-set>
       <h3>Interest Income (excluding non-taxable interest)</h3>
@@ -372,6 +420,113 @@
         </ol>
         <p>If you didn’t request to withhold taxes, the percentage will be 0%.</p>
         <p>If you don’t have a my Social Security account, or need help checking your federal withholdings, call the Social Security Administration at 1-800-772-1213.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-what-counts-job">
+      <modal-heading>What counts as a job?</modal-heading>
+      <modal-content>
+        <p>A job is when you earn income by working for an employer. At the end of the year, the employer will send a Form W-2 to report this income.</p>
+        <p><strong>Don’t include income earned through:</strong></p>
+        <ul>
+          <li>A partnership, trade, or business that you own</li>
+          <li>On-demand work, services, or goods as a freelancer, contractor, or gig worker</li>
+        </ul>
+        <p>Add this income in the <strong>Self-employment income</strong> section instead.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-what-counts-pension">
+      <modal-heading>What counts as a pension or annuity?</modal-heading>
+      <modal-content>
+        <p>A pension is typically a retirement plan that makes a series of payments to you after you retire from work, based on factors such as years of service and past pay.</p>
+        <p>An annuity is a series of payments from a company that provides steady retirement income.</p>
+        <p>At the end of the year, a pension or annuity provider will send a Form 1099-R to report this income.</p>
+        <p><strong>Don’t include</strong> distributions or withdrawals from 401(k), 403(b), or 457(b) plans or Individual Retirement Arrangements (IRAs). You can add pre-tax income from these accounts as &#x2018;Income from pre-tax retirement accounts.’</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-what-counts-self-employment">
+      <modal-heading>What counts as self-employment income?</modal-heading>
+      <modal-content>
+        <p>Self-employment income is earned from a partnership, trade, or business that you own. It can also be earned by providing on-demand work, services, or goods as a freelancer, contractor, or gig worker.</p>
+        <p>To report this income at the end of the year, the payer (person, business, or organization that pays you) will send a Form 1099-NEC, Form 1099-K, or Form 1099-MISC.</p>
+        <p><strong>Don’t include</strong> income earned by working for an employer. If the payer sends a Form W-2 with federal taxes withheld, then add this income in the <strong>Jobs with an employer (W-2)</strong> section instead.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-how-to-estimate-tips">
+      <modal-heading>How can I estimate tips?</modal-heading>
+      <modal-content>
+        <p>To estimate the total amount of tips you'll get in <fg-show path="/taxYear"/>:</p>
+        <p><strong>First</strong>, check your paystub for <strong>year-to-date tips</strong>, which includes any tips you've received so far this year.</p>
+        <ul>
+          <li>Tips may be labeled as Other, or Tips (credit card) on a paystub</li>
+        </ul>
+        <p><strong>Then</strong>, add any amounts you think you'll get for the rest of <fg-show path="/taxYear"/>.</p>
+        <p>If it's hard to estimate, it's ok to enter only what you've received so far, or to leave tips blank.</p>
+        <p>Avoid entering a higher amount than you're sure of for tips, because this can make your estimate less accurate.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-self-employment-gross-total">
+      <modal-heading>What's total gross income and where do I find it?</modal-heading>
+      <modal-content>
+        <p><strong>What is it?</strong></p>
+        <p>Total gross income is the total amount you expect to earn this year, before any taxes, deductions, or expenses are taken out.</p>
+        <p>If you expect to earn any additional pay this year, like bonus pay, tips, or overtime, include it in the gross amount.</p>
+        <p><strong>Where to find it?</strong></p>
+        <p>You can estimate gross total income by tracking how much you earn from self-employment. You may need to estimate your self-employment income for the entire year.</p>
+        <p><strong>How to check last year's tax return?</strong></p>
+        <p>If you were self-employed last year and expect your earnings to stay the same, you can find your gross income on line 7 of Schedule C.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-self-employment-deductions">
+      <modal-heading>What does it mean to deduct expenses?</modal-heading>
+      <modal-content>
+        <p>When you're self employed, a gig worker, or own and operate a business, you may be able to deduct certain business expenses from your income so you'll pay less tax.</p>
+        <p>Business expenses could include:</p>
+        <ul>
+          <li>Home office expenses</li>
+          <li>Car and truck expenses</li>
+          <li>Rent</li>
+          <li>Employee pay and pensions</li>
+          <li>Insurance</li>
+          <li>Interest on debts</li>
+          <li>Legal and professional fees</li>
+          <li>Taxes</li>
+          <li>Travel and meals</li>
+        </ul>
+        <p>These deductions are different from the personal deductions you'll make if you choose to itemize your deductions. You can deduct your business expenses here and still choose the standard deduction later.</p>
+        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Learn more about business expenses</a></p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-what-counts-unemployment">
+      <modal-heading>What counts as unemployment income?</modal-heading>
+      <modal-content>
+        <p>Unemployment income is a joint state-federal program that provides cash benefits to eligible workers.</p>
+        <p>To receive unemployment, you must become unemployed through no fault of your own and meet other requirements.</p>
+        <p>At the end of the year, you should receive Form 1099-G showing the amount paid to you during the year.</p>
+        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Learn more about unemployment income.</a></p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-fed-unemployment-tax-withheld-en">
+      <modal-heading>How do I know if I have taxes withheld?</modal-heading>
+      <modal-content>
+        <p>You can choose to have 10% federal income tax withheld from your unemployment compensation by submitting Form W-4V to the unemployment office.</p>
+        <p><strong>How to check if you have taxes withheld:</strong></p>
+        <ul>
+          <li>Check your unemployment statement for federal tax withholding</li>
+          <li>Call your unemployment office and ask about your withholding</li>
+        </ul>
+        <p>If you didn't request to withhold taxes, select no.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-what-counts-pre-tax-retirement">
+      <modal-heading>What counts as a distribution from pre-tax retirement accounts?</modal-heading>
+      <modal-content>
+        <p>Any withdrawal of pre-tax funds from a 401(k), 403(b), 457(b), or traditional IRA counts as a distribution. This includes distributions at retirement, early withdrawals, required minimum distributions (RMDs), and pretax-to-Roth conversions.</p>
+        <p>At the end of the year, your financial institution will send a Form 1099-R to report this income.</p>
+        <p><strong>Don’t include:</strong></p>
+        <ul>
+          <li>Distributions from Roth (post-tax) accounts. These distributions have already been taxed.</li>
+          <li>Other forms of retirement income, like pensions, annuities, Social Security, or other investment income. You’ll enter them in other sections.</li>
+        </ul>
       </modal-content>
     </modal-dialog>
   </page>

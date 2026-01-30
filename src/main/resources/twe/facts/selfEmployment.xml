@@ -2,6 +2,79 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/selfEmploymentSources">
+      <Description>The taxpayer's self-employment income sources</Description>
+      <Writable>
+        <Collection/>
+      </Writable>
+    </Fact>
+    <Fact path="/selfEmploymentSources/*/filerAssignment">
+      <Description>Whether this self-employment income is attributed to the primary filer or spouse if MFJ</Description>
+      <Override>
+        <Condition>
+          <Not>
+            <Dependency path="/isFilingStatusMFJ"/>
+          </Not>
+        </Condition>
+        <Default>
+          <Enum optionsPath="/filerAssignmentOption">self</Enum>
+        </Default>
+      </Override>
+      <Writable>
+        <Enum optionsPath="/filerAssignmentOption"/>
+      </Writable>
+    </Fact>
+    <Fact path="/selfEmploymentSources/*/notSpouses">
+      <Description>The income doesn't belong to the spouse (i.e. is for primary filer or unset)</Description>
+      <Derived>
+        <Any>
+          <Not>
+            <IsComplete>
+              <Dependency path="../filerAssignment"/>
+            </IsComplete>
+          </Not>
+          <NotEqual>
+            <Left>
+              <Dependency path="../filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignmentOption">spouse</Enum>
+            </Right>
+          </NotEqual>
+        </Any>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentSources/*/grossIncome">
+      <Description>Gross self-employment income for this source</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/selfEmploymentSources/*/workRelatedExpenses">
+      <Description>Work-related business expenses for this self-employment source</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/selfEmploymentSources/*/netIncome">
+      <Description>Net profit or loss for this self-employment source (gross income - expenses)</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="../grossIncome"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="../workRelatedExpenses"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
     <Fact path="/netSelfEmploymentIncomeTotal">
       <Derived>
         <Switch>
@@ -30,14 +103,9 @@
     <Fact path="/netSelfEmploymentIncomeSelf">
       <Description>Net profit loss, reported as Line 31 on Schedule C and line 2 of Schedule SE for self.</Description>
       <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/grossSelfEmploymentIncomeSelf"/>
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="/selfEmploymentIncomeExpensesSelf"/>
-          </Subtrahends>
-        </Subtract>
+        <CollectionSum>
+          <Dependency path="/selfEmploymentSourcesAssignedToSelf/*/netIncome"/>
+        </CollectionSum>
       </Derived>
     </Fact>
     <Fact path="/netSelfEmploymentIncomeSpouse">
@@ -46,37 +114,12 @@
         <Switch>
           <Case>
             <When>
-              <All>
-                <Dependency path="/isFilingStatusMFJ"/>
-                <IsComplete>
-                  <Dependency path="/grossSelfEmploymentIncomeSpouse"/>
-                </IsComplete>
-              </All>
+              <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Subtract>
-                <Minuend>
-                  <Dependency path="/grossSelfEmploymentIncomeSpouse"/>
-                </Minuend>
-                <Subtrahends>
-                  <Dependency path="/selfEmploymentIncomeExpensesSpouse"/>
-                </Subtrahends>
-              </Subtract>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <All>
-                <Dependency path="/isFilingStatusMFJ"/>
-                <Not>
-                  <IsComplete>
-                    <Dependency path="/grossSelfEmploymentIncomeSpouse"/>
-                  </IsComplete>
-                </Not>
-              </All>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
+              <CollectionSum>
+                <Dependency path="/selfEmploymentSourcesAssignedToSpouse/*/netIncome"/>
+              </CollectionSum>
             </Then>
           </Case>
           <Case>
@@ -722,6 +765,34 @@
             </Subtrahends>
           </Subtract>
         </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentSourcesAssignedToSelf">
+      <Derived>
+        <Filter path="/selfEmploymentSources">
+          <Equal>
+            <Left>
+              <Dependency path="filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignmentOption">self</Enum>
+            </Right>
+          </Equal>
+        </Filter>
+      </Derived>
+    </Fact>
+    <Fact path="/selfEmploymentSourcesAssignedToSpouse">
+      <Derived>
+        <Filter path="/selfEmploymentSources">
+          <Equal>
+            <Left>
+              <Dependency path="filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignmentOption">spouse</Enum>
+            </Right>
+          </Equal>
+        </Filter>
       </Derived>
     </Fact>
   </Facts>
