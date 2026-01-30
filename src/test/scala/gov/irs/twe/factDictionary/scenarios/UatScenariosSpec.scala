@@ -25,7 +25,7 @@ import scala.math.Fractional.Implicits.infixFractionalOps
  */
 class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   val CSV_ROOT: Path = os.pwd / "src" / "test" / "resources" / "csv"
-  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-01-27.csv"
+  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-01-30.csv"
 
   case class FixtureParam(scenario: scenarios.Scenario)
 
@@ -210,7 +210,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column Q
-  test("Q:Single, high wages +Cap Gains + Investment") { td =>
+  test("Single, high wages +Cap Gains + Investment+OverallLimitation") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 682000)
     scenario.assertEquals("/agi", 667000)

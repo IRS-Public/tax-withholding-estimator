@@ -283,7 +283,10 @@ def convertDate(raw: String): Day = {
   val split = raw.split("/")
   val year = split(2).toInt
   val month = split(0).toInt
-  val day = split(1).toInt
+  var day = split(1).toInt
+  if (day < 1) {
+    day = 1
+  }
   Day(f"$year-$month%02d-$day%02d")
 }
 
