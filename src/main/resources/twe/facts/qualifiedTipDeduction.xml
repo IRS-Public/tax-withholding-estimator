@@ -19,48 +19,17 @@
         <Dollar>25000</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/doTipsExceedSelfEmploymentIncome">
-      <!-- TODO: confirm that this definition matches implementation, specifically 'exceeds sum of
-      deductions' -->
-      <Name>Do tips exceed self employment income?</Name>
-      <Description>OB3 Section 70201 temporarily creating &#xA7;224(c): Deduction may not exceed
-        individual&#x2019;s net income (without regard to this deduction) from the trade or business
-        in
-        which the tips were earned.</Description>
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <GreaterThan>
-                <Left>
-                  <Dependency path="/qualifiedTipIncome"/>
-                </Left>
-                <Right>
-                  <Dependency path="/netSelfEmploymentIncomeTotal"/>
-                </Right>
-              </GreaterThan>
-            </When>
-            <Then>
-              <True/>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <False/>
-            </Then>
-          </Case>
-        </Switch>
-      </Derived>
-    </Fact>
     <Fact path="/isEligibleForQualifiedTipDeduction">
       <Name>Taxpayer eligible for qualified tip deduction</Name>
-      <Description>Is the taxpayer eligible for the qualified tip deduction?</Description>
+      <Description>
+        Per Notice 2025-69, Taxpayers are ineligible for the qualified tip deduction if they are Married Filing Single.
+        https://www.irs.gov/pub/irs-drop/n-25-69.pdf
+      </Description>
       <Derived>
         <All>
-          <Dependency path="/doTipsExceedSelfEmploymentIncome"/>
+          <Not>
+            <Dependency path="/isFilingStatusMFS"/>
+          </Not>
           <GreaterThan>
             <Left>
               <Dependency path="/qualifiedTipIncome"/>

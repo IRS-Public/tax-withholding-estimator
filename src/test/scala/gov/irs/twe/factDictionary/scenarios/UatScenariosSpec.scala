@@ -592,6 +592,21 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
+  // Column BC
+  test("MFS, 1 job, tips and OT") { td =>
+    val scenario = td.scenario
+    scenario.graph.set("/isFlsaNonExempt", true)
+    scenario.assertEquals("/agi", 156000)
+    scenario.assertEquals("/overtimeCompensationDeduction", 0)
+
+    scenario.assertEquals("/taxableIncome", 139900)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 24253)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 820)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+  }
+
   // Column BE
   test("Single, phasedout deduction") { td =>
     val scenario = td.scenario
