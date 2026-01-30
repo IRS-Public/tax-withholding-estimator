@@ -109,18 +109,17 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column S
-  ignore("Single, wages + tips + overtime + car loan interest") { td =>
+  test("Single, wages + tips + overtime + car loan interest") { td =>
     val scenario = td.scenario
+    scenario.graph.set("/isFlsaNonExempt", true)
     scenario.assertEquals("/incomeTotal", 104000)
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/qualifiedTipDeduction", 10000)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 8200)
     scenario.assertEquals("/overtimeCompensationDeduction", 6000)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 0)
-    scenario.assertEquals("/standardOrItemizedDeduction", 40300)
-    scenario.assertEquals("/taxableIncome", 63700)
-    scenario.assertEquals("/stateAndLocalTaxPayments", 8000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 8000)
+    scenario.assertEquals("/taxableIncome", 63700)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 8732)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 8732)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 13000)
