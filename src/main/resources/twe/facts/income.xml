@@ -374,29 +374,29 @@ and car loan interest deduction
     <Fact path="/earnedIncomeSelf">
       <Description>
         Earned Income includes:
-          Wages, salary, or tips where federal income taxes are withheld on Form W-2, box 1
-          Income from a job where your employer didn&#x2019;t withhold tax (such as gig economy work) including:
-            Driving a car for booked rides or deliveries
-            Running errands or doing tasks
-            Selling goods online
-            Providing creative or professional services
-            Providing other temporary, on-demand or freelance work
-          Money made from self-employment, including if you:
-            Own or operate a business or farm
-            Are a minister or member of a religious order
-            Are a statutory employee and have income
-          Benefits from a union strike
-          Certain disability benefits you got before you were the minimum retirement age
-          Nontaxable Combat Pay (Form W-2, box 12 with code Q)
+        Wages, salary, or tips where federal income taxes are withheld on Form W-2, box 1
+        Income from a job where your employer didn&#x2019;t withhold tax (such as gig economy work) including:
+        Driving a car for booked rides or deliveries
+        Running errands or doing tasks
+        Selling goods online
+        Providing creative or professional services
+        Providing other temporary, on-demand or freelance work
+        Money made from self-employment, including if you:
+        Own or operate a business or farm
+        Are a minister or member of a religious order
+        Are a statutory employee and have income
+        Benefits from a union strike
+        Certain disability benefits you got before you were the minimum retirement age
+        Nontaxable Combat Pay (Form W-2, box 12 with code Q)
 
         Earned income does not include:
-          Pay you got for work when you were an inmate in a penal institution
-          Interest and dividends
-          Pensions or annuities
-          Social Security
-          Unemployment benefits
-          Alimony
-          Child support
+        Pay you got for work when you were an inmate in a penal institution
+        Interest and dividends
+        Pensions or annuities
+        Social Security
+        Unemployment benefits
+        Alimony
+        Child support
 
 
       </Description>
@@ -445,7 +445,6 @@ and car loan interest deduction
         calculate taxable portion onf SSA benefits</Description>
       <Derived>
         <Add>
-          <Dependency path="/ordinaryDividendsIncome"/>
           <Dependency path="/netSelfEmploymentIncomeTotal"/>
           <Dependency path="/unemploymentIncome"/>
           <Dependency path="/taxableInterestIncome"/>
@@ -458,7 +457,8 @@ and car loan interest deduction
           <Dependency path="/royaltyIncome"/>
           <Dependency path="/nonSpecificOtherIncome"/>
           <Dependency path="/trumpAccountDistribution"/>
-          <Dependency path="/netCapitalGains"/>
+          <Dependency path="/ordinaryDividendsIncome"/>
+          <Dependency path="/qualifiedDividendsIncome"/>
         </Add>
       </Derived>
     </Fact>

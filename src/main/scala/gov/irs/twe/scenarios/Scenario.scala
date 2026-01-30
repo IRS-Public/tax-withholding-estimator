@@ -428,6 +428,8 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   // Other Income
   "InterestOrdinaryDividends" -> "/ordinaryDividendsIncome",
   "QualifiedDividends" -> "/qualifiedDividendsIncome",
+  "ShortTermGains(or losses)" -> "/shortTermCapitalGainsIncome",
+  "OtherLongTermGains(or losses)" -> "/longTermCapitalGainsIncome",
   // Adjustments, Deductions, Credits
   "HSAdeduction" -> "/hsaContributionAmount",
   "studentLoanInterest" -> "/studentLoanInterestAmount",
