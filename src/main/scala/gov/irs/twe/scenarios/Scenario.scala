@@ -1,3 +1,30 @@
+/* Scenario.scala - Translate the UAT Spreadsheet to Fact Graphs
+ *
+ * The User Acceptance Testing (UAT) Spreadsheet is a set of tests maintained internally at IRS.
+ * They model a wide breadth of possible taxpayers, and the withholdings that we should
+ * recommend them given their current situation.
+ *
+ * The Scenario class represents one column of that spreadsheet. The rows in that column are used to
+ * build a corresponding Fact Graph that maps deterministically to the inputs described by each row.
+ * Adding new tests (or updating old ones) is as simple as uploading a new version of the
+ * spreadsheet, provided that the names of the scenarios (row B) remain the same. New spreadsheets
+ * can (and must) be uploaded WITHOUT MODIFICATION; just save the XLSX as CSV and commit it.
+ *
+ * These spreadsheets were originally built for an older version of TWE. As such, the inputs don't
+ * match perfectly with the questions the current TWE asks, nor does "one question per row" match
+ * the model of a web applicaiton. What's important isn't that these two models match, but that the
+ * former can be deterministically mapped to the latter.
+ *
+ * For instance, when the taxpayer has no children, the spreadsheet shows Child1Age as 0. We know
+ * that this means there's no child, and we only add children to the Fact Graph if there's a
+ * Child1Age greater than zero. That doesn't mean that children under the age of one don't count, it
+ * means that we understand the spreadsheet is telling us not to test children for that scenario.
+ *
+ * The result of building out the tests this way is that Scenario.scala represents a translation of
+ * the tax model represented by these testing spreadsheets to the tax model represented by our Fact
+ * Dictionary. Over time, we can work to make the delta smaller, but today, it already increases the
+ * robustness of BOTH models by checking the assumptions of each one against the other.
+ */
 package gov.irs.twe.scenarios
 
 import com.github.tototoshi.csv.*

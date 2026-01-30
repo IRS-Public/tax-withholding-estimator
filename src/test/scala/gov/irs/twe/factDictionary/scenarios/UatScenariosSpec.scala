@@ -1,3 +1,25 @@
+/* UAT Testing Scenarios
+ *
+ * Each test pulls a scenario column from the UAT Spreadsheet, converts it into a Fact Graph, then
+ * verifies that the Fact Graph calculation matches both the spreadsheet and an expected value.
+ *
+ * The column chosen automatically corresponds to the test name, which matches the value on row B of
+ * the spreadsheet. For instance, the scenario "Single filer, new job" is the fifth column of the
+ * spreadsheet (Column E in Excel/LibreOffice). The test harness finds that column based on the test
+ * name, and then loads passes it to the test for assertions.
+ *
+ * We have two assertions: `assertEquals` and `assertOffset`. Asserting that the fact graph
+ * calculation differs from the spreadsheet by some amount makes no normative statements about
+ * whether the fact graph or the spreadsheet is "correct" in its estimation value; it merely reifies
+ * that the disparity exists.
+ *
+ * These assertions also require the tester to hard-code the expected value. This ensures that the
+ * test is actually testing the scenario that they think it is. It also aids with merge conflicts:
+ * without it, big subsections of the test bodies look identical to git and it gets confused.
+ *
+ * If you want to add a new test, you might need to edit `Scenario.scala`, which owns the mappings
+ * between rows from the spreadsheet and fact paths.
+ */
 package gov.irs.twe.factDictionary.scenarios
 import gov.irs.factgraph.types.Dollar
 import gov.irs.twe.scenarios
@@ -6,23 +28,6 @@ import org.scalatest.funsuite
 import os.Path
 import scala.math.Fractional.Implicits.infixFractionalOps
 
-/* UAT Testing Scenarios
- *
- * Each test pulls a scenario column from the UAT Spreadsheet, converts it into a Fact Graph, then
- * verifies that the Fact Graph calculation matches both the spreadsheet and an expected value.
- *
- * The column chosen automatically corresponds to the test name, which matches the value on Row 2 of
- * the spreadsheet ("Key scenario feature"). For instance, the scenario "Single filer, new job" is
- * the fifth column of the spreadsheet (Column E in Excel/LibreOffice). The test harness finds that
- * column based on the test name, and then loads passes it to the test for assertions.
- *
- * We have two types of assertions: `assertEquals` and `assertOffset`. Asserting that the fact graph calculation differs
- * from the spreadsheet by some amount makes no normative statements about whether the fact graph or the
- * spreadsheet is "correct" in its estimation value; it merely reifies that the disparity exists.
- *
- * If you want to add a new test, you might need to edit `Scenario.scala`, which owns the mappings between rows from
- * the spreadsheet and fact shapes.
- */
 class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   val CSV_ROOT: Path = os.pwd / "src" / "test" / "resources" / "csv"
   val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-01-30.csv"
