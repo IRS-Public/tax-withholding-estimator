@@ -22,7 +22,8 @@
     <Fact path="/isEligibleForQualifiedTipDeduction">
       <Name>Taxpayer eligible for qualified tip deduction</Name>
       <Description>
-        Per Notice 2025-69, Taxpayers are ineligible for the qualified tip deduction if they are Married Filing Single.
+        Per Notice 2025-69, Taxpayers are ineligible for the qualified tip deduction if they are
+        Married Filing Separately.
         https://www.irs.gov/pub/irs-drop/n-25-69.pdf
       </Description>
       <Derived>

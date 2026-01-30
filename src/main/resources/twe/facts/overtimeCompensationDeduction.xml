@@ -76,8 +76,8 @@
     <Fact path="/isEligibleForOvertimeCompensationDeduction">
       <Name>Taxpayer eligible for overtime compensation deduction</Name>
       <Description>
-        Per Notice 2025-69, Taxpayers are ineligible for the qualified tip deduction if they are working a FLSA-exempt
-        job or are Married Filing Single.
+        Per Notice 2025-69, Taxpayers are ineligible for the qualified tip deduction if they are
+        working a FLSA-exempt job or are Married Filing Separately.
         https://www.irs.gov/pub/irs-drop/n-25-69.pdf
       </Description>
       <Derived>
