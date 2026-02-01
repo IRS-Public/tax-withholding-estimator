@@ -1202,11 +1202,11 @@
               <Dependency path="/taxableInterestIncome"/>
               <Dependency path="/ordinaryDividendsIncome"/>
               <GreaterOf>
-                <Dependency path="/shortTermCapitalGainsIncome"/>
+                <Dependency path="/netShortTermGainOrLoss"/>
                 <Dollar>0</Dollar>
               </GreaterOf>
               <GreaterOf>
-                <Dependency path="/longTermCapitalGainsIncome"/>
+                <Dependency path="/netLongTermGainOrLoss"/>
                 <Dollar>0</Dollar>
               </GreaterOf>
             </Add>

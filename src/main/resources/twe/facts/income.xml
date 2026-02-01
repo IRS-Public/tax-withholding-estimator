@@ -78,6 +78,24 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/shortTermCapitalLoss">
+      <Description>Short term capital losses</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/longTermCapitalLoss">
+      <Description>Long term capital losses</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
     <Fact path="/qualifiedDividendsIncome">
       <Description>Form 1040 Line 3a. Amount of qualified dividends estimated by tax payer.</Description>
       <Writable>
@@ -87,12 +105,36 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/grossCapitalGainOrLoss">
+    <Fact path="/netShortTermGainOrLoss">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/shortTermCapitalGainsIncome"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/shortTermCapitalLoss"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/netLongTermGainOrLoss">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/longTermCapitalGainsIncome"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/longTermCapitalLoss"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/netCapitalGainOrLoss">
       <Description> Form 1040 Line 7</Description>
       <Derived>
         <Add>
-          <Dependency path="/shortTermCapitalGainsIncome"/>
-          <Dependency path="/longTermCapitalGainsIncome"/>
+          <Dependency path="/netShortTermGainOrLoss"/>
+          <Dependency path="/netLongTermGainOrLoss"/>
         </Add>
       </Derived>
     </Fact>
@@ -107,7 +149,7 @@
                     <Dollar>0</Dollar>
                   </Left>
                   <Right>
-                    <Dependency path="/longTermCapitalGainsIncome"/>
+                    <Dependency path="/netLongTermGainOrLoss"/>
                   </Right>
                 </GreaterThanOrEqual>
                 <GreaterThanOrEqual>
@@ -115,7 +157,7 @@
                     <Dollar>0</Dollar>
                   </Left>
                   <Right>
-                    <Dependency path="/grossCapitalGainOrLoss"/>
+                    <Dependency path="/netCapitalGainOrLoss"/>
                   </Right>
                 </GreaterThanOrEqual>
               </Any>
@@ -130,8 +172,8 @@
             </When>
             <Then>
               <LesserOf>
-                <Dependency path="/longTermCapitalGainsIncome"/>
-                <Dependency path="/grossCapitalGainOrLoss"/>
+                <Dependency path="/netLongTermGainOrLoss"/>
+                <Dependency path="/netCapitalGainOrLoss"/>
               </LesserOf>
             </Then>
           </Case>
@@ -165,8 +207,17 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/sCorpPassiveIncome">
+      <Description>Passive income from S-corporations or partnerships</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
     <Fact path="/sCorpNonPassiveIncome">
-      <Description>S-corp non-passive income (Schedule K1)</Description>
+      <Description>Non-passive income from S-corporations or partnerships</Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -185,6 +236,15 @@
     </Fact>
     <Fact path="/nonSpecificOtherIncome">
       <Description>Non-specific other income</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/otherIncomeWithholding">
+      <Description>Federal taxes withheld from other income so far in the tax year</Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -448,9 +508,10 @@ and car loan interest deduction
           <Dependency path="/netSelfEmploymentIncomeTotal"/>
           <Dependency path="/unemploymentIncome"/>
           <Dependency path="/taxableInterestIncome"/>
-          <Dependency path="/grossCapitalGainOrLoss"/>
+          <Dependency path="/netCapitalGainOrLoss"/>
           <Dependency path="/taxableScholarshipIncome"/>
           <Dependency path="/alimonyReceivedIncome"/>
+          <Dependency path="/sCorpPassiveIncome"/>
           <Dependency path="/sCorpNonPassiveIncome"/>
           <Dependency path="/netScheduleEIncome"/>
           <Dependency path="/rentalIncome"/>

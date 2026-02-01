@@ -1,0 +1,13 @@
+<details class="fg-detail"
+    th:classappend="${(useChevron ? 'fg-detail--chevron ' : '') + (condition != null ? ' hidden' : '')}"
+    th:attr="condition=${condition}, operator=${operator}, open=${open} ? 'open' : null">
+  <summary>
+    <h2 th:if="${headingTag == 'h2'}" th:utext="${summary}"></h2>
+    <h3 th:if="${headingTag == 'h3'}" th:utext="${summary}"></h3>
+    <h4 th:if="${headingTag == 'h4'}" th:utext="${summary}"></h4>
+    <h5 th:if="${headingTag == 'h5'}" th:utext="${summary}"></h5>
+    <h6 th:if="${headingTag == 'h6'}" th:utext="${summary}"></h6>
+  </summary>
+  <div class="usa-prose" th:utext="${childrenHtml}">
+  </div>
+</details>

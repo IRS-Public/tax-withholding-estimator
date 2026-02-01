@@ -35,10 +35,7 @@
     </Fact>
     <Fact path="/form461Line3">
       <Derived>
-        <Add>
-          <Dependency path="/shortTermCapitalGainsIncome"/>
-          <Dependency path="/longTermCapitalGainsIncome"/>
-        </Add>
+        <Dependency path="/netCapitalGainOrLoss"/>
       </Derived>
     </Fact>
     <Fact path="/form461Line4">
@@ -49,6 +46,7 @@
     <Fact path="/form461Line5">
       <Derived>
         <Add>
+          <Dependency path="/sCorpPassiveIncome"/>
           <Dependency path="/sCorpNonPassiveIncome"/>
           <Dependency path="/rentalIncome"/>
           <Dependency path="/royaltyIncome"/>

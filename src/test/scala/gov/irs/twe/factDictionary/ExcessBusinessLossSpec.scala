@@ -82,6 +82,7 @@ class ExcessBusinessLossSpec extends AnyFunSuite with TableDrivenPropertyChecks 
           // Set Line 9 dependencies not in the table to zero for consistent testing
           Path("/shortTermCapitalGainsIncome") -> Dollar("0"),
           Path("/longTermCapitalGainsIncome") -> Dollar("0"),
+          Path("/sCorpPassiveIncome") -> Dollar("0"),
           Path("/sCorpNonPassiveIncome") -> Dollar("0"),
           Path("/rentalIncome") -> Dollar("0"),
           Path("/royaltyIncome") -> Dollar("0"),

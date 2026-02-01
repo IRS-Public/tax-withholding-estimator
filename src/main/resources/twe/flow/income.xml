@@ -221,8 +221,14 @@
           <p>For 2025 through 2028, there are new deductions for tips and overtime.</p>
           <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> meet the eligibility requirements, you may be able to deduct (subtract) tips and overtime pay from your income, so you won’t have to pay tax on it.</p>
           <p>If this doesn’t apply to <span condition="/isFilingStatusMFJ" operator="isTrue">your spouse</span><span condition="/isFilingStatusMFJ" operator="isFalse">you</span>, it’s okay to leave this blank.</p>
-          <!-- TODO: Add Estimated tips accordion here -->
-          <!-- TODO: Add Estimated overtime accordion here -->
+          <fg-detail icon="chevron">
+            <summary>Estimated tips</summary>
+            <!-- TODO: add content -->
+          </fg-detail>
+          <fg-detail icon="chevron">
+            <summary>Estimated overtime</summary>
+            <!-- TODO: add content -->
+          </fg-detail>
         </div>
       </fg-collection>
 
@@ -303,39 +309,120 @@
         <input type="dollar"/>
       </fg-set>
 
+      <h3>Investment income</h3>
+      <p>Even if you expect to earn a small amount of investment income, adding this amount will help get the most accurate withholding estimate.</p>
+      <fg-detail icon="chevron">
+        <summary>Interest income</summary>
+        <p><modal-link for="modal-estimate-interest-income-en">What's interest income and how can I estimate it?</modal-link></p>
+        <fg-set path="/taxableInterestIncome">
+          <question>Interest you<span condition="/isFilingStatusMFJ" operator="isTrue"> and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
+          <input type="dollar"/>
+        </fg-set>
+      </fg-detail>
+      <fg-detail icon="chevron">
+        <summary>Ordinary or qualified dividends</summary>
+        <p>Enter the total amounts you expect to earn in <fg-show path="/taxYear"/>.</p>
+        <p><modal-link for="modal-what-are-dividends-en">What are dividends and how can I estimate them?</modal-link></p>
+        <fg-set path="/ordinaryDividendsIncome">
+          <question>Ordinary dividend income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/qualifiedDividendsIncome">
+          <question>Qualified dividend income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
+          <input type="dollar"/>
+        </fg-set>
+      </fg-detail>
+      <fg-detail icon="chevron">
+        <summary>Short-term or long-term gains and losses</summary>
+        <p>Enter the total amounts you expect to earn and lose in <fg-show path="/taxYear"/>.</p>
+        <p><modal-link for="modal-what-are-short-long-term-gains-losses-en">What are short- and long-term gains and losses, and how can I estimate them?</modal-link></p>
+        <fg-set path="/shortTermCapitalGainsIncome">
+          <question>Short-term gains you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/shortTermCapitalLoss">
+          <question>Short-term losses you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect in <fg-show path="/taxYear"/></question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/longTermCapitalGainsIncome">
+          <question>Long-term gains you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/longTermCapitalLoss">
+          <question>Long-term losses you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect in <fg-show path="/taxYear"/></question>
+          <input type="dollar"/>
+        </fg-set>
+      </fg-detail>
+      <fg-detail icon="chevron">
+        <summary>Rental income</summary>
+        <p><modal-link for="modal-rental-expenses-net-income-en">What are rental expenses and how can I estimate net rental income?</modal-link></p>
+        <fg-set path="/rentalIncome">
+          <question>Net amount of rental income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
+          <hint>Net is the total minus any expenses.</hint>
+          <input type="dollar"/>
+        </fg-set>
+      </fg-detail>
+      <fg-detail icon="chevron">
+        <summary>Royalties</summary>
+        <p><modal-link for="modal-estimate-royalty-income-en">How can I estimate royalty income?</modal-link></p>
+        <fg-set path="/royaltyIncome">
+          <question>Royalty income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
+          <input type="dollar"/>
+        </fg-set>
+      </fg-detail>
+      <fg-detail icon="chevron">
+        <summary>Passive or non-passive income from S-corporations or partnerships</summary>
+        <p>Enter the total amounts you expect to earn in <fg-show path="/taxYear"/>.</p>
+        <p><modal-link for="modal-estimate-s-corp-partnership-income-en">How can I estimate income from S-corporations or partnerships?</modal-link></p>
+        <fg-set path="/sCorpPassiveIncome">
+          <question>Passive income from S-corporations or partnerships you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
+          <input type="dollar"/>
+        </fg-set>
+        <fg-set path="/sCorpNonPassiveIncome">
+          <question>Non-passive income from S-corporations or partnerships you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
+          <input type="dollar"/>
+        </fg-set>
+      </fg-detail>
+
+      <h3>Other taxable income not already included above</h3>
+      <p>Estimate any other taxable income that you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> think you'll receive in <fg-show path="/taxYear"/>, including:</p>
+      <ul>
+        <li>Scholarships</li>
+        <li>Winnings from gambling</li>
+        <li>Alimony from pre-2019 divorce decrees</li>
+        <li>Court awards and damages (unless they're for physical injury or sickness)</li>
+        <li>Fees for services you've provided</li>
+      </ul>
+      <p><a target="_blank" href="https://www.irs.gov/filing/taxable-income" class="usa-link usa-link--external">Learn more about other taxable income.<span class="usa-sr-only"> (opens in a new tab)</span></a></p>
+      <fg-set path="/nonSpecificOtherIncome">
+        <question>Total amount of other income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/></question>
+        <hint>Enter one total amount for all other income.</hint>
+        <input type="dollar"/>
+      </fg-set>
+      <fg-set path="/otherIncomeWithholding">
+        <question>Federal taxes withheld from your <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse's</span> other income so far in <fg-show path="/taxYear"/></question>
+        <hint>If you don't know, leave this blank.</hint>
+        <input type="dollar"/>
+      </fg-set>
+
+      <h3>Estimated taxes paid</h3>
+      <p class="text-base-dark">In addition to taxes already withheld from your income, estimated payments are made directly to the IRS, usually through an IRS Online Account or with Form 1040-ES.</p>
+      <p><a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link usa-link--external">Learn more about estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a></p>
+      <fg-set path="/totalEstimatedTaxesPaid">
+        <question>Estimated tax payments you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> made so far in <fg-show path="/taxYear"/></question>
+        <hint>Don't include taxes withheld from paychecks and other income.</hint>
+        <input type="dollar"/>
+      </fg-set>
+
+      <!-- Keeping this here to remind folks that these facts and questions already exists and need to be moved elsewhere -->
       <h3>Trump Account Distribution</h3>
       <fg-set path="/trumpAccountDistribution">
         <question>Distributions from Trump Account</question>
         <input type="dollar"/>
       </fg-set>
-      <h3>Ordinary Dividends Income</h3>
-      <fg-set path="/ordinaryDividendsIncome">
-        <question>How much have you made in ordinary dividends income so far this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Qualified Dividends Income</h3>
-      <fg-set path="/qualifiedDividendsIncome">
-        <question>How much qualified dividends income do you estimate for this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Long-Term Capital Gains Income</h3>
-      <fg-set path="/longTermCapitalGainsIncome">
-        <question>How much long-term capital gains income do you estimate for this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Interest Income (excluding non-taxable interest)</h3>
-      <fg-set path="/taxableInterestIncome">
-        <question>How much other income have you made this year?</question>
-        <input type="dollar"/>
-      </fg-set>
       <h3>Non-taxable Interest Income</h3>
       <fg-set path="/taxExemptInterestIncome">
         <question>How much non-taxable interest income have you received this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Short term capital gains</h3>
-      <fg-set path="/shortTermCapitalGainsIncome">
-        <question>How much short term capital gains have you received this year?</question>
         <input type="dollar"/>
       </fg-set>
       <h3>Taxable Scholarship Income</h3>
@@ -348,13 +435,6 @@
         <question>How much alimony (pre-2019 divorce) have you received this year?</question>
         <input type="dollar"/>
       </fg-set>
-      <h3>S-corp non-passive Income (Schedule K1)</h3>
-      <fg-set path="/sCorpNonPassiveIncome">
-        <question>
-          How much S-corp non-passive income (Schedule K1) have you made this year?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
       <h3>Net Schedule E Income</h3>
       <fg-set path="/netScheduleEIncome">
         <question>
@@ -362,30 +442,7 @@
         </question>
         <input type="dollar"/>
       </fg-set>
-      <h3>Rental and Royalty Income </h3>
-      <fg-set path="/rentalIncome">
-        <question>
-          How much rental income have you made this year?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <fg-set path="/royaltyIncome">
-        <question>
-          How much royalty income have you made this year?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Non-specific Other Income</h3>
-      <fg-set path="/nonSpecificOtherIncome">
-        <question>How much non-specific other income have you made this year?</question>
-        <input type="dollar"/>
-      </fg-set>
       <h3>SSA income from Forms SSA-1099 and RRB-1099</h3>
-      <h4>Estimated taxes paid</h4>
-      <fg-set path="/totalEstimatedTaxesPaid">
-        <question>If you [and your spouse] made any estimated tax payments this year, you may deduct those. This does not include taxes withheld from your paycheck .</question>
-        <input type="dollar"/>
-      </fg-set>
     </section>
 
     <modal-dialog id="modal-what-counts-social-security">
@@ -526,6 +583,89 @@
         <ul>
           <li>Distributions from Roth (post-tax) accounts. These distributions have already been taxed.</li>
           <li>Other forms of retirement income, like pensions, annuities, Social Security, or other investment income. You’ll enter them in other sections.</li>
+        </ul>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-estimate-interest-income-en">
+      <modal-heading>What's interest income and how can I estimate it?</modal-heading>
+      <modal-content>
+        <p>Common types of interest income include interest earned from bank accounts or from lending money.</p>
+        <p>To estimate your interest income, look at your monthly bank statements to see how much you've been earning in interest each month. Multiply the monthly average by 12 to get an estimate for the year.</p>
+        <p>When estimating interest income, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
+        <p><strong>How to check last year's tax return</strong></p>
+        <p>If you earned interest income last year and think you'll earn a similar amount this year, check for an amount in:</p>
+        <ul>
+          <li>Line 2b on Form 1040 of your <fg-show path="/lastTaxYear"/> federal tax return</li>
+        </ul>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-what-are-dividends-en">
+      <modal-heading>What are dividends and how can I estimate them?</modal-heading>
+      <modal-content>
+        <p>Ordinary or qualified dividends are payments made by corporations to shareholders based on a company's profits. The main difference between the two is that qualified dividends are taxed at a lower rate.</p>
+        <p><strong>How to estimate dividends</strong></p>
+        <p>Dividends are often paid out quarterly. To estimate your dividends, look at your financial statements to see how much you've earned in dividends so far this year. Multiply your average quarterly dividend by four (or a different number if not quarterly) to get an estimate for the year.</p>
+        <p>When estimating dividends, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
+        <p><strong>How to check last year's tax return</strong></p>
+        <p>If you earned these dividends last year and think you'll earn a similar amount this year, check:</p>
+        <ul>
+          <li>Line 3b on Form 1040 of your <fg-show path="/lastTaxYear"/> federal tax return for ordinary dividends</li>
+          <li>Line 3a on Form 1040 of your <fg-show path="/lastTaxYear"/> federal tax return for qualified dividends</li>
+        </ul>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-what-are-short-long-term-gains-losses-en">
+      <modal-heading>What are short- and long-term gains and losses, and how can I estimate them?</modal-heading>
+      <modal-content>
+        <p>The length of time you hold an asset determines what type of gain or loss it is:</p>
+        <ul>
+          <li><strong>Short-term gain or loss</strong>, if you held the asset for less than a year.</li>
+          <li><strong>Long-term gain or loss</strong>, if you held the asset for more than one year.</li>
+        </ul>
+        <p><strong>How to check for gains and losses</strong></p>
+        <p>If you have an investment or brokerage account, log in or review your latest statement to check for any short- or long-term gains and losses this year.</p>
+        <p><strong>How to estimate gains and losses</strong></p>
+        <p>If you plan to sell any assets before the end of the year, include the estimated gains or losses in your total.</p>
+        <p>When estimating short- and long-term gains, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-rental-expenses-net-income-en">
+      <modal-heading>What are rental expenses and how can I estimate net rental income?</modal-heading>
+      <modal-content>
+        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">Rental expenses<span class="usa-sr-only"> (opens in a new tab)</span></a> include maintenance costs, insurance, taxes, and interest.</p>
+        <p><strong>How to estimate net rental income</strong></p>
+        <p>First, add up all the money you expect to receive from tenants during the year. Next, subtract your rental expenses.</p>
+        <p>When estimating rental income, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
+        <p><strong>How to check last year's tax return</strong></p>
+        <p>If you earned rental income last year and think you'll earn a similar amount this year, check your <fg-show path="/lastTaxYear"/> forms:</p>
+        <ul>
+          <li>Schedule E (Form 1040), Part I, line 21, Columns A - C</li>
+        </ul>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-estimate-royalty-income-en">
+      <modal-heading>How can I estimate royalty income?</modal-heading>
+      <modal-content>
+        <p>Check your licensing agreements or publisher statements for expected payment schedules or percentages.</p>
+        <p>If estimating future royalty income, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
+        <p><strong>How to check last year's tax return</strong></p>
+        <p>If you earned royalties last year and think you'll earn a similar amount this year, check your <fg-show path="/lastTaxYear"/> forms:</p>
+        <ul>
+          <li>Schedule E (Form 1040), Part I, line 23b</li>
+        </ul>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-estimate-s-corp-partnership-income-en">
+      <modal-heading>How can I estimate income from S-corporations or partnerships?</modal-heading>
+      <modal-content>
+        <p>You can use investor reports, profit/ loss statements, or other business data to predict annual earnings. Multiply those earnings by your ownership percentage or distributive share.</p>
+        <p>When estimating S-corporation or partnership income, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
+        <p>Don't include income previously entered under self-employment.</p>
+        <p><strong>How to check last year's return</strong></p>
+        <p>If you earned income from S-corporations or partnerships last year and think you'll earn a similar amount this year, check these <fg-show path="/lastTaxYear"/> forms:</p>
+        <ul>
+          <li>Schedule E (Form 1040), Part II, Line 29a, Column h, for passive income</li>
+          <li>Schedule E (Form 1040), Part II, Line 29a, column k, for non-passive income</li>
         </ul>
       </modal-content>
     </modal-dialog>

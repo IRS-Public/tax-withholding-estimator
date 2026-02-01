@@ -1,0 +1,71 @@
+/* One border around the whole block; spacing between fg-detail blocks */
+.flow .fg-detail {
+  margin-top: var(--units-3);
+  border: var(--units-05) solid var(--base-lightest);
+  border-radius: var(--radius-md, 0.25rem);
+}
+
+/* Hide browser default disclosure triangle so we control the chevron on the right */
+.flow .fg-detail > summary {
+  list-style: none;
+}
+.flow .fg-detail > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Summary bar: gray background, padding. Chevron icon overrides details.css add/remove. */
+.flow .fg-detail--chevron > summary {
+  display: block;
+  background-color: var(--base-lightest);
+  background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/expand_more.svg"), linear-gradient(transparent, transparent);
+  background-repeat: no-repeat;
+  background-position: right var(--units-205) center;
+  background-size: var(--units-3);
+  cursor: pointer;
+  font-weight: 700;
+  margin: 0;
+  padding: var(--units-2) var(--units-7) var(--units-2) var(--units-205);
+  text-decoration: none;
+}
+.flow .fg-detail--chevron > summary:hover {
+  background-color: var(--gray-10);
+}
+.flow .fg-detail--chevron > summary:focus {
+  outline: var(--units-05) solid var(--blue-40v);
+  outline-offset: 0;
+}
+.flow .fg-detail--chevron > summary:hover,
+.flow .fg-detail--chevron > summary:focus {
+  background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/expand_more.svg"), linear-gradient(transparent, transparent);
+}
+.flow .fg-detail--chevron[open] > summary,
+.flow .fg-detail--chevron[open] > summary:hover,
+.flow .fg-detail--chevron[open] > summary:focus {
+  background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/expand_less.svg"), linear-gradient(transparent, transparent);
+  border-bottom: var(--units-05) solid var(--base-lightest);
+}
+
+/* Summary heading: consistent size and no extra spacing (overrides .fg-collection-item__fields h4/h5 in collections) */
+.flow .fg-detail > summary h2,
+.flow .fg-detail > summary h3,
+.flow .fg-detail > summary h4,
+.flow .fg-detail > summary h5,
+.flow .fg-detail > summary h6 {
+  font-size: var(--font-size-md);
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+/* Expanded content: padding only, no inner border (override details.css) */
+.flow .fg-detail[open]::details-content {
+  border: none;
+  padding: var(--units-1) var(--units-205);
+}
+
+/* Input height in fg-detail inside collection: avoid height:100% so parent's top/bottom border stays visible.
+   fg-collection is the custom element (tag name), not a class. */
+.flow fg-collection .fg-detail .usa-input-group input {
+  height: auto;
+  max-height: 1.5rem;
+}

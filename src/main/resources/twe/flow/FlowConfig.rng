@@ -288,6 +288,27 @@
     </element>
   </define>
 
+  <define name="fg-detail-module">
+    <element name="fg-detail">
+      <optional><attribute name="icon"><text/></attribute></optional>
+      <optional><attribute name="heading-tag"><text/></attribute></optional>
+      <optional><attribute name="open"><text/></attribute></optional>
+      <optional><attribute name="condition"><data type="anyURI"/></attribute></optional>
+      <optional><attribute name="operator"><choice><value>isTrue</value><value>isFalse</value></choice></attribute></optional>
+      <element name="summary">
+        <ref name="FlowConfigModuleInlineContent"/>
+      </element>
+      <zeroOrMore>
+        <choice>
+          <ref name="HtmlBlockContent"/>
+          <ref name="fg-set-module"/>
+          <ref name="fg-collection-module"/>
+          <ref name="fg-section-gate-module"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+
   <define name="fg-reset-module">
     <element name="fg-reset">
       <element name="button">
@@ -707,6 +728,7 @@
           <ref name="fg-reset-module"/>
           <ref name="fg-section-gate-module"/>
           <ref name="details-module"/>
+          <ref name="fg-detail-module"/>
         </choice>
       </zeroOrMore>
     </mixed>

@@ -529,6 +529,7 @@
             <Dependency path="/jobs/*/endOfYearProjectedWithholding"/>
           </CollectionSum>
           <Dependency path="/pensionsTotalEndOfYearProjectedWithholding"/>
+          <Dependency path="/otherIncomeWithholding"/>
         </Add>
       </Derived>
     </Fact>
@@ -563,6 +564,7 @@
         <Add>
           <Dependency path="/jobsTotalCommittedWithholding"/>
           <Dependency path="/pensionsTotalCommittedWithholding"/>
+          <Dependency path="/otherIncomeWithholding"/>
         </Add>
       </Derived>
     </Fact>

@@ -9,6 +9,9 @@ import org.thymeleaf.context.Context
 enum FgCollectionNode {
   case fgSet(fact: FgSet)
   case fgSectionGate(fgSectionGate: FgSectionGate)
+
+  /** A div whose element children are parsed (fg-set, fg-section-gate, fg-detail, rawHTML). */
+  case divWithContent(divNode: xml.Node, children: List[SectionNode])
   case rawHTML(node: xml.Node)
 }
 
@@ -18,13 +21,20 @@ case class FgCollection(
     disallowEmpty: String,
     condition: Option[Condition],
     nodes: List[FgCollectionNode],
+    factDictionary: FactDictionary,
+    pageRoute: String,
 ) {
   def html(templateEngine: TweTemplateEngine): String = {
     val collectionFacts = this.nodes
       .map {
-        case FgCollectionNode.fgSet(x)         => x.html(templateEngine)
-        case FgCollectionNode.fgSectionGate(x) => x.html(templateEngine)
-        case FgCollectionNode.rawHTML(x)       => x
+        case FgCollectionNode.fgSet(x)                          => x.html(templateEngine)
+        case FgCollectionNode.fgSectionGate(x)                  => x.html(templateEngine)
+        case FgCollectionNode.divWithContent(divNode, children) =>
+          val childrenHtml = FgCollection.renderSectionNodes(children, templateEngine, "\n")
+          val attrs = divNode.attributes.asAttrMap.map { case (k, v) => s"""$k="$v"""" }.mkString(" ")
+          val attrStr = if (attrs.nonEmpty) s" $attrs" else ""
+          s"<div$attrStr>$childrenHtml</div>"
+        case FgCollectionNode.rawHTML(x) => x
       }
       .mkString("\n")
 
@@ -41,7 +51,7 @@ case class FgCollection(
 }
 
 object FgCollection {
-  def parse(node: xml.Node, factDictionary: FactDictionary): FgCollection = {
+  def parse(node: xml.Node, pageRoute: String, factDictionary: FactDictionary): FgCollection = {
     val path = node \@ "path"
     val itemName = node \@ "item-name"
     val disallowEmpty = node \@ "disallow-empty"
@@ -54,12 +64,15 @@ object FgCollection {
         node.label match {
           case "fg-set"          => FgCollectionNode.fgSet(FgSet.parse(node, factDictionary))
           case "fg-section-gate" => FgCollectionNode.fgSectionGate(FgSectionGate.parse(node))
-          case _                 => FgCollectionNode.rawHTML(node)
+          case "div"             =>
+            val children = (node \ "_").map(c => Section.processNode(c, pageRoute, factDictionary)).toList
+            FgCollectionNode.divWithContent(node, children)
+          case _ => FgCollectionNode.rawHTML(node)
         },
       )
       .toList
 
-    FgCollection(path, itemName, disallowEmpty, condition, nodes)
+    FgCollection(path, itemName, disallowEmpty, condition, nodes, factDictionary, pageRoute)
   }
 
   private def validateFgCollection(path: String, factDictionary: FactDictionary): Unit = {
@@ -67,4 +80,17 @@ object FgCollection {
     if (factDictionary.getDefinition(path).typeNode != "CollectionNode")
       throw InvalidFormConfig(s"Path $path must be of type CollectionNode")
   }
+
+  /** Renders a list of section nodes (used by divWithContent and FgDetail for their children). */
+  def renderSectionNodes(nodes: List[SectionNode], templateEngine: TweTemplateEngine, separator: String = ""): String =
+    nodes
+      .map {
+        case SectionNode.fgCollection(x)  => x.html(templateEngine)
+        case SectionNode.fgSet(x)         => x.html(templateEngine)
+        case SectionNode.fgAlert(x)       => x.html(templateEngine)
+        case SectionNode.fgSectionGate(x) => x.html(templateEngine)
+        case SectionNode.fgDetail(x)      => x.html(templateEngine)
+        case SectionNode.rawHTML(x)       => x.toString
+      }
+      .mkString(separator)
 }

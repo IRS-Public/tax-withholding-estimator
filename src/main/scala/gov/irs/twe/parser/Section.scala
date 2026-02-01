@@ -8,10 +8,11 @@ enum SectionNode {
   case fgSet(fgSet: FgSet)
   case fgAlert(fgSet: FgAlert)
   case fgSectionGate(fgSectionGate: FgSectionGate)
+  case fgDetail(fgDetail: FgDetail)
   case rawHTML(node: xml.Node)
 }
 
-case class Section(nodes: List[SectionNode], factDictionary: FactDictionary) {
+case class Section(nodes: List[SectionNode], factDictionary: FactDictionary, pageRoute: String) {
   def html(templateEngine: TweTemplateEngine): String = {
     val sectionHtml = this.nodes
       .map {
@@ -19,6 +20,7 @@ case class Section(nodes: List[SectionNode], factDictionary: FactDictionary) {
         case SectionNode.fgSet(x)         => x.html(templateEngine)
         case SectionNode.fgAlert(x)       => x.html(templateEngine)
         case SectionNode.fgSectionGate(x) => x.html(templateEngine)
+        case SectionNode.fgDetail(x)      => x.html(templateEngine)
         case SectionNode.rawHTML(x)       => renderNode(x, templateEngine)
       }
       .mkString("\n")
@@ -32,9 +34,10 @@ case class Section(nodes: List[SectionNode], factDictionary: FactDictionary) {
       // Process children and reconstruct the node
       val processedChildren = (node \ "_").map { child =>
         child.label match {
-          case "fg-collection"   => SectionNode.fgCollection(FgCollection.parse(child, factDictionary))
+          case "fg-collection"   => SectionNode.fgCollection(FgCollection.parse(child, this.pageRoute, factDictionary))
           case "fg-set"          => SectionNode.fgSet(FgSet.parse(child, factDictionary))
           case "fg-section-gate" => SectionNode.fgSectionGate(FgSectionGate.parse(child))
+          case "fg-detail"       => SectionNode.fgDetail(FgDetail.parse(child, this.pageRoute, factDictionary))
           case _                 => SectionNode.rawHTML(child)
         }
       }
@@ -44,6 +47,7 @@ case class Section(nodes: List[SectionNode], factDictionary: FactDictionary) {
         case SectionNode.fgSet(x)         => x.html(templateEngine)
         case SectionNode.fgSectionGate(x) => x.html(templateEngine)
         case SectionNode.fgAlert(x)       => x.html(templateEngine)
+        case SectionNode.fgDetail(x)      => x.html(templateEngine)
         case SectionNode.rawHTML(x)       => renderNode(x, templateEngine)
       }.mkString
 
@@ -60,7 +64,9 @@ case class Section(nodes: List[SectionNode], factDictionary: FactDictionary) {
     }
 
   private def containsSpecialElements(node: xml.Node): Boolean =
-    (node \\ "_").exists(n => n.label == "fg-collection" || n.label == "fg-set" || n.label == "fg-section-gate")
+    (node \\ "_").exists(n =>
+      n.label == "fg-collection" || n.label == "fg-set" || n.label == "fg-section-gate" || n.label == "fg-detail",
+    )
 }
 
 object Section {
@@ -69,15 +75,16 @@ object Section {
       .map(node => processNode(node, pageRoute, factDictionary))
       .toList
 
-    Section(nodes, factDictionary)
+    Section(nodes, factDictionary, pageRoute)
   }
 
-  private def processNode(node: xml.Node, pageRoute: String, factDictionary: FactDictionary): SectionNode =
+  private[parser] def processNode(node: xml.Node, pageRoute: String, factDictionary: FactDictionary): SectionNode =
     node.label match {
-      case "fg-collection"   => SectionNode.fgCollection(FgCollection.parse(node, factDictionary))
+      case "fg-collection"   => SectionNode.fgCollection(FgCollection.parse(node, pageRoute, factDictionary))
       case "fg-set"          => SectionNode.fgSet(FgSet.parse(node, factDictionary))
       case "fg-alert"        => SectionNode.fgAlert(FgAlert.parse(node, pageRoute, factDictionary))
       case "fg-section-gate" => SectionNode.fgSectionGate(FgSectionGate.parse(node))
+      case "fg-detail"       => SectionNode.fgDetail(FgDetail.parse(node, pageRoute, factDictionary))
       case _                 => SectionNode.rawHTML(node)
     }
 }
