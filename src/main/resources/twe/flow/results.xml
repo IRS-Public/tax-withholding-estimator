@@ -12,10 +12,19 @@
       <p condition="/isUnderwithheld" operator="isTrue">Based on what you entered, we estimate that <strong>you're not withholding enough taxes.</strong></p>
       <p condition="/isUnderwithheld" operator="isTrue">
         If you keep your withholding the same, you’ll likely owe taxes in <fg-show path="/taxYear"/>.
-        {{You may have to pay a penalty in addition to what you owe if you owe [at least $1,000/more than 10 percent of your tax bill].}}
+        <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">
+          You may have to pay a penalty in addition to what you owe if you owe
+          <span condition="/underpaymentPenaltyReasonIs1000DollarLimit" operator="isTrue">at least $1,000.</span>
+          <span condition="/underpaymentPenaltyReasonIs10PercentLimit" operator="isTrue">more than 10 percent of your tax bill.</span>
+        </span>
       </p>
+
+      <p condition="/isUnderwithheld" operator="isTrue">
+        If you’d like to get your tax balance closer to $0
+        <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">and avoid paying a penalty</span>,
+        you can <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjust your withholding</a>.
         <!-- TODO: There is also an "underwithheld and can't make up" scenario that adds some content here-->
-      <p condition="/isUnderwithheld" operator="isTrue">If you’d like to get your tax balance closer to $0 {{and avoid paying a penalty}}, you can <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjust your withholding</a>.</p>
+      </p>
 
       <p condition="/isZeroRefund" operator="isTrue">Based on what you entered, we estimate that <strong>you’re withholding enough to cover your federal taxes.</strong></p>
       <p condition="/isZeroRefund" operator="isTrue">If you keep your withholding the same, it’s likely you won’t owe federal taxes in <fg-show path="/taxYear"/>.</p>
@@ -113,6 +122,7 @@
                   <span condition="/isUnderwithheld" operator="isFalse">Estimated federal tax refund</span>
                 </th>
                 <td>
+                  <!-- TODO: /totalOwed does not account for projected withholdings, so this is incorrect for W4 and W4P income -->
                   <span condition="/isUnderwithheld" operator="isTrue">$<fg-show path="/totalOwed"/></span>
                   <span condition="/isUnderwithheld" operator="isFalse">$<fg-show path="/totalRefund"/></span>
                 </td>
@@ -128,117 +138,51 @@
       <h3 id="heading-adjust-withholding-for-lower-tax-balance" condition="/isUnderwithheld" operator="isTrue">How to adjust your withholding to get more take-home pay</h3>
       <h3 id="heading-adjust-withholding" condition="/isZeroRefund" operator="isTrue">How to adjust your withholding</h3>
 
-      <!-- TODO: Remove old content -->
-      <hr/>
-      <p>TODO: OLD CONTENT BELOW</p>
-      <hr/>
+      <p condition="/hasJobsIncomeButNoPensionsIncome" operator="isTrue">Use our recommendations to complete Form W-4.</p>
+      <p condition="/hasJobsIncomeButNoPensionsIncome" operator="isTrue"><modal-link for="modal-what-is-form-w-4">What's a Form W-4?</modal-link></p>
 
-      <h2>Results</h2>
-      <table class="usa-table width-full usa-table--borderless usa-table--flush">
-        <caption>Income and taxes</caption>
-        <thead>
-          <tr>
-            <th scope="col">Description</th>
-            <th scope="col">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Adjusted gross income</th>
-            <td>
-              <fg-show path="/agi"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Standard deduction</th>
-            <td>
-              <fg-show path="/standardDeduction"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Taxable income</th>
-            <td>
-              <fg-show path="/taxableIncome"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Tentative Tax from Taxable Income:</th>
-            <td>
-              <fg-show path="/tentativeTaxFromTaxableIncome"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Total taxes owed:</th>
-            <td>
-              <fg-show path="/totalOwed"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Total year-to-date jobs withholding</th>
-            <td>
-              <fg-show path="/totalYearToDateJobsWithholding"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Gap in withholding for the rest of the year</th>
-            <td>
-              <fg-show path="/withholdingGap"/>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table class="usa-table width-full usa-table--borderless usa-table--flush">
-        <caption>New Forms W-4 information</caption>
-        <thead>
-          <tr>
-            <th scope="col">Description</th>
-            <th scope="col">Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">Line 1 filing status</th>
-            <td>
-              <fg-show path="/filingStatus"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Line 2(c) checkbox</th>
-            <td>false</td>
-          </tr>
-          <tr>
-            <th scope="row">Line 3 total credits</th>
-            <td>
-              <fg-show path="/totalCredits"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Line 4(a) other income (not from jobs)</th>
-            <td>
-              <fg-show path="/jobs/*/w4Line4a"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Line 4(b) deductions</th>
-            <td>
-              <fg-show path="/jobs/*/w4Line4b"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Line 4(c) extra withholding</th>
-            <td>
-              <fg-show path="/jobs/*/w4Line4c"/>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">Remaining pay periods</th>
-            <td>
-              <fg-show path="/jobs/*/remainingPayPeriodsInteger"/>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button class="usa-button usa-button--outline" type="button" onclick="downloadW4(window.factGraph)">Download pre-filled Form W4</button>
+      <p condition="/hasPensionsIncomeButNoJobsIncome" operator="isTrue">Use our recommendations to complete Form W-4P.</p>
+      <p condition="/hasPensionsIncomeButNoJobsIncome" operator="isTrue"><modal-link for="modal-what-is-form-w-4p">What's a Form W-4P?</modal-link></p>
+
+      <p condition="/hasJobsIncomeAndPensionsIncome" operator="isTrue">Use our recommendations to complete Forms W-4 and W-4P.</p>
+      <p condition="/hasJobsIncomeAndPensionsIncome" operator="isTrue"><modal-link for="modal-what-is-form-w-4-and-w-4p">What's a Form W-4 and W-4P?</modal-link></p>
+
+      <!-- TODO: for each job / pension show w-4/w-4p section -->
+      <!-- TODO: Button goes inside accordion for each job -->
+      <!--<button class="usa-button usa-button&#45;&#45;outline" type="button" onclick="downloadW4(window.factGraph)">Download pre-filled Form W4</button>-->
+      <!-- /TODO -->
+
+      <div class="usa-alert usa-alert--info">
+        <div class="usa-alert__body">
+          <h4 class="usa-alert__heading">Check your withholding every January</h4>
+          <p class="usa-alert__text">This will help you decide if you need to make any adjustments for the year.</p>
+        </div>
+      </div>
     </section>
+    <modal-dialog id="modal-what-is-form-w-4">
+      <modal-heading>What’s a Form W-4?</modal-heading>
+      <modal-content>
+        <p>You need to submit a Form W-4 to each of your employers to help them withhold the right amount of taxes from your paychecks throughout the year.</p>
+        <p>Withholding at the right rate ensures that you don’t withhold too much and get smaller paychecks, or withhold too little and end up owing a large amount, or even penalties, at the end of the year.</p>
+        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn more about Form W-4.</a></p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-what-is-form-w-4p">
+      <modal-heading>What’s a Form W-4P?</modal-heading>
+      <modal-content>
+        <p>You need to submit a Form W-4P to your pension or annuity providers to help them withhold the right amount of taxes from your payments throughout the year.</p>
+        <p>Withholding at the right rate ensures that you don’t withhold too much and get smaller payments, or withhold too little and end up owing a large amount, or even penalties, at the end of the year.</p>
+        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn more about Form W-4P.</a></p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-what-is-form-w-4-and-w-4p">
+      <modal-heading>What’s a Form W-4 and W-4P?</modal-heading>
+      <modal-content>
+        <p>You need to submit a Form W-4 to each of your employers or a Form W-4P to your pension or annuity providers to help them withhold the right amount of taxes from your paycheck or pension payment throughout the year.</p>
+        <p>Withholding at the right rate ensures that you don’t withhold too much and take home a smaller amount, or withhold too little and end up owing a large amount, or even penalties, at the end of the year.</p>
+        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn more about Form W-4.</a></p>
+        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn more about Form W-4P.</a></p>
+      </modal-content>
+    </modal-dialog>
   </page>
 </FlowConfig>

@@ -770,5 +770,17 @@
         </Filter>
       </Derived>
     </Fact>
+    <Fact path="/hasJobsIncome">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/jobsIncomeTotal"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>

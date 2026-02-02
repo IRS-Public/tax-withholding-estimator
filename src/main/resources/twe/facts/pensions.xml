@@ -640,5 +640,17 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/hasPensionsIncome">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/pensionsIncomeTotal"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>

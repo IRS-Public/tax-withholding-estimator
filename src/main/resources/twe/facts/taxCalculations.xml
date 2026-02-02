@@ -2170,6 +2170,85 @@
         </Multiply>
       </Derived>
     </Fact>
+    <Fact path="/mayBeSubjectToUnderpaymentPenalty">
+      <Description>
+        Taxpayers may be subject to penalties if they owe
+        * $1,000 (or more), OR
+        * 10% (or more) of their total tax (minus refundable credits) bill
+        whichever is smaller.
+
+        https://www.irs.gov/taxtopics/tc306
+        https://www.irs.gov/payments/underpayment-of-estimated-tax-by-individuals-penalty
+      </Description>
+      <Derived>
+        <Any>
+          <Dependency path="/owesAtleast1000Dollars"/>
+          <Dependency path="/owesAtleast10PercentOfTotalTax"/>
+        </Any>
+      </Derived>
+    </Fact>
+    <Fact path="/underpaymentPenaltyReasonIs1000DollarLimit">
+      <Derived>
+        <All>
+          <Dependency path="/owesAtleast1000Dollars"/>
+          <LessThanOrEqual>
+            <Left>
+              <Dollar>1000</Dollar>
+            </Left>
+            <Right>
+              <Dependency path="/10PercentOfTotalTax"/>
+            </Right>
+          </LessThanOrEqual>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/underpaymentPenaltyReasonIs10PercentLimit">
+      <Derived>
+        <All>
+          <Dependency path="/owesAtleast10PercentOfTotalTax"/>
+          <LessThan>
+            <Left>
+              <Dependency path="/10PercentOfTotalTax"/>
+            </Left>
+            <Right>
+              <Dollar>1000</Dollar>
+            </Right>
+          </LessThan>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/owesAtleast1000Dollars">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/totalOwed"/>
+          </Left>
+          <Right>
+            <Dollar>1000</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/owesAtleast10PercentOfTotalTax">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/totalOwed"/>
+          </Left>
+          <Right>
+            <Dependency path="/10PercentOfTotalTax"/>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/10PercentOfTotalTax">
+      <Derived>
+        <Multiply>
+          <Rational>1/10</Rational>
+          <Dependency path="/totalTax"/>
+        </Multiply>
+      </Derived>
+    </Fact>
     <Fact path="/totalTaxNetRefundableCredits">
       <Description>Total Tax - total payments + estimated tax</Description>
       <Derived>

@@ -554,5 +554,33 @@ and car loan interest deduction
         </Round>
       </Derived>
     </Fact>
+    <Fact path="/hasJobsIncomeButNoPensionsIncome">
+      <Derived>
+        <All>
+          <Dependency path="/hasJobsIncome"/>
+          <Not>
+            <Dependency path="/hasPensionsIncome"/>
+          </Not>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/hasPensionsIncomeButNoJobsIncome">
+      <Derived>
+        <All>
+          <Not>
+            <Dependency path="/hasJobsIncome"/>
+          </Not>
+          <Dependency path="/hasPensionsIncome"/>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/hasJobsIncomeAndPensionsIncome">
+      <Derived>
+        <All>
+          <Dependency path="/hasJobsIncome"/>
+          <Dependency path="/hasPensionsIncome"/>
+        </All>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>
