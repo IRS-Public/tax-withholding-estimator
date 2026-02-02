@@ -534,7 +534,12 @@
       </Derived>
     </Fact>
     <Fact path="/withholdingGap">
-      <Description>The rest-of-year withholding gap: taxes owed if nothing is changed.</Description>
+      <Description>
+        The rest-of-year withholding gap: taxes owed if nothing is changed.
+
+        Positive value = underpayment = balance due
+        Negative value = overpayment = refund
+      </Description>
       <Derived>
         <Subtract>
           <Minuend>
@@ -544,6 +549,137 @@
             <Dependency path="/totalEndOfYearProjectedWithholding"/>
           </Subtrahends>
         </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/withholdingSurplus">
+      <Description>
+        The rest-of-year withholding surplus: refund gained if nothing is changed.
+
+        Positive value = overpayment = refund
+        Negative value = underpayment = balance due
+
+        Used when you need a positive value for projected refund amount
+      </Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/withholdingGap"/>
+          <Dollar>-1</Dollar>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/isOverwithheld">
+      <Derived>
+        <LessThan>
+          <Left>
+            <Dependency path="/withholdingGap"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </LessThan>
+      </Derived>
+    </Fact>
+    <Fact path="/isZeroRefund">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="/withholdingGap"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
+    <Fact path="/isUnderwithheld">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/withholdingGap"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/mayBeSubjectToUnderpaymentPenalty">
+      <Description>
+        Taxpayers may be subject to penalties if they owe
+        * $1,000 (or more), OR
+        * 10% (or more) of their total tax (minus refundable credits) bill
+        whichever is smaller.
+
+        https://www.irs.gov/taxtopics/tc306
+        https://www.irs.gov/payments/underpayment-of-estimated-tax-by-individuals-penalty
+      </Description>
+      <Derived>
+        <Any>
+          <Dependency path="/owesAtleast1000Dollars"/>
+          <Dependency path="/owesAtleast10PercentOfWithholdingGap"/>
+        </Any>
+      </Derived>
+    </Fact>
+    <Fact path="/underpaymentPenaltyReasonIs1000DollarLimit">
+      <Derived>
+        <All>
+          <Dependency path="/owesAtleast1000Dollars"/>
+          <LessThanOrEqual>
+            <Left>
+              <Dollar>1000</Dollar>
+            </Left>
+            <Right>
+              <Dependency path="/10PercentOfWithholdingGap"/>
+            </Right>
+          </LessThanOrEqual>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/underpaymentPenaltyReasonIs10PercentLimit">
+      <Derived>
+        <All>
+          <Dependency path="/owesAtleast10PercentOfWithholdingGap"/>
+          <LessThan>
+            <Left>
+              <Dependency path="/10PercentOfWithholdingGap"/>
+            </Left>
+            <Right>
+              <Dollar>1000</Dollar>
+            </Right>
+          </LessThan>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/owesAtleast1000Dollars">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/withholdingGap"/>
+          </Left>
+          <Right>
+            <Dollar>1000</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/owesAtleast10PercentOfWithholdingGap">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/withholdingGap"/>
+          </Left>
+          <Right>
+            <Dependency path="/10PercentOfWithholdingGap"/>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/10PercentOfWithholdingGap">
+      <Derived>
+        <Multiply>
+          <Rational>1/10</Rational>
+          <Dependency path="/withholdingGap"/>
+        </Multiply>
       </Derived>
     </Fact>
     <Fact path="/taxGap">
