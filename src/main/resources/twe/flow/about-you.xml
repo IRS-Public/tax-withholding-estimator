@@ -61,12 +61,6 @@
         <modal-link for="modal-secondary-claimed-as-dependent">How do I know if my spouse could be a dependent?</modal-link>
         <input type="boolean"/>
       </fg-set>
-      <h2>Start over</h2>
-      <!--// TODO: Move to dev panel-->
-      <fg-reset>
-        <button class="usa-button usa-button--outline" type="reset">Start over</button>
-      </fg-reset>
-      <!--// /TODO -->
     </section>
     <modal-dialog id="modal-claiming-dependents">
       <modal-heading>Who can I claim as a dependent?</modal-heading>
