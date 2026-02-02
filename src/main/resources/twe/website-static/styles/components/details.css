@@ -3,7 +3,7 @@
   to mimic the USWDS accordion style.
 */
 
-.flow > details {
+.flow details {
   margin: var(--units-1) 0;
 
   /* Corrects box model for nested usa-input-group */
@@ -15,7 +15,7 @@
   }
 }
 
-.flow > details > summary {
+.flow details > summary {
   display: block;
   background-color: var(--base-lightest);
   background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/add.svg"), linear-gradient(transparent, transparent);
@@ -42,14 +42,14 @@
   }
 }
 
-.flow > details[open] {
+.flow details[open] {
   summary {
       background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/remove.svg"), linear-gradient(transparent, transparent);
   }
 }
 
-.flow > details[open]::details-content {
+.flow details[open] .details-content {
   border: var(--units-05) solid var(--base-lightest); ;
   border-top: none;
-  padding: var(--units-1) var(--units-205) 0;
+  padding: var(--units-1) var(--units-205) var(--units-205);
 }

@@ -11,5 +11,5 @@
     <h5 th:if="${headingTag == 'h5'}" th:utext="${summary}"></h5>
     <h6 th:if="${headingTag == 'h6'}" th:utext="${summary}"></h6>
   </summary>
-  <div class="usa-prose" th:utext="${childrenHtml}"></div>
+  <div class="usa-prose details-content" th:utext="${childrenHtml}"></div>
 </details>

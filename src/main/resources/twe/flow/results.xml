@@ -40,7 +40,7 @@
         <summary>
           <h4>Your calculation</h4>
         </summary>
-        <div class="usa-prose">
+        <div class="usa-prose details-content">
           <p>First, we calculated your taxable income.</p>
           <table class="usa-table usa-table--borderless width-full">
             <caption class="usa-sr-only">Taxable income breakdown</caption>
