@@ -35,8 +35,25 @@
         <Enum optionsPath="/filerAssignmentOption"/>
       </Writable>
     </Fact>
+    <Fact path="/jobs/*/isFilerAssignmentSelf">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../filerAssignment"/>
+          </Left>
+          <Right>
+            <Enum optionsPath="/filerAssignmentOption">self</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/isAllYear">
       <Description>Whether this job was held for the entire tax year.</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+    <Fact path="/jobs/*/isHourlyJob">
       <Writable>
         <Boolean/>
       </Writable>

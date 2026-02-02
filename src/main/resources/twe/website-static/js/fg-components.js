@@ -705,14 +705,6 @@ function handleSectionContinue (event) {
   return true
 }
 
-function handleSectionComplete (event) {
-  event.preventDefault()
-  if (validateSectionForNavigation()) {
-    alert("You've completed filling out the Tax Withholding Estimator")
-  }
-  return false
-}
-
 function validateSectionForNavigation () {
   const fgSets = document.querySelectorAll('fg-set:not(.hidden)')
   const missingFields = []
@@ -783,7 +775,6 @@ function generateUUID () {
 }
 
 window.handleSectionContinue = handleSectionContinue
-window.handleSectionComplete = handleSectionComplete
 
 // Add show/hide functionality to all elements
 document.addEventListener('fg-update', showOrHideAllElements)

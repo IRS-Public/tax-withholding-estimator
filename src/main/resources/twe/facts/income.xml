@@ -2,6 +2,31 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/jobs/*/initialQuestionsComplete">
+      <Derived>
+        <All>
+          <IsComplete>
+            <Dependency path="../filerAssignment"/>
+          </IsComplete>
+          <IsComplete>
+            <Dependency path="../isAllYear"/>
+          </IsComplete>
+          <IsComplete>
+            <Dependency path="../isHourlyJob"/>
+          </IsComplete>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/showTipAndOvetime">
+      <Derived>
+        <All>
+          <Dependency path="../initialQuestionsComplete"/>
+          <Not>
+            <Dependency path="/isFilingStatusMFS"/>
+          </Not>
+        </All>
+      </Derived>
+    </Fact>
     <Fact path="/declaredDoneAddingIncome">
       <Description>Whether the taxpayer has declared they are done adding new income</Description>
       <Writable>

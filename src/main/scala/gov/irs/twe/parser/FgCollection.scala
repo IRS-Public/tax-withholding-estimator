@@ -81,7 +81,6 @@ object FgCollection {
       throw InvalidFormConfig(s"Path $path must be of type CollectionNode")
   }
 
-  /** Renders a list of section nodes (used by divWithContent and FgDetail for their children). */
   def renderSectionNodes(nodes: List[SectionNode], templateEngine: TweTemplateEngine, separator: String = ""): String =
     nodes
       .map {

@@ -5,7 +5,7 @@ class ModalLink extends HTMLElement {
     const link = document.createElement('a')
     link.classList.add('usa-link')
     link.href = '#' + this.modalId
-    link.text = this.innerText
+    link.innerHTML = this.innerHTML
     link.addEventListener('click', (event) => this.onclick(event))
 
     this.replaceChildren(link)

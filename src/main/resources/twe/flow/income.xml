@@ -29,118 +29,319 @@
             <option value="spouse">My spouse</option>
           </select>
         </fg-set>
+        <fg-set path="/jobs/*/isHourlyJob">
+          <question>Is this an hourly or salary job</question>
+          <input type="boolean">
+            <option value="true">Hourly (the pay changes based on how many hours you work)</option>
+            <option value="false">Salary (the pay is about the same each pay period)</option>
+          </input>
+        </fg-set>
+        <h5>Timing</h5>
         <fg-set path="/jobs/*/isAllYear">
           <question>
-            Do you expect to have this job all year, from January 1 - December 31, 2025?
+            Do
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
+            <!-- This is the only place where we have to do a default, because it shows -->
+            <!-- up on the screen before the filer assignement has been selected -->
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">you</span>
+            expect to have this job all year or only part of the year?
           </question>
-          <input type="boolean"/>
+          <input type="boolean">
+            <option value="true">All year (January 1-December 31, <fg-show path="/taxYear"/>)</option>
+            <option value="false">Part of the year</option>
+          </input>
         </fg-set>
         <fg-set path="/jobs/*/writableStartDate" if-true="/jobs/*/flowAskPartYearDates">
-          <question>What’s the start date?</question>
+          <question>
+            What’s the first day in <fg-show path="/taxYear"/>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span>
+            expect to have this job?
+          </question>
+          <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/writableEndDate" if-true="/jobs/*/flowAskPartYearDates">
-          <question>What’s the end date?</question>
-          <input type="date"/>
-        </fg-set>
-        <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
-          <question>When did your most recent pay period end?</question>
-          <input type="date"/>
-        </fg-set>
-        <fg-set path="/jobs/*/mostRecentPayDate">
-          <question>When was your most recent pay date?</question>
-          <input type="date"/>
-        </fg-set>
-        <fg-set path="/jobs/*/inconsistentPay">
-          <question>How steady is the pay from paycheck to paycheck?</question>
-          <input type="boolean">
-            <option value="false">The pay is about the same each paycheck</option>
-            <option value="true">The pay is very different each paycheck</option>
-          </input>
-        </fg-set>
-        <fg-set path="/jobs/*/amountLastPaycheck" if-false="/jobs/*/inconsistentPay">
-          <question>What is the income made on your last paycheck?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/pastPaycheckIncome1" if-true="/jobs/*/inconsistentPay">
-          <question>What is the income made on your most recent paycheck?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/pastPaycheckIncome2" if-true="/jobs/*/inconsistentPay">
-          <question>What is the income made on your second-most recent paycheck?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/pastPaycheckIncome3" if-true="/jobs/*/inconsistentPay" optional="true">
           <question>
-            What is the income made on your third-most recent paycheck? Leave
-            this blank if you only have two past paychecks.
+            What’s the last day in <fg-show path="/taxYear"/>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span>
+            expect to have this job?
           </question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/yearToDateIncome">
-          <question>What’s your year-to-date income for this job?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/amountWithheldLastPaycheck">
-          <question>What was the amount of federal withholding on your last paycheck?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/yearToDateWithholding">
-          <question>What’s your year-to-date federal withholding for this job?</question>
-          <input type="dollar"/>
+          <hint>It’s okay to estimate.</hint>
+          <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/payFrequency">
           <question>How frequently are you paid?</question>
-          <select options-path="/jobs/*/payFrequency">
+          <modal-link for="modal-pay-frequency-en">Learn more about pay frequency.</modal-link>
+          <input type="enum" options-path="/payFrequencyOptions">
             <option value="weekly">Weekly</option>
-            <option value="biWeekly">Biweekly</option>
-            <option value="semiMonthly">Semimonthly</option>
-            <option value="monthly">Monthly</option>
-          </select>
+            <option value="biWeekly">Every two weeks</option>
+            <option value="semiMonthly">Twice monthly</option>
+            <option value="monthly">Once a month</option>
+          </input>
         </fg-set>
-        <fg-set path="/jobs/*/totalBonusReceived">
-          <question>What bonus amount were you paid for this job?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/retirementPlanContributionsToDate">
-          <question>What retirement plan contributions have you made for this job to date?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/retirementPlanContributionsPerPayPeriod">
-          <question>What retirement plan contributions do you make per pay period for this job?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/healthInsuranceContributionsToDate">
-          <question>What health insurance contributions have you made for this job?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/healthInsuranceContributionsPerPayPeriod">
-          <question>What health insurance contributions do you make per pay period for this job?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/hsaOrFsaContributionsToDate">
-          <question>What HSA or FSA contributions have you made for this job?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/hsaOrFsaContributionsPerPayPeriod">
-          <question>What HSA or FSA plan contributions do you make per pay period for this job?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/qualifiedTipIncome">
-          <question>How much qualified tips did you make for this job?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/overtimeCompensationTotal">
-          <question>How much overtime compensation did you make this year?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/jobs/*/overtimeCompensationRate">
-          <question>What is the rate at which you get paid overtime?</question>
-          <select options-path="/jobs/*/overtimeCompensationRate">
-            <option value="onePointFive">Time and a half (1.5x)</option>
-            <option value="two">Double time (2x)</option>
-          </select>
-        </fg-set>
+        <div condition="/jobs/*/initialQuestionsComplete" operator="isFalse">
+          <h5>Job Details</h5>
+          <p>Once we know more about your income, we'll ask you additional questions.</p>
+        </div>
+        <div condition="/jobs/*/initialQuestionsComplete" operator="isTrueAndComplete">
+          <h5>Dates and income</h5>
+          <p>Use the most recent paystub from <fg-show path="/taxYear"/> to enter the following information.</p>
+          <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
+            <question>When did the most recent pay period in <fg-show path="/taxYear"/> end?</question>
+            <modal-link for="modal-job-pay-dates-en">How do I find the pay period and pay date?</modal-link>
+            <input type="date"/>
+          </fg-set>
+          <fg-set path="/jobs/*/mostRecentPayDate">
+            <question>
+              When was
+              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span>
+              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span>
+              most recent pay date in <fg-show path="/taxYear"/>?
+            </question>
+            <input type="date"/>
+          </fg-set>
+          <fg-set path="/jobs/*/inconsistentPay">
+            <question>How steady is the pay from paycheck to paycheck?</question>
+            <input type="boolean">
+              <option value="false">The pay is about the same each paycheck</option>
+              <option value="true">The pay is very different each paycheck</option>
+            </input>
+          </fg-set>
+          <fg-set path="/jobs/*/amountLastPaycheck" if-false="/jobs/*/inconsistentPay">
+            <question>What’s the gross income for this pay period?</question>
+            <modal-link for="modal-job-gross-pay-period-en">How do I find the gross income per pay period?</modal-link>
+            <input type="dollar"/>
+          </fg-set>
+          <fg-set path="/jobs/*/pastPaycheckIncome1" if-true="/jobs/*/inconsistentPay">
+            <question>On the most recent paystub from <fg-show path="/taxYear"/>, what’s the gross income per pay period?</question>
+            <modal-link for="modal-job-gross-pay-period-en">How do I find the gross income per pay period?</modal-link>
+            <input type="dollar"/>
+          </fg-set>
+          <fg-set path="/jobs/*/pastPaycheckIncome2" if-true="/jobs/*/inconsistentPay">
+            <question>On the second paystub, what’s the gross income per pay period?</question>
+            <input type="dollar"/>
+          </fg-set>
+          <fg-set path="/jobs/*/pastPaycheckIncome3" if-true="/jobs/*/inconsistentPay" optional="true">
+            <question>
+              On the third paystub, what’s the gross income per pay period?
+              Leave this blank if you only have two past paychecks.
+            </question>
+            <input type="dollar"/>
+          </fg-set>
+          <fg-set path="/jobs/*/totalBonusReceived">
+            <question>
+              Enter an estimate for any bonus pay you think
+              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
+              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
+              will earn in <fg-show path="/taxYear"/>
+            </question>
+            <hint>If you don’t know, leave this blank.</hint>
+            <modal-link for="modal-estimate-future-bonus-en">How do I estimate future bonus pay?</modal-link>
+            <input type="dollar"/>
+          </fg-set>
+          <fg-set path="/jobs/*/yearToDateIncome">
+            <question>What’s the gross income
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse has</span>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you have</span>
+              received so far in <fg-show path="/taxYear"/>?
+            </question>
+            <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
+            <modal-link for="modal-job-gross-ytd-end-en">
+                How do I find the gross income so far in <fg-show path="/taxYear"/>?
+              </modal-link>
+              <input type="dollar"/>
+            </fg-set>
+          </div>
+        <div condition="/jobs/*/showTipAndOvetime" operator="isTrueAndComplete">
+          <h5>Estimated tips and overtime</h5>
+          <p>For 2025 through 2028, there are new deductions for tips and overtime.</p>
+          <p>
+            If
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse meets</span>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you meet</span>
+            the eligibility requirements, you may be able to deduct (subtract) tips and
+            overtime pay from your income, so you won’t have to pay tax on it.
+          </p>
+          <p>
+            If this doesn’t apply to
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>,
+            it’s okay to leave this blank.
+          </p>
+          <fg-detail icon="chevron">
+            <summary>Estimated tips</summary>
+            <p>
+              Tips are voluntary cash or credit card payments received from customers or through
+              tip‑sharing arrangements.
+            </p>
+            <p>
+              <a
+                target="_blank"
+                href="https://www.irs.gov/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025">
+                Learn more about the no tax on tips deduction.
+              </a>
+            </p>
+            <p>
+              To be eligible for the no tax on tips deduction,
+              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
+              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
+              must have an
+              <a
+                target="_blank"
+                href="https://www.irs.gov/forms-pubs/occupations-that-customarily-and-regularly-received-tips-on-or-before-december-31-2024">
+                occupation
+              </a>
+              that's recognized by the IRS as regularly receiving tips.
+            </p>
+            <fg-set path="/jobs/*/qualifiedTipIncome">
+              <question>Total estimated tips for <fg-show path="/taxYear"/></question>
+              <hint>Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you don’t</span> have a social security number.</hint>
+              <modal-link for="modal-estimate-tips-en">How can I estimate tips?</modal-link>
+              <input type="dollar"/>
+            </fg-set>
+          </fg-detail>
+          <fg-detail icon="chevron">
+            <summary>Estimated overtime</summary>
+            <p>Overtime is extra pay earned by working more than 40 hours per week.</p>
+            <p><modal-link for="modal-estimate-overtime-en">Learn more about the no tax on overtime deduction</modal-link></p>
+            <fg-set path="/jobs/*/overtimeCompensationTotal">
+              <question>Total estimated overtime pay for <fg-show path="/taxYear"/></question>
+              <hint>Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you don’t</span> have a social security number.</hint>
+              <modal-link for="modal-estimate-overtime-en">How can I estimate overtime?</modal-link>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/jobs/*/overtimeCompensationRate">
+              <question>What is the rate at which you get paid overtime?</question>
+              <modal-link for="modal-estimate-overtime-rate-en">What if I get paid a different overtime rate?</modal-link>
+              <input type="enum" options-path="/jobs/*/overtimeCompensationRate">
+                <option value="onePointFive">1.5 times my regular pay</option>
+                <option value="two">2.0 times my regular pay</option>
+              </input>
+            </fg-set>
+          </fg-detail>
+        </div>
+        <div condition="/jobs/*/initialQuestionsComplete" operator="isTrueAndComplete">
+          <h5>Federal taxes</h5>
+          <p>Use the most recent paystub to enter the following information.</p>
+          <fg-set path="/jobs/*/amountWithheldLastPaycheck">
+            <question>Federal taxes withheld (paid) for this pay period</question>
+            <hint>Don’t include state and local taxes, Medicare, or Social Security.</hint>
+            <input type="dollar"/>
+            <modal-link for="modal-fed-tax-pay-period-en">
+              How do I find federal taxes withheld per pay period?
+            </modal-link>
+          </fg-set>
+          <fg-set path="/jobs/*/yearToDateWithholding">
+            <question>Federal taxes withheld (paid) so far in <fg-show path="/taxYear"/></question>
+            <hint>
+              This might be labeled year-to-date or YTD on your paystub. Don't include state and
+              local taxes, Medicare, or Social Security.
+            </hint>
+            <input type="dollar"/>
+            <modal-link for="modal-fed-tax-ytd-en">
+              How do I find federal taxes withheld in <fg-show path="/taxYear"/>?
+            </modal-link>
+          </fg-set>
+        </div>
+        <div condition="/jobs/*/initialQuestionsComplete" operator="isTrueAndComplete">
+          <h5>Contributions</h5>
+          <p>
+            Check
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse's</span>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span>
+              paystub for pre-tax contributions (or payroll deductions) to help pay for benefits.
+          </p>
+          <p>
+            These contribution amounts can usually be found under a <strong>Deductions</strong>
+            or <strong>Pre-Tax</strong> section.
+          </p>
+          <fg-detail icon="chevron">
+            <summary>Retirement Plans</summary>
+            <p>Enter total contributions made to retirement plans.</p>
+            <p>
+              Retirement contributions can usually be found under a <strong>Deductions</strong> or
+              <strong>Pre-Tax</strong> section on a paystub.
+            </p>
+            <p>Include contributions made to any of these plans:</p>
+            <ul>
+              <li>401(k) plans</li>
+              <li>403(b) plans</li>
+              <li>457(b) plans</li>
+              <li>Thrift Savings Plan for federal employees</li>
+              <li>Salary Reduction Simplified Employee Pension (SARSEP) plans</li>
+              <li>Savings Incentive Match Plan for Employees (SIMPLE) IRA or SIMPLE 401(k) plans</li>
+              <li>Non-qualified deferred compensation plans</li>
+            </ul>
+            <p><strong>Don’t include</strong> contributions to Roth plans.</p>
+
+            <p><modal-link for="modal-retirement-roth-en">Why can’t I include Roth contributions?</modal-link></p>
+
+            <fg-set path="/jobs/*/retirementPlanContributionsPerPayPeriod">
+              <question>Amount per pay period</question>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/jobs/*/retirementPlanContributionsToDate">
+              <question>Amount so far in <fg-show path="/taxYear"/></question>
+              <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
+              <input type="dollar"/>
+            </fg-set>
+          </fg-detail>
+          <fg-detail icon="chevron">
+            <summary>Health insurance</summary>
+            <p>Enter the total contributions made to pay for health coverage.</p>
+            <p>
+              Health coverage contributions can usually be found under a
+              <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub.
+            </p>
+            <p>Include contributions for:</p>
+            <ul>
+              <li>Health insurance plans</li>
+              <li>Dental or vision insurance plans</li>
+              <li>Premiums for COBRA continuation coverage</li>
+            </ul>
+            <p><strong>Don’t include:</strong></p>
+            <ul>
+              <li>Long-term care contributions</li>
+              <li>Employer contributions</li>
+            </ul>
+            <fg-set path="/jobs/*/healthInsuranceContributionsPerPayPeriod">
+              <question>Amount per pay period</question>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/jobs/*/healthInsuranceContributionsToDate">
+              <question>Amount so far in <fg-show path="/taxYear"/></question>
+              <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
+              <input type="dollar"/>
+            </fg-set>
+          </fg-detail>
+          <fg-detail icon="chevron">
+            <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
+            <p>
+              Enter total contributions to Health Savings Accounts (HSA) or Flexible Spending
+              Account (FSA).
+            </p>
+            <p>
+              HSA and FSA contribution amounts can usually be found under a
+              <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub.
+            </p>
+            <p>
+              Learn more about contributions to
+              <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSA</a>
+              and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSA</a>.
+            </p>
+            <fg-set path="/jobs/*/hsaOrFsaContributionsPerPayPeriod">
+              <question>Amount per pay period</question>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/jobs/*/hsaOrFsaContributionsToDate">
+              <question>Amount so far in <fg-show path="/taxYear"/></question>
+              <input type="dollar"/>
+            </fg-set>
+          </fg-detail>
+        </div>
       </fg-collection>
 
       <h3>Pension or annuity income</h3>
@@ -216,20 +417,6 @@
           <modal-link for="modal-self-employment-deductions">What does it mean to deduct expenses?</modal-link>
           <input type="dollar"/>
         </fg-set>
-        <div condition="/isFilingStatusMFS" operator="isFalse">
-          <h5>Estimated tips and overtime</h5>
-          <p>For 2025 through 2028, there are new deductions for tips and overtime.</p>
-          <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> meet the eligibility requirements, you may be able to deduct (subtract) tips and overtime pay from your income, so you won’t have to pay tax on it.</p>
-          <p>If this doesn’t apply to <span condition="/isFilingStatusMFJ" operator="isTrue">your spouse</span><span condition="/isFilingStatusMFJ" operator="isFalse">you</span>, it’s okay to leave this blank.</p>
-          <fg-detail icon="chevron">
-            <summary>Estimated tips</summary>
-            <!-- TODO: add content -->
-          </fg-detail>
-          <fg-detail icon="chevron">
-            <summary>Estimated overtime</summary>
-            <!-- TODO: add content -->
-          </fg-detail>
-        </div>
       </fg-collection>
 
       <h3>Social Security income</h3>
@@ -275,7 +462,8 @@
         <fg-set path="/socialSecuritySources/*/withheldRate" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
           <question>How much federal tax <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">is</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">was</span> withheld from the Social Security payment each month?</question>
           <hint>If <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> haven’t chosen to withhold federal taxes, select 0%.</hint>
-          <modal-link for="modal-fed-social-security-tax-withheld">How do I know if I have taxes withheld?</modal-link> modal-fed-tax-social-security-pay-period-en <input type="enum" options-path="/socialSecurityWithheldTaxesOptions">
+          <modal-link for="modal-fed-social-security-tax-withheld">How do I know if I have taxes withheld?</modal-link>
+          <input type="enum" options-path="/socialSecurityWithheldTaxesOptions">
             <option value="zero">0%</option>
             <option value="seven">7%</option>
             <option value="ten">10%</option>
@@ -445,6 +633,46 @@
       <h3>SSA income from Forms SSA-1099 and RRB-1099</h3>
     </section>
 
+    <modal-dialog id="modal-pay-frequency-en">
+      <modal-heading>Learn more about pay frequency</modal-heading>
+      <modal-content>
+        <p>
+          Pay frequency is how often a person gets paid by an employer or pension.
+        </p>
+        <ul>
+          <li><strong>Weekly</strong>: Paid once per week</li>
+          <li><strong>Every two weeks</strong>: Paid every other week and gets two-to-three  payments per month</li>
+          <li><strong>Twice monthly</strong>: Always paid twice a month on certain days. For example, the 1st and the 15th of the month</li>
+          <li><strong>Once monthly</strong>: Paid one time per month</li>
+        </ul>
+        <p>If your pay frequency doesn’t match one of these, then choose the closest option and adjust your pay accordingly.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-job-pay-dates-en">
+      <modal-heading>Learn more about pay frequency</modal-heading>
+      <modal-content>
+        <p>
+          You can find the pay period and pay date on the paystub, the statement that comes with a
+          paycheck and tells you about the details of the pay.
+        </p>
+        <ul>
+          <li><strong>Pay period</strong>: The days that you worked and are being paid for, sometimes shown as a start and end date</li>
+          <li><strong>Pay date</strong>: The date when the paycheck is issued or dated</li>
+        </ul>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-job-gross-pay-period-en">
+      <modal-heading>How do I find the gross income per pay period?</modal-heading>
+      <modal-content>
+        <p>
+          Gross income per pay period is the total amount you’re paid for the dates on a single
+          paycheck before any taxes or deductions are taken out.
+        </p>
+        <p>If there’s additional pay, like bonus pay, tips, or overtime for the pay period, it will be included in the gross amount.</p>
+        <p><strong>Where to find it</strong></p>
+        <p>Check the paystub for the <strong>gross amount per pay period</strong>, which only includes the pay for the days you worked on this current paystub.</p>
+      </modal-content>
+    </modal-dialog>
     <modal-dialog id="modal-what-counts-social-security">
       <modal-heading>What counts as Social Security income?</modal-heading>
       <modal-content>
@@ -506,19 +734,6 @@
         <p>Self-employment income is earned from a partnership, trade, or business that you own. It can also be earned by providing on-demand work, services, or goods as a freelancer, contractor, or gig worker.</p>
         <p>To report this income at the end of the year, the payer (person, business, or organization that pays you) will send a Form 1099-NEC, Form 1099-K, or Form 1099-MISC.</p>
         <p><strong>Don’t include</strong> income earned by working for an employer. If the payer sends a Form W-2 with federal taxes withheld, then add this income in the <strong>Jobs with an employer (W-2)</strong> section instead.</p>
-      </modal-content>
-    </modal-dialog>
-    <modal-dialog id="modal-how-to-estimate-tips">
-      <modal-heading>How can I estimate tips?</modal-heading>
-      <modal-content>
-        <p>To estimate the total amount of tips you'll get in <fg-show path="/taxYear"/>:</p>
-        <p><strong>First</strong>, check your paystub for <strong>year-to-date tips</strong>, which includes any tips you've received so far this year.</p>
-        <ul>
-          <li>Tips may be labeled as Other, or Tips (credit card) on a paystub</li>
-        </ul>
-        <p><strong>Then</strong>, add any amounts you think you'll get for the rest of <fg-show path="/taxYear"/>.</p>
-        <p>If it's hard to estimate, it's ok to enter only what you've received so far, or to leave tips blank.</p>
-        <p>Avoid entering a higher amount than you're sure of for tips, because this can make your estimate less accurate.</p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-self-employment-gross-total">
@@ -667,6 +882,115 @@
           <li>Schedule E (Form 1040), Part II, Line 29a, Column h, for passive income</li>
           <li>Schedule E (Form 1040), Part II, Line 29a, column k, for non-passive income</li>
         </ul>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-estimate-future-bonus-en">
+      <modal-heading>How do I estimate future bonus pay?</modal-heading>
+      <modal-content>
+        <p>Bonus pay is usually a one-time payment in addition to regular wages.</p>
+        <p>If you expect to receive a year-end or quarterly bonus from the employer, include that amount here.</p>
+        <p>It’s okay to enter your best guess of what you will receive. You can also leave future bonus pay blank.</p>
+        <p>Don’t include any past bonus pay that you already received this year.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-job-gross-ytd-end-en">
+      <modal-heading>How do I find the gross income so far in <fg-show path="/taxYear"/>?</modal-heading>
+      <modal-content>
+        <p>Gross income is the total amount you’ve been paid, before any taxes or deductions are taken out.</p>
+        <p>If you earned any additional pay this year, like bonus pay, tips, or overtime, it will be included in the gross amount.</p>
+        <p><strong>Where to find it</strong></p>
+        <p>
+          Check the paystub for the <strong>gross amount year-to-date</strong> or
+          <strong>YTD</strong>, which includes all your pay so far in <fg-show path="/taxYear"/>.
+        </p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-estimate-tips-en">
+      <modal-heading>How can I estimate tips?</modal-heading>
+      <modal-content>
+        <p>To estimate the total amount of tips you’ll get in <fg-show path="/taxYear"/>:</p>
+        <p>
+          <strong>First</strong>, check your paystub for <strong>year-to-date tips</strong>,
+          which includes any tips you’ve received so far this year.
+        </p>
+        <ul>
+          <li>Tips may be labeled as Other, or Tips (credit card) on a paystub</li>
+        </ul>
+        <p><strong>Then</strong>, add any amounts you think you’ll get for the rest of <fg-show path="/taxYear"/>.</p>
+        <p>If it’s hard to estimate, it’s ok to enter only what you’ve received so far, or to leave tips blank.</p>
+        <p>Avoid entering a higher amount than you’re sure of for tips, because this can make your estimate less accurate.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-estimate-overtime-en">
+      <modal-heading>How can I estimate overtime?</modal-heading>
+      <modal-content>
+        <p>To estimate the total amount of overtime you’ll get in <fg-show path="/taxYear"/>:</p>
+        <p>
+          <strong>First</strong>, check your paystub for <strong>year-to-date overtime</strong>,
+          which includes any overtime you’ve received so far this year.
+        </p>
+
+        <ul>
+          <li>Overtime may be labeled as OT hours, OT pay, 1.5 pay, or time-and-a-half on a paystub</li>
+          <li>If overtime is split into multiple line items, add them together</li>
+          <li>Only include overtime that’s earned from working over 40 hours per week</li>
+        </ul>
+
+        <p>
+          <strong>Then</strong>, add any amounts you think you’ll get for the rest of <fg-show path="/taxYear"/>.
+        </p>
+
+        <p>
+          If it’s hard to estimate, it’s okay to enter only what you’ve received so far, or to leave
+          it blank.
+        </p>
+        <p>
+          Avoid entering a higher amount than you’re sure of for overtime, because this can make your estimate less accurate.
+        </p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-estimate-overtime-rate-en">
+      <modal-heading>What if I get paid a different overtime rate?</modal-heading>
+      <modal-content>
+        <p>
+          If you’re paid for overtime at a different rate than 1.5 times or 2.0 times your regular pay:
+        Select the option that’s closest to your overtime pay rate:
+        </p>
+        <ul>
+          <li>Select the option that’s closest to your overtime pay rate</li>
+        </ul>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-fed-tax-pay-period-en">
+      <modal-heading>How do I find federal taxes withheld per pay period?</modal-heading>
+      <modal-content>
+        <p>These are amounts withheld, or taken out of your paycheck to pay for federal taxes.</p>
+        <p>Where to find federal taxes paid <strong>per pay period</strong> on a paystub:</p>
+        <ul>
+          <li>Federal taxes paid may appear  as a single line with a label of <strong>Taxes</strong></li>
+          <li>They may also be labeled as, FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax or similar</li>
+          <li>Check for the <strong>per-pay-period</strong> amount, which only includes the federal taxes paid on this paycheck</li>
+        </ul>
+        <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, Social Security, or other amounts withheld.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-fed-tax-ytd-en">
+      <modal-heading>How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>?</modal-heading>
+      <modal-content>
+        <p>These are amounts withheld, or taken out of a paycheck to pay for federal taxes throughout the year.</p>
+        <p>Where to find the federal taxes paid <strong>so far this year (year-to-date)</strong> on a paystub:</p>
+        <ul>
+          <li>Federal taxes paid may appear as a single line with a label of <strong>Taxes</strong></li>
+          <li>They may also be labeled as, FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax or similar</li>
+          <li>Check for the <strong>year-to-date</strong> or <strong>YTD</strong> amount, which includes all federal taxes paid so far for the year</li>
+        </ul>
+        <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, Social Security, or other amounts withheld.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-retirement-roth-en">
+      <modal-heading>Why can’t I include Roth contributions?</modal-heading>
+      <modal-content>
+        <p>Contributions to Roth plans aren’t deductible because you’ve already paid tax on them. </p>
       </modal-content>
     </modal-dialog>
   </page>

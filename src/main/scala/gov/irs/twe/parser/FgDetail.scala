@@ -31,10 +31,7 @@ case class FgDetail(
 }
 
 object FgDetail {
-
-  /** Valid values for heading-tag attribute. Default is h4. */
   private val ValidHeadingTags = Set("h2", "h3", "h4", "h5", "h6")
-
   def parse(node: xml.Node, pageRoute: String, factDictionary: FactDictionary): FgDetail = {
     val summary = (node \ "summary").headOption match {
       case Some(summaryNode) => summaryNode.child.map(_.toString).mkString.trim

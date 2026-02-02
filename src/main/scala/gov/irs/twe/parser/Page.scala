@@ -29,10 +29,10 @@ case class Page(
       .mkString("")
 
     // Coerce all fg-show nodes into open, empty tags because HTML doesn't allow custom, self-closing tags
-    val regex = new Regex("""<(fg-show) ([^>]*)>""", "nodeName", "attributes")
+    val regex = new Regex("""<fg-show ([^>]*)>""", "attributes")
     val pageXml = regex.replaceAllIn(
       pageContent,
-      m => s"<\\${m group "nodeName"} \\${m group "attributes"}></\\${m group "nodeName"}>",
+      m => s"<fg-show \\${m group "attributes"}></fg-show>",
     )
 
     pageXml
