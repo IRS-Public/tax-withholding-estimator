@@ -168,6 +168,11 @@ class FgSet extends HTMLElement {
     // Place the error div just before the invalid field location
     errorLocation.insertAdjacentElement('beforebegin', errorDiv)
 
+    // If the error is inside a details element, open it
+    // TODO: we can migrate all accordions to details/summary and remove the next block
+    const detailsElement = this.closest('details')
+    if (detailsElement) detailsElement.setAttribute('open', '')
+
     // If the element is inside of a closed accordion, open it
     const accordionContent = this.closest('.usa-accordion__content')
     if (accordionContent && accordionContent.getAttribute('hidden') !== null) {
