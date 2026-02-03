@@ -639,12 +639,8 @@ class FgReset extends HTMLElement {
   }
 
   handleEvent () {
-    factGraph = fg.GraphFactory.apply(factDictionary)
-    window.factGraph = factGraph
-    saveFactGraph()
-
-    showOrHideAllElements()
-    document.dispatchEvent(new CustomEvent('fg-clear'))
+    sessionStorage.removeItem('factGraph')
+    window.location = '/app/tax-withholding-estimator/'
   }
 }
 customElements.define('fg-reset', FgReset)
