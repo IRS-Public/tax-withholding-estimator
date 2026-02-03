@@ -13,12 +13,12 @@ permissions:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   # do not cancel redundant builds on main or release branches
-  cancel-in-progress: ${{ github.ref != 'refs/heads/rav/605-deploy-pipeline' && !startsWith(github.ref, 'refs/heads/release/') }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/heads/release/') }}
 
 jobs:
   build-deploy-twe:
     if: vars.build == 'true'
-    uses: IRSDigitalService/shared-actions/.github/workflows/build-deploy-twe.yml@21d12e06c0a2d2c4dda61f822e065151a16a7af0
+    uses: IRSDigitalService/shared-actions/.github/workflows/build-deploy-twe.yml@ec2af556f11681855b2ddc96ce6dd1b6adf4221e
     permissions:
       id-token: write
       contents: read
