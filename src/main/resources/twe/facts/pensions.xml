@@ -24,17 +24,70 @@
         <Enum optionsPath="/filerAssignmentOption"/>
       </Writable>
     </Fact>
-    <!-- TODO: Need isAllYear fact -->
+    <Fact path="/pensions/*/notSpouses">
+      <Description>The income doesn't belong to the spouse</Description>
+      <Derived>
+        <Any>
+          <Not>
+            <IsComplete>
+              <Dependency path="../filerAssignment"/>
+            </IsComplete>
+          </Not>
+          <NotEqual>
+            <Left>
+              <Dependency path="../filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignmentOption">spouse</Enum>
+            </Right>
+          </NotEqual>
+        </Any>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/isAllYear">
+      <Writable>
+        <Boolean/>
+      </Writable>
+    </Fact>
+    <Fact path="/pensions/*/flowIsAllYearComplete">
+      <Derived>
+        <IsComplete>
+          <Dependency path="../isAllYear"/>
+        </IsComplete>
+      </Derived>
+    </Fact>
     <Fact path="/pensions/*/startDate">
       <Description>The start date of the pension this year</Description>
+      <Override>
+        <Condition>
+          <Dependency path="../isAllYear"/>
+        </Condition>
+        <Default>
+          <Dependency path="/yearStartDate"/>
+        </Default>
+      </Override>
       <Writable>
         <Day/>
+        <Limit type="Max">
+          <Dependency path="/yearEndDate"/>
+        </Limit>
       </Writable>
     </Fact>
     <Fact path="/pensions/*/endDate">
       <Description>The end date of the pension this year</Description>
+      <Override>
+        <Condition>
+          <Dependency path="../isAllYear"/>
+        </Condition>
+        <Default>
+          <Dependency path="/yearEndDate"/>
+        </Default>
+      </Override>
       <Writable>
         <Day/>
+        <Limit type="Max">
+          <Dependency path="/yearEndDate"/>
+        </Limit>
       </Writable>
     </Fact>
     <Fact path="/pensions/*/payFrequency">
@@ -71,6 +124,97 @@
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
+    </Fact>
+    <!-- Pre-tax calculations -->
+    <Fact path="/pensions/*/healthInsuranceContributionsPerPayPeriod">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/pensions/*/healthInsuranceContributionsToDate">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/pensions/*/healthInsuranceContributions">
+      <Derived>
+        <Add>
+          <Dependency path="../healthInsuranceContributionsToDate"/>
+          <Multiply>
+            <Dependency path="../healthInsuranceContributionsPerPayPeriod"/>
+            <Dependency path="../remainingPayPeriodsInteger"/>
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/otherPreTaxContributionsPerPayPeriod">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/pensions/*/otherPreTaxContributionsToDate">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/pensions/*/otherPreTaxContributions">
+      <Derived>
+        <Add>
+          <Dependency path="../otherPreTaxContributionsToDate"/>
+          <Multiply>
+            <Dependency path="../otherPreTaxContributionsPerPayPeriod"/>
+            <Dependency path="../remainingPayPeriodsInteger"/>
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/hsaOrFsaContributionsPerPayPeriod">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/pensions/*/hsaOrFsaContributionsToDate">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/pensions/*/hsaOrFsaContributions">
+      <Derived>
+        <Add>
+          <Dependency path="../hsaOrFsaContributionsToDate"/>
+          <Multiply>
+            <Dependency path="../hsaOrFsaContributionsPerPayPeriod"/>
+            <Dependency path="../remainingPayPeriodsInteger"/>
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/preTaxDeductions">
+      <Derived>
+        <Add>
+          <Dependency path="../healthInsuranceContributions"/>
+          <Dependency path="../otherPreTaxContributions"/>
+          <Dependency path="../hsaOrFsaContributions"/>
+        </Add>
+      </Derived>
     </Fact>
     <Fact path="/pensions/*/yearToDateWithholding">
       <Writable>
@@ -410,6 +554,20 @@
         </LessThanOrEqual>
       </Derived>
     </Fact>
+    <Fact path="/pensions/*/isPastJobIncompleteOrFalse">
+      <Derived>
+        <Any>
+          <Not>
+            <IsComplete>
+              <Dependency path="../isPastJob"/>
+            </IsComplete>
+          </Not>
+          <Not>
+            <Dependency path="../isPastJob"/>
+          </Not>
+        </Any>
+      </Derived>
+    </Fact>
     <!-- Income/withholding Calculations -->
     <Fact path="/pensions/*/restOfYearIncome">
       <Derived>
@@ -438,11 +596,17 @@
     </Fact>
     <Fact path="/pensions/*/income">
       <Derived>
-        <Add>
-          <Dependency path="../restOfYearIncome"/>
-          <Dependency path="../yearToDateIncome"/>
-        </Add>
-        <!-- TODO: handle subtracting and accepting preTaxDeductions -->
+        <Subtract>
+          <Minuend>
+            <Add>
+              <Dependency path="../restOfYearIncome"/>
+              <Dependency path="../yearToDateIncome"/>
+            </Add>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="../preTaxDeductions"/>
+          </Subtrahends>
+        </Subtract>
       </Derived>
     </Fact>
     <Fact path="/pensions/*/lagWithholding">

@@ -3,7 +3,7 @@
 <FlowConfig>
   <page title="Income &amp; tax payments" route="/income">
     <section>
-      <h2><fg-show path="/taxYear" /> Income &amp; tax payments</h2>
+      <h2><fg-show path="/taxYear"/> Income &amp; tax payments</h2>
       <p>Tell us about the total income, federal tax withholding, and estimated tax payments you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to have for <fg-show path="/taxYear"/>.</p>
       <!-- TODO: Make into fg-alert in the future-->
       <div class="usa-alert usa-alert--info">
@@ -20,7 +20,9 @@
         <p> To continue using the estimator, you need to have at least one job or pension that regularly withholds federal income taxes. If you don’t pay any taxes on your income through withholding, you may want to plan to <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
         </p>
       </fg-alert>
-      <p><modal-link for="modal-what-counts-job">What counts as a job?</modal-link></p>
+      <p>
+        <modal-link for="modal-what-counts-job">What counts as a job?</modal-link>
+      </p>
       <fg-collection path="/jobs" item-name="Job">
         <fg-set path="/jobs/*/filerAssignment" if-true="/isFilingStatusMFJ">
           <question>Who is this income for?</question>
@@ -345,59 +347,167 @@
       </fg-collection>
 
       <h3>Pension or annuity income</h3>
-      <p><modal-link for="modal-what-counts-pension">What counts as a pension or annuity?</modal-link></p>
+      <p>
+        <modal-link for="modal-what-counts-pension">What counts as a pension or annuity?</modal-link>
+      </p>
       <fg-collection path="/pensions" item-name="Pension or annuity income">
         <fg-set path="/pensions/*/filerAssignment" if-true="/isFilingStatusMFJ">
-          <question>Who is this pension for?</question>
-          <select options-path="/pensions/*/filerAssignmentOption">
+          <question>Who is this pension or annuity paid to?</question>
+          <input type="enum" options-path="/filerAssignmentOption">
             <option value="self">Myself</option>
             <option value="spouse">My spouse</option>
-          </select>
+          </input>
         </fg-set>
-        <fg-set path="/pensions/*/startDate">
-          <question>What’s the start date?</question>
+        <h5>Timing</h5>
+        <fg-set path="/pensions/*/isAllYear">
+          <question>Do <span condition="/pensions/*/notSpouses" operator="isTrue">you</span><span condition="/pensions/*/notSpouses" operator="isFalse">they</span> expect to have this pension or annuity all year or only part of the year?</question>
+          <input type="boolean">
+            <option value="true">All year (January 1–December 31, <fg-show path="/taxYear"/>)</option>
+            <option value="false">Part of the year</option>
+          </input>
+        </fg-set>
+        <fg-set path="/pensions/*/startDate" if-false="/pensions/*/isAllYear">
+          <question>What’s the first day in <fg-show path="/taxYear"/> <span condition="/pensions/*/notSpouses" operator="isTrue">you</span><span condition="/pensions/*/notSpouses" operator="isFalse">they</span> expect to receive this pension or annuity?</question>
+          <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
-        <fg-set path="/pensions/*/endDate">
-          <question>What’s the end date?</question>
+        <fg-set path="/pensions/*/endDate" if-false="/pensions/*/isAllYear">
+          <question>What’s the last day in <fg-show path="/taxYear"/> <span condition="/pensions/*/notSpouses" operator="isTrue">you</span><span condition="/pensions/*/notSpouses" operator="isFalse">they</span> expect to receive this pension or annuity?</question>
+          <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
-        <fg-set path="/pensions/*/mostRecentPayDate">
-          <question>When was your most recent pay date?</question>
-          <input type="date"/>
-        </fg-set>
-        <fg-set path="/pensions/*/averagePayPerPayPeriod">
-          <question>What’s the average amount you get paid each pay period?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/pensions/*/yearToDateIncome">
-          <question>What’s your year-to-date income for this pension?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/pensions/*/averageWithholdingPerPayPeriod">
-          <question>What’s the average amount of federal withholding each pay period?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/pensions/*/yearToDateWithholding">
-          <question>What’s your year-to-date federal withholding for this pension?</question>
-          <input type="dollar"/>
-        </fg-set>
-        <fg-set path="/pensions/*/payFrequency">
-          <question>How frequently are you paid?</question>
-          <select options-path="/pensions/*/payFrequency">
+        <fg-set path="/pensions/*/payFrequency" if-true="/pensions/*/flowIsAllYearComplete">
+          <question>How frequently are <span condition="/pensions/*/notSpouses" operator="isTrue">you</span><span condition="/pensions/*/notSpouses" operator="isFalse">they</span> paid?</question>
+          <input type="enum" options-path="/payFrequencyOptions">
             <option value="weekly">Weekly</option>
-            <option value="biWeekly">Biweekly</option>
-            <option value="semiMonthly">Semimonthly</option>
-            <option value="monthly">Monthly</option>
-          </select>
+            <option value="biWeekly">Every two weeks</option>
+            <option value="semiMonthly">Twice monthly</option>
+            <option value="monthly">Once a month</option>
+          </input>
         </fg-set>
+        <h5 condition="/pensions/*/flowIsAllYearComplete" operator="isFalse">Pension or annuity details</h5>
+        <p condition="/pensions/*/flowIsAllYearComplete" operator="isFalse">Once we know more about your pension or annuity, we’ll ask you additional questions.</p>
+        <div condition="/pensions/*/flowIsAllYearComplete" operator="isTrue">
+          <h5>Dates and income</h5>
+          <p>Use the most recent pension or annuity statement to enter the following information.</p>
+          <fg-set path="/pensions/*/mostRecentPayDate" if-true="/pensions/*/isPastJobIncompleteOrFalse">
+            <question>What’s the date of <span condition="/pensions/*/notSpouses" operator="isTrue">your</span><span condition="/pensions/*/notSpouses" operator="isFalse">their</span> most recent pension or annuity payment?</question>
+            <input type="date"/>
+          </fg-set>
+          <fg-set path="/pensions/*/averagePayPerPayPeriod" if-true="/pensions/*/isPastJobIncompleteOrFalse">
+            <question>What’s the gross income for the most recent pension or annuity payment?</question>
+            <modal-link for="modal-pension-gross-pay-period">How do I find the gross income for the most recent payment?</modal-link>
+            <input type="dollar"/>
+          </fg-set>
+          <fg-set path="/pensions/*/yearToDateIncome">
+            <question>What's the gross income <span condition="/pensions/*/notSpouses" operator="isTrue">you have</span><span condition="/pensions/*/notSpouses" operator="isFalse">your spouse has</span> received so far in <fg-show path="/taxYear"/>?</question>
+            <hint>This might be labeled year-to-date or YTD on your statement.<span condition="/pensions/*/isPastJob" operator="isTrue"> If you’re expecting a final payment, include that additional amount.</span></hint>
+            <modal-link for="modal-pension-gross-ytd-end">How do I find the gross income so far in <fg-show path="/taxYear"/>?</modal-link>
+            <input type="dollar"/>
+          </fg-set>
+        </div>
+        <div condition="/pensions/*/flowIsAllYearComplete" operator="isTrue">
+          <h5>Federal taxes</h5>
+          <p>Use the most recent pension or annuity statement to enter the following information.</p>
+          <fg-set path="/pensions/*/averageWithholdingPerPayPeriod" if-true="/pensions/*/isPastJobIncompleteOrFalse">
+            <question>Federal taxes withheld (paid) for the most recent payment</question>
+            <hint>Don’t include state and local taxes, Medicare, or Social Security.</hint>
+            <modal-link for="modal-fed-tax-pension-pay-period">How do I find federal taxes withheld for the most recent payment?</modal-link>
+            <input type="dollar"/>
+          </fg-set>
+          <fg-set path="/pensions/*/yearToDateWithholding">
+            <question>Federal taxes withheld (paid) so far in <fg-show path="/taxYear"/></question>
+            <hint>This might be labeled year-to-date or YTD on your statement. Don't include state and local taxes, Medicare, or Social Security.</hint>
+            <modal-link for="modal-fed-pension-tax-ytd">How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>?</modal-link>
+            <input type="dollar"/>
+          </fg-set>
+        </div>
+        <div condition="/pensions/*/flowIsAllYearComplete" operator="isTrue">
+          <h5>Contributions</h5>
+          <p>Check your <span condition="/pensions/*/notSpouses" operator="isFalse">spouse’s</span> pension or annuity statement for pre-tax contributions to help pay for benefits.</p>
+          <fg-detail icon="chevron">
+            <summary>Health insurance</summary>
+            <p>Enter the total contributions made to pay for health coverage.</p>
+            <p> Health coverage contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
+            <p>Include contributions for:</p>
+            <ul>
+              <li>Health insurance plans</li>
+              <li>Dental or vision insurance plans</li>
+              <li>Premiums for COBRA continuation coverage</li>
+            </ul>
+            <p>
+              <strong>Don’t include:</strong>
+            </p>
+            <ul>
+              <li>Long-term care contributions</li>
+              <li>Employer contributions</li>
+            </ul>
+            <fg-set path="/pensions/*/healthInsuranceContributionsPerPayPeriod">
+              <question>Amount per pay period</question>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/pensions/*/healthInsuranceContributionsToDate">
+              <question>Amount so far in <fg-show path="/taxYear"/></question>
+              <hint>This might be labeled year-to-date or YTD on your statement.</hint>
+              <input type="dollar"/>
+            </fg-set>
+          </fg-detail>
+          <fg-detail icon="chevron">
+            <summary>Other pre-tax benefits</summary>
+            <p>Enter the total contributions made to pay for other pre-tax benefits.</p>
+            <p>Benefits contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
+            <p>Common pre-tax benefits may include:</p>
+            <ul>
+              <li>Accident insurance plans</li>
+              <li>Dependent care assistance plans</li>
+              <li>Group-term life insurance on the lives of employees</li>
+              <li>Qualified adoption assistance</li>
+              <li>Accidental death or dismemberment insurance</li>
+              <li>Long-term and short-term disability coverage</li>
+              <li>Qualified transportation fringe benefit</li>
+            </ul>
+            <p>
+              <strong>Don’t include:</strong>
+            </p>
+            <ul>
+              <li>Long-term care contributions</li>
+              <li>Employer contributions</li>
+            </ul>
+            <fg-set path="/pensions/*/otherPreTaxContributionsPerPayPeriod">
+              <question>Amount per pay period</question>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/pensions/*/otherPreTaxContributionsToDate">
+              <question>Amount so far in <fg-show path="/taxYear"/></question>
+              <hint>This might be labeled year-to-date or YTD on your statement.</hint>
+              <input type="dollar"/>
+            </fg-set>
+          </fg-detail>
+          <fg-detail icon="chevron">
+            <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
+            <p>Enter total contributions to Health Savings Accounts (HSA) or Flexible Spending Account (FSA).</p>
+            <p>HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
+            <p>Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSA</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSA</a>.</p>
+            <fg-set path="/pensions/*/hsaOrFsaContributionsPerPayPeriod">
+              <question>Amount per pay period</question>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/pensions/*/hsaOrFsaContributionsToDate">
+              <question>Amount so far in <fg-show path="/taxYear"/></question>
+              <hint>This might be labeled year-to-date or YTD on your statement.</hint>
+              <input type="dollar"/>
+            </fg-set>
+          </fg-detail>
+        </div>
       </fg-collection>
 
       <h3>Additional income</h3>
 
       <h4>Self-employment income</h4>
       <p>This includes income from a partnership, trade, or business that you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> own. It can also include income earned as a freelancer, contractor, or gig worker.</p>
-      <p><modal-link for="modal-what-counts-self-employment">What counts as self-employment income?</modal-link></p>
+      <p>
+        <modal-link for="modal-what-counts-self-employment">What counts as self-employment income?</modal-link>
+      </p>
       <fg-collection path="/selfEmploymentSources" item-name="Self-employment income">
         <fg-set path="/selfEmploymentSources/*/filerAssignment" if-true="/isFilingStatusMFJ">
           <question>Who is this income for?</question>
@@ -474,7 +584,9 @@
       </fg-collection>
 
       <h3>Unemployment income</h3>
-      <p><modal-link for="modal-what-counts-unemployment">What counts as unemployment income?</modal-link></p>
+      <p>
+        <modal-link for="modal-what-counts-unemployment">What counts as unemployment income?</modal-link>
+      </p>
       <fg-set path="/unemploymentIncome">
         <question>Total gross unemployment income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/>?</question>
         <input type="dollar"/>
@@ -501,7 +613,9 @@
       <p>Even if you expect to earn a small amount of investment income, adding this amount will help get the most accurate withholding estimate.</p>
       <fg-detail icon="chevron">
         <summary>Interest income</summary>
-        <p><modal-link for="modal-estimate-interest-income-en">What's interest income and how can I estimate it?</modal-link></p>
+        <p>
+          <modal-link for="modal-estimate-interest-income-en">What's interest income and how can I estimate it?</modal-link>
+        </p>
         <fg-set path="/taxableInterestIncome">
           <question>Interest you<span condition="/isFilingStatusMFJ" operator="isTrue"> and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
           <input type="dollar"/>
@@ -510,7 +624,9 @@
       <fg-detail icon="chevron">
         <summary>Ordinary or qualified dividends</summary>
         <p>Enter the total amounts you expect to earn in <fg-show path="/taxYear"/>.</p>
-        <p><modal-link for="modal-what-are-dividends-en">What are dividends and how can I estimate them?</modal-link></p>
+        <p>
+          <modal-link for="modal-what-are-dividends-en">What are dividends and how can I estimate them?</modal-link>
+        </p>
         <fg-set path="/ordinaryDividendsIncome">
           <question>Ordinary dividend income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
           <input type="dollar"/>
@@ -523,7 +639,9 @@
       <fg-detail icon="chevron">
         <summary>Short-term or long-term gains and losses</summary>
         <p>Enter the total amounts you expect to earn and lose in <fg-show path="/taxYear"/>.</p>
-        <p><modal-link for="modal-what-are-short-long-term-gains-losses-en">What are short- and long-term gains and losses, and how can I estimate them?</modal-link></p>
+        <p>
+          <modal-link for="modal-what-are-short-long-term-gains-losses-en">What are short- and long-term gains and losses, and how can I estimate them?</modal-link>
+        </p>
         <fg-set path="/shortTermCapitalGainsIncome">
           <question>Short-term gains you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
           <input type="dollar"/>
@@ -543,7 +661,9 @@
       </fg-detail>
       <fg-detail icon="chevron">
         <summary>Rental income</summary>
-        <p><modal-link for="modal-rental-expenses-net-income-en">What are rental expenses and how can I estimate net rental income?</modal-link></p>
+        <p>
+          <modal-link for="modal-rental-expenses-net-income-en">What are rental expenses and how can I estimate net rental income?</modal-link>
+        </p>
         <fg-set path="/rentalIncome">
           <question>Net amount of rental income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
           <hint>Net is the total minus any expenses.</hint>
@@ -552,7 +672,9 @@
       </fg-detail>
       <fg-detail icon="chevron">
         <summary>Royalties</summary>
-        <p><modal-link for="modal-estimate-royalty-income-en">How can I estimate royalty income?</modal-link></p>
+        <p>
+          <modal-link for="modal-estimate-royalty-income-en">How can I estimate royalty income?</modal-link>
+        </p>
         <fg-set path="/royaltyIncome">
           <question>Royalty income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
           <input type="dollar"/>
@@ -561,7 +683,9 @@
       <fg-detail icon="chevron">
         <summary>Passive or non-passive income from S-corporations or partnerships</summary>
         <p>Enter the total amounts you expect to earn in <fg-show path="/taxYear"/>.</p>
-        <p><modal-link for="modal-estimate-s-corp-partnership-income-en">How can I estimate income from S-corporations or partnerships?</modal-link></p>
+        <p>
+          <modal-link for="modal-estimate-s-corp-partnership-income-en">How can I estimate income from S-corporations or partnerships?</modal-link>
+        </p>
         <fg-set path="/sCorpPassiveIncome">
           <question>Passive income from S-corporations or partnerships you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
           <input type="dollar"/>
@@ -581,7 +705,9 @@
         <li>Court awards and damages (unless they're for physical injury or sickness)</li>
         <li>Fees for services you've provided</li>
       </ul>
-      <p><a target="_blank" href="https://www.irs.gov/filing/taxable-income" class="usa-link usa-link--external">Learn more about other taxable income.<span class="usa-sr-only"> (opens in a new tab)</span></a></p>
+      <p>
+        <a target="_blank" href="https://www.irs.gov/filing/taxable-income" class="usa-link usa-link--external">Learn more about other taxable income.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+      </p>
       <fg-set path="/nonSpecificOtherIncome">
         <question>Total amount of other income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/></question>
         <hint>Enter one total amount for all other income.</hint>
@@ -595,7 +721,9 @@
 
       <h3>Estimated taxes paid</h3>
       <p class="text-base-dark">In addition to taxes already withheld from your income, estimated payments are made directly to the IRS, usually through an IRS Online Account or with Form 1040-ES.</p>
-      <p><a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link usa-link--external">Learn more about estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a></p>
+      <p>
+        <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link usa-link--external">Learn more about estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+      </p>
       <fg-set path="/totalEstimatedTaxesPaid">
         <question>Estimated tax payments you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> made so far in <fg-show path="/taxYear"/></question>
         <hint>Don't include taxes withheld from paychecks and other income.</hint>
@@ -711,7 +839,9 @@
       <modal-heading>What counts as a job?</modal-heading>
       <modal-content>
         <p>A job is when you earn income by working for an employer. At the end of the year, the employer will send a Form W-2 to report this income.</p>
-        <p><strong>Don’t include income earned through:</strong></p>
+        <p>
+          <strong>Don’t include income earned through:</strong>
+        </p>
         <ul>
           <li>A partnership, trade, or business that you own</li>
           <li>On-demand work, services, or goods as a freelancer, contractor, or gig worker</li>
@@ -725,6 +855,60 @@
         <p>A pension is typically a retirement plan that makes a series of payments to you after you retire from work, based on factors such as years of service and past pay.</p>
         <p>An annuity is a series of payments from a company that provides steady retirement income.</p>
         <p>At the end of the year, a pension or annuity provider will send a Form 1099-R to report this income.</p>
+        <p><strong>Don’t include</strong> distributions or withdrawals from 401(k), 403(b), or 457(b) plans or Individual Retirement Arrangements (IRAs). You can add pre-tax income from these accounts as ‘Income from pre-tax retirement accounts.’</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-pension-gross-pay-period">
+      <modal-heading>How do I find the gross income for the most recent payment?</modal-heading>
+      <modal-content>
+        <p>This is the total amount of your most recent pension or annuity payment, before any taxes or deductions are taken out.</p>
+        <p><strong>On your most recent statement</strong>, check for the gross payment amount.</p>
+        <p>If the annual amount of your pension or annuity will be the same as last year, you can also refer to your <fg-show path="/lastTaxYear"/> Form 1099-R. To estimate the gross amount for your most recent payment:</p>
+        <ol>
+          <li>Find Box 1 on the Form 1099-R, which shows the gross amount for all of last year</li>
+          <li>Divide last year’s gross amount by the number of payments you expect to receive in <fg-show path="/taxYear"/></li>
+        </ol>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-pension-gross-ytd-end">
+      <modal-heading>How do I find the gross income so far in <fg-show path="/taxYear"/>?</modal-heading>
+      <modal-content>
+        <p>Gross income is the total amount you’ve been paid, before any taxes or deductions are taken out.</p>
+        <p><strong>On your most recent statement</strong>, check for the gross income so far this year. This might be labeled as gross income year-to-date or YTD.</p>
+        <p><strong>If you don’t have a statement</strong>, but know the gross amount per payment, you can estimate by multiplying it by the number of payments you’ve received so far in <fg-show path="/taxYear"/>.</p>
+        <p>If the annual amount of your pension or annuity will be the same as last year, you can also refer to your <fg-show path="/lastTaxYear"/> Form 1099-R. To estimate the gross income so far this year:</p>
+        <ol>
+          <li>Find Box 1 on the Form 1099-R, which shows the gross amount for all of last year</li>
+          <li>Divide last year’s gross amount by the number of payments you expect to receive in <fg-show path="/taxYear"/></li>
+          <li>Then, multiply by the number of payments you’ve received so far in <fg-show path="/taxYear"/></li>
+        </ol>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-fed-tax-pension-pay-period">
+      <modal-heading>How do I find federal taxes withheld for the most recent payment?</modal-heading>
+      <modal-content>
+        <p>These are amounts withheld, or taken out of your pension or annuity payment to pay for federal taxes.</p>
+        <p><strong>On your most recent statement</strong>, check for the federal taxes paid for each payment.</p>
+        <p>If the annual amount of your pension or annuity will be the same as last year, you can also refer to your <fg-show path="/lastTaxYear"/> Form 1099-R. To estimate federal taxes withheld for the most recent payment:</p>
+        <ol>
+          <li>Find Box 4 on the Form 1099-R, which shows the federal taxes withheld for all of last year</li>
+          <li>Divide last year’s withholding amount by the number of payments you expect to receive in <fg-show path="/taxYear"/></li>
+        </ol>
+        <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, Social Security, or other amounts withheld.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-fed-pension-tax-ytd">
+      <modal-heading>How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>?</modal-heading>
+      <modal-content>
+        <p>These are amounts withheld, or taken out of a pension or annuity payment to pay for federal taxes throughout the year.</p>
+        <p><strong>On your most recent statement</strong>, check for the federal taxes paid so far this year. This might be labeled as year-to-date or YTD. </p>
+        <p>If the annual amount of your pension or annuity will be the same as last year, you can also refer to your <fg-show path="/lastTaxYear"/> Form 1099-R. To estimate federal taxes withheld so far this year:</p>
+        <ol>
+          <li>Find Box 4 on the Form 1099-R, which shows federal taxes withheld last year</li>
+          <li>Divide last year’s withholding amount by the number of payments you expect to receive in <fg-show path="/taxYear"/></li>
+          <li>Then, multiply by the number of payments you’ve received so far in <fg-show path="/taxYear"/></li>
+        </ol>
+        <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, Social Security, or other amounts withheld.</p>
         <p><strong>Don’t include</strong> distributions or withdrawals from 401(k), 403(b), or 457(b) plans or Individual Retirement Arrangements (IRAs). You can add pre-tax income from these accounts as &#x2018;Income from pre-tax retirement accounts.’</p>
       </modal-content>
     </modal-dialog>
@@ -739,12 +923,18 @@
     <modal-dialog id="modal-self-employment-gross-total">
       <modal-heading>What's total gross income and where do I find it?</modal-heading>
       <modal-content>
-        <p><strong>What is it?</strong></p>
+        <p>
+          <strong>What is it?</strong>
+        </p>
         <p>Total gross income is the total amount you expect to earn this year, before any taxes, deductions, or expenses are taken out.</p>
         <p>If you expect to earn any additional pay this year, like bonus pay, tips, or overtime, include it in the gross amount.</p>
-        <p><strong>Where to find it?</strong></p>
+        <p>
+          <strong>Where to find it?</strong>
+        </p>
         <p>You can estimate gross total income by tracking how much you earn from self-employment. You may need to estimate your self-employment income for the entire year.</p>
-        <p><strong>How to check last year's tax return?</strong></p>
+        <p>
+          <strong>How to check last year's tax return?</strong>
+        </p>
         <p>If you were self-employed last year and expect your earnings to stay the same, you can find your gross income on line 7 of Schedule C.</p>
       </modal-content>
     </modal-dialog>
@@ -765,7 +955,9 @@
           <li>Travel and meals</li>
         </ul>
         <p>These deductions are different from the personal deductions you'll make if you choose to itemize your deductions. You can deduct your business expenses here and still choose the standard deduction later.</p>
-        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Learn more about business expenses</a></p>
+        <p>
+          <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Learn more about business expenses</a>
+        </p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-what-counts-unemployment">
@@ -774,14 +966,18 @@
         <p>Unemployment income is a joint state-federal program that provides cash benefits to eligible workers.</p>
         <p>To receive unemployment, you must become unemployed through no fault of your own and meet other requirements.</p>
         <p>At the end of the year, you should receive Form 1099-G showing the amount paid to you during the year.</p>
-        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Learn more about unemployment income.</a></p>
+        <p>
+          <a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Learn more about unemployment income.</a>
+        </p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-fed-unemployment-tax-withheld-en">
       <modal-heading>How do I know if I have taxes withheld?</modal-heading>
       <modal-content>
         <p>You can choose to have 10% federal income tax withheld from your unemployment compensation by submitting Form W-4V to the unemployment office.</p>
-        <p><strong>How to check if you have taxes withheld:</strong></p>
+        <p>
+          <strong>How to check if you have taxes withheld:</strong>
+        </p>
         <ul>
           <li>Check your unemployment statement for federal tax withholding</li>
           <li>Call your unemployment office and ask about your withholding</li>
@@ -794,7 +990,9 @@
       <modal-content>
         <p>Any withdrawal of pre-tax funds from a 401(k), 403(b), 457(b), or traditional IRA counts as a distribution. This includes distributions at retirement, early withdrawals, required minimum distributions (RMDs), and pretax-to-Roth conversions.</p>
         <p>At the end of the year, your financial institution will send a Form 1099-R to report this income.</p>
-        <p><strong>Don’t include:</strong></p>
+        <p>
+          <strong>Don’t include:</strong>
+        </p>
         <ul>
           <li>Distributions from Roth (post-tax) accounts. These distributions have already been taxed.</li>
           <li>Other forms of retirement income, like pensions, annuities, Social Security, or other investment income. You’ll enter them in other sections.</li>
@@ -807,7 +1005,9 @@
         <p>Common types of interest income include interest earned from bank accounts or from lending money.</p>
         <p>To estimate your interest income, look at your monthly bank statements to see how much you've been earning in interest each month. Multiply the monthly average by 12 to get an estimate for the year.</p>
         <p>When estimating interest income, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
-        <p><strong>How to check last year's tax return</strong></p>
+        <p>
+          <strong>How to check last year's tax return</strong>
+        </p>
         <p>If you earned interest income last year and think you'll earn a similar amount this year, check for an amount in:</p>
         <ul>
           <li>Line 2b on Form 1040 of your <fg-show path="/lastTaxYear"/> federal tax return</li>
@@ -818,10 +1018,14 @@
       <modal-heading>What are dividends and how can I estimate them?</modal-heading>
       <modal-content>
         <p>Ordinary or qualified dividends are payments made by corporations to shareholders based on a company's profits. The main difference between the two is that qualified dividends are taxed at a lower rate.</p>
-        <p><strong>How to estimate dividends</strong></p>
+        <p>
+          <strong>How to estimate dividends</strong>
+        </p>
         <p>Dividends are often paid out quarterly. To estimate your dividends, look at your financial statements to see how much you've earned in dividends so far this year. Multiply your average quarterly dividend by four (or a different number if not quarterly) to get an estimate for the year.</p>
         <p>When estimating dividends, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
-        <p><strong>How to check last year's tax return</strong></p>
+        <p>
+          <strong>How to check last year's tax return</strong>
+        </p>
         <p>If you earned these dividends last year and think you'll earn a similar amount this year, check:</p>
         <ul>
           <li>Line 3b on Form 1040 of your <fg-show path="/lastTaxYear"/> federal tax return for ordinary dividends</li>
@@ -837,9 +1041,13 @@
           <li><strong>Short-term gain or loss</strong>, if you held the asset for less than a year.</li>
           <li><strong>Long-term gain or loss</strong>, if you held the asset for more than one year.</li>
         </ul>
-        <p><strong>How to check for gains and losses</strong></p>
+        <p>
+          <strong>How to check for gains and losses</strong>
+        </p>
         <p>If you have an investment or brokerage account, log in or review your latest statement to check for any short- or long-term gains and losses this year.</p>
-        <p><strong>How to estimate gains and losses</strong></p>
+        <p>
+          <strong>How to estimate gains and losses</strong>
+        </p>
         <p>If you plan to sell any assets before the end of the year, include the estimated gains or losses in your total.</p>
         <p>When estimating short- and long-term gains, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
       </modal-content>
@@ -848,10 +1056,14 @@
       <modal-heading>What are rental expenses and how can I estimate net rental income?</modal-heading>
       <modal-content>
         <p><a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">Rental expenses<span class="usa-sr-only"> (opens in a new tab)</span></a> include maintenance costs, insurance, taxes, and interest.</p>
-        <p><strong>How to estimate net rental income</strong></p>
+        <p>
+          <strong>How to estimate net rental income</strong>
+        </p>
         <p>First, add up all the money you expect to receive from tenants during the year. Next, subtract your rental expenses.</p>
         <p>When estimating rental income, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
-        <p><strong>How to check last year's tax return</strong></p>
+        <p>
+          <strong>How to check last year's tax return</strong>
+        </p>
         <p>If you earned rental income last year and think you'll earn a similar amount this year, check your <fg-show path="/lastTaxYear"/> forms:</p>
         <ul>
           <li>Schedule E (Form 1040), Part I, line 21, Columns A - C</li>
@@ -863,7 +1075,9 @@
       <modal-content>
         <p>Check your licensing agreements or publisher statements for expected payment schedules or percentages.</p>
         <p>If estimating future royalty income, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
-        <p><strong>How to check last year's tax return</strong></p>
+        <p>
+          <strong>How to check last year's tax return</strong>
+        </p>
         <p>If you earned royalties last year and think you'll earn a similar amount this year, check your <fg-show path="/lastTaxYear"/> forms:</p>
         <ul>
           <li>Schedule E (Form 1040), Part I, line 23b</li>
@@ -876,7 +1090,9 @@
         <p>You can use investor reports, profit/ loss statements, or other business data to predict annual earnings. Multiply those earnings by your ownership percentage or distributive share.</p>
         <p>When estimating S-corporation or partnership income, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
         <p>Don't include income previously entered under self-employment.</p>
-        <p><strong>How to check last year's return</strong></p>
+        <p>
+          <strong>How to check last year's return</strong>
+        </p>
         <p>If you earned income from S-corporations or partnerships last year and think you'll earn a similar amount this year, check these <fg-show path="/lastTaxYear"/> forms:</p>
         <ul>
           <li>Schedule E (Form 1040), Part II, Line 29a, Column h, for passive income</li>
