@@ -140,13 +140,13 @@
         </Round>
       </Derived>
     </Fact>
-    <Fact path="/jobs/*/proportionOfYearEndJobsIncome">
+    <Fact path="/jobs/*/proportionOfIncome">
       <!--      TODO: average pay per period * pay periods in the table in worksheet 1A-->
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Dependency path="../isHeldToYearEnd"/>
+              <Dependency path="/jobs/*/conditionForPossibleW4Jobs"/>
             </When>
             <Then>
               <Divide>
@@ -154,7 +154,7 @@
                   <Dependency path="../annualizedIncome"/>
                 </Dividend>
                 <Divisors>
-                  <Dependency path="/annualizedIncomeFromYearEndJobs"/>
+                  <Dependency path="/annualizedIncomeFromAvailableJobs"/>
                 </Divisors>
               </Divide>
             </Then>
@@ -282,72 +282,25 @@
     <Fact path="/jobSelectedForW4Line4a">
       <Description>The job selected to have Line 4a populated on a new W4. It is the year end job with the highest proportion of income among all year jobs, or if there are no year end jobs it is the job with highest proportion of standard withholding for the rest of the year.</Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <GreaterThan>
+        <IndexOf>
+          <Collection>
+            <Filter path="/jobs">
+              <Equal>
                 <Left>
-                  <CollectionSize>
-                    <Dependency path="/yearEndJobs"/>
-                  </CollectionSize>
+                  <Maximum>
+                    <Dependency path="/possibleW4Jobs/*/restOfYearIncome"/>
+                  </Maximum>
                 </Left>
                 <Right>
-                  <Int>0</Int>
+                  <Dependency path="restOfYearIncome"/>
                 </Right>
-              </GreaterThan>
-            </When>
-            <Then>
-              <IndexOf>
-                <Collection>
-                  <!-- When there is a year end job, use the year end job with highest proportion of income. -->
-                  <!-- (This is effectively /yearEndJobs but we can't write it that way: Cases must use same collection.) -->
-                  <Filter path="/jobs">
-                    <Equal>
-                      <Left>
-                        <Maximum>
-                          <Dependency path="/yearEndJobs/*/proportionOfYearEndJobsIncome"/>
-                        </Maximum>
-                      </Left>
-                      <Right>
-                        <Dependency path="proportionOfYearEndJobsIncome"/>
-                      </Right>
-                    </Equal>
-                  </Filter>
-                </Collection>
-                <Index>
-                  <Int>0</Int>
-                </Index>
-              </IndexOf>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <!-- When there are no year end jobs, use non-past job with highest income. -->
-              <IndexOf>
-                <Collection>
-                  <Filter path="/jobs">
-                    <Equal>
-                      <Left>
-                        <Maximum>
-                          <Dependency path="/possibleW4Jobs/*/income"/>
-                        </Maximum>
-                      </Left>
-                      <Right>
-                        <Dependency path="income"/>
-                      </Right>
-                    </Equal>
-                  </Filter>
-                </Collection>
-                <Index>
-                  <Int>0</Int>
-                </Index>
-              </IndexOf>
-            </Then>
-          </Case>
-        </Switch>
+              </Equal>
+            </Filter>
+          </Collection>
+          <Index>
+            <Int>0</Int>
+          </Index>
+        </IndexOf>
       </Derived>
     </Fact>
     <Fact path="/projectedW4EffectDate">
@@ -452,10 +405,10 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/annualizedIncomeFromYearEndJobs">
+    <Fact path="/annualizedIncomeFromAvailableJobs">
       <Derived>
         <CollectionSum>
-          <Dependency path="/yearEndJobs/*/annualizedIncome"/>
+          <Dependency path="/possibleW4Jobs/*/annualizedIncome"/>
         </CollectionSum>
       </Derived>
     </Fact>

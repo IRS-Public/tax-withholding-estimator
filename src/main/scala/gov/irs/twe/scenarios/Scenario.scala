@@ -245,14 +245,6 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   if (csv("Child4Age").toInt > 0) ctcEligibleChildren += 1
   factGraph.set("/ctcEligibleDependents", ctcEligibleChildren)
 
-  // Stopgap to add senior deduction, we should update the FG to automate this
-  if (factGraph.get("/primaryFilerAge65OrOlder").value.get == true) {
-    factGraph.set("/primaryTaxpayerElectsForSeniorDeduction", true)
-  }
-  if (factGraph.get("/secondaryFilerAge65OrOlder").value.get == true) {
-    factGraph.set("/secondaryTaxpayerElectsForSeniorDeduction", true)
-  }
-
   // Calculated facts
   factGraph.set("/primaryFilerAge25OrOlderForEitc", csv("User Age").toInt >= 25)
   val spouseAge = csv("Spouse Age").toInt
@@ -268,7 +260,10 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
     factGraph.set(s"/jobs/#$JOB_1_ID/overtimeCompensationTotal", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_2_ID/qualifiedTipIncome", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_2_ID/overtimeCompensationTotal", Dollar(0))
+  } else if (factGraph.get("/primaryFilerAge65OrOlder").value.get == true) {
+    factGraph.set("/primaryTaxpayerElectsForSeniorDeduction", true)
   }
+
   if (csv("Valid SSN (spouse)") == "0") {
     factGraph.set(s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/qualifiedTipIncome", Dollar(0))
     factGraph.set(s"/jobs/#$PREVIOUS_SPOUSE_JOB_ID/overtimeCompensationTotal", Dollar(0))
@@ -276,6 +271,13 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
     factGraph.set(s"/jobs/#$JOB_3_ID/overtimeCompensationTotal", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_4_ID/qualifiedTipIncome", Dollar(0))
     factGraph.set(s"/jobs/#$JOB_4_ID/overtimeCompensationTotal", Dollar(0))
+  } else if (factGraph.get("/secondaryFilerAge65OrOlder").value.get == true) {
+    factGraph.set("/secondaryTaxpayerElectsForSeniorDeduction", true)
+  }
+
+  if (csv("Valid SSN (self)") == "0" && csv("Valid SSN (spouse)") == "0") {
+    factGraph.set("/ctcEligibleDependents", 0)
+    factGraph.set("/odcEligibleDependents", 0)
   }
 
   // Remove jobs that have no income
@@ -496,6 +498,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
 private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/agi" -> "AGI",
   "/tentativeTaxFromTaxableIncome" -> "Income tax before credits",
+  // TODO: Needs to be updated, likely totaldeductions - QBI
   "/standardOrItemizedDeduction" -> "Total standard or itemized deductions",
   "/taxableIncome" -> "Taxable income",
   "/tentativeTaxNetNonRefundableCredits" -> "Income tax before refundable credits",
@@ -509,6 +512,7 @@ private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/additionalMedicareTax" -> "Additional Medicare Tax:",
   "/selfEmploymentTax" -> "Self-Employment Tax",
   "/netInvestmentIncomeTax" -> "NetInvestmentIncomeTax",
+  // TODO: Not always the right mapping
   "/totalEndOfYearProjectedWithholding" -> "do-nothingTaxWithholding",
   "/totalCtcAndOdc" -> "CTC + Credit for Other Dep",
   "/additionalCtc" -> "Addl CTC",

@@ -557,19 +557,6 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/jobs/*/isHeldToYearEnd">
-      <Description>Does the filer hold this job at the end of the year?</Description>
-      <Derived>
-        <GreaterThanOrEqual>
-          <Left>
-            <Dependency path="../endDate/ordinal"/>
-          </Left>
-          <Right>
-            <Dependency path="/daysInYear"/>
-          </Right>
-        </GreaterThanOrEqual>
-      </Derived>
-    </Fact>
     <Fact path="/jobs/*/isPastJob">
       <Derived>
         <LessThanOrEqual>
@@ -747,19 +734,27 @@
         </LastDayOfMonth>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/conditionForPossibleW4Jobs">
+      <Derived>
+        <All>
+          <Not>
+            <Dependency path="../isPastJob"/>
+          </Not>
+          <GreaterThan>
+            <Left>
+              <Dependency path="../remainingPayPeriodsInteger"/>
+            </Left>
+            <Right>
+              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+            </Right>
+          </GreaterThan>
+        </All>
+      </Derived>
+    </Fact>
     <Fact path="/possibleW4Jobs">
       <Derived>
         <Filter path="/jobs">
-          <Not>
-            <Dependency path="isPastJob"/>
-          </Not>
-        </Filter>
-      </Derived>
-    </Fact>
-    <Fact path="/yearEndJobs">
-      <Derived>
-        <Filter path="/jobs">
-          <Dependency path="isHeldToYearEnd"/>
+          <Dependency path="/jobs/*/conditionForPossibleW4Jobs"/>
         </Filter>
       </Derived>
     </Fact>

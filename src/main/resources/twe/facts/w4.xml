@@ -83,37 +83,14 @@
               <Switch>
                 <Case>
                   <When>
-                    <!-- ... and this is a year end job ... -->
-                    <Dependency path="../isHeldToYearEnd"/>
+                    <!-- ... and this is a possible job ... -->
+                    <Dependency path="../conditionForPossibleW4Jobs"/>
                   </When>
                   <Then>
                     <!-- ... it gets absolute value of net change in proportion to income for year end jobs. -->
                     <Multiply>
                       <Dependency path="/w4Line4NetChange"/>
                       <Dollar>-1</Dollar>
-                    </Multiply>
-                  </Then>
-                </Case>
-                <Case>
-                  <When>
-                    <!-- ... and there are no year end jobs ... -->
-                    <Equal>
-                      <Left>
-                        <CollectionSize>
-                          <Dependency path="/yearEndJobs"/>
-                        </CollectionSize>
-                      </Left>
-                      <Right>
-                        <Int>0</Int>
-                      </Right>
-                    </Equal>
-                  </When>
-                  <Then>
-                    <!-- ... it gets absolute value of net change in proportion to rest of year standard withholding. -->
-                    <Multiply>
-                      <Dependency path="/w4Line4NetChange"/>
-                      <Int>-1</Int>
-                      <Dependency path="../proportionOfRestOfYearStandardWithholding"/>
                     </Multiply>
                   </Then>
                 </Case>
