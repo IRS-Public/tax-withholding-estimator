@@ -193,12 +193,12 @@
         </Limit>
       </Writable>
     </Fact>
-    <Fact path="/jobs/*/inconsistentPay">
+    <Fact path="/jobs/*/consistentPay">
       <Writable>
         <Boolean/>
       </Writable>
       <Placeholder>
-        <False/>
+        <True/>
       </Placeholder>
     </Fact>
     <Fact path="/jobs/*/amountLastPaycheck">
@@ -211,7 +211,9 @@
         <Switch>
           <Case>
             <When>
-              <Dependency path="../inconsistentPay"/>
+              <Not>
+                <Dependency path="../consistentPay"/>
+              </Not>
             </When>
             <Then>
               <Dependency path="../inconsistentPayAverage"/>
@@ -316,7 +318,9 @@
         <Switch>
           <Case>
             <When>
-              <Dependency path="../inconsistentPay"/>
+              <Not>
+                <Dependency path="../consistentPay"/>
+              </Not>
             </When>
             <Then>
               <Multiply>

@@ -105,28 +105,28 @@
             </question>
             <input type="date"/>
           </fg-set>
-          <fg-set path="/jobs/*/inconsistentPay">
+          <fg-set path="/jobs/*/consistentPay">
             <question>How steady is the pay from paycheck to paycheck?</question>
             <input type="boolean">
-              <option value="false">The pay is about the same each paycheck</option>
-              <option value="true">The pay is very different each paycheck</option>
+              <option value="true">The pay is about the same each paycheck</option>
+              <option value="false">The pay is very different each paycheck</option>
             </input>
           </fg-set>
-          <fg-set path="/jobs/*/amountLastPaycheck" if-false="/jobs/*/inconsistentPay">
+          <fg-set path="/jobs/*/amountLastPaycheck" if-true="/jobs/*/consistentPay">
             <question>What’s the gross income for this pay period?</question>
             <modal-link for="modal-job-gross-pay-period-en">How do I find the gross income per pay period?</modal-link>
             <input type="dollar"/>
           </fg-set>
-          <fg-set path="/jobs/*/pastPaycheckIncome1" if-true="/jobs/*/inconsistentPay">
+          <fg-set path="/jobs/*/pastPaycheckIncome1" if-false="/jobs/*/consistentPay">
             <question>On the most recent paystub from <fg-show path="/taxYear"/>, what’s the gross income per pay period?</question>
             <modal-link for="modal-job-gross-pay-period-en">How do I find the gross income per pay period?</modal-link>
             <input type="dollar"/>
           </fg-set>
-          <fg-set path="/jobs/*/pastPaycheckIncome2" if-true="/jobs/*/inconsistentPay">
+          <fg-set path="/jobs/*/pastPaycheckIncome2" if-false="/jobs/*/consistentPay">
             <question>On the second paystub, what’s the gross income per pay period?</question>
             <input type="dollar"/>
           </fg-set>
-          <fg-set path="/jobs/*/pastPaycheckIncome3" if-true="/jobs/*/inconsistentPay" optional="true">
+          <fg-set path="/jobs/*/pastPaycheckIncome3" if-false="/jobs/*/consistentPay" optional="true">
             <question>
               On the third paystub, what’s the gross income per pay period?
               Leave this blank if you only have two past paychecks.

@@ -15,7 +15,7 @@ class JobSpec extends AnyFunSuite with TableDrivenPropertyChecks {
   val jobId = "11111111-1111-447e-a94d-0944cc8e3b6b"
   val jobsCollection = Collection(Vector(java.util.UUID.fromString(jobId)))
 
-  val inconsistentPay = Path(s"/jobs/#${jobId}/inconsistentPay")
+  val consistentPay = Path(s"/jobs/#${jobId}/consistentPay")
   val paycheck1 = Path(s"/jobs/#${jobId}/pastPaycheckIncome1")
   val paycheck2 = Path(s"/jobs/#${jobId}/pastPaycheckIncome2")
   val paycheck3 = Path(s"/jobs/#${jobId}/pastPaycheckIncome3")
@@ -29,7 +29,7 @@ class JobSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       jobs -> jobsCollection,
-      inconsistentPay -> true,
+      consistentPay -> false,
       paycheck1 -> Dollar("100"),
     )
 
@@ -41,7 +41,7 @@ class JobSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       jobs -> jobsCollection,
-      inconsistentPay -> true,
+      consistentPay -> false,
       paycheck1 -> Dollar("100"),
       paycheck2 -> Dollar("200"),
     )
@@ -54,7 +54,7 @@ class JobSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       jobs -> jobsCollection,
-      inconsistentPay -> true,
+      consistentPay -> false,
       paycheck1 -> Dollar("100"),
       paycheck2 -> Dollar("200"),
       paycheck3 -> Dollar("400"),
@@ -68,7 +68,7 @@ class JobSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       jobs -> jobsCollection,
-      inconsistentPay -> true,
+      consistentPay -> false,
       paycheck1 -> Dollar("100"),
       paycheck2 -> Dollar("200"),
       amountWithheldLastPaycheckPath -> Dollar("10"),
@@ -82,7 +82,7 @@ class JobSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     val graph = makeGraphWith(
       factDictionary,
       jobs -> jobsCollection,
-      inconsistentPay -> true,
+      consistentPay -> false,
       paycheck1 -> Dollar("100"),
       paycheck2 -> Dollar("200"),
       paycheck2 -> Dollar("400"),
