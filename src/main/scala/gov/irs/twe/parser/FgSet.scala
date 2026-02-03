@@ -1,6 +1,6 @@
 package gov.irs.twe.parser
 
-import gov.irs.factgraph.FactDictionary
+import gov.irs.factgraph.{ FactDictionary, Path }
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.Utils.validateFact
 import gov.irs.twe.TweTemplateEngine
@@ -71,29 +71,16 @@ object FgSet {
     if (path.isEmpty) {
       throw InvalidFormConfig("fg-set attribute `path` is required but was missing or empty")
     }
-    // Use .child.mkString instead of .text to preserve XML tags (e.g., <span>, <fg-show>) in mixed content
-    val question = (node \ "question").head.child.mkString.trim
-    if (question.isEmpty) {
-      throw InvalidFormConfig(s"fg-set at path: $path has an empty question tag. This is required.")
-    }
-    val isOptional = !(node \@ "optional").isEmpty()
-    val condition = Condition.getCondition(node, factDictionary)
-    val input = Input.extractFromFgSet(node, isOptional, factDictionary)
 
-    val hintNode = node \ "hint"
-    val hint = if (hintNode.isEmpty) {
-      None
-    } else {
-      Some(hintNode.head.child.mkString.trim)
-    }
-    val modalLinkNode = node \ "modal-link"
-    val modalLink = if (modalLinkNode.isEmpty) {
-      None
-    } else {
-      Some(modalLinkNode.head.toString.trim)
-    }
+    // TODO remove optional fields from the flow entirely
+    var isOptional = (node \@ "optional").nonEmpty
+    val factDefinitionNode = factDictionary.getDefinitionsAsNodes()(Path(path))
+    val placeholder = factDefinitionNode \ "Placeholder"
+    if (placeholder.nonEmpty) { isOptional = true }
 
     validateFact(path, factDictionary)
+    val input = Input.extractFromFgSet(node, isOptional, factDictionary)
+
     val typeNode = factDictionary.getDefinition(path).typeNode
     val inputAndNodeTypeMismatch = input match {
       case Input.text(_)       => typeNode != "StringNode"
@@ -107,6 +94,26 @@ object FgSet {
       case Input.multiEnumInput(_, _, _) => typeNode != "MultiEnumNode"
     }
     if (inputAndNodeTypeMismatch) throw InvalidFormConfig(s"Path $path must be of type $input")
+
+    // Use .child.mkString instead of .text to preserve XML tags (e.g., <span>, <fg-show>) in mixed content
+    val question = (node \ "question").head.child.mkString.trim
+    if (question.isEmpty) {
+      throw InvalidFormConfig(s"fg-set at path: $path has an empty question tag. This is required.")
+    }
+
+    val condition = Condition.getCondition(node, factDictionary)
+    val hintNode = node \ "hint"
+    val hint = if (hintNode.isEmpty) {
+      None
+    } else {
+      Some(hintNode.head.child.mkString.trim)
+    }
+    val modalLinkNode = node \ "modal-link"
+    val modalLink = if (modalLinkNode.isEmpty) {
+      None
+    } else {
+      Some(modalLinkNode.head.toString.trim)
+    }
 
     FgSet(path, question, condition, input, hint, isOptional, modalLink)
   }
