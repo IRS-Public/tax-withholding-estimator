@@ -13,9 +13,7 @@
       <p condition="/isUnderwithheld" operator="isTrue">
         If you keep your withholding the same, you’ll likely owe taxes in <fg-show path="/taxYear"/>.
         <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">
-          You may have to pay a penalty in addition to what you owe if you owe
-          <span condition="/underpaymentPenaltyReasonIs1000DollarLimit" operator="isTrue">at least $1,000.</span>
-          <span condition="/underpaymentPenaltyReasonIs10PercentLimit" operator="isTrue">more than 10 percent of your tax bill.</span>
+          You may have to pay a penalty in addition to what you owe if you owe at least $1,000 and more than 10 percent of your tax bill.
         </span>
       </p>
 

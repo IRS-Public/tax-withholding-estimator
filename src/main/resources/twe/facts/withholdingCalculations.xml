@@ -559,47 +559,16 @@
     <Fact path="/mayBeSubjectToUnderpaymentPenalty">
       <Description>
         Taxpayers may be subject to penalties if they owe
-        * $1,000 (or more), OR
-        * 10% (or more) of their total tax (minus refundable credits) bill
-        whichever is smaller.
+        * $1,000 (or more), AND
+        * the amount owed is 10% (or more) of their total tax (minus refundable credits) bill
 
         https://www.irs.gov/taxtopics/tc306
         https://www.irs.gov/payments/underpayment-of-estimated-tax-by-individuals-penalty
       </Description>
       <Derived>
-        <Any>
-          <Dependency path="/owesAtleast1000Dollars"/>
-          <Dependency path="/owesAtleast10PercentOfWithholdingGap"/>
-        </Any>
-      </Derived>
-    </Fact>
-    <Fact path="/underpaymentPenaltyReasonIs1000DollarLimit">
-      <Derived>
         <All>
           <Dependency path="/owesAtleast1000Dollars"/>
-          <LessThanOrEqual>
-            <Left>
-              <Dollar>1000</Dollar>
-            </Left>
-            <Right>
-              <Dependency path="/10PercentOfWithholdingGap"/>
-            </Right>
-          </LessThanOrEqual>
-        </All>
-      </Derived>
-    </Fact>
-    <Fact path="/underpaymentPenaltyReasonIs10PercentLimit">
-      <Derived>
-        <All>
           <Dependency path="/owesAtleast10PercentOfWithholdingGap"/>
-          <LessThan>
-            <Left>
-              <Dependency path="/10PercentOfWithholdingGap"/>
-            </Left>
-            <Right>
-              <Dollar>1000</Dollar>
-            </Right>
-          </LessThan>
         </All>
       </Derived>
     </Fact>
