@@ -2,16 +2,6 @@ fg-set {
   display: block;
   margin: var(--units-3) 0;
   padding-bottom: var(--units-3);
-  opacity: 1;
-
-  transition: opacity 1s, display 1s allow-discrete;
-
-  @starting-style {
-    /* Only fade in the facts that have a condition */
-    &[condition] {
-      opacity: 0;
-    }
-  }
 }
 
 fg-set:last-of-type {
