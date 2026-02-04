@@ -782,13 +782,6 @@
         </All>
       </Derived>
     </Fact>
-    <Fact path="/possibleW4Jobs">
-      <Derived>
-        <Filter path="/jobs">
-          <Dependency path="/jobs/*/conditionForPossibleW4Jobs"/>
-        </Filter>
-      </Derived>
-    </Fact>
     <Fact path="/jobsAssignedToSelf">
       <Derived>
         <Filter path="/jobs">

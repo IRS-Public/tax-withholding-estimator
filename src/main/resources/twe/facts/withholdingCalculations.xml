@@ -253,30 +253,6 @@
         </Multiply>
       </Derived>
     </Fact>
-    <Fact path="/jobSelectedForW4Line4a">
-      <Description>The job selected to have Line 4a populated on a new W4. It is the year end job with the highest proportion of income among all year jobs, or if there are no year end jobs it is the job with highest proportion of standard withholding for the rest of the year.</Description>
-      <Derived>
-        <IndexOf>
-          <Collection>
-            <Filter path="/jobs">
-              <Equal>
-                <Left>
-                  <Maximum>
-                    <Dependency path="/possibleW4Jobs/*/restOfYearIncome"/>
-                  </Maximum>
-                </Left>
-                <Right>
-                  <Dependency path="restOfYearIncome"/>
-                </Right>
-              </Equal>
-            </Filter>
-          </Collection>
-          <Index>
-            <Int>0</Int>
-          </Index>
-        </IndexOf>
-      </Derived>
-    </Fact>
     <Fact path="/projectedW4EffectDate">
       <Description>Date when we expect the W4 chagnes to take effect. 14 days after the current date</Description>
       <Derived>
@@ -382,7 +358,7 @@
     <Fact path="/annualizedIncomeFromAvailableJobs">
       <Derived>
         <CollectionSum>
-          <Dependency path="/possibleW4Jobs/*/annualizedIncome"/>
+          <Dependency path="/jobsAvailableForExtraWithholding/*/annualizedIncome"/>
         </CollectionSum>
       </Derived>
     </Fact>
@@ -399,19 +375,7 @@
       <Derived>
         <!-- TODO: what should we do if no jobs meet this filter? -->
         <Filter path="/jobs">
-          <All>
-            <Not>
-              <Dependency path="isPastJob"/>
-            </Not>
-            <GreaterThan>
-              <Left>
-                <Dependency path="/jobs/*/remainingPayPeriodsInteger"/>
-              </Left>
-              <Right>
-                <Dependency path="/jobs/*/payPeriodsBeforeW4ChangesAppear"/>
-              </Right>
-            </GreaterThan>
-          </All>
+          <Dependency path="/jobs/*/conditionForPossibleW4Jobs"/>
         </Filter>
       </Derived>
     </Fact>
@@ -667,7 +631,7 @@
                     <Dependency path=".."/>
                   </Left>
                   <Right>
-                    <Dependency path="/jobSelectedForW4Line4a"/>
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
                   </Right>
                 </Equal>
               </When>

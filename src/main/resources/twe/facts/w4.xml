@@ -42,7 +42,7 @@
                     <Dependency path=".."/>
                   </Left>
                   <Right>
-                    <Dependency path="/jobSelectedForW4Line4a"/>
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
                   </Right>
                 </Equal>
               </All>
@@ -136,7 +136,7 @@
                     <Dependency path=".."/>
                   </Left>
                   <Right>
-                    <Dependency path="/jobSelectedForW4Line4a"/>
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
                   </Right>
                 </Equal>
               </All>
@@ -204,7 +204,7 @@
                     <Dependency path=".."/>
                   </Left>
                   <Right>
-                    <Dependency path="/jobSelectedForW4Line4a"/>
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
                   </Right>
                 </Equal>
               </All>
