@@ -1,13 +1,25 @@
 .logo-banner {
   width: 100%;
   background-color: var(--primary);
+  padding: var(--units-2) 0;
+}
+
+.logo-banner a {
+  display: inline-block;
+  &:focus {
+    outline-color: white;
+    outline-offset: var(--units-05);
+  }
 }
 
 .logo-banner img {
   height: 100%;
   width: 6.25rem;
-  margin: var(--units-2);
+  max-height: 36px;
   vertical-align: middle;
+  @media (min-width: 880px) {
+    width: 7.25rem;
+  }
 }
 
 .gtm-noscript {

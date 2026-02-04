@@ -49,7 +49,6 @@ layout:
   irs:
     name: IRS
     domain: IRS.gov
-    logo-alt-text: IRS logo
 
   banner:
     how-you-know: Here’s how you know

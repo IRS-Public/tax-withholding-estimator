@@ -9,7 +9,13 @@
   <a class="usa-skipnav" href="#main-content" th:text="#{layout.skip-to-main}"></a>
   <header>
     <div th:replace="fragments/usa-banner"></div>
-    <div class="logo-banner"><img src="/app/tax-withholding-estimator/resources/img/irs-logo.svg" th:alt="#{layout.irs.logo-alt-text}"></div>
+    <div class="logo-banner">
+      <div class="grid-container">
+        <a href="https://www.irs.gov" th:aria-label="#{layout.irs.domain}">
+          <img src="/app/tax-withholding-estimator/resources/img/irs-logo.svg" alt="" />
+        </a>
+      </div>
+    </div>
   </header>
 
   <main id="main-content">
