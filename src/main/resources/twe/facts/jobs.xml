@@ -796,6 +796,20 @@
         </Filter>
       </Derived>
     </Fact>
+    <Fact path="/jobsAvailableForExtraWithholdingAssignedToSelf">
+      <Derived>
+        <Filter path="/jobsAvailableForExtraWithholding">
+          <Equal>
+            <Left>
+              <Dependency path="filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignmentOption">self</Enum>
+            </Right>
+          </Equal>
+        </Filter>
+      </Derived>
+    </Fact>
     <Fact path="/jobsAssignedToSpouse">
       <Derived>
         <Filter path="/jobs">
@@ -810,14 +824,63 @@
         </Filter>
       </Derived>
     </Fact>
-    <Fact path="/hasJobsIncome">
+    <Fact path="/jobsAvailableForExtraWithholdingAssignedToSpouse">
+      <Derived>
+        <Filter path="/jobsAvailableForExtraWithholding">
+          <Equal>
+            <Left>
+              <Dependency path="filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignmentOption">spouse</Enum>
+            </Right>
+          </Equal>
+        </Filter>
+      </Derived>
+    </Fact>
+    <Fact path="/hasJobsAvailableForExtraWithholding">
+      <Derived>
+        <All>
+          <IsComplete>
+            <Dependency path="/jobsAvailableForExtraWithholding"/>
+          </IsComplete>
+          <GreaterThan>
+            <Left>
+              <CollectionSize>
+                <Dependency path="/jobsAvailableForExtraWithholding"/>
+              </CollectionSize>
+            </Left>
+            <Right>
+              <Int>0</Int>
+            </Right>
+          </GreaterThan>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/primaryFilerHasJobsAvailableForExtraWithholding">
       <Derived>
         <GreaterThan>
           <Left>
-            <Dependency path="/jobsIncomeTotal"/>
+            <CollectionSize>
+              <Dependency path="/jobsAvailableForExtraWithholdingAssignedToSelf"/>
+            </CollectionSize>
           </Left>
           <Right>
-            <Dollar>0</Dollar>
+            <Int>0</Int>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/spouseHasJobsAvailableForExtraWithholding">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <CollectionSize>
+              <Dependency path="/jobsAvailableForExtraWithholdingAssignedToSpouse"/>
+            </CollectionSize>
+          </Left>
+          <Right>
+            <Int>0</Int>
           </Right>
         </GreaterThan>
       </Derived>

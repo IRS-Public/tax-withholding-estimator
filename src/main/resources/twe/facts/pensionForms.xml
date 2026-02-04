@@ -92,6 +92,18 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/pensions/*/shouldLeaveW4pLine4aBlank">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../w4pLine4a"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
     <Fact path="/pensions/*/pub15TWorksheet1bLine1e">
       <Description>Line 1e of Pub 15-T Worksheet 1B</Description>
       <Derived>
@@ -145,6 +157,18 @@
             </Then>
           </Case>
         </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/shouldLeaveW4pLine4bBlank">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../w4pLine4b"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </Equal>
       </Derived>
     </Fact>
     <Fact path="/pensions/*/pub15TWorksheet1bLine1g">
@@ -969,6 +993,18 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/pensions/*/shouldLeaveW4pLine3Blank">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../w4pLine3"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
     <Fact path="/pensions/*/pub15TWorksheet1bLine3b">
       <Derived>
         <GreaterOf>
@@ -1049,6 +1085,18 @@
             </Then>
           </Case>
         </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/shouldLeaveW4pLine4cBlank">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../w4pLine4c"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </Equal>
       </Derived>
     </Fact>
   </Facts>

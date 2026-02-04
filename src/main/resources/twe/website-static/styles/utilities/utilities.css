@@ -19,7 +19,7 @@
 }
 
 /* Automatically style external links (those with http:// or https:// in the main content area. This should account for everything in the flow and modals, but exclude areas like the header and footer*/
-main a[href^="http"]::after {
+main a[href^="http"]:not(.usa-button)::after {
   content: '';
   display: inline-block;
   width: 0.75rem;
@@ -35,7 +35,7 @@ main a[href^="http"]::after {
 }
 
 /* Use white icon for external links in dark backgrounds (e.g., identifier section) */
-.usa-identifier a[href^="http"]::after {
+.usa-identifier a[href^="http"]:not(.usa-button)::after {
   background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons-bg/launch--white.svg");
 }
 

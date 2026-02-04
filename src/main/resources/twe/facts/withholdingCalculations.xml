@@ -375,7 +375,7 @@
       <Derived>
         <!-- TODO: what should we do if no jobs meet this filter? -->
         <Filter path="/jobs">
-          <Dependency path="/jobs/*/conditionForPossibleW4Jobs"/>
+          <Dependency path="conditionForPossibleW4Jobs"/>
         </Filter>
       </Derived>
     </Fact>

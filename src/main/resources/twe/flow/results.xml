@@ -135,19 +135,38 @@
       <h3 id="heading-adjust-withholding-for-lower-tax-balance" condition="/isUnderwithheld" operator="isTrue">How to adjust your withholding to get more take-home pay</h3>
       <h3 id="heading-adjust-withholding" condition="/isZeroRefund" operator="isTrue">How to adjust your withholding</h3>
 
-      <p condition="/hasJobsIncomeButNoPensionsIncome" operator="isTrue">Use our recommendations to complete Form W-4.</p>
-      <p condition="/hasJobsIncomeButNoPensionsIncome" operator="isTrue"><modal-link for="modal-what-is-form-w-4">What's a Form W-4?</modal-link></p>
+      <p condition="/hasJobsAvailableForExtraWithholdingButNotPensions" operator="isTrue">Use our recommendations to complete Form W-4.</p>
+      <p condition="/hasJobsAvailableForExtraWithholdingButNotPensions" operator="isTrue"><modal-link for="modal-what-is-form-w-4">What's a Form W-4?</modal-link></p>
 
-      <p condition="/hasPensionsIncomeButNoJobsIncome" operator="isTrue">Use our recommendations to complete Form W-4P.</p>
-      <p condition="/hasPensionsIncomeButNoJobsIncome" operator="isTrue"><modal-link for="modal-what-is-form-w-4p">What's a Form W-4P?</modal-link></p>
+      <p condition="/hasPensionsAvailableForExtraWithholdingButNotJobs" operator="isTrue">Use our recommendations to complete Form W-4P.</p>
+      <p condition="/hasPensionsAvailableForExtraWithholdingButNotJobs" operator="isTrue"><modal-link for="modal-what-is-form-w-4p">What's a Form W-4P?</modal-link></p>
 
-      <p condition="/hasJobsIncomeAndPensionsIncome" operator="isTrue">Use our recommendations to complete Forms W-4 and W-4P.</p>
-      <p condition="/hasJobsIncomeAndPensionsIncome" operator="isTrue"><modal-link for="modal-what-is-form-w-4-and-w-4p">What's a Form W-4 and W-4P?</modal-link></p>
+      <p condition="/hasJobsAndPensionsAvailableForExtraWithholding" operator="isTrue">Use our recommendations to complete Forms W-4 and W-4P.</p>
+      <p condition="/hasJobsAndPensionsAvailableForExtraWithholding" operator="isTrue"><modal-link for="modal-what-is-form-w-4-and-w-4p">What's a Form W-4 and W-4P?</modal-link></p>
 
-      <!-- TODO: for each job / pension show w-4/w-4p section -->
-      <!-- TODO: Button goes inside accordion for each job -->
-      <!--<button class="usa-button usa-button&#45;&#45;outline" type="button" onclick="downloadW4(window.factGraph)">Download pre-filled Form W4</button>-->
-      <!-- /TODO -->
+      <h4 condition="/primaryFilerHasJobsOrPensionsAvailableForExtraWithholding" operator="isTrue">Your withholding</h4>
+      <fg-withholding-adjustments
+        if-true="/primaryFilerHasJobsAvailableForExtraWithholding"
+        path="/jobsAvailableForExtraWithholdingAssignedToSelf"
+        form-type="w-4"
+      />
+      <fg-withholding-adjustments
+        if-true="/primaryFilerHasPensionsAvailableForExtraWithholding"
+        path="/pensionsAvailableForExtraWithholdingAssignedToSelf"
+        form-type="w-4p"
+      />
+
+      <h4 condition="/spouseHasJobsOrPensionsAvailableForExtraWithholding" operator="isTrue">Your spouse's withholding</h4>
+      <fg-withholding-adjustments
+        if-true="/spouseHasJobsAvailableForExtraWithholding"
+        path="/jobsAvailableForExtraWithholdingAssignedToSpouse"
+        form-type="w-4"
+      />
+      <fg-withholding-adjustments
+        if-true="/spouseHasPensionsAvailableForExtraWithholding"
+        path="/pensionsAvailableForExtraWithholdingAssignedToSpouse"
+        form-type="w-4p"
+      />
 
       <div class="usa-alert usa-alert--info">
         <div class="usa-alert__body">
@@ -179,6 +198,76 @@
         <p>Withholding at the right rate ensures that you don’t withhold too much and take home a smaller amount, or withhold too little and end up owing a large amount, or even penalties, at the end of the year.</p>
         <p><a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn more about Form W-4.</a></p>
         <p><a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn more about Form W-4P.</a></p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-why-step-1-c">
+      <modal-heading>Why is this recommended?</modal-heading>
+      <modal-content>
+        <p>This is the filing status you selected in Step 1 of the estimator.</p>
+        <p>Your filing status affects your standard deduction and which credits and deductions you’re eligible for.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-why-w-4p-step-2">
+      <modal-heading>Why is this recommended?</modal-heading>
+      <modal-content>
+        <p>This steps helps you decide which job or pension you should withhold from.</p>
+        <p>You’ve already completed this step by using the estimator.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-why-w-4-step-2-c">
+      <modal-heading>Why is this recommended?</modal-heading>
+      <modal-content>
+        <p>This is where you can say if you have more than one job, or if you and your spouse (if filing jointly) both work.</p>
+        <p>Even if you have more than one job, the estimator will recommend leaving this box unchecked. This helps protect your privacy from an employer and your calculations will still be correct.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-why-step-3">
+      <modal-heading>Why is this recommended?</modal-heading>
+      <modal-content>
+        <p>Step 3 shows the total amount of credits you’re planning to claim in <fg-show path="/taxYear"/>.</p>
+        <p>This total amount is based on the information you added to the estimator for your income, whether you have dependents, and which credits you think you’ll qualify for.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-why-w-4-step-4-a">
+      <modal-heading>Why is this recommended?</modal-heading>
+      <modal-content>
+        <p>Step 4 accounts for any differences between the income you earn from this job and your other taxable income. The amounts entered here help to adjust your withholding to account for this difference.</p>
+        <p><strong>Step 4(a)</strong> is used if you entered other sources of taxable income into the estimator that's not from jobs, pensions, or annuities.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-why-w-4p-step-4-a">
+      <modal-heading>Why is this recommended?</modal-heading>
+      <modal-content>
+        <p>Step 4 accounts for any differences between the income you earn from this pension or annuity and your other taxable income. The amounts entered here help to adjust your withholding to account for this difference.</p>
+        <p><strong>Step 4(a)</strong> is used if you entered other sources of taxable income into the estimator that's not from jobs, pensions, or annuities.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-why-w-4-step-4-b">
+      <modal-heading>Why is this recommended?</modal-heading>
+      <modal-content>
+        <p>Step 4 accounts for any differences between the income you earn from this job and your other taxable income. The amounts entered here help to adjust your withholding to account for this difference.</p>
+        <p><strong>Step 4(b)</strong> includes the deductions and adjustments you entered into the estimator. These can help reduce how much of your income is taxed and the amount you need to withhold.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-why-w-4p-step-4-b">
+      <modal-heading>Why is this recommended?</modal-heading>
+      <modal-content>
+        <p>Step 4 accounts for any differences between the income you earn from this pension or annuity and your other taxable income. The amounts entered here help to adjust your withholding to account for this difference.</p>
+        <p><strong>Step 4(b)</strong> includes the deductions and adjustments you entered into the estimator. These can help reduce how much of your income is taxed and the amount you need to withhold.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-why-w-4-step-4-c">
+      <modal-heading>Why is this recommended?</modal-heading>
+      <modal-content>
+        <p>Step 4 accounts for any differences between the income you earn from this job and your other taxable income. The amounts entered here help to adjust your withholding to account for this difference.</p>
+        <p><strong>Step 4(c)</strong> is used if you need to withhold more from your paycheck. Otherwise, this box may be left blank.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-why-w-4p-step-4-c">
+      <modal-heading>Why is this recommended?</modal-heading>
+      <modal-content>
+        <p>Step 4 accounts for any differences between the income you earn from this pension or annuity and your other taxable income. The amounts entered here help to adjust your withholding to account for this difference.</p>
+        <p><strong>Step 4(c)</strong> is used if you need to withhold more from your payment. Otherwise, this box may be left blank.</p>
       </modal-content>
     </modal-dialog>
   </page>

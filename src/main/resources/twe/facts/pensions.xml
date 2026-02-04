@@ -24,6 +24,18 @@
         <Enum optionsPath="/filerAssignmentOption"/>
       </Writable>
     </Fact>
+    <Fact path="/pensions/*/isFilerAssignmentSelf">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../filerAssignment"/>
+          </Left>
+          <Right>
+            <Enum optionsPath="/filerAssignmentOption">self</Enum>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
     <Fact path="/pensions/*/notSpouses">
       <Description>The income doesn't belong to the spouse</Description>
       <Derived>
@@ -736,10 +748,10 @@
             </Not>
             <GreaterThan>
               <Left>
-                <Dependency path="/pensions/*/remainingPayPeriodsInteger"/>
+                <Dependency path="remainingPayPeriodsInteger"/>
               </Left>
               <Right>
-                <Dependency path="/pensions/*/payPeriodsBeforeW4ChangesAppear"/>
+                <Dependency path="payPeriodsBeforeW4ChangesAppear"/>
               </Right>
             </GreaterThan>
           </All>
@@ -804,14 +816,77 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/hasPensionsIncome">
+    <Fact path="/hasPensionsAvailableForExtraWithholding">
+      <Derived>
+        <All>
+          <IsComplete>
+            <Dependency path="/pensionsAvailableForExtraWithholding"/>
+          </IsComplete>
+          <GreaterThan>
+            <Left>
+              <CollectionSize>
+                <Dependency path="/pensionsAvailableForExtraWithholding"/>
+              </CollectionSize>
+            </Left>
+            <Right>
+              <Int>0</Int>
+            </Right>
+          </GreaterThan>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/pensionsAvailableForExtraWithholdingAssignedToSelf">
+      <Derived>
+        <Filter path="/pensionsAvailableForExtraWithholding">
+          <Equal>
+            <Left>
+              <Dependency path="filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignmentOption">self</Enum>
+            </Right>
+          </Equal>
+        </Filter>
+      </Derived>
+    </Fact>
+    <Fact path="/pensionsAvailableForExtraWithholdingAssignedToSpouse">
+      <Derived>
+        <Filter path="/pensionsAvailableForExtraWithholding">
+          <Equal>
+            <Left>
+              <Dependency path="filerAssignment"/>
+            </Left>
+            <Right>
+              <Enum optionsPath="/filerAssignmentOption">spouse</Enum>
+            </Right>
+          </Equal>
+        </Filter>
+      </Derived>
+    </Fact>
+    <Fact path="/primaryFilerHasPensionsAvailableForExtraWithholding">
       <Derived>
         <GreaterThan>
           <Left>
-            <Dependency path="/pensionsIncomeTotal"/>
+            <CollectionSize>
+              <Dependency path="/pensionsAvailableForExtraWithholdingAssignedToSelf"/>
+            </CollectionSize>
           </Left>
           <Right>
-            <Dollar>0</Dollar>
+            <Int>0</Int>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/spouseHasPensionsAvailableForExtraWithholding">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <CollectionSize>
+              <Dependency path="/pensionsAvailableForExtraWithholdingAssignedToSpouse"/>
+            </CollectionSize>
+          </Left>
+          <Right>
+            <Int>0</Int>
           </Right>
         </GreaterThan>
       </Derived>

@@ -63,6 +63,18 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/shouldLeaveW4Line4aBlank">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../w4Line4a"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/w4Line4b">
       <Description>Form W-4 Line 4(b); also Pub 15-T Worksheet 1A Line 1f.</Description>
       <Derived>
@@ -114,6 +126,18 @@
             </Then>
           </Case>
         </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/shouldLeaveW4Line4bBlank">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../w4Line4b"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </Equal>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/w4Line3">
@@ -185,6 +209,18 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/shouldLeaveW4Line3Blank">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../w4Line3"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </Equal>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/w4Line4c">
       <Derived>
         <Switch>
@@ -238,6 +274,18 @@
             </Then>
           </Case>
         </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/shouldLeaveW4Line4cBlank">
+      <Derived>
+        <Equal>
+          <Left>
+            <Dependency path="../w4Line4c"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </Equal>
       </Derived>
     </Fact>
   </Facts>

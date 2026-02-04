@@ -19,7 +19,9 @@
           </IsComplete>
           <Any>
             <Dependency path="../isPastJob"/>
-            <IsComplete><Dependency path="../payFrequency"/></IsComplete>
+            <IsComplete>
+              <Dependency path="../payFrequency"/>
+            </IsComplete>
           </Any>
         </All>
       </Derived>
@@ -587,31 +589,50 @@ and car loan interest deduction
         </Round>
       </Derived>
     </Fact>
-    <Fact path="/hasJobsIncomeButNoPensionsIncome">
+    <Fact path="/hasJobsAvailableForExtraWithholdingButNotPensions">
       <Derived>
         <All>
-          <Dependency path="/hasJobsIncome"/>
+          <Dependency path="/hasJobsAvailableForExtraWithholding"/>
           <Not>
-            <Dependency path="/hasPensionsIncome"/>
+            <Dependency path="/hasPensionsAvailableForExtraWithholding"/>
           </Not>
         </All>
       </Derived>
     </Fact>
-    <Fact path="/hasPensionsIncomeButNoJobsIncome">
+    <Fact path="/hasPensionsAvailableForExtraWithholdingButNotJobs">
       <Derived>
         <All>
           <Not>
-            <Dependency path="/hasJobsIncome"/>
+            <Dependency path="/hasJobsAvailableForExtraWithholding"/>
           </Not>
-          <Dependency path="/hasPensionsIncome"/>
+          <Dependency path="/hasPensionsAvailableForExtraWithholding"/>
         </All>
       </Derived>
     </Fact>
-    <Fact path="/hasJobsIncomeAndPensionsIncome">
+    <Fact path="/hasJobsAndPensionsAvailableForExtraWithholding">
       <Derived>
         <All>
-          <Dependency path="/hasJobsIncome"/>
-          <Dependency path="/hasPensionsIncome"/>
+          <Dependency path="/hasJobsAvailableForExtraWithholding"/>
+          <Dependency path="/hasPensionsAvailableForExtraWithholding"/>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/primaryFilerHasJobsOrPensionsAvailableForExtraWithholding">
+      <Derived>
+        <Any>
+          <Dependency path="/primaryFilerHasJobsAvailableForExtraWithholding"/>
+          <Dependency path="/primaryFilerHasPensionsAvailableForExtraWithholding"/>
+        </Any>
+      </Derived>
+    </Fact>
+    <Fact path="/spouseHasJobsOrPensionsAvailableForExtraWithholding">
+      <Derived>
+        <All>
+          <Dependency path="/isFilingStatusMFJ"/>
+          <Any>
+            <Dependency path="/spouseHasJobsAvailableForExtraWithholding"/>
+            <Dependency path="/spouseHasPensionsAvailableForExtraWithholding"/>
+          </Any>
         </All>
       </Derived>
     </Fact>

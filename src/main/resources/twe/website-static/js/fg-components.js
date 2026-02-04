@@ -30,6 +30,24 @@ function loadFactGraph (factGraphAsString) {
 }
 window.loadFactGraph = loadFactGraph
 
+/**
+ * Update all abstract paths in the template to include the collection id
+ * @param template
+ * @param collectionId
+ */
+function configureCollectionIds (template, collectionId) {
+  const attributes = ['path', 'condition', 'id', 'for', 'name', 'aria-describedby']
+  const nodesWithAbstractPaths = template.querySelectorAll(attributes.map(attr => `[${attr}*="/*/"]`).join(','))
+  for (const node of nodesWithAbstractPaths) {
+    for (const attribute of attributes) {
+      const path = node.getAttribute(attribute)
+      if (path) {
+        node.setAttribute(attribute, makeCollectionIdPath(path, collectionId))
+      }
+    }
+  }
+}
+
 function makeCollectionIdPath (abstractPath, id) {
   return abstractPath.replace('*', `#${id}`)
 }
@@ -530,19 +548,8 @@ class FgCollectionItem extends HTMLElement {
     const fgCollection = this.closest('fg-collection')
     const templateContent = fgCollection.querySelector('.fg-collection__item-template').content.cloneNode(true)
 
-    // Update all abstract paths in the template to include the collection id
     const collectionId = this.getAttribute('collectionId')
-
-    const attributes = ['path', 'condition', 'id', 'for', 'name', 'aria-describedby']
-    const nodesWithAbstractPaths = templateContent.querySelectorAll(attributes.map(attr => `[${attr}*="/*/"]`).join(','))
-    for (const node of nodesWithAbstractPaths) {
-      for (const attribute of attributes) {
-        const path = node.getAttribute(attribute)
-        if (path) {
-          node.setAttribute(attribute, makeCollectionIdPath(path, collectionId))
-        }
-      }
-    }
+    configureCollectionIds(templateContent, collectionId)
 
     this.append(templateContent)
 
@@ -588,6 +595,31 @@ class FgCollectionItem extends HTMLElement {
   }
 }
 customElements.define('fg-collection-item', FgCollectionItem)
+
+class FgWithholdingAdjustments extends HTMLElement {
+  constructor () {
+    super()
+    this.updateListener = () => this.render()
+  }
+
+  connectedCallback () {
+    this.path = this.getAttribute('path')
+    this.render()
+  }
+
+  render () {
+    const collectionIds = factGraph.getCollectionIds(this.path)
+    collectionIds.forEach(collectionId => this.renderJob(collectionId))
+  }
+
+  renderJob (collectionId) {
+    const fgWithholdingAdjustments = this.closest('fg-withholding-adjustments')
+    const templateContent = fgWithholdingAdjustments.querySelector('.fg-withholding-adjustment__template').content.cloneNode(true)
+    configureCollectionIds(templateContent, collectionId)
+    this.append(templateContent)
+  }
+}
+customElements.define('fg-withholding-adjustments', FgWithholdingAdjustments)
 
 /*
  * <fg-show> - Display the current value and/or status of a fact.

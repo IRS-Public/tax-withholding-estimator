@@ -1,0 +1,20 @@
+.fg-withholding-adjustment > tbody > tr > th {
+    background-color: #fff;
+}
+
+.fg-withholding-adjustment > thead > tr > th,
+.fg-withholding-adjustment > tbody > tr > th,
+.fg-withholding-adjustment > tbody > tr > td {
+    vertical-align: top;
+    border-left: none;
+    border-right: none;
+}
+
+.fg-withholding-adjustment > tbody > tr > td > p {
+    margin: 0;
+}
+
+.fg-withholding-adjustment > tbody > tr:first-child > th,
+.fg-withholding-adjustment > tbody > tr:first-child > td {
+    border-top: none;
+}

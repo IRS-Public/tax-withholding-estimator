@@ -19,6 +19,7 @@
 @import "components/step-indicator.css";
 @import "components/tables.css";
 @import "components/estimate.css";
+@import "components/fg-withholding-adjustment.css";
 
 /* Utilities */
 @import "utilities/utilities.css";

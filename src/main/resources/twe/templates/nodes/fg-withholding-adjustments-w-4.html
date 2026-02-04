@@ -1,0 +1,109 @@
+<fg-withholding-adjustments th:attr="path=${path}, condition=${condition}, operator=${operator}">
+    <template class="fg-withholding-adjustment__template">
+        <details class="fg-detail fg-detail--chevron">
+            <summary>
+                <h5>Adjust <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span> $<fg-show path="/jobs/*/income"/> W-2 job</h5>
+            </summary>
+            <div class="usa-prose details-content">
+                <p>
+                    Download and complete Form W-4, then submit it to
+                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span>
+                    employer.
+                </p>
+                <p>Or, use our recommendations to adjust your withholding directly in the employer’s payroll or human resource software.</p>
+                <button class="usa-button" type="button" onclick="downloadW4(window.factGraph)">Download pre-filled Form W-4</button>
+                <a class="usa-button usa-button--outline" href="https://www.irs.gov/pub/irs-pdf/fw4.pdf" download>Download blank Form W-4</a>
+                <table class="fg-withholding-adjustment usa-table width-full">
+                    <caption class="usa-sr-only">Instructions for completing Form W-4</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">W-4 field</th>
+                            <th scope="col">How to answer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Step 1 (a): Personal information</th>
+                            <td>Enter your name and address</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Step 1 (b): Social security number</th>
+                            <td>Enter your Social Security number (if applicable).</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Step 1 (c): Filing status</th>
+                            <td>
+                                <p>
+                                    <span condition="/isFilingStatusMFJ" operator="isTrue">Married filing jointly</span>
+                                    <span condition="/isFilingStatusMFS" operator="isTrue">Married filing separately</span>
+                                    <span condition="/isFilingStatusSingle" operator="isTrue">Single</span>
+                                    <span condition="/isFilingStatusHOH" operator="isTrue">Head of household</span>
+                                    <span condition="/isFilingStatusQSS" operator="isTrue">Qualified surviving spouse</span>
+                                </p>
+                                <p><modal-link for="modal-why-step-1-c">Why?</modal-link></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Step 2 (c): Multiple jobs or spouse works</th>
+                            <td>
+                                <p>Don’t check this box</p>
+                                <p><modal-link for="modal-why-w-4-step-2-c">Why?</modal-link></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Step 3: Credits total</th>
+                            <td>
+                                <p>
+                                    <span condition="jobs/*/shouldLeaveW4Line3Blank" operator="isFalse">$<fg-show path="jobs/*/w4Line3"/></span>
+                                    <span condition="jobs/*/shouldLeaveW4Line3Blank" operator="isTrue">Leave blank</span>
+                                </p>
+                                <p><modal-link for="modal-why-step-3">Why?</modal-link></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Step 4 (a): Other income (not from jobs)</th>
+                            <td>
+                                <p>
+                                    <span condition="jobs/*/shouldLeaveW4Line4aBlank" operator="isFalse">$<fg-show path="jobs/*/w4Line4a"/></span>
+                                    <span condition="jobs/*/shouldLeaveW4Line4aBlank" operator="isTrue">Leave blank</span>
+                                </p>
+                                <p><modal-link for="modal-why-w-4-step-4-a">Why?</modal-link></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Step 4 (b): Deductions</th>
+                            <td>
+                                <p>
+                                    <span condition="jobs/*/shouldLeaveW4Line4bBlank" operator="isFalse">$<fg-show path="jobs/*/w4Line4b"/></span>
+                                    <span condition="jobs/*/shouldLeaveW4Line4bBlank" operator="isTrue">Leave blank</span>
+                                </p>
+                                <p><modal-link for="modal-why-w-4-step-4-b">Why?</modal-link></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Step 4 (c): Extra withholding</th>
+                            <td>
+                                <p>
+                                    <span condition="jobs/*/shouldLeaveW4Line4cBlank" operator="isFalse">$<fg-show path="jobs/*/w4Line4c"/></span>
+                                    <span condition="jobs/*/shouldLeaveW4Line4cBlank" operator="isTrue">Leave blank</span>
+                                </p>
+                                <p><modal-link for="modal-why-w-4-step-4-c">Why?</modal-link></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Step 5: Sign Here</th>
+                            <td>Sign your signature and enter the date</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    Withholding updates are time sensitive. Submit your completed form to
+                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span>
+                    employer as soon as possible.
+                </p>
+            </div>
+        </details>
+    </template>
+</fg-withholding-adjustments>

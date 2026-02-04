@@ -25,6 +25,14 @@
     margin-bottom: 1em
 }
 
+.fg-estimate__details thead th:last-child {
+    text-align: right;
+}
+
+.fg-estimate__details tbody td {
+    text-align: right;
+}
+
 /* specificity hack */
 .fg-estimate__details.fg-estimate__details {
     margin-top: 0;

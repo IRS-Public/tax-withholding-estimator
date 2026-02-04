@@ -9,6 +9,7 @@ enum SectionNode {
   case fgAlert(fgSet: FgAlert)
   case fgSectionGate(fgSectionGate: FgSectionGate)
   case fgDetail(fgDetail: FgDetail)
+  case fgWithholdingAdjustments(fgWithholdingAdjustments: FgWithholdingAdjustments)
   case rawHTML(node: xml.Node)
 }
 
@@ -16,12 +17,13 @@ case class Section(nodes: List[SectionNode], factDictionary: FactDictionary, pag
   def html(templateEngine: TweTemplateEngine): String = {
     val sectionHtml = this.nodes
       .map {
-        case SectionNode.fgCollection(x)  => x.html(templateEngine)
-        case SectionNode.fgSet(x)         => x.html(templateEngine)
-        case SectionNode.fgAlert(x)       => x.html(templateEngine)
-        case SectionNode.fgSectionGate(x) => x.html(templateEngine)
-        case SectionNode.fgDetail(x)      => x.html(templateEngine)
-        case SectionNode.rawHTML(x)       => renderNode(x, templateEngine)
+        case SectionNode.fgCollection(x)             => x.html(templateEngine)
+        case SectionNode.fgSet(x)                    => x.html(templateEngine)
+        case SectionNode.fgAlert(x)                  => x.html(templateEngine)
+        case SectionNode.fgSectionGate(x)            => x.html(templateEngine)
+        case SectionNode.fgDetail(x)                 => x.html(templateEngine)
+        case SectionNode.fgWithholdingAdjustments(x) => x.html(templateEngine)
+        case SectionNode.rawHTML(x)                  => renderNode(x, templateEngine)
       }
       .mkString("\n")
 
@@ -38,17 +40,20 @@ case class Section(nodes: List[SectionNode], factDictionary: FactDictionary, pag
           case "fg-set"          => SectionNode.fgSet(FgSet.parse(child, factDictionary))
           case "fg-section-gate" => SectionNode.fgSectionGate(FgSectionGate.parse(child))
           case "fg-detail"       => SectionNode.fgDetail(FgDetail.parse(child, this.pageRoute, factDictionary))
-          case _                 => SectionNode.rawHTML(child)
+          case "fg-withholding-adjustments" =>
+            SectionNode.fgWithholdingAdjustments(FgWithholdingAdjustments.parse(child, factDictionary))
+          case _ => SectionNode.rawHTML(child)
         }
       }
 
       val childrenHtml = processedChildren.map {
-        case SectionNode.fgCollection(x)  => x.html(templateEngine)
-        case SectionNode.fgSet(x)         => x.html(templateEngine)
-        case SectionNode.fgSectionGate(x) => x.html(templateEngine)
-        case SectionNode.fgAlert(x)       => x.html(templateEngine)
-        case SectionNode.fgDetail(x)      => x.html(templateEngine)
-        case SectionNode.rawHTML(x)       => renderNode(x, templateEngine)
+        case SectionNode.fgCollection(x)             => x.html(templateEngine)
+        case SectionNode.fgSet(x)                    => x.html(templateEngine)
+        case SectionNode.fgSectionGate(x)            => x.html(templateEngine)
+        case SectionNode.fgAlert(x)                  => x.html(templateEngine)
+        case SectionNode.fgDetail(x)                 => x.html(templateEngine)
+        case SectionNode.fgWithholdingAdjustments(x) => x.html(templateEngine)
+        case SectionNode.rawHTML(x)                  => renderNode(x, templateEngine)
       }.mkString
 
       // Reconstruct the node with processed children
@@ -80,11 +85,13 @@ object Section {
 
   private[parser] def processNode(node: xml.Node, pageRoute: String, factDictionary: FactDictionary): SectionNode =
     node.label match {
-      case "fg-collection"   => SectionNode.fgCollection(FgCollection.parse(node, pageRoute, factDictionary))
-      case "fg-set"          => SectionNode.fgSet(FgSet.parse(node, factDictionary))
-      case "fg-alert"        => SectionNode.fgAlert(FgAlert.parse(node, pageRoute, factDictionary))
-      case "fg-section-gate" => SectionNode.fgSectionGate(FgSectionGate.parse(node))
-      case "fg-detail"       => SectionNode.fgDetail(FgDetail.parse(node, pageRoute, factDictionary))
-      case _                 => SectionNode.rawHTML(node)
+      case "fg-collection"              => SectionNode.fgCollection(FgCollection.parse(node, pageRoute, factDictionary))
+      case "fg-set"                     => SectionNode.fgSet(FgSet.parse(node, factDictionary))
+      case "fg-alert"                   => SectionNode.fgAlert(FgAlert.parse(node, pageRoute, factDictionary))
+      case "fg-section-gate"            => SectionNode.fgSectionGate(FgSectionGate.parse(node))
+      case "fg-detail"                  => SectionNode.fgDetail(FgDetail.parse(node, pageRoute, factDictionary))
+      case "fg-withholding-adjustments" =>
+        SectionNode.fgWithholdingAdjustments(FgWithholdingAdjustments.parse(node, factDictionary))
+      case _ => SectionNode.rawHTML(node)
     }
 }
