@@ -1,6 +1,4 @@
-<fg-set
-    th:attr="path=${path}, inputType=${typeString}, condition=${condition}, operator=${operator}, optional=${optional}"
->
+<fg-set th:attr="path=${path}, inputType=${typeString}, condition=${condition}, operator=${operator}">
   <div class="usa-form-group">
     <th th:unless="${usesFieldset}">
       <span th:replace="~{nodes/question-label}"></span>

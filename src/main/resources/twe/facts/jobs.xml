@@ -294,6 +294,11 @@
       <Writable>
         <Dollar/>
       </Writable>
+      <!-- This is the only optional one, because we check whether this -->
+      <!-- is complete before using it in /jobs/*/inconsistentPayAverage -->
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/yearToDateIncome">
       <Writable>

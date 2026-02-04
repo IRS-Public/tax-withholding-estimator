@@ -18,7 +18,7 @@
       <h3 condition="/tentativelyEligibleForCtcOdc" operator="isTrue">Child Tax Credit (CTC)</h3>
       <p condition="/tentativelyEligibleForCtcOdc" operator="isTrue">The CTC helps families raising children by providing a tax benefit of up to $<fg-show path="/maxCtcAmount"/> per qualifying child.</p>
       <p condition="/tentativelyEligibleForCtcOdc" operator="isTrue"><modal-link for="modal-ctc-who-can-claim">Who can claim the CTC?</modal-link></p>
-      <fg-set path="/ctcEligibleDependents" optional="true" if-true="/tentativelyEligibleForCtcOdc">
+      <fg-set path="/ctcEligibleDependents" if-true="/tentativelyEligibleForCtcOdc">
         <question>
           Number of children
         </question>
@@ -32,7 +32,7 @@
       <h3 condition="/tentativelyEligibleForCtcOdc" operator="isTrue">Child for Other Dependents Credit (ODC)</h3>
       <p condition="/tentativelyEligibleForCtcOdc" operator="isTrue">Taxpayers with dependents who don’t qualify for the Child Tax Credit may be able to claim the ODC.</p>
       <p condition="/tentativelyEligibleForCtcOdc" operator="isTrue"><modal-link for="modal-odc-who-can-claim">Who can claim the ODC?</modal-link></p>
-      <fg-set path="/odcEligibleDependents" optional="true" if-true="/tentativelyEligibleForCtcOdc">
+      <fg-set path="/odcEligibleDependents" if-true="/tentativelyEligibleForCtcOdc">
         <question>
           Number of dependents
         </question>
@@ -43,13 +43,13 @@
       <h3 condition="/hasCdccEarnedIncome" operator="isTrue">Child and Dependent Care Credit (CDCC)</h3>
       <p condition="/hasCdccEarnedIncome" operator="isTrue">The CDCC helps taxpayers who pay for the care of a family or household member while working or looking for work.</p>
       <p condition="/hasCdccEarnedIncome" operator="isTrue"><modal-link for="modal-cdcc-who-can-claim-and-eligible-expenses">Who can claim the CDCC and what expenses are eligible?</modal-link></p>
-      <fg-set path="/cdccQualifyingPersons" optional="true" if-true="/hasCdccEarnedIncome">
+      <fg-set path="/cdccQualifyingPersons" if-true="/hasCdccEarnedIncome">
         <question>
           Number of qualifying children and dependents
         </question>
         <input type="int"/>
       </fg-set>
-      <fg-set path="/cdccQualifyingExpenses" optional="true" if-true="/hasCdccEarnedIncome">
+      <fg-set path="/cdccQualifyingExpenses" if-true="/hasCdccEarnedIncome">
         <question>
           Estimated annual care expenses for <fg-show path="/taxYear"/>
         </question>
@@ -60,17 +60,17 @@
       <h3 condition="/flowShouldShowEitcSection" operator="isTrue">Earned Income Tax Credit</h3>
       <p condition="/flowShouldShowEitcSection" operator="isTrue">The EITC helps low- to moderate-income workers and families lower their taxes.</p>
       <p condition="/flowShouldShowEitcSection" operator="isTrue"><modal-link for="modal-eitc-who-can-claim">Who can claim the EITC?</modal-link></p>
-      <fg-set path="/eitcQualifyingChildren" optional="true" if-true="/flowShouldAskForEitcQualifyingChildren">
+      <fg-set path="/eitcQualifyingChildren" if-true="/flowShouldAskForEitcQualifyingChildren">
         <question>Number of qualifying children</question>
         <hint>Don't count children without a Social Security Number (SSN). Leave blank if you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> don't have an SSN.</hint>
         <input type="int"/>
       </fg-set>
-      <fg-set path="/primaryFilerAge25OrOlderForEitc" optional="true" if-true="/flowShouldAskWhetherPrimaryFilerAge25OrOlderForEitc">
+      <fg-set path="/primaryFilerAge25OrOlderForEitc" if-true="/flowShouldAskWhetherPrimaryFilerAge25OrOlderForEitc">
         <question>Will you be 25 years old or older on January 1, <fg-show path="/nextTaxYear"/>?</question>
         <hint>Select "No" if you don't have an SSN.</hint>
         <input type="boolean"/>
       </fg-set>
-      <fg-set path="/secondaryFilerAge25OrOlderForEitc" optional="true" if-true="/flowShouldAskWhetherSecondaryFilerAge25OrOlderForEitc">
+      <fg-set path="/secondaryFilerAge25OrOlderForEitc" if-true="/flowShouldAskWhetherSecondaryFilerAge25OrOlderForEitc">
         <question>Will your spouse be 25 years old or older on January 1, <fg-show path="/nextTaxYear"/>?</question>
         <hint>Select "No" if your spouse doesn't have an SSN.</hint>
         <input type="boolean"/>
@@ -82,7 +82,7 @@
         Enter the total amount of retirement contributions you and your spouse expect to make to a traditional IRA, Roth IRA, 401(k), 403(b), or similar plans.
       </p>
       <p condition="/isEligibleForRetirementSavingsContributionsCredit" operator="isTrue"><modal-link for="modal-retirement-savings-credit-who-can-claim">Who can claim the retirement savings contribution credit?</modal-link></p>
-      <fg-set path="/retirementSavingsContributionsTaxCreditAmount" optional="true" if-true="/isEligibleForRetirementSavingsContributionsCredit">
+      <fg-set path="/retirementSavingsContributionsTaxCreditAmount" if-true="/isEligibleForRetirementSavingsContributionsCredit">
         <question>Retirement contributions you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
         <hint>(max $<fg-show path="/retirementSavingsContributionsMaximumAmount"/>)</hint>
         <input type="dollar"/>
@@ -91,11 +91,11 @@
       <h3 condition="/isEligibleForEducationCredits" operator="isTrue">American Opportunity Tax Credit (AOTC)</h3>
       <p condition="/isEligibleForEducationCredits" operator="isTrue">The AOTC helps offset the cost of tuition, fees, and other expenses for the first four years of college.</p>
       <p condition="/isEligibleForEducationCredits" operator="isTrue"><modal-link for="modal-aotc-who-can-claim-and-eligible-expenses">Who can claim the AOTC and what expenses qualify?</modal-link></p>
-      <fg-set path="/aotcQualifyingStudents" optional="true" if-true="/isEligibleForEducationCredits">
+      <fg-set path="/aotcQualifyingStudents" if-true="/isEligibleForEducationCredits">
         <question>Number of college students</question>
         <input type="int" />
       </fg-set>
-      <fg-set path="/aotcQualifiedEducationExpenses" optional="true" if-true="/isEligibleForEducationCredits">
+      <fg-set path="/aotcQualifiedEducationExpenses" if-true="/isEligibleForEducationCredits">
         <question>Estimated total college tuition or fees in <fg-show path="/taxYear"/></question>
         <hint>(max $<fg-show path="/maxAotcAdjustedQualifiedExpenseCap"/> per student)</hint>
         <input type="dollar"/>
@@ -107,7 +107,7 @@
         You can’t claim the AOTC and LLC for the same student.
       </p>
       <p condition="/isEligibleForEducationCredits" operator="isTrue"><modal-link for="modal-llc-who-can-claim">Who can claim the LLC?</modal-link> </p>
-      <fg-set path="/llcQualifiedEducationExpenses" optional="true" if-true="/isEligibleForEducationCredits">
+      <fg-set path="/llcQualifiedEducationExpenses" if-true="/isEligibleForEducationCredits">
         <question>Estimated total tuition or fees in <fg-show path="/taxYear"/>?</question>
         <hint>(max $10,000)</hint>
         <input type="dollar"/>
@@ -116,11 +116,11 @@
       <h3 condition="/isEligibleForAdoptionCredit" operator="isTrue">Adoption Credit</h3>
       <p condition="/isEligibleForAdoptionCredit" operator="isTrue">The adoption credit helps families offset the costs of adopting an eligible child.</p>
       <p condition="/isEligibleForAdoptionCredit" operator="isTrue"><modal-link for="modal-adoption-credit-who-can-claim">Who can claim the Adoption Credit?</modal-link></p>
-      <fg-set path="/adoptionEligibleChildren" optional="true" if-true="/isEligibleForAdoptionCredit">
+      <fg-set path="/adoptionEligibleChildren" if-true="/isEligibleForAdoptionCredit">
         <question>Number of adopted children</question>
         <input type="int"/>
       </fg-set>
-      <fg-set path="/estimatedTotalQualifiedAdoptionExpenses" optional="true" if-true="/isEligibleForAdoptionCredit">
+      <fg-set path="/estimatedTotalQualifiedAdoptionExpenses" if-true="/isEligibleForAdoptionCredit">
         <question>Adoption expenses you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/>?</question>
         <hint>(max $<fg-show path="/maxAdoptionCreditPerChild"/> per child)</hint>
         <input type="dollar"/>
@@ -129,7 +129,7 @@
       <h3 condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue">Credit for the Elderly or the Disabled</h3>
       <p condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue">This credit helps older adults and people with qualifying disabilities lower their taxes.</p>
       <p condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue"><modal-link for="modal-credit-elderly-disabled-who-can-claim">Who can claim the credit for the elderly or the disabled?</modal-link></p>
-      <fg-set path="/elderlyAndDisabledTaxCreditAmount" optional="true">
+      <fg-set path="/elderlyAndDisabledTaxCreditAmount">
         <question>Elderly and Disabled tax credit you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
@@ -137,7 +137,7 @@
       <h3>Foreign Tax Credit</h3>
       <p>The foreign tax credit reduces your U.S. taxes when you pay or owe taxes to a foreign country or U.S. territory.</p>
       <p><modal-link for="modal-foreign-tax-credit-who-can-claim">Who can claim the foreign tax credit?</modal-link></p>
-      <fg-set path="/schedule3Line1" optional="true">
+      <fg-set path="/schedule3Line1">
         <question>Foreign tax you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
@@ -145,7 +145,7 @@
       <h3>Business Credits</h3>
       <p>Business credits include many individual tax credits that reward businesses for things like hiring and supporting workers, energy investments, or research and development. </p>
       <p><modal-link for="modal-what-are-business-credits">What are business credits?</modal-link></p>
-      <fg-set path="/schedule3Line6a" optional="true">
+      <fg-set path="/schedule3Line6a">
         <question>Amount in business credits you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to claim in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
@@ -153,7 +153,7 @@
       <h3>Mortgage Interest Credit</h3>
       <p>The mortgage interest credit reduces taxes for low- to moderate-income homeowners who receive a Mortgage Credit Certificate from their state or local government.</p>
       <p><modal-link for="modal-mortgage-interest-credit-who-can-claim">Who can claim the mortgage interest credit?</modal-link></p>
-      <fg-set path="/schedule3Line6g" optional="true">
+      <fg-set path="/schedule3Line6g">
         <question>Estimated mortgage interest credit you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to claim in <fg-show path="/taxYear"/></question>
         <hint>(max $2,000)</hint>
         <input type="dollar"/>
@@ -162,7 +162,7 @@
       <h3>Alternative Minimum Tax (AMT) Credit</h3>
       <p>The AMT Credit allows high-income taxpayers to reclaim extra tax paid under the AMT in previous years.</p>
       <p><modal-link for="modal-amt-who-can-claim">Who can claim the AMT Credit?</modal-link></p>
-      <fg-set path="/alternativeMinimumTaxCreditAmount" optional="true">
+      <fg-set path="/alternativeMinimumTaxCreditAmount">
         <question>AMT tax credit you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to claim in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>

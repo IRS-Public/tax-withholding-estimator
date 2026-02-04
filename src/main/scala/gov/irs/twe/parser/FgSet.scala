@@ -71,16 +71,12 @@ object FgSet {
     if (path.isEmpty) {
       throw InvalidFormConfig("fg-set attribute `path` is required but was missing or empty")
     }
-
-    // TODO remove optional fields from the flow entirely
-    var isOptional = (node \@ "optional").nonEmpty
-    val factDefinitionNode = factDictionary.getDefinitionsAsNodes()(Path(path))
-    val placeholder = factDefinitionNode \ "Placeholder"
-    if (placeholder.nonEmpty) { isOptional = true }
-
     validateFact(path, factDictionary)
-    val input = Input.extractFromFgSet(node, isOptional, factDictionary)
 
+    val factDefinitionNode = factDictionary.getDefinitionsAsNodes()(Path(path))
+    val isOptional = (factDefinitionNode \ "Placeholder").nonEmpty
+
+    val input = Input.extractFromFgSet(node, isOptional, factDictionary)
     val typeNode = factDictionary.getDefinition(path).typeNode
     val inputAndNodeTypeMismatch = input match {
       case Input.text(_)       => typeNode != "StringNode"

@@ -126,7 +126,7 @@
             <question>On the second paystub, what’s the gross income per pay period?</question>
             <input type="dollar"/>
           </fg-set>
-          <fg-set path="/jobs/*/pastPaycheckIncome3" if-false="/jobs/*/consistentPay" optional="true">
+          <fg-set path="/jobs/*/pastPaycheckIncome3" if-false="/jobs/*/consistentPay">
             <question>
               On the third paystub, what’s the gross income per pay period?
               Leave this blank if you only have two past paychecks.
