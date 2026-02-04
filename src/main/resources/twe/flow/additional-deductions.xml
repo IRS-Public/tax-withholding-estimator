@@ -79,7 +79,7 @@
       <fg-set path="/wantsDerivedQBIDeduction">
         <question>Choose if you want to use the QBI amount we calculated from your answers or if you want to enter a different amount.</question>
         <input type="boolean">
-          <option value="true">Use <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/> for this estimate)</option>
+          <option value="true">Use <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/> for this estimate</option>
           <option value="false">Enter a different amount for this estimate</option>
         </input>
       </fg-set>
