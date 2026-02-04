@@ -1,5 +1,5 @@
 ---
-name: Bug report 🐞
+name: Bug report
 about: Create a report to help TWE improve
 title: 'Bug: [YOUR TITLE]'
 labels: ['Bug']

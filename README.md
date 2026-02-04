@@ -1,8 +1,33 @@
 # Tax Withholding Estimator (TWE)
 
-An online website for a taxpayer to estimate their tax withholdings for a variety of tax situations.
+### Overview
+An online website provided by the Internal Revenue Service (IRS) for a taxpayer to estimate their tax withholdings for a variety of tax situations.
 For a deep dive into the technical design of this repository, start [here](./docs/adr/001-twe-architecture.md).
 To better understand the math behind tax withholdings, go [here](./docs/taxes/withholdings-basics.md).
+
+### What TWE is (and isn't)
+TWE is designed to help taxpayers fine-tune their withholdings with greater precision than the standard Form W-4. The goal is to minimize large refunds or balance due scenarios at year-end when filing a tax return. Unlike tax return filing software that evaluate the prior year as a whole, TWE is used in the middle of a tax year where the remainder of the tax year is unknown. Because it operates *during* the tax year without the benefit of finalized W-2s or information returns(1099s), TWE relies on specific estimation logic and assumptions. By open-sourcing this project, we provide full transparency into those calculations, allowing taxpayers to see exactly how their W-4 recommendations are derived.
+
+### Contributing
+We value community feedback and invite public participation. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
+
+This codebase is dedicated to the public domain under the [Creative Commons Zero v1.0 Universal](LICENSE.md) license (CC0 1.0).
+
+## Legal Disclaimer: Public Repository Access
+
+> This repository contains draft and under-development source code for the IRS Tax Withholding Estimator. It is made available to the public solely for transparency, collaboration, and research purposes. The source code and associated content are not official IRS tools, and must not be used by taxpayers to estimate federal income tax withholding from their paychecks.
+>
+> **No Endorsement or Warranty**
+>
+> IRS does not endorse, maintain, or guarantee the accuracy, completeness, or functionality of the code in this repository. The IRS assumes no responsibility or liability for any use of the code by external parties, including individuals, developers, or organizations. This includes—but is not limited to—any tax consequences, computation errors, data loss, or other outcomes resulting from the use or modification of this code.
+>
+> **Official Tool for Tax Withholding Estimation**
+>
+> If you are a taxpayer seeking to estimate the federal income tax you want your employer to withhold from your paycheck, please use the official IRS Tax Withholding Estimator available at https://www.irs.gov/individuals/tax-withholding-estimator. If you are a taxpayer seeking to understand tax withholdings and the Internal Revenue Code (IRC), please review official IRS [Publications](https://www.irs.gov/publications), [Forms
+](https://www.irs.gov/forms-instructions) or [guidance](https://www.irs.gov/newsroom/irs-guidance). Names and identifiers used in source code or other artifacts (e.g. the names of Facts) in this repository are not intended to reflect official interpretation of the IRC or replacement of IRS Publications, Forms or Guidance.
+>
+> Use of the code in this repository is at your own risk. This repository is not intended for production use or public consumption as a finalized product.
+
 
 ## Setup
 
@@ -51,22 +76,3 @@ If you make changes to the Fact Graph, and you want to propagate those changes, 
 
 TWE comes bundled with an "Audit Mode" that lets users see how TWE arrives at its calculations.
 It can be toggled by running `enableAduitMode()` and `disableAuditMode()` in the browser console.
-
-## Contributing
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
-
-## Legal Disclaimer: Public Repository Access
-
-> This repository contains draft and under-development source code for the IRS Tax Withholding Estimator. It is made available to the public solely for transparency, collaboration, and research purposes. The source code and associated content are not official IRS tools, and must not be used by taxpayers to estimate federal income tax withholding from their paychecks.
->
-> **No Endorsement or Warranty**
->
-> The Internal Revenue Service (IRS) does not endorse, maintain, or guarantee the accuracy, completeness, or functionality of the code in this repository. The IRS assumes no responsibility or liability for any use of the code by external parties, including individuals, developers, or organizations. This includes—but is not limited to—any tax consequences, computation errors, data loss, or other outcomes resulting from the use or modification of this code.
->
-> **Official Tool for Tax Withholding Estimation**
->
-> If you are a taxpayer seeking to estimate the federal income tax you want your employer to withhold from your paycheck, please use the official IRS Tax Withholding Estimator available at https://www.irs.gov/individuals/tax-withholding-estimator
->
-> Use of the code in this repository is at your own risk. This repository is not intended for production use or public consumption as a finalized product.
-
