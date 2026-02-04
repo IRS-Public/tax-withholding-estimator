@@ -106,3 +106,15 @@ main h1 {
   padding: var(--units-3) 0;
   margin-bottom: 0;
 }
+
+/* Set max width for all flow content equal to .usa-prose */
+.flow p,
+.flow table,
+.flow .usa-hint,
+.flow ul,
+.flow ol,
+.flow h3,
+.flow h4,
+.flow h5 {
+  max-width: 68ex;
+}
