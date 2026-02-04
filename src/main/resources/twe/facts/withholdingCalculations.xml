@@ -38,32 +38,6 @@
         </Add>
       </Derived>
     </Fact>
-    <Fact path="/jobs/*/restOfYearIncome">
-      <Description>This amount this job will pay for the rest of the year.</Description>
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="../isPastJob"/>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Multiply>
-                <Dependency path="../averagePayPerPayPeriod"/>
-                <Dependency path="../remainingPayPeriodsRational"/>
-              </Multiply>
-            </Then>
-          </Case>
-        </Switch>
-      </Derived>
-    </Fact>
     <Fact path="/bonusWithholdingPrimaryRate">
       <Description>
         Bonus withholdings are 22% if less than 1,000,000 and 37% on the sum exceeding

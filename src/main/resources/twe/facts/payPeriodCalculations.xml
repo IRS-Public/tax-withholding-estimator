@@ -1634,6 +1634,14 @@
             </Then>
           </Case>
           <Case>
+            <When>
+              <Dependency path="../isPastJob"/>
+            </When>
+            <Then>
+              <Int>0</Int>
+            </Then>
+          </Case>
+          <Case>
             <!-- When the predicted final pay date is within the year, then no adjustment is needed. -->
             <When>
               <True/>

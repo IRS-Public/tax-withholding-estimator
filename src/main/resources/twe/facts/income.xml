@@ -2,25 +2,66 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/jobs/*/initialQuestionsComplete">
+    <Fact path="/jobs/*/flowInitialQuestionsComplete">
       <Derived>
         <All>
           <IsComplete>
             <Dependency path="../filerAssignment"/>
           </IsComplete>
           <IsComplete>
-            <Dependency path="../isAllYear"/>
+            <Dependency path="../startDate"/>
+          </IsComplete>
+          <IsComplete>
+            <Dependency path="../endDate"/>
           </IsComplete>
           <IsComplete>
             <Dependency path="../isHourlyJob"/>
           </IsComplete>
+          <Any>
+            <Dependency path="../isPastJob"/>
+            <IsComplete><Dependency path="../payFrequency"/></IsComplete>
+          </Any>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/isPastJobIncompleteOrFalse">
+      <Derived>
+        <Any>
+          <Not>
+            <IsComplete>
+              <Dependency path="../isPastJob"/>
+            </IsComplete>
+          </Not>
+          <Not>
+            <Dependency path="../isPastJob"/>
+          </Not>
+        </Any>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/flowShowConsistentPayQuestion">
+      <Derived>
+        <All>
+          <Dependency path="../isHourlyJob"/>
+          <Not>
+            <Dependency path="../isPastJob"/>
+          </Not>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/flowShowSinglePayPeriodQuestion">
+      <Derived>
+        <All>
+          <Dependency path="../consistentPay"/>
+          <Not>
+            <Dependency path="../isPastJob"/>
+          </Not>
         </All>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/showTipAndOvetime">
       <Derived>
         <All>
-          <Dependency path="../initialQuestionsComplete"/>
+          <Dependency path="../flowInitialQuestionsComplete"/>
           <Not>
             <Dependency path="/isFilingStatusMFS"/>
           </Not>
@@ -214,24 +255,6 @@
         </Add>
       </Derived>
     </Fact>
-    <Fact path="/taxableScholarshipIncome">
-      <Description>Taxable income from scholarships</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
-    <Fact path="/alimonyReceivedIncome">
-      <Description>Alimony received income</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
     <Fact path="/sCorpPassiveIncome">
       <Description>Passive income from S-corporations or partnerships</Description>
       <Writable>
@@ -302,18 +325,6 @@
       </Writable>
       <Placeholder>
         <False/>
-      </Placeholder>
-    </Fact>
-    <Fact path="/trumpAccountDistribution">
-      <Name>OB3 70204: Distribution from Trump Account as defined by IRC 530A</Name>
-      <Description> The term "Trump account" means an individual retirement account (as defined in
-        section 408(a)) which is not
-        designated as a Roth IRA and which meets certain investment requirements</Description>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
     <!-- Sections 911, 931, and 933 are carved out for OB3 MAGI calculations for senior deduction
@@ -534,15 +545,12 @@ and car loan interest deduction
           <Dependency path="/unemploymentIncome"/>
           <Dependency path="/taxableInterestIncome"/>
           <Dependency path="/netCapitalGainOrLoss"/>
-          <Dependency path="/taxableScholarshipIncome"/>
-          <Dependency path="/alimonyReceivedIncome"/>
           <Dependency path="/sCorpPassiveIncome"/>
           <Dependency path="/sCorpNonPassiveIncome"/>
           <Dependency path="/netScheduleEIncome"/>
           <Dependency path="/rentalIncome"/>
           <Dependency path="/royaltyIncome"/>
           <Dependency path="/nonSpecificOtherIncome"/>
-          <Dependency path="/trumpAccountDistribution"/>
           <Dependency path="/ordinaryDividendsIncome"/>
           <Dependency path="/qualifiedDividendsIncome"/>
         </Add>

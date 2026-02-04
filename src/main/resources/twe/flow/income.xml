@@ -74,7 +74,7 @@
           <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
-        <fg-set path="/jobs/*/payFrequency">
+        <fg-set path="/jobs/*/payFrequency" if-true="/jobs/*/isPastJobIncompleteOrFalse">
           <question>How frequently are you paid?</question>
           <modal-link for="modal-pay-frequency-en">Learn more about pay frequency.</modal-link>
           <input type="enum" options-path="/payFrequencyOptions">
@@ -84,35 +84,36 @@
             <option value="monthly">Once a month</option>
           </input>
         </fg-set>
-        <div condition="/jobs/*/initialQuestionsComplete" operator="isFalse">
+        <div condition="/jobs/*/flowInitialQuestionsComplete" operator="isFalse">
           <h5>Job Details</h5>
           <p>Once we know more about your income, we'll ask you additional questions.</p>
         </div>
-        <div condition="/jobs/*/initialQuestionsComplete" operator="isTrueAndComplete">
+        <div condition="/jobs/*/flowInitialQuestionsComplete" operator="isTrueAndComplete">
           <h5>Dates and income</h5>
-          <p>Use the most recent paystub from <fg-show path="/taxYear"/> to enter the following information.</p>
-          <fg-set path="/jobs/*/mostRecentPayPeriodEnd">
+          <p condition="/jobs/*/isPastJob" operator="isFalse">
+            Use the most recent paystub from <fg-show path="/taxYear"/> to enter the following information.
+          </p>
+          <fg-set path="/jobs/*/mostRecentPayPeriodEnd" if-false="/jobs/*/isPastJob">
             <question>When did the most recent pay period in <fg-show path="/taxYear"/> end?</question>
             <modal-link for="modal-job-pay-dates-en">How do I find the pay period and pay date?</modal-link>
             <input type="date"/>
           </fg-set>
-          <fg-set path="/jobs/*/mostRecentPayDate">
+          <fg-set path="/jobs/*/mostRecentPayDate" if-false="/jobs/*/isPastJob">
             <question>
               When was
               <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span>
-              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span>
-              most recent pay date in <fg-show path="/taxYear"/>?
+              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span> most recent pay date in <fg-show path="/taxYear"/>?
             </question>
             <input type="date"/>
           </fg-set>
-          <fg-set path="/jobs/*/consistentPay">
+          <fg-set path="/jobs/*/consistentPay" if-true="/jobs/*/flowShowConsistentPayQuestion">
             <question>How steady is the pay from paycheck to paycheck?</question>
             <input type="boolean">
               <option value="true">The pay is about the same each paycheck</option>
               <option value="false">The pay is very different each paycheck</option>
             </input>
           </fg-set>
-          <fg-set path="/jobs/*/amountLastPaycheck" if-true="/jobs/*/consistentPay">
+          <fg-set path="/jobs/*/amountLastPaycheck" if-true="/jobs/*/flowShowSinglePayPeriodQuestion">
             <question>What’s the gross income for this pay period?</question>
             <modal-link for="modal-job-gross-pay-period-en">How do I find the gross income per pay period?</modal-link>
             <input type="dollar"/>
@@ -133,7 +134,7 @@
             </question>
             <input type="dollar"/>
           </fg-set>
-          <fg-set path="/jobs/*/totalBonusReceived">
+          <fg-set path="/jobs/*/totalBonusReceived" if-false="/jobs/*/isPastJob">
             <question>
               Enter an estimate for any bonus pay you think
               <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
@@ -151,12 +152,10 @@
               received so far in <fg-show path="/taxYear"/>?
             </question>
             <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
-            <modal-link for="modal-job-gross-ytd-end-en">
-                How do I find the gross income so far in <fg-show path="/taxYear"/>?
-              </modal-link>
-              <input type="dollar"/>
-            </fg-set>
-          </div>
+            <modal-link for="modal-job-gross-ytd-end-en">How do I find the gross income so far in <fg-show path="/taxYear"/>?</modal-link>
+            <input type="dollar"/>
+          </fg-set>
+        </div>
         <div condition="/jobs/*/showTipAndOvetime" operator="isTrueAndComplete">
           <h5>Estimated tips and overtime</h5>
           <p>For 2025 through 2028, there are new deductions for tips and overtime.</p>
@@ -225,10 +224,10 @@
             </fg-set>
           </fg-detail>
         </div>
-        <div condition="/jobs/*/initialQuestionsComplete" operator="isTrueAndComplete">
+        <div condition="/jobs/*/flowInitialQuestionsComplete" operator="isTrueAndComplete">
           <h5>Federal taxes</h5>
           <p>Use the most recent paystub to enter the following information.</p>
-          <fg-set path="/jobs/*/amountWithheldLastPaycheck">
+          <fg-set path="/jobs/*/amountWithheldLastPaycheck" if-false="/jobs/*/isPastJob">
             <question>Federal taxes withheld (paid) for this pay period</question>
             <hint>Don’t include state and local taxes, Medicare, or Social Security.</hint>
             <input type="dollar"/>
@@ -248,7 +247,7 @@
             </modal-link>
           </fg-set>
         </div>
-        <div condition="/jobs/*/initialQuestionsComplete" operator="isTrueAndComplete">
+        <div condition="/jobs/*/flowInitialQuestionsComplete" operator="isTrueAndComplete">
           <h5>Contributions</h5>
           <p>
             Check
@@ -729,36 +728,6 @@
         <hint>Don't include taxes withheld from paychecks and other income.</hint>
         <input type="dollar"/>
       </fg-set>
-
-      <!-- Keeping this here to remind folks that these facts and questions already exists and need to be moved elsewhere -->
-      <h3>Trump Account Distribution</h3>
-      <fg-set path="/trumpAccountDistribution">
-        <question>Distributions from Trump Account</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Non-taxable Interest Income</h3>
-      <fg-set path="/taxExemptInterestIncome">
-        <question>How much non-taxable interest income have you received this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Taxable Scholarship Income</h3>
-      <fg-set path="/taxableScholarshipIncome">
-        <question>How much taxable scholarship income have you received this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Alimony Received</h3>
-      <fg-set path="/alimonyReceivedIncome">
-        <question>How much alimony (pre-2019 divorce) have you received this year?</question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>Net Schedule E Income</h3>
-      <fg-set path="/netScheduleEIncome">
-        <question>
-          How much Net Schedule E income from passive activities have you received this year?
-        </question>
-        <input type="dollar"/>
-      </fg-set>
-      <h3>SSA income from Forms SSA-1099 and RRB-1099</h3>
     </section>
 
     <modal-dialog id="modal-pay-frequency-en">

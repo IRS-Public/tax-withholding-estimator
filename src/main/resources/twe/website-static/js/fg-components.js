@@ -691,6 +691,9 @@ function showOrHideAllElements () {
       // Only delete facts for <fg-set>, not other elements that might have conditions
       if (element.tagName === 'FG-SET') {
         element?.deleteFactNoUpdate()
+      } else {
+        const fgSetChildren = element.querySelectorAll('fg-set')
+        for (const fgSetChild of fgSetChildren) fgSetChild.deleteFactNoUpdate()
       }
     } else if (meetsCondition && element.classList.contains('hidden')) {
       element.classList.remove('hidden')
@@ -713,7 +716,8 @@ function validateSectionForNavigation () {
 
   // Loop through fields and mark incomplete if empty and required
   for (const fgSet of fgSets) {
-    if (!(fgSet.isComplete() || fgSet.optional)) {
+    // It's only blocking if it's not optional, not complete, and not the child of a hidden element
+    if (!fgSet.optional && !fgSet.isComplete() && !fgSet.closest('.hidden')) {
       const fieldName = fgSet.path
       missingFields.push(fieldName)
       if (!fgSet.validateRequiredFields()) {
