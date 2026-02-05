@@ -47,7 +47,7 @@
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">State and local taxes</h4>
       <div condition="/wantsItemizedDeduction" operator="isTrue">
         <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> pay state and local
-          taxes, you can deduct up to <fg-show path="/stateAndLocalTaxPaymentsApplicableThreshold"/>.</p>
+          taxes, you can deduct up to <fg-show path="/stateAndLocalTaxDeductionLimit"/>.</p>
         <p>You can deduct:</p>
         <ul>
           <li>State and local real estate taxes</li>
@@ -63,7 +63,7 @@
       <fg-set path="/stateAndLocalTaxPayments" if-true="/wantsItemizedDeduction">
         <question>State and local taxes you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
         <input type="dollar" hintId="stateAndLocalTaxPaymentsHintId"/>
-        <hint>(max <fg-show path="/stateAndLocalTaxPaymentsApplicableThreshold" />)</hint>
+        <hint>(max <fg-show path="/stateAndLocalTaxDeductionLimit"/>)</hint>
       </fg-set>
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">Medical and dental expenses deduction</h4>
       <div condition="/wantsItemizedDeduction" operator="isTrue">

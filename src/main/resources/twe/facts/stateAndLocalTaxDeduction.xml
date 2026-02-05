@@ -2,8 +2,42 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/stateAndLocalTaxDeductionLimit">
+      <Description>
+        This fact is purely informational for the user interface.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Dependency path="/saltWorksheetLine1"/>
+                </Dividend>
+                <Divisors>
+                  <Int>2</Int>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/saltWorksheetLine1"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/saltWorksheetLine1">
-      <Description>SALT Worksheet Line 1. Enter $40,400 for all filers</Description>
+      <Description>
+        Instructions for Schedule A (Form 1040) SALT Worksheet Line 1.
+      </Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>40400</Dollar>
