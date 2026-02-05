@@ -60,19 +60,6 @@
         <Boolean/>
       </Writable>
     </Fact>
-    <Fact path="/isFlsaNonExempt">
-      <!-- This fact is writable today to allow content to handle eligibility. Given the complexity
-      of FLSA Section 7, in future iterations to create a better taxpayer experience-->
-      <Name>Is the taxpayer non-exempt and eligible for qualified overtime comp under FLSA Section 7?</Name>
-      <Description>
-        OB3 Section 70202 temporarily creating &#xA7;225(c)(1): For purposes of this
-        section, the term &#x2018;qualified overtime compensation&#x2019; means overtime compensation paid to
-        an individual required under section 7 of the Fair Labor Standards Act of 1938
-      </Description>
-      <Writable>
-        <Boolean/>
-      </Writable>
-    </Fact>
     <Fact path="/isEligibleForOvertimeCompensationDeduction">
       <Name>Taxpayer eligible for overtime compensation deduction</Name>
       <Description>
@@ -82,7 +69,6 @@
       </Description>
       <Derived>
         <All>
-          <Dependency path="/isFlsaNonExempt"/>
           <Not>
             <Dependency path="/isFilingStatusMFS"/>
           </Not>

@@ -45,7 +45,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // Column B
   test("Single, OB3, itemized") { td =>
     val scenario = td.scenario
-    scenario.graph.set("/isFlsaNonExempt", true)
     scenario.assertEquals("/incomeTotal", 156000)
     scenario.assertEquals("/agi", 154587)
     scenario.assertEquals("/taxableIncome", 105445)
@@ -100,7 +99,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // Column S
   test("Single, wages + tips + overtime + car loan interest") { td =>
     val scenario = td.scenario
-    scenario.graph.set("/isFlsaNonExempt", true)
     scenario.assertEquals("/incomeTotal", 104000)
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/qualifiedTipDeduction", 10000)
@@ -204,7 +202,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("Single, No tax on overtime, factor 2, itemized,SSN") { td =>
     {
       val scenario = td.scenario
-      scenario.graph.set("/isFlsaNonExempt", true)
 
       scenario.assertEquals("/agi", 154587)
       scenario.assertEquals("/taxableIncome", 106695)
@@ -321,8 +318,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // Column L
   test("Single, wages + overtime income") { td =>
     val scenario = td.scenario
-    scenario.graph.set("/isFlsaNonExempt", true)
     scenario.assertEquals("/agi", 98800)
+    scenario.assertEquals("/taxableIncome", 75700)
     scenario.assertEquals("/overtimeCompensationDeduction", 7000)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 11372)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1357)
@@ -700,7 +697,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("Single, 1 job, factor 2, partial deduction") { td =>
     {
       val scenario = td.scenario
-      scenario.graph.set("/isFlsaNonExempt", true)
 
       scenario.assertEquals("/agi", 156000)
       scenario.assertEquals("/overtimeCompensationDeduction", 9400)
@@ -717,7 +713,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("Single, 1 job, factor 1.5, partial deduction") { td =>
     {
       val scenario = td.scenario
-      scenario.graph.set("/isFlsaNonExempt", true)
 
       scenario.assertEquals("/agi", 254650)
       scenario.assertEquals("/overtimeCompensationDeduction", 9600)
@@ -734,7 +729,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("Single, 2 jobs,  partial deduction") { td =>
     {
       val scenario = td.scenario
-      scenario.graph.set("/isFlsaNonExempt", true)
       scenario.assertEquals("/agi", 186000)
       scenario.assertEquals("/overtimeCompensationDeduction", 3900)
       scenario.assertEquals("/taxableIncome", 166000)
@@ -750,7 +744,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("MFj, 2 jobs, maximum deduction") { td =>
     {
       val scenario = td.scenario
-      scenario.graph.set("/isFlsaNonExempt", true)
       scenario.assertEquals("/agi", 186000)
       scenario.assertEquals("/overtimeCompensationDeduction", 7500)
       scenario.assertEquals("/taxableIncome", 146300)
@@ -766,7 +759,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("MFj, 2 jobs, phased out deduction, no SSN spouse") { td =>
     {
       val scenario = td.scenario
-      scenario.graph.set("/isFlsaNonExempt", true)
       scenario.assertEquals("/agi", 356000)
       scenario.assertEquals("/overtimeCompensationDeduction", 14400)
       scenario.assertEquals("/taxableIncome", 309400)
@@ -781,7 +773,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // Column BB
   test("HH, 1 job, tips and OT") { td =>
     val scenario = td.scenario
-    scenario.graph.set("/isFlsaNonExempt", true)
     scenario.assertEquals("/agi", 156000)
     scenario.assertEquals("/taxableIncome", 97450)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 12146)
@@ -793,7 +784,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // Column BC
   test("MFS, 1 job, tips and OT") { td =>
     val scenario = td.scenario
-    scenario.graph.set("/isFlsaNonExempt", true)
     scenario.assertEquals("/agi", 156000)
     scenario.assertEquals("/overtimeCompensationDeduction", 0)
 
@@ -1196,7 +1186,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("HH, 2 jobs") { td =>
     {
       val scenario = td.scenario
-      scenario.graph.set("/isFlsaNonExempt", true)
 
       scenario.assertEquals("/agi", 155000)
       scenario.assertEquals("/overtimeCompensationDeduction", 7250)
