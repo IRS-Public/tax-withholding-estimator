@@ -17,6 +17,7 @@
 @import "components/forms.css";
 @import "components/modals.css";
 @import "components/step-indicator.css";
+@import "components/stacked-button-group.css";
 @import "components/tables.css";
 @import "components/estimate.css";
 @import "components/fg-withholding-adjustment.css";

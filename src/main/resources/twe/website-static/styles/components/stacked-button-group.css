@@ -1,0 +1,11 @@
+.stacked-button-group {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--units-3);
+}
+
+.stacked-button-group > .usa-button {
+    max-width: 100%;
+    box-sizing: border-box;
+}
