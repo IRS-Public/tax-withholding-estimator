@@ -5,7 +5,6 @@ import gov.irs.factgraph.types.Day
 import gov.irs.factgraph.types.Dollar
 import gov.irs.factgraph.types.Enum
 import gov.irs.factgraph.types.Rational
-import gov.irs.factgraph.FactDictionaryForTests
 import gov.irs.factgraph.Path
 import java.util.UUID
 import org.scalatest.funsuite.AnyFunSuite
@@ -563,6 +562,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-12-31"),
 
       // Derived overrides
+      Path("/today") -> Day("2025-09-01"), // Date between startDate and endDate
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
       Path("/totalCredits") -> Dollar("0"),
@@ -589,6 +589,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-08-20"),
 
       // Derived overrides
+      Path("/today") -> Day("2025-03-01"), // Date between startDate and endDate
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
       Path("/totalCredits") -> Dollar("0"),
@@ -615,6 +616,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-12-31"),
 
       // Derived overrides
+      Path("/today") -> Day("2025-09-01"), // Date between startDate and endDate
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
       Path("/totalCredits") -> Dollar("0"),
@@ -641,6 +643,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-12-31"),
 
       // Derived overrides
+      Path("/today") -> Day("2025-09-01"), // Date between startDate and endDate
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
       Path("/totalCredits") -> Dollar("0"),
@@ -667,6 +670,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-08-31"),
 
       // Derived overrides
+      Path("/today") -> Day("2025-03-01"), // Date between startDate and endDate
       Path("/adjustmentsToIncome") -> Dollar("0"),
       Path("/totalOtherIncome") -> Dollar("0"),
       Path("/totalCredits") -> Dollar("0"),
@@ -683,6 +687,9 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
       Path(s"/pensions/#${pension1Id}/mostRecentPayDate") -> Day("2025-12-11"),
       Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-12-31"),
+
+      // Derived overrides
+      Path("/today") -> Day("2025-12-15"), // Date after endDate
     )
 
     assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayPeriodsInteger")).value.contains(1))
@@ -979,6 +986,11 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
           Path(s"/pensions/#${pension1Id}/startDate") -> Day(startDateValue),
           Path(s"/pensions/#${pension1Id}/mostRecentPayDate") -> Day(recentPayDateValue),
           Path(s"/pensions/#${pension1Id}/endDate") -> Day(endDateValue),
+
+          // Derived overrides
+          // Use recentPayDateValue for /today since /recentPayDate should never be in the future,
+          // which should work for these scenarios
+          Path("/today") -> Day(recentPayDateValue),
         )
 
         assert(
@@ -1027,5 +1039,32 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
         val fractRemainingPayPeriods = graph.get(Path(s"/jobs/#${dummyUUID}/partialPayPeriods"))
         assert(fractRemainingPayPeriods.value.contains(expectedFractional))
     }
+  }
+
+  test("Verifying past pensions have 0 remaining pay periods") {
+    val graph = makeGraphWith(
+      factDictionary,
+      pensions -> pensionsCollection,
+      Path("/primaryFilerDateOfBirth") -> Day("1985-01-28"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
+      Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
+      Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
+      Path(s"/pensions/#${pension1Id}/income") -> Dollar("60000"),
+      Path(s"/pensions/#${pension1Id}/startDate") -> Day("2025-01-01"),
+      Path(s"/pensions/#${pension1Id}/mostRecentPayDate") -> Day("2025-08-01"),
+      Path(s"/pensions/#${pension1Id}/endDate") -> Day("2025-12-15"),
+
+      // Derived overrides
+      Path("/today") -> Day("2025-12-31"), // Date after endDate
+      Path("/adjustmentsToIncome") -> Dollar("0"),
+      Path("/totalOtherIncome") -> Dollar("0"),
+      Path("/totalCredits") -> Dollar("0"),
+    )
+
+    assert(graph.get(Path(s"/pensions/#${pension1Id}/remainingPayPeriodsInteger")).value.contains(0))
   }
 }

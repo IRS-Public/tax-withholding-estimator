@@ -1208,6 +1208,14 @@
         <Switch>
           <Case>
             <When>
+              <Dependency path="../isPastJob"/>
+            </When>
+            <Then>
+              <Int>0</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
               <Dependency path="../isPayFrequencyMonthly"/>
             </When>
             <Then>
@@ -1631,14 +1639,6 @@
                   </Ceiling>
                 </Subtrahends>
               </Subtract>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <Dependency path="../isPastJob"/>
-            </When>
-            <Then>
-              <Int>0</Int>
             </Then>
           </Case>
           <Case>
