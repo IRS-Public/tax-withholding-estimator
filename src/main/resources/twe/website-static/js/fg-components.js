@@ -658,11 +658,16 @@ class FgShow extends HTMLElement {
       if (outputHtml !== '') outputHtml += ', '
       if (result.hasValue) {
         const value = result.get.toString()
-        outputHtml += `${value}`
+        if (result.get.s_math_BigDecimal__f_bigDecimal) {
+          outputHtml += parseFloat(value).toLocaleString()
+        } else {
+          outputHtml += value
+        }
       } else {
         outputHtml += '<span class="text-base">-</span>'
       }
     }
+
     this.innerHTML = outputHtml
   }
 }
