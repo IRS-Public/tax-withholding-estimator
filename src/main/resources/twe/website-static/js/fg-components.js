@@ -30,6 +30,7 @@ function loadFactGraph (factGraphAsString) {
 }
 window.loadFactGraph = loadFactGraph
 
+const COLLECTION_ID_PLACEHOLDER = '{{COLLECTION_ID}}'
 /**
  * Update all abstract paths in the template to include the collection id
  * @param template
@@ -45,6 +46,11 @@ function configureCollectionIds (template, collectionId) {
         node.setAttribute(attribute, makeCollectionIdPath(path, collectionId))
       }
     }
+  }
+
+  for (const button of template.querySelectorAll('button.pdf-download')) {
+    const onclick = button.getAttribute('onclick')
+    button.setAttribute('onclick', onclick.replaceAll(COLLECTION_ID_PLACEHOLDER, collectionId))
   }
 }
 
