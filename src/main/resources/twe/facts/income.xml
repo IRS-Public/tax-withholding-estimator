@@ -100,6 +100,9 @@
       <Writable>
         <Boolean/>
       </Writable>
+      <Placeholder>
+        <False/>
+      </Placeholder>
     </Fact>
     <Fact path="/preTaxRetirementAccountIncome">
       <Description>Total distributions from pre-tax retirement accounts</Description>
