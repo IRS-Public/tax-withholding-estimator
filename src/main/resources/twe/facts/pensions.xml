@@ -758,59 +758,59 @@
         </Filter>
       </Derived>
     </Fact>
-    <Fact path="/noJobs">
+    <Fact path="/highestPayingPension">
+      <Description>Highest "paying" pension or annuity available for extra withholding</Description>
       <Derived>
-        <CollectionSize>
-          <Dependency path="/jobs"/>
-        </CollectionSize>
+        <IndexOf>
+          <Collection>
+            <Filter path="/pensionsAvailableForExtraWithholding">
+              <Equal>
+                <Left>
+                  <Maximum>
+                    <Dependency path="/pensionsAvailableForExtraWithholding/*/income"/>
+                  </Maximum>
+                </Left>
+                <Right>
+                  <Dependency path="income"/>
+                </Right>
+              </Equal>
+            </Filter>
+          </Collection>
+          <Index>
+            <Int>0</Int>
+          </Index>
+        </IndexOf>
       </Derived>
     </Fact>
     <Fact path="/pensionSelectedForExtraWithholding">
-      <Description>
-        Logic dictating which pension will be assigned additional or reduced withholding.
-        If there are any jobs, then those will be assigned the withholding modifications and
-        pensions will remain untouched.
-      </Description>
+      <Description>Logic dictating which pension will be assigned additional or reduced withholding.</Description>
       <Derived>
         <Switch>
           <Case>
             <When>
-              <Any>
-                <Not>
-                  <IsComplete>
-                    <Dependency path="/noJobs"/>
-                  </IsComplete>
-                </Not>
-                <Equal>
-                  <Left>
-                    <Dependency path="/noJobs"/>
-                  </Left>
-                  <Right>
-                    <Int>0</Int>
-                  </Right>
-                </Equal>
-              </Any>
+              <All>
+                <IsComplete>
+                  <Dependency path="/highestPayingPension"/>
+                </IsComplete>
+                <Any>
+                  <Not>
+                    <IsComplete>
+                      <Dependency path="/highestPayingJob"/>
+                    </IsComplete>
+                  </Not>
+                  <GreaterThanOrEqual>
+                    <Left>
+                      <Dependency path="/highestPayingPension/income"/>
+                    </Left>
+                    <Right>
+                      <Dependency path="/highestPayingJob/income"/>
+                    </Right>
+                  </GreaterThanOrEqual>
+                </Any>
+              </All>
             </When>
             <Then>
-              <IndexOf>
-                <Collection>
-                  <Filter path="/pensionsAvailableForExtraWithholding">
-                    <Equal>
-                      <Left>
-                        <Maximum>
-                          <Dependency path="/pensionsAvailableForExtraWithholding/*/restOfYearIncome"/>
-                        </Maximum>
-                      </Left>
-                      <Right>
-                        <Dependency path="restOfYearIncome"/>
-                      </Right>
-                    </Equal>
-                  </Filter>
-                </Collection>
-                <Index>
-                  <Int>0</Int>
-                </Index>
-              </IndexOf>
+              <Dependency path="/highestPayingPension"/>
             </Then>
           </Case>
         </Switch>

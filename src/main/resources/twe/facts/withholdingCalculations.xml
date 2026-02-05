@@ -379,9 +379,8 @@
         </Filter>
       </Derived>
     </Fact>
-    <Fact path="/jobSelectedForExtraWithholding">
-      <Description>The job selected for extra withholding on a new W4. The W4 refers to this as the
-        "highest paying job".</Description>
+    <Fact path="/highestPayingJob">
+      <Description>Highest "paying" job available for extra withholding</Description>
       <Derived>
         <IndexOf>
           <Collection>
@@ -389,11 +388,11 @@
               <Equal>
                 <Left>
                   <Maximum>
-                    <Dependency path="/jobsAvailableForExtraWithholding/*/restOfYearIncome"/>
+                    <Dependency path="/jobsAvailableForExtraWithholding/*/income"/>
                   </Maximum>
                 </Left>
                 <Right>
-                  <Dependency path="restOfYearIncome"/>
+                  <Dependency path="income"/>
                 </Right>
               </Equal>
             </Filter>
@@ -402,6 +401,40 @@
             <Int>0</Int>
           </Index>
         </IndexOf>
+      </Derived>
+    </Fact>
+    <Fact path="/jobSelectedForExtraWithholding">
+      <Description>The job selected for extra withholding on a new W4. The W4 refers to this as the "highest paying job".</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <IsComplete>
+                  <Dependency path="/highestPayingJob"/>
+                </IsComplete>
+                <Any>
+                  <Not>
+                    <IsComplete>
+                      <Dependency path="/highestPayingPension"/>
+                    </IsComplete>
+                  </Not>
+                  <GreaterThanOrEqual>
+                    <Left>
+                      <Dependency path="/highestPayingJob/income"/>
+                    </Left>
+                    <Right>
+                      <Dependency path="/highestPayingPension/income"/>
+                    </Right>
+                  </GreaterThanOrEqual>
+                </Any>
+              </All>
+            </When>
+            <Then>
+              <Dependency path="/highestPayingJob"/>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/totalYearToDateJobsWithholding">

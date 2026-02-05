@@ -184,12 +184,12 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column AL
-  ignore("MFJ,  salary, pension, phased out deduction, one SSN") { td =>
+  test("MFJ,  salary, pension, phased out deduction, one SSN") { td =>
     val scenario = td.scenario
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 413)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 413)
     scenario.assertEquals("/incomeTotal", 162000)
     scenario.assertEquals("/agi", 162000)
     scenario.assertEquals("/taxableIncome", 119570)
