@@ -84,12 +84,13 @@ object FgCollection {
   def renderSectionNodes(nodes: List[SectionNode], templateEngine: TweTemplateEngine, separator: String = ""): String =
     nodes
       .map {
-        case SectionNode.fgCollection(x)  => x.html(templateEngine)
-        case SectionNode.fgSet(x)         => x.html(templateEngine)
-        case SectionNode.fgAlert(x)       => x.html(templateEngine)
-        case SectionNode.fgSectionGate(x) => x.html(templateEngine)
-        case SectionNode.fgDetail(x)      => x.html(templateEngine)
-        case SectionNode.rawHTML(x)       => x.toString
+        case SectionNode.fgCollection(x)             => x.html(templateEngine)
+        case SectionNode.fgSet(x)                    => x.html(templateEngine)
+        case SectionNode.fgAlert(x)                  => x.html(templateEngine)
+        case SectionNode.fgSectionGate(x)            => x.html(templateEngine)
+        case SectionNode.fgDetail(x)                 => x.html(templateEngine)
+        case SectionNode.fgWithholdingAdjustments(x) => x.html(templateEngine)
+        case SectionNode.rawHTML(x)                  => x.toString
       }
       .mkString(separator)
 }
