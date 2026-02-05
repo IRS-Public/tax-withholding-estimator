@@ -603,14 +603,14 @@
     <Fact path="/jobs/*/isCurrentJob">
       <Derived>
         <All>
-          <LessThanOrEqual>
+          <LessThan>
             <Left>
               <Dependency path="/today"/>
             </Left>
             <Right>
               <Dependency path="../endDate"/>
             </Right>
-          </LessThanOrEqual>
+          </LessThan>
           <GreaterThanOrEqual>
             <Left>
               <Dependency path="/today"/>
