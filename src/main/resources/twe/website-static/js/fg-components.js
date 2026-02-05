@@ -689,7 +689,17 @@ class FgReset extends HTMLElement {
 customElements.define('fg-reset', FgReset)
 
 function checkCondition (condition, operator) {
-  const value = factGraph.get(condition)
+  let value
+  // This guards against this `.get` throwing an exception for reasons such as an unexpected fact
+  // graph update, or a misconfigured flow. Since this runs before the spinner unblocks, an
+  // exception bricks the entire page (bad). It defaults to true because having to answer an
+  // unnecessary question is likely preferable to not being presented a necessary question.
+  try {
+    value = factGraph.get(condition)
+  } catch (e) {
+    console.error(`Error attempting to fetch ${condition}, ignoring condition:\n`, e)
+    return true
+  }
 
   switch (operator) {
     // We need to explicitly check for true/false to account for incompletes
