@@ -34,6 +34,20 @@ main a[href^="http"]:not(.usa-button)::after {
   top: 0.15em;
 }
 
+@supports ((-webkit-mask:url()) or (mask:url())) {
+  main a[href^="http"]:not(.usa-button)::after {
+    background: 0 0;
+    background-color: currentColor;
+    -webkit-mask-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/launch.svg"), linear-gradient(transparent, transparent);
+    mask-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/launch.svg"), linear-gradient(transparent, transparent);
+    -webkit-mask-position: center center;
+    mask-position: center center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 1.75ex 1.75ex;
+    mask-size: 1.75ex 1.75ex;
+  }
+}
 /* Use white icon for external links in dark backgrounds (e.g., identifier section) */
 .usa-identifier a[href^="http"]:not(.usa-button)::after {
   background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons-bg/launch--white.svg");
