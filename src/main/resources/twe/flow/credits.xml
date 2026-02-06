@@ -91,7 +91,7 @@
       <h3 condition="/isEligibleForEducationCredits" operator="isTrue">American Opportunity Tax Credit (AOTC)</h3>
       <p condition="/isEligibleForEducationCredits" operator="isTrue">The AOTC helps offset the cost of tuition, fees, and other expenses for the first four years of college.</p>
       <p condition="/isEligibleForEducationCredits" operator="isTrue"><modal-link for="modal-aotc-who-can-claim-and-eligible-expenses">Who can claim the AOTC and what expenses qualify?</modal-link></p>
-      <fg-set path="/aotcQualifyingStudents" if-true="/isEligibleForEducationCredits">
+      <fg-set path="/qualifyingStudents" if-true="/isEligibleForEducationCredits">
         <question>Number of college students</question>
         <input type="int" />
       </fg-set>

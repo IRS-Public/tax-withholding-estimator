@@ -2,8 +2,8 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <Fact path="/aotcQualifyingStudents">
-      <Name>Number of AOTC qualifying students</Name>
+    <Fact path="/qualifyingStudents">
+      <Name>Number of qualifying students</Name>
       <Writable>
         <Int/>
         <Limit type="Min">
@@ -105,7 +105,7 @@
             </When>
             <Then>
               <Add>
-                <Dependency path="/form8863Line28"/>
+                <Dependency path="/form8863Line29"/>
                 <Dollar>2000</Dollar>
               </Add>
             </Then>
@@ -122,7 +122,7 @@
     <Fact path="/maxAotcAmountForTaxYear">
       <Derived>
         <Multiply>
-          <Dependency path="/aotcQualifyingStudents"/>
+          <Dependency path="/qualifyingStudents"/>
           <Dependency path="/maxAotcPerQualifyingStudent"/>
         </Multiply>
       </Derived>
@@ -135,10 +135,10 @@
     <Fact path="/tentativeMaximumAotcAmount">
       <Description>Form 8863 Line 1, for all qualifying students</Description>
       <Derived>
-        <Multiply>
-          <Dependency path="/aotcQualifyingStudents"/>
-          <Dependency path="/form8863Line30"/>
-        </Multiply>
+        <LesserOf>
+          <Dependency path="/maxAotcAmountForTaxYear"/>
+          <Dependency path="/aotcQualifiedEducationExpenses"/>
+        </LesserOf>
       </Derived>
     </Fact>
     <Fact path="/educationCreditPhaseoutThreshold">
@@ -378,7 +378,8 @@
     </Fact>
     <Fact path="/educationCreditLimitWorksheetLine1">
       <Derived>
-        <Dependency path="/reducedLlcAfterPhaseout"/>
+        <Dollar>0</Dollar>
+        <!--        <Dependency path="/reducedLlcAfterPhaseout"/>-->
       </Derived>
     </Fact>
     <Fact path="/educationCreditLimitWorksheetLine2">

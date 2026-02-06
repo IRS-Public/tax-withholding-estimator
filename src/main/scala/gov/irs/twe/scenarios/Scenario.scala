@@ -232,13 +232,12 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
     factGraph.set(factPath, convertedValue)
   }
 
-  // Add children
-  var ctcEligibleChildren = 0
-  if (csv("Child1Age").toInt > 0) ctcEligibleChildren += 1
-  if (csv("Child2Age").toInt > 0) ctcEligibleChildren += 1
-  if (csv("Child3Age").toInt > 0) ctcEligibleChildren += 1
-  if (csv("Child4Age").toInt > 0) ctcEligibleChildren += 1
-  factGraph.set("/ctcEligibleDependents", ctcEligibleChildren)
+  // CTC and ODC eligible dependents
+  val childKeys = (1 to 4).map(i => s"Child${i}Age")
+  val ages = childKeys.flatMap(key => csv.get(key).map(_.toInt))
+  val ctcCount = ages.count(age => age > 0 && age < 18)
+
+  factGraph.set("/ctcEligibleDependents", ctcCount)
 
   // Calculated facts
   factGraph.set("/primaryFilerAge25OrOlderForEitc", csv("User Age").toInt >= 25)
@@ -464,14 +463,15 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "HSAdeduction" -> "/hsaContributionAmount",
   "studentLoanInterest" -> "/studentLoanInterestAmount",
   "Car loan interest" -> "/personalVehicleLoanInterestAmount",
-  "qualChildrenCDCC" -> "/ctcEligibleDependents",
+  "qualChildrenCDCC" -> "/cdccQualifyingPersons",
+  "ChildCareExpenses" -> "/cdccQualifyingExpenses",
   "How many QC for EITC" -> "/eitcQualifyingChildren",
   "movingExpense" -> "/movingExpensesForArmedServicesMembers",
   "educatorExpense" -> "/educatorExpenses",
   "IRAcontribution" -> "/deductionForTraditionalIRAContribution",
   "AMT Credit" -> "/alternativeMinimumTaxCreditAmount",
   "Foreign Tax Credit" -> "/schedule3Line1",
-  "Number of students" -> "/aotcQualifyingStudents",
+  "Number of students" -> "/qualifyingStudents",
   "AOTC" -> "/aotcQualifiedEducationExpenses",
   "LLC" -> "/llcQualifiedEducationExpenses",
   "Elderly or Disabled Credit" -> "/elderlyAndDisabledTaxCreditAmount",
@@ -521,6 +521,8 @@ private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/overtimeCompensationDeduction" -> "No tax on overtime deduction",
   "/medicalAndDentalExpensesTotal" -> "medicalExpenses allowed",
   "/totalNonRefundableCredits" -> "Total non-refundable credits",
+  "/lifetimeLearningCredit" -> "Non-Ref Edn credits",
+  "/americanOpportunityCredit" -> "Refundable Edn credits",
   // TODO: This is not going to scale when the jobs that aren't Job 1 have withholdings
   // TODO: This doesn't work if Job 1 isn't the highest paying job and is selected for extra withholdings
   "/jobSelectedForExtraWithholding/w4Line3" -> "W-4 Line3Amount1",

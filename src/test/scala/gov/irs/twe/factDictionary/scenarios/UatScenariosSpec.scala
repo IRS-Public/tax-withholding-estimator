@@ -49,8 +49,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 154587)
     scenario.assertEquals("/taxableIncome", 105445)
     // scenario.assertEquals("/standardOrItemizedDeduction", 45425)
-    scenario.assertEquals("/stateAndLocalTaxDeduction", 30000)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 17910)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 30000)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 14136)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 13600)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 11310)
@@ -146,15 +146,17 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column U
-  ignore("MFJ, college student dependent + tuition payments") { td =>
+  test("MFJ, college student dependent + tuition payments") { td =>
     val scenario = td.scenario
-    println(scenario.graph.debugFact("/totalNonRefundableCredits"))
-    println(scenario.graph.debugFact("/totalRefundableCredits"))
+    scenario.graph.set("/odcEligibleDependents", 1)
     scenario.assertEquals("/incomeTotal", 104000)
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/taxableIncome", 71800)
-    scenario.assertEquals("/totalNonRefundableCredits", 2000)
+    scenario.assertEquals("/totalCtcAndOdc", 500)
+    scenario.assertEquals("/lifetimeLearningCredit", 1500)
+    scenario.assertEquals("/americanOpportunityCredit", 1000)
     scenario.assertEquals("/totalRefundableCredits", 1000)
+    scenario.assertEquals("/totalNonRefundableCredits", 2000)
     scenario.assertEquals("/additionalMedicareTax", 0)
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
