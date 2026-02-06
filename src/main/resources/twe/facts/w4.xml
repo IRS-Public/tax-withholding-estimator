@@ -82,39 +82,31 @@
           <Case>
             <When>
               <!-- When the net change is negative ... -->
-              <LessThan>
-                <Left>
-                  <Dependency path="/w4Line4NetChange"/>
-                </Left>
-                <Right>
-                  <Dollar>0</Dollar>
-                </Right>
-              </LessThan>
+              <All>
+                <LessThan>
+                  <Left>
+                    <Dependency path="/w4Line4NetChange"/>
+                  </Left>
+                  <Right>
+                    <Dollar>0</Dollar>
+                  </Right>
+                </LessThan>
+                <Equal>
+                  <Left>
+                    <Dependency path=".."/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/jobSelectedForExtraWithholding"/>
+                  </Right>
+                </Equal>
+              </All>
             </When>
             <Then>
-              <Switch>
-                <Case>
-                  <When>
-                    <!-- ... and this is a possible job ... -->
-                    <Dependency path="../conditionForPossibleW4Jobs"/>
-                  </When>
-                  <Then>
-                    <!-- ... it gets absolute value of net change in proportion to income for year end jobs. -->
-                    <Multiply>
-                      <Dependency path="/w4Line4NetChange"/>
-                      <Dollar>-1</Dollar>
-                    </Multiply>
-                  </Then>
-                </Case>
-                <Case>
-                  <When>
-                    <True/>
-                  </When>
-                  <Then>
-                    <Dollar>0</Dollar>
-                  </Then>
-                </Case>
-              </Switch>
+              <!-- ... it gets absolute value of net change in proportion to income for year end jobs. -->
+              <Multiply>
+                <Dependency path="/w4Line4NetChange"/>
+                <Dollar>-1</Dollar>
+              </Multiply>
             </Then>
           </Case>
           <Case>

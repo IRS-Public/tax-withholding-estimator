@@ -700,8 +700,7 @@
                 </Equal>
               </When>
               <Then>
-                <Dependency path="/w4Line4NetChange"/>
-                <!-- <Dollar>0</Dollar> -->
+                <Dependency path="../w4Line4a"/>
               </Then>
             </Case>
             <Case>
@@ -721,7 +720,7 @@
         <Add>
           <Dependency path="../pub15Worksheet1aLine1g"/>
           <!-- Line 1f -->
-          <!-- <Dependency path="../w4Line4b"/> -->
+          <Dependency path="../w4Line4b"/>
         </Add>
       </Derived>
     </Fact>
