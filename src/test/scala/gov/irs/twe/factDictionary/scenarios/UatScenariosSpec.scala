@@ -377,10 +377,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // Column P
   test("Single, high wages +Cap Gains + Investment") { td =>
     val scenario = td.scenario
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 55000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 1544)
     scenario.assertEquals("/incomeTotal", 682000)
     scenario.assertEquals("/agi", 667000)
     scenario.assertEquals("/taxableIncome", 649900)
@@ -389,6 +385,11 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/additionalMedicareTax", 3708)
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 760)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 188202)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 55000)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 1544)
   }
 
   // Column Q

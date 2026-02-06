@@ -205,43 +205,74 @@
         be processed.
       </Description>
       <Derived>
-        <!-- future withholding, too soon to be changed and thus incorporates lag. Does not use Pub 15-T Worksheet 1a calculation -->
-        <Multiply>
-          <Dependency path="../averageWithholdingPerPayPeriod"/>
-          <LesserOf>
-            <Dependency path="../remainingPayPeriodsRational"/>
-            <!-- Casting this value to a rational -->
-            <Multiply>
-              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
-              <Rational>1/1</Rational>
-            </Multiply>
-          </LesserOf>
-        </Multiply>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPastJob"/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Multiply>
+                <Dependency path="../averageWithholdingPerPayPeriod"/>
+                <LesserOf>
+                  <Dependency path="../remainingPayPeriodsRational"/>
+                  <!-- Casting this value to a rational -->
+                  <Multiply>
+                    <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                    <Rational>1/1</Rational>
+                  </Multiply>
+                </LesserOf>
+              </Multiply>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/futureTentativeWithholding">
-      <!-- future tentative withholding: result from Pub 15-T Worksheet 1A -->
-      <!-- For now, we treat this as a "given" that won't change. Probably will need to revisit
-      this when we get to reducing below tentative withholding. -->
+      <Description>Result from Pub 15-T Worksheet 1A</Description>
       <Derived>
-        <Multiply>
-          <Dependency path="../tentativeWithholdingAmount"/>
-          <GreaterOf>
-            <Rational>0/1</Rational>
-            <Subtract>
-              <Minuend>
-                <Dependency path="../remainingPayPeriodsRational"/>
-              </Minuend>
-              <Subtrahends>
-                <!-- Casting this value to a rational -->
-                <Multiply>
-                  <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
-                  <Rational>1/1</Rational>
-                </Multiply>
-              </Subtrahends>
-            </Subtract>
-          </GreaterOf>
-        </Multiply>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isPastJob"/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Multiply>
+                <Dependency path="../tentativeWithholdingAmount"/>
+                <GreaterOf>
+                  <Rational>0/1</Rational>
+                  <Subtract>
+                    <Minuend>
+                      <Dependency path="../remainingPayPeriodsRational"/>
+                    </Minuend>
+                    <Subtrahends>
+                      <!-- Casting this value to a rational -->
+                      <Multiply>
+                        <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                        <Rational>1/1</Rational>
+                      </Multiply>
+                    </Subtrahends>
+                  </Subtract>
+                </GreaterOf>
+              </Multiply>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/annualizedIncome">

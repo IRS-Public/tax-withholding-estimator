@@ -211,11 +211,6 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   List(PREVIOUS_SELF_JOB_ID, PREVIOUS_SPOUSE_JOB_ID).foreach(jobId => {
     factGraph.set(s"/jobs/#$jobId/writableStartDate", Day("2026-01-01"))
     factGraph.set(s"/jobs/#$jobId/writableEndDate", Day("2026-01-15"))
-    factGraph.set(s"/jobs/#$jobId/payFrequency", types.Enum(Some("weekly"), "/payFrequencyOptions"))
-    factGraph.set(s"/jobs/#$jobId/mostRecentPayPeriodEnd", Day("2026-01-15"))
-    factGraph.set(s"/jobs/#$jobId/mostRecentPayDate", Day("2026-01-15"))
-    factGraph.set(s"/jobs/#$jobId/amountLastPaycheck", Dollar("0"))
-    factGraph.set(s"/jobs/#$jobId/amountWithheldLastPaycheck", Dollar("0"))
   })
 
   // These are facts that we need to set that aren't in the spreadsheets
@@ -280,10 +275,13 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
     factGraph.set("/odcEligibleDependents", 0)
   }
 
-  // Remove jobs that have no income
+  // TODO there is one scenario (CA) where the spreadsheet is accidentally set for 2025
+  if (csv("DateRun") == "2/5/2025") { factGraph.set("/overrideDate", Day("2026-02-05")) }
+
+  // Remove jobs that don't have any income
   ALL_JOBS.foreach(jobId => {
     val income = factGraph.get(s"/jobs/#$jobId/income")
-    if (!income.hasValue || income.get == 0) {
+    if (income.get == 0) {
       factGraph.delete(s"/jobs/#$jobId")
     }
   })

@@ -202,6 +202,14 @@
       </Placeholder>
     </Fact>
     <Fact path="/jobs/*/amountLastPaycheck">
+      <Override>
+        <Condition>
+          <Dependency path="../isPastJob"/>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
       <Writable>
         <Dollar/>
       </Writable>
@@ -381,12 +389,17 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/amountWithheldLastPaycheck">
+      <Override>
+        <Condition>
+          <Dependency path="../isPastJob"/>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
       <Writable>
         <Dollar/>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/payFrequency">
       <Name>Pay Frequency</Name>
