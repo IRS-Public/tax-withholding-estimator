@@ -314,7 +314,7 @@
 
             <p><modal-link for="modal-retirement-roth-en">Why can’t I include Roth contributions?</modal-link></p>
 
-            <fg-set path="/jobs/*/retirementPlanContributionsPerPayPeriod">
+            <fg-set path="/jobs/*/retirementPlanContributionsPerPayPeriod" if-false="/jobs/*/isPastJob">
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
@@ -342,7 +342,7 @@
               <li>Long-term care contributions</li>
               <li>Employer contributions</li>
             </ul>
-            <fg-set path="/jobs/*/healthInsuranceContributionsPerPayPeriod">
+            <fg-set path="/jobs/*/healthInsuranceContributionsPerPayPeriod" if-false="/jobs/*/isPastJob">
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
@@ -367,12 +367,13 @@
               <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSA</a>
               and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSA</a>.
             </p>
-            <fg-set path="/jobs/*/hsaOrFsaContributionsPerPayPeriod">
+            <fg-set path="/jobs/*/hsaOrFsaContributionsPerPayPeriod" if-false="/jobs/*/isPastJob">
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
             <fg-set path="/jobs/*/hsaOrFsaContributionsToDate">
               <question>Amount so far in <fg-show path="/taxYear"/></question>
+              <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
               <input type="dollar"/>
             </fg-set>
           </fg-detail>
@@ -475,7 +476,7 @@
               <li>Long-term care contributions</li>
               <li>Employer contributions</li>
             </ul>
-            <fg-set path="/pensions/*/healthInsuranceContributionsPerPayPeriod">
+            <fg-set path="/pensions/*/healthInsuranceContributionsPerPayPeriod" if-false="/pensions/*/isPastJobIncompleteOrFalse">
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
@@ -506,7 +507,7 @@
               <li>Long-term care contributions</li>
               <li>Employer contributions</li>
             </ul>
-            <fg-set path="/pensions/*/otherPreTaxContributionsPerPayPeriod">
+            <fg-set path="/pensions/*/otherPreTaxContributionsPerPayPeriod" if-false="/pensions/*/isPastJobIncompleteOrFalse">
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
@@ -521,7 +522,7 @@
             <p>Enter total contributions to Health Savings Accounts (HSA) or Flexible Spending Account (FSA).</p>
             <p>HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
             <p>Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSA</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSA</a>.</p>
-            <fg-set path="/pensions/*/hsaOrFsaContributionsPerPayPeriod">
+            <fg-set path="/pensions/*/hsaOrFsaContributionsPerPayPeriod" if-false="/pensions/*/isPastJobIncompleteOrFalse">
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
