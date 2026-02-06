@@ -659,7 +659,9 @@ class FgShow extends HTMLElement {
       if (result.hasValue) {
         const value = result.get.toString()
         if (result.get.s_math_BigDecimal__f_bigDecimal) {
-          outputHtml += parseFloat(value).toLocaleString()
+          const minimumFractionDigits = (value % 1 === 0) ? 0 : 2
+          const options = { style: 'currency', currency: 'USD', minimumFractionDigits }
+          outputHtml += new Intl.NumberFormat('en-US', options).format(value)
         } else {
           outputHtml += value
         }

@@ -16,7 +16,7 @@
       </p>
 
       <h3 condition="/tentativelyEligibleForCtcOdc" operator="isTrue">Child Tax Credit (CTC)</h3>
-      <p condition="/tentativelyEligibleForCtcOdc" operator="isTrue">The CTC helps families raising children by providing a tax benefit of up to $<fg-show path="/maxCtcAmount"/> per qualifying child.</p>
+      <p condition="/tentativelyEligibleForCtcOdc" operator="isTrue">The CTC helps families raising children by providing a tax benefit of up to <fg-show path="/maxCtcAmount"/> per qualifying child.</p>
       <p condition="/tentativelyEligibleForCtcOdc" operator="isTrue"><modal-link for="modal-ctc-who-can-claim">Who can claim the CTC?</modal-link></p>
       <fg-set path="/ctcEligibleDependents" if-true="/tentativelyEligibleForCtcOdc">
         <question>
@@ -53,7 +53,7 @@
         <question>
           Estimated annual care expenses for <fg-show path="/taxYear"/>
         </question>
-        <hint>max $<fg-show path="/cdccMaxClaimableExpenseWithOneQP"/> for one person, and $<fg-show path="/cdccMaxClaimableExpenseWithTwoQP"/> for two or more people</hint>
+        <hint>max <fg-show path="/cdccMaxClaimableExpenseWithOneQP"/> for one person, and <fg-show path="/cdccMaxClaimableExpenseWithTwoQP"/> for two or more people</hint>
         <input type="dollar"/>
       </fg-set>
 
@@ -84,7 +84,7 @@
       <p condition="/isEligibleForRetirementSavingsContributionsCredit" operator="isTrue"><modal-link for="modal-retirement-savings-credit-who-can-claim">Who can claim the retirement savings contribution credit?</modal-link></p>
       <fg-set path="/retirementSavingsContributionsTaxCreditAmount" if-true="/isEligibleForRetirementSavingsContributionsCredit">
         <question>Retirement contributions you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
-        <hint>(max $<fg-show path="/retirementSavingsContributionsMaximumAmount"/>)</hint>
+        <hint>(max <fg-show path="/retirementSavingsContributionsMaximumAmount"/>)</hint>
         <input type="dollar"/>
       </fg-set>
 
@@ -97,7 +97,7 @@
       </fg-set>
       <fg-set path="/aotcQualifiedEducationExpenses" if-true="/isEligibleForEducationCredits">
         <question>Estimated total college tuition or fees in <fg-show path="/taxYear"/></question>
-        <hint>(max $<fg-show path="/maxAotcAdjustedQualifiedExpenseCap"/> per student)</hint>
+        <hint>(max <fg-show path="/maxAotcAdjustedQualifiedExpenseCap"/> per student)</hint>
         <input type="dollar"/>
       </fg-set>
 
@@ -122,7 +122,7 @@
       </fg-set>
       <fg-set path="/estimatedTotalQualifiedAdoptionExpenses" if-true="/isEligibleForAdoptionCredit">
         <question>Adoption expenses you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/>?</question>
-        <hint>(max $<fg-show path="/maxAdoptionCreditPerChild"/> per child)</hint>
+        <hint>(max <fg-show path="/maxAdoptionCreditPerChild"/> per child)</hint>
         <input type="dollar"/>
       </fg-set>
 
@@ -178,7 +178,7 @@
           <li>Has a Social Security number (SSN) valid for work (you or your spouse must also have an SSN)</li>
           <li>Doesn’t support themselves or plans to file a joint return (unless to claim a refund)</li>
         </ul>
-        <p>You can claim up to $<fg-show path="/maxCtcAmount"/> per qualifying child.</p>
+        <p>You can claim up to <fg-show path="/maxCtcAmount"/> per qualifying child.</p>
         <p><strong>How to check if you claimed this credit last year</strong></p>
         <p class="margin-top-0">Review line 4 on Schedule 8812 for a number greater than 0. Schedule 8812  would have been attached to and submitted with your Form 1040 federal tax return.</p>
         <p><a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/child-tax-credit">Learn more about the CTC.</a></p>
@@ -190,13 +190,13 @@
         <p>To claim the ODC, you must have a qualifying dependent who:</p>
         <ul>
           <li>You plan to claim as a dependent on your tax return</li>
-          <li>Has a gross income less than $<fg-show path="/odcDependentGrossIncomeThreshold"/></li>
+          <li>Has a gross income less than <fg-show path="/odcDependentGrossIncomeThreshold"/></li>
           <li>Lives with you in the U.S. more than half the year if they’re a child or for all year if they’re an adult, unless they're a <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000220957">specific type of relative</a></li>
           <li>Has a Social Security number, Individual Taxpayer Identification Number (ITIN), or Adoption Tax Identification Number (ATIN)</li>
           <li>Doesn’t support themselves or plans to file a joint return</li>
           <li>Won’t be used to claim the Child Tax Credit</li>
         </ul>
-        <p>You can claim up to $<fg-show path="/maxOdcAmount"/> per qualifying dependent of any age.</p>
+        <p>You can claim up to <fg-show path="/maxOdcAmount"/> per qualifying dependent of any age.</p>
         <p><strong>How to check if you claimed this credit last year</strong></p>
         <p class="margin-top-0">Review line 6 on Schedule 8812 for a number greater than 0. Schedule 8812 would have been attached to and submitted with your Form 1040 federal tax return.</p>
         <p><a target="_blank" class="usa-link" href="https://www.irs.gov/newsroom/understanding-the-credit-for-other-dependents">Learn more about the ODC.</a></p>
@@ -222,7 +222,7 @@
           <li>Payments to your spouse, the child’s parent, or another dependent for care</li>
         </ul>
         <p>This is not a complete list. Refer to <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203292">Publication 503</a> to learn more about which expenses qualify.</p>
-        <p>You can claim up to $<fg-show path="/cdccMaxClaimableExpenseWithOneQP"/> for one person or $<fg-show path="/cdccMaxClaimableExpenseWithTwoQP"/> for two or more people.</p>
+        <p>You can claim up to <fg-show path="/cdccMaxClaimableExpenseWithOneQP"/> for one person or <fg-show path="/cdccMaxClaimableExpenseWithTwoQP"/> for two or more people.</p>
         <p condition="/isFilingStatusMFS" operator="isTrue">If you’re married and filing separately from your spouse, you can only claim this credit if you and your spouse are legally separated or live apart and meet <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203323">other criteria.</a></p>
         <p><strong>How to check if you claimed this credit last year</strong></p>
         <p class="margin-top-0">Review line 2 on Schedule 3, which would have been attached to and submitted with your Form 1040 federal tax return.</p>
@@ -263,7 +263,7 @@
           <li>Employer contributions or matches</li>
           <li>Rollover contributions</li>
         </ul>
-        <p>You can claim up to $<fg-show path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount"/> for yourself, and $<fg-show path="/retirementSavingsContributionsCreditSpouseMaximumAmount"/> for your spouse (if filing jointly).</p>
+        <p>You can claim up to <fg-show path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount"/> for yourself, and <fg-show path="/retirementSavingsContributionsCreditSpouseMaximumAmount"/> for your spouse (if filing jointly).</p>
         <p><strong>How to check if you claimed this credit last year</strong></p>
         <p class="margin-top-0">Review line 20 of your  Form 1040 of your federal tax return, and line 4 of Schedule 3.</p>
         <p><a target="_blank" class="usa-link" href="https://www.irs.gov/taxtopics/tc610">Learn more about the Retirement Savings Credit.</a></p>
@@ -277,7 +277,7 @@
           <li>Be in the first 4 years of higher education</li>
           <li>Enroll at least half-time to pursue a degree or credential</li>
         </ul>
-        <p>You can claim up to $<fg-show path="/maxAotcPerQualifyingStudent"/> per student, including:</p>
+        <p>You can claim up to <fg-show path="/maxAotcPerQualifyingStudent"/> per student, including:</p>
         <ul>
           <li>100% of the first $2,000 in expenses</li>
           <li>25% of the next $2,000 in expenses</li>
@@ -302,7 +302,7 @@
           <li>Enroll or take courses at an <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/eligible-educational-institution">eligible educational institution</a></li>
           <li>Enroll in one or more courses for an academic period in <fg-show path="/taxYear"/></li>
         </ul>
-        <p>You can claim up to 20% of the first $10,000 in expenses and a maximum of $<fg-show path="/maxLlcAmountForTaxYear"/> per federal tax return. You may claim expenses paid by you, your spouse, your dependent, or a third party.</p>
+        <p>You can claim up to 20% of the first $10,000 in expenses and a maximum of <fg-show path="/maxLlcAmountForTaxYear"/> per federal tax return. You may claim expenses paid by you, your spouse, your dependent, or a third party.</p>
         <p>You can’t claim both the American Opportunity Tax Credit and the LLC for the same student.</p>
         <p><strong>How to check if you claimed this credit last year</strong></p>
         <p class="margin-top-0">Review line 31 on Form 8863, which would have been attached to and submitted with your Form 1040 federal tax return.</p>
@@ -317,8 +317,8 @@
           <li>Have paid qualified <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/adoption-credit#qualifiedexpenses">adoption expenses</a> such as adoption fees, court costs, attorney fees, or travel</li>
           <li>Adopt a child under 18, or who is physically or mentally unable to care for themselves</li>
         </ul>
-        <p>You can claim up to $<fg-show path="/maxAdoptionCreditPerChild"/> in qualified expenses per adopted child. <a target="_blank" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e531">When to claim expenses</a> depends on adoption type, adoption status, and when expenses were incurred.</p>
-        <p>This credit is partially refundable. It can reduce your taxes and give you a refund up to $<fg-show path="/maxRefundableAdoptionCreditAmount"/> if it brings your tax owed to $0. Unused amounts can be carried forward for up to 5 years.</p>
+        <p>You can claim up to <fg-show path="/maxAdoptionCreditPerChild"/> in qualified expenses per adopted child. <a target="_blank" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e531">When to claim expenses</a> depends on adoption type, adoption status, and when expenses were incurred.</p>
+        <p>This credit is partially refundable. It can reduce your taxes and give you a refund up to <fg-show path="/maxRefundableAdoptionCreditAmount"/> if it brings your tax owed to $0. Unused amounts can be carried forward for up to 5 years.</p>
         <p condition="/isFilingStatusMFS" operator="isTrue">If you’re married and filing separately from your spouse, you can only claim this credit if you lived apart from your spouse and meet <a target="_blank" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e498">other criteria.</a></p>
         <p><strong>How to check if you claimed this credit last year</strong></p>
         <p class="margin-top-0">Review Form 8839 (Qualified Adoption Expenses), which would have been attached to and submitted with your Form 1040 federal tax return.</p>

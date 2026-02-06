@@ -31,8 +31,8 @@
       <div class="fg-estimate">
         <h3 class="fg-estimate__heading" condition="/isOverwithheld" operator="isTrue">Estimated federal tax refund</h3>
         <h3 class="fg-estimate__heading" condition="/isOverwithheld" operator="isFalse">Estimated federal tax owed</h3>
-        <p class="fg-estimate__amount fg-estimate__amount-under-withheld" condition="/isUnderwithheld" operator="isTrue">$<fg-show path="/withholdingGap"/></p>
-        <p class="fg-estimate__amount" condition="/isUnderwithheld" operator="isFalse">$<fg-show path="/withholdingSurplus"/></p>
+        <p class="fg-estimate__amount fg-estimate__amount-under-withheld" condition="/isUnderwithheld" operator="isTrue"><fg-show path="/withholdingGap"/></p>
+        <p class="fg-estimate__amount" condition="/isUnderwithheld" operator="isFalse"><fg-show path="/withholdingSurplus"/></p>
       </div>
       <details class="fg-estimate__details">
         <summary>
@@ -51,26 +51,26 @@
             <tbody>
               <tr>
                 <th scope="row">Gross income</th>
-                <td>$<fg-show path="/incomeTotal"/></td>
+                <td><fg-show path="/incomeTotal"/></td>
               </tr>
               <tr condition="/adjustmentsToIncome" operator="isGreaterThanZero">
                 <th scope="row">Adjustments</th>
-                <td>-$<fg-show path="/adjustmentsToIncome"/></td>
+                <td>-<fg-show path="/adjustmentsToIncome"/></td>
               </tr>
               <tr>
                 <th scope="row">
                   <span condition="/standardDeductionWillBeUsed" operator="isTrue">Standard Deduction</span>
                   <span condition="/standardDeductionWillBeUsed" operator="isFalse">Itemized Deduction</span>
                 </th>
-                <td>-$<fg-show path="/standardOrItemizedDeduction"/></td>
+                <td>-<fg-show path="/standardOrItemizedDeduction"/></td>
               </tr>
               <tr condition="/additionalDeductions" operator="isGreaterThanZero">
                 <th scope="row">Additional Deductions</th>
-                <td>-$<fg-show path="/additionalDeductions"/></td>
+                <td>-<fg-show path="/additionalDeductions"/></td>
               </tr>
               <tr>
                 <th scope="row">Taxable income</th>
-                <td>$<fg-show path="/taxableIncome"/></td>
+                <td><fg-show path="/taxableIncome"/></td>
               </tr>
             </tbody>
           </table>
@@ -87,7 +87,7 @@
             <tbody>
               <tr>
                 <th scope="row">Federal tax obligation</th>
-                <td>$<fg-show path="/totalTaxObligationBeforeCreditsAndDeductions"/></td>
+                <td><fg-show path="/totalTaxObligationBeforeCreditsAndDeductions"/></td>
               </tr>
             </tbody>
           </table>
@@ -104,15 +104,15 @@
             <tbody>
               <tr condition="/totalCredits" operator="isGreaterThanZero">
                 <th scope="row">Credits</th>
-                <td>-$<fg-show path="/totalCredits"/></td>
+                <td>-<fg-show path="/totalCredits"/></td>
               </tr>
               <tr>
                 <th scope="row">Federal tax withholding</th>
-                <td>-$<fg-show path="/totalEndOfYearProjectedWithholding"/></td>
+                <td>-<fg-show path="/totalEndOfYearProjectedWithholding"/></td>
               </tr>
               <tr condition="/totalEstimatedTaxesPaid" operator="isGreaterThanZero">
                 <th scope="row">Estimated tax payments</th>
-                <td>-$<fg-show path="/totalEstimatedTaxesPaid"/></td>
+                <td>-<fg-show path="/totalEstimatedTaxesPaid"/></td>
               </tr>
               <tr>
                 <th scope="row">
@@ -120,8 +120,8 @@
                   <span condition="/isUnderwithheld" operator="isFalse">Estimated federal tax refund</span>
                 </th>
                 <td>
-                  <span condition="/isUnderwithheld" operator="isTrue">$<fg-show path="/withholdingGap"/></span>
-                  <span condition="/isUnderwithheld" operator="isFalse">$<fg-show path="/withholdingSurplus"/></span>
+                  <span condition="/isUnderwithheld" operator="isTrue"><fg-show path="/withholdingGap"/></span>
+                  <span condition="/isUnderwithheld" operator="isFalse"><fg-show path="/withholdingSurplus"/></span>
                 </td>
               </tr>
             </tbody>

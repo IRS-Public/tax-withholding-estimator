@@ -2,7 +2,7 @@
     <template class="fg-withholding-adjustment__template">
         <details class="fg-detail fg-detail--chevron">
             <summary>
-                <h5>Adjust <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> $<fg-show path="/pensions/*/income"/> pension or annuity</h5>
+                <h5>Adjust <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> <fg-show path="/pensions/*/income"/> pension or annuity</h5>
             </summary>
             <div class="usa-prose details-content">
                 <p>
@@ -56,7 +56,7 @@
                         <th scope="row">Step 3: Credits total</th>
                         <td>
                             <p>
-                                <span condition="pensions/*/shouldLeaveW4pLine3Blank" operator="isFalse">$<fg-show path="pensions/*/w4pLine3"/></span>
+                                <span condition="pensions/*/shouldLeaveW4pLine3Blank" operator="isFalse"><fg-show path="pensions/*/w4pLine3"/></span>
                                 <span condition="pensions/*/shouldLeaveW4pLine3Blank" operator="isTrue">Leave blank</span>
                             </p>
                             <p><modal-link for="modal-why-step-3">Why?</modal-link></p>
@@ -66,7 +66,7 @@
                         <th scope="row">Step 4 (a): Other income (not from jobs)</th>
                         <td>
                             <p>
-                                <span condition="pensions/*/shouldLeaveW4pLine4aBlank" operator="isFalse">$<fg-show path="pensions/*/w4pLine4a"/></span>
+                                <span condition="pensions/*/shouldLeaveW4pLine4aBlank" operator="isFalse"><fg-show path="pensions/*/w4pLine4a"/></span>
                                 <span condition="pensions/*/shouldLeaveW4pLine4aBlank" operator="isTrue">Leave blank</span>
                             </p>
                             <p><modal-link for="modal-why-w-4p-step-4-a">Why?</modal-link></p>
@@ -76,7 +76,7 @@
                         <th scope="row">Step 4 (b): Deductions</th>
                         <td>
                             <p>
-                                <span condition="pensions/*/shouldLeaveW4pLine4bBlank" operator="isFalse">$<fg-show path="pensions/*/w4pLine4b"/></span>
+                                <span condition="pensions/*/shouldLeaveW4pLine4bBlank" operator="isFalse"><fg-show path="pensions/*/w4pLine4b"/></span>
                                 <span condition="pensions/*/shouldLeaveW4pLine4bBlank" operator="isTrue">Leave blank</span>
                             </p>
                             <p><modal-link for="modal-why-w-4p-step-4-b">Why?</modal-link></p>
@@ -86,7 +86,7 @@
                         <th scope="row">Step 4 (c): Extra withholding</th>
                         <td>
                             <p>
-                                <span condition="pensions/*/shouldLeaveW4pLine4cBlank" operator="isFalse">$<fg-show path="pensions/*/w4pLine4c"/></span>
+                                <span condition="pensions/*/shouldLeaveW4pLine4cBlank" operator="isFalse"><fg-show path="pensions/*/w4pLine4c"/></span>
                                 <span condition="pensions/*/shouldLeaveW4pLine4cBlank" operator="isTrue">Leave blank</span>
                             </p>
                             <p><modal-link for="modal-why-w-4p-step-4-c">Why?</modal-link></p>
