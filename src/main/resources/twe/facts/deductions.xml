@@ -93,9 +93,6 @@
       <Writable>
         <Boolean/>
       </Writable>
-      <Placeholder>
-        <True/>
-      </Placeholder>
     </Fact>
     <Fact path="/wantsItemizedDeduction">
       <Name>Wants itemized deduction</Name>
