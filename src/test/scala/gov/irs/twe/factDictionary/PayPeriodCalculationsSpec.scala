@@ -28,6 +28,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
   val ordinalEffectiveEndDate = Path(s"/jobs/#$dummyUUID/ordinalEffectiveEndDate")
   val restOfYearIncome = Path(s"/jobs/#$dummyUUID/restOfYearIncome")
   val averagePayPerPayPeriod = Path(s"/jobs/#$dummyUUID/averagePayPerPayPeriod")
+  val averagePayPerPayPeriodForWithholding = Path(s"/jobs/#$dummyUUID/averagePayPerPayPeriodForWithholding")
   val isPastJob = Path(s"/jobs/#$dummyUUID/isPastJob")
   val isCurrentJob = Path(s"/jobs/#$dummyUUID/isCurrentJob")
   val isFutureJob = Path(s"/jobs/#$dummyUUID/isFutureJob")
@@ -513,7 +514,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
           endDate -> Day(endDateValue),
           recentPayPeriodEnd -> Day(recentPayPeriodEndValue),
           recentPayDate -> Day(recentPayDateValue),
-          averagePayPerPayPeriod -> Dollar(100),
+          averagePayPerPayPeriodForWithholding -> Dollar(100),
           isPastJob -> false,
           isFutureJob -> false,
           isCurrentJob -> true,
@@ -552,7 +553,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
-      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriodForWithholding") -> Dollar("5000"),
       Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
       Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
@@ -579,7 +580,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
-      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriodForWithholding") -> Dollar("5000"),
       Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
       Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
@@ -606,7 +607,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
-      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriodForWithholding") -> Dollar("5000"),
       Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
       Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("monthly", "/payFrequencyOptions"),
@@ -633,7 +634,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
-      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriodForWithholding") -> Dollar("5000"),
       Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
       Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),
@@ -660,7 +661,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       Path("/primaryFilerIsBlind") -> false,
       Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
       Path(s"/pensions/#${pension1Id}/w4pLine2bi") -> Dollar("50000.00"),
-      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriod") -> Dollar("5000"),
+      Path(s"/pensions/#${pension1Id}/averagePayPerPayPeriodForWithholding") -> Dollar("5000"),
       Path(s"/pensions/#${pension1Id}/averageWithholdingPerPayPeriod") -> Dollar("1000"),
       Path(s"/pensions/#${pension1Id}/yearToDateWithholding") -> Dollar("7200"),
       Path(s"/pensions/#${pension1Id}/payFrequency") -> Enum("semiMonthly", "/payFrequencyOptions"),

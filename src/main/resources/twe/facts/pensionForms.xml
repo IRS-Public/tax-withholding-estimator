@@ -45,7 +45,7 @@
       <Description>Line 1c of Pub 15-T Worksheet 1B</Description>
       <Derived>
         <Multiply>
-          <Dependency path="../averagePayPerPayPeriod"/>
+          <Dependency path="../averagePayPerPayPeriodForWithholding"/>
           <Dependency path="../payPeriodsPerYear"/>
         </Multiply>
       </Derived>

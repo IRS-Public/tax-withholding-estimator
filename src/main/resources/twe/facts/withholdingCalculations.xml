@@ -279,7 +279,7 @@
       <Description>The earnings if the job duration were all year.</Description>
       <Derived>
         <Multiply>
-          <Dependency path="../averagePayPerPayPeriod"/>
+          <Dependency path="../averagePayPerPayPeriodForWithholding"/>
           <Dependency path="../payPeriodsPerYear"/>
         </Multiply>
       </Derived>
@@ -669,7 +669,7 @@
           <Dollar>0</Dollar>
           <Subtract>
             <Minuend>
-              <Dependency path="../averagePayPerPayPeriod"/>
+              <Dependency path="../averagePayPerPayPeriodForWithholding"/>
             </Minuend>
             <Subtrahends>
               <Dependency path="../preTaxDeductionsPerPayPeriod"/>

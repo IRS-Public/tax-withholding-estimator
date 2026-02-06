@@ -180,7 +180,8 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
     spreadsheetFacts =
       spreadsheetFacts + (s"/pensions/#$JOB_1_ID/payFrequency" -> csv("payFrequency1 (1=W; 2=BW; 3=SM; 4=M)"))
     spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_1_ID/mostRecentPayDate" -> csv("recentPayDate1"))
-    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_1_ID/averagePayPerPayPeriod" -> csv("paymentPerPPd1"))
+    spreadsheetFacts =
+      spreadsheetFacts + (s"/pensions/#$JOB_1_ID/averagePayPerPayPeriodForWithholding" -> csv("paymentPerPPd1"))
     spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_1_ID/yearToDateIncome" -> csv("paymentYTD1"))
     spreadsheetFacts =
       spreadsheetFacts + (s"/pensions/#$JOB_1_ID/averageWithholdingPerPayPeriod" -> csv("taxWhPerPPd1"))

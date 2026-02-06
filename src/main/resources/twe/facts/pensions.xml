@@ -112,7 +112,7 @@
         <Day/>
       </Writable>
     </Fact>
-    <Fact path="/pensions/*/averagePayPerPayPeriod">
+    <Fact path="/pensions/*/averagePayPerPayPeriodForWithholding">
       <Writable>
         <Dollar/>
       </Writable>
@@ -598,7 +598,7 @@
             </When>
             <Then>
               <Multiply>
-                <Dependency path="../averagePayPerPayPeriod"/>
+                <Dependency path="../averagePayPerPayPeriodForWithholding"/>
                 <Dependency path="../remainingPayPeriodsRational"/>
               </Multiply>
             </Then>

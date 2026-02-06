@@ -134,6 +134,40 @@
             </question>
             <input type="dollar"/>
           </fg-set>
+          <fg-set path="/jobs/*/mostRecentPayPeriodHasBonus" if-false="/jobs/*/isPastJob">
+            <question> Did <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your
+              spouse</span>
+              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
+              receive a bonus <span condition="/jobs/*/consistentPay" operator="isTrue">this pay
+              period</span>
+              <span condition="/jobs/*/consistentPay" operator="isFalse">in these pay
+              periods</span>? </question>
+            <modal-link for="modal-job-check-bonus-en">How do I check if there's a bonus this pay
+              period?</modal-link>
+            <input type="boolean">
+              <option value="true">Yes, there's bonus pay in <span condition="/jobs/*/consistentPay"
+                  operator="isTrue">this pay period</span>
+                <span condition="/jobs/*/consistentPay"
+                  operator="isFalse">these pay periods</span>
+              </option>
+              <option value="false">No, there's only regular pay in <span
+                  condition="/jobs/*/consistentPay" operator="isTrue">this pay period</span>
+                <span
+                  condition="/jobs/*/consistentPay" operator="isFalse">these pay periods</span>
+              </option>
+            </input>
+          </fg-set>
+          <fg-set path="/jobs/*/mostRecentPayPeriodBonusAmount"
+            if-true="/jobs/*/mostRecentPayPeriodHasBonus">
+            <question> How much <span condition="/jobs/*/consistentPay" operator="isFalse">total </span>
+              bonus pay did <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your
+              spouse</span>
+              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
+              earn in <span condition="/jobs/*/consistentPay" operator="isTrue">this pay period</span>
+              <span
+                condition="/jobs/*/consistentPay" operator="isFalse">these pay periods</span>? </question>
+            <input type="dollar" />
+          </fg-set>
           <fg-set path="/jobs/*/totalBonusReceived" if-false="/jobs/*/isPastJob">
             <question>
               Enter an estimate for any bonus pay you think
@@ -393,7 +427,7 @@
             <question>What’s the date of <span condition="/pensions/*/notSpouses" operator="isTrue">your</span><span condition="/pensions/*/notSpouses" operator="isFalse">their</span> most recent pension or annuity payment?</question>
             <input type="date"/>
           </fg-set>
-          <fg-set path="/pensions/*/averagePayPerPayPeriod" if-true="/pensions/*/isPastJobIncompleteOrFalse">
+          <fg-set path="/pensions/*/averagePayPerPayPeriodForWithholding" if-true="/pensions/*/isPastJobIncompleteOrFalse">
             <question>What’s the gross income for the most recent pension or annuity payment?</question>
             <modal-link for="modal-pension-gross-pay-period">How do I find the gross income for the most recent payment?</modal-link>
             <input type="dollar"/>
@@ -1076,6 +1110,18 @@
         <p>If you expect to receive a year-end or quarterly bonus from the employer, include that amount here.</p>
         <p>It’s okay to enter your best guess of what you will receive. You can also leave future bonus pay blank.</p>
         <p>Don’t include any past bonus pay that you already received this year.</p>
+      </modal-content>
+    </modal-dialog>
+    <modal-dialog id="modal-job-check-bonus-en">
+      <modal-heading>How do I check if there's a bonus this pay period?</modal-heading>
+      <modal-content>
+        <p>Bonus pay is usually a one-time payment in addition to your regular wages.</p>
+        <p>To check if you earned a bonus for the <strong>current pay period:</strong></p>
+        <ol>
+          <li>Find the gross or total earnings for the pay period, which only includes the pay for the days you worked on this current paystub.</li>
+          <li>Check if there's an amount labeled "Bonus" that's included in the gross or total earnings for the pay period.</li>
+        </ol>
+        <p><strong>Don't include</strong> bonuses that appear in the year-to-date (YTD) amount. Only enter bonus pay from the current pay period.</p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-job-gross-ytd-end-en">

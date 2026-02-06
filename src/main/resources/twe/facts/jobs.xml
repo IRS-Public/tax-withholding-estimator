@@ -238,6 +238,41 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/averagePayPerPayPeriodForWithholding">
+      <Description>Average pay per pay period used for withholding, consistent pay uses
+        amountLastPaycheck minus most recent pay period bonus, while inconsistent pay uses
+        inconsistentPayAverageExcludingBonus</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../consistentPay"/>
+            </When>
+            <Then>
+              <GreaterOf>
+                <Dollar>0</Dollar>
+                <Subtract>
+                  <Minuend>
+                    <Dependency path="../amountLastPaycheck"/>
+                  </Minuend>
+                  <Subtrahends>
+                    <Dependency path="../mostRecentPayPeriodBonusAmount"/>
+                  </Subtrahends>
+                </Subtract>
+              </GreaterOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../inconsistentPayAverageExcludingBonus"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/inconsistentPayAverage">
       <Derived>
         <Switch>
@@ -287,6 +322,70 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/inconsistentPayAverageExcludingBonus">
+      <Description>Average pay per pay period for inconsistent pay with most recent pay period(s)
+        bonus subtracted from the sum before dividing by n.</Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Switch>
+            <Case>
+              <When>
+                <IsComplete>
+                  <Dependency path="../pastPaycheckIncome3"/>
+                </IsComplete>
+              </When>
+              <Then>
+                <Divide>
+                  <Dividend>
+                    <Subtract>
+                      <Minuend>
+                        <Add>
+                          <Dependency path="../pastPaycheckIncome1"/>
+                          <Dependency path="../pastPaycheckIncome2"/>
+                          <Dependency path="../pastPaycheckIncome3"/>
+                        </Add>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../mostRecentPayPeriodBonusAmount"/>
+                      </Subtrahends>
+                    </Subtract>
+                  </Dividend>
+                  <Divisors>
+                    <Int>3</Int>
+                  </Divisors>
+                </Divide>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Divide>
+                  <Dividend>
+                    <Subtract>
+                      <Minuend>
+                        <Add>
+                          <Dependency path="../pastPaycheckIncome1"/>
+                          <Dependency path="../pastPaycheckIncome2"/>
+                        </Add>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../mostRecentPayPeriodBonusAmount"/>
+                      </Subtrahends>
+                    </Subtract>
+                  </Dividend>
+                  <Divisors>
+                    <Int>2</Int>
+                  </Divisors>
+                </Divide>
+              </Then>
+            </Case>
+          </Switch>
+        </GreaterOf>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/pastPaycheckIncome1">
       <!-- This is the most recent paycheck -->
       <Writable>
@@ -309,7 +408,9 @@
       </Placeholder>
     </Fact>
     <Fact path="/jobs/*/restOfYearIncome">
-      <Description>This amount this job will pay for the rest of the year.</Description>
+      <Description>This amount this job will pay for the rest of the year. Uses the same
+        per-period basis as withholding (averagePayPerPayPeriodForWithholding) so W-4 job
+        selection and total job income are consistent with withholding calculations.</Description>
       <Derived>
         <Switch>
           <Case>
@@ -326,7 +427,7 @@
             </When>
             <Then>
               <Multiply>
-                <Dependency path="../averagePayPerPayPeriod"/>
+                <Dependency path="../averagePayPerPayPeriodForWithholding"/>
                 <Dependency path="../remainingPayPeriodsRational"/>
               </Multiply>
             </Then>
@@ -407,6 +508,24 @@
       <Writable>
         <Enum optionsPath="/payFrequencyOptions"/>
       </Writable>
+    </Fact>
+    <Fact path="/jobs/*/mostRecentPayPeriodHasBonus">
+      <Description>Whether the job had bonus pay in the most recent pay period</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+      <Placeholder>
+        <False/>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/mostRecentPayPeriodBonusAmount">
+      <Description>Bonus pay amount in the most recent pay period</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/totalBonusReceived">
       <Description>The total amount of bonus per year for a specific job</Description>
