@@ -687,31 +687,7 @@
             <Dependency path="../payPeriodsPerYear"/>
           </Multiply>
           <!-- Line 1d -->
-          <Switch>
-            <Case>
-              <When>
-                <Equal>
-                  <Left>
-                    <Dependency path=".."/>
-                  </Left>
-                  <Right>
-                    <Dependency path="/jobSelectedForExtraWithholding"/>
-                  </Right>
-                </Equal>
-              </When>
-              <Then>
-                <Dependency path="../w4Line4a"/>
-              </Then>
-            </Case>
-            <Case>
-              <When>
-                <True/>
-              </When>
-              <Then>
-                <Dollar>0</Dollar>
-              </Then>
-            </Case>
-          </Switch>
+          <Dependency path="../w4Line4a"/>
         </Add>
       </Derived>
     </Fact>
