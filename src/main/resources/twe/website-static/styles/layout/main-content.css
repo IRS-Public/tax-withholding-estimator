@@ -113,8 +113,8 @@ main h1 {
 .flow .usa-hint,
 .flow ul,
 .flow ol,
-.flow h3,
-.flow h4,
-.flow h5 {
+.flow h3:not(.usa-accordion__heading),
+.flow h4:not(.usa-accordion__heading),
+.flow h5:not(.usa-accordion__heading) {
   max-width: 68ex;
 }
