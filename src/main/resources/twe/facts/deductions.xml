@@ -190,7 +190,7 @@
             </Case>
             <Case>
               <When>
-                <Dependency path="/wantsStandardDeduction"/>
+                <True/>
               </When>
               <Then>
                 <Dependency path="/standardDeduction"/>
