@@ -34,12 +34,7 @@
       <Derived>
         <All>
           <Dependency path="/primaryFilerIsClaimingDependents"/>
-          <Not>
-            <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
-          </Not>
-          <Not>
-            <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
-          </Not>
+          <Dependency path="/neitherFilerIsClaimedOnAnotherReturn"/>
         </All>
       </Derived>
     </Fact>

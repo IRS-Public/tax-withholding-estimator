@@ -59,12 +59,7 @@
             <Dependency path="/primaryFilerAge65OrOlder"/>
           </Not>
           <!-- aren't a dependent on someone else's return -->
-          <Not>
-            <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
-          </Not>
-          <Not>
-            <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
-          </Not>
+          <Dependency path="/neitherFilerIsClaimedOnAnotherReturn"/>
           <!-- is not claiming dependents OR enters 0 qualifying children -->
           <Dependency path="/hasNoEitcQualifyingChildren"/>
         </All>
@@ -87,12 +82,7 @@
             <Dependency path="/secondaryFilerAge65OrOlder"/>
           </Not>
           <!-- Neither filer is claimed on someone else's return -->
-          <Not>
-            <Dependency path="/primaryFilerIsClaimedOnAnotherReturn"/>
-          </Not>
-          <Not>
-            <Dependency path="/secondaryFilerIsClaimedOnAnotherReturn"/>
-          </Not>
+          <Dependency path="/neitherFilerIsClaimedOnAnotherReturn"/>
           <!-- enter "No" to the self 25+ age question (only 1 taxpayer must certify) -->
           <Not>
             <Dependency path="/primaryFilerAge25OrOlderForEitc"/>
