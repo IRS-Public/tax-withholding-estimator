@@ -26,10 +26,10 @@
       <fg-collection path="/jobs" item-name="Job">
         <fg-set path="/jobs/*/filerAssignment" if-true="/isFilingStatusMFJ">
           <question>Who is this income for?</question>
-          <select options-path="/jobs/*/filerAssignmentOption">
+          <input type="enum" options-path="/jobs/*/filerAssignmentOption">
             <option value="self">Myself</option>
             <option value="spouse">My spouse</option>
-          </select>
+          </input>
         </fg-set>
         <fg-set path="/jobs/*/isHourlyJob">
           <question>Is this an hourly or salary job</question>
