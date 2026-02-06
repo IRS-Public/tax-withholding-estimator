@@ -30,7 +30,7 @@
         <li>Other equipment, and supplementary materials that you use in the classroom</li>
       </ul>
       <p>
-        <a target="_blank" href="https://www.irs.gov/taxtopics/tc456" class="usa-link">Learn more about educator expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" href="https://www.irs.gov/taxtopics/tc458" class="usa-link">Learn more about educator expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/educatorExpenses/">
         <question>Educator expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
