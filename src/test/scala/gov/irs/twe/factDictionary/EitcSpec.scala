@@ -78,7 +78,7 @@ class EitcSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         // given
         val graph = makeGraphWith(
           factDictionary,
-          Path("/maybeEligibleForEitcBase") -> true,
+          Path("/maybeEligibleForEitcBaseDependingOnNumberOfQualifyingChildren") -> true,
           Path("/primaryFilerIsClaimingDependents") -> primaryFilerIsClaimingDependents,
         )
 

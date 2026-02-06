@@ -14,10 +14,24 @@
         <Int>0</Int>
       </Placeholder>
     </Fact>
+    <Fact path="/maybeEligibleForEitcBaseDependingOnNumberOfQualifyingChildren">
+      <Description>
+        Similar to `/maybeEligibleForEitcBase`, however we need taxpayer input to further evaluate eligibility, so we
+        more broadly check that the taxpayer could be eligible based on maximum possible thresholds first
+      </Description>
+      <Derived>
+        <All>
+          <Dependency path="/hasEarnedIncome"/>
+          <Dependency path="/belowHighestEitcEarnedIncomeLimit"/>
+          <Dependency path="/belowHighestEitcAgiLimit"/>
+          <Dependency path="/belowEitcInvestmentIncomeLimit"/>
+        </All>
+      </Derived>
+    </Fact>
     <Fact path="/flowShouldAskForEitcQualifyingChildren">
       <Derived>
         <All>
-          <Dependency path="/maybeEligibleForEitcBase"/>
+          <Dependency path="/maybeEligibleForEitcBaseDependingOnNumberOfQualifyingChildren"/>
           <Dependency path="/primaryFilerIsClaimingDependents"/>
         </All>
       </Derived>
@@ -667,6 +681,35 @@
         <Dollar>19540</Dollar>
       </Derived>
     </Fact>
+    <Fact path="/highestEitcPhaseoutAmount">
+      <Description>
+        Used for a tentative eligibility check for the flow.
+        Until the taxpayer is able to enter their number of qualifying dependents, assume they may be eligible based on
+        the greatest phaseout amount for their filing status.
+      </Description>
+      <Derived>
+        <Switch>
+          <!-- MFJ Limits -->
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dependency path="/eitcMfjLimitWithThreeOrMoreChildren"/>
+            </Then>
+          </Case>
+          <!-- Not MFJ Limits -->
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/eitcSelfLimitWithThreeOrMoreChildren"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/eitcCompletedPhaseoutAmount">
       <Name>EITC Completed Phaseout Amount</Name>
       <Description>The amount of income at which EITC is completely phased out.</Description>
@@ -1140,6 +1183,19 @@
         </LessThan>
       </Derived>
     </Fact>
+    <Fact path="/belowHighestEitcAgiLimit">
+      <Description>Whether the TP's AGI is low enough to potentially be eligible for the EITC</Description>
+      <Derived>
+        <LessThan>
+          <Left>
+            <Dependency path="/agi"/>
+          </Left>
+          <Right>
+            <Dependency path="/highestEitcPhaseoutAmount"/>
+          </Right>
+        </LessThan>
+      </Derived>
+    </Fact>
     <Fact path="/hasEarnedIncome">
       <Name>Has Earned Income</Name>
       <Description>Whether the TP had earned income</Description>
@@ -1164,6 +1220,19 @@
           </Left>
           <Right>
             <Dependency path="/eitcCompletedPhaseoutAmount"/>
+          </Right>
+        </LessThan>
+      </Derived>
+    </Fact>
+    <Fact path="/belowHighestEitcEarnedIncomeLimit">
+      <Description>Whether the TP's Earned Income is low enough to potentially be eligible for the EITC.</Description>
+      <Derived>
+        <LessThan>
+          <Left>
+            <Dependency path="/earnedIncomeTotal"/>
+          </Left>
+          <Right>
+            <Dependency path="/highestEitcPhaseoutAmount"/>
           </Right>
         </LessThan>
       </Derived>
