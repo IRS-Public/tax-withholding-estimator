@@ -48,8 +48,8 @@
       <div th:utext="${pageXml}"></div>
       <div class="form-actions" th:if="${nextPageHref}">
         <a class="usa-button" th:href="${nextPageHref}" onclick="return handleSectionContinue(event)">
-          [[${first} ? #{buttons.next} : #{buttons.continue}]]
-          <svg th:unless="${first}" aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
+          [[#{buttons.next}]]
+          <svg aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
             <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
           </svg>
         </a>
