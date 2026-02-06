@@ -1,12 +1,21 @@
 # Tax Withholding Estimator (TWE)
 
 ### Overview
-An online website provided by the Internal Revenue Service (IRS) for a taxpayer to estimate their tax withholdings for a variety of tax situations.
+TWE is an online tool provided by the Internal Revenue Service (IRS) designed to help taxpayers estimate their federal tax withholdings while preparing [Form W-4](https://www.irs.gov/pub/irs-pdf/fw4.pdf) or [Form W-4P](https://www.irs.gov/pub/irs-pdf/fw4p.pdf). TWE is built to handle complex scenarios, including multiple jobs, self-employment income, and various credits or deductions.
 For a deep dive into the technical design of this repository, start [here](./docs/adr/001-twe-architecture.md).
 To better understand the math behind tax withholdings, go [here](./docs/taxes/withholdings-basics.md).
 
 ### What TWE is (and isn't)
-TWE is designed to help taxpayers fine-tune their withholdings with greater precision than the standard Form W-4. The goal is to minimize large refunds or balance due scenarios at year-end when filing a tax return. Unlike tax return filing software that evaluate the prior year as a whole, TWE is often used in the middle of a tax year when the remainder of the tax year can only be approximated. Because it operates *during* the tax year without the benefit of finalized W-2s or information returns (1099s), TWE relies on specific estimation logic and assumptions. By open-sourcing this project, we hope taxpayers will better understand how their W-4 recommendations are derived when using TWE through greater transparency into the core tax engine and corresponding assumption.
+TWE helps taxpayers avoid unexpected surprises when they file their taxes by reducing the likelihood of overwithholding (resulting in a large refund) or underwithholding (resulting in a balance due). The primary function of the TWE is to generate a *customized* Form W-4 (for employees) or Form W-4P (for pension recipients), based on their current tax scenario and financial reality.
+
+When these forms are submitted, they instruct payors on exactly how much Federal Income Tax to withhold. Without the specific instructions provided in Steps 3 through 4c of these forms, employers rely on default assumptions outlined in [Pub. 15](https://www.irs.gov/pub/irs-pdf/p15.pdf) and [Pub. 15-T](https://www.irs.gov/pub/irs-pdf/p15t.pdf), which can lead to inaccurate withholding for anyone with a non-standard tax profile.
+
+There are several key differences between TWE and preparing an annual tax return through tax filing software:
+- **TWE is not a filing tool**: The TWE does not send data to the IRS. Instead, it generates a pre-populated Form W-4, which the taxpayer must manually provide to their employer or payroll department.
+- **TWE is predictive, not historical**: A tax return looks backward at finalized data (W-2s and 1099s). In contrast, the TWE operates during the tax year using year-to-date data and estimations for the remaining months. Because it relies on estimations and assumptions, the output is an approximation of what will happen for the rest of the year, not a certainty.
+- **TWE is federal-only**: The TWE does not address state or local income taxes.
+
+By open-sourcing this project, we aim to provide deeper insight into how the TWE generates withholding recommendations. Our goal is to foster trust through transparency, allowing taxpayers to see exactly how the core tax engine processes data and applies year-to-date assumptions to generate the W-4 and W-4P.
 
 ### Contributing
 We value community feedback and invite public participation. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
