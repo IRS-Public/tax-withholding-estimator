@@ -26,6 +26,7 @@
       <Derived>
         <Add>
           <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpensesTotal"/>
+          <Dependency path="/qualifiedMortgageInsurancePremiumDeductionTotal"/>
           <Dependency path="/stateAndLocalTaxDeduction"/>
           <Dependency path="/medicalAndDentalExpensesTotal"/>
           <Dependency path="/charitableContributionsTotal"/>
@@ -68,6 +69,15 @@
       <Name>Qualified mortgage interest and investment interest expenses </Name>
       <Description>Qualified mortgage interest including points (if you're the buyer) and Investment interest (limited to your net investment income)
       </Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/qualifiedMortgageInsurancePremiums">
+      <Name>Qualified mortgage insurance premiums</Name>
       <Writable>
         <Dollar/>
       </Writable>
@@ -260,6 +270,7 @@
       <Derived>
         <Add>
           <Dependency path="/qualifiedMortgageInterestAndInvestmentInterestExpensesTotal"/>
+          <Dependency path="/qualifiedMortgageInsurancePremiumDeductionTotal"/>
           <Dependency path="/stateAndLocalTaxDeduction"/>
           <Dependency path="/medicalAndDentalExpensesTotal"/>
           <Dependency path="/charitableContributionsFloored"/>

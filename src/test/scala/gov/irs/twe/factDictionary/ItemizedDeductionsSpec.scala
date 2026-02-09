@@ -220,5 +220,45 @@ class ItemizedDeductionsSpec extends AnyFunSuite with TableDrivenPropertyChecks 
       assert(actualSALTDeduction.value.contains(Dollar(expectedStateAndLocalTaxPaymentsTotal)))
     }
   }
+  test("test OB3: qualified mortgage insurance premium phaseout") {
+    val dataTable = Table(
+      ("status", "agi", "premiums", "expectedDeduction"),
+      (single, "95000", "2000", "2000.00"),
+      (single, "100000", "2000", "2000.00"),
+      (single, "100001", "2000", "2000.00"),
+      (single, "101000", "2000", "1800.00"),
+      (single, "101001", "2000", "1800.00"),
+      (single, "102000", "2000", "1600.00"),
+      (single, "102001", "2000", "1600.00"),
+      (single, "105000", "2000", "1000.00"),
+      (single, "105001", "2000", "1000.00"),
+      (single, "109000", "2000", "200.00"),
+      (single, "109001", "2000", "200.00"),
+      (single, "110000", "2000", "0.00"),
+      (single, "110001", "2000", "0.00"),
+      (mfs, "49000", "3000", "3000"),
+      (mfs, "50000", "3000", "3000"),
+      (mfs, "50001", "3000", "3000"),
+      (mfs, "50500", "3000", "2700"),
+      (mfs, "50501", "3000", "2700"),
+      (mfs, "51001", "3000", "2400"),
+      (mfs, "54500", "3000", "300"),
+      (mfs, "54501", "3000", "300"),
+      (mfs, "55000", "3000", "0"),
+      (mfs, "60000", "3000", "0"),
+    )
+
+    forAll(dataTable) { (status, agi, premiums, expectedDeduction) =>
+      val graph = makeGraphWith(
+        factDictionary,
+        Path("/filingStatus") -> status,
+        Path("/agi") -> Dollar(agi),
+        Path("/qualifiedMortgageInsurancePremiums") -> Dollar(premiums),
+      )
+
+      val actual = graph.get("/qualifiedMortgageInsurancePremiumDeductionTotal")
+      assert(actual.value.contains(Dollar(expectedDeduction)))
+    }
+  }
 
 }

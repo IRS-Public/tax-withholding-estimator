@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<?xml-model href="./FactDictionaryModule.rng"?>
+<FactDictionaryModule>
+  <Facts>
+    <Fact path="/qualifiedMortgageInsurancePremiumPhaseInLimit">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>100000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedMortgageInsurancePremiumPhaseOutRate">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Rational>1/500</Rational>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Rational>1/1000</Rational>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedMortgageInsurancePremiumPhaseOutBaseIncrement">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>1000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedMortgageInsurancePremiumPhaseInThreshold">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Dependency path="/qualifiedMortgageInsurancePremiumPhaseInLimit"/>
+                </Dividend>
+                <Divisors>
+                  <Int>2</Int>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/qualifiedMortgageInsurancePremiumPhaseInLimit"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedMortgageInsurancePremiumExcessOverThreshold">
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/agi"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/qualifiedMortgageInsurancePremiumPhaseInThreshold"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedMortgageInsurancePremiumPhaseOutFactor">
+      <Description>
+        IRC Section 163(h)(3)(E): The amount otherwise treated as interest under clause (i) shall be reduced (but not below zero) by 10 percent of
+          such amount for each $1,000 ($500 in the case of a married individual filing a separate return) (or fraction thereof)
+          that the taxpayer&#x2019;s adjusted gross income for the taxable year exceeds $100,000 ($50,000 in the case of a married individual filing a separate return).
+
+          If the excess is more than 10 increments over the threshold ($10k non-MFS, $5k MFS) then the deduction is phased down to zero and the output is negative
+      </Description>
+      <Derived>
+        <Round>
+          <StepwiseMultiply>
+            <Multiplicand>
+              <Dependency path="/qualifiedMortgageInsurancePremiumExcessOverThreshold"/>
+            </Multiplicand>
+            <Rate>
+              <Dependency path="/qualifiedMortgageInsurancePremiumPhaseOutRate"/>
+            </Rate>
+          </StepwiseMultiply>
+        </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedMortgageInsurancePremiumPhaseOut">
+      <Description>
+        IRC Section 163(h)(3)(E): The amount otherwise treated as interest under clause (i) shall be reduced (but not below zero) by 10 percent of
+          such amount for each $1,000 ($500 in the case of a married individual filing a separate return) (or fraction thereof)
+          that the taxpayer&#x2019;s adjusted gross income for the taxable year exceeds $100,000 ($50,000 in the case of a married individual filing a separate return).
+
+          If the excess is more than 10 increments over the threshold ($10k non-MFS, $5k MFS) then the deduction is phased down to zero and the output is negative
+      </Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/qualifiedMortgageInsurancePremiumPhaseOutFactor"/>
+          <Dependency path="/qualifiedMortgageInsurancePremiums"/>
+          <Rational>1/10</Rational>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/qualifiedMortgageInsurancePremiumDeductionTotal">
+      <Description>
+        Calculates the final deductible PMI after applying the phaseout percentage to the total premiums paid.
+      </Description>
+      <Derived>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/qualifiedMortgageInsurancePremiums"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/qualifiedMortgageInsurancePremiumPhaseOut"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>

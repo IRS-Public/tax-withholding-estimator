@@ -31,11 +31,24 @@
       <p condition="/wantsStandardDeduction" operator="isIncomplete">If the total of your itemized deductions is higher than the standard deduction, we use that amount to calculate your results. This is more advantageous for you.</p>
       <p condition="/wantsStandardDeduction" operator="isTrueAndComplete">You chose to apply the standard deduction instead of itemizing. You can continue to the next page.</p>
       <p condition="/wantsItemizedDeduction" operator="isTrue">Estimate the amount for deductions you plan to take this year.</p>
-      <!-- TODO: make entire section (and required questions within) below conditional, instead of individual elements -->
-      <!-- https://github.com/IRSDigitalService/tax-withholding-estimator/issues/1032 -->
+      <h4 condition="/wantsItemizedDeduction" operator="isTrue">Mortgage insurance premiums</h4>
+      <div condition="/wantsItemizedDeduction" operator="isTrue">
+        <p>If <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> will to pay a premium for mortgage insurance in <fg-show path="/taxYear"/>, you may be able to deduct it. Your mortgage insurance contract must have been issued in 2007 or later for your main or second home.</p>
+        <p>Qualified insurance includes:</p>
+        <ul>
+          <li>Private mortgage insurance on conventional loans</li>
+          <li>Mortgage insurance premiums on Federal Housing Administration loans</li>
+          <li>Funding fees on Veteran Affairs loans</li>
+          <li>Guarantee and annual fees on USDA's Rural Housing Administration loans</li>
+        </ul>
+      </div>
+      <fg-set path="/qualifiedMortgageInsurancePremiums" if-true="/wantsItemizedDeduction">
+        <question>Mortgage insurance premiums you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
+        <input type="dollar"/>
+      </fg-set>
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">Qualified mortgage interest and investment interest expenses</h4>
       <div condition="/wantsItemizedDeduction" operator="isTrue">
-        <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> borrow money to buy a home or investment property, you can deduct the interest you paid on that loan. You can also deduct your mortgage insurance premiums.</p>
+        <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> borrow money to buy a home or investment property, you can deduct the interest you paid on that loan.</p>
         <p>
           <a target="_blank" href="https://www.irs.gov/taxtopics/tc505" class="usa-link">Learn more about mortgage interest and investment interest.</a>
         </p>
