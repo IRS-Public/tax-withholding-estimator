@@ -119,16 +119,16 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h3 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Certain business expenses</h3>
-      <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">If <span condition="/isFilingStatusMFJ" operator="isFalse">you're</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse are</span> an Armed Forces reservist, qualified performing artist, fee-basis state or local government official, or employee with a disability and impairment-related work expenses, you can deduct expenses in <fg-show path="/taxYear"/> that are:</p>
-      <ul condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
+      <h3>Certain business expenses</h3>
+      <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you're</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse are</span> an Armed Forces reservist, qualified performing artist, fee-basis state or local government official, or employee with a disability and impairment-related work expenses, you can deduct expenses in <fg-show path="/taxYear"/> that are:</p>
+      <ul>
         <li>Common and accepted in your field of trade, business, or profession</li>
         <li>Helpful and appropriate for your business</li>
       </ul>
-      <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
+      <p>
         <a target="_blank" href="https://www.irs.gov/instructions/i2106" class="usa-link">Learn more about certain business expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
-      <fg-set path="/businessCreditsForEligible" if-true="/eitherTPHasSelfEmploymentIncome">
+      <fg-set path="/businessCreditsForEligible">
         <question>Eligible business expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
