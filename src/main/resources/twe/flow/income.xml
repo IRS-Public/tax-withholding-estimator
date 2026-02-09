@@ -535,9 +535,7 @@
         </div>
       </fg-collection>
 
-      <h3>Additional income</h3>
-
-      <h4>Self-employment income</h4>
+      <h3>Self-employment income</h3>
       <p>This includes income from a partnership, trade, or business that you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> own. It can also include income earned as a freelancer, contractor, or gig worker.</p>
       <p>
         <modal-link for="modal-what-counts-self-employment">What counts as self-employment income?</modal-link>
