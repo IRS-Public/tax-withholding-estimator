@@ -10,14 +10,26 @@
       </p>
       <p>This estimator only supports some adjustments. There may be other adjustments that you qualify for, which could impact your estimate.</p>
 
-      <h3>Student loan interest deduction</h3>
-      <p>If you pay interest in <fg-show path="/taxYear"/>, on a qualified student loan for yourself, your spouse, or a person who was your dependent when you took out the loan, you can deduct up to $2,500</p>
-      <p> This includes both required and voluntarily pre-paid interest payments. </p>
-      <p>
-        <a target="_blank" href="https://www.irs.gov/taxtopics/tc456" class="usa-link">Learn more about student loan interest.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+      <h3 condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">Student loan interest deduction</h3>
+      <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">
+        If you pay interest in <fg-show path="/taxYear"/>, on a qualified student loan for
+        yourself, your spouse, or a person who was your dependent when you took out the loan, you
+        can deduct up to $2,500
       </p>
-      <fg-set path="/studentLoanInterestAmount">
-        <question>Student loan interest <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
+      <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">
+        This includes both required and voluntarily pre-paid interest payments.
+      </p>
+      <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">
+        <a target="_blank" href="https://www.irs.gov/taxtopics/tc456" class="usa-link">
+        Learn more about student loan interest.
+        <span class="usa-sr-only">(opens in a new tab)</span></a>
+      </p>
+      <fg-set path="/studentLoanInterestAmount" if-true="/isEligibleForStudentLoanInterestDeduction">
+        <question>
+          Student loan interest <span condition="/isFilingStatusMFJ" operator="isFalse">you</span>
+          <span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect
+          to pay in <fg-show path="/taxYear"/>
+        </question>
         <input type="dollar"/>
       </fg-set>
 
