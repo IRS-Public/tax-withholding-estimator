@@ -1,9 +1,9 @@
 # Tax Withholding Estimator (TWE)
 
 ### Overview
-TWE is an online tool provided by the Internal Revenue Service (IRS) designed to help taxpayers estimate their federal tax withholdings while preparing [Form W-4](https://www.irs.gov/pub/irs-pdf/fw4.pdf) or [Form W-4P](https://www.irs.gov/pub/irs-pdf/fw4p.pdf). TWE is built to handle complex scenarios, including multiple jobs, self-employment income, and various credits or deductions.
-For a deep dive into the technical design of this repository, start [here](./docs/adr/001-twe-architecture.md).
-To better understand the math behind tax withholdings, go [here](./docs/taxes/withholdings-basics.md).
+TWE is an online tool provided by the Internal Revenue Service (IRS) designed to help taxpayers estimate their federal tax withholdings while preparing [Form W-4](https://www.irs.gov/pub/irs-pdf/fw4.pdf) or [Form W-4P](https://www.irs.gov/pub/irs-pdf/fw4p.pdf). TWE is built to handle complex scenarios, including multiple jobs, self-employment income, and various credits or deductions. To better understand the math behind tax withholdings, go [here](./docs/taxes/withholdings-basics.md).
+
+This codebase represents a version of TWE (TWE 2.0) that went live in February 2026. For a deep dive into the architecture and technical design choices for changes between the original version of TWE (TWE 1.0) and this version, start [here](./docs/adr/001-twe-architecture.md).
 
 ### What TWE is (and isn't)
 TWE helps taxpayers avoid unexpected surprises when they file their taxes by reducing the likelihood of overwithholding (resulting in a large refund) or underwithholding (resulting in a balance due). The primary function of the TWE is to generate a *customized* Form W-4 (for employees) or Form W-4P (for pension recipients), based on their current tax scenario and financial reality.
