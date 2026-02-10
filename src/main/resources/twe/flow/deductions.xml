@@ -3,14 +3,14 @@
 <FlowConfig>
   <page title="Standard deduction choice" route="/deductions">
     <section>
-      <h2>Standard deduction or itemize deductions</h2>
+      <h2>Standard deduction or itemized deductions</h2>
       <p>
         Choose if you want to use the <modal-link for="modal-standard-deduction-or-itemize-deductions">standard deduction or itemize deductions</modal-link>.
         Most people take the standard deduction because the amount is higher than what they’d get by itemizing.
       </p>
       <p condition="/additionalStandardDeductionItems" operator="isGreaterThanZero"><modal-link for="modal-standard-deduction-amount">Based on your answers</modal-link>, your standard deduction amount is <fg-show path="/standardDeduction" />.</p>
       <p condition="/additionalStandardDeductionItems" operator="isZero">Based on your answers, your standard deduction amount is <fg-show path="/standardDeduction" />.</p>
-      <p>If you choose to itemize <a target="_blank" href="https://www.irs.gov/newsroom/tax-basics-understanding-the-difference-between-standard-and-itemized-deductions" class="usa-link">deductions<span class="usa-sr-only"> (opens in a new tab)</span></a>, we'll ask you about your expenses later and calculate the total amount for you.</p>
+      <p>If you choose to itemize deductions, we'll ask you about your expenses later and calculate the total amount for you.</p>
       <!-- TODO: Make fg-alert flexible enough to do a more basic alert like this as well: -->
       <div condition="/isFilingStatusMFS" operator="isTrue" class="usa-alert usa-alert--info">
         <div class="usa-alert__body">
@@ -33,7 +33,7 @@
       <p condition="/wantsItemizedDeduction" operator="isTrue">Estimate the amount for deductions you plan to take this year.</p>
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">Mortgage insurance premiums</h4>
       <div condition="/wantsItemizedDeduction" operator="isTrue">
-        <p>If <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> will to pay a premium for mortgage insurance in <fg-show path="/taxYear"/>, you may be able to deduct it. Your mortgage insurance contract must have been issued in 2007 or later for your main or second home.</p>
+        <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> will to pay a premium for mortgage insurance in <fg-show path="/taxYear"/>, you may be able to deduct it. Your mortgage insurance contract must have been issued in 2007 or later for your main or second home.</p>
         <p>Qualified insurance includes:</p>
         <ul>
           <li>Private mortgage insurance on conventional loans</li>
@@ -100,7 +100,7 @@
       <div condition="/wantsItemizedDeduction" operator="isTrue">
         <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> experience any casualty, disaster, or theft losses due to a state or federally declared disaster, you can deduct those losses.</p>
         <p>You can also deduct losses due to theft related to a transaction entered into for profit.</p>
-        <p>The losses must not have been covered by insurance.</p>
+        <p>The losses must not be covered by insurance.</p>
         <p><a target="_blank" href="https://www.irs.gov/taxtopics/tc515" class="usa-link">Learn more about casualty losses.</a></p>
       </div>
       <fg-set path="/casualtyLossesTotal" if-true="/wantsItemizedDeduction">
@@ -115,7 +115,7 @@
           <li>Casualty and theft losses from income-producing property</li>
           <li>Excess deductions (including administrative expenses) allowed a beneficiary on termination of an estate or trust</li>
           <li>Federal estate tax on income of a person who has died</li>
-          <li>Amounts paid as part of your trade or business that represent restitution, remediation, or to come into compliance with the law.</li>
+          <li>Amounts paid as part of your trade or business that represent restitution, remediation, or to come into compliance with the law</li>
           <li>Gambling losses up to the amount of gambling winnings</li>
           <li>Impairment-related work expenses of persons with disabilities</li>
           <li>Losses from Ponzi-type investment schemes</li>
@@ -131,7 +131,7 @@
         <input type="dollar"/>
       </fg-set>
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">Itemized deductions total: <fg-show path="/itemizedDeductionTotal"/></h4>
-      <p condition="/wantsItemizedDeduction" operator="isTrue">We use the most advantageous amount when we calculate your results: either the standard deduction or your total itemized deductions.</p>
+      <p condition="/wantsItemizedDeduction" operator="isTrue">We’ll use whichever number is higher when we calculate your results: either the standard deduction or your total itemized deductions.</p>
     </section>
     <modal-dialog id="modal-standard-deduction-or-itemize-deductions">
       <modal-heading>What are the standard deduction and itemized deductions?</modal-heading>
