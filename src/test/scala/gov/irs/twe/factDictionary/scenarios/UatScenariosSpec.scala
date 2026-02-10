@@ -712,6 +712,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 5000)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+
+    // regression prevention sanity check
+    scenario.graph.set("/wantsStandardDeduction", false)
+    assert(scenario.graph.get("/standardOrItemizedDeductionForQBIDeduction").hasValue)
   }
 
   // Column AW
