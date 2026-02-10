@@ -34,7 +34,7 @@
       </fg-set>
 
       <h3>Educator expense deduction</h3>
-      <p>If you're a K-12 educator, you can deduct up to $300 of unreimbursed expenses in <fg-show path="/taxYear"/>.<span condition="/isFilingStatusMFJ" operator="isTrue"> If you're filing a joint tax return and both of you are educators, you can deduct up to $600.</span></p>
+      <p>If you're a K-12 educator, you can deduct up to <fg-show path="/maxEducatorExpensesNotMFJ"/> of unreimbursed expenses in <fg-show path="/taxYear"/>.<span condition="/isFilingStatusMFJ" operator="isTrue"> If you're filing a joint tax return and both of you are educators, you can deduct up to <fg-show path="/maxEducatorExpensesMFJ"/>.</span></p>
       <p>Qualified expenses include:</p>
       <ul>
         <li>Professional development courses</li>
@@ -46,6 +46,7 @@
       </p>
       <fg-set path="/educatorExpenses/">
         <question>Educator expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
+        <hint>(max <fg-show path="/maxEducatorExpensesLimit"/>)</hint>
         <input type="dollar"/>
       </fg-set>
 

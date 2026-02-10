@@ -20,6 +20,22 @@
         </LesserOf>
       </Derived>
     </Fact>
+    <Fact path="/maxEducatorExpensesMFJ">
+      <Name>Maximum Deduction for educator expenses</Name>
+      <Description>The maximum deduction an individual can take for educator expense and is MFJ</Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>700</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/maxEducatorExpensesNotMFJ">
+      <Name>Maximum Deduction for educator expenses</Name>
+      <Description>The maximum deduction an individual can take for educator expense and is not MFJ</Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>350</Dollar>
+      </Derived>
+    </Fact>
     <Fact path="/maxEducatorExpensesLimit">
       <Name>Maximum Deduction for educator expenses</Name>
       <Description>The maximum deduction an individual can take for educator expense</Description>
@@ -31,7 +47,7 @@
               <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Dollar>700</Dollar>
+              <Dependency path="/maxEducatorExpensesMFJ"/>
             </Then>
           </Case>
           <Case>
@@ -39,7 +55,7 @@
               <True/>
             </When>
             <Then>
-              <Dollar>350</Dollar>
+              <Dependency path="/maxEducatorExpensesNotMFJ"/>
             </Then>
           </Case>
         </Switch>
