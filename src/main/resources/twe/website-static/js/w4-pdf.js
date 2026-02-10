@@ -22,10 +22,10 @@ const FORM_FIELDS = {
       headOfHousehold: 'topmostSubform[0].Page1[0].c1_1[2]',
       qualifiedSurvivingSpouse: 'topmostSubform[0].Page1[0].c1_1[1]' // Equivalent to Married
     },
-    credits: 'topmostSubform[0].Page1[0].f1_09[0]',
-    nonJobIncome: 'topmostSubform[0].Page1[0].f1_10[0]',
-    deductions: 'topmostSubform[0].Page1[0].f1_11[0]',
-    extraWithholding: 'topmostSubform[0].Page1[0].f1_12[0]'
+    credits: 'topmostSubform[0].Page1[0].f1_08[0]',
+    nonJobIncome: 'topmostSubform[0].Page1[0].f1_09[0]',
+    deductions: 'topmostSubform[0].Page1[0].f1_10[0]',
+    extraWithholding: 'topmostSubform[0].Page1[0].f1_11[0]'
   },
   // W-4P has different field IDs
   w4p: {
