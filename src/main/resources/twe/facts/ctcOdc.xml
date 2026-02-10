@@ -136,7 +136,6 @@
       </Derived>
     </Fact>
     <Fact path="/odcDependentGrossIncomeThreshold">
-      <!-- TODO: Update with the 2026 value once known -->
       <Description>Dependent income threshold to for odc qualification</Description>
       <TaxYear>2025</TaxYear>
       <Derived>

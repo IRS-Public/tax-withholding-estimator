@@ -1,22 +1,22 @@
 # Tax Withholding Basics
 
 > [!WARNING]
-> Nothing in this document should be construed as tax guidance or official tax filing instructions.
+> Nothing in this document is, or should be construed, as tax guidance or official tax filing instructions.
 > This is a high-level overview to explain how the online tax withholding estimator works and
 > the information included here is not guaranteed to be up-to-date or correct.
-> Do not calculate your taxes based on this document.
-> See the Legal Notice in the README for more.
+> Do not calculate your taxes or estimate your withholdings based on this document.
+> See the [Legal Disclaimer](../../README.md#legal-disclaimer-public-repository-access) for more.
 
-Per [Pub505](https://www.irs.gov/publications/p505), there are two ways to pay as you go:
+Per [Pub505](https://www.irs.gov/publications/p505), there are two ways to pay federal income tax during the year:
 
-1. Withholding - under most circumstances, if you are an employee whose paycheck is processed by a payroll provider, certain taxes are paid on your earnings throughout the year by your employer and/or the payroll provider.
+1. Withholdings - under most circumstances, if you are an employee whose paycheck is processed by a payroll provider, certain taxes are paid on your earnings throughout the year by your employer and/or the payroll provider.
 If you have earnings that your employer is unaware of, you can instruct them to withhold additional amounts, which are paid to the IRS in your name.
-2. Estimated tax - you can make quarterly estimated payments on your income directly to the IRS.
+2. Estimated tax payments - you can make estimated payments on your income directly to the IRS.
 This is typically how you pay taxes if you are self-employed or derive significant income via other means such as capital gains, rents, and dividends.
 
 When you start a job, you submit a W-4 to the employer that provides the information they need to withhold the appropriate amount from your paycheck.
 
-The W-4 is a [relatively simple, four-page form](https://www.irs.gov/pub/irs-pdf/fw4.pdf), consisting of one page that the taxpayer submits to the employer, and three pages of information and supplemental worksheets.
+The W-4 is a [four-page form](https://www.irs.gov/pub/irs-pdf/fw4.pdf), consisting of one page that the taxpayer submits to the employer, and three pages of information and supplemental worksheets.
 Broadly speaking, the paper W-4 is capable of estimating the taxpayer's withholdings if they (or they and their spouse) have three or fewer jobs, have no other sources of income, and do not change jobs during the year.
 Many taxpayers fall within this category, but many do not.
 For the ones that do not, the paper W-4 repeatedly directs them to use the Tax Withholding Estimator (TWE) found at [https://www.irs.gov/individuals/tax-withholding-estimator](https://www.irs.gov/individuals/tax-withholding-estimator).
@@ -189,7 +189,7 @@ In this formula, $a$ is the number of days worked in the fractional pay period, 
 
 ## Filling out the W-4
 
-Once TWE has calculated the tax gap, it automatically filling out a W-4.
+Once TWE has calculated the tax gap, it automatically fills out a W-4.
 There are only 4 lines that need to be produced.
 
 - Line 3: Credits & Payments

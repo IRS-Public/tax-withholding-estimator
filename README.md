@@ -3,7 +3,7 @@
 ### Overview
 TWE is an online tool provided by the Internal Revenue Service (IRS) designed to help taxpayers estimate their federal tax withholdings while preparing [Form W-4](https://www.irs.gov/pub/irs-pdf/fw4.pdf) or [Form W-4P](https://www.irs.gov/pub/irs-pdf/fw4p.pdf). TWE is built to handle complex scenarios, including multiple jobs, self-employment income, and various credits or deductions. To better understand the math behind tax withholdings, go [here](./docs/taxes/withholdings-basics.md).
 
-This codebase represents a version of TWE (TWE 2.0) that went live in February 2026. For a deep dive into the architecture and technical design choices for changes between the original version of TWE (TWE 1.0) and this version, start [here](./docs/adr/001-twe-architecture.md).
+This codebase is actively maintained and represents a version of TWE (TWE 2.0) that went live in February 2026. For a deep dive into the architecture and technical design choices for changes between the original version of TWE (TWE 1.0) and this version, start [here](./docs/adr/001-twe-architecture.md).
 
 ### What TWE is (and isn't)
 TWE helps taxpayers avoid unexpected surprises when they file their taxes by reducing the likelihood of overwithholding (resulting in a large refund) or underwithholding (resulting in a balance due). The primary function of the TWE is to generate a *customized* Form W-4 (for employees) or Form W-4P (for pension recipients), based on their current tax scenario and financial reality.
@@ -39,23 +39,22 @@ This codebase is dedicated to the public domain under the [Creative Commons Zero
 
 
 ## Setup
+- If you are an IRS employee, follow the instructions in the [IRS Onboarding Docs](./docs/onboarding/onboarding-irs.md).
+- If you are a developer, follow the instructions in the [IRS Onboarding Docs](./docs/onboarding/onboarding-irs.md).
+- If you are not a developer, follow the instructions in the [Non-Dev Onboarding Docs](./docs/onboarding/onboarding-nondev.md).
 
-If you are an IRS developer, first follow the instructions in the [IRS Onboarding Docs](./docs/onboarding/onboarding-irs.md).
-
-If you are not a developer, follow the instructions in the [Non-Dev Onboarding Docs](./docs/onboarding/onboarding-nondev.md).
-
-### Instructions
+### Quickstart
 
 1. Install [Scala 3.7](https://www.scala-lang.org/download) and [sbt](https://www.scala-sbt.org/1.x/docs/Setup.html).
-You may choose install these with Coursier, sdkman, or some other method of your choosing;
-it shouldn't make a difference.
+   You may choose install these with Coursier, sdkman, or some other method of your choosing;
+   it shouldn't make a difference.
 2. Download the [Fact Graph](https://github.com/IRS-Public/fact-graph) and run `make publish` in that repository
 3. Return to this repository and run `make`
 4. (Optional) Ensure that you have local installations of `xmllint` (via `libxml2`) and `npx` (via `npm`) command line tools, then run  `make ci-setup` to install the tools required for running the validations; this is useful if you plan to submit a PR.
 
 Additional developer notes and tips for installing LSP integrations and the like can be found in the [Dev Onboarding Docs](./docs/onboarding/onboarding-dev.md).
 
-## Development
+### Development
 
 Basic development commands are declared via Makefile.
 
@@ -67,21 +66,3 @@ The following commands are particularly useful for most development flows:
 * `make ci` - Run CI checks locally
 
 To see a list of _all_ available commands, run `make help`.
-
-### Updating the vendored copy of the Fact Graph
-
-The Fact Graph is used in two places: first as a declared Scala dependency in `build.sbt`, and second as a vendored JavaScript file that gets sent to the client.
-
-If you make changes to the Fact Graph, and you want to propagate those changes, you need to do two things:
-
-1. Run `make publish` in the Fact Graph repo
-
-   Note: Scala.js compilation occurs during `make publish`. It can produce slightly different output even with identical source code. As a result, the vendored files (`factgraph-3.1.0.js` and `main.mjs.map`) may change after running this command even if no Fact Graph source was modified. If you haven't made any Fact Graph changes, these don't need to be committed.
-2. Run `make copy-fg` in this repo
-
-   Note: `make copy-fg` target assumes that the Fact Graph repo is located in `../fact-graph`.
-
-## Audit Mode
-
-TWE comes bundled with an "Audit Mode" that lets users see how TWE arrives at its calculations.
-It can be toggled by running `enableAduitMode()` and `disableAuditMode()` in the browser console.

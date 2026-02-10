@@ -31,7 +31,6 @@
             <Dependency path="/isFilingStatusMFS"/>
           </Not>
           <Dependency path="/primaryFilerAge65OrOlder"/>
-          <!-- TODO: /MAGI check based on filing status -->
         </All>
       </Derived>
     </Fact>
@@ -41,7 +40,6 @@
         <All>
           <Dependency path="/isFilingStatusMFJ"/>
           <Dependency path="/secondaryFilerAge65OrOlder"/>
-          <!-- TODO: /MAGI check based on filing status -->
         </All>
       </Derived>
     </Fact>

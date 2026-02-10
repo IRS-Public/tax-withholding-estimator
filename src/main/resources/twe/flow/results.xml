@@ -21,7 +21,6 @@
         If you’d like to get your tax balance closer to $0
         <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">and avoid paying a penalty</span>,
         you can <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjust your withholding</a>.
-        <!-- TODO: There is also an "underwithheld and can't make up" scenario that adds some content here-->
       </p>
 
       <p condition="/isZeroRefund" operator="isTrue">Based on what you entered, we estimate that <strong>you’re withholding enough to cover your federal taxes.</strong></p>

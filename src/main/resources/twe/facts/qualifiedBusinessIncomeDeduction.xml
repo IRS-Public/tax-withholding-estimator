@@ -339,7 +339,6 @@
     </Fact>
     <Fact path="/form8995aLine24">
       <Description> QBI Phase In Percentage. We multiply this by 100 and then divide by 100 at the end of the QBI Deduction calculation to ensure a high level of precision</Description>
-      <!-- TODO: Proper decimal hack to preserve as much precision as possible-->
       <Derived>
         <Divide>
           <Dividend>

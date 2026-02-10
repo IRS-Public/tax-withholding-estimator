@@ -2,14 +2,14 @@
 
 * If you are a member of the public, see [members of the public](#members-of-the-public)
 * If you are an active maintainer, see [maintainers](#maintainers)
+> [!WARNING]
+> Sensitive PII and [SBU](https://en.wikipedia.org/wiki/Sensitive_but_unclassified) are not permitted _anywhere_ in open source repositories.
+>
+> Any accidental exposure of SBU or PII must be immediately reported and remediated as an incident.
+
 
 ## Members of the public
-
-
-The primary purpose of this open-source repository is to provide taxpayers with full transparency into the logic and assumptions of TWE.
-
-### Response Expectations
-The maintainers will monitor activity and respond to community input as appropriate. Internal review cycles may fluctuate and may influence the timeline for addressing certain issues or PRs.
+The primary purpose of this open-source repository is to provide taxpayers with greater transparency into the logic and assumptions of TWE. The repository is read-only for members of the public, however we welcome any feedback through opening Issues and Pull Requests (PRs). The maintainers will monitor activity and respond to community input as appropriate. Internal review cycles may fluctuate and may influence the timeline for addressing certain issues or PRs.
 
 ### How to Engage
 A PR should only be opened after an issue has been opened and a PR has been solicited.
@@ -48,10 +48,6 @@ As a result, individuals should configure their accounts and git configurations 
 
 As a matter of policy, the IRS requires that internal contributors use their GitHub `no-reply` email address for authoring commits. See [ONBOARDING - Configure Commit Email Address](/ONBOARDING.md#configure-commit-email-address).
 
-> [!WARNING]
-> Sensitive PII and [SBU](https://en.wikipedia.org/wiki/Sensitive_but_unclassified) are not permitted _anywhere_ in open source repositories.
->
-> Any accidental exposure of SBU or PII must be immediately reported and remediated as an incident.
 
 ### Best Practices
 

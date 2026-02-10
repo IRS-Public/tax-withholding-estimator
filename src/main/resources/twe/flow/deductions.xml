@@ -11,7 +11,6 @@
       <p condition="/additionalStandardDeductionItems" operator="isGreaterThanZero"><modal-link for="modal-standard-deduction-amount">Based on your answers</modal-link>, your standard deduction amount is <fg-show path="/standardDeduction" />.</p>
       <p condition="/additionalStandardDeductionItems" operator="isZero">Based on your answers, your standard deduction amount is <fg-show path="/standardDeduction" />.</p>
       <p>If you choose to itemize deductions, we'll ask you about your expenses later and calculate the total amount for you.</p>
-      <!-- TODO: Make fg-alert flexible enough to do a more basic alert like this as well: -->
       <div condition="/isFilingStatusMFS" operator="isTrue" class="usa-alert usa-alert--info">
         <div class="usa-alert__body">
           <p class="usa-alert__text">
@@ -154,8 +153,6 @@
         <p condition="/primaryAndSecondaryFilersAreClaimedOnAnotherReturn" operator="isTrue">Your standard deduction is limited because you and your spouse can be claimed as dependents by another taxpayer.</p>
         <p condition="/treatFilersAsDependents" operator="isTrue">It's calculated as the greater of <fg-show path="/tentativeMinimumStandardDeduction" /> or your earned income plus <fg-show path="/earnedIncomeBump" /> (but can't be higher than <fg-show path="/filingStatusStandardDeduction" />)</p>
         <p condition="/treatFilersAsDependents" operator="isTrue">On top of that amount, you get an additional amount because:</p>
-        <!-- TODO: get localizable filing status in plain language from /filingStatus, instead of using fg-show of /filingStatus -->
-        <!--       https://github.com/IRSDigitalService/tax-withholding-estimator/issues/1030 -->
         <p condition="/treatFilersAsDependents" operator="isFalse">
           Your standard deduction is based on
           <span condition="/isFilingStatusMFJ" operator="isTrue">married filing jointly</span>

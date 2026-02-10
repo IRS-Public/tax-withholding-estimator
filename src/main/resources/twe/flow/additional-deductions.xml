@@ -19,7 +19,6 @@
           <li>Payroll deduction</li>
           <li>Transfer of gift card redeemable for cash</li>
         </ul>
-        <!-- TODO: Make fg-alert flexible enough to do a more basic alert like this as well: -->
         <div condition="/standardDeductionOverridesItemizedDeduction" operator="isTrue" class="usa-alert usa-alert--info">
           <div class="usa-alert__body">
             <p class="usa-alert__text">

@@ -773,7 +773,6 @@
       <Description>Pensions that are ended or end too soon are not candidates for extra withholding on a
         new W4.</Description>
       <Derived>
-        <!-- TODO: what should we do if no pensions meet this filter? -->
         <Filter path="/pensions">
           <All>
             <Not>

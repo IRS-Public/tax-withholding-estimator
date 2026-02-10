@@ -5,7 +5,6 @@
     <section>
       <h2><fg-show path="/taxYear"/> Income &amp; tax payments</h2>
       <p>Tell us about the total income, federal tax withholding, and estimated tax payments you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to have for <fg-show path="/taxYear"/>.</p>
-      <!-- TODO: Make into fg-alert in the future-->
       <div class="usa-alert usa-alert--info">
         <div class="usa-alert__body">
           <p class="usa-alert__text">
