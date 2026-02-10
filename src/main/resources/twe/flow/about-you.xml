@@ -20,7 +20,7 @@
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/primaryFilerIsClaimedOnAnotherReturn">
-        <question>Can you be claimed as a dependent on someone else’s tax return?</question>
+        <question>Can you be claimed as a dependent on someone else’s <fg-show path="/nextTaxYear"/> tax return?</question>
         <modal-link for="modal-primary-claimed-as-dependent">How do I know if I’m someone’s dependent?</modal-link>
         <input type="boolean"/>
       </fg-set>
@@ -45,9 +45,9 @@
       </fg-set>
 
       <h3>Spouse</h3>
-      <p condition="/filingStatus" operator="isIncomplete">If you plan to file using Married Filing Jointly, we may need to ask more questions about your spouse.</p>
+      <p condition="/filingStatus" operator="isIncomplete">If you plan to file using Married Filing Jointly, we need to ask more questions about your spouse.</p>
       <p condition="/isFilingStatusMFJ" operator="isFalse">You can continue. Since you don't plan to file using Married Filing Jointly, we don't need to ask any more questions.</p>
-      <p condition="/isFilingStatusMFJ" operator="isTrue">If you plan to file using Married Filing Jointly, we may need to ask more questions about your spouse.</p>
+      <p condition="/isFilingStatusMFJ" operator="isTrue">If you plan to file using Married Filing Jointly, we need to ask more questions about your spouse.</p>
       <fg-set path="/secondaryFilerAge65OrOlder" if-true="/isFilingStatusMFJ">
         <question>Will your spouse be 65 years old or older on January 1, <fg-show path="/nextTaxYear"/>?</question>
         <input type="boolean"/>
@@ -57,7 +57,7 @@
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/secondaryFilerIsClaimedOnAnotherReturn" if-true="/isFilingStatusMFJ">
-        <question>Can your spouse be claimed as a dependent on someone else's tax return?</question>
+        <question>Can your spouse be claimed as a dependent on someone else's <fg-show path="/taxYear"/> tax return?</question>
         <modal-link for="modal-secondary-claimed-as-dependent">How do I know if my spouse could be a dependent?</modal-link>
         <input type="boolean"/>
       </fg-set>
@@ -78,7 +78,7 @@
     <modal-dialog id="modal-primary-claimed-as-dependent">
       <modal-heading>How do I know if I’m someone’s dependent?</modal-heading>
       <modal-content>
-        <p>If you relied on someone else (other than you spouse) for support in <fg-show path="/taxYear"/>, they might be able to claim you as a dependent on their federal tax return.</p>
+        <p>If you relied on someone else (other than your spouse) for support in <fg-show path="/taxYear"/>, they might be able to claim you as a dependent on their federal tax return.</p>
         <p>There are a few factors that determine whether someone can claim you as a dependent, including:</p>
         <ul>
           <li>Your relationship to that person</li>
@@ -92,8 +92,8 @@
     <modal-dialog id="modal-filing-status">
       <modal-heading>Which filing status should I use?</modal-heading>
       <modal-content>
-        <p>If there's no change in your martial status or family situation this year, then you may want to use the same filing status from your <fg-show path="/lastTaxYear"/> tax return.</p>
-        <p>If you had a change in your martial status or household in the past year, you may need to use a different filing status for a more accurate estimate.</p>
+        <p>If there's no change in your marital status or family situation this year, then you may want to use the same filing status from your <fg-show path="/lastTaxYear"/> tax return.</p>
+        <p>If you had a change in your marital status or household in the past year, you may need to use a different filing status for a more accurate estimate.</p>
         <p>Each filing status has different requirements.</p>
         <p>
           <strong>Single:</strong>
@@ -125,13 +125,13 @@
           <strong>Qualifying Widow(er):</strong>
         </p>
         <ul>
-          <li>Your spouse must have died in <fg-show path="/lastTaxYear"/> or <fg-show path="/taxYearMinusTwo"/></li>
+          <li>Your spouse died in <fg-show path="/lastTaxYear"/> or <fg-show path="/taxYearMinusTwo"/></li>
           <li>You didn't remarry before <fg-show path="/taxYear"/></li>
           <li>You have a dependent child who lives with you all year</li>
           <li>You pay more than half the cost of keeping up your home</li>
         </ul>
         <p>
-          <a target="_blank" href="https://www.irs.gov/filing/filing-status">Learn more about filing statuses<span class="usa-sr-only"> (opens in a new tab)</span></a>
+          <a target="_blank" href="https://www.irs.gov/filing/filing-status">Learn more about filing statuses<span class="usa-sr-only"> (opens in a new tab)</span>.</a>
         </p>
       </modal-content>
     </modal-dialog>
