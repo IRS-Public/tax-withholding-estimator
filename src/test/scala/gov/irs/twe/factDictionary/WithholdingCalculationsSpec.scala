@@ -2,6 +2,7 @@ package gov.irs.twe.factDictionary
 
 import gov.irs.factgraph.types.Collection
 import gov.irs.factgraph.types.Day
+import gov.irs.factgraph.types.Dollar
 import gov.irs.factgraph.types.Enum
 import gov.irs.factgraph.FactDictionaryForTests
 import gov.irs.factgraph.Path
@@ -61,6 +62,29 @@ class WithholdingCalculationsSpec extends AnyFunSuite with TableDrivenPropertyCh
 
       val payPeriodsBeforeW4ChangesAppear = graph.get(Path(s"/jobs/#${jobId}/payPeriodsBeforeW4ChangesAppear"))
       assert(payPeriodsBeforeW4ChangesAppear.value.contains(payPeriodDelay))
+    }
+  }
+
+  test("bonus pay withholding") {
+    val mostRecentPayPeriodBonusAmount = Path(s"/jobs/#$jobId/mostRecentPayPeriodBonusAmount")
+    val totalFutureBonus = Path(s"/jobs/#$jobId/totalFutureBonus")
+
+    val bonusTable = Table(
+      ("currentBonus", "futureBonus", "expectedWithholding"),
+      (1000000, 1000, 370),
+      (500000, 600000, 147000),
+      (500000, 1000, 220),
+    )
+    forAll(bonusTable) { (currentBonus, futureBonus, expectedWithholding) =>
+      val graph = makeGraphWith(
+        factDictionary,
+        jobs -> jobsCollection,
+        mostRecentPayPeriodBonusAmount -> Dollar(currentBonus),
+        totalFutureBonus -> Dollar(futureBonus),
+      )
+      assert(
+        graph.get(Path(s"/jobs/#$jobId/withholdingsFromTotalBonusReceived")).value.contains(Dollar(expectedWithholding)),
+      )
     }
   }
 }

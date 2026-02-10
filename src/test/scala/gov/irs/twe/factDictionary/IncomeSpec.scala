@@ -1,6 +1,7 @@
 package gov.irs.twe.factDictionary
 
 import gov.irs.factgraph.types.Collection
+import gov.irs.factgraph.types.Day
 import gov.irs.factgraph.types.Dollar
 import gov.irs.factgraph.types.Enum
 import gov.irs.factgraph.FactDictionaryForTests
@@ -171,5 +172,36 @@ class IncomeSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       val actual = graph.get(standardAnnualWithholdingAmount)
       assert(actual.value.contains(Dollar(expectedStandardAnnualWithholdingAmount)))
     }
+  }
+
+  test("a jobs income includes bonuses") {
+    val allYear = Path(s"/jobs/#$jobId/isAllYear")
+    val recentPayPeriodEnd = Path(s"/jobs/#$jobId/mostRecentPayPeriodEnd")
+    val recentPayDate = Path(s"/jobs/#$jobId/mostRecentPayDate")
+    val payFreq = Path(s"/jobs/#$jobId/payFrequency")
+    val weekly = Enum("weekly", "/payFrequencyOptions")
+
+    val amountLastPaycheck = Path(s"/jobs/#$jobId/amountLastPaycheck")
+    val mostRecentPayPeriodBonusAmount = Path(s"/jobs/#$jobId/mostRecentPayPeriodBonusAmount")
+    val totalFutureBonus = Path(s"/jobs/#$jobId/totalFutureBonus")
+    val yearToDateIncome = Path(s"/jobs/#$jobId/yearToDateIncome")
+
+    val graph = makeGraphWith(
+      factDictionary,
+      filingStatus -> single,
+      jobs -> jobsCollection,
+      allYear -> true,
+      recentPayPeriodEnd -> Day("2026-02-04"),
+      recentPayDate -> Day("2026-02-04"),
+      Path("/today") -> Day("2026-02-04"),
+      payFreq -> weekly,
+      amountLastPaycheck -> Dollar(2000),
+      mostRecentPayPeriodBonusAmount -> Dollar(1000),
+      totalFutureBonus -> Dollar(40000),
+      yearToDateIncome -> Dollar(7000),
+    )
+    assert(graph.get(Path(s"/jobs/#$jobId/isCurrentJob")).value.contains(true))
+    assert(graph.get(Path(s"/jobs/#$jobId/totalBonusReceived")).value.contains(Dollar(41000)))
+    assert(graph.get(Path(s"/jobs/#$jobId/income")).value.contains(Dollar(94000)))
   }
 }

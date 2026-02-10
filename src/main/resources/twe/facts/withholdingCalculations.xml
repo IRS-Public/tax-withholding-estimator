@@ -70,17 +70,24 @@
               <When>
                 <LessThanOrEqual>
                   <Left>
-                    <Dependency path="../totalBonusReceived"/>
+                    <Dependency path="../totalFutureBonus"/>
                   </Left>
                   <Right>
-                    <Dependency path="/totalBonusReceivedThreshold"/>
+                    <Subtract>
+                      <Minuend>
+                        <Dependency path="/totalBonusReceivedThreshold"/>
+                      </Minuend>
+                      <Subtrahends>
+                        <Dependency path="../mostRecentPayPeriodBonusAmount"/>
+                      </Subtrahends>
+                    </Subtract>
                   </Right>
                 </LessThanOrEqual>
               </When>
               <Then>
                 <Multiply>
                   <Dependency path="/bonusWithholdingPrimaryRate"/>
-                  <Dependency path="../totalBonusReceived"/>
+                  <Dependency path="../totalFutureBonus"/>
                 </Multiply>
               </Then>
             </Case>
@@ -93,7 +100,17 @@
                   <!-- 22% on the first $1,000,000-->
                   <Multiply>
                     <Dependency path="/bonusWithholdingPrimaryRate"/>
-                    <Dependency path="/totalBonusReceivedThreshold"/>
+                    <GreaterOf>
+                      <Dollar>0</Dollar>
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="/totalBonusReceivedThreshold"/>
+                        </Minuend>
+                        <Subtrahends>
+                          <Dependency path="../mostRecentPayPeriodBonusAmount"/>
+                        </Subtrahends>
+                      </Subtract>
+                    </GreaterOf>
                   </Multiply>
                   <!-- 37% on the amount exceeding $1,000,000-->
                   <Multiply>

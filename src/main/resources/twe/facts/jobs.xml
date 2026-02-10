@@ -527,14 +527,23 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/jobs/*/totalBonusReceived">
-      <Description>The total amount of bonus per year for a specific job</Description>
+    <Fact path="/jobs/*/totalFutureBonus">
+      <Description>The total amount of bonus per year you expect to recieve in the future</Description>
       <Writable>
         <Dollar/>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/totalBonusReceived">
+      <Description>The total amount of bonus per year for a specific job</Description>
+      <Derived>
+        <Add>
+          <Dependency path="../mostRecentPayPeriodBonusAmount"/>
+          <Dependency path="../totalFutureBonus"/>
+        </Add>
+      </Derived>
     </Fact>
     <Fact path="/jobs/*/retirementPlanContributionsToDate">
       <Writable>
@@ -596,6 +605,7 @@
             <Add>
               <Dependency path="../restOfYearIncome"/>
               <Dependency path="../yearToDateIncome"/>
+              <Dependency path="../totalFutureBonus"/>
             </Add>
           </Minuend>
           <Subtrahends>
