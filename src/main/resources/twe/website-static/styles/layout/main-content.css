@@ -46,6 +46,10 @@ main h1 {
   opacity: 1;
 }
 
+#heading-your-withholding {
+  margin-bottom: var(--units-4);
+}
+
 .flow h2,
 .flow h3:not(.usa-accordion__heading, .fg-estimate__heading, details > summary > h3),
 .flow h4:not(.usa-accordion__heading, details > summary > h4),

@@ -69,12 +69,12 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h3>Qualified business income</h3>
+      <h3>Qualified business income (QBI)</h3>
       <p>
-        If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> own a partnership, S corporation, or are self employed, you may be able to claim a deduction if you have qualified business income (QBI) in <fg-show path="/taxYear"/>.
+        If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> own a partnership, S corporation, or are self employed, you may be able to claim a deduction if you have QBI in <fg-show path="/taxYear"/>.
         This deduction may be reduced or eliminated for some service businesses.
       </p>
-      <p><strong>Based on your answers, you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> had qualified business income of <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/></strong></p>
+      <p><strong>Based on your answers, you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> had a QBI of <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/></strong></p>
       <fg-set path="/wantsDerivedQBIDeduction">
         <question>Choose if you want to use the QBI amount we calculated from your answers or if you want to enter a different amount.</question>
         <input type="boolean">
@@ -83,18 +83,18 @@
         </input>
       </fg-set>
 
-      <h3 condition="/wantsQBIDeductionOverride" operator="isTrue">Qualified business income estimate</h3>
+      <h3 condition="/wantsQBIDeductionOverride" operator="isTrue">Qualified business income (QBI) estimate</h3>
       <div condition="/wantsQBIDeductionOverride" operator="isTrue">
         <p>To estimate QBI, calculate</p>
         <ol>
-          <li>Expected business for <fg-show path="/taxYear"/></li>
+          <li>Expected business income for <fg-show path="/taxYear"/></li>
           <li>Minus ordinary business expenses (like rent, supplies, and employee benefits)</li>
           <li>Minus self-employment-related deductions (like self-employed health insurance premiums, contributions to self-employed retirement plans, and half of your self-employment tax)</li>
         </ol>
         <p><a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction" class="usa-link">Learn more about qualified business income.</a></p>
       </div>
       <fg-set path="/qBIDeductionOverrideAmount" if-true="/wantsQBIDeductionOverride">
-        <question>Estimate qualified business income for you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> in <fg-show path="/taxYear"/></question>
+        <question>Estimated QBI for you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
     </section>
