@@ -43,8 +43,7 @@
             Do
             <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
             <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
-            <!-- This is the only place where we have to do a default, because it shows -->
-            <!-- up on the screen before the filer assignement has been selected -->
+            <!-- isIncomplete default needed because this appears before filer selected -->
             <span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">you</span>
             expect to have this job all year or only part of the year?
           </question>
@@ -74,7 +73,12 @@
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/payFrequency" if-true="/jobs/*/isPastJobIncompleteOrFalse">
-          <question>How frequently are you paid?</question>
+          <question>How frequently are
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
+            <!-- isIncomplete default needed because this appears before filer selected -->
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">you</span>
+            paid?</question>
           <modal-link for="modal-pay-frequency-en">Learn more about pay frequency.</modal-link>
           <input type="enum" options-path="/payFrequencyOptions">
             <option value="weekly">Weekly</option>
