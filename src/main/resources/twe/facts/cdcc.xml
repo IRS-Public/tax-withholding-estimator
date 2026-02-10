@@ -26,52 +26,124 @@
     </Fact>
     <Fact path="/cdccMaxClaimableExpenseWithOneQP">
       <Name>Maximum Claimable Expense With One Qualifying Person</Name>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>3000</Dollar>
       </Derived>
     </Fact>
     <Fact path="/cdccMaxClaimableExpenseWithTwoQP">
       <Name>Maximum Claimable Expense With Two or More Qualifying Persons</Name>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>6000</Dollar>
       </Derived>
     </Fact>
     <Fact path="/cdccMaxAllowedCreditWithOneQP">
       <Name>Maximum Allowed Credit With One Qualifying Person</Name>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>1050</Dollar>
+        <Dollar>1500</Dollar>
       </Derived>
     </Fact>
     <Fact path="/cdccMaxAllowedCreditWithTwoQP">
       <Name>Maximum Allowed Credit With Two or More Qualifying Persons</Name>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>2100</Dollar>
+        <Dollar>3000</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/cdccMinAllowedPercentageTY2024">
-      <Name>Minimum Allowed Percentage for Tax Year 2024</Name>
+    <Fact path="/cdccCareExpensesInitialPhaseOutRate">
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Int>20</Int>
+        <!-- .01 for every whole $2,000 of income -->
+        <Rational>1/2000</Rational>
       </Derived>
     </Fact>
-    <Fact path="/cdccMaxAllowedPercentageTY2024">
-      <Name>Maximum Allowed Percentage for Tax Year 2024</Name>
+    <Fact path="/cdccCareExpensesAdditionalPhaseOutRate">
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Int>35</Int>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <!-- .01 for every whole $4,000 of income -->
+              <Rational>1/4000</Rational>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <!-- .01 for every whole $2,000 of income -->
+              <Rational>1/2000</Rational>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
-    <Fact path="/cdccCareExpensesFallOffThreshold">
-      <Name>Care Expenses Fall Off Threshold</Name>
+    <Fact path="/cdccCareExpensesInitialPhaseInStart">
       <Description>The threshold at which the care expenses decimal amount begins reducing</Description>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>15000</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/cdccCareExpensesPlateauThreshold">
-      <Name>Care Expenses Fall Off Threshold</Name>
-      <Description>The threshold at which the care expenses decimal amount stops reducing</Description>
+    <Fact path="/cdccCareExpensesInitialPhaseOutThreshold">
+      <Description>The threshold at which the care expenses decimal amount stops reducing past 35% (until the additional phase out starts at a higher AGI)</Description>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>43000</Dollar>
+        <Dollar>45000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccCareExpensesAdditionalPhaseInStart">
+      <Description>The threshold at which care expenses begin a second phase out, different depending on MFJ and non-MFJ AGI and rates </Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>150000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>75000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/cdccCareExpensesAdditionalPhaseOutThreshold">
+      <Description>The threshold at which the care expenses decimal amount stops reducing</Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>210000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>105000</Dollar>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/cdccQualifyingExpenseCap">
@@ -202,17 +274,31 @@
     </Fact>
     <Fact path="/cdccCareExpensesDecimalAmount">
       <Name>Care Expenses Decimal Amount</Name>
-      <Description>Care Expenses Decimal Amount. Form 2441, Line 8.
-        Line 7 is AGI
-      </Description>
+      <Description>Care Expenses Decimal Amount. Form 2441, Line 8. Line 7 is AGI. OB3 made changes to phase down </Description>
+      <TaxYear>2026</TaxYear>
       <Derived>
         <!--
         Note: This fact is returned as a <Dollar> because we don't have a distinct <Decimal> type currently
         and it is important
         that precision of these decimal values be preserved
+
+        Non-MFJ
+        0 ≤ AGI ≤ 15,000: P=50%
+        15,000 < AGI ≤ 45,000: P=50%−((AGI−15,000)×0.0005)
+        45,000 < AGI≤ 75,000: P=35%
+        75,000 < AGI≤ 105,000: P=35%−((AGI−75,000)×0.0005)
+        AGI > 105,000: P=20%
+
+        MFJ
+        0 ≤ AGI ≤15,000: P=50%
+        15,000 < AGI ≤45,000: P=50%−((AGI−15,000)×0.0005)
+        45,000 <AGI ≤150,000: P=35%
+        150,000 < AGI ≤210,000: P=35%−((AGI−150,000)×0.00025)
+        AGI > 210,000: P=20%
       -->
         <Switch>
           <Case>
+            <!-- Zero or negative AGI = no liability = no nonrefundable credits            -->
             <When>
               <LessThanOrEqual>
                 <Left>
@@ -229,31 +315,111 @@
           </Case>
           <Case>
             <When>
-              <!-- The decimal amount never goes lower than .20 -->
-              <GreaterThan>
-                <Left>
-                  <Dependency path="/agi"/>
-                </Left>
-                <Right>
-                  <Dependency path="/cdccCareExpensesPlateauThreshold"/>
-                </Right>
-              </GreaterThan>
-            </When>
-            <Then>
-              <Dollar>0.20</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <!-- The decimal amount never goes lower than .35 -->
+              <!-- AGI < initial phase in threshold ($15,000), 50% decimal amount-->
               <LessThanOrEqual>
                 <Left>
                   <Dependency path="/agi"/>
                 </Left>
                 <Right>
-                  <Dependency path="/cdccCareExpensesFallOffThreshold"/>
+                  <Dependency path="/cdccCareExpensesInitialPhaseInStart"/>
                 </Right>
               </LessThanOrEqual>
+            </When>
+            <Then>
+              <Dollar>
+                0.50
+              </Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <!-- AGI > initial phase in ($15,000) && AGI <= initial phase out threshold ($45,000), phase down from 50% to 35% decimal amount-->
+              <All>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/agi"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/cdccCareExpensesInitialPhaseInStart"/>
+                  </Right>
+                </GreaterThan>
+                <LessThanOrEqual>
+                  <Left>
+                    <Dependency path="/agi"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/cdccCareExpensesInitialPhaseOutThreshold"/>
+                  </Right>
+                </LessThanOrEqual>
+              </All>
+            </When>
+            <Then>
+              <!--
+            The decimal amount reduces by .01 for every 2K over 15,000.01 until 45,000.00
+            This formula is emulating the effects of this table from the form 2441 instructions: Non-MFJ-->
+              <Subtract>
+                <Minuend>
+                  <!-- The case statement above handles 15K and down, so we start from the second row -->
+                  <Dollar>0.49</Dollar>
+                </Minuend>
+                <Subtrahends>
+                  <Divide>
+                    <Dividend>
+                      <StepwiseMultiply>
+                        <Multiplicand>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="/agi"/>
+                            </Minuend>
+                            <Subtrahends>
+                              <!--
+                                The increment steps up at one cent over each 2K threshold,
+                                so we need to take away an extra penny to compensate
+                              -->
+                              <Add>
+                                <Dependency path="/cdccCareExpensesInitialPhaseInStart"/>
+                                <Dollar>0.01</Dollar>
+                              </Add>
+                            </Subtrahends>
+                          </Subtract>
+                        </Multiplicand>
+                        <Rate>
+                          <Dependency path="/cdccCareExpensesInitialPhaseOutRate"/>
+                        </Rate>
+                      </StepwiseMultiply>
+                    </Dividend>
+                    <Divisors>
+                      <!-- Stepwise multiple doesn't support decimal rates, so we have to convert
+                      from percent to
+                      decimal -->
+                      <Int>100</Int>
+                    </Divisors>
+                  </Divide>
+                </Subtrahends>
+              </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <!-- AGI > initial phase out threshold ($45,000) && AGI <= additional phase in threshold ($75k non-MFJ, $150k MFJ), 35% decimal amount-->
+              <All>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/agi"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/cdccCareExpensesInitialPhaseOutThreshold"/>
+                  </Right>
+                </GreaterThan>
+                <LessThanOrEqual>
+                  <Left>
+                    <Dependency path="/agi"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/cdccCareExpensesAdditionalPhaseInStart"/>
+                  </Right>
+                </LessThanOrEqual>
+              </All>
             </When>
             <Then>
               <Dollar>
@@ -263,39 +429,31 @@
           </Case>
           <Case>
             <When>
-              <True/>
+              <All>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/agi"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/cdccCareExpensesAdditionalPhaseInStart"/>
+                  </Right>
+                </GreaterThan>
+                <LessThanOrEqual>
+                  <Left>
+                    <Dependency path="/agi"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/cdccCareExpensesAdditionalPhaseOutThreshold"/>
+                  </Right>
+                </LessThanOrEqual>
+              </All>
             </When>
             <Then>
-              <!--
-            This formula is emulating the effects of this table from the form 2441 instructions:
-
-            """
-            IF your 2022 adjusted gross income was:	 	THEN the decimal amount is:
-            Over:	 	But not over:
-            $ 0	    —	$15,000	 	0.35
-            15,000	—	17,000	 	0.34
-            17,000	—	19,000	 	0.33
-            19,000	—	21,000	 	0.32
-            21,000	—	23,000	 	0.31
-            23,000	—	25,000	 	0.30
-            25,000	—	27,000	 	0.29
-            27,000	—	29,000	 	0.28
-            29,000	—	31,000	 	0.27
-            31,000	—	33,000	 	0.26
-            33,000	—	35,000	 	0.25
-            35,000	—	37,000	 	0.24
-            37,000	—	39,000	 	0.23
-            39,000	—	41,000	 	0.22
-            41,000	—	43,000	 	0.21
-            43,000	—	No limit	0.20
-            """
-
-            The decimal amount reduces by .01 for every 2K over 15,000.01.
-            -->
+              <!--              Starting at 34%-->
+              <!--            For non-MFJ, the decimal amount reduces by .01 for every 2K over 75,000.01 until 105,000.00-->
+              <!--            For MFJ, the decimal amount reduces by .01 for every 4K over 150,000.01 until 210,000.00-->
               <Subtract>
                 <Minuend>
-                  <!-- The case statement above handles 15K and down, so we start from the second
-                  row -->
                   <Dollar>0.34</Dollar>
                 </Minuend>
                 <Subtrahends>
@@ -313,15 +471,14 @@
                                 so we need to take away an extra penny to compensate
                               -->
                               <Add>
-                                <Dependency path="/cdccCareExpensesFallOffThreshold"/>
+                                <Dependency path="/cdccCareExpensesAdditionalPhaseInStart"/>
                                 <Dollar>0.01</Dollar>
                               </Add>
                             </Subtrahends>
                           </Subtract>
                         </Multiplicand>
                         <Rate>
-                          <Rational>1/2000</Rational>
-                          <!-- .01 for every whole $2,000 of income -->
+                          <Dependency path="/cdccCareExpensesAdditionalPhaseOutRate"/>
                         </Rate>
                       </StepwiseMultiply>
                     </Dividend>
@@ -334,6 +491,15 @@
                   </Divide>
                 </Subtrahends>
               </Subtract>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <!-- AGI > additional phase out threshold has a flat 20% rate -->
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0.20</Dollar>
             </Then>
           </Case>
         </Switch>
@@ -402,9 +568,7 @@
       </Derived>
     </Fact>
     <Fact path="/creditForChildAndDependentCareExpenses">
-      <Description>Credit for child and dependent care expenses. Smaller of line 9c or line 10
-
-        Form 2441 Line 11. Input on Schedule 3 Line 2</Description>
+      <Description>Credit for child and dependent care expenses. Smaller of line 9c or line 10 Form 2441 Line 11. Input on Schedule 3 Line 2</Description>
       <Derived>
         <LesserOf>
           <Dependency path="/currentAndLastYearExpenseAmount"/>

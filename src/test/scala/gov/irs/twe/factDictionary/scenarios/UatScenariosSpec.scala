@@ -96,6 +96,24 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/additionalMedicareTax", 0)
   }
 
+  // Column R
+  ignore("MFJ, high itemized deductions (mortgage interest, SALT, charity, medical)") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals("/agi", 820000)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 10000)
+    scenario.assertEquals("/medicalAndDentalExpensesTotal", 3500)
+    scenario.assertEquals("/standardOrItemizedDeduction", 36362)
+    scenario.assertEquals("/taxableIncome", 783638)
+    scenario.assertEquals("/additionalMedicareTax", 5130)
+    scenario.assertEquals("/totalNonRefundableCredits", 5000)
+    scenario.assertEquals("/totalEndOfYearProjectedWithholding", 154000)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 212241)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 2162)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 3070)
+  }
+
   // Column S
   test("Single, wages + tips + overtime + car loan interest") { td =>
     val scenario = td.scenario
