@@ -32,6 +32,7 @@ import gov.irs.factgraph.{ types, FactDefinition, Graph }
 import gov.irs.factgraph.compnodes.{ EnumNode, MultiEnumNode }
 import gov.irs.factgraph.types.{ Day, Dollar }
 import gov.irs.twe.loadTweFactDictionary
+import scala.util.{ Failure, Success, Try }
 
 val INPUT_NAME_COL = 0
 
@@ -107,6 +108,8 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
     List("Start date", "End date", "SS monthly benefit", "SS monthly withholding")
 
   var job1IsPension = false
+  var hasSeenJob1 = false
+  var job2IsPension = false
 
   val csv: Map[String, String] = rows.foldLeft(Map()) { (dict, row) =>
     var inputName = row(INPUT_NAME_COL)
@@ -115,8 +118,13 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
       inputName = inputName + "2"
     }
     val inputValue = row(scenarioColumn)
-    if (inputName == "Pension? (1=yes)" && inputValue == "1") {
-      job1IsPension = true
+    if (inputName == "Pension? (1=yes)") {
+      if (inputValue == "1" && hasSeenJob1) {
+        job2IsPension = true
+      } else if (inputValue == "1") {
+        job1IsPension = true
+      }
+      hasSeenJob1 = true
     }
     dict + (inputName -> inputValue)
   }
@@ -187,6 +195,26 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
       spreadsheetFacts + (s"/pensions/#$JOB_1_ID/averageWithholdingPerPayPeriod" -> csv("taxWhPerPPd1"))
     spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_1_ID/yearToDateWithholding" -> csv("taxWhYTD1"))
   }
+  if (job2IsPension) {
+    factGraph.addToCollection("/pensions", JOB_2_ID)
+    factGraph.set(s"/pensions/#$JOB_2_ID/filerAssignment", new types.Enum(Some("self"), "/filerAssignmentOption"))
+
+    // Set job to be deleted and add info as pension
+    spreadsheetFacts = spreadsheetFacts + (s"/jobs/#$JOB_2_ID/amountLastPaycheck" -> "$0")
+    spreadsheetFacts = spreadsheetFacts + (s"/jobs/#$JOB_2_ID/yearToDateIncome" -> "$0")
+
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_2_ID/startDate" -> csv("Job start2"))
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_2_ID/endDate" -> csv("Job end2"))
+    spreadsheetFacts =
+      spreadsheetFacts + (s"/pensions/#$JOB_2_ID/payFrequency" -> csv("payFrequency2 (1=W; 2=BW; 3=SM; 4=M)"))
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_2_ID/mostRecentPayDate" -> csv("recentPayDate2"))
+    spreadsheetFacts =
+      spreadsheetFacts + (s"/pensions/#$JOB_2_ID/averagePayPerPayPeriodForWithholding" -> csv("paymentPerPPd2"))
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_2_ID/yearToDateIncome" -> csv("paymentYTD2"))
+    spreadsheetFacts =
+      spreadsheetFacts + (s"/pensions/#$JOB_2_ID/averageWithholdingPerPayPeriod" -> csv("taxWhPerPPd2"))
+    spreadsheetFacts = spreadsheetFacts + (s"/pensions/#$JOB_2_ID/yearToDateWithholding" -> csv("taxWhYTD2"))
+  }
 
   factGraph.set(s"/jobs/#$PREVIOUS_SELF_JOB_ID/filerAssignment", new types.Enum(Some("self"), "/filerAssignmentOption"))
   factGraph.set(
@@ -217,20 +245,26 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   // These are facts that we need to set that aren't in the spreadsheets
   factGraph.set("/secondaryFilerIsClaimedOnAnotherReturn", false)
 
-  // For each fact, convert the value to its fact type and set it in the fact graph
   spreadsheetFacts.foreach { (factPath, value) =>
     val definition = tweFactDictionary.factDictionary.getDefinition(factPath)
 
-    val convertedValue = definition.typeNode match {
-      case "BooleanNode" => convertBoolean(value)
-      case "DayNode"     => convertDate(value)
-      case "EnumNode"    => convertEnum(value, definition)
-      case "DollarNode"  => Dollar(value.replace("$", "").strip())
-      case "IntNode"     => value.toInt
-      case _             => value
+    val result = Try {
+      definition.typeNode match {
+        case "BooleanNode" => convertBoolean(value)
+        case "DayNode"     => convertDate(value)
+        case "EnumNode"    => convertEnum(value, definition)
+        case "DollarNode"  => Dollar(value.replace("$", "").strip())
+        case "IntNode"     => value.toInt
+        case _             => value
+      }
     }
+    result match {
+      case Success(convertedValue) =>
+        factGraph.set(factPath, convertedValue)
 
-    factGraph.set(factPath, convertedValue)
+      case Failure(e) =>
+        throw Exception(s"Unable to process fact '$factPath' with value '$value': ${e.getMessage}")
+    }
   }
 
   // CTC and ODC eligible dependents
@@ -308,11 +342,14 @@ def convertBoolean(raw: String): Boolean = {
 
 def convertDate(raw: String): Day = {
   val split = raw.split("/")
-  val year = split(2).toInt
   val month = split(0).toInt
   var day = split(1).toInt
+  var year = split(2).toInt
   if (day < 1) {
     day = 1
+  }
+  if (year < 100) {
+    year += 2000
   }
   Day(f"$year-$month%02d-$day%02d")
 }
@@ -476,8 +513,11 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "AOTC" -> "/aotcQualifiedEducationExpenses",
   "LLC" -> "/llcQualifiedEducationExpenses",
   "Elderly or Disabled Credit" -> "/elderlyAndDisabledTaxCreditAmount",
+  "Adoption Tax Credit" -> "/estimatedTotalQualifiedAdoptionExpenses",
+  "QualifiedChildrenAdoptionCredit" -> "/adoptionEligibleChildren",
   // Itemized Deductions
   "Interest you Paid" -> "/qualifiedMortgageInterestAndInvestmentInterestExpenses",
+  "Mortgage Insurance Premium" -> "/qualifiedMortgageInsurancePremiums",
   "SALT you paid" -> "/stateAndLocalTaxPayments",
   "MedicalExpenses" -> "/medicalAndDentalExpenses",
   "Gifts to Charity" -> "/nonCashCharitableContributions",
@@ -524,6 +564,9 @@ private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/totalNonRefundableCredits" -> "Total non-refundable credits",
   "/lifetimeLearningCredit" -> "Non-Ref Edn credits",
   "/americanOpportunityCredit" -> "Refundable Edn credits",
+  "/adoptionCreditRefundable" -> "Refundable Adoption credit",
+  "/adoptionCreditNonRefundable" -> "Non-Ref Adoption credit",
+  "/qualifiedMortgageInsurancePremiumDeductionTotal" -> "Mortgate insurance premium deduction",
   // TODO: This is not going to scale when the jobs that aren't Job 1 have withholdings
   // TODO: This doesn't work if Job 1 isn't the highest paying job and is selected for extra withholdings
   "/jobSelectedForExtraWithholding/w4Line3" -> "W-4 Line3Amount1",

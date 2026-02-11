@@ -379,7 +379,6 @@
     <Fact path="/educationCreditLimitWorksheetLine1">
       <Derived>
         <Dollar>0</Dollar>
-        <!--        <Dependency path="/reducedLlcAfterPhaseout"/>-->
       </Derived>
     </Fact>
     <Fact path="/educationCreditLimitWorksheetLine2">

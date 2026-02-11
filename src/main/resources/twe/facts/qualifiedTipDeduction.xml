@@ -92,34 +92,37 @@
         20,000 tip - 2,000 phase out = 18,000 applicable deduction
       </Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/isEligibleForQualifiedTipDeduction"/>
-            </When>
-            <Then>
-              <LesserOf>
-                <Subtract>
-                  <Minuend>
-                    <Dependency path="/qualifiedTipIncome"/>
-                  </Minuend>
-                  <Subtrahends>
-                    <Dependency path="/qualifiedTipDeductionPhaseOut"/>
-                  </Subtrahends>
-                </Subtract>
-                <Dollar>25000</Dollar>
-              </LesserOf>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Switch>
+            <Case>
+              <When>
+                <Dependency path="/isEligibleForQualifiedTipDeduction"/>
+              </When>
+              <Then>
+                <LesserOf>
+                  <Subtract>
+                    <Minuend>
+                      <Dependency path="/qualifiedTipIncome"/>
+                    </Minuend>
+                    <Subtrahends>
+                      <Dependency path="/qualifiedTipDeductionPhaseOut"/>
+                    </Subtrahends>
+                  </Subtract>
+                  <Dollar>25000</Dollar>
+                </LesserOf>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+          </Switch>
+        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/qualifiedTipDeductionLimit">

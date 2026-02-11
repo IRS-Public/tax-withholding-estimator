@@ -239,17 +239,19 @@
         eligibility)- (excess * 0.06)
       </Description>
       <Derived>
-        <GreaterOf>
-          <Dollar>0</Dollar>
-          <Subtract>
-            <Minuend>
-              <Dependency path="/applicableMaxSeniorDeductionAmount"/>
-            </Minuend>
-            <Subtrahends>
-              <Dependency path="/phaseOutAmountSeniorDeduction"/>
-            </Subtrahends>
-          </Subtract>
-        </GreaterOf>
+        <Round>
+          <GreaterOf>
+            <Dollar>0</Dollar>
+            <Subtract>
+              <Minuend>
+                <Dependency path="/applicableMaxSeniorDeductionAmount"/>
+              </Minuend>
+              <Subtrahends>
+                <Dependency path="/phaseOutAmountSeniorDeduction"/>
+              </Subtrahends>
+            </Subtract>
+          </GreaterOf>
+        </Round>
       </Derived>
     </Fact>
   </Facts>

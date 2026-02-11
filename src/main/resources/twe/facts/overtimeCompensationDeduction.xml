@@ -150,34 +150,37 @@
         10,000 overtime comp - 2,000 phase out = 8,000 applicable deduction
       </Description>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/isEligibleForOvertimeCompensationDeduction"/>
-            </When>
-            <Then>
-              <LesserOf>
-                <Subtract>
-                  <Minuend>
-                    <Dependency path="/totalDeductibleOvertimeCompensation"/>
-                  </Minuend>
-                  <Subtrahends>
-                    <Dependency path="/overtimeCompensationDeductionPhaseOut"/>
-                  </Subtrahends>
-                </Subtract>
-                <Dependency path="/overtimeCompensationDeductionMaximum"/>
-              </LesserOf>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Switch>
+            <Case>
+              <When>
+                <Dependency path="/isEligibleForOvertimeCompensationDeduction"/>
+              </When>
+              <Then>
+                <LesserOf>
+                  <Subtract>
+                    <Minuend>
+                      <Dependency path="/totalDeductibleOvertimeCompensation"/>
+                    </Minuend>
+                    <Subtrahends>
+                      <Dependency path="/overtimeCompensationDeductionPhaseOut"/>
+                    </Subtrahends>
+                  </Subtract>
+                  <Dependency path="/overtimeCompensationDeductionMaximum"/>
+                </LesserOf>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Dollar>0</Dollar>
+              </Then>
+            </Case>
+          </Switch>
+        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/overtimeCompensationDeductionMaximum">

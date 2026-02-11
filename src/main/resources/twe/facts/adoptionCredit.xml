@@ -66,9 +66,12 @@
       </Derived>
     </Fact>
     <Fact path="/maxRefundableAdoptionCreditAmount">
-      <TaxYear>2025</TaxYear>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>5120</Dollar>
+        <Multiply>
+          <Dollar>5120</Dollar>
+          <Dependency path="/adoptionEligibleChildren"/>
+        </Multiply>
       </Derived>
     </Fact>
     <Fact path="/maxAdoptionCreditPerChild">
@@ -119,8 +122,8 @@
         </GreaterOf>
       </Derived>
     </Fact>
-    <Fact path="/adoptionCreditMultiplierx10">
-      <Description>Form 8839 Line 9 (multiplied by 10)</Description>
+    <Fact path="/adoptionCreditMultiplier">
+      <Description>Form 8839 Line 9 (multiplied by 1000)</Description>
       <!-- We are required to round our multiplier to three decimals. To do this while
                 respecting that our fact graph system automatically rounds dollar values to
                 two decimal points, we multiply our numerator of dollars by ten and, after
@@ -128,12 +131,12 @@
            -->
       <Derived>
         <LesserOf>
-          <!-- This is also multiplied by 10 -->
-          <Dollar>10.00</Dollar>
+          <!-- This is also multiplied by 100 -->
+          <Dollar>1000.00</Dollar>
           <Divide>
             <Dividend>
               <Multiply>
-                <Dollar>10</Dollar>
+                <Dollar>1000</Dollar>
                 <Dependency path="/adoptionCreditMagiBuffer"/>
               </Multiply>
             </Dividend>
@@ -147,17 +150,19 @@
     <Fact path="/tentativeAdoptionCreditAmount">
       <Description>Form 8839 Line 10</Description>
       <Derived>
-        <Divide>
-          <Dividend>
-            <Multiply>
-              <Dependency path="/tentativeMaximumAdoptionCredit"/>
-              <Dependency path="/adoptionCreditMultiplierx10"/>
-            </Multiply>
-          </Dividend>
-          <Divisors>
-            <Dollar>10</Dollar>
-          </Divisors>
-        </Divide>
+        <Round>
+          <Divide>
+            <Dividend>
+              <Multiply>
+                <Dependency path="/tentativeMaximumAdoptionCredit"/>
+                <Dependency path="/adoptionCreditMultiplier"/>
+              </Multiply>
+            </Dividend>
+            <Divisors>
+              <Dollar>1000</Dollar>
+            </Divisors>
+          </Divide>
+        </Round>
       </Derived>
     </Fact>
     <Fact path="/tentativeRefundableAdoptionCreditAmount">
@@ -260,12 +265,8 @@
       </Derived>
     </Fact>
     <Fact path="/adoptionCreditNonRefundable">
-      <Description>Form 8839 Line 18</Description>
       <Derived>
-        <LesserOf>
-          <Dependency path="/adoptionCreditLimitWorksheetLine5"/>
-          <Dependency path="/tentativeNonRefundableAdoptionCreditAmountWithCarryforward"/>
-        </LesserOf>
+        <Dependency path="/tentativeNonRefundableAdoptionCreditAmountWithCarryforward"/>
       </Derived>
     </Fact>
   </Facts>

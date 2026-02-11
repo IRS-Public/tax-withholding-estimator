@@ -69,10 +69,13 @@
       <Name>OB3 Deductions</Name>
       <Description>Sum of all OB3 below the line deductions</Description>
       <Derived>
-        <Add>
-          <Dependency path="/oB3DeductionsExcludingNonItemizerCharity"/>
-          <Dependency path="/nonItemizerCharitableContributionDeduction"/>
-        </Add>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Add>
+            <Dependency path="/oB3DeductionsExcludingNonItemizerCharity"/>
+            <Dependency path="/nonItemizerCharitableContributionDeduction"/>
+          </Add>
+        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/oB3DeductionsExcludingNonItemizerCharity">

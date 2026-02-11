@@ -105,10 +105,12 @@
     <Fact path="/netInvestmentIncomeTax">
       <Description>Form 8960 Line 17</Description>
       <Derived>
-        <Multiply>
-          <Dependency path="/netInvestmentIncomeTaxRate"/>
-          <Dependency path="/form8960Line16"/>
-        </Multiply>
+        <Round>
+          <Multiply>
+            <Dependency path="/netInvestmentIncomeTaxRate"/>
+            <Dependency path="/form8960Line16"/>
+          </Multiply>
+        </Round>
       </Derived>
     </Fact>
   </Facts>
