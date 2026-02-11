@@ -11,25 +11,18 @@
       <p>This estimator only supports some adjustments. There may be other adjustments that you qualify for, which could impact your estimate.</p>
 
       <h3 condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">Student loan interest deduction</h3>
-      <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">
-        If you pay interest in <fg-show path="/taxYear"/>, on a qualified student loan for
-        yourself, your spouse, or a person who was your dependent when you took out the loan, you
-        can deduct up to $2,500
-      </p>
+      <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue"> If you pay interest in <fg-show path="/taxYear"/>, on a qualified student loan for yourself, your spouse, or a person who was your dependent when you took out the loan, you can deduct up to $2,500. </p>
       <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">
         This includes both required and voluntarily pre-paid interest payments.
       </p>
       <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">
-        <a target="_blank" href="https://www.irs.gov/taxtopics/tc456" class="usa-link">
-        Learn more about student loan interest.
-        <span class="usa-sr-only">(opens in a new tab)</span></a>
+        <a target="_blank" href="https://www.irs.gov/taxtopics/tc456" class="usa-link"> Learn more about student loan interest. <span class="usa-sr-only">(opens in a new tab)</span></a>
       </p>
       <fg-set path="/studentLoanInterestAmount" if-true="/isEligibleForStudentLoanInterestDeduction">
-        <question>
-          Student loan interest <span condition="/isFilingStatusMFJ" operator="isFalse">you</span>
-          <span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect
-          to pay in <fg-show path="/taxYear"/>
+        <question> Student loan interest <span condition="/isFilingStatusMFJ" operator="isFalse">you</span>
+          <span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/>
         </question>
+        <hint>(max <fg-show path="/maxStudentLoanDeduction"/>)</hint>
         <input type="dollar"/>
       </fg-set>
 
@@ -39,7 +32,7 @@
       <ul>
         <li>Professional development courses</li>
         <li>Books, supplies, computer equipment (including related software and services)</li>
-        <li>Other equipment, and supplementary materials that you use in the classroom</li>
+        <li>Other equipment and supplementary materials that you use in the classroom</li>
       </ul>
       <p>
         <a target="_blank" href="https://www.irs.gov/taxtopics/tc458" class="usa-link">Learn more about educator expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
@@ -52,36 +45,43 @@
 
       <h3>Traditional (pre-tax) IRA deduction</h3>
       <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> contribute to a traditional (pre-tax) IRA outside of your payroll contributions in <fg-show path="/taxYear"/>, you may be able to claim a deduction.</p>
-      <p>Don't already include amounts that you included on one of your jobs, contributions to other IRAs, or contributions to other retirement plans.</p>
+      <p><strong>Don’t include</strong> amounts that you already included on one of your jobs, contributions to Roth IRAs, or contributions to other retirement plans.</p>
       <p>
         <a target="_blank" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits" class="usa-link">Learn more about IRA contributions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/deductionForTraditionalIRAContribution">
-        <question>
-          Traditional (pre-tax) IRA contributions <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
+        <question> Traditional (pre-tax) IRA contributions <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
 
       <h3 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Self-employed retirement plan deduction</h3>
-      <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> are self-employed and make contributions to an SEP, SIMPLE, solo-401(k), or other qualified retirement plan in <fg-show path="/taxYear"/>, you may be eligible for the self-employed retirement plan deduction.</p>
+      <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> are self employed and make contributions to qualified retirement plans in <fg-show path="/taxYear"/>, you may be eligible for the self-employed retirement plan deduction.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">To qualify, <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> must:</p>
       <ul condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
         <li>Be a sole proprietor</li>
         <li>Be a working partner in a partnership, or</li>
-        <li>Have a limited liability company.</li>
+        <li>Have a limited liability company</li>
       </ul>
+      <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Eligible plans may include:</p>
+      <ul condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
+        <li>Simplified Employee Pension (SEP) plan</li>
+        <li>Savings Incentive Match Plan for Employees</li>
+        <li>Solo-401(k)</li>
+        <li>Other qualified retirement plans</li>
+      </ul>
+      <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue"><strong>Don't include</strong> Individual Retirement Arrangement (IRA) contributions.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">You must use a special rule to calculate retirement plan contributions for yourself.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
         <a target="_blank" href="https://www.irs.gov/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction" class="usa-link">Learn more about self-employed retirement contributions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/selfEmploymentRetirementPlanContributions" if-true="/eitherTPHasSelfEmploymentIncome">
-        <question>What is <span condition="/isFilingStatusMFJ" operator="isFalse">your</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse's</span> self-employment retirement plan contributions for this year?</question>
+        <question>Self-employed retirement contributions <span condition="/isFilingStatusMFJ" operator="isFalse">your</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
 
       <h3>Health Savings Account (HSA) deduction</h3>
-      <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> contributed to an HSA outside of your payroll contributions in <fg-show path="/taxYear"/>, you can claim a deduction.</p>
-      <p>Don't include amounts that you already included on one of your jobs.</p>
+      <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> contribute to an HSA outside of your payroll contributions in <fg-show path="/taxYear"/>, you can claim a deduction.</p>
+      <p><strong>Don't include</strong> amounts that you already included on one of your jobs.</p>
       <p>
         <a target="_blank" href="https://www.irs.gov/forms-pubs/about-publication-969" class="usa-link">Learn more about HSA contributions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
@@ -110,10 +110,10 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h3>Military and intelligence community moving expenses for members of armed forces deduction</h3>
+      <h3>Military and intelligence community moving expenses</h3>
       <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you're</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse are</span> a member of the Armed Forces or intelligence community and your move was due to a change of station, you can deduct unreimbursed <fg-show path="/taxYear"/> moving expenses.</p>
       <p>
-        <a target="_blank" href="https://www.irs.gov/taxtopics/tc455" class="usa-link">Learn more about moving expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" href="https://www.irs.gov/taxtopics/tc455" class="usa-link">Learn more about moving expenses for members of the armed forces.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/movingExpensesForArmedServicesMembers">
         <question>Moving expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
@@ -135,8 +135,8 @@
       </fg-set>
 
       <h3 condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Self-employed health insurance deduction</h3>
-      <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">If <span condition="/isFilingStatusMFJ" operator="isFalse">you're</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse are</span> self-employed and have a net profit for the year, you can deduct your <fg-show path="/taxYear"/> health insurance premiums.</p>
-      <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Eligible premiums are medical, dental, vision, and long-term care insurance. The policy can be for yourself, your spouse, and your dependents. The policy can also cover your child who is under the age of 27 at the end of the year even if the child wasn't your dependent.</p>
+      <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">If <span condition="/isFilingStatusMFJ" operator="isFalse">you're</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse are</span> self employed and have a net profit for the year, you can deduct your <fg-show path="/taxYear"/> health insurance premiums.</p>
+      <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Eligible premiums are medical, dental, vision, and long-term care insurance. The policy can be for yourself, your spouse, and your dependents. The policy can also cover your child who is under the age of 27 at the end of the year, even if the child wasn't your dependent.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
         <a target="_blank" href="https://www.irs.gov/instructions/i7206" class="usa-link">Learn more about self-employed health insurance.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>

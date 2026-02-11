@@ -83,6 +83,7 @@
           <Not>
             <Dependency path="/isFilingStatusMFS"/>
           </Not>
+          <Dependency path="/neitherFilerIsClaimedOnAnotherReturn"/>
           <LessThanOrEqual>
             <Left>
               <Dependency path="/magiForStudentLoanInterestDeduction"/>
@@ -169,7 +170,7 @@
     <Fact path="/studentLoanInterestDeduction">
       <Name>Student Loan Interest Deduction Amount</Name>
       <Description>The amount of the student loan interest deduction. Line 21 of Form 1040 Schedule 1, Line 33
-            Calculated per requirements on Student Loan Interest Deduction Worksheet</Description>
+        Calculated per requirements on Student Loan Interest Deduction Worksheet</Description>
       <Derived>
         <Round>
           <Switch>
