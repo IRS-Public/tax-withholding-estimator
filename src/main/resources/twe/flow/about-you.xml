@@ -20,7 +20,7 @@
         <input type="boolean"/>
       </fg-set>
       <fg-set path="/primaryFilerIsClaimedOnAnotherReturn">
-        <question>Can you be claimed as a dependent on someone else’s <fg-show path="/nextTaxYear"/> tax return?</question>
+        <question>Can you be claimed as a dependent on someone else’s <fg-show path="/taxYear"/> tax return?</question>
         <modal-link for="modal-primary-claimed-as-dependent">How do I know if I’m someone’s dependent?</modal-link>
         <input type="boolean"/>
       </fg-set>
