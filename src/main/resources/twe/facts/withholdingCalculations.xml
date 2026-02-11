@@ -577,7 +577,7 @@
       <Description>
         Taxpayers may be subject to penalties if they owe
         * $1,000 (or more), AND
-        * the amount owed is 10% (or more) of their total tax (minus refundable credits) bill
+        * the withholding gap is more than 10% of total tax bill
 
         https://www.irs.gov/taxtopics/tc306
         https://www.irs.gov/payments/underpayment-of-estimated-tax-by-individuals-penalty
@@ -585,7 +585,7 @@
       <Derived>
         <All>
           <Dependency path="/owesAtleast1000Dollars"/>
-          <Dependency path="/owesAtleast10PercentOfWithholdingGap"/>
+          <Dependency path="/owesAtleast10PercentOfTotalTax"/>
         </All>
       </Derived>
     </Fact>
@@ -601,23 +601,24 @@
         </GreaterThan>
       </Derived>
     </Fact>
-    <Fact path="/owesAtleast10PercentOfWithholdingGap">
+    <Fact path="/owesAtleast10PercentOfTotalTax">
+      <Description>Withholding gap is more than 10% of total tax bill. Used for underpayment penalty.</Description>
       <Derived>
         <GreaterThan>
           <Left>
             <Dependency path="/withholdingGap"/>
           </Left>
           <Right>
-            <Dependency path="/10PercentOfWithholdingGap"/>
+            <Dependency path="/10PercentOfTotalTax"/>
           </Right>
         </GreaterThan>
       </Derived>
     </Fact>
-    <Fact path="/10PercentOfWithholdingGap">
+    <Fact path="/10PercentOfTotalTax">
       <Derived>
         <Multiply>
           <Rational>1/10</Rational>
-          <Dependency path="/withholdingGap"/>
+          <Dependency path="/totalTax"/>
         </Multiply>
       </Derived>
     </Fact>

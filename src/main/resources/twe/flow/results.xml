@@ -126,6 +126,7 @@
             </tbody>
           </table>
 
+          <p condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">If you owe at least $1,000 and more than 10 percent of your tax bill, you may have to pay a penalty in addition to your federal tax owed.</p>
           <p class="fg-estimate__disclaimer">Note: The IRS does not guarantee the accuracy of this estimate and accepts no liability resulting from your use of this estimation.</p>
         </div>
       </details>
