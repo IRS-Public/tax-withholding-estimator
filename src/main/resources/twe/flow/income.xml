@@ -316,8 +316,6 @@
             </ul>
             <p><strong>Don’t include</strong> contributions to Roth plans.</p>
 
-            <p><modal-link for="modal-retirement-roth-en">Why can’t I include Roth contributions?</modal-link></p>
-
             <fg-set path="/jobs/*/retirementPlanContributionsPerPayPeriod" if-false="/jobs/*/isPastJob">
               <question>Amount per pay period</question>
               <input type="dollar"/>
@@ -947,7 +945,10 @@
     <modal-dialog id="modal-self-employment-deductions">
       <modal-heading>What does it mean to deduct expenses?</modal-heading>
       <modal-content>
-        <p>When you're self employed, a gig worker, or own and operate a business, you may be able to deduct certain business expenses from your income so you'll pay less tax.</p>
+        <p>
+          When you're self employed, a gig worker, or own and operate a business, you may be able to
+          deduct certain business expenses from your income so you'll pay less tax.
+        </p>
         <p>Business expenses could include:</p>
         <ul>
           <li>Home office expenses</li>
@@ -960,7 +961,18 @@
           <li>Taxes</li>
           <li>Travel and meals</li>
         </ul>
-        <p>These deductions are different from the personal deductions you'll make if you choose to itemize your deductions. You can deduct your business expenses here and still choose the standard deduction later.</p>
+        <p>
+          These deductions are different from the personal deductions you'll make if you choose to
+          itemize your deductions. You can deduct your business expenses here and still choose the
+          standard deduction later.
+        </p>
+        <p>
+          <strong>How to check last year's tax return?</strong>
+        </p>
+        <p>
+          If you were self-employed last year and expect your work-related expenses to stay the
+          same, you can find your deductible expenses on line 28 of Schedule C.
+        </p>
         <p>
           <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Learn more about business expenses</a>
         </p>
@@ -1187,8 +1199,8 @@
       <modal-heading>What if I get paid a different overtime rate?</modal-heading>
       <modal-content>
         <p>
-          If you’re paid for overtime at a different rate than 1.5 times or 2.0 times your regular pay:
-        Select the option that’s closest to your overtime pay rate:
+          If you’re paid for overtime at a different rate than 1.5 times or 2.0 times your regular
+          pay:
         </p>
         <ul>
           <li>Select the option that’s closest to your overtime pay rate</li>
@@ -1219,12 +1231,6 @@
           <li>Check for the <strong>year-to-date</strong> or <strong>YTD</strong> amount, which includes all federal taxes paid so far for the year</li>
         </ul>
         <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, Social Security, or other amounts withheld.</p>
-      </modal-content>
-    </modal-dialog>
-    <modal-dialog id="modal-retirement-roth-en">
-      <modal-heading>Why can’t I include Roth contributions?</modal-heading>
-      <modal-content>
-        <p>Contributions to Roth plans aren’t deductible because you’ve already paid tax on them. </p>
       </modal-content>
     </modal-dialog>
   </page>

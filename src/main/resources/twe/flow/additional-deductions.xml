@@ -51,11 +51,15 @@
       </fg-set>
 
       <h3>Car loan interest deduction</h3>
-      <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> purchase a qualifying new vehicle in <fg-show path="/taxYear"/>, you can deduct $10,000 of the car loan interest.</p>
+      <p>
+        If you <span condition="/isFilingStatusMFJ" operator="isTrue"> and your spouse</span>
+        purchased a qualifying new vehicle after 2024, you can deduct $10,000 of the car loan
+        interest.
+    </p>
       <p>A qualifying vehicle is a car, minivan, van, sport utility vehicle (SUV), pickup truck, or motorcycle that’s:</p>
       <ul>
         <li>New (not used)</li>
-        <li>Purchased in <fg-show path="/taxYear"/></li>
+        <li>Purchased after 2024</li>
         <li>For personal use</li>
         <li>Went through final assembly in the U.S.</li>
         <li>A gross vehicle weight of less than 14,000 lbs.</li>
