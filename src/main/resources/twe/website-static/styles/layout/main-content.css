@@ -106,11 +106,6 @@ main h1 {
   }
 }
 
-.fg-section-gate h5 {
-  padding: var(--units-3) 0;
-  margin-bottom: 0;
-}
-
 /* Set max width for all flow content equal to .usa-prose */
 .flow p,
 .flow table,

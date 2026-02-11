@@ -80,7 +80,7 @@
         <Dollar>0</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/schedule3Line6g">
+    <Fact path="/tentativeSchedule3Line6g">
       <Description>Mortgage interest credit. Form 8396</Description>
       <Writable>
         <Dollar/>
@@ -88,6 +88,50 @@
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
+    </Fact>
+    <Fact path="/maxSchedule3Line6g">
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Dollar>2000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/schedule3Line6g">
+      <Description>Mortgage interest credit. Form 8396</Description>
+      <Derived>
+        <LesserOf>
+          <Dependency path="/tentativeSchedule3Line6g"/>
+          <Dependency path="/maxSchedule3Line6g"/>
+        </LesserOf>
+      </Derived>
+    </Fact>
+    <Fact path="/isSchedule3Line6gOverMax">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/tentativeSchedule3Line6g"/>
+                </Left>
+                <Right>
+                  <Dependency path="/maxSchedule3Line6g"/>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <True/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <False/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
     </Fact>
     <Fact path="/schedule3Line6h">
       <Description>District of Columbia first-time homebuyer credit. Form 8859</Description>
