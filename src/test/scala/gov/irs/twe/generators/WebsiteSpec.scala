@@ -53,9 +53,9 @@ class WebsiteSpec extends AnyFunSpec {
       assert(document.body() != null)
     }
 
-    it("contains 2 <fg-set>s") {
+    it("contains 3 <fg-set>s") {
       val fgSets = document.body().select("fg-set")
-      assert(fgSets.size() == 2)
+      assert(fgSets.size() == 3) // The boolean has two
     }
   }
 

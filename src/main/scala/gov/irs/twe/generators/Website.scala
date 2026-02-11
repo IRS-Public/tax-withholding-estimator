@@ -60,7 +60,7 @@ object Website {
 
   def generate(flow: Flow, dictionaryXml: xml.Elem, flags: Map[String, Boolean]): Website = {
     val templateEngine = new TweTemplateEngine()
-    val navPages = flow.pages.filter(p => p.exclude == false)
+    val navPages = flow.pages.filter(p => !p.exclude)
     val excludedPageLength = flow.pages.length - navPages.size
 
     val pages = flow.pages.zipWithIndex.map { (page, index) =>
@@ -97,7 +97,6 @@ object Website {
       val content = templateEngine.process("page", context)
       WebsitePage(page.route, content)
     }
-
-    Website(AllScreens.generate(flow) +: pages, dictionaryXml)
+    Website(pages, dictionaryXml)
   }
 }
