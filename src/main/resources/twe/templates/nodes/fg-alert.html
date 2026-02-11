@@ -2,10 +2,10 @@
     th:attr="alert-type=${alertType}, condition=${condition}, operator=${operator}, blocking=${alertType == 'error'}"
     th:class="${condition ? '' : 'hidden'}"
 >
-  <div th:class="'usa-alert usa-alert--' + ${alertType}">
+  <div th:class="'fg-alert usa-alert usa-alert--' + ${alertType}">
     <div class="usa-alert__body">
-      <h3 class="usa-alert__heading" th:utext="#{${headingKey}}"></h3>
-      <p class="usa-alert__text" th:each="bodyKey: ${bodyKeys}" th:utext="#{${bodyKey}}"></h3>
+      <h3 class="usa-alert__heading" th:utext="${heading}"></h3>
+      <div th:remove="tag" th:utext="${children}"></div>
     </div>
   </div>
 </fg-alert>

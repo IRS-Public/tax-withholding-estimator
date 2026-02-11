@@ -14,9 +14,10 @@
       </div>
 
       <h3>Jobs with an employer (W-2)</h3>
-      <fg-alert alert-type="error" alert-key="at-least-one-job" if-true="/declaredDoneAddingIncome">
+      <fg-alert alert-type="error" alert-key="at-least-one-job" condition="/declaredDoneAddingIncome" operator="isTrue">
         <heading>You need to have a job or pension to continue</heading>
-        <p> To continue using the estimator, you need to have at least one job or pension that regularly withholds federal income taxes. If you don’t pay any taxes on your income through withholding, you may want to plan to <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <p class="usa-alert__text">
+          To continue using the estimator, you need to have at least one job or pension that regularly withholds federal income taxes. If you don’t pay any taxes on your income through withholding, you may want to plan to <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
         </p>
       </fg-alert>
       <p>

@@ -5,6 +5,13 @@
     <section>
       <h2>Your withholding results</h2>
 
+      <fg-alert alert-type="warning" alert-key="withholding-gap-incomplete" condition="/withholdingGap" operator="notHasValue">
+        <heading>You still need to complete earlier steps</heading>
+        <p class="usa-alert__text">
+          To use the estimator, you'll have to go back and complete <a href="/app/tax-withholding-estimator/">Step 1: About You</a>
+        </p>
+      </fg-alert>
+
       <p condition="/isOverwithheld" operator="isTrue">Based on what you entered, we estimate that <strong>you're withholding more taxes than you need to.</strong></p>
       <p condition="/isOverwithheld" operator="isTrue">If you keep your withholding the same, you'll likely get a federal tax refund in <fg-show path="/taxYear"/></p>
       <p condition="/isOverwithheld" operator="isTrue">If you'd like to get more take-home pay, you can <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust your withholding</a>.</p>

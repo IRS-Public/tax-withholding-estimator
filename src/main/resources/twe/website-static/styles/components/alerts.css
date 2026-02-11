@@ -5,3 +5,7 @@
   margin-bottom: var(--units-2);
   width: 100%;
 }
+
+.fg-alert {
+  margin-top: 1em
+}

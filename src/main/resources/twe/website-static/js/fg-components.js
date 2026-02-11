@@ -717,6 +717,8 @@ function checkCondition (condition, operator) {
       return value.hasValue && (value.get > 0)
     } case 'isIncomplete': {
       return value.complete === false
+    } case 'notHasValue': {
+      return value.hasValue === false
     } default: {
       console.error(`Unknown condition operator ${operator}`)
       return false

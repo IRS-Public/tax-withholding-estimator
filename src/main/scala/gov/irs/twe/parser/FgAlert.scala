@@ -1,18 +1,15 @@
 package gov.irs.twe.parser
 
 import gov.irs.factgraph.FactDictionary
-import gov.irs.twe.exceptions.InvalidFormConfig
-import gov.irs.twe.parser.Utils.validateFact
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
-import scala.collection.JavaConverters.asJavaIterableConverter
 
 case class FgAlert(
     condition: Option[Condition],
     alertType: String,
     pageRoute: String,
-    headingKey: String,
-    bodyKeys: Seq[String],
+    heading: String,
+    children: List[xml.Node],
 ) {
   def html(templateEngine: TweTemplateEngine): String = {
     val context = new Context()
@@ -20,39 +17,27 @@ case class FgAlert(
     context.setVariable("operator", this.condition.map(_.operator.toString).orNull)
     context.setVariable("alertType", alertType)
 
-    context.setVariable("headingKey", headingKey)
-    context.setVariable("bodyKeys", bodyKeys.asJava)
+    context.setVariable("heading", heading)
+    context.setVariable("children", children.mkString)
 
     templateEngine.process("nodes/fg-alert", context)
   }
 }
 
 object FgAlert {
-  def getBodyNodes(node: xml.Node) = (node \ "p" ++ node \ "ul" ++ node \ "ol")
-
   def parse(node: xml.Node, pageRoute: String, factDictionary: FactDictionary): FgAlert = {
     val alertType = node \@ "alert-type"
-    val slim = node.attribute("slim").getOrElse("false")
-    val icon = node.attribute("icon").getOrElse("true")
 
-    val defaultKeyBase = s"flow.${pageRoute.split("\\.")(0)}.alerts.${node \@ "alert-key"}"
+    val heading = (node \ "heading").head.child.mkString.trim
+    val childNodes = (node \ "_").filter(_.label != "heading")
+    val children = childNodes.toList
 
-    val headingKey = (node \ "heading").head
-      .attribute("content-key")
-      .asInstanceOf[Option[Seq[String]]]
-      .getOrElse(Seq(s"${defaultKeyBase}.heading"))
-      .head
-    val bodyKeys = getBodyNodes(node).zipWithIndex
-      .map((node, index) =>
-        node
-          .attribute("content-key")
-          .asInstanceOf[Option[Seq[String]]]
-          .getOrElse(Seq(s"${defaultKeyBase}.body.${index}-${node.label}")),
-      )
-      .head
+    val conditionPath = node \@ "condition"
+    val conditionOperator = node \@ "operator"
+    val condition = Option.when(conditionPath.nonEmpty && conditionOperator.nonEmpty)(
+      Condition(conditionPath, ConditionOperator.fromAttribute(conditionOperator)),
+    )
 
-    val condition = Condition.getCondition(node, factDictionary)
-
-    FgAlert(condition, alertType, pageRoute, headingKey, bodyKeys)
+    FgAlert(condition, alertType, pageRoute, heading, children)
   }
 }

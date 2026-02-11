@@ -13,7 +13,14 @@ enum ConditionOperator {
   case isZero
   case isGreaterThanZero
   case isIncomplete
+  case notHasValue
 }
+
+object ConditionOperator:
+  def fromAttribute(operatorString: String): ConditionOperator =
+    values
+      .find(it => it.toString.equals(operatorString))
+      .getOrElse(throw new IllegalArgumentException(s"operatorString $operatorString was invalid."))
 
 case class Condition(path: String, operator: ConditionOperator)
 
