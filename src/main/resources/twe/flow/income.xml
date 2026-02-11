@@ -355,6 +355,37 @@
             </fg-set>
           </fg-detail>
           <fg-detail icon="chevron">
+            <summary>Other pre-tax benefits</summary>
+            <p>Enter the total contributions made to pay for other pre-tax benefits.</p>
+            <p>Benefits contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub.</p>
+            <p>Common pre-tax benefits may include:</p>
+            <ul>
+              <li>Accident insurance plans</li>
+              <li>Dependent care assistance plans</li>
+              <li>Group-term life insurance on the lives of employees</li>
+              <li>Qualified adoption assistance</li>
+              <li>Accidental death or dismemberment insurance</li>
+              <li>Long-term and short-term disability coverage</li>
+              <li>Qualified transportation fringe benefit</li>
+            </ul>
+            <p>
+              <strong>Don't include:</strong>
+            </p>
+            <ul>
+              <li>Long-term care contributions</li>
+              <li>Employer contributions</li>
+            </ul>
+            <fg-set path="/jobs/*/otherPreTaxContributionsPerPayPeriod" if-false="/jobs/*/isPastJob">
+              <question>Amount per pay period</question>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/jobs/*/otherPreTaxContributionsToDate">
+              <question>Amount so far in <fg-show path="/taxYear"/></question>
+              <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
+              <input type="dollar"/>
+            </fg-set>
+          </fg-detail>
+          <fg-detail icon="chevron">
             <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
             <p>
               Enter total contributions to Health Savings Accounts (HSA) or Flexible Spending

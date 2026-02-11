@@ -569,6 +569,14 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/jobs/*/otherPreTaxContributionsToDate">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
     <Fact path="/jobs/*/retirementPlanContributionsPerPayPeriod">
       <Writable>
         <Dollar/>
@@ -586,6 +594,14 @@
       </Placeholder>
     </Fact>
     <Fact path="/jobs/*/hsaOrFsaContributionsPerPayPeriod">
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/otherPreTaxContributionsPerPayPeriod">
       <Writable>
         <Dollar/>
       </Writable>
@@ -621,6 +637,7 @@
           <Dependency path="../retirementPlanContributions"/>
           <Dependency path="../healthInsuranceContributions"/>
           <Dependency path="../hsaOrFsaContributions"/>
+          <Dependency path="../otherPreTaxContributions"/>
         </Add>
       </Derived>
     </Fact>
@@ -660,6 +677,18 @@
         </Add>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/otherPreTaxContributions">
+      <Description>Other pre-tax benefits contributions from a specific job</Description>
+      <Derived>
+        <Add>
+          <Dependency path="../otherPreTaxContributionsToDate"/>
+          <Multiply>
+            <Dependency path="../otherPreTaxContributionsPerPayPeriod"/>
+            <Dependency path="../remainingPayPeriodsInteger"/>
+          </Multiply>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/preTaxDeductionsPerPayPeriod">
       <Description>
         The pre-tax deductions being taken out of a particular paycheck.
@@ -671,6 +700,7 @@
           <Dependency path="../retirementPlanContributionsPerPayPeriod"/>
           <Dependency path="../healthInsuranceContributionsPerPayPeriod"/>
           <Dependency path="../hsaOrFsaContributionsPerPayPeriod"/>
+          <Dependency path="../otherPreTaxContributionsPerPayPeriod"/>
         </Add>
       </Derived>
     </Fact>
