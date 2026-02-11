@@ -106,7 +106,7 @@
         The LLC helps offset the cost of college courses, professional certifications, and job skill trainings.
         You can’t claim the AOTC and LLC for the same student.
       </p>
-      <p condition="/isEligibleForEducationCredits" operator="isTrue"><modal-link for="modal-llc-who-can-claim">Who can claim the LLC?</modal-link> </p>
+      <p condition="/isEligibleForEducationCredits" operator="isTrue"><modal-link for="modal-llc-who-can-claim">Who can claim the LLC?</modal-link></p>
       <fg-set path="/llcQualifiedEducationExpenses" if-true="/isEligibleForEducationCredits">
         <question>Estimated total tuition or fees in <fg-show path="/taxYear"/>?</question>
         <hint>(max $10,000)</hint>
@@ -121,7 +121,7 @@
         <input type="int"/>
       </fg-set>
       <fg-set path="/estimatedTotalQualifiedAdoptionExpenses" if-true="/isEligibleForAdoptionCredit">
-        <question>Adoption expenses you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/>?</question>
+        <question>Adoption expenses you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
         <hint>(max <fg-show path="/maxAdoptionCreditPerChild"/> per child)</hint>
         <input type="dollar"/>
       </fg-set>
@@ -131,8 +131,7 @@
       <p condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue"><modal-link for="modal-credit-elderly-disabled-who-can-claim">Who can claim the credit for the elderly or the disabled?</modal-link></p>
 
       <fg-set path="/elderlyAndDisabledTaxCreditAmount" optional="true">
-        <question>Amount of the elderly and disabled credit you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/></question>
-        <input type="dollar"/>
+        <question>Amount of the elderly and disabled credit you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to claim in <fg-show path="/taxYear"/></question>        <input type="dollar"/>
       </fg-set>
 
       <h3>Foreign Tax Credit</h3>
@@ -246,7 +245,7 @@
         <p condition="/isFilingStatusMFS" operator="isTrue">If you’re married and filing separately from your spouse, you can only claim this credit if you meet <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit/who-qualifies-for-the-earned-income-tax-credit-eitc#marriedfilingseparate">specific criteria.</a></p>
         <p><strong>To claim the EITC without children,</strong> you must be a low- to moderate-income worker who:</p>
         <ul>
-          <li>Will be 25 to 64 years old on January 1, <fg-show path="/nextTaxYear"/></li>
+          <li>Will be at least 25 years old but under 65 on January 1, <fg-show path="/nextTaxYear"/></li>
           <li>Lived in the U.S. for more than half the year</li>
           <li>Have a Social Security number valid for work</li>
         </ul>
@@ -256,9 +255,9 @@
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-retirement-savings-credit-who-can-claim">
-      <modal-heading>Who can claim the Retirement Savings Credit?</modal-heading>
+    <modal-heading>Who can claim the Retirement Savings Contribution Credit?</modal-heading>
       <modal-content>
-        <p>To claim the Retirement Savings Credit, you must contribute to a traditional IRA, Roth IRA, 401(k), 403(b), or similar plan.</p>
+        <p>To claim the retirement savings contribution credit, you must contribute to a traditional IRA, Roth IRA, 401(k), 403(b), or similar plan.</p>
         <p>These contributions don’t qualify:</p>
         <ul>
           <li>Employer contributions or matches</li>
@@ -266,8 +265,8 @@
         </ul>
         <p>You can claim up to <fg-show path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount"/> for yourself, and <fg-show path="/retirementSavingsContributionsCreditSpouseMaximumAmount"/> for your spouse (if filing jointly).</p>
         <p><strong>How to check if you claimed this credit last year</strong></p>
-        <p class="margin-top-0">Review line 20 of your  Form 1040 of your federal tax return, and line 4 of Schedule 3.</p>
-        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/taxtopics/tc610">Learn more about the Retirement Savings Credit.</a></p>
+        <p class="margin-top-0">Review line 4 on Schedule 3, which would have been attached to and submitted with your Form 1040 federal tax return.</p>
+        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/taxtopics/tc610">Learn more about the retirement savings contribution credit.</a></p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-aotc-who-can-claim-and-eligible-expenses">
@@ -311,9 +310,9 @@
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-adoption-credit-who-can-claim">
-      <modal-heading>Who can claim the adoption credit?</modal-heading>
+      <modal-heading>Who can claim the Adoption Credit?</modal-heading>
       <modal-content>
-        <p>To claim the Adoption Credit, you or your spouse must:</p>
+        <p>To claim the adoption credit, you or your spouse must:</p>
         <ul>
           <li>Have paid qualified <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/adoption-credit#qualifiedexpenses">adoption expenses</a> such as adoption fees, court costs, attorney fees, or travel</li>
           <li>Adopt a child under 18, or who is physically or mentally unable to care for themselves</li>
