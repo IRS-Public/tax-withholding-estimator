@@ -611,6 +611,25 @@ and car loan interest deduction
         </Add>
       </Derived>
     </Fact>
+    <Fact path="/grossIncomeTotal">
+      <Description>
+        The full gross income, without removing pre-tax income. This is usually not the fact you
+        want in tax calculations; it's used for displaying a taxpayer's total income in a way that
+        matches their expectations.
+      </Description>
+      <Derived>
+        <Add>
+          <CollectionSum>
+            <Dependency path="/jobs/*/grossIncome"/>
+          </CollectionSum>
+          <CollectionSum>
+            <Dependency path="/pensions/*/grossIncome"/>
+          </CollectionSum>
+          <Dependency path="/otherIncomeWithoutSSABenefitsTaxableAmountTotal"/>
+          <Dependency path="/excessBusinessLossAdjustment"/>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/incomeTotalMinusTaxableSSABenefits">
       <Description>Sum of 1z, 2b, 3b, 4b, 5b, 7, and 8 on the 1040 (Line 9 - 6b) </Description>
       <Derived>

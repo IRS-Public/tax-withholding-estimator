@@ -606,6 +606,19 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/pensions/*/grossIncome">
+      <Description>
+        The pension income before pretax deductions. This is usually not the fact you want in tax
+        calculations, it's used for displaying a pension's total income in a way that matches
+        taxpayer expectations.
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="../income"/>
+          <Dependency path="../preTaxDeductions"/>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/pensions/*/income">
       <Derived>
         <Subtract>

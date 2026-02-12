@@ -609,6 +609,19 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/jobs/*/grossIncome">
+      <Description>
+        The job income before pretax deductions. This is usually not the fact you want in tax
+        calculations, it's used for displaying a job's total income in a way that matches taxpayer
+        expectations.
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="../income"/>
+          <Dependency path="../preTaxDeductions"/>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/income">
       <Description>
         The total income from a specific job.
