@@ -165,11 +165,9 @@
             if-true="/jobs/*/mostRecentPayPeriodHasBonus">
             <question> How much <span condition="/jobs/*/consistentPay" operator="isFalse">total </span>
               bonus pay did <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your
-              spouse</span>
-              <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
-              earn in <span condition="/jobs/*/consistentPay" operator="isTrue">this pay period</span>
-              <span
-                condition="/jobs/*/consistentPay" operator="isFalse">these pay periods</span>? </question>
+              spouse</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
+              earn in <span condition="/jobs/*/consistentPay" operator="isTrue">this pay period?</span><span
+                condition="/jobs/*/consistentPay" operator="isFalse">these pay periods?</span></question>
             <input type="dollar" />
           </fg-set>
           <fg-set path="/jobs/*/totalFutureBonus" if-false="/jobs/*/isPastJob">

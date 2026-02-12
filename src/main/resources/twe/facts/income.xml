@@ -699,5 +699,14 @@ and car loan interest deduction
         </All>
       </Derived>
     </Fact>
+    <Fact path="/primaryFilerAndSpouseHaveJobsOrPensionsAvailableForExtraWithholding">
+      <Derived>
+        <All>
+          <Dependency path="/isFilingStatusMFJ"/>
+          <Dependency path="/primaryFilerHasJobsOrPensionsAvailableForExtraWithholding"/>
+          <Dependency path="/spouseHasJobsOrPensionsAvailableForExtraWithholding"/>
+        </All>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>

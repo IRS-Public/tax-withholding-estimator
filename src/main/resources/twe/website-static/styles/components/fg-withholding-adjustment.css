@@ -1,3 +1,12 @@
+fg-withholding-adjustments {
+    display: block;
+}
+
+h4.hidden + fg-withholding-adjustments:not(.hidden),
+h4.hidden + fg-withholding-adjustments.hidden + fg-withholding-adjustments:not(.hidden) {
+    margin-top: var(--units-4);
+}
+
 .fg-withholding-adjustment > tbody > tr > th {
     background-color: #fff;
 }
