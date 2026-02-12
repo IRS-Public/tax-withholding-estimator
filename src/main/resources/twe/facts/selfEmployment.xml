@@ -48,6 +48,9 @@
       <Description>Gross self-employment income for this source</Description>
       <Writable>
         <Dollar/>
+        <Limit type="Min">
+          <Dollar>0</Dollar>
+        </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
@@ -57,6 +60,9 @@
       <Description>Work-related business expenses for this self-employment source</Description>
       <Writable>
         <Dollar/>
+        <Limit type="Min">
+          <Dollar>0</Dollar>
+        </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>

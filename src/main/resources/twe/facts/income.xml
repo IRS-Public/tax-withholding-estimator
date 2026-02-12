@@ -157,6 +157,9 @@
       <Description>Short term capital gains income</Description>
       <Writable>
         <Dollar/>
+        <Limit type="Min">
+          <Dollar>0</Dollar>
+        </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
@@ -166,6 +169,9 @@
       <Description>Long term capital gains income</Description>
       <Writable>
         <Dollar/>
+        <Limit type="Min">
+          <Dollar>0</Dollar>
+        </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
