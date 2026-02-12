@@ -143,9 +143,9 @@
               spouse</span>
               <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
               receive a bonus <span condition="/jobs/*/consistentPay" operator="isTrue">this pay
-              period</span>
+              period?</span>
               <span condition="/jobs/*/consistentPay" operator="isFalse">in these pay
-              periods</span>? </question>
+              periods?</span></question>
             <modal-link for="modal-job-check-bonus-en">How do I check if there's a bonus this pay
               period?</modal-link>
             <input type="boolean">
