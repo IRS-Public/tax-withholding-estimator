@@ -201,6 +201,63 @@
         </Divide>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/creditsNeededToFullyBridgeTaxGap">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <LessThan>
+                <Left>
+                  <Dependency path="/taxGap"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </LessThan>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Multiply>
+                    <!-- Ensure taxGap gets converted to a positive number and annualized -->
+                    <Dependency path="/taxGap"/>
+                    <Int>-1</Int>
+                    <Dependency path="../payPeriodsPerYear"/>
+                  </Multiply>
+                </Dividend>
+                <Divisors>
+                  <Subtract>
+                    <Minuend>
+                      <Dependency path="../fullPayPeriods"/>
+                    </Minuend>
+                    <Subtrahends>
+                      <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                    </Subtrahends>
+                  </Subtract>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/tentativeAnnualWithholdingAmount">
+      <Description>Annualized tentative withholding amount. Line 2g of Pub. 15-T Worksheet 1A</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="../tentativeWithholdingAmount"/>
+          <Dependency path="../payPeriodsPerYear"/>
+        </Multiply>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/committedWithholding">
       <Description>
         The total amount that will be withheld from the paycheck if the W-4 is submitted today with
@@ -1419,6 +1476,46 @@
             </Then>
           </Case>
         </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/cannotZeroOutRefundDueToExcessWithholding">
+      <Description>
+        The taxpayer has already overwithheld enough money for long enough, that dropping all withholding for the
+        remainder of the year will not bring them to a zero balance.
+      </Description>
+      <Derived>
+        <Any>
+          <All>
+            <!-- If job is selected for extra withholding -->
+            <IsComplete>
+              <Dependency path="/jobSelectedForExtraWithholding"/>
+            </IsComplete>
+            <!-- and tentativeAnnualWithholdingAmount is lower than creditsNeededToFullyBridgeTaxGap -->
+            <LessThan>
+              <Left>
+                <Dependency path="/jobSelectedForExtraWithholding/tentativeAnnualWithholdingAmount"/>
+              </Left>
+              <Right>
+                <Dependency path="/jobSelectedForExtraWithholding/creditsNeededToFullyBridgeTaxGap"/>
+              </Right>
+            </LessThan>
+          </All>
+          <All>
+            <!-- If pension is selected for extra withholding -->
+            <IsComplete>
+              <Dependency path="/pensionSelectedForExtraWithholding"/>
+            </IsComplete>
+            <!-- and tentativeAnnualWithholdingAmount is lower than creditsNeededToFullyBridgeTaxGap -->
+            <LessThan>
+              <Left>
+                <Dependency path="/pensionSelectedForExtraWithholding/tentativeAnnualWithholdingAmount"/>
+              </Left>
+              <Right>
+                <Dependency path="/pensionSelectedForExtraWithholding/creditsNeededToFullyBridgeTaxGap"/>
+              </Right>
+            </LessThan>
+          </All>
+        </Any>
       </Derived>
     </Fact>
   </Facts>

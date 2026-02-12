@@ -228,6 +228,54 @@
         </GreaterOf>
       </Derived>
     </Fact>
+    <Fact path="/pensions/*/creditsNeededToFullyBridgeTaxGap">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <LessThan>
+                <Left>
+                  <Dependency path="/taxGap"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </LessThan>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Multiply>
+                    <!-- Ensure taxGap gets converted to a positive number and annualized -->
+                    <Dependency path="/taxGap"/>
+                    <Int>-1</Int>
+                    <Dependency path="../payPeriodsPerYear"/>
+                  </Multiply>
+                </Dividend>
+                <Divisors>
+                  <Subtract>
+                    <Minuend>
+                      <Dependency path="../fullPayPeriods"/>
+                    </Minuend>
+                    <Subtrahends>
+                      <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                    </Subtrahends>
+                  </Subtract>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/pensions/*/tentativeAnnualWithholdingAmount">
       <!-- Lines 2e - 2i are just intermediate calculations for 2j so they are done inline -->
       <!-- This is also the same as 2u so we just use this directly -->
@@ -956,26 +1004,7 @@
               <Round>
                 <LesserOf>
                   <!-- bridge gap to zero -->
-                  <Divide>
-                    <Dividend>
-                      <Multiply>
-                        <!-- Ensure taxGap gets converted to a positive number and annualized -->
-                        <Dependency path="/taxGap"/>
-                        <Int>-1</Int>
-                        <Dependency path="../payPeriodsPerYear"/>
-                      </Multiply>
-                    </Dividend>
-                    <Divisors>
-                      <Subtract>
-                        <Minuend>
-                          <Dependency path="../fullPayPeriods"/>
-                        </Minuend>
-                        <Subtrahends>
-                          <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
-                        </Subtrahends>
-                      </Subtract>
-                    </Divisors>
-                  </Divide>
+                  <Dependency path="../creditsNeededToFullyBridgeTaxGap"/>
                   <!-- Withhold zero -->
                   <Dependency path="../tentativeAnnualWithholdingAmount"/>
                 </LesserOf>

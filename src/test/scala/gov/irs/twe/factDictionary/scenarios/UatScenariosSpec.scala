@@ -251,6 +251,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+
+    assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
 
   // Column G
@@ -264,6 +266,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+
+    assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
 
   // Column H
@@ -312,6 +316,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+
+    assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
 
   // Column L
@@ -489,6 +495,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
     // Scenario-specific assertions
     scenario.assertOffset("/earnedIncomeCredit", 498, 2)
+
+    assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
 
   // Column AC
@@ -870,6 +878,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+
+    assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
 
   // Column BL
@@ -883,6 +893,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+
+    assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
 
   // Column BM
@@ -897,6 +909,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 6700)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+
+    assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
 
   // Column BN
@@ -1060,6 +1074,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertOffset("/tentativeTaxNetNonRefundableCredits", 55870, -3)
     scenario.assertOffset("/tentativeTaxFromTaxableIncome", 58070, -3)
     scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 58069, -2)
+
+    assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
 
   // Column BX

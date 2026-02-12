@@ -161,31 +161,9 @@
               <Round>
                 <LesserOf>
                   <!-- bridge gap to zero -->
-                  <Divide>
-                    <Dividend>
-                      <Multiply>
-                        <!-- Ensure taxGap gets converted to a positive number and annualized -->
-                        <Dependency path="/taxGap"/>
-                        <Int>-1</Int>
-                        <Dependency path="../payPeriodsPerYear"/>
-                      </Multiply>
-                    </Dividend>
-                    <Divisors>
-                      <Subtract>
-                        <Minuend>
-                          <Dependency path="../fullPayPeriods"/>
-                        </Minuend>
-                        <Subtrahends>
-                          <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
-                        </Subtrahends>
-                      </Subtract>
-                    </Divisors>
-                  </Divide>
+                  <Dependency path="../creditsNeededToFullyBridgeTaxGap"/>
                   <!-- Withhold zero -->
-                  <Multiply>
-                    <Dependency path="../tentativeWithholdingAmount"/>
-                    <Dependency path="../payPeriodsPerYear"/>
-                  </Multiply>
+                  <Dependency path="../tentativeAnnualWithholdingAmount"/>
                 </LesserOf>
               </Round>
             </Then>

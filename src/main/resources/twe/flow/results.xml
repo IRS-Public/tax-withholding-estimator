@@ -12,13 +12,19 @@
         </p>
       </fg-alert>
 
-      <p condition="/isOverwithheld" operator="isTrue">Based on what you entered, we estimate that <strong>you're withholding more taxes than you need to.</strong></p>
-      <p condition="/isOverwithheld" operator="isTrue">If you keep your withholding the same, you'll likely get a federal tax refund in <fg-show path="/taxYear"/></p>
-      <p condition="/isOverwithheld" operator="isTrue">If you'd like to get more take-home pay, you can <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust your withholding</a>.</p>
+      <div condition="/isOverwithheld" operator="isTrue">
+        <p>Based on what you entered, we estimate that <strong>you're withholding more taxes than you need to.</strong></p>
+
+        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isTrue">You'll likely get a federal tax refund for <fg-show path="/taxYear"/>.</p>
+        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isTrue">If you'd like to get more take-home pay, you can <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust your withholding</a> to $0.</p>
+
+        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isFalse">If you keep your withholding the same, you'll likely get a federal tax refund for <fg-show path="/taxYear"/>.</p>
+        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isFalse">If you'd like to get more take-home pay, you can <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust your withholding</a>.</p>
+      </div>
 
       <p condition="/isUnderwithheld" operator="isTrue">Based on what you entered, we estimate that <strong>you're not withholding enough taxes.</strong></p>
       <p condition="/isUnderwithheld" operator="isTrue">
-        If you keep your withholding the same, you’ll likely owe taxes in <fg-show path="/taxYear"/>.
+        If you keep your withholding the same, you’ll likely owe taxes for <fg-show path="/taxYear"/>.
         <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">
           You may have to pay a penalty in addition to what you owe if you owe at least $1,000 and more than 10 percent of your tax bill.
         </span>
@@ -31,7 +37,7 @@
       </p>
 
       <p condition="/isZeroRefund" operator="isTrue">Based on what you entered, we estimate that <strong>you’re withholding enough to cover your federal taxes.</strong></p>
-      <p condition="/isZeroRefund" operator="isTrue">If you keep your withholding the same, it’s likely you won’t owe federal taxes in <fg-show path="/taxYear"/>.</p>
+      <p condition="/isZeroRefund" operator="isTrue">If you keep your withholding the same, it’s likely you won’t owe federal taxes for <fg-show path="/taxYear"/>.</p>
       <p condition="/isZeroRefund" operator="isTrue">If you <a class="usa-link" href="#heading-adjust-withholding">adjust your withholding</a>, your federal tax balance and take-home pay will change.</p>
 
       <div class="fg-estimate">
