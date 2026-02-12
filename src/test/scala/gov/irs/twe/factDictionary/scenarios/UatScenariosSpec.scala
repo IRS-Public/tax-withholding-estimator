@@ -1249,6 +1249,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // Column CM
   test("MFS, MIP phased out") { td =>
     val scenario = td.scenario
+    scenario.graph.set("/wantsStandardDeduction", false)
     scenario.assertEquals("/incomeTotal", 52000)
     scenario.assertEquals("/agi", 52000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 9500)
