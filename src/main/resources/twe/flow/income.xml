@@ -890,7 +890,7 @@
         <p>A pension is typically a retirement plan that makes a series of payments to you after you retire from work, based on factors such as years of service and past pay.</p>
         <p>An annuity is a series of payments from a company that provides steady retirement income.</p>
         <p>At the end of the year, a pension or annuity provider will send a Form 1099-R to report this income.</p>
-        <p><strong>Don’t include</strong> distributions or withdrawals from 401(k), 403(b), or 457(b) plans or Individual Retirement Arrangements (IRAs). You can add pre-tax income from these accounts as ‘Income from pre-tax retirement accounts.’</p>
+        <p><strong>Don’t include</strong> distributions or withdrawals from 401(k), 403(b), or 457(b) plans; Trump accounts; or Individual Retirement Arrangements (IRAs). Add this income in the <strong>Pre-tax retirement account income</strong> section instead.</p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-pension-gross-pay-period">
@@ -944,7 +944,6 @@
           <li>Then, multiply by the number of payments you’ve received so far in <fg-show path="/taxYear"/></li>
         </ol>
         <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, Social Security, or other amounts withheld.</p>
-        <p><strong>Don’t include</strong> distributions or withdrawals from 401(k), 403(b), or 457(b) plans or Individual Retirement Arrangements (IRAs). You can add pre-tax income from these accounts as &#x2018;Income from pre-tax retirement accounts.’</p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-what-counts-self-employment">
@@ -1037,7 +1036,7 @@
     <modal-dialog id="modal-what-counts-pre-tax-retirement">
       <modal-heading>What counts as a distribution from pre-tax retirement accounts?</modal-heading>
       <modal-content>
-        <p>Any withdrawal of pre-tax funds from a 401(k), 403(b), 457(b), or traditional IRA counts as a distribution. This includes distributions at retirement, early withdrawals, required minimum distributions (RMDs), and pretax-to-Roth conversions.</p>
+        <p>Any withdrawal of pre-tax funds from a 401(k), 403(b), 457(b), Trump account, or traditional IRA counts as a distribution. This includes distributions at retirement, early withdrawals, required minimum distributions (RMDs), and pretax-to-Roth conversions.</p>
         <p>At the end of the year, your financial institution will send a Form 1099-R to report this income.</p>
         <p>
           <strong>Don’t include:</strong>
