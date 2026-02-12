@@ -2,6 +2,28 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/capitalLossLimit">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dollar>1500.00</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>3000.00</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/flowInitialQuestionsComplete">
       <Derived>
         <All>
@@ -150,18 +172,30 @@
       </Placeholder>
     </Fact>
     <Fact path="/shortTermCapitalLoss">
-      <Description>Short term capital losses</Description>
+      <Description>Short term capital losses. Losses are captured as positive amounts</Description>
       <Writable>
         <Dollar/>
+        <Limit type="Min">
+          <Dollar>0</Dollar>
+        </Limit>
+        <Limit type="Max">
+          <Dependency path="/capitalLossLimit"/>
+        </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
     <Fact path="/longTermCapitalLoss">
-      <Description>Long term capital losses</Description>
+      <Description>Long term capital losses. Losses are captured as positive amounts</Description>
       <Writable>
         <Dollar/>
+        <Limit type="Min">
+          <Dollar>0</Dollar>
+        </Limit>
+        <Limit type="Max">
+          <Dependency path="/capitalLossLimit"/>
+        </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
@@ -203,10 +237,17 @@
     <Fact path="/netCapitalGainOrLoss">
       <Description> Form 1040 Line 7</Description>
       <Derived>
-        <Add>
-          <Dependency path="/netShortTermGainOrLoss"/>
-          <Dependency path="/netLongTermGainOrLoss"/>
-        </Add>
+        <GreaterOf>
+          <!--          You cannot offset ordinary income by more than the capital loss limit, so we ensure that combined losses do not exceed the limit separate from the individual caps on the loss facts themselves-->
+          <Multiply>
+            <Dependency path="/capitalLossLimit"/>
+            <Dollar>-1.00</Dollar>
+          </Multiply>
+          <Add>
+            <Dependency path="/netShortTermGainOrLoss"/>
+            <Dependency path="/netLongTermGainOrLoss"/>
+          </Add>
+        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/netCapitalGainsWithoutQualifiedDividends">
