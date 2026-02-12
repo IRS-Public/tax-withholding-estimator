@@ -178,9 +178,6 @@
         <Limit type="Min">
           <Dollar>0</Dollar>
         </Limit>
-        <Limit type="Max">
-          <Dependency path="/capitalLossLimit"/>
-        </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
@@ -192,9 +189,6 @@
         <Dollar/>
         <Limit type="Min">
           <Dollar>0</Dollar>
-        </Limit>
-        <Limit type="Max">
-          <Dependency path="/capitalLossLimit"/>
         </Limit>
       </Writable>
       <Placeholder>
