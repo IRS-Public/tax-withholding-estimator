@@ -27,7 +27,12 @@
         </input>
       </fg-set>
       <h3>Itemized Deductions</h3>
-      <p condition="/wantsStandardDeduction" operator="isIncomplete">If the total of your itemized deductions is higher than the standard deduction, we use that amount to calculate your results. This is more advantageous for you.</p>
+      <div condition="/isFilingStatusMFS" operator="isTrue">
+        <p condition="/wantsStandardDeduction" operator="isIncomplete">If you choose to itemize, we need to ask more questions.</p>
+      </div>
+      <div condition="/isFilingStatusMFS" operator="isFalse">
+        <p condition="/wantsStandardDeduction" operator="isIncomplete">If the total of your itemized deductions is higher than the standard deduction, we use that amount to calculate your results. This is more advantageous for you.</p>
+      </div>
       <p condition="/wantsStandardDeduction" operator="isTrueAndComplete">You chose to apply the standard deduction instead of itemizing. You can continue to the next page.</p>
       <p condition="/wantsItemizedDeduction" operator="isTrue">Estimate the amount for deductions you plan to take this year.</p>
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">Mortgage insurance premiums</h4>
@@ -130,7 +135,9 @@
         <input type="dollar"/>
       </fg-set>
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">Itemized deductions total: <fg-show path="/itemizedDeductionTotal"/></h4>
-      <p condition="/wantsItemizedDeduction" operator="isTrue">We’ll use whichever number is higher when we calculate your results: either the standard deduction or your total itemized deductions.</p>
+      <div condition="/isFilingStatusMFS" operator="isFalse">
+        <p condition="/wantsItemizedDeduction" operator="isTrue">We’ll use whichever number is higher when we calculate your results: either the standard deduction or your total itemized deductions.</p>
+      </div>
     </section>
     <modal-dialog id="modal-standard-deduction-or-itemize-deductions">
       <modal-heading>What are the standard deduction and itemized deductions?</modal-heading>

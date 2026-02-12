@@ -137,6 +137,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // Column X
   test("MFS, No tax on tips, No tax on overtime, SALT, phased out") { td =>
     val scenario = td.scenario
+    scenario.graph.set("/wantsStandardDeduction", false)
     scenario.assertEquals("/incomeTotal", 256000)
     scenario.assertEquals("/agi", 256000)
     scenario.assertEquals("/taxableIncome", 236325)
@@ -1150,6 +1151,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // Column CE
   test("MFS, SALT, phased out") { td =>
     val scenario = td.scenario
+    scenario.graph.set("/wantsStandardDeduction", false)
     scenario.assertEquals("/agi", 256000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 19675)
     scenario.assertEquals("/taxableIncome", 236325)

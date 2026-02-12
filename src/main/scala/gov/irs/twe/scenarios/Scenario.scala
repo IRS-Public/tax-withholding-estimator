@@ -133,6 +133,13 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   // The resulting map is factPath -> spreadsheetRowValue
   var spreadsheetFacts = SHEET_ROW_TO_WRITABLE_FACT.map((sheetKey, factPath) => factPath -> csv(sheetKey))
 
+// '/wantsItemized' is the opposite of '/wantsStandardDeduction', so we need to flip the value from our mapping
+  val wantsItemized = csv("Itemize even if smaller (1=yes)") match {
+    case "1" => "0"
+    case "0" => "1"
+  }
+
+  spreadsheetFacts = spreadsheetFacts + (s"/wantsStandardDeduction" -> wantsItemized)
   // convert SS monthly withholding to a percent and handle as an enum
   val monthlyBenefit1 = csv("SS monthly benefit").replace("$", "").replace(",", "").toDouble
   val monthlyWithholding1 = csv("SS monthly withholding").replace("$", "").replace(",", "").toDouble
@@ -531,6 +538,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   // "S-CorpPassive" -> "/sCorpPassiveIncome", // Not in the spreadsheet
   "S-CorpNonPassive" -> "/sCorpNonPassiveIncome",
   "EstdTaxPymntsToDate" -> "/totalEstimatedTaxesPaid",
+  "Itemize even if smaller (1=yes)" -> "/wantsStandardDeduction",
 )
 
 // Note that this is the opposite direction of the writable fact mappings

@@ -53,7 +53,7 @@
     </Fact>
     <Fact path="/totalDeductionsForQBIDeduction">
       <Description>OB3 deductions + Standard or Itemized, with coordination from OB3 70111 to remove limitation on top bracket for itemizers
-      From Form 8995A:
+        From Form 8995A:
         Form 1040 or 1040-SR filers: Form 1040 or 1040-SR, line 11a, minus Schedule 1-A (Form 1040), Part II, line 13, and then minus Form 1040 or 1040-SR, line 12e
       </Description>
       <Derived>
@@ -116,22 +116,42 @@
         In all other cases, the standard deduction will be used.
       </Description>
       <Derived>
-        <Not>
-          <GreaterThan>
-            <Left>
-              <Dependency path="/itemizedDeduction"/>
-            </Left>
-            <Right>
-              <Dependency path="/standardDeduction"/>
-            </Right>
-          </GreaterThan>
-        </Not>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFS"/>
+            </When>
+            <Then>
+              <Dependency path="/wantsStandardDeduction"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Not>
+                <GreaterThan>
+                  <Left>
+                    <Dependency path="/itemizedDeduction"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/standardDeduction"/>
+                  </Right>
+                </GreaterThan>
+              </Not>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/standardDeductionOverridesItemizedDeduction">
       <Description>Whether the taxpayer wanted to itemize, but the standard deduction was determined to be of greater benefit</Description>
       <Derived>
         <All>
+          <Not>
+            <Dependency path="/isFilingStatusMFS"/>
+          </Not>
           <Dependency path="/wantsItemizedDeduction"/>
           <Dependency path="/standardDeductionWillBeUsed"/>
         </All>
