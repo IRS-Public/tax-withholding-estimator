@@ -130,7 +130,7 @@
       <p condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue">This credit helps older adults and people with qualifying disabilities lower their taxes.</p>
       <p condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue"><modal-link for="modal-credit-elderly-disabled-who-can-claim">Who can claim the credit for the elderly or the disabled?</modal-link></p>
 
-      <fg-set path="/elderlyAndDisabledTaxCreditAmount" optional="true">
+      <fg-set path="/elderlyAndDisabledTaxCreditAmount" if-true="/eitherPrimaryOrSecondaryFilersAge65OrOlder" optional="true">
         <question>Amount of the elderly and disabled credit you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to claim in <fg-show path="/taxYear"/></question>        <input type="dollar"/>
       </fg-set>
 
