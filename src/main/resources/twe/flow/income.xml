@@ -673,14 +673,14 @@
       </fg-set>
 
       <h3>Investment income</h3>
-      <p>Even if you expect to earn a small amount of investment income, adding this amount will help get the most accurate withholding estimate.</p>
+      <p>Even if you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse </span>expect to earn a small amount of investment income, adding this amount will help get the most accurate withholding estimate.</p>
       <fg-detail icon="chevron">
         <summary>Interest income</summary>
         <p>
           <modal-link for="modal-estimate-interest-income-en">What's interest income and how can I estimate it?</modal-link>
         </p>
         <fg-set path="/taxableInterestIncome">
-          <question>Interest you<span condition="/isFilingStatusMFJ" operator="isTrue"> and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
+          <question>Interest income you<span condition="/isFilingStatusMFJ" operator="isTrue"> and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
           <input type="dollar"/>
         </fg-set>
       </fg-detail>
@@ -1034,7 +1034,7 @@
     <modal-dialog id="modal-what-counts-pre-tax-retirement">
       <modal-heading>What counts as a distribution from pre-tax retirement accounts?</modal-heading>
       <modal-content>
-        <p>Any withdrawal of pre-tax funds from a 401(k), 403(b), 457(b), Trump account, or traditional IRA counts as a distribution. This includes distributions at retirement, early withdrawals, required minimum distributions (RMDs), and pretax-to-Roth conversions.</p>
+        <p>Any withdrawal of pre-tax funds from a 401(k), 403(b), 457(b), Trump account, or traditional Individual Retirement Arrangement (IRA) counts as a distribution. This includes distributions at retirement, early withdrawals, required minimum distributions (RMDs), and pretax-to-Roth conversions.</p>
         <p>At the end of the year, your financial institution will send a Form 1099-R to report this income.</p>
         <p>
           <strong>Don’t include:</strong>
@@ -1142,7 +1142,7 @@
         <p>If you earned income from S-corporations or partnerships last year and think you'll earn a similar amount this year, check these <fg-show path="/lastTaxYear"/> forms:</p>
         <ul>
           <li>Schedule E (Form 1040), Part II, Line 29a, Column h, for passive income</li>
-          <li>Schedule E (Form 1040), Part II, Line 29a, column k, for non-passive income</li>
+          <li>Schedule E (Form 1040), Part II, Line 29a, Column k, for non-passive income</li>
         </ul>
       </modal-content>
     </modal-dialog>
