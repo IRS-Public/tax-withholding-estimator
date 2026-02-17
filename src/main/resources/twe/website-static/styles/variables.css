@@ -144,4 +144,9 @@
   */
 
   --font-sans: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+
+  /* TWE Tokens */
+  --flow-spacing: var(--units-3);
+  --flow-spacing--sm: var(--units-1);
+  --flow-spacing--offset: calc(var(--flow-spacing) + var(--flow-spacing--sm));
 }

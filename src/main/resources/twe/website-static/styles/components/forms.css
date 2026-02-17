@@ -1,12 +1,15 @@
 fg-set {
   display: block;
-  margin: var(--units-3) 0;
-  padding-bottom: var(--units-3);
+  margin: var(--flow-spacing) 0;
+  padding-bottom: var(--flow-spacing--sm);
+
+  &:last-child {
+    padding-bottom: 0;
+  }
 }
 
-fg-set:last-of-type {
-  border-bottom: 0;
-  padding-bottom: 0;
+fg-withholding-adjustments {
+  display: block;
 }
 
 h2 + fg-set {
@@ -28,6 +31,6 @@ h2 + fg-set {
 
 .form-actions {
   border-top: 2px solid var(--base-lighter);
-  margin-top: var(--units-4);
-  padding-top: var(--units-3);
+  margin-top: var(--flow-spacing--offset);
+  padding-top: var(--flow-spacing);
 }

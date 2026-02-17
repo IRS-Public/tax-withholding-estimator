@@ -4,7 +4,7 @@
 */
 
 .flow details {
-  margin: var(--units-1) 0;
+  margin: var(--flow-spacing--sm) 0;
 
   /* Corrects box model for nested usa-input-group */
   .usa-input-group,
@@ -12,6 +12,10 @@
   input,
   select {
     box-sizing: border-box;
+  }
+
+  &:last-child {
+    margin-bottom: var(--flow-spacing);
   }
 }
 
