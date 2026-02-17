@@ -63,8 +63,8 @@ class AuditedFact extends HTMLElement {
   }
 
   render () {
-    const definition = factGraph.dictionary.getDefinition(this.factPath)
-    const fact = factGraph.get(this.factPath)
+    const definition = window.factGraph.dictionary.getDefinition(this.factPath)
+    const fact = window.factGraph.get(this.factPath)
 
     // Fill out the data fields
     this.factPathElem.innerText = this.factPath
@@ -132,7 +132,7 @@ function trackFact (path, collectionId) {
 }
 
 function setFactOptions () {
-  const paths = factGraph.paths().sort()
+  const paths = window.factGraph.paths().sort()
   const options = paths.map((path) => `<option path=${path}>${path}</option>`)
   document.querySelector('#fact-options').innerHTML = options
 }
@@ -156,9 +156,9 @@ export function enable () {
     link.append(fgShow)
   }
 
-  // Load paths once the document is ready (if it isn't already)
-  if (document.readyState !== 'complete') {
-    document.addEventListener('DOMContentLoaded', setFactOptions)
+  // Load fact paths once the fact graph is available (if it isn't already)
+  if (!window.factGraph) {
+    document.addEventListener('fg-load', setFactOptions)
   } else {
     setFactOptions()
   }

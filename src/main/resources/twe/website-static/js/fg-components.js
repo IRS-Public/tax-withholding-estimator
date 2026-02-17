@@ -14,6 +14,7 @@ if (serializedGraphJSON) {
   factGraph = fg.GraphFactory.apply(factDictionary)
 }
 window.factGraph = factGraph
+document.dispatchEvent(new CustomEvent('fg-load'))
 
 function saveFactGraph () {
   sessionStorage.setItem('factGraph', factGraph.toJSON())
