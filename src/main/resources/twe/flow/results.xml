@@ -149,7 +149,7 @@
       </details>
 
       <h3 id="heading-adjust-withholding-for-more-take-home-pay" condition="/isOverwithheld" operator="isTrue">How to adjust your withholding to get more take-home pay</h3>
-      <h3 id="heading-adjust-withholding-for-lower-tax-balance" condition="/isUnderwithheld" operator="isTrue">How to adjust your withholding to get more take-home pay</h3>
+      <h3 id="heading-adjust-withholding-for-lower-tax-balance" condition="/isUnderwithheld" operator="isTrue">How to adjust your withholding to avoid a balance due when you file your tax return</h3>
       <h3 id="heading-adjust-withholding" condition="/isZeroRefund" operator="isTrue">How to adjust your withholding</h3>
 
       <p condition="/hasJobsAvailableForExtraWithholdingButNotPensions" operator="isTrue">Use our recommendations to complete Form W-4.</p>
