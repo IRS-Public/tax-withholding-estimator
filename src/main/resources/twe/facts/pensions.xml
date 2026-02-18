@@ -123,6 +123,9 @@
     <Fact path="/pensions/*/yearToDateIncome">
       <Writable>
         <Dollar/>
+        <Limit type="Min">
+          <Dependency path="../averagePayPerPayPeriodForWithholding"/>
+        </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
@@ -231,6 +234,9 @@
     <Fact path="/pensions/*/yearToDateWithholding">
       <Writable>
         <Dollar/>
+        <Limit type="Min">
+          <Dependency path="../averageWithholdingPerPayPeriod"/>
+        </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>

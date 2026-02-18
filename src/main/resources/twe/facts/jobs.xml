@@ -438,6 +438,9 @@
     <Fact path="/jobs/*/yearToDateIncome">
       <Writable>
         <Dollar/>
+        <Limit type="Min">
+          <Dependency path="../amountLastPaycheck"/>
+        </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
@@ -447,6 +450,9 @@
       <Description>The year-to-date withholding from a specific job</Description>
       <Writable>
         <Dollar/>
+      <Limit type="Min">
+        <Dependency path="../amountWithheldLastPaycheck"/>
+      </Limit>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
