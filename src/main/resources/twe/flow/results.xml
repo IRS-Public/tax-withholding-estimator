@@ -66,8 +66,8 @@
                 <td><fg-show path="/grossIncomeTotal"/></td>
               </tr>
               <tr>
-                <th scope="row">Income after payroll deductions</th>
-                <td><fg-show path="/incomeTotal"/></td>
+                <th scope="row">Payroll deductions</th>
+                <td>-<fg-show path="/preTaxDeductionsTotal"/></td>
               </tr>
               <tr condition="/adjustmentsToIncome" operator="isGreaterThanZero">
                 <th scope="row">Adjustments</th>

@@ -630,6 +630,23 @@ and car loan interest deduction
         </Add>
       </Derived>
     </Fact>
+    <Fact path="/preTaxDeductionsTotal">
+      <Description>
+        Pretax deductions, summed separately from the income. This is usually not the fact you want
+        in tax calculations; it's used for displaying a taxpayer's deductions income in a way that
+        matches their expectations.
+      </Description>
+      <Derived>
+        <Add>
+          <CollectionSum>
+            <Dependency path="/jobs/*/preTaxDeductions"/>
+          </CollectionSum>
+          <CollectionSum>
+            <Dependency path="/pensions/*/preTaxDeductions"/>
+          </CollectionSum>
+        </Add>
+      </Derived>
+    </Fact>
     <Fact path="/incomeTotalMinusTaxableSSABenefits">
       <Description>Sum of 1z, 2b, 3b, 4b, 5b, 7, and 8 on the 1040 (Line 9 - 6b) </Description>
       <Derived>
