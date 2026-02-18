@@ -127,9 +127,6 @@
           <Dependency path="../averagePayPerPayPeriodForWithholding"/>
         </Limit>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/pensions/*/averageWithholdingPerPayPeriod">
       <Description>Average withholding from a specific pension per pay-period.</Description>
@@ -238,9 +235,6 @@
           <Dependency path="../averageWithholdingPerPayPeriod"/>
         </Limit>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/pensionsAssignedToSelf">
       <Derived>

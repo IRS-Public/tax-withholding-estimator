@@ -442,9 +442,6 @@
           <Dependency path="../amountLastPaycheck"/>
         </Limit>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/yearToDateWithholding">
       <Description>The year-to-date withholding from a specific job</Description>
@@ -454,9 +451,6 @@
         <Dependency path="../amountWithheldLastPaycheck"/>
       </Limit>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/averageWithholdingPerPayPeriod">
       <Description>The average withholding from a specific job per pay period</Description>
