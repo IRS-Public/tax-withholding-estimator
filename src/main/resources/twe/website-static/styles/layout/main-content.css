@@ -75,8 +75,8 @@ main h1 {
 .fg-collection-item__fields h5 {
   border-top: 2px solid var(--base-lighter);
   font-size: var(--font-size-8);
-  padding-top: var(--units-3);
-  margin: var(--units-4) 0 var(--units-1);
+  padding-top: var(--flow-spacing);
+  margin: var(--flow-spacing--offset) 0 var(--flow-spacing--sm);
 
   @media (min-width: 640px) {
     font-size: var(--font-size-10);
