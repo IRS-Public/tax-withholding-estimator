@@ -178,7 +178,7 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/charitableContributionsFloored">
+    <Fact path="/charitableContributionsTotal">
       <Description>
         OB3 70425(a) amends IRC 170(b)(1) to only allow this itemized deduction for individuals
         whose aggregate charitable contributions are in excess of %0.5 of their AGI
@@ -212,39 +212,6 @@
         </GreaterOf>
       </Derived>
     </Fact>
-    <Fact path="/charitableContributionsTotal">
-      <Description>Application of 35% ceiling for taxpayers in the top tax bracket</Description>
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <GreaterThan>
-                <Left>
-                  <Dependency path="/excessTaxableIncomeOverTopTaxBracket"/>
-                </Left>
-                <Right>
-                  <Dollar>0</Dollar>
-                </Right>
-              </GreaterThan>
-            </When>
-            <Then>
-              <Multiply>
-                <Dependency path="/charitableContributionsFloored"/>
-                <Rational>35/100</Rational>
-              </Multiply>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dependency path="/charitableContributionsFloored"/>
-            </Then>
-          </Case>
-        </Switch>
-      </Derived>
-    </Fact>
     <Fact path="/casualtyLossesTotal">
       <Name>Total of all casualty loss items </Name>
       <Description>Casualty and theft losses relating to your home, household items, and vehicles if
@@ -273,7 +240,7 @@
           <Dependency path="/qualifiedMortgageInsurancePremiumDeductionTotal"/>
           <Dependency path="/stateAndLocalTaxDeduction"/>
           <Dependency path="/medicalAndDentalExpensesTotal"/>
-          <Dependency path="/charitableContributionsFloored"/>
+          <Dependency path="/charitableContributionsTotal"/>
           <Dependency path="/casualtyLossesTotal"/>
           <Dependency path="/otherDeductionsTotal"/>
         </Add>

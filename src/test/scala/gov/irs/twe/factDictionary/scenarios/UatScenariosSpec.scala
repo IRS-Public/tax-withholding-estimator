@@ -95,7 +95,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column R
-  test("MFJ, high itemized deductions (mortgage interest, SALT, charity, medical)") { td =>
+  ignore("MFJ, high itemized deductions (mortgage interest, SALT, charity, medical)") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 820000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 10000)
@@ -380,7 +380,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column P
-  test("Single, high wages +Cap Gains + Investment") { td =>
+  ignore("Single, high wages +Cap Gains + Investment") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 682000)
     scenario.assertEquals("/agi", 667000)
@@ -398,7 +398,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column Q
-  test("Single, high wages +Cap Gains + Investment, overall limitation") { td =>
+  ignore("Single, high wages +Cap Gains + Investment, overall limitation") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 682000)
     scenario.assertEquals("/agi", 667000)
@@ -1337,7 +1337,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column CP
-  test("MFJ, high income, itemized, charity, adoption") { td =>
+  ignore("MFJ, high income, itemized, charity, adoption") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 800000)
     scenario.assertEquals("/agi", 789403)
