@@ -607,7 +607,7 @@
         </fg-set>
         <h5>Timing</h5>
         <fg-set path="/socialSecuritySources/*/isAllYear">
-          <question>Do <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> expect to have this income all year or only part of the year?</question>
+          <question>Do <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> expect to have this Social Security income all year or only part of the year?</question>
           <input type="boolean">
             <option value="true">All year (January 1–December 31, <fg-show path="/taxYear"/>)</option>
             <option value="false">Part of the year</option>
@@ -629,11 +629,12 @@
         <fg-set path="/socialSecuritySources/*/monthlyIncome" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
           <question>What’s the monthly benefit amount <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">receive</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">received</span> from Social Security?</question>
           <modal-link for="modal-fed-tax-social-security-pay-period">What’s the monthly benefit amount and where do I find it?</modal-link>
+          <hint>Include the total amount before any Medicare premiums and other deductions are taken out.</hint>
           <input type="dollar"/>
         </fg-set>
         <h5 condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Federal taxes</h5>
         <fg-set path="/socialSecuritySources/*/withheldRate" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
-          <question>How much federal tax <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">is</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">was</span> withheld from the Social Security payment each month?</question>
+          <question>What percent of your monthly Social Security benefit <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">is</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">was</span> withheld for federal tax?</question>
           <hint>If <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> haven’t chosen to withhold federal taxes, select 0%.</hint>
           <modal-link for="modal-fed-social-security-tax-withheld">How do I know if I have taxes withheld?</modal-link>
           <input type="enum" options-path="/socialSecurityWithheldTaxesOptions">
