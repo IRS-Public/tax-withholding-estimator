@@ -4,6 +4,7 @@
   <Facts>
     <!-- Pub 15-T Calculations -->
     <Fact path="/pensions/*/payPeriodsPerYear">
+      <Description>Also Pub 15-T Worksheet 1B Line 1b</Description>
       <Derived>
         <Switch>
           <Case>
@@ -219,7 +220,7 @@
       </Derived>
     </Fact>
     <Fact path="/pensions/*/pub15TWorksheet1bLine2d">
-      <!-- On the W4-P, for step 2 they are chosing option a so they can skip to 2d on the pub 15-T form -->
+      <!-- On the W4-P, for step 2 they are choosing option a so they can skip to 2d on the pub 15-T form -->
       <Description>Adjusted annual payment amount (2d).</Description>
       <Derived>
         <GreaterOf>
@@ -1035,14 +1036,20 @@
       </Derived>
     </Fact>
     <Fact path="/pensions/*/pub15TWorksheet1bLine3b">
+      <Description>
+        Pub. 15-T Worksheet 1B Line 3b
+        Subtract line 3a from line 2u. If zero or less, enter -0-
+      </Description>
       <Derived>
         <GreaterOf>
           <Dollar>0</Dollar>
           <Subtract>
             <Minuend>
+              <!-- Pub. 15-T, Worksheet 1B, Line 2u -->
               <Dependency path="../tentativeAnnualWithholdingAmount"/>
             </Minuend>
             <Subtrahends>
+              <!-- Pub. 15-T, Worksheet 1B, Line 3a -->
               <Dependency path="../w4pLine3"/>
             </Subtrahends>
           </Subtract>
@@ -1050,12 +1057,17 @@
       </Derived>
     </Fact>
     <Fact path="/pensions/*/pub15TWorksheet1bLine4a">
+      <Description>
+        Pub. 15-T Worksheet 1B Line 4a
+        Divide the amount on line 3b by the number of payment periods from line 1b
+      </Description>
       <Derived>
         <Divide>
           <Dividend>
             <Dependency path="../pub15TWorksheet1bLine3b"/>
           </Dividend>
           <Divisors>
+            <!-- Pub. 15-T, Worksheet 1B, Line 1b -->
             <Dependency path="../payPeriodsPerYear"/>
           </Divisors>
         </Divide>
@@ -1126,6 +1138,22 @@
             <Dollar>0</Dollar>
           </Right>
         </Equal>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/withholdingAmountPerPayPeriod">
+      <Description>
+        "The amount to withhold from the payee's wages this pay period", also Pub 15-T Worksheet 1B, Line 4c
+        Payers will calculate this based off of the payee's W-4P. We also calculate it for its usefulness in determining
+        whether the taxpayer may need to make estimated tax payments.
+
+        Defined as the sum of Pub-15 Worksheet 1B, Lines 4a and 4b.
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="../pub15TWorksheet1bLine4a"/>
+          <!-- Pub. 15-T, Worksheet 1B, Line 4b -->
+          <Dependency path="../w4pLine4c"/>
+        </Add>
       </Derived>
     </Fact>
   </Facts>

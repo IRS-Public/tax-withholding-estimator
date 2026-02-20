@@ -22,19 +22,22 @@
         <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isFalse">If you'd like to get more take-home pay, you can <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust your withholding</a>.</p>
       </div>
 
-      <p condition="/isUnderwithheld" operator="isTrue">Based on what you entered, we estimate that <strong>you're not withholding enough taxes.</strong></p>
-      <p condition="/isUnderwithheld" operator="isTrue">
-        If you keep your withholding the same, you’ll likely owe taxes for <fg-show path="/taxYear"/>.
-        <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">
-          You may have to pay a penalty in addition to what you owe if you owe at least $1,000 and more than 10 percent of your tax bill.
-        </span>
-      </p>
+      <div condition="/isUnderwithheld" operator="isTrue">
+        <p>Based on what you entered, we estimate that <strong>you're not withholding enough taxes.</strong></p>
+        <p>
+          If you keep your withholding the same, you’ll likely owe taxes for <fg-show path="/taxYear"/>.
+          <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">
+            You may have to pay a penalty in addition to what you owe if you owe at least $1,000 and more than 10 percent of your tax bill.
+          </span>
+        </p>
 
-      <p condition="/isUnderwithheld" operator="isTrue">
-        If you’d like to get your tax balance closer to $0
-        <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">and avoid paying a penalty</span>,
-        you can <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjust your withholding</a>.
-      </p>
+        <p>
+          <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isFalse">If you’d like to get your tax balance closer to $0,</span>
+          <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">If you’d like to get your tax balance closer to $0 and avoid paying a penalty,</span>
+          <span condition="/mayNeedToMakeEstimatedPayments" operator="isFalse">you can <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjust your withholding</a>.</span>
+          <span condition="/mayNeedToMakeEstimatedPayments" operator="isTrue">you can <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjust your withholding</a> and make <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed</span>.
+        </p>
+      </div>
 
       <p condition="/isZeroRefund" operator="isTrue">Based on what you entered, we estimate that <strong>you’re withholding enough to cover your federal taxes.</strong></p>
       <p condition="/isZeroRefund" operator="isTrue">If you keep your withholding the same, it’s likely you won’t owe federal taxes for <fg-show path="/taxYear"/>.</p>

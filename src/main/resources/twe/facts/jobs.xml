@@ -278,7 +278,7 @@
         <Switch>
           <!--
             There are only two cases here: two past paychecks, or three.
-            Entering at least two paycheks is required if you select "inconsistent pay"
+            Entering at least two paychecks is required if you select "inconsistent pay"
           -->
           <Case>
             <When>
@@ -899,6 +899,7 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/payPeriodsPerYear">
+      <Description>Also Pub 15-T Worksheet 1A Line 1b</Description>
       <Derived>
         <Switch>
           <Case>

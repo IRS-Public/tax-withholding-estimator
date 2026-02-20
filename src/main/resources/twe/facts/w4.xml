@@ -133,7 +133,7 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/w4Line3">
-      <Description>W-4 Line 3. Also used on Line 3c of Pub. 15-T Worksheet 1A</Description>
+      <Description>W-4 Line 3. Pub. 15-T Worksheet 1A Line 3a</Description>
       <Derived>
         <Switch>
           <Case>

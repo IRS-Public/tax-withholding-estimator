@@ -1518,5 +1518,113 @@
         </Any>
       </Derived>
     </Fact>
+    <Fact path="/jobs/*/pub15TWorksheet1aLine3b">
+      <Description>
+        Pub. 15-T Worksheet 1A Line 3b
+        Divide the amount on line 3a by the number of pay periods on line 1b
+      </Description>
+      <Derived>
+        <Divide>
+          <Dividend>
+            <!-- Pub. 15-T, Worksheet 1A, Line 3a -->
+            <Dependency path="../w4Line3"/>
+          </Dividend>
+          <Divisors>
+            <!-- Pub. 15-T, Worksheet 1A, Line 1b -->
+            <Dependency path="../payPeriodsPerYear"/>
+          </Divisors>
+        </Divide>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/pub15TWorksheet1aLine3c">
+      <Description>
+        Pub. 15-T Worksheet 1A Line 3c
+        Subtract line 3b from line 2h. If zero or less, enter -0-
+      </Description>
+      <Derived>
+        <GreaterOf>
+          <Subtract>
+            <Minuend>
+              <!-- Pub. 15-T, Worksheet 1A, Line 2h -->
+              <Dependency path="../tentativeWithholdingAmount"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="../pub15TWorksheet1aLine3b"/>
+            </Subtrahends>
+          </Subtract>
+          <Dollar>0</Dollar>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/withholdingAmountPerPayPeriod">
+      <Description>
+        "The amount to withhold from the employee's wages this pay period", also Pub 15-T Worksheet 1A, Line 4b
+        Employers will calculate this based off of the employee's W-4. We also calculate it for its usefulness in determining
+        whether the taxpayer may need to make estimated tax payments.
+
+        Defined as the sum of Pub-15 Worksheet 1A, Lines 3c and 4a.
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="../pub15TWorksheet1aLine3c"/>
+          <!-- Pub. 15-T, Worksheet 1A, Line 4a -->
+          <Dependency path="../w4Line4c"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/mayNeedToMakeEstimatedPayments">
+      <Description>
+        Whether the taxpayer needs to make estimated payments to make up the balance.
+
+        In short, if the amount that needs to be withheld per pay period is greater than (or equal to, being conservative
+        with the calculation is helpful to the taxpayer here) than the amount of money available.
+      </Description>
+      <Derived>
+        <Any>
+          <All>
+            <IsComplete>
+              <Dependency path="/jobSelectedForExtraWithholding"/>
+            </IsComplete>
+            <GreaterThan>
+              <Left>
+                <Dependency path="/jobSelectedForExtraWithholding/withholdingAmountPerPayPeriod"/>
+              </Left>
+              <Right>
+                <Dollar>0</Dollar>
+              </Right>
+            </GreaterThan>
+            <GreaterThanOrEqual>
+              <Left>
+                <Dependency path="/jobSelectedForExtraWithholding/withholdingAmountPerPayPeriod"/>
+              </Left>
+              <Right>
+                <Dependency path="/jobSelectedForExtraWithholding/averageTaxablePayPerPayPeriod"/>
+              </Right>
+            </GreaterThanOrEqual>
+          </All>
+          <All>
+            <IsComplete>
+              <Dependency path="/pensionSelectedForExtraWithholding"/>
+            </IsComplete>
+            <GreaterThan>
+              <Left>
+                <Dependency path="/pensionSelectedForExtraWithholding/withholdingAmountPerPayPeriod"/>
+              </Left>
+              <Right>
+                <Dollar>0</Dollar>
+              </Right>
+            </GreaterThan>
+            <GreaterThanOrEqual>
+              <Left>
+                <Dependency path="/pensionSelectedForExtraWithholding/withholdingAmountPerPayPeriod"/>
+              </Left>
+              <Right>
+                <Dependency path="/pensionSelectedForExtraWithholding/averagePayPerPayPeriodForWithholding"/>
+              </Right>
+            </GreaterThanOrEqual>
+          </All>
+        </Any>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>
