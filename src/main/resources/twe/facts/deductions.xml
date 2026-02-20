@@ -186,7 +186,7 @@
       </Derived>
     </Fact>
     <Fact path="/standardOrItemizedDeductionForQBIDeduction">
-      <Description>Ignores /amountOfItemizedDeductionsToSubtract when computing /itemizedDeduction as this has a circular dependency on QBI deduction that is explicitly ignored per OB3 70111 when calculation QBID</Description>
+      <Description>Ignores /amountOfItemizedDeductionsToSubtract when computing /itemizedDeduction as this has a circular dependency on QBI deduction that is explicitly ignored when calculation QBID</Description>
       <Derived>
         <Round>
           <Switch>

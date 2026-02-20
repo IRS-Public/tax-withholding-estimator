@@ -671,9 +671,9 @@
       </Derived>
     </Fact>
     <Fact path="/pensions/*/futureTentativeWithholding">
-      <!-- future tentative withholding: result from Pub 15-T Worksheet 1A -->
-      <!-- For now, we treat this as a "given" that won't change. Probably will need to revisit
-      this when we get to reducing below tentative withholding. -->
+      <Description> Future tentative withholding: result from Pub 15-T Worksheet 1A
+      For now, we treat this as a "given" that won't change. Probably will need to revisit
+        this when we get to reducing below tentative withholding. </Description>
       <Derived>
         <Switch>
           <Case>

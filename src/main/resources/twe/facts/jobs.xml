@@ -138,7 +138,7 @@
     </Fact>
     <Fact path="/jobs/*/qualifiedTipIncome">
       <Name>Qualified Tip Income</Name>
-      <Description>OB3 &#xA7;70201; IRC &#xA7;224. Qualified tip income</Description>
+      <Description>IRC &#xA7;224. Qualified tip income</Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -447,9 +447,9 @@
       <Description>The year-to-date withholding from a specific job</Description>
       <Writable>
         <Dollar/>
-      <Limit type="Min">
-        <Dependency path="../amountWithheldLastPaycheck"/>
-      </Limit>
+        <Limit type="Min">
+          <Dependency path="../amountWithheldLastPaycheck"/>
+        </Limit>
       </Writable>
     </Fact>
     <Fact path="/jobs/*/averageWithholdingPerPayPeriod">

@@ -112,7 +112,8 @@
     </Fact>
     <Fact path="/selfEmploymentIncomeForm8959Line8">
       <Description> Form 8959 Part I Line 8. Per the Form instructions, this should include the total Medicare wages and tips plus your self-employment income, if any (including the Medicare wages and tips and self-employment income of your spouse, if married filing jointly), are greater than the threshold amount for your filing status
-        The Form calls for Schedule SE (Form 1040), Part I, line 6, but we pass in net SE income</Description>
+        The Form calls for Schedule SE (Form 1040), Part I, line 6, but we pass in net SE income.
+      Simplifying Assumption used</Description>
       <Derived>
         <Add>
           <!--          <Dependency path="/scheduleSELine6Self"/>-->

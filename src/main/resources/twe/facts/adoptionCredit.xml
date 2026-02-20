@@ -265,6 +265,7 @@
       </Derived>
     </Fact>
     <Fact path="/adoptionCreditNonRefundable">
+      <Description>Simplifying assumption</Description>
       <Derived>
         <Dependency path="/tentativeNonRefundableAdoptionCreditAmountWithCarryforward"/>
       </Derived>

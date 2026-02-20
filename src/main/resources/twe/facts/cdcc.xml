@@ -274,7 +274,7 @@
     </Fact>
     <Fact path="/cdccCareExpensesDecimalAmount">
       <Name>Care Expenses Decimal Amount</Name>
-      <Description>Care Expenses Decimal Amount. Form 2441, Line 8. Line 7 is AGI. OB3 made changes to phase down </Description>
+      <Description>Care Expenses Decimal Amount. Form 2441, Line 8. Line 7 is AGI. </Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <!--

@@ -45,9 +45,6 @@
     </Fact>
     <Fact path="/eligibleTaxpayersForSeniorDeduction">
       <Name>Senior Deduction Secondary Filer Eligibility</Name>
-      <Description>OB3 Section 70103 temporarily amending 151(d)(5)(3)(c)(ii)(II) taxpayer's spouse,
-        if such spouse has attained age 65 before the close of the taxable year.
-      </Description>
       <Derived>
         <Switch>
           <Case>
@@ -135,23 +132,7 @@
     </Fact>
     <Fact path="/phaseOutAmountSeniorDeduction">
       <Name>Senior Deduction Amount Phase Out</Name>
-      <Description>
-        Phaseout amount for the senior deduction. phaseOutAmount = excess * 0.06.
-
-        In the case of any
-        taxpayer for any taxable year, the $6,000 amount in clause (i) shall be reduced (but not
-        below zero) by 6 percent of so much of the taxpayer&#x2019;s modified adjusted gross income
-        as exceeds $75,000 ($150,000 in the case of a joint return).
-
-        Example 1):Single filer with
-        MAGI of $85,500. This amount exceeds the relevant threshold ($75,000) by $10,500. Therefore,
-        the $6,000 amount is reduced by $630 (6% of $10,500) to $5,370.Example 2):Joint filer with
-        MAGI of $160,500. Both filers qualify for the deduction based on their age and SSN. Their
-        MAGI exceeds the relevant threshold ($150,000) by $10,500. Therefore, the$6,000 amount is
-        reduced by $630 (6% of $10,500) to $5,370. Because both the primary and secondary filer are
-        eligible for the deduction, the deduction amount is $10,740 ($5,370 per qualified individual
-        multiplied by 2 qualified individuals).
-      </Description>
+      <Description>Phaseout amount for the senior deduction. phaseOutAmount = excess * 0.06.</Description>
       <Derived>
         <Multiply>
           <Dollar>0.06</Dollar>
@@ -234,9 +215,7 @@
     <Fact path="/seniorDeduction">
       <Name>Actual Amount of Senior Deduction</Name>
       <Description>Actual amount of senior deduction that can be applied against MAGI. amount = (max
-        amount based
-        on
-        eligibility)- (excess * 0.06)
+        amount based on eligibility)- (excess * 0.06)
       </Description>
       <Derived>
         <Round>

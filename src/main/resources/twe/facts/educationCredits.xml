@@ -377,6 +377,7 @@
       </Derived>
     </Fact>
     <Fact path="/educationCreditLimitWorksheetLine1">
+      <Description>Simplifying Assumption</Description>
       <Derived>
         <Dollar>0</Dollar>
       </Derived>

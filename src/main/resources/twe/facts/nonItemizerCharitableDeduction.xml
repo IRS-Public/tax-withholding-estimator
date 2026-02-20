@@ -4,7 +4,6 @@
   <Facts>
     <Fact path="/nonItemizerCharitableContributionDeductionMFJMax">
       <Name>Maximum non itemizer charitable deduction cap for MFJ filer</Name>
-      <Description>2000 is maximum a non itemizer can deduct if they are MFJ</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>
@@ -14,7 +13,6 @@
     </Fact>
     <Fact path="/nonItemizerCharitableContributionDeductionNonMFJMax">
       <Name>Maximum non itemizer charitable deduction cap for non-MFJ filer</Name>
-      <Description>1000 is maximum a non itemizer can deduct if they are non-MFJ</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>
@@ -106,15 +104,7 @@
     </Fact>
     <Fact path="/nonItemizerCharitableContributionDeduction">
       <Name>Non-itemizer charitable deduction</Name>
-      <Description>OB3 70424, amending IRC 170(p): Special rule for taxpayers who do not elect to
-        itemize deductions. In the case of any taxable year, if the individual does not elect to
-        itemize deductions for such taxable year, the deduction under this section shall be equal to
-        the deduction, not in excess of 1,000 ($2,000 in the case of
-        a joint return), which would be determined under this section if the only charitable
-        contributions taken into account in determining such deduction
-        were contributions made in cash during such taxable year ...
-
-        We only expect this deduction to be taken if the filer's standard deduction is greater than
+      <Description>We only expect this deduction to be taken if the filer's standard deduction is greater than
         their itemized deduction, keeping in line with the logic in "/standardOrItemizedDeduction"
       </Description>
       <Derived>

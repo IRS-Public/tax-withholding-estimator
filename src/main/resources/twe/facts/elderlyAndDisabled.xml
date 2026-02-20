@@ -3,8 +3,6 @@
 <FactDictionaryModule>
   <Facts>
     <Fact path="/elderlyAndDisabledTaxCreditAmount">
-      <Description>Elderly and Disabled tax credit, no logic in place for actually calculating the
-        applicable amount.</Description>
       <Writable>
         <Dollar/>
       </Writable>

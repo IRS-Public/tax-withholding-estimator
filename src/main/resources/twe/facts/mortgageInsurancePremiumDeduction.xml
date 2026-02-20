@@ -83,11 +83,7 @@
     </Fact>
     <Fact path="/qualifiedMortgageInsurancePremiumPhaseOutFactorX10">
       <Description>
-        IRC Section 163(h)(3)(E): The amount otherwise treated as interest under clause (i) shall be reduced (but not below zero) by 10 percent of
-        such amount for each $1,000 ($500 in the case of a married individual filing a separate return) (or fraction thereof)
-        that the taxpayer&#x2019;s adjusted gross income for the taxable year exceeds $100,000 ($50,000 in the case of a married individual filing a separate return).
-
-        If the excess is more than 10 increments over the threshold ($10k non-MFS, $5k MFS) then the deduction is phased down to zero and the output is negative
+        If the excess is more than 10 increments over the threshold ($10k non-MFS, $5k MFS) then the deduction is phased down to zero and the output is negative. Multiplier is used for precision purposes for testing
       </Description>
       <Derived>
         <Multiply>
@@ -102,8 +98,6 @@
         IRC Section 163(h)(3)(E): The amount otherwise treated as interest under clause (i) shall be reduced (but not below zero) by 10 percent of
         such amount for each $1,000 ($500 in the case of a married individual filing a separate return) (or fraction thereof)
         that the taxpayer&#x2019;s adjusted gross income for the taxable year exceeds $100,000 ($50,000 in the case of a married individual filing a separate return).
-
-        If the excess is more than 10 increments over the threshold ($10k non-MFS, $5k MFS) then the deduction is phased down to zero and the output is negative
       </Description>
       <Derived>
         <Round>

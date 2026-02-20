@@ -36,19 +36,7 @@
       </Derived>
     </Fact>
     <Fact path="/amountOfItemizedDeductionsToSubtract">
-      <Description>OB3 70111 adding: IRC Section 68:
-        (a) In general In the case of an individual, the
-        amount of the itemized deductions otherwise allowable for the taxable year (determined
-        without regard to this section) shall be reduced by 2&#x2044;37 of the lesser of
-        (1) such amount of
-        itemized deductions, or
-        (2) so much of the taxable income of the taxpayer for the taxable
-        year (determined without regard to this section and increased by such amount of itemized
-        deductions) as exceeds the dollar amount at which the 37 percent rate bracket under section
-        1 begins with respect to the taxpayer.
-
-        n.b. this definition is ignored for purposes of QBI deduction calculation per OB3
-       If the taxpayer is not in the tax bracket, /excessTaxableIncomeOverTopTaxBracket will be negative or zero so this fact will always be zero
+      <Description>If the taxpayer is not in the tax bracket, /excessTaxableIncomeOverTopTaxBracket will be negative or zero so this fact will always be zero.
       </Description>
       <Derived>
         <Round>
@@ -180,11 +168,9 @@
     </Fact>
     <Fact path="/charitableContributionsTotal">
       <Description>
-        OB3 70425(a) amends IRC 170(b)(1) to only allow this itemized deduction for individuals
-        whose aggregate charitable contributions are in excess of %0.5 of their AGI
-
-        We first floor the charitable amount by MIN of A) Charitable contributions - (0.005 * MAX(contribution base, 0); or B) 0.6 *
-        contribution base. We then apply take 35% of this amount if the taxpayer is in the top tax bracket, in /charitableContributionsTotal
+        Only allow this itemized deduction for individuals whose aggregate charitable contributions are in excess of %0.5 of their AGI
+        Floor the charitable amount by MIN of A) Charitable contributions - (0.005 * MAX(contribution base, 0); or B) 0.6 *
+        contribution base.
       </Description>
       <Derived>
         <GreaterOf>

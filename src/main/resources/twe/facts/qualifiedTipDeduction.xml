@@ -4,7 +4,6 @@
   <Facts>
     <Fact path="/qualifiedTipIncome">
       <Name>Qualified Tip Income</Name>
-      <Description>OB3 &#xA7;70201; IRC &#xA7;224. Qualified tip income</Description>
       <Derived>
         <CollectionSum>
           <Dependency path="/jobs/*/qualifiedTipIncome"/>
@@ -13,7 +12,6 @@
     </Fact>
     <Fact path="/maxQualifiedTipDeductionAmount">
       <Name>Maximum qualified tip deduction</Name>
-      <Description>The maximum amount one is allowed to deduct of their tip income </Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>25000</Dollar>
@@ -83,9 +81,7 @@
     </Fact>
     <Fact path="/qualifiedTipDeduction">
       <Name>Qualified tip deduction</Name>
-      <Description>OB3 Section 70201: Qualified tip deductions
-        Maximum annual deduction is $25,000
-
+      <Description>Qualified tip deductions
         Example:
         Single filer with 160k MAGI and 20k qualified tips. 150k applicable tip deduction threshold
         (20,000 excess/1000)*100 = 2,000 phase out
@@ -148,6 +144,7 @@
       </Derived>
     </Fact>
     <Fact path="/qualifiedTipDeductionPhaseOutThreshold">
+      <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
           <Case>

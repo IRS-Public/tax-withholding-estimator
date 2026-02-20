@@ -3,13 +3,24 @@
 <FactDictionaryModule>
   <Facts>
     <Fact path="/retirementSavingsContributionsTaxCreditAmount">
-      <Description>Savers credit, no logic in place for actually calculating the applicable amount.</Description>
       <Writable>
         <Dollar/>
       </Writable>
       <Placeholder>
         <Dollar>0</Dollar>
       </Placeholder>
+    </Fact>
+    <Fact path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>2000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/retirementSavingsContributionsCreditSpouseMaximumAmount">
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>2000</Dollar>
+      </Derived>
     </Fact>
     <Fact path="/retirementSavingsContributionsTaxCreditIncomeThreshold">
       <Description>The maximum income limit to be eligible for the savers credit</Description>
@@ -73,18 +84,6 @@
         </LessThanOrEqual>
       </Derived>
     </Fact>
-    <Fact path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount">
-      <TaxYear>2026</TaxYear>
-      <Derived>
-        <Dollar>2000</Dollar>
-      </Derived>
-    </Fact>
-    <Fact path="/retirementSavingsContributionsCreditSpouseMaximumAmount">
-      <TaxYear>2026</TaxYear>
-      <Derived>
-        <Dollar>2000</Dollar>
-      </Derived>
-    </Fact>
     <Fact path="/retirementSavingsContributionsMaximumAmount">
       <Derived>
         <Switch>
@@ -111,8 +110,12 @@
       </Derived>
     </Fact>
     <Fact path="/retirementSavingsContributionsCredit">
+      <Description>Simplifying assumption for calculation without phaseout</Description>
       <Derived>
-        <Dependency path="/retirementSavingsContributionsTaxCreditAmount"/>
+        <LesserOf>
+          <Dependency path="/retirementSavingsContributionsTaxCreditAmount"/>
+          <Dependency path="/retirementSavingsContributionsMaximumAmount"/>
+        </LesserOf>
       </Derived>
     </Fact>
   </Facts>

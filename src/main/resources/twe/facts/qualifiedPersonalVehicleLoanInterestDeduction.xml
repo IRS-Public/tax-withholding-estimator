@@ -2,12 +2,8 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
-    <!--        Interest paid on loan during taxable year-->
     <Fact path="/personalVehicleLoanInterestAmount">
       <Name>Interest paid on passenger vehicle loan</Name>
-      <Description>How much interest have you paid on the passenger vehicle loan during the tax
-        year?
-      </Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -15,12 +11,9 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <!--        Eligibility and calculations-->
     <Fact path="/isEligibleForQualifiedPassengerVehicleLoanInterestDeduction">
       <Name>Eligible for Qualified Passenger Vehicle Loan Interest Deduction</Name>
-      <Description>Taxpayer eligibility for</Description>
       <Derived>
-        <!--We plan to handle eligibilty through content. Previous iterations used fact-based eligibility with ~a dozen writable booleans to ensure that the vehicle and loan met the legal requirements-->
         <GreaterThan>
           <Left>
             <Dependency path="/personalVehicleLoanInterestAmount"/>
@@ -33,10 +26,6 @@
     </Fact>
     <Fact path="/maxQPVLIDAmount">
       <Name>Maximum qualified personal vehicle loan deduction</Name>
-      <Description>The maximum amount one is allowed to deduct because of qualified personal vehicle
-        loan interest
-        payments
-      </Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>10000</Dollar>
@@ -98,15 +87,7 @@
     </Fact>
     <Fact path="/phaseOutAmountQPVLID">
       <Name>Qualified Personal Vehicle Loan Amount Phase Out</Name>
-      <Description>The amount which is otherwise allowable as a deduction under subsection (a) as
-        qualified passenger vehicle loan interest (determined without regard to this clause and
-        after the application of clause (i)) shall be reduced (but not below zero) by $200 for each $1,000
-        (or portion thereof) by which the modified adjusted gross income of the taxpayer for the
-        taxable year exceeds $100,000 ($200,000 in the case of a joint return).
-
-        Phaseout amount for the qualified personal vehicle loan deduction:
-        phaseOutAmount= 200*(filing= 200*(filing status specific MAGI/1000)status specific MAGI/1000)
-      </Description>
+      <Description>Phaseout amount for the qualified personal vehicle loan deduction:</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <StepwiseMultiply>
@@ -122,10 +103,6 @@
     </Fact>
     <Fact path="/tentativeQualifiedPersonalVehicleLoanInterestDeduction">
       <Name>Tentative amount of the personal vehicle loan interest deduction</Name>
-      <Description>The lesser of 10000 or actual interest paid minus phase out amount, with a lowest
-        possible
-        value of 0
-      </Description>
       <Derived>
         <GreaterOf>
           <LesserOf>

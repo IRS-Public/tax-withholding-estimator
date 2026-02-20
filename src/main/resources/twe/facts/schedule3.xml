@@ -181,10 +181,7 @@
     <Fact path="/schedule3Line6z">
       <Description>Other nonrefundable credits.</Description>
       <Derived>
-        <Add>
-          <Dependency path="/alternativeMinimumTaxCreditAmount"/>
-          <Dependency path="/contributionsScholarshipGrantingOrganizationsCreditAmount"/>
-        </Add>
+        <Dependency path="/alternativeMinimumTaxCreditAmount"/>
       </Derived>
     </Fact>
     <Fact path="/schedule3Line7">

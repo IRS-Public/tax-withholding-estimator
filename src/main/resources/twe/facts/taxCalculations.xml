@@ -2,6 +2,15 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/totalEstimatedTaxesPaid">
+      <Description>Form 1040 Line 26. The taxpayer's estimated taxes paid for the entire tax year.</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
     <Fact path="/agi">
       <Name>Adjusted Gross Income</Name>
       <Description>Total income to report on line 11 of Form 1040.</Description>
@@ -37,7 +46,7 @@
       </Derived>
     </Fact>
     <Fact path="/taxableIncomeForQBIDeduction">
-      <Description>Taxable income without the QBI Deduction, with coordination with OB3 70111 to exclude limitation on itemized deduction</Description>
+      <Description>Taxable income without the QBI Deduction, with coordination with limitation on itemized deduction</Description>
       <Derived>
         <GreaterOf>
           <Dollar>0</Dollar>

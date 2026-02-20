@@ -403,7 +403,6 @@ and car loan interest deduction
     </Fact>
     <Fact path="/incomeToIncludeForOB3MAGI">
       <Derived>
-        <!--This fact might seem a bit silly given that we are summing a bunch of zeroed out Dollar facts, however we want to be explicit about modeling the tax law in the event that we implement these income sources in the future-->
         <Add>
           <Dependency path="/foreignEarnedIncome"/>
           <Dependency path="/overseasTerritoryIncome"/>

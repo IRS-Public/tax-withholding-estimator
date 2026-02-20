@@ -358,7 +358,7 @@
       </Derived>
     </Fact>
     <Fact path="/scheduleSELine11Self">
-      <Description>Line 10 *2.9%  (medicare self employment tax portion)
+      <Description>Line 10 * 2.9%  (medicare self employment tax portion)
       </Description>
       <Derived>
         <Round>
@@ -594,10 +594,10 @@
       </Derived>
     </Fact>
     <Fact path="/selfEmploymentHealthInsuranceDeductionForm7206Line1">
-      <Description>Total amount paid in 2024 for health insurance coverage established under your business(or the S corporation in which you were a more-than-2% shareholder) for 2024 for you, your spouse,and your dependents.
+      <Description>Total amount paid for health insurance coverage established under your business(or the S corporation in which you were a more-than-2% shareholder)  for you, your spouse,and your dependents.
         Excludes:
         1) Amounts for any month you were eligible to participate in a health plan subsidized by your employer or your spouse&#x2019;s employer or the employer of either your dependent or your child who was under the age of 27 at the end of 2024.
-        2) Any amounts paid, not to exceed $3,000, from retirement plan distributions that were non taxablebecause you are a retired public safety officer.
+        2) Any amounts paid, not to exceed $3,000, from retirement plan distributions that were non taxable because you are a retired public safety officer.
         3) Any payments for qualified long-term care insurance (see line 2)</Description>
       <Derived>
         <Dependency path="/selfEmploymentHealthInsuranceContributions"/>
@@ -757,7 +757,6 @@
         (Schedule C net profit - deductible portion of SE tax) x (plan contribution rate/ 100% + plan contribution rate)
         Because we don't know what the plan contribution rate is, for all intents and purposes, the max SE retirement plan deduction is
         net self-employment profit - SE tax deduction
-        https://www.irs.gov/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction
       </Description>
       <Derived>
         <LesserOf>

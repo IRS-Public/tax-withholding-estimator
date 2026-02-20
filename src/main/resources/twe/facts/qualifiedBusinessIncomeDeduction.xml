@@ -107,12 +107,6 @@
     </Fact>
     <Fact path="/minimumDeductionForActiveQBIAmount">
       <Name>Minimum Deduction for Active QBI</Name>
-      <Description>OB3 70111, amending IRC 26 Section 199A(i): In the case of an applicable
-        taxpayer for any taxable
-        year, the deduction allowed under subsection(a) for the taxable year shall be equal to the
-        greater of&#x2014;(A) the amount of such deduction determined without regard to this
-        subsection,
-        or (B) $400.</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>400</Dollar>
@@ -120,12 +114,6 @@
     </Fact>
     <Fact path="/minimumQBIThresholdForApplicableTaxpayer">
       <Name>Minimum QBI for Base Deduction</Name>
-      <Description>OB3 70111, amending IRC 26 Section 199A(i):
-        (2) APPLICABLE TAXPAYER.&#x2014;For purposes of this sub-section&#x2014;(A) IN
-        GENERAL.&#x2014;The term &#x2018;applicable taxpayer&#x2019;means, with respect to any
-        taxable year, a taxpayer
-        whose aggregate qualified business income with respect to all active qualified trades or
-        businesses of the taxpayer for such taxable year is at least $1,000.</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>1000</Dollar>
@@ -240,7 +228,7 @@
       </Derived>
     </Fact>
     <Fact path="/form8995aLine13">
-      <Description>If there is no phase in, use the tentative QBI Component. If there is any phase in (positive or negative), use that. This deviates from the Form</Description>
+      <Description>Simplifying assumption: if there is no phase in, use the tentative QBI Component. If there is any phase in (positive or negative), use that instead.</Description>
       <Derived>
         <Switch>
           <Case>
@@ -364,7 +352,7 @@
       </Derived>
     </Fact>
     <Fact path="/form8995aLine26">
-      <Description>Form 8895-A Line 26, flows into Line 12. We always calculate the phase in reduction if the taxable income is above the phase in threshold, even if they are above the phase out threshold</Description>
+      <Description>Form 8895-A Line 26, flows into Line 12. Simplifying assumption to always calculate the phase in reduction if the taxable income is above the phase in threshold, even if they are above the phase out threshold</Description>
       <Derived>
         <Switch>
           <Case>
