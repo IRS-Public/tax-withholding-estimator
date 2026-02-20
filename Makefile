@@ -41,7 +41,7 @@ test-watch: ## Run and watch tests
 .PHONY: format
 format: ## Format the Scala and XML code
 	@# We only automatically format the fact configs
-	find $(FACTS_DIR) -name '*xml' | xargs -I {} xmllint --format {} --output {}
+	find $(FACTS_DIR) -name '*.xml' | xargs -I {} xmllint --format {} --output {}
 	sbt scalafmtAll
 	npm --prefix $(TWE_RESOURCES_DIR) run format
 
@@ -62,11 +62,12 @@ ci: ## Run most of the CI checks locally
 	make validate-xml
 	make validate-html
 	make validate-js
+	make validate-scala
 	# Skip semgrep (locally) for now
 
 .PHONY: validate-xml
 validate-xml: ## Validate .xml files
-	find $(FACTS_DIR) -name '*xml' | xargs xmllint --quiet --relaxng $(FACTS_CONFIG) > /dev/null
+	find $(FACTS_DIR) -name '*.xml' | xargs xmllint --quiet --relaxng $(FACTS_CONFIG) > /dev/null
 
 .PHONY: validate-html
 validate-html: ## Validate .html files
@@ -75,6 +76,10 @@ validate-html: ## Validate .html files
 .PHONY: validate-js
 validate-js: ## Run javascript linter
 	npm --prefix $(TWE_RESOURCES_DIR) run lint
+
+.PHONY: validate-scala
+validate-scala: ## Validate Scala code
+	sbt scalafmtCheckAll
 
 # Semgrep setup is not handled by ci-setup, but done separately in the GHA files
 .PHONY:
