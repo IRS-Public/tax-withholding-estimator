@@ -66,7 +66,7 @@ class socialSecurityBenefitsSpec extends AnyFunSuite with TableDrivenPropertyChe
     // Head of Household, same calculation as for Single. SSA AGI more than 25K, less than 34K. Taxable amount < 50% of benefits total.
     (hoh, false, "6000.00", "27000.00", "1000.00"),
 
-    // Quailfied surviving spouse, same calculation as for Single. SSA AGI more than 25K, less than 34K. Taxable amount up to 50% of benefits total.
+    // Qualified surviving spouse, same calculation as for Single. SSA AGI more than 25K, less than 34K. Taxable amount up to 50% of benefits total.
     (qss, false, "5980.00", "31980.00", "2990.00"),
   )
 

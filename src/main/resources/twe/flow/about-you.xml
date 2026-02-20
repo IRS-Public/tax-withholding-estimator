@@ -32,7 +32,7 @@
           <option value="marriedFilingJointly">Married Filing Jointly</option>
           <option value="marriedFilingSeparately">Married Filing Separately</option>
           <option value="headOfHousehold">Head of Household</option>
-          <option value="qualifiedSurvivingSpouse">Qualifying Widow(er)</option>
+          <option value="qualifiedSurvivingSpouse">Qualified Surviving Spouse</option>
         </input>
       </fg-set>
 
@@ -122,7 +122,7 @@
           <li>You paid more than half the cost of keeping up a home for a family member or member of your household for a specific amount of time, and they must meet certain requirements</li>
         </ul>
         <p>
-          <strong>Qualifying Widow(er):</strong>
+          <strong>Qualified Surviving Spouse:</strong>
         </p>
         <ul>
           <li>Your spouse died in <fg-show path="/lastTaxYear"/> or <fg-show path="/taxYearMinusTwo"/></li>
