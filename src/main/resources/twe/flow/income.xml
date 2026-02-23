@@ -331,11 +331,10 @@
               Health coverage contributions can usually be found under a
               <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub.
             </p>
-            <p>Include contributions for:</p>
+            <p><strong>Include contributions for:</strong></p>
             <ul>
               <li>Health insurance plans</li>
               <li>Dental or vision insurance plans</li>
-              <li>Premiums for COBRA continuation coverage</li>
             </ul>
             <p><strong>Don’t include:</strong></p>
             <ul>
@@ -356,7 +355,7 @@
             <summary>Other pre-tax benefits</summary>
             <p>Enter the total contributions made to pay for other pre-tax benefits.</p>
             <p>Benefits contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub.</p>
-            <p>Common pre-tax benefits may include:</p>
+            <p><strong>Common pre-tax benefits may include:</strong></p>
             <ul>
               <li>Accident insurance plans</li>
               <li>Dependent care assistance plans</li>
@@ -395,8 +394,8 @@
             </p>
             <p>
               Learn more about contributions to
-              <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSA</a>
-              and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSA</a>.
+              <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a>
+              and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
             </p>
             <fg-set path="/jobs/*/hsaOrFsaContributionsPerPayPeriod" if-false="/jobs/*/isPastJob">
               <question>Amount per pay period</question>
@@ -494,11 +493,10 @@
             <summary>Health insurance</summary>
             <p>Enter the total contributions made to pay for health coverage.</p>
             <p> Health coverage contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
-            <p>Include contributions for:</p>
+            <p><strong>Include contributions for:</strong></p>
             <ul>
               <li>Health insurance plans</li>
               <li>Dental or vision insurance plans</li>
-              <li>Premiums for COBRA continuation coverage</li>
             </ul>
             <p>
               <strong>Don’t include:</strong>
@@ -521,7 +519,7 @@
             <summary>Other pre-tax benefits</summary>
             <p>Enter the total contributions made to pay for other pre-tax benefits.</p>
             <p>Benefits contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
-            <p>Common pre-tax benefits may include:</p>
+            <p><strong>Common pre-tax benefits may include:</strong></p>
             <ul>
               <li>Accident insurance plans</li>
               <li>Dependent care assistance plans</li>
@@ -552,7 +550,7 @@
             <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
             <p>Enter total contributions to Health Savings Accounts (HSA) or Flexible Spending Account (FSA).</p>
             <p>HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
-            <p>Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSA</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSA</a>.</p>
+            <p>Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.</p>
             <fg-set path="/pensions/*/hsaOrFsaContributionsPerPayPeriod" if-false="/pensions/*/isPastJobIncompleteOrFalse">
               <question>Amount per pay period</question>
               <input type="dollar"/>
@@ -923,6 +921,10 @@
       <modal-content>
         <p>These are amounts withheld, or taken out of your pension or annuity payment to pay for federal taxes.</p>
         <p><strong>On your most recent statement</strong>, check for the federal taxes paid for each payment.</p>
+        <ul>
+          <li>This may appear as a single line called Taxes, FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax or similar. </li>
+          <li>If you have requested extra federal taxes to be withheld, that extra amount may appear on a separate line. Be sure to add these two amounts</li>
+        </ul>
         <p>If the annual amount of your pension or annuity will be the same as last year, you can also refer to your <fg-show path="/lastTaxYear"/> Form 1099-R. To estimate federal taxes withheld for the most recent payment:</p>
         <ol>
           <li>Find Box 4 on the Form 1099-R, which shows the federal taxes withheld for all of last year</li>
@@ -935,8 +937,12 @@
       <modal-heading>How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>?</modal-heading>
       <modal-content>
         <p>These are amounts withheld, or taken out of a pension or annuity payment to pay for federal taxes throughout the year.</p>
-        <p><strong>On your most recent statement</strong>, check for the federal taxes paid so far this year. This might be labeled as year-to-date or YTD. </p>
-        <p>If the annual amount of your pension or annuity will be the same as last year, you can also refer to your <fg-show path="/lastTaxYear"/> Form 1099-R. To estimate federal taxes withheld so far this year:</p>
+        <p><strong>On your most recent statement</strong>, check for the federal taxes paid so far this year. This might be labeled as year-to-date or YTD.</p>
+        <ul>
+          <li>This may appear as a single line called Taxes, FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax or similar.</li>
+          <li>If you have requested extra federal taxes to be withheld, that extra amount may appear on a separate line. Be sure to add these two amounts</li>
+        </ul>
+        <p>If the annual amount of your pension or annuity will be the same as last year, you can also refer to your <fg-show path="/lastTaxYear"/> Form 1099-R. To estimate federal taxes withheld so far this year: </p>
         <ol>
           <li>Find Box 4 on the Form 1099-R, which shows federal taxes withheld last year</li>
           <li>Divide last year’s withholding amount by the number of payments you expect to receive in <fg-show path="/taxYear"/></li>
