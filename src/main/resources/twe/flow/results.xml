@@ -15,17 +15,17 @@
       <div condition="/isOverwithheld" operator="isTrue">
         <p>Based on what you entered, we estimate that <strong>you're withholding more taxes than you need to.</strong></p>
 
-        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isTrue">You'll likely get a federal tax refund for <fg-show path="/taxYear"/>.</p>
-        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isTrue">If you'd like to get more take-home pay, you can <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust your withholding</a> to $0.</p>
+        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isTrue">You'll likely get a tax refund when you file your <fg-show path="/taxYear"/> federal tax return.</p>
+        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isTrue">If you'd like to get more take-home pay and reduce your estimated refund, you can <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust your withholding</a> to $0.</p>
 
-        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isFalse">If you keep your withholding the same, you'll likely get a federal tax refund for <fg-show path="/taxYear"/>.</p>
-        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isFalse">If you'd like to get more take-home pay, you can <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust your withholding</a>.</p>
+        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isFalse">If you keep your withholding the same, you'll likely get a tax refund when you file your <fg-show path="/taxYear"/> federal tax return.</p>
+        <p condition="/cannotZeroOutRefundDueToExcessWithholding" operator="isFalse">If you'd like to get more take-home pay and reduce your estimated refund, you can <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust your withholding</a>.</p>
       </div>
 
       <div condition="/isUnderwithheld" operator="isTrue">
         <p>Based on what you entered, we estimate that <strong>you're not withholding enough taxes.</strong></p>
         <p>
-          If you keep your withholding the same, you’ll likely owe taxes for <fg-show path="/taxYear"/>.
+          If you keep your withholding the same, you’ll likely owe taxes when you file your <fg-show path="/taxYear"/> federal tax return.
           <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">
             You may have to pay a penalty in addition to what you owe if you owe at least $1,000 and more than 10 percent of your tax bill.
           </span>
@@ -34,13 +34,13 @@
         <p>
           <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isFalse">If you’d like to get your tax balance closer to $0,</span>
           <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">If you’d like to get your tax balance closer to $0 and avoid paying a penalty,</span>
-          <span condition="/mayNeedToMakeEstimatedPayments" operator="isFalse">you can <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjust your withholding</a>.</span>
-          <span condition="/mayNeedToMakeEstimatedPayments" operator="isTrue">you can <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjust your withholding</a> and make <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed</span>.
+          <span condition="/mayNeedToMakeEstimatedPayments" operator="isFalse">you can reduce your take-home pay by <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjusting your withholding</a>.</span>
+          <span condition="/mayNeedToMakeEstimatedPayments" operator="isTrue">you can reduce your take-home pay by <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjusting your withholding</a> and making <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed</span>.
         </p>
       </div>
 
       <p condition="/isZeroRefund" operator="isTrue">Based on what you entered, we estimate that <strong>you’re withholding enough to cover your federal taxes.</strong></p>
-      <p condition="/isZeroRefund" operator="isTrue">If you keep your withholding the same, it’s likely you won’t owe federal taxes for <fg-show path="/taxYear"/>.</p>
+      <p condition="/isZeroRefund" operator="isTrue">If you keep your withholding the same, it’s likely you won’t owe federal taxes when you file your <fg-show path="/taxYear"/> federal tax return.</p>
       <p condition="/isZeroRefund" operator="isTrue">If you <a class="usa-link" href="#heading-adjust-withholding">adjust your withholding</a>, your federal tax balance and take-home pay will change.</p>
 
       <div class="fg-estimate">
@@ -94,9 +94,9 @@
             </tbody>
           </table>
 
-          <p>Then, we applied your federal tax bracket to your taxable income to calculate your taxes.</p>
+          <p>Then, we applied the tax brackets to your taxable income to estimate your tax liability for your <fg-show path="/taxYear"/> tax return.</p>
           <table class="usa-table usa-table--borderless width-full">
-            <caption class="usa-sr-only">Federal tax obligation breakdown</caption>
+            <caption class="usa-sr-only">Estimated <fg-show path="/taxYear"/> tax liability breakdown</caption>
             <thead class="usa-sr-only">
               <tr>
                 <th scope="col">Description</th>
@@ -105,7 +105,7 @@
             </thead>
             <tbody>
               <tr>
-                <th scope="row">Federal tax obligation</th>
+                <th scope="row">Estimated <fg-show path="/taxYear"/> tax liability</th>
                 <td><fg-show path="/totalTaxObligationBeforeCreditsAndDeductions"/></td>
               </tr>
             </tbody>
@@ -135,8 +135,8 @@
               </tr>
               <tr>
                 <th scope="row">
-                  <span condition="/isUnderwithheld" operator="isTrue">Estimated federal tax owed</span>
-                  <span condition="/isUnderwithheld" operator="isFalse">Estimated federal tax refund</span>
+                  <span condition="/isUnderwithheld" operator="isTrue">Estimated <fg-show path="/taxYear"/> federal tax owed</span>
+                  <span condition="/isUnderwithheld" operator="isFalse">Estimated <fg-show path="/taxYear"/> federal tax refund</span>
                 </th>
                 <td>
                   <span condition="/isUnderwithheld" operator="isTrue"><fg-show path="/withholdingGap"/></span>
@@ -147,12 +147,12 @@
           </table>
 
           <p condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">If you owe at least $1,000 and more than 10 percent of your tax bill, you may have to pay a penalty in addition to your federal tax owed.</p>
-          <p class="fg-estimate__disclaimer">Note: The IRS does not guarantee the accuracy of this estimate and accepts no liability resulting from your use of this estimation.</p>
+          <p class="fg-estimate__disclaimer">Note: This estimate depends on the accuracy of your information. The IRS does not guarantee the accuracy of this estimate and accepts no liability resulting from your use of this estimation.</p>
         </div>
       </details>
 
-      <h3 id="heading-adjust-withholding-for-more-take-home-pay" condition="/isOverwithheld" operator="isTrue">How to adjust your withholding to get more take-home pay</h3>
-      <h3 id="heading-adjust-withholding-for-lower-tax-balance" condition="/isUnderwithheld" operator="isTrue">How to adjust your withholding to avoid a balance due when you file your tax return</h3>
+      <h3 id="heading-adjust-withholding-for-more-take-home-pay" condition="/isOverwithheld" operator="isTrue">How to adjust your withholding to get more take-home pay, which will reduce your estimated refund</h3>
+      <h3 id="heading-adjust-withholding-for-lower-tax-balance" condition="/isUnderwithheld" operator="isTrue">How to adjust your withholding to get your tax balance closer to $0, which will reduce your take-home pay</h3>
       <h3 id="heading-adjust-withholding" condition="/isZeroRefund" operator="isTrue">How to adjust your withholding</h3>
 
       <p condition="/hasJobsAvailableForExtraWithholdingButNotPensions" operator="isTrue">Use our recommendations to complete Form W-4.</p>
@@ -238,7 +238,7 @@
       <modal-heading>Why is this recommended?</modal-heading>
       <modal-content>
         <p>This is where you can say if you have more than one job, or if you and your spouse (if filing jointly) both work.</p>
-        <p>Even if you have more than one job, the estimator will recommend leaving this box unchecked. This helps protect your privacy from an employer and your calculations will still be correct.</p>
+        <p>Leave this unchecked because the estimator's recommendation already takes multiple jobs (if present) into account so you don't have to reveal this information to your employer.</p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-why-step-3">

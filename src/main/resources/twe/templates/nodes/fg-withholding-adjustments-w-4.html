@@ -11,7 +11,7 @@
                     <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span>
                     employer.
                 </p>
-                <p>Or, use our recommendations to adjust your withholding directly in the employer’s payroll or human resource software.</p>
+                <p>Or, use our recommendations to adjust <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span> withholding directly in <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span> employer’s payroll or human resource software.</p>
                 <div class="stacked-button-group">
                     <button class="usa-button pdf-download" type="button" onclick="downloadW4(window.factGraph, '{{COLLECTION_ID}}')">Download pre-filled Form W-4</button>
                     <a class="usa-button usa-button--outline" href="https://www.irs.gov/pub/irs-pdf/fw4.pdf" download>Download blank Form W-4</a>
@@ -27,11 +27,11 @@
                     <tbody>
                         <tr>
                             <th scope="row">Step 1 (a): Personal information</th>
-                            <td>Enter your name and address</td>
+                            <td>Enter <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span> name and address</td>
                         </tr>
                         <tr>
                             <th scope="row">Step 1 (b): Social security number</th>
-                            <td>Enter your Social Security number (if applicable).</td>
+                            <td>Enter <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span> Social Security number.</td>
                         </tr>
                         <tr>
                             <th scope="row">Step 1 (c): Filing status</th>
@@ -95,7 +95,7 @@
                         </tr>
                         <tr>
                             <th scope="row">Step 5: Sign Here</th>
-                            <td>Sign your signature and enter the date</td>
+                            <td>Sign and enter the date</td>
                         </tr>
                     </tbody>
                 </table>

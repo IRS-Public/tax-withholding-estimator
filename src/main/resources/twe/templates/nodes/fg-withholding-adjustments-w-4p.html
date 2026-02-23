@@ -26,11 +26,11 @@
                     <tbody>
                     <tr>
                         <th scope="row">Step 1 (a): Personal information</th>
-                        <td>Enter your name and address</td>
+                        <td>Enter <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> name and address</td>
                     </tr>
                     <tr>
                         <th scope="row">Step 1 (b): Social security number</th>
-                        <td>Enter your Social Security number (if applicable).</td>
+                        <td>Enter <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> Social Security number.</td>
                     </tr>
                     <tr>
                         <th scope="row">Step 1 (c): Filing status</th>
@@ -94,7 +94,7 @@
                     </tr>
                     <tr>
                         <th scope="row">Step 5: Sign Here</th>
-                        <td>Sign your signature and enter the date</td>
+                        <td>Sign and enter the date</td>
                     </tr>
                     </tbody>
                 </table>
