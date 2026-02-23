@@ -842,6 +842,12 @@ window.handleSectionContinue = handleSectionContinue
 // Add show/hide functionality to all elements
 document.addEventListener('fg-update', showOrHideAllElements)
 showOrHideAllElements()
-
 document.querySelector('#page-content-wrapper').classList.remove('hidden')
 document.querySelector('#loading-spinner').classList.add('hidden')
+
+// This opens all <details> elements that have a complete fact, to help users see information they've entered if they need to return to a page.
+for (const fgSet of document.querySelectorAll('.fg-detail fg-set:not(.hidden)')) {
+  if (fgSet.isComplete()) {
+    fgSet.closest('.fg-detail').setAttribute('open', '')
+  }
+}
