@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches: [ "main" ]
-    tags: [ "*" ]
+    tags: [ "v*" ]
 
 permissions:
   contents: read
@@ -18,7 +18,7 @@ concurrency:
 jobs:
   build-deploy-twe:
     if: vars.build == 'true'
-    uses: IRSDigitalService/shared-actions/.github/workflows/build-deploy-twe.yml@938056b01f1382fd1d36bc1b9b1e6e234f9326aa
+    uses: IRSDigitalService/shared-actions/.github/workflows/build-deploy-twe.yml@main
     permissions:
       id-token: write
       contents: read

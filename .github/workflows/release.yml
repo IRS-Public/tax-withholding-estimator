@@ -1,0 +1,24 @@
+name: Release
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "*" ]
+
+permissions:
+  contents: read
+  id-token: write
+
+# Cancel redundant builds on same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # do not cancel redundant builds on main or release branches
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/heads/release/') }}
+
+jobs:
+  release-twe:
+      if: vars.release == 'true'
+      uses: IRSDigitalService/shared-actions/.github/workflows/release-twe.yml@faa8732c4328b88b607c5d562d25eddbb584f40f
+      secrets: inherit
+      with:
+        sha: ${{ github.sha }}
