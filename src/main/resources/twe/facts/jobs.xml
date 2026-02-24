@@ -474,7 +474,7 @@
                   </Divisors>
                 </Divide>
                 <!-- Multiply it by the average pay to estimate the average withholding -->
-                <Dependency path="../inconsistentPayAverage"/>
+                <Dependency path="../inconsistentPayAverageExcludingBonus"/>
               </Multiply>
             </Then>
           </Case>
@@ -483,7 +483,52 @@
               <True/>
             </When>
             <Then>
-              <Dependency path="../amountWithheldLastPaycheck"/>
+              <!-- If there is a bonus we assume future paychecks will have a proportionally reduced withholding -->
+              <Switch>
+                <Case>
+                  <When>
+                    <GreaterThan>
+                      <Left>
+                        <Dependency path="../mostRecentPayPeriodBonusAmount "/>
+                      </Left>
+                      <Right>
+                        <Dollar>0</Dollar>
+                      </Right>
+                    </GreaterThan>
+                  </When>
+                  <Then>
+                    <Multiply>
+                      <!-- Get the percentage withheld from the most recent paycheck -->
+                      <Divide>
+                        <Dividend>
+                          <Dependency path="../amountWithheldLastPaycheck"/>
+                        </Dividend>
+                        <Divisors>
+                          <Dependency path="../amountLastPaycheck"/>
+                        </Divisors>
+                      </Divide>
+                      <!-- Multiply it by the typical pay to estimate the withholding -->
+                      <Subtract>
+                        <Minuend>
+                          <Dependency path="../amountLastPaycheck"/>
+                        </Minuend>
+                        <Subtrahends>
+                          <Dependency path="../mostRecentPayPeriodBonusAmount "/>
+                        </Subtrahends>
+                      </Subtract>
+                    </Multiply>
+                  </Then>
+                </Case>
+                <Case>
+                  <!-- This case is not necessarily needed, but ensures we don't have any differences due to precision -->
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Dependency path="../amountWithheldLastPaycheck"/>
+                  </Then>
+                </Case>
+              </Switch>
             </Then>
           </Case>
         </Switch>
