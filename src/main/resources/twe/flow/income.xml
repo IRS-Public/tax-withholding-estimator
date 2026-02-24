@@ -713,7 +713,7 @@
       <h3>Other taxable income not already included above</h3>
       <p>Estimate any other taxable income that you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> think you'll receive in <fg-show path="/taxYear"/>, including:</p>
       <ul>
-        <li>Scholarships</li>
+        <li>Taxable scholarships</li>
         <li>Winnings from gambling</li>
         <li>Alimony from pre-2019 divorce decrees</li>
         <li>Court awards and damages (unless they're for physical injury or sickness)</li>
@@ -838,10 +838,10 @@
     <modal-dialog id="modal-what-counts-pension">
       <modal-heading>What counts as a pension or annuity?</modal-heading>
       <modal-content>
-        <p>A pension is typically a retirement plan that makes a series of payments to you after you retire from work, based on factors such as years of service and past pay.</p>
-        <p>An annuity is a series of payments from a company that provides steady retirement income.</p>
+        <p>A pension is generally a series of definitely determinable payments made to you after you retire from work. Pension payments are made regularly and are based on factors such as years of service and past pay.</p>
+        <p>An annuity is a series of payments under a contract made at regular intervals over a period of more than 1 full year.</p>
         <p>At the end of the year, a pension or annuity provider will send a Form 1099-R to report this income.</p>
-        <p><strong>Don’t include</strong> distributions or withdrawals from 401(k), 403(b), or 457(b) plans; Trump accounts; or Individual Retirement Arrangements (IRAs). Add this income in the <strong>Pre-tax retirement account income</strong> section instead.</p>
+        <p>Don’t include distributions or withdrawals from 401(k), 403(b), or 457(b) plans or Individual Retirement Arrangements (IRAs). Add this income as <strong>Pre-tax retirement account income</strong> instead.</p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-pension-gross-pay-period">
@@ -995,13 +995,13 @@
     <modal-dialog id="modal-what-counts-pre-tax-retirement">
       <modal-heading>What counts as a distribution from pre-tax retirement accounts?</modal-heading>
       <modal-content>
-        <p>Any withdrawal of pre-tax funds from a 401(k), 403(b), 457(b), Trump account, or traditional Individual Retirement Arrangement (IRA) counts as a distribution. This includes distributions at retirement, early withdrawals, required minimum distributions (RMDs), and pretax-to-Roth conversions.</p>
+        <p>Any withdrawal of pre-tax funds from a 401(k), 403(b), 457(b), or traditional Individual Retirement Arrangement (IRA) counts as a distribution. This includes distributions at retirement, early withdrawals, required minimum distributions (RMDs), and pretax-to-Roth conversions.</p>
         <p>At the end of the year, your financial institution will send a Form 1099-R to report this income.</p>
         <p>
           <strong>Don’t include:</strong>
         </p>
         <ul>
-          <li>Distributions from Roth (post-tax) accounts. These distributions have already been taxed.</li>
+          <li>Distributions from Roth (post-tax) accounts.</li>
           <li>Other forms of retirement income, like pensions, annuities, Social Security, or other investment income. You’ll enter them in other sections.</li>
         </ul>
       </modal-content>
