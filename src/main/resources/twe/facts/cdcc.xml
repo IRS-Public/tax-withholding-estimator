@@ -558,7 +558,8 @@
     <Fact path="/cdccCreditLimit">
       <Name>Tax Liability Credit Limit</Name>
       <Description>
-        The maximum possible credit the filer can receive for CDCC, calculated using the Credit Limit Worksheet
+        The maximum possible credit the filer can receive for CDCC, calculated using the Credit Limit Worksheet.
+        The following simplifying assumption was made for user convenience: do not reduce by the amount of dependent care benefits the filer receives from their employer.
       </Description>
       <!--
         Calculated using the "Credit Limit Worksheet"

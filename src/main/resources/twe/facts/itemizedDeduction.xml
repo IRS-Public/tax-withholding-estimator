@@ -200,7 +200,9 @@
     </Fact>
     <Fact path="/casualtyLossesTotal">
       <Name>Total of all casualty loss items </Name>
-      <Description>Casualty and theft losses relating to your home, household items, and vehicles if the loss is attributable to a federally-declared disaster or a State declared disaster</Description>
+      <Description>Casualty and theft losses relating to your home, household items, and vehicles if the loss is attributable to a federally-declared disaster or a State declared disaster
+        The following simplifying assumption was made for user convenience: Do not apply the dollar and AGI limit, i.e. only itemized if the casualty loss is in excess of $100 from each casualty, to the extent that the total exceeds 10% of AGI.
+      </Description>
       <Writable>
         <Dollar/>
       </Writable>

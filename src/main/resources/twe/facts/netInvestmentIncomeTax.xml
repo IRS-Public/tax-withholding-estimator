@@ -19,9 +19,9 @@
           <Dependency path="/pensionsIncomeTotal"/>
           <!-- Line 4a-->
           <Dependency path="/sCorpPassiveIncome"/>
-          <Dependency path="/netScheduleEIncome"/>
           <Dependency path="/rentalIncome"/>
           <Dependency path="/royaltyIncome"/>
+          <Dependency path="/nonRentalRoyaltyScheduleEIncome"/>
           <!-- Line 5a-->
           <Dependency path="/netCapitalGainOrLoss"/>
         </Add>

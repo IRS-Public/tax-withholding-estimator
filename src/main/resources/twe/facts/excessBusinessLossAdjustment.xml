@@ -79,7 +79,7 @@
     </Fact>
     <Fact path="/form461Line10">
       <Derived>
-        <Dependency path="/netScheduleEIncome"/>
+        <Dependency path="/nonRentalRoyaltyScheduleEIncome"/>
       </Derived>
     </Fact>
     <Fact path="/form461Line11">

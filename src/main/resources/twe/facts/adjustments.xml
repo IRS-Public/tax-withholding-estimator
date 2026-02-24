@@ -147,7 +147,8 @@
       </Derived>
     </Fact>
     <Fact path="/adjustmentsToIncome">
-      <Description>Adjustments to income to report on line 10 of Form 1040 and line 26 of Schedule 1.</Description>
+      <Description>Adjustments to income to report on line 10 of Form 1040 and line 26 of Schedule 1.
+        The following simplifying assumption was made for user convenience: Not all Schedule 1 adjustments are included to reduce the number of questions</Description>
       <Derived>
         <GreaterOf>
           <Round>

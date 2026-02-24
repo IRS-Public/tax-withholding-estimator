@@ -265,7 +265,7 @@
       </Derived>
     </Fact>
     <Fact path="/adoptionCreditNonRefundable">
-      <Description>Simplifying assumption</Description>
+      <Description>Line 18. The following simplifying assumption was made for user convenience: do take take the lesser of CLW line 5 and tentative adoption credit non-refundable, and instead only use tentative adoption credit non-refundable</Description>
       <Derived>
         <Dependency path="/tentativeNonRefundableAdoptionCreditAmountWithCarryforward"/>
       </Derived>

@@ -319,7 +319,7 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/netScheduleEIncome">
+    <Fact path="/nonRentalRoyaltyScheduleEIncome">
       <Description>Net Schedule E income. Input is not accessible in the Flow and not accessible for taxpayers to provide values.Used for backwards compatibility with certain test scenarios where Net Schedule E was a separate input than Rentals and Royalties</Description>
       <Writable>
         <Dollar/>
@@ -592,7 +592,7 @@ and car loan interest deduction
           <Dependency path="/netCapitalGainOrLoss"/>
           <Dependency path="/sCorpPassiveIncome"/>
           <Dependency path="/sCorpNonPassiveIncome"/>
-          <Dependency path="/netScheduleEIncome"/>
+          <Dependency path="/nonRentalRoyaltyScheduleEIncome"/>
           <Dependency path="/rentalIncome"/>
           <Dependency path="/royaltyIncome"/>
           <Dependency path="/nonSpecificOtherIncome"/>

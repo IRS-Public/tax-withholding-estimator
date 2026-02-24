@@ -110,7 +110,7 @@
       </Derived>
     </Fact>
     <Fact path="/retirementSavingsContributionsCredit">
-      <Description>Simplifying assumption for calculation without phaseout</Description>
+      <Description>The following simplifying assumption was made for user convenience: do not apply AGI phaseout</Description>
       <Derived>
         <LesserOf>
           <Dependency path="/retirementSavingsContributionsTaxCreditAmount"/>

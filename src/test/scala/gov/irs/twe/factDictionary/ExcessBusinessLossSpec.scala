@@ -19,12 +19,12 @@ class ExcessBusinessLossSpec extends AnyFunSuite with TableDrivenPropertyChecks 
 
   // Test data table for Form 461 calculation scenarios.
   // We minimize the variable inputs by setting most Line 9 dependencies to zero,
-  // focusing on the primary loss drivers (netSelfEmploymentIncomeTotal, netScheduleEIncome).
+  // focusing on the primary loss drivers (netSelfEmploymentIncomeTotal, nonRentalRoyaltyScheduleEIncome).
   val dataTable = Table(
     (
       "status",
       "netSelfEmploymentIncomeTotal",
-      "netScheduleEIncome",
+      "nonRentalRoyaltyScheduleEIncome",
       "expectedExcessBusinessLossAdjustment",
     ),
     (mfj, "-50000", "0", "0.00"),
@@ -70,7 +70,7 @@ class ExcessBusinessLossSpec extends AnyFunSuite with TableDrivenPropertyChecks 
       (
           status,
           netSelfEmploymentIncomeTotal,
-          netScheduleEIncome,
+          nonRentalRoyaltyScheduleEIncome,
           expectedExcessBusinessLossAdjustment,
       ) =>
         // Define all dependencies required by the XML, setting non-variable ones to 0
@@ -78,7 +78,7 @@ class ExcessBusinessLossSpec extends AnyFunSuite with TableDrivenPropertyChecks 
           factDictionary,
           Path("/filingStatus") -> status,
           Path("/netSelfEmploymentIncomeTotal") -> Dollar(netSelfEmploymentIncomeTotal),
-          Path("/netScheduleEIncome") -> Dollar(netScheduleEIncome),
+          Path("/nonRentalRoyaltyScheduleEIncome") -> Dollar(nonRentalRoyaltyScheduleEIncome),
           // Set Line 9 dependencies not in the table to zero for consistent testing
           Path("/shortTermCapitalGainsIncome") -> Dollar("0"),
           Path("/longTermCapitalGainsIncome") -> Dollar("0"),

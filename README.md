@@ -18,7 +18,7 @@ There are several key differences between TWE and preparing an annual tax return
 By open-sourcing this project, we aim to provide deeper insight into how the TWE generates withholding recommendations. Our goal is to foster trust through transparency, allowing taxpayers to see exactly how the core tax engine processes data and applies year-to-date assumptions to generate the W-4 and W-4P.
 
 ### Contributing
-We value community feedback and invite public participation. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
 
 This codebase is dedicated to the public domain under the [Creative Commons Zero v1.0 Universal](LICENSE.md) license (CC0 1.0).
 

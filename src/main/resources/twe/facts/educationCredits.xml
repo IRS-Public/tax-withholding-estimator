@@ -324,7 +324,7 @@
       </Derived>
     </Fact>
     <Fact path="/llcAdjustedQualifiedEducationExpenses">
-      <Description>Form 8863 Line 31</Description>
+      <Description>Form 8863 Line 31. The following simplifying assumption was made for user convenience: do not calculate adjusted AOTC expenses based on part 3 of Form 8863</Description>
       <Derived>
         <Dependency path="/llcQualifiedEducationExpenses"/>
       </Derived>
@@ -377,7 +377,7 @@
       </Derived>
     </Fact>
     <Fact path="/educationCreditLimitWorksheetLine1">
-      <Description>Simplifying Assumption</Description>
+      <Description>The following simplifying assumption was made for user convenience: do not include phased out /reducedLlcAfterPhaseout as Credit Limit Worksheet Line 1</Description>
       <Derived>
         <Dollar>0</Dollar>
       </Derived>

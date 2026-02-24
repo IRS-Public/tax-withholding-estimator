@@ -130,7 +130,7 @@
               <Dependency path="/sCorpNonPassiveIncome"/>
               <Dependency path="/rentalIncome"/>
               <Dependency path="/royaltyIncome"/>
-              <Dependency path="/netScheduleEIncome"/>
+              <Dependency path="/nonRentalRoyaltyScheduleEIncome"/>
             </Add>
           </Minuend>
           <Subtrahends>
@@ -214,10 +214,10 @@
       </Derived>
     </Fact>
     <Fact path="/form8995aLine11">
+      <Description>The following simplifying assumption was made for user convenience: Because Line 4 (Allocable share of W-2 wages from the trade, business, or aggregation) is zero'd out, Line 10 will always be zero. We don't collect or derive this information in TWE today so we ignore it here and always take the tentative QBI component</Description>
       <Derived>
         <LesserOf>
           <Dependency path="/tentativeQualifiedBusinessIncomeComponent"/>
-          <!-- Because Line 4 (Allocable share of W-2 wages from the trade, business, or aggregation) is zero'd out, Line 10 will always be zero. We don't collect or derive this information in TWE today so we ignore it here and always take the tentative QBI component        -->
           <!--          <Dependency path="/form8995aLine10"/>-->
         </LesserOf>
       </Derived>
@@ -228,7 +228,7 @@
       </Derived>
     </Fact>
     <Fact path="/form8995aLine13">
-      <Description>Simplifying assumption: if there is no phase in, use the tentative QBI Component. If there is any phase in (positive or negative), use that instead.</Description>
+      <Description>The following simplifying assumption was made for user convenience: if there is no phase in, use the tentative QBI Component. If there is any phase in (positive or negative), use that instead.</Description>
       <Derived>
         <Switch>
           <Case>
@@ -352,7 +352,7 @@
       </Derived>
     </Fact>
     <Fact path="/form8995aLine26">
-      <Description>Form 8895-A Line 26, flows into Line 12. Simplifying assumption to always calculate the phase in reduction if the taxable income is above the phase in threshold, even if they are above the phase out threshold</Description>
+      <Description>Form 8895-A Line 26, flows into Line 12. The following simplifying assumption was made for user convenience: we always calculate the phase in reduction if the taxable income is above the phase in threshold, even if they are above the phase out threshold</Description>
       <Derived>
         <Switch>
           <Case>

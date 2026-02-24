@@ -534,7 +534,7 @@ private val SHEET_ROW_TO_WRITABLE_FACT = Map(
   "alimonyPaid" -> "/alimonyPaid",
   // Other Income
   "RentsRoyalties (or losses)" -> "/rentalIncome",
-  "SchedEpassive" -> "/netScheduleEIncome",
+  "SchedEpassive" -> "/nonRentalRoyaltyScheduleEIncome",
   // "S-CorpPassive" -> "/sCorpPassiveIncome", // Not in the spreadsheet
   "S-CorpNonPassive" -> "/sCorpNonPassiveIncome",
   "EstdTaxPymntsToDate" -> "/totalEstimatedTaxesPaid",
