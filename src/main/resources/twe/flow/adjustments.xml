@@ -121,7 +121,7 @@
         </li>
       </ul>
       <p>
-        <a target="_blank" href="https://www.irs.gov/taxtopics/tc455" class="usa-link">Learn more about military and intelligency community moving expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" href="https://www.irs.gov/taxtopics/tc455" class="usa-link">Learn more about military and intelligence community moving expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/movingExpensesForArmedServicesMembers">
         <question>Moving expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
