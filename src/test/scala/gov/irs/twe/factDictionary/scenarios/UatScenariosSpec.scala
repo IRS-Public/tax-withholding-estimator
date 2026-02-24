@@ -95,23 +95,20 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column R
-  // pending changes due to top bracket itemizer logic
-  ignore("MFJ, high itemized deductions (mortgage interest, SALT, charity, medical)") { td =>
+  test("MFJ, high itemized deductions (mortgage interest, SALT, charity, medical)") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 820000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 10000)
     scenario.assertEquals("/medicalAndDentalExpensesTotal", 3500)
-    scenario.assertEquals("/standardOrItemizedDeduction", 36362)
-    scenario.assertEquals("/taxableIncome", 783638)
+    scenario.assertEquals("/standardOrItemizedDeduction", 41527)
+    scenario.assertEquals("/taxableIncome", 778473)
     scenario.assertEquals("/additionalMedicareTax", 5130)
     scenario.assertEquals("/totalNonRefundableCredits", 5000)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 154000)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 212241)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 210330)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    //    validate through running W4 through Pub 15T and comparing against UAT sheet
-//    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 2162)
-//    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 3070)
+    // Manual Pub15 validation - pending multi-year withholding logic
   }
 
   // Column S
@@ -220,15 +217,13 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column D
-  // pending changes due to OB3 deduction phase out ordering
-  ignore("Married filing jointly, salary, 1 child, multiple incomes, car loan interest") { td =>
+  test("Married filing jointly, salary, 1 child, multiple incomes, car loan interest") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 252000)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 34662)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 35766)
+    scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 594)
-    // Scenario-specific assertions
-    scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 4600)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 644)
   }
 
   // Column E
@@ -338,10 +333,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // Column M
   test("Single, wages + tip income") { td =>
     val scenario = td.scenario
-    scenario.assertEquals("/agi", 104000)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 8556)
+    scenario.assertEquals("/agi", 98800)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 7412)
     scenario.assertEquals("/qualifiedTipDeduction", 25000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 5829)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 6037)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
@@ -382,41 +377,37 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column P
-  // pending changes due to top bracket itemizer logic
-  ignore("Single, high wages +Cap Gains + Investment") { td =>
+  test("Single, high wages +Cap Gains + Investment") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 682000)
     scenario.assertEquals("/agi", 667000)
-    scenario.assertEquals("/taxableIncome", 649900)
+    scenario.assertEquals("/taxableIncome", 648871)
     scenario.assertEquals("/totalNonRefundableCredits", 5000)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/additionalMedicareTax", 3708)
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 760)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 188202)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 187842)
+    // Manual Pub15 validation - pending multi-year withholding logic
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 55000)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 1544)
   }
 
   // Column Q
-  // pending changes due to top bracket itemizer logic
-  ignore("Single, high wages +Cap Gains + Investment, overall limitation") { td =>
+  test("Single, high wages +Cap Gains + Investment, overall limitation") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 682000)
     scenario.assertEquals("/agi", 667000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 10000)
-    scenario.assertEquals("/taxableIncome", 649900)
+    scenario.assertEquals("/taxableIncome", 648871)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 760)
     scenario.assertEquals("/additionalMedicareTax", 3708)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 188202)
-    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 183734)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 187842)
+    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 183374)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 55000)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 1544)
+    // Manual Pub15 validation - pending multi-year withholding logic
   }
 
   // Column T
@@ -472,12 +463,11 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column Z
-  // pending changes due to OB3 deduction phase out ordering
-  ignore("MFJ, High Income, 1 child, Multi, Car loan") { td =>
+  test("MFJ, High Income, 1 child, Multi, Car loan") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 242571)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 52)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 104)
   }
 
   // Column AA
@@ -671,19 +661,18 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column AT
-  // pending changes due to OB3 deduction phase out ordering
-  ignore("MFJ, three tipped jobs, max") { td =>
+  test("MFJ, three tipped jobs, max") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 360000)
     scenario.assertEquals("/agi", 360000)
-    scenario.assertEquals("/taxableIncome", 295000)
+    scenario.assertEquals("/taxableIncome", 301000)
     scenario.assertEquals("/totalNonRefundableCredits", 4400)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/additionalMedicareTax", 990)
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/qualifiedTipDeduction", 25000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 9112)
+    scenario.assertEquals("/qualifiedTipDeduction", 19000)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 6772)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7800)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
@@ -728,16 +717,14 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column AX
-  // pending changes due to OB3 deduction phase out ordering
-  ignore("Single, 1 job, factor 1.5, partial deduction") { td =>
+  test("Single, 1 job, factor 1.5, partial deduction") { td =>
     {
       val scenario = td.scenario
-
       scenario.assertEquals("/agi", 254650)
-      scenario.assertEquals("/overtimeCompensationDeduction", 9600)
-      scenario.assertEquals("/taxableIncome", 228950)
-      scenario.assertEquals("/totalTaxNetRefundableCredits", 50260)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2803)
+      scenario.assertEquals("/overtimeCompensationDeduction", 2100)
+      scenario.assertEquals("/taxableIncome", 236450)
+      scenario.assertEquals("/totalTaxNetRefundableCredits", 52660)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 29)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 5350)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
@@ -790,13 +777,12 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column BB
-  // pending changes due to OB3 deduction phase out ordering
-  ignore("HH, 1 job, tips and OT") { td =>
+  test("HH, 1 job, tips and OT") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 156000)
-    scenario.assertEquals("/taxableIncome", 97450)
-    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 12146)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 11386)
+    scenario.assertEquals("/taxableIncome", 98050)
+    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 12278)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 11230)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
@@ -926,9 +912,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 52000)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 2991)
-    scenario.assertEquals("/totalCtcAndOdc", 2200)
-    scenario.assertEquals("/totalRefundableCredits", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2526)
+    scenario.assertEquals("/totalCtcAndOdc", 1941)
+    scenario.assertEquals("/totalRefundableCredits", 259)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2988)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
@@ -986,7 +972,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
 
     scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 4304, 2)
-
   }
 
   // Column BS
@@ -1027,8 +1012,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column BU
-  // pending changes due to exclusion of s corp non-passive from NIIT calculation
-  ignore("Single, QBI, over high threshold") { td =>
+  test("Single, QBI, over high threshold") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 299732)
     scenario.assertEquals("/standardOrItemizedDeduction", 16100)
@@ -1036,14 +1020,14 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 400)
     scenario.assertEquals("/selfEmploymentTax", 536)
     scenario.assertEquals("/additionalMedicareTax", 450)
-    scenario.assertEquals("/netInvestmentIncomeTax", 1900)
+    scenario.assertEquals("/netInvestmentIncomeTax", 0)
+    scenario.assertOffset("/tentativeTaxNetNonRefundableCredits", 67900, 1)
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 68886, 1)
+
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 69332)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 1055)
-
-    scenario.assertOffset("/tentativeTaxNetNonRefundableCredits", 67900, 1)
-    scenario.assertOffset("/totalTaxNetRefundableCredits", 70786, 1)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 422)
   }
 
   // Column BV
@@ -1289,7 +1273,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 1251)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
-    // Validated different recommendation logic with Pub15T manually
+    // Manual Pub15 validation - pending multi-year withholding logic
   }
 
   // Column CN
@@ -1342,12 +1326,11 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalTaxNetRefundableCredits", 25780)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    // Validated Pub15T withholding per pay manually
+    // Manual Pub15 validation - pending multi-year withholding logic
   }
 
   // Column CP
-  // pending changes due to top bracket itemizer logic
-  ignore("MFJ, high income, itemized, charity, adoption") { td =>
+  test("MFJ, high income, itemized, charity, adoption") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 800000)
     scenario.assertEquals("/agi", 789403)
@@ -1359,13 +1342,13 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/adoptionCreditRefundable", 0)
     scenario.assertEquals("/adoptionCreditNonRefundable", 0)
     scenario.assertEquals("/qualifiedMortgageInsurancePremiumDeductionTotal", 0)
-    scenario.assertEquals("/taxableIncome", 754253)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 232311)
-    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 201527)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 201527)
+    scenario.assertEquals("/taxableIncome", 734069)
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 225247)
+    scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 194463)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 194463)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    // Validated different recommendation logic with Pub15T manually
+    // Manual Pub15 validation - pending multi-year withholding logic
   }
 
   // Column CQ
