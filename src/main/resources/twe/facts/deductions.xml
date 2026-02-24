@@ -109,10 +109,8 @@
     <Fact path="/standardDeductionWillBeUsed">
       <Description>
         Whether the standard deduction is used, based on the taxpayer's choice and net benefit.
-
-        Effectively, the only time we will *not* use the standard deduction is when the taxpayer wants to itemize,
+        Effectively, the only time we will *not* use the standard deduction is when non-MFS taxpayer wants to itemize,
         and their itemized deduction amount is greater than the standard deduction amount that they are eligible for.
-
         In all other cases, the standard deduction will be used.
       </Description>
       <Derived>
@@ -136,7 +134,10 @@
                     <Dependency path="/itemizedDeduction"/>
                   </Left>
                   <Right>
-                    <Dependency path="/standardDeduction"/>
+                    <Add>
+                      <Dependency path="/standardDeduction"/>
+                      <Dependency path="/nonItemizerCharitableContributionDeduction"/>
+                    </Add>
                   </Right>
                 </GreaterThan>
               </Not>

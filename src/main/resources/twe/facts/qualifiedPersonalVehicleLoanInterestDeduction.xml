@@ -87,7 +87,7 @@
     </Fact>
     <Fact path="/phaseOutAmountQPVLID">
       <Name>Qualified Personal Vehicle Loan Amount Phase Out</Name>
-      <Description>Phaseout amount for the qualified personal vehicle loan deduction:</Description>
+      <Description>Phaseout amount for the qualified</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <StepwiseMultiply>
@@ -105,17 +105,17 @@
       <Name>Tentative amount of the personal vehicle loan interest deduction</Name>
       <Derived>
         <GreaterOf>
-          <LesserOf>
-            <Dependency path="/maxQPVLIDAmount"/>
-            <Subtract>
-              <Minuend>
+          <Subtract>
+            <Minuend>
+              <LesserOf>
+                <Dependency path="/maxQPVLIDAmount"/>
                 <Dependency path="/personalVehicleLoanInterestAmount"/>
-              </Minuend>
-              <Subtrahends>
-                <Dependency path="/phaseOutAmountQPVLID"/>
-              </Subtrahends>
-            </Subtract>
-          </LesserOf>
+              </LesserOf>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/phaseOutAmountQPVLID"/>
+            </Subtrahends>
+          </Subtract>
           <Dollar>0</Dollar>
         </GreaterOf>
       </Derived>

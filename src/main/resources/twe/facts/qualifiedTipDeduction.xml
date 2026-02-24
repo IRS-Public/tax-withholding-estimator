@@ -96,17 +96,17 @@
                 <Dependency path="/isEligibleForQualifiedTipDeduction"/>
               </When>
               <Then>
-                <LesserOf>
-                  <Subtract>
-                    <Minuend>
+                <Subtract>
+                  <Minuend>
+                    <LesserOf>
                       <Dependency path="/qualifiedTipIncome"/>
-                    </Minuend>
-                    <Subtrahends>
-                      <Dependency path="/qualifiedTipDeductionPhaseOut"/>
-                    </Subtrahends>
-                  </Subtract>
-                  <Dollar>25000</Dollar>
-                </LesserOf>
+                      <Dependency path="/maxQualifiedTipDeductionAmount"/>
+                    </LesserOf>
+                  </Minuend>
+                  <Subtrahends>
+                    <Dependency path="/qualifiedTipDeductionPhaseOut"/>
+                  </Subtrahends>
+                </Subtract>
               </Then>
             </Case>
             <Case>
@@ -119,28 +119,6 @@
             </Case>
           </Switch>
         </GreaterOf>
-      </Derived>
-    </Fact>
-    <Fact path="/qualifiedTipDeductionLimit">
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/isFilingStatusMFJ"/>
-            </When>
-            <Then>
-              <Dollar>25000</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>12500</Dollar>
-            </Then>
-          </Case>
-        </Switch>
       </Derived>
     </Fact>
     <Fact path="/qualifiedTipDeductionPhaseOutThreshold">

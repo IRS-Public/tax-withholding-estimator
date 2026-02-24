@@ -24,8 +24,7 @@
         <Dollar>25000</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/applicableMaxOvertimeCompensationDeductionAmount">
-      <Name>Maximum overtime compensation deduction </Name>
+    <Fact path="/overtimeCompensationDeductionMax">
       <Derived>
         <Switch>
           <Case>
@@ -46,12 +45,6 @@
           </Case>
         </Switch>
       </Derived>
-    </Fact>
-    <Fact path="/hasOvertimeCompThisTaxYear">
-      <Name>Has the taxpayer received overtime comp this tax years?</Name>
-      <Writable>
-        <Boolean/>
-      </Writable>
     </Fact>
     <Fact path="/isEligibleForOvertimeCompensationDeduction">
       <Name>Taxpayer eligible for overtime compensation deduction</Name>
@@ -152,17 +145,17 @@
                 <Dependency path="/isEligibleForOvertimeCompensationDeduction"/>
               </When>
               <Then>
-                <LesserOf>
-                  <Subtract>
-                    <Minuend>
+                <Subtract>
+                  <Minuend>
+                    <LesserOf>
                       <Dependency path="/totalDeductibleOvertimeCompensation"/>
-                    </Minuend>
-                    <Subtrahends>
-                      <Dependency path="/overtimeCompensationDeductionPhaseOut"/>
-                    </Subtrahends>
-                  </Subtract>
-                  <Dependency path="/overtimeCompensationDeductionMaximum"/>
-                </LesserOf>
+                      <Dependency path="/overtimeCompensationDeductionMax"/>
+                    </LesserOf>
+                  </Minuend>
+                  <Subtrahends>
+                    <Dependency path="/overtimeCompensationDeductionPhaseOut"/>
+                  </Subtrahends>
+                </Subtract>
               </Then>
             </Case>
             <Case>
@@ -175,28 +168,6 @@
             </Case>
           </Switch>
         </GreaterOf>
-      </Derived>
-    </Fact>
-    <Fact path="/overtimeCompensationDeductionMaximum">
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/isFilingStatusMFJ"/>
-            </When>
-            <Then>
-              <Dollar>25000</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>12500</Dollar>
-            </Then>
-          </Case>
-        </Switch>
       </Derived>
     </Fact>
   </Facts>

@@ -24,6 +24,22 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/flowIsEligibleForCDCC">
+      <Description>Taxpayers who 1) have CDCC earned income; and 2) are non-MFS or MFS and didn't live together should see the CDCC section of the flow.MFS taxpayers generally cannot claim CDCC, in particular if they will live together for the entire year. If they are MFS and do not live together all year, or any non-MFS status, they are eligible </Description>
+      <Derived>
+        <All>
+          <Dependency path="/hasCdccEarnedIncome"/>
+          <Any>
+            <Not>
+              <Dependency path="/isFilingStatusMFS"/>
+            </Not>
+            <Not>
+              <Dependency path="/isMFSLivedTogether"/>
+            </Not>
+          </Any>
+        </All>
+      </Derived>
+    </Fact>
     <Fact path="/cdccMaxClaimableExpenseWithOneQP">
       <Name>Maximum Claimable Expense With One Qualifying Person</Name>
       <TaxYear>2026</TaxYear>

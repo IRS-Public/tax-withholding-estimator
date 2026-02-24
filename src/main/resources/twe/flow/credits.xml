@@ -39,16 +39,16 @@
         <input type="int"/>
       </fg-set>
 
-      <h3 condition="/hasCdccEarnedIncome" operator="isTrue">Child and Dependent Care Credit (CDCC)</h3>
-      <p condition="/hasCdccEarnedIncome" operator="isTrue">The CDCC helps taxpayers who pay for the care of a family or household member while working or looking for work.</p>
-      <p condition="/hasCdccEarnedIncome" operator="isTrue"><modal-link for="modal-cdcc-who-can-claim-and-eligible-expenses">Who can claim the CDCC and what expenses are eligible?</modal-link></p>
-      <fg-set path="/cdccQualifyingPersons" if-true="/hasCdccEarnedIncome">
+      <h3 condition="/flowIsEligibleForCDCC" operator="isTrue">Child and Dependent Care Credit (CDCC)</h3>
+      <p condition="/flowIsEligibleForCDCC" operator="isTrue">The CDCC helps taxpayers who pay for the care of a family or household member while working or looking for work.</p>
+      <p condition="/flowIsEligibleForCDCC" operator="isTrue"><modal-link for="modal-cdcc-who-can-claim-and-eligible-expenses">Who can claim the CDCC and what expenses are eligible?</modal-link></p>
+      <fg-set path="/cdccQualifyingPersons" if-true="/flowIsEligibleForCDCC">
         <question>
           Number of qualifying children and dependents
         </question>
         <input type="int"/>
       </fg-set>
-      <fg-set path="/cdccQualifyingExpenses" if-true="/hasCdccEarnedIncome">
+      <fg-set path="/cdccQualifyingExpenses" if-true="/flowIsEligibleForCDCC">
         <question>
           Estimated annual care expenses for <fg-show path="/taxYear"/>
         </question>

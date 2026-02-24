@@ -2,6 +2,15 @@
 <?xml-model href="./FactDictionaryModule.rng"?>
 <FactDictionaryModule>
   <Facts>
+    <Fact path="/nonItemizerCharitableContributionDeductionAmount">
+      <Name>Amount a non-itemizer taxpayer contributed to charitable causes during the tax year</Name>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
     <Fact path="/nonItemizerCharitableContributionDeductionMFJMax">
       <Name>Maximum non itemizer charitable deduction cap for MFJ filer</Name>
       <TaxYear>2026</TaxYear>
@@ -44,15 +53,6 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/nonItemizerCharitableContributionDeductionAmount">
-      <Name>Amount a non-itemizer taxpayer contributed to charitable causes during the tax year</Name>
-      <Writable>
-        <Dollar/>
-      </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
-    </Fact>
     <Fact path="/contributionsForNonItemizerCharitableContributionDeduction">
       <Name>Amount a non-itemizer taxpayer contributed to charitable causes during the tax year</Name>
       <Derived>
@@ -94,7 +94,10 @@
           <!--                  Compare against itemizedDeductionTotal because itemizedDeduction creates a
           circular dependency with OB3 deductions-->
           <Left>
-            <Dependency path="/standardDeduction"/>
+            <Add>
+              <Dependency path="/standardDeduction"/>
+              <Dependency path="/hypotheticalNonItemizerCharitableContributionDeduction"/>
+            </Add>
           </Left>
           <Right>
             <Dependency path="/itemizedDeductionTotal"/>
@@ -145,6 +148,37 @@
             </When>
             <Then>
               <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/hypotheticalNonItemizerCharitableContributionDeduction">
+      <Description>Non-itemizer charitable deduction without taking into account eligibility</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFJ"/>
+              </All>
+            </When>
+            <Then>
+              <LesserOf>
+                <Dependency path="/nonItemizerCharitableContributionDeductionMFJMax"/>
+                <Dependency path="/contributionsForNonItemizerCharitableContributionDeduction"/>
+              </LesserOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <LesserOf>
+                <Dependency path="/nonItemizerCharitableContributionDeductionNonMFJMax"/>
+                <Dependency path="/contributionsForNonItemizerCharitableContributionDeduction"/>
+              </LesserOf>
             </Then>
           </Case>
         </Switch>

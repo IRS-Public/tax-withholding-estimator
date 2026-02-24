@@ -320,7 +320,7 @@
       </Placeholder>
     </Fact>
     <Fact path="/netScheduleEIncome">
-      <Description>Net Schedule E income</Description>
+      <Description>Net Schedule E income. Input is not accessible in the Flow and not accessible for taxpayers to provide values.Used for backwards compatibility with certain test scenarios where Net Schedule E was a separate input than Rentals and Royalties</Description>
       <Writable>
         <Dollar/>
       </Writable>

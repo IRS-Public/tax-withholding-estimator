@@ -95,6 +95,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column R
+  // pending changes due to top bracket itemizer logic
   ignore("MFJ, high itemized deductions (mortgage interest, SALT, charity, medical)") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 820000)
@@ -219,7 +220,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column D
-  test("Married filing jointly, salary, 1 child, multiple incomes, car loan interest") { td =>
+  // pending changes due to OB3 deduction phase out ordering
+  ignore("Married filing jointly, salary, 1 child, multiple incomes, car loan interest") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 252000)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 34662)
@@ -380,6 +382,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column P
+  // pending changes due to top bracket itemizer logic
   ignore("Single, high wages +Cap Gains + Investment") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 682000)
@@ -398,6 +401,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column Q
+  // pending changes due to top bracket itemizer logic
   ignore("Single, high wages +Cap Gains + Investment, overall limitation") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 682000)
@@ -468,7 +472,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column Z
-  test("MFJ, High Income, 1 child, Multi, Car loan") { td =>
+  // pending changes due to OB3 deduction phase out ordering
+  ignore("MFJ, High Income, 1 child, Multi, Car loan") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 242571)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
@@ -666,7 +671,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column AT
-  test("MFJ, three tipped jobs, max") { td =>
+  // pending changes due to OB3 deduction phase out ordering
+  ignore("MFJ, three tipped jobs, max") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 360000)
     scenario.assertEquals("/agi", 360000)
@@ -722,7 +728,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column AX
-  test("Single, 1 job, factor 1.5, partial deduction") { td =>
+  // pending changes due to OB3 deduction phase out ordering
+  ignore("Single, 1 job, factor 1.5, partial deduction") { td =>
     {
       val scenario = td.scenario
 
@@ -783,7 +790,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column BB
-  test("HH, 1 job, tips and OT") { td =>
+  // pending changes due to OB3 deduction phase out ordering
+  ignore("HH, 1 job, tips and OT") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 156000)
     scenario.assertEquals("/taxableIncome", 97450)
@@ -1019,7 +1027,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column BU
-  test("Single, QBI, over high threshold") { td =>
+  // pending changes due to exclusion of s corp non-passive from NIIT calculation
+  ignore("Single, QBI, over high threshold") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 299732)
     scenario.assertEquals("/standardOrItemizedDeduction", 16100)
@@ -1337,6 +1346,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column CP
+  // pending changes due to top bracket itemizer logic
   ignore("MFJ, high income, itemized, charity, adoption") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 800000)

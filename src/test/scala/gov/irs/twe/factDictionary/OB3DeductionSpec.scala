@@ -39,8 +39,8 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (single, standardDeduction.single, "15000", "50000", "2000", "1000"),
       (single, standardDeduction.single, "15749", "50000", "2000", "1000"),
       // single itemized is larger than standard, no deduction
-      (single, standardDeduction.single, "15755", "50000", "1000", "0"),
-      (single, standardDeduction.single, "15755", "50000", "2000", "0"),
+      (single, standardDeduction.single, "16755", "50000", "1000", "0"),
+      (single, standardDeduction.single, "16755", "50000", "2000", "0"),
 
       // MFS
       // MFS standard is larger than itemized
@@ -52,8 +52,8 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (mfs, standardDeduction.mfs, "15749", "50000", "2000", "1000"),
 
       // MFS itemized is larger than standard, no deduction
-      (mfs, standardDeduction.mfs, "15755", "50000", "1000", "0"),
-      (mfs, standardDeduction.mfs, "15755", "50000", "2000", "0"),
+      (mfs, standardDeduction.mfs, "16755", "50000", "1000", "0"),
+      (mfs, standardDeduction.mfs, "16755", "50000", "2000", "0"),
 
       // QSS
       // QSS standard is larger than itemized
@@ -65,8 +65,8 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (qss, standardDeduction.qss, "31499", "50000", "2000", "1000"),
 
       // QSS itemized is larger than standard, no deduction
-      (qss, standardDeduction.qss, "31500", "50000", "1000", "0"),
-      (qss, standardDeduction.qss, "31600", "50000", "2000", "0"),
+      (qss, standardDeduction.qss, "32500", "50000", "1000", "0"),
+      (qss, standardDeduction.qss, "32600", "50000", "2000", "0"),
 
       // HOH
       // HOH standard is larger than itemized
@@ -79,8 +79,8 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (hoh, standardDeduction.hoh, "23624", "50000", "2000", "1000"),
 
       // HOH itemized is larger than standard, no deduction
-      (hoh, standardDeduction.hoh, "23625", "50000", "1000", "0"),
-      (hoh, standardDeduction.hoh, "23630", "50000", "2000", "0"),
+      (hoh, standardDeduction.hoh, "25625", "50000", "1000", "0"),
+      (hoh, standardDeduction.hoh, "25630", "50000", "2000", "0"),
 
       // MFJ
       // MFJ standard is larger than itemized
@@ -92,8 +92,8 @@ class OB3DeductionSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (mfj, standardDeduction.mfj, "31499", "50000", "3000", "2000"),
 
       // MFJ itemized is larger than standard, no deduction
-      (mfj, standardDeduction.mfj, "31500", "50000", "1000", "0"),
-      (mfj, standardDeduction.mfj, "31600", "50000", "2000", "0"),
+      (mfj, standardDeduction.mfj, "33500", "50000", "1000", "0"),
+      (mfj, standardDeduction.mfj, "33600", "50000", "2000", "0"),
     )
     forAll(dataTable) {
       (
