@@ -11,7 +11,7 @@
       <p>This estimator only supports some adjustments. There may be other adjustments that you qualify for, which could impact your estimate.</p>
 
       <h3 condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">Student loan interest deduction</h3>
-      <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue"> If you pay interest in <fg-show path="/taxYear"/>, on a qualified student loan for yourself, your spouse, or a person who was your dependent when you took out the loan, you can deduct up to $2,500. </p>
+      <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">If you’re legally responsible for paying the interest on a qualified student loan, you can deduct up to <fg-show path="/maxStudentLoanDeduction"/> in interest payments. The loan must be for you, your spouse, or your dependent.</p>
       <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">
         This includes both required and voluntarily pre-paid interest payments.
       </p>
@@ -111,9 +111,17 @@
       </fg-set>
 
       <h3>Military and intelligence community moving expenses</h3>
-      <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you're</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse are</span> a member of the Armed Forces or intelligence community and your move was due to a change of station, you can deduct unreimbursed <fg-show path="/taxYear"/> moving expenses.</p>
+      <p>You can deduct unreimbursed moving expenses paid in <fg-show path="/taxYear"/> if:</p>
+      <ul>
+        <li>
+          <span condition="/isFilingStatusMFJ" operator="isFalse">You're</span><span condition="/isFilingStatusMFJ" operator="isTrue">You or your spouse are</span> a member of the Armed Forces on active duty and your move was due to a military order and a permanent change of station, or
+        </li>
+        <li>
+          <span condition="/isFilingStatusMFJ" operator="isFalse">You're</span><span condition="/isFilingStatusMFJ" operator="isTrue">You or your spouse are</span> an employee or new appointee of the intelligence community and your move was due to a change in assignment which required relocation
+        </li>
+      </ul>
       <p>
-        <a target="_blank" href="https://www.irs.gov/taxtopics/tc455" class="usa-link">Learn more about moving expenses for members of the armed forces.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" href="https://www.irs.gov/taxtopics/tc455" class="usa-link">Learn more about military and intelligency community moving expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/movingExpensesForArmedServicesMembers">
         <question>Moving expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
