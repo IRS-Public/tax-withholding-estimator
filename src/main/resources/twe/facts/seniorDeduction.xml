@@ -17,10 +17,15 @@
     <Fact path="/couldEitherTaxpayerBeEligibleForSeniorDeduction">
       <Description>Either the primary or secondary taxpayer could be eligible for the senior deduction</Description>
       <Derived>
-        <Any>
-          <Dependency path="/couldPrimaryTaxpayerBeEligibleForSeniorDeduction"/>
-          <Dependency path="/couldSecondaryTaxpayerBeEligibleForSeniorDeduction"/>
-        </Any>
+        <All>
+          <Any>
+            <Dependency path="/couldPrimaryTaxpayerBeEligibleForSeniorDeduction"/>
+            <Dependency path="/couldSecondaryTaxpayerBeEligibleForSeniorDeduction"/>
+          </Any>
+          <Not>
+            <Dependency path="/aboveIncomeCapForSeniorDeduction"/>
+          </Not>
+        </All>
       </Derived>
     </Fact>
     <Fact path="/couldPrimaryTaxpayerBeEligibleForSeniorDeduction">
@@ -153,6 +158,13 @@
         <Dollar>75000</Dollar>
       </Derived>
     </Fact>
+    <Fact path="/seniorDeductionAdditionalIncomeCap">
+      <Description>The amount of income above the phaseout amount that leads to being completely phased out</Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Dollar>100000</Dollar>
+      </Derived>
+    </Fact>
     <Fact path="/seniorDeductionPhaseOutStart">
       <Derived>
         <Switch>
@@ -190,6 +202,18 @@
         </GreaterOf>
       </Derived>
     </Fact>
+    <Fact path="/aboveIncomeCapForSeniorDeduction">
+      <Derived>
+        <GreaterThanOrEqual>
+          <Left>
+            <Dependency path="/excessOverThresholdSeniorDeduction"/>
+          </Left>
+          <Right>
+            <Dependency path="/seniorDeductionAdditionalIncomeCap"/>
+          </Right>
+        </GreaterThanOrEqual>
+      </Derived>
+    </Fact>
     <Fact path="/applicableMaxSeniorDeductionAmount">
       <Name>Maximum senior deduction amount</Name>
       <Description>The maximum amount a single taxpayer can deduct. Doubled for MFJ if both
@@ -210,6 +234,22 @@
       <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>6000</Dollar>
+      </Derived>
+    </Fact>
+    <Fact path="/maxSeniorDeductionAmount">
+      <Description>Max senior deduction amount. Doesn't account for for income limits</Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="/maxSeniorDeductionAmountPerEligibleTaxpayer"/>
+          <Add>
+            <Count>
+              <Dependency path="/couldPrimaryTaxpayerBeEligibleForSeniorDeduction"/>
+            </Count>
+            <Count>
+              <Dependency path="/couldSecondaryTaxpayerBeEligibleForSeniorDeduction"/>
+            </Count>
+          </Add>
+        </Multiply>
       </Derived>
     </Fact>
     <Fact path="/seniorDeduction">
