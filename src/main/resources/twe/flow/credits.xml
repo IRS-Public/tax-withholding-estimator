@@ -7,12 +7,11 @@
 
       <p>
         Credits directly reduce the amount of tax you owe, dollar for dollar.
-        Unlike deductions or adjustments, which lower taxable income, credits lower your tax bill itself.
-        Some credits can even increase your refund if the credit is larger than the tax you owe.
+        Certain credits can increase your refund if their combined amount is larger than the tax you owe.
       </p>
       <p>
         This estimator only supports some credits.
-        There may be other credits you qualify for that could impact your estimate.
+        There may be other credits you qualify for that could impact your estimated refund or tax owed.
       </p>
 
       <h3 condition="/tentativelyEligibleForCtcOdc" operator="isTrue">Child Tax Credit (CTC)</h3>
@@ -23,20 +22,20 @@
           Number of children
         </question>
         <hint>
-          Don’t count children without a Social Security number (SSN).
-          Leave blank if you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> don’t have an SSN.
+          Don’t count children without a Social Security number (SSN) valid for work.
+          Leave blank if <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">both you and your spouse</span> don’t have an SSN.
         </hint>
         <input type="int"/>
       </fg-set>
 
-      <h3 condition="/tentativelyEligibleForCtcOdc" operator="isTrue">Child for Other Dependents Credit (ODC)</h3>
+      <h3 condition="/tentativelyEligibleForCtcOdc" operator="isTrue">Credit for Other Dependents (ODC)</h3>
       <p condition="/tentativelyEligibleForCtcOdc" operator="isTrue">Taxpayers with dependents who don’t qualify for the Child Tax Credit may be able to claim the ODC.</p>
       <p condition="/tentativelyEligibleForCtcOdc" operator="isTrue"><modal-link for="modal-odc-who-can-claim">Who can claim the ODC?</modal-link></p>
       <fg-set path="/odcEligibleDependents" if-true="/tentativelyEligibleForCtcOdc">
         <question>
-          Number of dependents
+          Number of other dependents
         </question>
-        <hint>Leave blank if you’re not a U.S. citizen, national, or lawful resident.</hint>
+        <hint>Leave blank if you’re not a U.S. citizen, national, or lawful resident. Don't include dependents that you already reported for the Child Tax Credit.</hint>
         <input type="int"/>
       </fg-set>
 
@@ -57,7 +56,7 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h3 condition="/flowShouldShowEitcSection" operator="isTrue">Earned Income Tax Credit</h3>
+      <h3 condition="/flowShouldShowEitcSection" operator="isTrue">Earned Income Tax Credit (EITC)</h3>
       <p condition="/flowShouldShowEitcSection" operator="isTrue">The EITC helps low- to moderate-income workers and families lower their taxes.</p>
       <p condition="/flowShouldShowEitcSection" operator="isTrue"><modal-link for="modal-eitc-who-can-claim">Who can claim the EITC?</modal-link></p>
       <fg-set path="/eitcQualifyingChildren" if-true="/flowShouldAskForEitcQualifyingChildren">
