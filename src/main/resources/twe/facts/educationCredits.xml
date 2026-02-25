@@ -377,9 +377,8 @@
       </Derived>
     </Fact>
     <Fact path="/educationCreditLimitWorksheetLine1">
-      <Description>The following simplifying assumption was made for user convenience: do not include phased out /reducedLlcAfterPhaseout as Credit Limit Worksheet Line 1</Description>
       <Derived>
-        <Dollar>0</Dollar>
+        <Dependency path="/reducedLlcAfterPhaseout"/>
       </Derived>
     </Fact>
     <Fact path="/educationCreditLimitWorksheetLine2">
@@ -412,14 +411,17 @@
     </Fact>
     <Fact path="/educationCreditLimitWorksheetLine6">
       <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="/educationCreditLimitWorksheetLine4"/>
-          </Minuend>
-          <Subtrahends>
-            <Dependency path="/educationCreditLimitWorksheetLine5"/>
-          </Subtrahends>
-        </Subtract>
+        <GreaterOf>
+          <Dollar>0</Dollar>
+          <Subtract>
+            <Minuend>
+              <Dependency path="/educationCreditLimitWorksheetLine4"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="/educationCreditLimitWorksheetLine5"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
       </Derived>
     </Fact>
     <Fact path="/educationCreditLimitWorksheetLine7">

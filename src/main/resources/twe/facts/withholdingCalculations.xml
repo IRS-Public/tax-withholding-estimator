@@ -131,35 +131,6 @@
         </Round>
       </Derived>
     </Fact>
-    <Fact path="/jobs/*/proportionOfIncome">
-      <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/jobs/*/conditionForPossibleW4Jobs"/>
-            </When>
-            <Then>
-              <Divide>
-                <Dividend>
-                  <Dependency path="../annualizedIncome"/>
-                </Dividend>
-                <Divisors>
-                  <Dependency path="/annualizedIncomeFromAvailableJobs"/>
-                </Divisors>
-              </Divide>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>0</Dollar>
-            </Then>
-          </Case>
-        </Switch>
-      </Derived>
-    </Fact>
     <Fact path="/jobs/*/restOfYearStandardWithholding">
       <Derived>
         <Multiply>
@@ -173,18 +144,6 @@
           </Divide>
           <Dependency path="../fullPayPeriods"/>
         </Multiply>
-      </Derived>
-    </Fact>
-    <Fact path="/jobs/*/proportionOfRestOfYearStandardWithholding">
-      <Derived>
-        <Divide>
-          <Dividend>
-            <Dependency path="../restOfYearStandardWithholding"/>
-          </Dividend>
-          <Divisors>
-            <Dependency path="/totalRestOfYearStandardWithholding"/>
-          </Divisors>
-        </Divide>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/tentativeWithholdingAmount">
@@ -219,7 +178,7 @@
               <Divide>
                 <Dividend>
                   <Multiply>
-                    <!-- Ensure taxGap gets converted to a positive number and annualized -->
+                    <!-- Ensure taxGap gets converted to a positive number-->
                     <Dependency path="/taxGap"/>
                     <Int>-1</Int>
                     <Dependency path="../payPeriodsPerYear"/>
@@ -459,20 +418,6 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/annualizedIncomeFromAvailableJobs">
-      <Derived>
-        <CollectionSum>
-          <Dependency path="/jobsAvailableForExtraWithholding/*/annualizedIncome"/>
-        </CollectionSum>
-      </Derived>
-    </Fact>
-    <Fact path="/totalRestOfYearStandardWithholding">
-      <Derived>
-        <CollectionSum>
-          <Dependency path="/jobs/*/restOfYearStandardWithholding"/>
-        </CollectionSum>
-      </Derived>
-    </Fact>
     <Fact path="/jobsAvailableForExtraWithholding">
       <Description>Jobs that are ended or end too soon are not candidates for extra withholding on a
         new W4.</Description>
@@ -538,14 +483,6 @@
             </Then>
           </Case>
         </Switch>
-      </Derived>
-    </Fact>
-    <Fact path="/totalYearToDateJobsWithholding">
-      <Description>Total actual withholding for all jobs</Description>
-      <Derived>
-        <CollectionSum>
-          <Dependency path="/jobs/*/yearToDateWithholding"/>
-        </CollectionSum>
       </Derived>
     </Fact>
     <Fact path="/totalEndOfYearProjectedWithholding">

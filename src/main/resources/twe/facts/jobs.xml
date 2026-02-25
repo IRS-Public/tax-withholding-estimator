@@ -582,7 +582,7 @@
       </Placeholder>
     </Fact>
     <Fact path="/jobs/*/totalBonusReceived">
-      <Description>The total amount of bonus per year for a specific job</Description>
+      <Description>The total amount of bonus per year for a specific job. The following simplifying assumption was made for user convenience: if there were bonuses earlier than this period, such as last year's end-of-year bonus being paid out in early January, then those aren't accounted for here</Description>
       <Derived>
         <Add>
           <Dependency path="../mostRecentPayPeriodBonusAmount"/>

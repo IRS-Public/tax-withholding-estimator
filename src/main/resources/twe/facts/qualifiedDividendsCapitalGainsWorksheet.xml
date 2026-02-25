@@ -106,10 +106,13 @@
     </Fact>
     <Fact path="/qdcgWorksheetLine3">
       <Derived>
-        <Dependency path="/netCapitalGainsWithoutQualifiedDividends"/>
+        <LesserOf>
+          <Dependency path="/scheduleDLine16"/>
+          <Dependency path="/netLongTermGainOrLoss"/>
+        </LesserOf>
       </Derived>
     </Fact>
-    <Fact path="/qualifiedDividendsAndLongTermCapitalGains">
+    <Fact path="/qdcgWorksheetLine4">
       <Description>The sum of Qualified Dividends and Long-Term Capital Gains.
         Line 4 - Qualified Dividends and Capital Gain Worksheet
       </Description>
@@ -139,7 +142,7 @@
       </Description>
       <Derived>
         <LesserOf>
-          <Dependency path="/taxableIncomeMinusNetGains"/>
+          <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
           <Dependency path="/qdcgWorksheetLine7"/>
         </LesserOf>
       </Derived>
@@ -168,7 +171,7 @@
       <Derived>
         <LesserOf>
           <Dependency path="/taxableIncome"/>
-          <Dependency path="/qualifiedDividendsAndLongTermCapitalGains"/>
+          <Dependency path="/qdcgWorksheetLine4"/>
         </LesserOf>
       </Derived>
     </Fact>
@@ -204,7 +207,7 @@
     <Fact path="/qdcgWorksheetLine15">
       <Derived>
         <Add>
-          <Dependency path="/taxableIncomeMinusNetGains"/>
+          <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
           <Dependency path="/amountOfNetGainsTaxedAt0"/>
         </Add>
       </Derived>

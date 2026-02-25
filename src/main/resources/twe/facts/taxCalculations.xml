@@ -1053,11 +1053,8 @@
         </Round>
       </Derived>
     </Fact>
-    <Fact path="/taxableIncomeMinusNetGains">
-      <Description>
-        Remaining taxable income after subtracting qualified dividends and long-term capital gains.
-        Line 5 - Qualified Dividends and Capital Gain Worksheet
-      </Description>
+    <Fact path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5">
+      <Description>Line 5 - Qualified Dividends and Capital Gain Worksheet</Description>
       <Derived>
         <GreaterOf>
           <Dollar>0</Dollar>
@@ -1066,13 +1063,13 @@
               <Dependency path="/taxableIncome"/>
             </Minuend>
             <Subtrahends>
-              <Dependency path="/qualifiedDividendsAndLongTermCapitalGains"/>
+              <Dependency path="/qdcgWorksheetLine4"/>
             </Subtrahends>
           </Subtract>
         </GreaterOf>
       </Derived>
     </Fact>
-    <Fact path="/roundedTaxableIncomeMinusNetGains">
+    <Fact path="/roundedTaxableIncomeMinusQDAndNetGains">
       <Name>Rounded taxable income minus net gains</Name>
       <Derived>
         <Switch>
@@ -1081,7 +1078,7 @@
             <When>
               <LessThanOrEqual>
                 <Left>
-                  <Dependency path="/taxableIncomeMinusNetGains"/>
+                  <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
                 </Left>
                 <Right>
                   <Dollar>0</Dollar>
@@ -1097,7 +1094,7 @@
             <When>
               <LessThan>
                 <Left>
-                  <Dependency path="/taxableIncomeMinusNetGains"/>
+                  <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
                 </Left>
                 <Right>
                   <Dollar>5</Dollar>
@@ -1112,7 +1109,7 @@
             <When>
               <LessThan>
                 <Left>
-                  <Dependency path="/taxableIncomeMinusNetGains"/>
+                  <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
                 </Left>
                 <Right>
                   <Dollar>15</Dollar>
@@ -1127,7 +1124,7 @@
             <When>
               <LessThan>
                 <Left>
-                  <Dependency path="/taxableIncomeMinusNetGains"/>
+                  <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
                 </Left>
                 <Right>
                   <Dollar>25</Dollar>
@@ -1143,7 +1140,7 @@
             <When>
               <LessThan>
                 <Left>
-                  <Dependency path="/taxableIncomeMinusNetGains"/>
+                  <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
                 </Left>
                 <Right>
                   <Dollar>3000</Dollar>
@@ -1154,7 +1151,7 @@
               <Add>
                 <StepwiseMultiply>
                   <Multiplicand>
-                    <Dependency path="/taxableIncomeMinusNetGains"/>
+                    <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
                   </Multiplicand>
                   <Rate>
                     <Rational>25/25</Rational>
@@ -1171,7 +1168,7 @@
             <When>
               <LessThan>
                 <Left>
-                  <Dependency path="/taxableIncomeMinusNetGains"/>
+                  <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
                 </Left>
                 <Right>
                   <Dollar>100000</Dollar>
@@ -1182,7 +1179,7 @@
               <Add>
                 <StepwiseMultiply>
                   <Multiplicand>
-                    <Dependency path="/taxableIncomeMinusNetGains"/>
+                    <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
                   </Multiplicand>
                   <Rate>
                     <Rational>50/50</Rational>
@@ -1199,7 +1196,7 @@
             <When>
               <GreaterThanOrEqual>
                 <Left>
-                  <Dependency path="/taxableIncomeMinusNetGains"/>
+                  <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
                 </Left>
                 <Right>
                   <Dollar>100000</Dollar>
@@ -1207,7 +1204,7 @@
               </GreaterThanOrEqual>
             </When>
             <Then>
-              <Dependency path="/taxableIncomeMinusNetGains"/>
+              <Dependency path="/taxableIncomeMinusQDAndNetGainsQDCGWorkSheetLine5"/>
             </Then>
           </Case>
         </Switch>
@@ -1234,7 +1231,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>24800</Dollar>
@@ -1244,7 +1241,7 @@
                     <Then>
                       <Multiply>
                         <Rational>10/100</Rational>
-                        <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                        <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                       </Multiply>
                     </Then>
                   </Case>
@@ -1253,7 +1250,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>100800</Dollar>
@@ -1267,7 +1264,7 @@
                           <Rational>12/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>24800</Dollar>
@@ -1282,7 +1279,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>211400</Dollar>
@@ -1296,7 +1293,7 @@
                           <Rational>22/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>100800</Dollar>
@@ -1312,7 +1309,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>403550</Dollar>
@@ -1326,7 +1323,7 @@
                           <Rational>24/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>211400</Dollar>
@@ -1342,7 +1339,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>512450</Dollar>
@@ -1356,7 +1353,7 @@
                           <Rational>32/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>403550</Dollar>
@@ -1372,7 +1369,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>768700</Dollar>
@@ -1386,7 +1383,7 @@
                           <Rational>35/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>512450</Dollar>
@@ -1401,7 +1398,7 @@
                     <When>
                       <GreaterThan>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>768700</Dollar>
@@ -1415,7 +1412,7 @@
                           <Rational>37/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>768700</Dollar>
@@ -1440,7 +1437,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>17700</Dollar>
@@ -1450,7 +1447,7 @@
                     <Then>
                       <Multiply>
                         <Rational>10/100</Rational>
-                        <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                        <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                       </Multiply>
                     </Then>
                   </Case>
@@ -1459,7 +1456,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>67450</Dollar>
@@ -1473,7 +1470,7 @@
                           <Rational>12/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>17700</Dollar>
@@ -1488,7 +1485,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>105700</Dollar>
@@ -1502,7 +1499,7 @@
                           <Rational>22/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>67450</Dollar>
@@ -1517,7 +1514,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>201750</Dollar>
@@ -1531,7 +1528,7 @@
                           <Rational>24/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>105700</Dollar>
@@ -1546,7 +1543,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>256200</Dollar>
@@ -1560,7 +1557,7 @@
                           <Rational>32/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>201750</Dollar>
@@ -1575,7 +1572,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>640600</Dollar>
@@ -1589,7 +1586,7 @@
                           <Rational>35/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>256200</Dollar>
@@ -1604,7 +1601,7 @@
                     <When>
                       <GreaterThan>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>640600</Dollar>
@@ -1618,7 +1615,7 @@
                           <Rational>37/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>640600</Dollar>
@@ -1643,7 +1640,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>12400</Dollar>
@@ -1653,7 +1650,7 @@
                     <Then>
                       <Multiply>
                         <Rational>10/100</Rational>
-                        <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                        <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                       </Multiply>
                     </Then>
                   </Case>
@@ -1662,7 +1659,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>50400</Dollar>
@@ -1676,7 +1673,7 @@
                           <Rational>12/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>12400</Dollar>
@@ -1691,7 +1688,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>105700</Dollar>
@@ -1705,7 +1702,7 @@
                           <Rational>22/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>50400</Dollar>
@@ -1720,7 +1717,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>201775</Dollar>
@@ -1734,7 +1731,7 @@
                           <Rational>24/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>105700</Dollar>
@@ -1749,7 +1746,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>256225</Dollar>
@@ -1763,7 +1760,7 @@
                           <Rational>32/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>201775</Dollar>
@@ -1778,7 +1775,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>640600</Dollar>
@@ -1792,7 +1789,7 @@
                           <Rational>35/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>256225</Dollar>
@@ -1807,7 +1804,7 @@
                     <When>
                       <GreaterThan>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>640600</Dollar>
@@ -1821,7 +1818,7 @@
                           <Rational>37/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>640600</Dollar>
@@ -1846,7 +1843,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>12400</Dollar>
@@ -1856,7 +1853,7 @@
                     <Then>
                       <Multiply>
                         <Rational>10/100</Rational>
-                        <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                        <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                       </Multiply>
                     </Then>
                   </Case>
@@ -1865,7 +1862,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>50400</Dollar>
@@ -1879,7 +1876,7 @@
                           <Rational>12/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>12400</Dollar>
@@ -1894,7 +1891,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>105700</Dollar>
@@ -1908,7 +1905,7 @@
                           <Rational>22/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>50400</Dollar>
@@ -1923,7 +1920,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>201775</Dollar>
@@ -1937,7 +1934,7 @@
                           <Rational>24/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>105700</Dollar>
@@ -1952,7 +1949,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>256225</Dollar>
@@ -1966,7 +1963,7 @@
                           <Rational>32/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>201775</Dollar>
@@ -1981,7 +1978,7 @@
                     <When>
                       <LessThanOrEqual>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>384350</Dollar>
@@ -1995,7 +1992,7 @@
                           <Rational>35/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>256225</Dollar>
@@ -2010,7 +2007,7 @@
                     <When>
                       <GreaterThan>
                         <Left>
-                          <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                          <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                         </Left>
                         <Right>
                           <Dollar>384350</Dollar>
@@ -2024,7 +2021,7 @@
                           <Rational>37/100</Rational>
                           <Subtract>
                             <Minuend>
-                              <Dependency path="/roundedTaxableIncomeMinusNetGains"/>
+                              <Dependency path="/roundedTaxableIncomeMinusQDAndNetGains"/>
                             </Minuend>
                             <Subtrahends>
                               <Dollar>384350</Dollar>

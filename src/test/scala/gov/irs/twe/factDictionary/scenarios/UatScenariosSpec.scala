@@ -30,7 +30,7 @@ import scala.math.Fractional.Implicits.infixFractionalOps
 
 class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   val CSV_ROOT: Path = os.pwd / "src" / "test" / "resources" / "csv"
-  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-02-11.csv"
+  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-02-24.csv"
 
   case class FixtureParam(scenario: scenarios.Scenario)
 
@@ -162,6 +162,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column U
+  // pending updated spreadsheet with derivation for LLC
   test("MFJ, college student dependent + tuition payments") { td =>
     val scenario = td.scenario
     scenario.graph.set("/odcEligibleDependents", 1)
@@ -169,17 +170,17 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/taxableIncome", 71800)
     scenario.assertEquals("/totalCtcAndOdc", 500)
-    scenario.assertEquals("/lifetimeLearningCredit", 1500)
     scenario.assertEquals("/americanOpportunityCredit", 1000)
+    scenario.assertOffset("/lifetimeLearningCredit", 2000, -500)
     scenario.assertEquals("/totalRefundableCredits", 1000)
-    scenario.assertEquals("/totalNonRefundableCredits", 2000)
     scenario.assertEquals("/additionalMedicareTax", 0)
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 3020)
+    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 3670, -650)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+
   }
 
   // Column AK
@@ -1239,6 +1240,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   }
 
   // Column CL
+  // pending spreadsheet with updated derivation of non-MFS ceiling for phaseout
   test("Single, MIP phased out") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/incomeTotal", 137000)
@@ -1250,12 +1252,13 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 13000)
     scenario.assertEquals("/overtimeCompensationDeduction", 3750)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 1301)
+    scenario.assertOffset("/qualifiedMortgageInsurancePremiumDeductionTotal", 1500, 247)
     scenario.assertEquals("/selfEmploymentTax", 989)
-    scenario.assertEquals("/qualifiedMortgageInsurancePremiumDeductionTotal", 1747)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 24796)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 17)
+
   }
 
   // Column CM

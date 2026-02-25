@@ -243,11 +243,16 @@
             <Dependency path="/capitalLossLimit"/>
             <Dollar>-1.00</Dollar>
           </Multiply>
-          <Add>
-            <Dependency path="/netShortTermGainOrLoss"/>
-            <Dependency path="/netLongTermGainOrLoss"/>
-          </Add>
+          <Dependency path="/scheduleDLine16"/>
         </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/scheduleDLine16">
+      <Derived>
+        <Add>
+          <Dependency path="/netShortTermGainOrLoss"/>
+          <Dependency path="/netLongTermGainOrLoss"/>
+        </Add>
       </Derived>
     </Fact>
     <Fact path="/netCapitalGainsWithoutQualifiedDividends">
@@ -261,7 +266,7 @@
                     <Dollar>0</Dollar>
                   </Left>
                   <Right>
-                    <Dependency path="/netLongTermGainOrLoss"/>
+                    <Dependency path="/scheduleDLine16"/>
                   </Right>
                 </GreaterThanOrEqual>
                 <GreaterThanOrEqual>
@@ -269,7 +274,7 @@
                     <Dollar>0</Dollar>
                   </Left>
                   <Right>
-                    <Dependency path="/netCapitalGainOrLoss"/>
+                    <Dependency path="/scheduleDLine16"/>
                   </Right>
                 </GreaterThanOrEqual>
               </Any>
@@ -293,7 +298,7 @@
       </Derived>
     </Fact>
     <Fact path="/netCapitalGains">
-      <Description>Qualified Dividends + lesser of long term and gross capital gains. Used in QBI Deduction and QDCG Worksheet</Description>
+      <Description>Qualified Dividends + lesser of long term and gross capital gains. Used in QBI Deduction</Description>
       <Derived>
         <Add>
           <Dependency path="/qualifiedDividendsIncome"/>
