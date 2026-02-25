@@ -466,8 +466,11 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("MFJ, High Income, 1 child, Multi, Car loan") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 242571)
+    // This is off because the scenarios need to be updated to account for the QPVLID
+    // rounding the phase-out amount up (instead of rounding down, which is more common)
+    scenario.assertOffset("/qualifiedPersonalVehicleLoanInterestDeduction", 1400, 200)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 104)
+    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4c", 106, -2)
   }
 
   // Column AA

@@ -87,18 +87,22 @@
     </Fact>
     <Fact path="/phaseOutAmountQPVLID">
       <Name>Qualified Personal Vehicle Loan Amount Phase Out</Name>
-      <Description>Phaseout amount for the qualified</Description>
+      <Description>Phaseout amount for the QPVLID</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
-        <StepwiseMultiply>
-          <Multiplicand>
-            <Dependency path="/excessOverThresholdQPVLID"/>
-          </Multiplicand>
-          <Rate>
-            <!-- Reduce by a rate of $200 for each $1000 of MAGI exceeding the relevant threshold -->
-            <Rational>200/1000</Rational>
-          </Rate>
-        </StepwiseMultiply>
+        <Multiply>
+          <Ceiling>
+            <Divide>
+              <Dividend>
+                <Dependency path="/excessOverThresholdQPVLID"/>
+              </Dividend>
+              <Divisors>
+                <Dollar>1000</Dollar>
+              </Divisors>
+            </Divide>
+          </Ceiling>
+          <Dollar>200</Dollar>
+        </Multiply>
       </Derived>
     </Fact>
     <Fact path="/tentativeQualifiedPersonalVehicleLoanInterestDeduction">
