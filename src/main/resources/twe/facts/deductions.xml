@@ -32,7 +32,7 @@
       </Derived>
     </Fact>
     <Fact path="/excessItemizedOverStandard">
-      <Description>Itemized Deduction - Standard Deduction. Used for calculating Line 4b net change</Description>
+      <Description>Itemized Deduction - Standard Deduction. Used for calculating Line 4b net change. </Description>
       <Derived>
         <GreaterOf>
           <Dollar>0</Dollar>

@@ -220,7 +220,7 @@
     </Fact>
     <Fact path="/adoptionCreditLimitWorksheetLine1">
       <Derived>
-        <Dependency path="/tentativeNonRefundableAdoptionCreditAmountWithoutCarryforward"/>
+        <Dependency path="/tentativeNonRefundableAdoptionCreditAmountWithCarryforward"/>
       </Derived>
     </Fact>
     <Fact path="/adoptionCreditLimitWorksheetLine2">
@@ -229,8 +229,12 @@
       </Derived>
     </Fact>
     <Fact path="/adoptionCreditLimitWorksheetLine3">
+      <Description>The following simplifying assumption was made for user convenience: use Form 1040 Line 19 in all cases and do not compare or include Line 14 of CLW B for Schedule 8812 Line 14</Description>
       <Derived>
         <Add>
+          <!-- Form 1040 Line 19 -->
+          <Dependency path="/totalCtcAndOdc"/>
+          <!-- Certain lines on Schedule 3 -->
           <Dependency path="/schedule3Line1"/>
           <Dependency path="/schedule3Line2"/>
           <Dependency path="/schedule3Line3"/>
