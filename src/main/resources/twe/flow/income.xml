@@ -242,7 +242,7 @@
               local taxes, Medicare, or Social Security.
             </hint>
             <input type="dollar"/>
-            <modal-link for="modal-fed-tax-ytd-en"> How do I find federal taxes withheld in <fg-show path="/taxYear"/>? </modal-link>
+            <modal-link for="modal-fed-tax-ytd-en"> How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>? </modal-link>
           </fg-set>
         </div>
         <div condition="/jobs/*/flowInitialQuestionsComplete" operator="isTrueAndComplete">
