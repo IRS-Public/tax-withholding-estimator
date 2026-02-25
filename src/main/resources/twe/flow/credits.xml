@@ -75,17 +75,18 @@
         <input type="boolean"/>
       </fg-set>
 
-      <h3 condition="/isEligibleForRetirementSavingsContributionsCredit" operator="isTrue">Retirement Savings Contribution Credit</h3>
-      <p condition="/isEligibleForRetirementSavingsContributionsCredit" operator="isTrue">
-        The retirement savings contribution credit is a tax benefit that helps low- to moderate-income taxpayers save for retirement.
-        Enter the total amount of retirement contributions you and your spouse expect to make to a traditional IRA, Roth IRA, 401(k), 403(b), or similar plans.
-      </p>
-      <p condition="/isEligibleForRetirementSavingsContributionsCredit" operator="isTrue"><modal-link for="modal-retirement-savings-credit-who-can-claim">Who can claim the retirement savings contribution credit?</modal-link></p>
-      <fg-set path="/retirementSavingsContributionsTaxCreditAmount" if-true="/isEligibleForRetirementSavingsContributionsCredit">
-        <question>Retirement contributions you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
-        <hint>(max <fg-show path="/retirementSavingsContributionsMaximumAmount"/>)</hint>
-        <input type="dollar"/>
-      </fg-set>
+      <div condition="/isEligibleForRetirementSavingsContributionsCredit" operator="isTrue">
+        <h3>Retirement Savings Contribution Credit</h3>
+        <p>The retirement savings contribution credit is a tax benefit that helps low- to moderate-income taxpayers save for retirement. Enter the credit amount you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to claim for contributions to a traditional IRA, Roth IRA, 401(k), 403(b), or similar plans.</p>
+        <p>
+          <modal-link for="modal-retirement-savings-credit-who-can-claim">Who can claim the retirement savings contribution credit and how do I estimate it?</modal-link>
+        </p>
+        <fg-set path="/retirementSavingsContributionsTaxCreditAmount">
+          <question>Retirement savings credit you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to claim in <fg-show path="/taxYear"/></question>
+          <hint>(max <fg-show path="/retirementSavingsContributionsMaximumAmount"/>)</hint>
+          <input type="dollar"/>
+        </fg-set>
+      </div>
 
       <h3 condition="/isEligibleForEducationCredits" operator="isTrue">American Opportunity Tax Credit (AOTC)</h3>
       <p condition="/isEligibleForEducationCredits" operator="isTrue">The AOTC helps offset the cost of tuition, fees, and other expenses for the first four years of college.</p>
@@ -254,7 +255,7 @@
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-retirement-savings-credit-who-can-claim">
-    <modal-heading>Who can claim the Retirement Savings Contribution Credit?</modal-heading>
+      <modal-heading>Who can claim the Retirement Savings Contribution Credit and how do I estimate it?</modal-heading>
       <modal-content>
         <p>To claim the retirement savings contribution credit, you must contribute to a traditional IRA, Roth IRA, 401(k), 403(b), or similar plan.</p>
         <p>These contributions don’t qualify:</p>
@@ -262,10 +263,16 @@
           <li>Employer contributions or matches</li>
           <li>Rollover contributions</li>
         </ul>
-        <p>You can claim up to <fg-show path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount"/> for yourself, and <fg-show path="/retirementSavingsContributionsCreditSpouseMaximumAmount"/> for your spouse (if filing jointly).</p>
-        <p><strong>How to check if you claimed this credit last year</strong></p>
-        <p class="margin-top-0">Review line 4 on Schedule 3, which would have been attached to and submitted with your Form 1040 federal tax return.</p>
-        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/taxtopics/tc610">Learn more about the retirement savings contribution credit.</a></p>
+        <p>To estimate your credit amount, multiply the retirement contributions you expect to make in <fg-show path="/taxYear"/> by <fg-show path="/retirementSavingsMultiplier"/>%. This percentage is based on your filing status and estimated adjusted gross income.</p>
+        <p>You can claim up to <fg-show path="/retirementSavingsMaximumAmountNonMFJ"/> (<fg-show path="/retirementSavingsMaximumAmountMFJ"/> if filing jointly).</p>
+        <p>If it’s hard to estimate, it’s ok to leave this credit amount blank.</p>
+        <p>
+          <strong>How to check if you claimed this credit last year</strong>
+        </p>
+        <p>If you expect to have similar retirement savings as last year, you can use your credit amount from last year. Review line 4 on Schedule 3, which would have been attached to and submitted with your Form 1040 federal tax return.</p>
+        <p>
+          <a target="_blank" class="usa-link" href="https://www.irs.gov/taxtopics/tc610">Learn more about the retirement savings contribution credit.</a>
+        </p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-aotc-who-can-claim-and-eligible-expenses">

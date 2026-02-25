@@ -10,16 +10,16 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
-    <Fact path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount">
+    <Fact path="/retirementSavingsMaximumAmountMFJ">
       <TaxYear>2026</TaxYear>
       <Derived>
         <Dollar>2000</Dollar>
       </Derived>
     </Fact>
-    <Fact path="/retirementSavingsContributionsCreditSpouseMaximumAmount">
+    <Fact path="/retirementSavingsMaximumAmountNonMFJ">
       <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>2000</Dollar>
+        <Dollar>1000</Dollar>
       </Derived>
     </Fact>
     <Fact path="/retirementSavingsContributionsTaxCreditIncomeThreshold">
@@ -72,16 +72,143 @@
         <Dollar>80500</Dollar>
       </Derived>
     </Fact>
+    <Fact path="/retirementSavingsAgiLimitForFiftyPercent">
+      <Description>Maximum income at which the applicable percentage is 50%</Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>48500</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusHOH"/>
+            </When>
+            <Then>
+              <Dollar>36375</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>24250</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/retirementSavingsAgiLimitForTwentyPercent">
+      <Description>Maximum income at which the applicable percentage is 20%</Description>
+      <TaxYear>2026</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <Dollar>52500</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusHOH"/>
+            </When>
+            <Then>
+              <Dollar>39375</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>26250</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/retirementSavingsMultiplier">
+      <Description>Content representation of the mulitiplier used on Form 8880, line 9</Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <LessThanOrEqual>
+                <Left>
+                  <Dependency path="/agi"/>
+                </Left>
+                <Right>
+                  <Dependency path="/retirementSavingsAgiLimitForFiftyPercent"></Dependency>
+                </Right>
+              </LessThanOrEqual>
+            </When>
+            <Then>
+              <Int>50</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <LessThanOrEqual>
+                <Left>
+                  <Dependency path="/agi"/>
+                </Left>
+                <Right>
+                  <Dependency path="/retirementSavingsAgiLimitForTwentyPercent"></Dependency>
+                </Right>
+              </LessThanOrEqual>
+            </When>
+            <Then>
+              <Int>20</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <LessThanOrEqual>
+                <Left>
+                  <Dependency path="/agi"/>
+                </Left>
+                <Right>
+                  <Dependency path="/retirementSavingsContributionsTaxCreditIncomeThreshold"/>
+                </Right>
+              </LessThanOrEqual>
+            </When>
+            <Then>
+              <Int>10</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Int>0</Int>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/isEligibleForRetirementSavingsContributionsCredit">
       <Derived>
-        <LessThanOrEqual>
-          <Left>
-            <Dependency path="/agi"/>
-          </Left>
-          <Right>
-            <Dependency path="/retirementSavingsContributionsTaxCreditIncomeThreshold"/>
-          </Right>
-        </LessThanOrEqual>
+        <All>
+          <LessThanOrEqual>
+            <Left>
+              <Dependency path="/agi"/>
+            </Left>
+            <Right>
+              <Dependency path="/retirementSavingsContributionsTaxCreditIncomeThreshold"/>
+            </Right>
+          </LessThanOrEqual>
+          <Dependency path="/neitherFilerIsClaimedOnAnotherReturn"/>
+        </All>
       </Derived>
     </Fact>
     <Fact path="/retirementSavingsContributionsMaximumAmount">
@@ -92,10 +219,7 @@
               <Dependency path="/isFilingStatusMFJ"/>
             </When>
             <Then>
-              <Add>
-                <Dependency path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount"/>
-                <Dependency path="/retirementSavingsContributionsCreditSpouseMaximumAmount"/>
-              </Add>
+              <Dependency path="/retirementSavingsMaximumAmountMFJ"/>
             </Then>
           </Case>
           <Case>
@@ -103,7 +227,7 @@
               <True/>
             </When>
             <Then>
-              <Dependency path="/retirementSavingsContributionsCreditPrimaryFilerMaximumAmount"/>
+              <Dependency path="/retirementSavingsMaximumAmountNonMFJ"/>
             </Then>
           </Case>
         </Switch>
