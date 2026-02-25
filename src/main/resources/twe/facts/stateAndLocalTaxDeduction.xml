@@ -130,8 +130,8 @@
         </Subtract>
       </Derived>
     </Fact>
-    <Fact path="/stateAndLocalTaxPaymentsDeductionFloor">
-      <Description>SALT Deduction Worksheet Line 1</Description>
+    <Fact path="/stateAndLocalTaxPaymentsDeductionLowerThreshold">
+      <Description>Boundary under the SALT deduction is not limited and the worksheet is not needed and over which the worksheet line 1 is set to $40,000 </Description>
       <TaxYear>2026</TaxYear>
       <Derived>
         <Switch>
@@ -159,7 +159,7 @@
       <Derived>
         <GreaterOf>
           <Dependency path="/saltWorksheetLine8"/>
-          <Dependency path="/stateAndLocalTaxPaymentsDeductionFloor"/>
+          <Dependency path="/stateAndLocalTaxPaymentsDeductionLowerThreshold"/>
         </GreaterOf>
       </Derived>
     </Fact>
@@ -182,7 +182,7 @@
                     <Rational>1/2</Rational>
                   </Rate>
                 </StepwiseMultiply>
-                <Dependency path="/stateAndLocalTaxPaymentsDeductionFloor"/>
+                <Dependency path="/stateAndLocalTaxPaymentsDeductionLowerThreshold"/>
               </GreaterOf>
             </Then>
           </Case>

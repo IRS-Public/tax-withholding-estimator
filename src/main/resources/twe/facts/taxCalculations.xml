@@ -2137,7 +2137,7 @@
       </Derived>
     </Fact>
     <Fact path="/totalPayments">
-      <Description>Form 1040 Line 33</Description>
+      <Description>Form 1040 Line 33. Does not include taxes withheld from W-2 Jobs or Pensions</Description>
       <Derived>
         <Add>
           <Dependency path="/totalEstimatedTaxesPaid"/>
