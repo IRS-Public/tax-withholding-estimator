@@ -454,6 +454,7 @@ class FgSet extends HTMLElement {
       }
       case 'text':
       case 'date':
+      case 'int':
       case 'dollar': {
         this.querySelector('input').value = ''
         break
