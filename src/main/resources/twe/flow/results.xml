@@ -84,7 +84,7 @@
                 <td>-<fg-show path="/standardOrItemizedDeduction"/></td>
               </tr>
               <tr condition="/additionalDeductions" operator="isGreaterThanZero">
-                <th scope="row">Additional Deductions</th>
+                <th scope="row">Additional deductions</th>
                 <td>-<fg-show path="/additionalDeductions"/></td>
               </tr>
               <tr>
