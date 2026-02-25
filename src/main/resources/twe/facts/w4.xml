@@ -3,7 +3,12 @@
 <FactDictionaryModule>
   <Facts>
     <Fact path="/w4Line4NetChange">
-      <Description>Total other income minus adjustments to income; the net change to be entered on Forms W4 Lines 4a (when positive) or 4b (when negative; use absolute value).</Description>
+      <Description>
+        Total other income minus adjustments to income; the net change to be entered on Forms W4
+        Lines 4a (when positive) or 4b (when negative; use absolute value).
+        This will not necessarily align with the value that would be produced by filling out the
+        worksheets manually.
+      </Description>
       <Derived>
         <Round>
           <Subtract>
