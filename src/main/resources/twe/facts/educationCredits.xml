@@ -250,16 +250,14 @@
                 <True/>
               </When>
               <Then>
-                <Round>
-                  <Divide>
-                    <Dividend>
-                      <Dependency path="/educationCreditPhaseoutBuffer"/>
-                    </Dividend>
-                    <Divisors>
-                      <Dependency path="/educationCreditPhaseoutRange"/>
-                    </Divisors>
-                  </Divide>
-                </Round>
+                <Divide>
+                  <Dividend>
+                    <Dependency path="/educationCreditPhaseoutBuffer"/>
+                  </Dividend>
+                  <Divisors>
+                    <Dependency path="/educationCreditPhaseoutRange"/>
+                  </Divisors>
+                </Divide>
               </Then>
             </Case>
           </Switch>

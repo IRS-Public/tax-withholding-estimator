@@ -147,7 +147,7 @@
                   <Dependency path="/agi"/>
                 </Left>
                 <Right>
-                  <Dependency path="/retirementSavingsAgiLimitForFiftyPercent"></Dependency>
+                  <Dependency path="/retirementSavingsAgiLimitForFiftyPercent"/>
                 </Right>
               </LessThanOrEqual>
             </When>
@@ -162,7 +162,7 @@
                   <Dependency path="/agi"/>
                 </Left>
                 <Right>
-                  <Dependency path="/retirementSavingsAgiLimitForTwentyPercent"></Dependency>
+                  <Dependency path="/retirementSavingsAgiLimitForTwentyPercent"/>
                 </Right>
               </LessThanOrEqual>
             </When>
