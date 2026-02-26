@@ -3,19 +3,17 @@
 ### Overview
 TWE is an online tool provided by the Internal Revenue Service (IRS) designed to help taxpayers estimate their federal tax withholdings while preparing [Form W-4](https://www.irs.gov/pub/irs-pdf/fw4.pdf) or [Form W-4P](https://www.irs.gov/pub/irs-pdf/fw4p.pdf). TWE is built to handle complex scenarios, including multiple jobs, self-employment income, and various credits or deductions. To better understand the math behind tax withholdings, go [here](./docs/taxes/withholdings-basics.md).
 
-This codebase is actively maintained and represents a version of TWE (TWE 2.0) that went live in February 2026. For a deep dive into the architecture and technical design choices for changes between the original version of TWE (TWE 1.0) and this version, start [here](./docs/adr/001-twe-architecture.md).
+This codebase is actively maintained and represents a version of TWE (TWE 2.0) that went live on February 27, 2026. For a deep dive into the architecture and technical design choices for changes between the original version of TWE (TWE 1.0) and this version, start [here](./docs/adr/001-twe-architecture.md).
 
 ### What TWE is (and isn't)
-TWE helps taxpayers avoid unexpected surprises when they file their taxes by reducing the likelihood of overwithholding (resulting in a large refund) or underwithholding (resulting in a balance due). The primary function of the TWE is to generate a *customized* Form W-4 (for employees) or Form W-4P (for pension recipients), based on their current tax scenario and financial reality.
-
-When these forms are submitted, they instruct payors on exactly how much Federal Income Tax to withhold. Without the specific instructions provided in Steps 3 through 4c of these forms, employers rely on default assumptions outlined in [Pub. 15](https://www.irs.gov/pub/irs-pdf/p15.pdf) and [Pub. 15-T](https://www.irs.gov/pub/irs-pdf/p15t.pdf), which can lead to inaccurate withholding for anyone with a non-standard tax profile.
+TWE helps taxpayers avoid unexpected surprises when they file their taxes by reducing the likelihood of overwithholding (resulting in a large refund) or underwithholding (resulting in a balance due). The primary function of TWE is to generate a Form W-4 (for employees) or Form W-4P (for pension recipients), based on their current tax scenario and financial reality. When these forms are submitted, they instruct payors on exactly how much Federal Income Tax to withhold. Without specific values in Lines 3 through 4c of these forms, employers rely on default assumptions outlined in [Pub. 15](https://www.irs.gov/pub/irs-pdf/p15.pdf) and [Pub. 15-T](https://www.irs.gov/pub/irs-pdf/p15t.pdf), which can lead to inaccurate withholding for taxpayers with more complex tax profiles.
 
 There are several key differences between TWE and preparing an annual tax return through tax filing software:
-- **TWE is not a filing tool**: The TWE does not send data to the IRS. Instead, it generates a pre-populated Form W-4, which the taxpayer must manually provide to their employer or payroll department.
-- **TWE is predictive, not historical**: A tax return looks backward at finalized data (W-2s and 1099s). In contrast, the TWE operates during the tax year using year-to-date data and estimations for the remaining months. Because it relies on estimations and assumptions, the output is an approximation of what will happen for the rest of the year, not a certainty.
-- **TWE is federal-only**: The TWE does not address state or local income taxes.
+- **TWE is not a filing tool**: TWE does not send data to the IRS. Instead, it estimates tax liability and uses this estimation to pre-populate Forms W-4 and/or W-4P, which the taxpayer must manually provide to their employer and/or pension or annuity provider, respectively.
+- **TWE is predictive, not historical**: A tax return looks backward at finalized data (W-2s and 1099s). In contrast, TWE operates during the tax year using year-to-date data and estimations for the remaining months. Because it relies on estimations and assumptions, the output is an approximation of what will happen for the rest of the year, not a certainty.
+- **TWE is federal-only**: TWE does not address state or local income taxes or withholdings.
 
-By open-sourcing this project, we aim to provide deeper insight into how the TWE generates withholding recommendations. Our goal is to foster trust through transparency, allowing taxpayers to see exactly how the core tax engine processes data and applies year-to-date assumptions to generate the W-4 and W-4P.
+By open-sourcing this project, we aim to provide deeper insight into how TWE generates withholding recommendations and estimates tax liability. Our goal is to foster trust through transparency, allowing taxpayers to see exactly how the core tax engine processes data and applies year-to-date assumptions to generate the W-4 and W-4P.
 
 ### Contributing
 Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
