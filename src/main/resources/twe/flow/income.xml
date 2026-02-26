@@ -116,10 +116,8 @@
             <input type="dollar"/>
           </fg-set>
           <fg-set path="/jobs/*/pastPaycheckIncome3" if-false="/jobs/*/consistentPay">
-            <question>
-              On the third paystub, what’s the gross income per pay period?
-              Leave this blank if you only have two past paychecks.
-            </question>
+            <question>On the third paystub, what’s the gross income per pay period?</question>
+            <hint>If you don’t have a third paystub, leave this blank.</hint>
             <input type="dollar"/>
           </fg-set>
           <fg-set path="/jobs/*/mostRecentPayPeriodHasBonus" if-false="/jobs/*/isPastJob">
@@ -190,7 +188,7 @@
                 occupation</a> that's recognized by the IRS as regularly receiving tips. </p>
             <fg-set path="/jobs/*/qualifiedTipIncome">
               <question>Total estimated tips for <fg-show path="/taxYear"/></question>
-              <hint>Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you don’t</span> have a social security number.</hint>
+              <hint>Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you don’t</span> have a Social Security number.</hint>
               <modal-link for="modal-estimate-tips-en">How can I estimate tips?</modal-link>
               <input type="dollar"/>
             </fg-set>
@@ -204,7 +202,7 @@
                 href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Learn more about the no tax on overtime deduction</a></p>
             <fg-set path="/jobs/*/overtimeCompensationTotal">
               <question>Total estimated overtime pay for <fg-show path="/taxYear"/></question>
-              <hint>Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you don’t</span> have a social security number.</hint>
+              <hint>Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you don’t</span> have a Social Security number.</hint>
               <modal-link for="modal-estimate-overtime-en">How can I estimate overtime?</modal-link>
               <input type="dollar"/>
             </fg-set>
