@@ -82,7 +82,7 @@
         </All>
       </Derived>
     </Fact>
-    <Fact path="/jobs/*/showTipAndOvetime">
+    <Fact path="/jobs/*/showTipAndOvertime">
       <Derived>
         <All>
           <Dependency path="../flowInitialQuestionsComplete"/>

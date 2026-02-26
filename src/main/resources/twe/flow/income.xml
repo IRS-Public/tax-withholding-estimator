@@ -167,7 +167,7 @@
             <input type="dollar"/>
           </fg-set>
         </div>
-        <div condition="/jobs/*/showTipAndOvetime" operator="isTrueAndComplete">
+        <div condition="/jobs/*/showTipAndOvertime" operator="isTrueAndComplete">
           <h5>Estimated tips and overtime</h5>
           <p> For 2025 through 2028, there are new deductions for tips and overtime. If you meet the eligibility requirements, you may be able to deduct (subtract) qualified tips and qualified overtime pay from your income.</p>
           <p> If <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse meets</span>
@@ -180,19 +180,14 @@
               Tips are voluntary cash or credit card payments received from customers or through
               tip‑sharing arrangements.
             </p>
-            <p>
-              <a
-                target="_blank"
-                href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">
-                Learn more about the no tax on tips deduction.
-              </a>
-            </p>
-            <p> To be eligible for the no tax on tips deduction, <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
+            <p><a
+              target="_blank"
+              href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Learn more about the no tax on tips deduction.</a></p>
+            <p>To be eligible for the no tax on tips deduction, <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
               <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span> must have an <a
                 target="_blank"
                 href="https://www.irs.gov/forms-pubs/occupations-that-customarily-and-regularly-received-tips-on-or-before-december-31-2024">
-                occupation
-              </a> that's recognized by the IRS as regularly receiving tips. </p>
+                occupation</a> that's recognized by the IRS as regularly receiving tips. </p>
             <fg-set path="/jobs/*/qualifiedTipIncome">
               <question>Total estimated tips for <fg-show path="/taxYear"/></question>
               <hint>Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you don’t</span> have a social security number.</hint>
@@ -206,8 +201,7 @@
             <p>
               <a
                 target="_blank"
-                href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"> Learn more about the no tax on overtime deduction</a>
-            </p>
+                href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Learn more about the no tax on overtime deduction</a></p>
             <fg-set path="/jobs/*/overtimeCompensationTotal">
               <question>Total estimated overtime pay for <fg-show path="/taxYear"/></question>
               <hint>Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you don’t</span> have a social security number.</hint>
@@ -535,13 +529,12 @@
           <input type="dollar"/>
         </fg-set>
         <fg-set path="/selfEmploymentSources/*/workRelatedExpenses">
-          <question>Total work-related expenses <span condition="/selfEmploymentSources/*/notSpouses" operator="isTrue">you</span><span condition="/selfEmploymentSources/*/notSpouses" operator="isFalse">they</span> plan to deduct in <fg-show path="/taxYear"/></question>
+          <question>Total self-employment work-related expenses <span condition="/selfEmploymentSources/*/notSpouses" operator="isTrue">you</span><span condition="/selfEmploymentSources/*/notSpouses" operator="isFalse">they</span> expect to deduct in <fg-show path="/taxYear"/></question>
           <hint>It's okay to estimate or leave this blank.</hint>
           <modal-link for="modal-self-employment-deductions">What does it mean to deduct expenses?</modal-link>
           <input type="dollar"/>
         </fg-set>
       </fg-collection>
-
       <h3>Social Security income</h3>
       <p>Enter any Social Security income you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> expect to receive in <fg-show path="/taxYear"/>. </p>
       <p>
