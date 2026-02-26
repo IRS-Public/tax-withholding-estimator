@@ -536,7 +536,6 @@
         </fg-set>
       </fg-collection>
       <h3>Social Security income</h3>
-      <p>Enter any Social Security income you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> expect to receive in <fg-show path="/taxYear"/>. </p>
       <p>
         <modal-link for="modal-what-counts-social-security">What counts as Social Security income?</modal-link>
       </p>
@@ -595,8 +594,9 @@
         <modal-link for="modal-what-counts-unemployment">What counts as unemployment income?</modal-link>
       </p>
       <fg-set path="/unemploymentIncome">
-        <question>Total gross unemployment income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/>?</question>
+        <question>Total gross unemployment income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
+        <hint>Gross means the total amount of income before taxes or deductions.</hint>
       </fg-set>
       <fg-set path="/unemploymentIncomeWithholding">
         <question>Did you choose to withhold federal tax from your unemployment income?</question>
