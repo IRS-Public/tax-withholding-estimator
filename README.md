@@ -33,7 +33,7 @@ This codebase is dedicated to the public domain under the [Creative Commons Zero
 > **Official Tool for Tax Withholding Estimation**
 >
 > If you are a taxpayer seeking to estimate the federal income tax you want your employer to withhold from your paycheck, please use the official IRS Tax Withholding Estimator available at https://www.irs.gov/individuals/tax-withholding-estimator. If you are a taxpayer seeking to understand tax withholdings and the Internal Revenue Code (IRC), please review official IRS [Publications](https://www.irs.gov/publications), [Forms
-](https://www.irs.gov/forms-instructions) or [guidance](https://www.irs.gov/newsroom/irs-guidance). Names and identifiers used in source code or other artifacts (e.g. the names of Facts) in this repository are not intended to reflect official interpretation of the IRC or replacement of IRS Publications, Forms or Guidance.
+](https://www.irs.gov/forms-instructions) or [guidance](https://www.irs.gov/newsroom/irs-guidance). Names and identifiers used in source code or other artifacts (e.g. the names of Facts) in this repository are not intended to reflect official interpretation of the IRC or replacement of IRS Publications, Forms, or Guidance.
 >
 > Use of the code in this repository is at your own risk. This repository is not intended for production use or public consumption as a finalized product.
 
@@ -45,9 +45,8 @@ This codebase is dedicated to the public domain under the [Creative Commons Zero
 
 ### Quickstart
 
-1. Install [Scala 3.7](https://www.scala-lang.org/download) and [sbt](https://www.scala-sbt.org/1.x/docs/Setup.html).
-   You may choose install these with Coursier, sdkman, or some other method of your choosing;
-   it shouldn't make a difference.
+1. Install the version of [Scala](https://www.scala-lang.org/download) specified in [build.sbt](./build.sbt) (currently 3.7.2) and [sbt](https://www.scala-sbt.org/1.x/docs/Setup.html).
+   You may choose to install these with [Coursier](https://get-coursier.io/), [sdkman](https://sdkman.io/), [asdf](https://asdf-vm.com/), [mise](https://mise.jdx.dev/), or some other method of your choosing.
 2. Download the [Fact Graph](https://github.com/IRS-Public/fact-graph) and run `make publish` in that repository
 3. Return to this repository and run `make`
 4. (Optional) Ensure that you have local installations of `xmllint` (via `libxml2`) and `npx` (via `npm`) command line tools, then run  `make ci-setup` to install the tools required for running the validations; this is useful if you plan to submit a PR.
