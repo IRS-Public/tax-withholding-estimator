@@ -164,7 +164,7 @@
       <p condition="/hasJobsAndPensionsAvailableForExtraWithholding" operator="isTrue">Use our recommendations to complete Forms W-4 and W-4P.</p>
       <p condition="/hasJobsAndPensionsAvailableForExtraWithholding" operator="isTrue"><modal-link for="modal-what-is-form-w-4-and-w-4p">What's a Form W-4 and W-4P?</modal-link></p>
 
-      <h4 condition="/primaryFilerAndSpouseHaveJobsOrPensionsAvailableForExtraWithholding" operator="isTrue">Your withholding</h4>
+      <h4 class="border-top-0" condition="/primaryFilerAndSpouseHaveJobsOrPensionsAvailableForExtraWithholding" operator="isTrue">Your withholding</h4>
       <fg-withholding-adjustments
         if-true="/primaryFilerHasJobsAvailableForExtraWithholding"
         path="/jobsAvailableForExtraWithholdingAssignedToSelf"
@@ -176,7 +176,7 @@
         form-type="w-4p"
       />
 
-      <h4 condition="/spouseHasJobsOrPensionsAvailableForExtraWithholding" operator="isTrue">Your spouse's withholding</h4>
+      <h4 class="border-top-0" condition="/spouseHasJobsOrPensionsAvailableForExtraWithholding" operator="isTrue">Your spouse's withholding</h4>
       <fg-withholding-adjustments
         if-true="/spouseHasJobsAvailableForExtraWithholding"
         path="/jobsAvailableForExtraWithholdingAssignedToSpouse"

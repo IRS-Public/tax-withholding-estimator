@@ -87,6 +87,11 @@ main h1 {
   }
 }
 
+.flow h3.border-top-0,
+.flow h4.border-top-0 {
+  border-top: 0;
+}
+
 /* This makes it so if there a conditional fg-set that is hidden before the first h4
    in a fg-collection-item, the h4 does not get the top border and padding */
 .fg-collection-item__fields fg-set.hidden:first-child + h5:first-of-type {
