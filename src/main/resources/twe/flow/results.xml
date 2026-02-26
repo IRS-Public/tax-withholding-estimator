@@ -35,7 +35,7 @@
           <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isFalse">If you’d like to get your tax balance closer to $0,</span>
           <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">If you’d like to get your tax balance closer to $0 and avoid paying a penalty,</span>
           <span condition="/mayNeedToMakeEstimatedPayments" operator="isFalse">you can reduce your take-home pay by <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjusting your withholding</a>.</span>
-          <span condition="/mayNeedToMakeEstimatedPayments" operator="isTrue">you can reduce your take-home pay by <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjusting your withholding</a> and making <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed</span>.
+          <span condition="/mayNeedToMakeEstimatedPayments" operator="isTrue">you can reduce your take-home pay by <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjusting your withholding</a> and making <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed.</span>
         </p>
       </div>
 
@@ -78,8 +78,8 @@
               </tr>
               <tr>
                 <th scope="row">
-                  <span condition="/standardDeductionWillBeUsed" operator="isTrue">Standard Deduction</span>
-                  <span condition="/standardDeductionWillBeUsed" operator="isFalse">Itemized Deduction</span>
+                  <span condition="/standardDeductionWillBeUsed" operator="isTrue">Standard deduction</span>
+                  <span condition="/standardDeductionWillBeUsed" operator="isFalse">Itemized deduction</span>
                 </th>
                 <td>-<fg-show path="/standardOrItemizedDeduction"/></td>
               </tr>
@@ -135,12 +135,12 @@
               </tr>
               <tr>
                 <th scope="row">
-                  <span condition="/isUnderwithheld" operator="isTrue">Estimated <fg-show path="/taxYear"/> federal tax owed</span>
-                  <span condition="/isUnderwithheld" operator="isFalse">Estimated <fg-show path="/taxYear"/> federal tax refund</span>
+                  <span condition="/isOverwithheld" operator="isFalse">Estimated <fg-show path="/taxYear"/> federal tax owed</span>
+                  <span condition="/isOverwithheld" operator="isTrue">Estimated <fg-show path="/taxYear"/> federal tax refund</span>
                 </th>
                 <td>
-                  <span condition="/isUnderwithheld" operator="isTrue"><fg-show path="/withholdingGap"/></span>
-                  <span condition="/isUnderwithheld" operator="isFalse"><fg-show path="/withholdingSurplus"/></span>
+                  <span condition="/isOverwithheld" operator="isFalse"><fg-show path="/withholdingGap"/></span>
+                  <span condition="/isOverwithheld" operator="isTrue"><fg-show path="/withholdingSurplus"/></span>
                 </td>
               </tr>
             </tbody>
