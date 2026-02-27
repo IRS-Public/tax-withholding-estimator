@@ -63,3 +63,18 @@ The following commands are particularly useful for most development flows:
 * `make ci` - Run CI checks locally
 
 To see a list of _all_ available commands, run `make help`.
+
+
+## Authorities
+Legal foundations for this work include:
+* Source Code Harmonization And Reuse in Information Technology Act" of 2024, Public Law 118 - 187
+* OMB Memorandum M-16-21, “Federal Source Code Policy: Achieving Efficiency,
+  Transparency, and Innovation through Reusable and Open Source Software,” August 8,
+  2016
+* Federal Acquisition Regulation (FAR) Part 27 – Patents, Data, and Copyrights
+* Digital Government Strategy: “Digital Government: Building a 21st Century Platform to
+  Better Serve the American People,” May 23, 2012
+* Federal Information Technology Acquisition Reform Act (FITARA), December 2014
+  (National Defense Authorization Act for Fiscal Year 2015, Title VIII, Subtitle D)
+* E-Government Act of 2002, Public Law 107-347
+* Clinger-Cohen Act of 1996, Public Law 104-106

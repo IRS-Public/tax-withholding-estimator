@@ -1,0 +1,79 @@
+{
+    "name": "tax-withholding-estimator",
+    "version": "2.0",
+    "organization": "Internal Revenue Service",
+    "description": "TWE is an online tool provided by the Internal Revenue Service (IRS) designed to help taxpayers estimate their federal tax withholdings while preparing Form W-4 or Form W-4P. ",
+    "longDescription": "TWE helps taxpayers avoid unexpected surprises when they file their taxes by reducing the likelihood of overwithholding (resulting in a large refund) or underwithholding (resulting in a balance due). The primary function of TWE is to generate a Form W-4 (for employees) or Form W-4P (for pension recipients), based on their current tax scenario and financial reality. When these forms are submitted, they instruct payors on exactly how much Federal Income Tax to withhold. Without specific values in Lines 3 through 4c of these forms, employers rely on default assumptions outlined in Pub. 15 and Pub. 15-T, which can lead to inaccurate withholding for taxpayers with more complex tax profiles.",
+    "status": "Production",
+    "permissions": {
+        "licenses": [
+            {
+                "name": "CC0-1.0",
+                "URL": "https://github.com/IRS-Public/tax-withholding-estimator/blob/main/LICENSE.md"
+            }
+        ],
+        "usageType": [
+            "openSource"
+        ],
+        "exemptionText": ""
+    },
+    "repositoryHost": [
+        "github.com/IRS-Public"
+    ],
+    "repositoryURL": "https://github.com/IRS-Public/tax-withholding-estimator",
+    "repositoryVisibility": "public",
+    "homepageURL": "https://apps.irs.gov/app/tax-withholding-estimator/",
+    "disclaimerURL": "https://github.com/IRSDigitalService/tax-withholding-estimator?tab=readme-ov-file#legal-disclaimer-public-repository-access",
+    "vcs": "git",
+    "platforms": [
+        "web"
+    ],
+    "categories": [
+        "other"
+    ],
+    "softwareType": [
+        "standalone/mobile",
+        "standalone/desktop",
+        "standalone/web",
+    ],
+    "languages": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Scala",
+        "Shell",
+        "Makefile"
+    ],
+    "sbom": "https://github.com/IRS-Public/tax-withholding-estimator/network/dependencies",
+    "relatedCode": [
+        "https://github.com/IRS-Public/fact-graph",
+        "https://github.com/IRS-Public/direct-file"
+    ],
+    "reusedCode": [
+        "https://github.com/IRS-Public/fact-graph",
+        "https://github.com/IRS-Public/direct-file"
+    ],
+    "tags": [
+        "Open Source",
+        "IRS",
+        "Tax",
+        "Tax Withholding",
+        "W-4",
+        "OBBBA"
+    ],
+    "feedbackMechanism": "https://github.com/IRS-Public/tax-withholding-estimator/issues",
+    "AIUseCaseID": "0",
+    "repositoryType": "application",
+    "userInput": true,
+    "group": "IRS/IT",
+    "userType": [
+        "government",
+        "taxpayers",
+    ],
+    "maturityModelTier": 3,
+    "date": {
+        "created": "2026-02-26T22:34:18Z",
+        "lastModified": "2026-02-26T22:34:18Z",
+        "metadataLastUpdated": "2026-02-26T22:34:18Z"
+    },
+}
