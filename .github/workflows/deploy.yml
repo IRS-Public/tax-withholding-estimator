@@ -13,18 +13,16 @@ permissions:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   # do not cancel redundant builds on main or release branches
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/heads/release/') }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/heads/release/') && !startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
   build-deploy-twe:
     if: vars.build == 'true'
-    uses: IRSDigitalService/shared-actions/.github/workflows/build-deploy-twe.yml@main
+    uses: IRSDigitalService/shared-actions/.github/workflows/build-scan-deploy.yml@main
     permissions:
       id-token: write
       contents: read
       packages: read
     with:
-      trigger-ref: ${{ github.ref }}
-      sha: ${{ github.sha }}
-      build-id: ${{ github.run_number }}
+      app: "twe"
     secrets: inherit
