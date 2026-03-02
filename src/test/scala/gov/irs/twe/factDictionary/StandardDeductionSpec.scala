@@ -103,10 +103,6 @@ class StandardDeductionSpec extends AnyFunSpec {
             Path("/incomeTotal") -> totalIncome,
           )
 
-          if (graph.get(Path("/usePreOb3StandardDeduction")).value.contains(true)) {
-            cancel("Skipping test based on OB3 standard deduction numbers because you are using pre-OB3 facts")
-          }
-
           val baseAmount = if (filerIsClaimed || (isMfj && spouseIsClaimed)) {
             Dollar(
               scala.math

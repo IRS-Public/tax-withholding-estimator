@@ -91,38 +91,13 @@
         </Multiply>
       </Derived>
     </Fact>
-    <Fact path="/usePreOb3StandardDeduction">
-      <Description>A temporary "feature flag". Manually change this if you want to use the original
-        TY2025 numbers IRS announced. Useful when comparing to historical outcomes like the QA
-        spreadsheet.</Description>
-      <Derived>
-        <False/>
-      </Derived>
-    </Fact>
     <Fact path="/MFJStandardDeduction">
       <Name>Married Filing Jointly Standard Deduction</Name>
       <Description>Standard Deduction for filers who are married filing jointly. Rev Proc .15
         Standard Deduction &#xA7;1(j)(2)(A)</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/usePreOb3StandardDeduction"/>
-            </When>
-            <Then>
-              <Dollar>30000</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>32200</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <Dollar>32200</Dollar>
       </Derived>
     </Fact>
     <Fact path="/singleOrMFSStandardDeduction">
@@ -131,24 +106,7 @@
         Proc .15 Standard Deduction &#xA7;1(j)(2)(C) &#xA7;1(j)(2)(D)</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/usePreOb3StandardDeduction"/>
-            </When>
-            <Then>
-              <Dollar>15000</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>16100</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <Dollar>16100</Dollar>
       </Derived>
     </Fact>
     <Fact path="/HoHStandardDeduction">
@@ -157,24 +115,7 @@
         &#xA7;1(j)(2)(B)</Description>
       <TaxYear>2026</TaxYear>
       <Derived>
-        <Switch>
-          <Case>
-            <When>
-              <Dependency path="/usePreOb3StandardDeduction"/>
-            </When>
-            <Then>
-              <Dollar>22500</Dollar>
-            </Then>
-          </Case>
-          <Case>
-            <When>
-              <True/>
-            </When>
-            <Then>
-              <Dollar>24150</Dollar>
-            </Then>
-          </Case>
-        </Switch>
+        <Dollar>24150</Dollar>
       </Derived>
     </Fact>
     <Fact path="/filingStatusStandardDeduction">
