@@ -17,11 +17,24 @@
             </Minuend>
             <Subtrahends>
               <Dependency path="/qualifiedBusinessIncomeDeduction"/>
-              <Dependency path="/excessItemizedOverStandard"/>
+              <Dependency path="/excessDeductionsOverStandard"/>
               <Dependency path="/adjustmentsToIncome"/>
             </Subtrahends>
           </Subtract>
         </Round>
+      </Derived>
+    </Fact>
+    <Fact path="/excessDeductionsOverStandard">
+      <Description>Used for calculating Line 4b net change</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/totalDeductionsNetQBI"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/filingStatusStandardDeduction"/>
+          </Subtrahends>
+        </Subtract>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/w4Line4a">

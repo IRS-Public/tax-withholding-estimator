@@ -30,7 +30,7 @@ import scala.math.Fractional.Implicits.infixFractionalOps
 
 class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   val CSV_ROOT: Path = os.pwd / "src" / "test" / "resources" / "csv"
-  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-02-24.csv"
+  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-03-05.csv"
 
   case class FixtureParam(scenario: scenarios.Scenario)
 
@@ -57,13 +57,13 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalCtcAndOdc", 6600)
     scenario.assertEquals("/overtimeCompensationDeduction", 4600)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 3717)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 3020)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/selfEmploymentTax", 2826)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2020)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 35)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 14455)
     scenario.assertEquals("/additionalMedicareTax", 0)
   }
 
@@ -84,12 +84,12 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalCtcAndOdc", 0)
     scenario.assertEquals("/overtimeCompensationDeduction", 0)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 3717)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 3020)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 970)
     scenario.assertEquals("/selfEmploymentTax", 2826)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 176)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 184)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/additionalMedicareTax", 0)
   }
@@ -126,10 +126,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalTaxNetRefundableCredits", 8732)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 13000)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 8732)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 6598)
+    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 1275, -1)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 24200)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
   }
 
   // Column X
@@ -196,8 +196,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/netInvestmentIncomeTax", 456)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 0)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 26890)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 452)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 31840)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 494)
   }
 
   // Column AL
@@ -205,8 +205,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 0)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 413)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 10230)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 515)
     scenario.assertEquals("/incomeTotal", 162000)
     scenario.assertEquals("/agi", 162000)
     scenario.assertEquals("/taxableIncome", 119570)
@@ -275,9 +275,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 39000)
     scenario.assertEquals("/taxableIncome", 14850)
     scenario.assertEquals("/totalNonRefundableCredits", 1000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1959)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 993)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8050)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
@@ -325,10 +325,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/taxableIncome", 75700)
     scenario.assertEquals("/overtimeCompensationDeduction", 7000)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 11372)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1357)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7000)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 7)
   }
 
   // Column M
@@ -337,9 +337,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 98800)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 7412)
     scenario.assertEquals("/qualifiedTipDeduction", 25000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 6037)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 537)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 25000)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
@@ -467,19 +467,20 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   test("MFJ, High Income, 1 child, Multi, Car loan") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 242571)
-    // This is off because the scenarios need to be updated to account for the QPVLID
-    // rounding the phase-out amount up (instead of rounding down, which is more common)
-    scenario.assertOffset("/qualifiedPersonalVehicleLoanInterestDeduction", 1400, 200)
+    scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 1400)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4c", 106, -2)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 1400)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 113)
   }
 
   // Column AA
   test("Single, SS, part time, senior deduction") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 32880)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1207)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 6880)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 314)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 1170)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
     // Scenario-specific assertions
     scenario.assertEquals("/seniorDeduction", 6000)
@@ -526,7 +527,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 52000)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 3097)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1109)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 143)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8050)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
@@ -536,7 +539,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 112000)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 14529)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 22)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 5830)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 49)
   }
 
   // Column AH
@@ -544,8 +549,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 100800)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 11911)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 3924)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 40800)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 2494)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 34298)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 0)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
   }
@@ -564,9 +569,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalTaxNetRefundableCredits", 3271)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 4800)
 
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 2492)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 1526)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 6550)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 14600)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
   }
 
@@ -575,9 +580,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 81500)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 4505)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 1214)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 296)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 2500)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 10150)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
   }
 
@@ -586,9 +591,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 84000)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 1279)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 6493)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 5346)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 0)
+    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 9560)
     scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
   }
 
@@ -610,9 +615,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/taxableIncome", 51900)
     scenario.assertEquals("/totalNonRefundableCredits", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2693)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 493)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 10000)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
@@ -627,8 +632,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedTipDeduction", 9400)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 9)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 9400)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 96)
   }
 
   // Column AR
@@ -642,8 +647,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedTipDeduction", 16400)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 15)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 16400)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 167)
   }
 
   // Column AS
@@ -660,8 +665,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedTipDeduction", 12000)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 489)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 12000)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 591)
   }
 
   // Column AT
@@ -676,9 +681,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
     scenario.assertEquals("/qualifiedTipDeduction", 19000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 6772)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2972)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7800)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 26800)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
@@ -694,9 +699,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
     scenario.assertEquals("/qualifiedTipDeduction", 21900)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 16722)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 11481)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 5000)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 26900)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
 
     // regression prevention sanity check
@@ -713,9 +718,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/overtimeCompensationDeduction", 9400)
       scenario.assertEquals("/taxableIncome", 130500)
       scenario.assertEquals("/totalTaxNetRefundableCredits", 23918)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2580)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 324)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 9400)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
     }
   }
@@ -728,10 +733,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/overtimeCompensationDeduction", 2100)
       scenario.assertEquals("/taxableIncome", 236450)
       scenario.assertEquals("/totalTaxNetRefundableCredits", 52660)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 29)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 5350)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7450)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 12)
     }
   }
 
@@ -745,8 +750,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/totalTaxNetRefundableCredits", 32438)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 59)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3900)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 95)
     }
   }
 
@@ -758,9 +763,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/overtimeCompensationDeduction", 7500)
       scenario.assertEquals("/taxableIncome", 146300)
       scenario.assertEquals("/totalTaxNetRefundableCredits", 21610)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1757)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 107)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7500)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
     }
   }
@@ -775,8 +780,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/totalTaxNetRefundableCredits", 60406)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 560)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 14400)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 681)
     }
   }
 
@@ -786,8 +791,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 156000)
     scenario.assertEquals("/taxableIncome", 98050)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 12278)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 11230)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 3271)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 33800)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
@@ -812,8 +818,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 12472)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 7200)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 550)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7200)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 611)
   }
 
   // Column BF
@@ -835,10 +842,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 12472)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 7200)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 283)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7200)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 50)
   }
 
   // Column BH
@@ -847,9 +854,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 6923)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 10000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1829)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 629)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 10000)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
 
@@ -1214,9 +1221,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       assert(scenario.graph.get("/ctcEligibleDependents").value.get === 3) // This is calculated from multiple rows
       scenario.assertEquals("/totalTaxNetRefundableCredits", 14431)
 
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 6157)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 3020)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2587)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 13205)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
     }
   }
@@ -1232,10 +1239,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/taxableIncome", 123600)
       scenario.assertEquals("/totalTaxNetRefundableCredits", 16051)
 
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 767)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
       scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7250)
+      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 32)
     }
   }
 
@@ -1252,12 +1259,12 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 13000)
     scenario.assertEquals("/overtimeCompensationDeduction", 3750)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 1301)
-    scenario.assertOffset("/qualifiedMortgageInsurancePremiumDeductionTotal", 1500, 247)
+    scenario.assertEquals("/qualifiedMortgageInsurancePremiumDeductionTotal", 1500)
     scenario.assertEquals("/selfEmploymentTax", 989)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 24796)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 17)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 28546)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 49)
 
   }
 
@@ -1298,8 +1305,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalTaxNetRefundableCredits", 2651)
     scenario.assertEquals("/totalCtcAndOdc", 2200)
     scenario.assertEquals("/adoptionCreditNonRefundable", 12550)
-    assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine3").value.get == 7296)
-    assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine4a").value.get == 40891)
+    assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine3").value.get == 6232)
+    assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine4a").value.get == 32028)
     assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine4b").value.get == 0)
     assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine4c").value.get == 0)
   }
