@@ -297,6 +297,24 @@
             </fg-set>
           </fg-detail>
           <fg-detail icon="chevron">
+            <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
+            <p>
+              Enter total contributions to Health Savings Accounts (HSA) or Flexible Spending
+              Account (FSA).
+            </p>
+            <p> HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub. </p>
+            <p> Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>. </p>
+            <fg-set path="/jobs/*/hsaOrFsaContributionsPerPayPeriod" if-false="/jobs/*/isPastJob">
+              <question>Amount per pay period</question>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/jobs/*/hsaOrFsaContributionsToDate">
+              <question>Amount so far in <fg-show path="/taxYear"/></question>
+              <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
+              <input type="dollar"/>
+            </fg-set>
+          </fg-detail>
+          <fg-detail icon="chevron">
             <summary>Other pre-tax benefits</summary>
             <p>Enter the total contributions made to pay for other pre-tax benefits.</p>
             <p>Benefits contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub.</p>
@@ -324,24 +342,6 @@
               <input type="dollar"/>
             </fg-set>
             <fg-set path="/jobs/*/otherPreTaxContributionsToDate">
-              <question>Amount so far in <fg-show path="/taxYear"/></question>
-              <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
-              <input type="dollar"/>
-            </fg-set>
-          </fg-detail>
-          <fg-detail icon="chevron">
-            <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
-            <p>
-              Enter total contributions to Health Savings Accounts (HSA) or Flexible Spending
-              Account (FSA).
-            </p>
-            <p> HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub. </p>
-            <p> Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>. </p>
-            <fg-set path="/jobs/*/hsaOrFsaContributionsPerPayPeriod" if-false="/jobs/*/isPastJob">
-              <question>Amount per pay period</question>
-              <input type="dollar"/>
-            </fg-set>
-            <fg-set path="/jobs/*/hsaOrFsaContributionsToDate">
               <question>Amount so far in <fg-show path="/taxYear"/></question>
               <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
               <input type="dollar"/>
@@ -458,6 +458,21 @@
             </fg-set>
           </fg-detail>
           <fg-detail icon="chevron">
+            <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
+            <p>Enter total contributions to Health Savings Accounts (HSA) or Flexible Spending Account (FSA).</p>
+            <p>HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
+            <p>Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.</p>
+            <fg-set path="/pensions/*/hsaOrFsaContributionsPerPayPeriod" if-false="/pensions/*/isPastJobIncompleteOrFalse">
+              <question>Amount per pay period</question>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/pensions/*/hsaOrFsaContributionsToDate">
+              <question>Amount so far in <fg-show path="/taxYear"/></question>
+              <hint>This might be labeled year-to-date or YTD on your statement.</hint>
+              <input type="dollar"/>
+            </fg-set>
+          </fg-detail>
+          <fg-detail icon="chevron">
             <summary>Other pre-tax benefits</summary>
             <p>Enter the total contributions made to pay for other pre-tax benefits.</p>
             <p>Benefits contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
@@ -485,21 +500,6 @@
               <input type="dollar"/>
             </fg-set>
             <fg-set path="/pensions/*/otherPreTaxContributionsToDate">
-              <question>Amount so far in <fg-show path="/taxYear"/></question>
-              <hint>This might be labeled year-to-date or YTD on your statement.</hint>
-              <input type="dollar"/>
-            </fg-set>
-          </fg-detail>
-          <fg-detail icon="chevron">
-            <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
-            <p>Enter total contributions to Health Savings Accounts (HSA) or Flexible Spending Account (FSA).</p>
-            <p>HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
-            <p>Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.</p>
-            <fg-set path="/pensions/*/hsaOrFsaContributionsPerPayPeriod" if-false="/pensions/*/isPastJobIncompleteOrFalse">
-              <question>Amount per pay period</question>
-              <input type="dollar"/>
-            </fg-set>
-            <fg-set path="/pensions/*/hsaOrFsaContributionsToDate">
               <question>Amount so far in <fg-show path="/taxYear"/></question>
               <hint>This might be labeled year-to-date or YTD on your statement.</hint>
               <input type="dollar"/>
