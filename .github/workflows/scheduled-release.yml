@@ -1,8 +1,8 @@
 name: Scheduled Release
 
 on:
-  # schedule:
-  #   - cron: '0 14 * * 1,3'  # Monday and Wednesday at 2pm UTC
+  schedule:
+    - cron: '0 14 * * 1,3'  # Monday and Wednesday at 2pm UTC
   workflow_dispatch:          # Manual trigger for testing
 
 permissions:
