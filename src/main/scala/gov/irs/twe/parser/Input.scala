@@ -4,7 +4,7 @@ import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.{ Log, TweTemplateEngine }
 import gov.irs.twe.exceptions.InvalidFormConfig
 import org.thymeleaf.context.Context
-import scala.collection.JavaConverters.asJavaIterableConverter
+import scala.jdk.CollectionConverters.IterableHasAsJava
 
 case class HtmlOption(name: String, value: String, description: Option[String] = None)
 
@@ -37,11 +37,10 @@ object Input {
     // Handle the <select> as a special case
     val selectNode = node \ "select"
     if (selectNode.nonEmpty) {
-      val optionsPath = Option(selectNode \@ "options-path").filter(_.nonEmpty)
+      val optionsPath = Utils.optionString(selectNode \@ "options-path")
       val options = (selectNode \ "option").map { node =>
         val name = node.text
-        var value = node \@ "value"
-        if (value == "") value = name
+        val value = Utils.optionString(node \@ "value").getOrElse(name)
 
         HtmlOption(name, value)
       }.toList
@@ -74,7 +73,7 @@ object Input {
         }.toList
 
         Input.boolean(isOptional, options)
-      case "enum" =>
+      case enumType @ ("enum" | "multi-enum") =>
         val optionsPath = inputNode \@ "optionsPath"
         val options = (inputNode \ "option").map { node =>
           val name = node.text
@@ -84,18 +83,8 @@ object Input {
           val description = if (descriptionKey.nonEmpty) Some(descriptionKey) else None
           HtmlOption(name, finalValue, description)
         }.toList
-        Input.enumInput(options, optionsPath, isOptional)
-      case "multi-enum" =>
-        val optionsPath = inputNode \@ "optionsPath"
-        val options = (inputNode \ "option").map { node =>
-          val name = node.text
-          val value = node \@ "value"
-          val finalValue = if (value.isEmpty) name else value
-          val descriptionKey = node \@ "description-key"
-          val description = if (descriptionKey.nonEmpty) Some(descriptionKey) else None
-          HtmlOption(name, finalValue, description)
-        }.toList
-        Input.multiEnumInput(options, optionsPath, isOptional)
+        if (enumType == "enum") Input.enumInput(options, optionsPath, isOptional)
+        else Input.multiEnumInput(options, optionsPath, isOptional)
       case "dollar" => Input.dollar(isOptional)
       case "date"   => Input.date(isOptional)
       case x        => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")

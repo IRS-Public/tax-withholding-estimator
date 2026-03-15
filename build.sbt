@@ -38,6 +38,9 @@ lazy val root = (project in file("."))
     // CSV library for parsing scenario spreadsheets
     libraryDependencies += "com.github.tototoshi" %% "scala-csv" % "2.0.0",
 
+    // Logging (silences SLF4J NOP warnings from Thymeleaf)
+    libraryDependencies += "org.slf4j" % "slf4j-simple" % "2.0.16" % Runtime,
+
     // Local server
     libraryDependencies += "org.smol-utils" %% "smol" % "0.1.2",
     )

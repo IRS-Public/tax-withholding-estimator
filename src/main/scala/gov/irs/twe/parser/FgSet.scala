@@ -5,7 +5,7 @@ import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.Utils.validateFact
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
-import scala.collection.JavaConverters.asJavaIterableConverter
+import scala.jdk.CollectionConverters.IterableHasAsJava
 
 case class ThymeleafOption(name: String, value: String, description: String)
 case class FgSet(

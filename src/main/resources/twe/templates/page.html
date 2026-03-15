@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <div th:replace="fragments/head"></div>
+  <div th:replace="~{fragments/head}"></div>
 
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KV978ZL"
@@ -8,7 +8,7 @@
   <!-- End Google Tag Manager (noscript) -->
   <a class="usa-skipnav" href="#main-content" th:text="#{layout.skip-to-main}"></a>
   <header>
-    <div th:replace="fragments/usa-banner"></div>
+    <div th:replace="~{fragments/usa-banner}"></div>
     <div class="logo-banner">
       <div class="grid-container">
         <a href="https://www.irs.gov" th:aria-label="#{layout.irs.domain}">
@@ -20,7 +20,7 @@
 
   <main id="main-content">
     <h1 th:text="#{layout.title}"></h1>
-    <div th:replace="fragments/usa-step-indicator"></div>
+    <div th:replace="~{fragments/usa-step-indicator}"></div>
 
     <div class="header-bottom-border" th:if="!${first}">
       <a class="usa-link back-link" th:href="${lastPageHref}">
@@ -58,7 +58,7 @@
 
   </main>
 
-  <div th:replace="fragments/audit-panel"></div>
+  <div th:replace="~{fragments/audit-panel}"></div>
   <script type="module" th:if="${flags.auditMode}">
     // If configured, automatically enable Audit Mode on startup
     import { enable } from '/app/tax-withholding-estimator/resources/js/audit-panel.js'
@@ -98,7 +98,7 @@
     </div>
   </footer>
 
-  <template th:replace="fragments/js-templates"></template>
+  <template th:replace="~{fragments/js-templates}"></template>
   <div th:replace="~{errors}"></div>
 
 </html>

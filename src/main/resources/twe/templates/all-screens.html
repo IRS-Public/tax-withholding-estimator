@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<meta th:replace="fragments/head">
+<meta th:replace="~{fragments/head}">
 <link rel="stylesheet" href="/app/tax-withholding-estimator/resources/styles/all-screens.css">
 
 
 <a class="usa-skipnav" href="#main-content">Skip to main content</a>
 <header>
-  <div th:replace="fragments/usa-banner"></div>
+  <div th:replace="~{fragments/usa-banner}"></div>
   <div class="logo-banner"><img src="/app/tax-withholding-estimator/resources/img/irs-logo.svg" alt="IRS Logo"></div>
 </header>
 
@@ -23,4 +23,4 @@
   </main>
 </div>
 
-<template th:replace="fragments/js-templates"></template>
+<template th:replace="~{fragments/js-templates}"></template>
