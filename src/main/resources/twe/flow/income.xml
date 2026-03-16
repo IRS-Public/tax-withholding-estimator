@@ -867,7 +867,7 @@
         <p>These are amounts withheld, or taken out of your pension or annuity payment to pay for federal taxes.</p>
         <p><strong>On your most recent statement</strong>, check for the federal taxes paid for each payment.</p>
         <ul>
-          <li>This may appear as a single line called Taxes, FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax or similar. </li>
+          <li>This may appear as a single line called Taxes, FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax or similar </li>
           <li>If you have requested extra federal taxes to be withheld, that extra amount may appear on a separate line. Be sure to add these two amounts</li>
         </ul>
         <p>If the annual amount of your pension or annuity will be the same as last year, you can also refer to your <fg-show path="/lastTaxYear"/> Form 1099-R. To estimate federal taxes withheld for the most recent payment:</p>
@@ -884,7 +884,7 @@
         <p>These are amounts withheld, or taken out of a pension or annuity payment to pay for federal taxes throughout the year.</p>
         <p><strong>On your most recent statement</strong>, check for the federal taxes paid so far this year. This might be labeled as year-to-date or YTD.</p>
         <ul>
-          <li>This may appear as a single line called Taxes, FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax or similar.</li>
+          <li>This may appear as a single line called Taxes, FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax or similar</li>
           <li>If you have requested extra federal taxes to be withheld, that extra amount may appear on a separate line. Be sure to add these two amounts</li>
         </ul>
         <p>If the annual amount of your pension or annuity will be the same as last year, you can also refer to your <fg-show path="/lastTaxYear"/> Form 1099-R. To estimate federal taxes withheld so far this year: </p>

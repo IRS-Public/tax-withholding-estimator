@@ -108,7 +108,7 @@
       </p>
       <p condition="/isEligibleForEducationCredits" operator="isTrue"><modal-link for="modal-llc-who-can-claim">Who can claim the LLC?</modal-link></p>
       <fg-set path="/llcQualifiedEducationExpenses" if-true="/isEligibleForEducationCredits">
-        <question>Estimated total tuition or fees in <fg-show path="/taxYear"/>?</question>
+        <question>Estimated total tuition or fees in <fg-show path="/taxYear"/></question>
         <hint>(max $10,000)</hint>
         <input type="dollar"/>
       </fg-set>
