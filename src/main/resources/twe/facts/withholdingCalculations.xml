@@ -1598,11 +1598,9 @@
           <IsComplete>
             <Dependency path="/jobSelectedForExtraWithholding"/>
           </IsComplete>
-
           <IsComplete>
             <Dependency path="/pensionSelectedForExtraWithholding"/>
           </IsComplete>
-
         </Any>
       </Derived>
     </Fact>

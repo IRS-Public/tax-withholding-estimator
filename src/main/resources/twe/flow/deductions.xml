@@ -26,7 +26,7 @@
           <option value="false">Itemize deductions</option>
         </input>
       </fg-set>
-      <h3>Itemized Deductions</h3>
+      <h3>Itemized deductions</h3>
       <div condition="/isFilingStatusMFS" operator="isTrue">
         <p condition="/wantsStandardDeduction" operator="isIncomplete">If you choose to itemize, we need to ask more questions.</p>
       </div>
