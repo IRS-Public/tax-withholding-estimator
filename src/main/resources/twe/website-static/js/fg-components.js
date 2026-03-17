@@ -31,6 +31,9 @@ function loadFactGraph (factGraphAsString) {
 }
 window.loadFactGraph = loadFactGraph
 
+// Presence of an unload event listener will disable bfcache in Firefox.
+window.addEventListener('unload', () => {})
+
 const COLLECTION_ID_PLACEHOLDER = '{{COLLECTION_ID}}'
 /**
  * Update all abstract paths in the template to include the collection id
