@@ -1,97 +1,22 @@
 package gov.irs.twe.parser
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.TweTemplateEngine
+import org.thymeleaf.context.Context
+import scala.xml.Elem
 
-enum SectionNode {
-  case fgCollection(fgCollection: FgCollection)
-  case fgSet(fgSet: FgSet)
-  case fgAlert(fgSet: FgAlert)
-  case fgSectionGate(fgSectionGate: FgSectionGate)
-  case fgDetail(fgDetail: FgDetail)
-  case fgWithholdingAdjustments(fgWithholdingAdjustments: FgWithholdingAdjustments)
-  case rawHTML(node: xml.Node)
-}
+case class Section(children: Seq[FlowNode]) extends FlowNode {
+  override def html(templateEngine: TweTemplateEngine): String = {
+    val childrenHtml = children.html(templateEngine)
 
-case class Section(nodes: List[SectionNode], factDictionary: FactDictionary) {
-  def html(templateEngine: TweTemplateEngine): String = {
-    val sectionHtml = this.nodes
-      .map {
-        case SectionNode.fgCollection(x)             => x.html(templateEngine)
-        case SectionNode.fgSet(x)                    => x.html(templateEngine)
-        case SectionNode.fgAlert(x)                  => x.html(templateEngine)
-        case SectionNode.fgSectionGate(x)            => x.html(templateEngine)
-        case SectionNode.fgDetail(x)                 => x.html(templateEngine)
-        case SectionNode.fgWithholdingAdjustments(x) => x.html(templateEngine)
-        case SectionNode.rawHTML(x)                  => renderNode(x, templateEngine)
-      }
-      .mkString("\n")
-
-    "<section class=\"flow usa-prose\">" + sectionHtml + "</section>"
+    val context = new Context()
+    context.setVariable("childrenHtml", childrenHtml)
+    templateEngine.process("nodes/section", context)
   }
-
-  private def renderNode(node: xml.Node, templateEngine: TweTemplateEngine): String =
-    // Check if this node or its descendants contain special elements
-    if (containsSpecialElements(node)) {
-      // Process children and reconstruct the node
-      val processedChildren = (node \ "_").map { child =>
-        child.label match {
-          case "fg-collection"              => SectionNode.fgCollection(FgCollection.parse(child, factDictionary))
-          case "fg-set"                     => SectionNode.fgSet(FgSet.parse(child, factDictionary))
-          case "fg-section-gate"            => SectionNode.fgSectionGate(FgSectionGate.parse(child))
-          case "fg-detail"                  => SectionNode.fgDetail(FgDetail.parse(child, factDictionary))
-          case "fg-withholding-adjustments" =>
-            SectionNode.fgWithholdingAdjustments(FgWithholdingAdjustments.parse(child, factDictionary))
-          case _ => SectionNode.rawHTML(child)
-        }
-      }
-
-      val childrenHtml = processedChildren.map {
-        case SectionNode.fgCollection(x)             => x.html(templateEngine)
-        case SectionNode.fgSet(x)                    => x.html(templateEngine)
-        case SectionNode.fgSectionGate(x)            => x.html(templateEngine)
-        case SectionNode.fgAlert(x)                  => x.html(templateEngine)
-        case SectionNode.fgDetail(x)                 => x.html(templateEngine)
-        case SectionNode.fgWithholdingAdjustments(x) => x.html(templateEngine)
-        case SectionNode.rawHTML(x)                  => renderNode(x, templateEngine)
-      }.mkString
-
-      // Reconstruct the node with processed children
-      val attributes = node.attributes.asAttrMap
-        .map { case (k, v) => s"""$k="$v"""" }
-        .mkString(" ")
-      val attrString = if (attributes.nonEmpty) s" $attributes" else ""
-
-      s"<${node.label}$attrString>$childrenHtml</${node.label}>"
-    } else {
-      // No special elements, return as-is
-      node.toString
-    }
-
-  private def containsSpecialElements(node: xml.Node): Boolean =
-    (node \\ "_").exists(n =>
-      n.label == "fg-collection" || n.label == "fg-set" || n.label == "fg-section-gate" || n.label == "fg-detail",
-    )
 }
+object Section extends FlowNodeParser {
+  override def fromXml(section: Elem, flowParser: FlowParser, level: Int): Section = {
+    val children = flowParser.parseChildElements(section, level)
 
-object Section {
-  def parse(section: xml.Node, factDictionary: FactDictionary): Section = {
-    val nodes = (section \ "_")
-      .map(node => processNode(node, factDictionary))
-      .toList
-
-    Section(nodes, factDictionary)
+    Section(children)
   }
-
-  private[parser] def processNode(node: xml.Node, factDictionary: FactDictionary): SectionNode =
-    node.label match {
-      case "fg-collection"              => SectionNode.fgCollection(FgCollection.parse(node, factDictionary))
-      case "fg-set"                     => SectionNode.fgSet(FgSet.parse(node, factDictionary))
-      case "fg-alert"                   => SectionNode.fgAlert(FgAlert.parse(node, factDictionary))
-      case "fg-section-gate"            => SectionNode.fgSectionGate(FgSectionGate.parse(node))
-      case "fg-detail"                  => SectionNode.fgDetail(FgDetail.parse(node, factDictionary))
-      case "fg-withholding-adjustments" =>
-        SectionNode.fgWithholdingAdjustments(FgWithholdingAdjustments.parse(node, factDictionary))
-      case _ => SectionNode.rawHTML(node)
-    }
 }

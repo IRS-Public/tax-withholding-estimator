@@ -1,36 +1,44 @@
 package gov.irs.twe.parser
+
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
+import scala.xml.Elem
 
 case class Modal(
     id: String,
     modalHeading: String,
-    modalContent: String,
-) {
-  def html(templateEngine: TweTemplateEngine): String = {
+    modalElements: Seq[FlowNode],
+) extends FlowNode {
+  override def html(templateEngine: TweTemplateEngine): String = {
     val context = new Context()
     context.setVariable("modalId", this.id)
     context.setVariable("modalHeading", modalHeading)
+    val modalContent = modalElements.html(templateEngine)
     context.setVariable("modalContent", modalContent)
 
     templateEngine.process("nodes/modal-dialog", context)
   }
 }
 
-object Modal {
-  def parse(node: xml.Node): Modal = {
-    val id = node \@ "id"
-    if (id == null) { throw InvalidFormConfig(s"Modal is missing an ID") }
+object Modal extends FlowNodeParser {
+  override def fromXml(modalElement: Elem, flowParser: FlowParser, level: Int): Modal = {
+    val id = modalElement \@ "id"
+    if (id == null) {
+      throw InvalidFormConfig(s"Modal is missing an id")
+    }
+    val modalHeadingNode = (modalElement \ "modal-heading").head
+    if (modalHeadingNode.isEmpty) {
+      throw InvalidFormConfig(s"Modal $id is missing a heading")
+    }
+    val modalContentNode = (modalElement \ "modal-content").collect { case e: xml.Elem => e }.head
+    if (modalContentNode.isEmpty) {
+      throw InvalidFormConfig(s"Modal $id is missing content")
+    }
 
-    val modalHeadingNode = (node \ "modal-heading").head
-    if (modalHeadingNode.isEmpty) { throw InvalidFormConfig(s"Modal $id is missing a heading") }
     val modalHeading = modalHeadingNode.child.mkString
+    val modalElements = flowParser.parseChildElements(modalContentNode, level)
 
-    val modalContentNode = (node \ "modal-content").head
-    if (modalContentNode.isEmpty) { throw InvalidFormConfig(s"Modal $id is missing content") }
-    val modalContent = modalContentNode.child.mkString
-
-    Modal(id, modalHeading, modalContent)
+    Modal(id, modalHeading, modalElements)
   }
 }

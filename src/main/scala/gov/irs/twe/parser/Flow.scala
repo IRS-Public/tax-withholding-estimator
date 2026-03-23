@@ -3,16 +3,24 @@ package gov.irs.twe.parser
 import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.Log
+import scala.xml.Elem
 
-case class Flow(pages: List[Page])
+case class Flow(
+    pages: List[Page],
+)
 
 object Flow {
-  def fromXmlConfig(config: xml.Elem, factDictionary: FactDictionary): Flow = {
-    if (config.label != "FlowConfig") {
-      throw InvalidFormConfig(s"Expected a top-level <FlowConfig>, found ${config.label}")
+  def fromXmlConfig(flowConfig: Elem, factDictionary: FactDictionary): Flow = {
+    if (flowConfig.label != "FlowConfig") {
+      throw InvalidFormConfig(s"Expected a top-level <FlowConfig>, found ${flowConfig.label}")
     }
 
-    val pages = (config \ "page").map(page => Page.parse(page, factDictionary)).toList
+    val flowParser = FlowParser(factDictionary)
+
+    // FlowConfig is expected to have only `page` child elements relevant to parsing
+    val pages = (flowConfig \ "page").collect { case pageElement: Elem =>
+      Page.fromXml(pageElement, flowParser)
+    }.toList
     Log.info(s"Generated flow with ${pages.length} pages")
 
     Flow(pages)

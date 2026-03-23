@@ -1,4 +1,4 @@
-package gov.irs.twe.parser.recursive
+package gov.irs.twe.parser
 
 import gov.irs.twe.TweTemplateEngine
 import scala.xml.Elem
@@ -12,5 +12,5 @@ extension (flowNodes: Seq[FlowNode]) {
 }
 
 trait FlowNodeParser {
-  def fromXml(element: Elem, flowParser: FlowParser, level: Int = 0): FlowNode
+  def fromXml(element: Elem, flowParser: FlowParser, level: Int): FlowNode
 }

@@ -3,6 +3,7 @@ package gov.irs.twe.parser
 import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
+import scala.xml.Elem
 
 enum FormType(val typeString: String):
   case W_4 extends FormType("w-4")
@@ -18,8 +19,8 @@ case class FgWithholdingAdjustments(
     path: String,
     condition: Option[Condition],
     formType: FormType,
-) {
-  def html(templateEngine: TweTemplateEngine): String = {
+) extends FlowNode {
+  override def html(templateEngine: TweTemplateEngine): String = {
 
     val context = new Context()
     context.setVariable("path", path)
@@ -33,12 +34,16 @@ case class FgWithholdingAdjustments(
   }
 }
 
-object FgWithholdingAdjustments {
-  def parse(node: xml.Node, factDictionary: FactDictionary): FgWithholdingAdjustments = {
+object FgWithholdingAdjustments extends FlowNodeParser {
+  override def fromXml(
+      fgWithholdingAdjustmentsElement: Elem,
+      flowParser: FlowParser,
+      level: Int,
+  ): FgWithholdingAdjustments = {
 
-    val path = node \@ "path"
-    val condition = Condition.getCondition(node, factDictionary)
-    val formType = FormType.fromAttribute((node \@ "form-type"))
+    val path = fgWithholdingAdjustmentsElement \@ "path"
+    val condition = Condition.getCondition(fgWithholdingAdjustmentsElement, flowParser.factDictionary)
+    val formType = FormType.fromAttribute((fgWithholdingAdjustmentsElement \@ "form-type"))
 
     FgWithholdingAdjustments(path, condition, formType)
   }

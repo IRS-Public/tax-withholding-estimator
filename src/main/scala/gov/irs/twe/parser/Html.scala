@@ -1,4 +1,4 @@
-package gov.irs.twe.parser.recursive
+package gov.irs.twe.parser
 
 import gov.irs.twe.TweTemplateEngine
 import scala.xml.Elem

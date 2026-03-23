@@ -6,6 +6,7 @@ import gov.irs.twe.parser.Utils.validateFact
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
 import scala.collection.JavaConverters.asJavaIterableConverter
+import scala.xml.Elem
 
 case class ThymeleafOption(name: String, value: String, description: String)
 case class FgSet(
@@ -16,8 +17,8 @@ case class FgSet(
     hint: Option[String],
     optional: Boolean,
     modalLink: Option[String],
-) {
-  def html(templateEngine: TweTemplateEngine): String = {
+) extends FlowNode {
+  override def html(templateEngine: TweTemplateEngine): String = {
     val usesFieldset =
       input.typeString == "boolean" || input.typeString == "date" || input.typeString == "enum" || input.typeString == "multi-enum"
 
@@ -65,9 +66,10 @@ case class FgSet(
   }
 }
 
-object FgSet {
-  def parse(node: xml.Node, factDictionary: FactDictionary): FgSet = {
-    val path = node \@ "path"
+object FgSet extends FlowNodeParser {
+  override def fromXml(fgSetElement: Elem, flowParser: FlowParser, level: Int): FgSet = {
+    val factDictionary = flowParser.factDictionary
+    val path = fgSetElement \@ "path"
     if (path.isEmpty) {
       throw InvalidFormConfig("fg-set attribute `path` is required but was missing or empty")
     }
@@ -76,7 +78,7 @@ object FgSet {
     val factDefinitionNode = factDictionary.getDefinitionsAsNodes()(Path(path))
     val isOptional = (factDefinitionNode \ "Placeholder").nonEmpty
 
-    val input = Input.extractFromFgSet(node, isOptional, factDictionary)
+    val input = Input.extractFromFgSet(fgSetElement, isOptional, factDictionary)
     val typeNode = factDictionary.getDefinition(path).typeNode
     val inputAndNodeTypeMismatch = input match {
       case Input.text(_)       => typeNode != "StringNode"
@@ -92,19 +94,19 @@ object FgSet {
     if (inputAndNodeTypeMismatch) throw InvalidFormConfig(s"Path $path must be of type $input")
 
     // Use .child.mkString instead of .text to preserve XML tags (e.g., <span>, <fg-show>) in mixed content
-    val question = (node \ "question").head.child.mkString.trim
+    val question = (fgSetElement \ "question").head.child.mkString.trim
     if (question.isEmpty) {
       throw InvalidFormConfig(s"fg-set at path: $path has an empty question tag. This is required.")
     }
 
-    val condition = Condition.getCondition(node, factDictionary)
-    val hintNode = node \ "hint"
+    val condition = Condition.getCondition(fgSetElement, factDictionary)
+    val hintNode = fgSetElement \ "hint"
     val hint = if (hintNode.isEmpty) {
       None
     } else {
       Some(hintNode.head.child.mkString.trim)
     }
-    val modalLinkNode = node \ "modal-link"
+    val modalLinkNode = fgSetElement \ "modal-link"
     val modalLink = if (modalLinkNode.isEmpty) {
       None
     } else {

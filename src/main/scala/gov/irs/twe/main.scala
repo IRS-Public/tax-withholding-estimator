@@ -1,16 +1,13 @@
 package gov.irs.twe
 
-import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.generators.Website
 import gov.irs.twe.parser.Flow
-import java.io.File
 import scala.io.Source
 import scala.util.matching.Regex
 import scala.util.Try
 import scala.xml.Elem
 import scala.xml.NodeBuffer
-import smol.*
 
 val FlowResourceRoot = "twe/flow"
 val flagRegex = new Regex("""--(\w*)""")
@@ -49,24 +46,9 @@ case class FgAlertContent(heading: String, body: Map[String, String])
   val flow = Flow.fromXmlConfig(resolvedConfig, tweFactDictionary.factDictionary)
   val site = Website.generate(flow, tweFactDictionary.xml, flags)
 
-  val recursiveFlow = gov.irs.twe.parser.recursive.Flow.fromXmlConfig(resolvedConfig, tweFactDictionary.factDictionary)
-  val recursiveSite = Website.generate(recursiveFlow, tweFactDictionary.xml, flags)
-
-  // assert legacy and recursive output are identical
-  assert(site.pages.length == recursiveSite.pages.length)
-
-  site.pages.zipWithIndex.foreach((page, index) => {
-    val pageContent = page.content.replaceAll(">\\s+<", "><").trim()
-    val recursivePageContent = recursiveSite.pages(index).content.replaceAll(">\\s+<", "><").trim()
-    assert(
-      recursivePageContent == pageContent,
-      s"Recursive parsing of ${page.route} did not match non-recursive output.",
-    )
-  })
-
   // Delete out/ directory and add files to it
   val outDir = os.pwd / "out"
-  recursiveSite.save(outDir / "app/tax-withholding-estimator")
+  site.save(outDir / "app/tax-withholding-estimator")
 
   if !flags.contains("serve") then return // Only start smol if 'serve' flag is set
 
