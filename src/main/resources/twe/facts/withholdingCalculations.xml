@@ -35,6 +35,7 @@
         <Add>
           <Dependency path="../yearToDateWithholding"/>
           <Dependency path="../restOfYearWithholding"/>
+          <Dependency path="../withholdingsFromTotalBonusReceived"/>
         </Add>
       </Derived>
     </Fact>
