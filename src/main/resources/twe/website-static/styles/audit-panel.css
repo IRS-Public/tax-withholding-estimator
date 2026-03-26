@@ -19,6 +19,13 @@
   }
 }
 
+.audit-panel__section {
+    border: 1px solid var(--base-lighter);
+    margin: 1rem 0;
+    padding: .5rem 2rem;
+    border-radius: 4px;
+}
+
 @keyframes fadeInOut {
   0% { opacity: 0;  visibility: visible;}
   20% { opacity: 1; }

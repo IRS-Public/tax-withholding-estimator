@@ -201,10 +201,33 @@ export function disable () {
  */
 function loadFactGraphFromAuditPanel () {
   const textarea = document.querySelector('#load-fact-graph')
+  const formGroup = textarea.closest('.usa-form-group')
+  const label = formGroup.querySelector('.usa-label')
+  let errorMessage = formGroup.querySelector('#load-fact-graph-error')
+
   try {
     window.loadFactGraph(textarea.value)
+    if (errorMessage) {
+      errorMessage.remove()
+      textarea.classList.remove('usa-input--error')
+      textarea.removeAttribute('aria-describedby')
+      label.classList.remove('usa-label--error')
+      formGroup.classList.remove('usa-form-group--error')
+    }
   } catch (error) {
-    textarea.setCustomValidity('Please enter a valid JSON')
+    const errorMessageId = 'load-fact-graph-error'
+    if (!errorMessage) {
+      errorMessage = document.createElement('span')
+      errorMessage.id = errorMessageId
+      errorMessage.className = 'usa-error-message'
+      label.after(errorMessage)
+      errorMessage.innerText = 'Enter a valid JSON'
+      label.classList.add('usa-label--error')
+      textarea.classList.add('usa-input--error')
+      textarea.setAttribute('aria-describedby', errorMessageId)
+      formGroup.classList.add('usa-form-group--error')
+      textarea.focus()
+    }
   }
 }
 window.loadFactGraphFromAuditPanel = loadFactGraphFromAuditPanel

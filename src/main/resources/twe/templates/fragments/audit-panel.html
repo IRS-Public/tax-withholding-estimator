@@ -13,81 +13,87 @@
     </div>
   </div>
 
-  <h2>Override Date</h2>
-
-  <div class="usa-form-group">
-    <p>Override date: <fg-show path="/overrideDate"></fg-show></p>
-    <p>
-      <fg-set path="/overrideDate" inputtype="text" optional="true">
-        <label class="usa-label twe-question" for="override-date-input">Set override date (YYYY-MM-DD):</label>
-        <input id="override-date-input" class="usa-input" type="text">
-      </fg-set>
-    </p>
+  <div class="audit-panel__section">
+    <h2>Override Date</h2>
+    <div class="usa-form-group">
+      <p>Override date: <fg-show path="/overrideDate"></fg-show></p>
+      <p>
+        <fg-set path="/overrideDate" inputtype="text" optional="true">
+          <label class="usa-label twe-question" for="override-date-input">Set override date:</label>
+          <input id="override-date-input" class="usa-input" type="date">
+        </fg-set>
+      </p>
+    </div>
   </div>
 
-  <h2>Copy Fact Graph</h2>
-  <div>
-    <button class="usa-button inline" type="button" onclick="copyFactGraphToClipboard()">
-      <svg aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-left-neg-1 margin-y-neg-05">
-        <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#content_copy"/>
-      </svg>
-      Copy Fact Graph
+  <div class="audit-panel__section">
+    <h2>Copy Fact Graph</h2>
+    <div>
+      <button class="usa-button inline" type="button" onclick="copyFactGraphToClipboard()">
+        <svg aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-left-neg-1 margin-y-neg-05">
+          <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#content_copy"/>
+        </svg>
+        Copy Fact Graph
+      </button>
+      <span id="copy-fg-status">Copied to clipboard!</span>
+    </div>
+  </div>
+
+  <div class="audit-panel__section">
+    <h2>Load Fact Graph</h2>
+      <div class="usa-form-group">
+        <label class="usa-label" for="load-fact-graph">Paste Fact Graph</label>
+        <textarea id="load-fact-graph" class="usa-textarea" onchange="this.setCustomValidity('')"></textarea>
+      </div>
+      <button class="usa-button" type="button" onclick="loadFactGraphFromAuditPanel()">Set Fact Graph</button>
+  </div>
+
+  <div class="audit-panel__section">
+    <h2>Fact Graph Audit Panel</h2>
+    <div class="usa-form-group">
+      <label
+        class="usa-label twe-question"
+        th:for="fact-select"
+        th:text="#{audit.fact-select.question}">
+      </label>
+      <input
+        list="fact-options"
+        class="usa-input"
+        onkeydown="pathSelectListener(event)"
+        id="fact-select">
+      <datalist id="fact-options" aria-invalid="false"></datalist>
+    </div>
+
+    <div class="usa-form-group">
+      <label
+        class="usa-label twe-question"
+        th:for="fact-collection-id"
+        th:text="#{audit.collection-id-label}">
+      </label>
+      <input
+        th:id="fact-collection-id"
+        class="usa-input"
+        type="text"
+        autocomplete="off"
+        aria-invalid="false">
+    </div>
+
+    <button
+        class="usa-button"
+        id="add-fact-button"
+        type="button"
+        onclick="trackSelectedFact()">
+      Add fact
     </button>
-    <span id="copy-fg-status">Copied to clipboard!</span>
+    <div id="audit-panel__fact-list"></div>
   </div>
 
-  <h2>Load Fact Graph</h2>
-
-  <form class="usa-form-group">
-    <label class="usa-label" for="load-fact-graph">Past Fact Graph</label>
-    <textarea id="load-fact-graph" class="usa-textarea" onchange="this.setCustomValidity('')">
-    </textarea>
-    <button class="usa-button" type="submit" onclick="loadFactGraphFromAuditPanel()">Set</button>
-  </form>
-
-  <h2>Reset Fact Graph</h2>
-
-  <fg-reset>
-    <button class="usa-button usa-button--outline" type="reset">Start over</button>
-  </fg-reset>
-
-  <h2>Fact Graph Audit Panel</h2>
-  <div class="usa-form-group">
-    <label
-       class="usa-label twe-question"
-       th:for="fact-select"
-       th:text="#{audit.fact-select.question}">
-    </label>
-    <input
-      list="fact-options"
-      class="usa-input"
-      onkeydown="pathSelectListener(event)"
-      id="fact-select">
-    <datalist id="fact-options" aria-invalid="false"></datalist>
+  <div class="audit-panel__section">
+    <h2>Reset Fact Graph</h2>
+    <fg-reset>
+      <button class="usa-button usa-button--outline" type="reset">Start over</button>
+    </fg-reset>
   </div>
-
-  <div class="usa-form-group">
-    <label
-      class="usa-label twe-question"
-      th:for="fact-collection-id"
-      th:text="#{audit.collection-id-label}">
-    </label>
-    <input
-      th:id="fact-collection-id"
-      class="usa-input"
-      type="text"
-      autocomplete="off"
-      aria-invalid="false">
-  </div>
-
-  <button
-      class="usa-button"
-      id="add-fact-button"
-      type="button"
-      onclick="trackSelectedFact()">
-    Add fact
-  </button>
-  <div id="audit-panel__fact-list"></div>
 </aside>
 
 <template id="audit-panel__fact">
