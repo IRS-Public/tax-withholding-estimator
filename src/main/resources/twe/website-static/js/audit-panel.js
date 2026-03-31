@@ -4,6 +4,7 @@ const XML_SERIALIZER = new XMLSerializer()
 const res = await fetch('/app/tax-withholding-estimator/resources/fact-dictionary.xml')
 const text = await res.text()
 const factDictionaryXml = parser.parseFromString(text, 'application/xml')
+const factSelect = document.querySelector('#fact-select')
 
 window.enableAuditMode = enable
 window.disableAuditMode = disable
@@ -64,6 +65,7 @@ class AuditedFact extends HTMLElement {
     this.removeButton.removeEventListener('click', this.deleteListener)
     this.removeEventListener('click', this.handleLinksListener)
     document.removeEventListener('fg-update', this.renderListener)
+    factSelect.focus()
   }
 
   render () {
@@ -109,10 +111,11 @@ class AuditedFact extends HTMLElement {
 customElements.define('audited-fact', AuditedFact)
 
 function trackSelectedFact () {
-  const factPath = document.querySelector('#fact-select').value
+  const factPath = factSelect.value
   const collectionId = document.querySelector('#fact-collection-id').value
   if (factPath) {
     trackFact(factPath, collectionId)
+    factSelect.value = ''
   }
 }
 
@@ -132,6 +135,12 @@ function trackFact (path, collectionId) {
 
   auditedFactsList.appendChild(auditedFact)
   auditedFact.scrollIntoView()
+  auditedFact.setAttribute('tabindex', '-1')
+  auditedFact.focus()
+
+  auditedFact.addEventListener('focusout', () => {
+    auditedFact.removeAttribute('tabindex')
+  }, { once: true })
 }
 
 function setFactOptions () {

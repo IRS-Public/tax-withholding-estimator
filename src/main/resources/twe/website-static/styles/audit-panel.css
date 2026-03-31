@@ -94,3 +94,8 @@ audited-fact::part(remove-button) {
   color: var(--primary);
   cursor: pointer;
 }
+
+audited-fact::part(remove-button):focus{
+  outline: .25rem solid #2491ff;
+  outline-offset: .25rem;
+}
