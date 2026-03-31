@@ -91,3 +91,7 @@ validate-scala: ## Validate Scala code
 semgrep:
 	semgrep scan --verbose --metrics off --severity WARNING --error \
 		--config p/security-audit --config p/scala
+
+.PHONY: diff-out
+diff-out: ## Compare the output static assets on your current branch with `main`
+	./scripts/diff-out.sh
