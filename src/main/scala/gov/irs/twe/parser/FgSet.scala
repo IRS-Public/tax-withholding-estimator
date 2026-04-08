@@ -5,7 +5,6 @@ import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.Utils.validateFact
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
-import scala.collection.mutable
 import scala.jdk.CollectionConverters.IterableHasAsJava
 import scala.xml.Elem
 
@@ -15,7 +14,7 @@ case class FgSet(
     condition: Option[Condition],
     input: Input,
     optional: Boolean,
-    contentKey: String,
+    translationContext: TranslationContext,
 ) extends FlowNode {
   override def html(templateEngine: TweTemplateEngine): String = {
     val usesFieldset =
@@ -28,6 +27,7 @@ case class FgSet(
     context.setVariable("typeString", input.typeString)
     context.setVariable("optional", optional)
     context.setVariable("usesFieldset", usesFieldset)
+    val contentKey = translationContext.fullKey()
     context.setVariable("contentKey", contentKey)
 
     input match {
@@ -68,7 +68,11 @@ case class FgSetOption(
 )
 
 object FgSet extends FlowNodeParser {
-  override def fromXml(fgSetElement: Elem, flowParser: FlowParser, level: Int): FgSet = {
+  override def fromXml(
+      fgSetElement: Elem,
+      flowParser: FlowParser,
+      parentTranslationContext: TranslationContext,
+  ): FgSet = {
     val factDictionary = flowParser.factDictionary
     val path = fgSetElement \@ "path"
     if (path.isEmpty) {
@@ -122,30 +126,25 @@ object FgSet extends FlowNodeParser {
       FgSetOption(value, name, descriptionValue)
     }
 
-    val parentContext = flowParser.translationContext
-    val mapAtParentLevel = flowParser.translationMap.getMap(parentContext)
-    mapAtParentLevel += path -> mutable.LinkedHashMap.empty[String, Any]
-    val currentMapLevel = mapAtParentLevel.getMap(List(path))
-    currentMapLevel += "question" -> question
+    val translationContext = parentTranslationContext.forChildWithId(path)
+
+    translationContext.updateValue("question", question)
     if (hint.nonEmpty) {
-      currentMapLevel += "hint" -> hint.get
+      translationContext.updateValue("hint", hint.get)
     }
     if (modalLink.nonEmpty) {
-      currentMapLevel += "modalLink" -> modalLink.get
+      translationContext.updateValue("modalLink", modalLink.get)
     }
 
     if (options.nonEmpty) {
-      currentMapLevel += "options" -> mutable.LinkedHashMap.empty[String, Any]
-      val optionsMap = currentMapLevel.getMap(List("options"))
+      val optionsContext = translationContext.forChildWithId("options")
       options.foreach(option => {
-        optionsMap += option.value -> mutable.LinkedHashMap.empty[String, Any]
-        val specificOption = optionsMap.getMap(List(option.value))
-        specificOption += "name" -> option.name
-        if (option.description.isDefined) specificOption += "description" -> option.description.get
+        val specificOptionContext = optionsContext.forChildWithId(option.value)
+        specificOptionContext.updateValue("name", option.name)
+        if (option.description.isDefined) specificOptionContext.updateValue("description", option.description.get)
       })
     }
-    val currentTranslationPath = s"${parentContext.mkString(".")}.$path"
 
-    FgSet(path, condition, input, isOptional, currentTranslationPath)
+    FgSet(path, condition, input, isOptional, translationContext)
   }
 }

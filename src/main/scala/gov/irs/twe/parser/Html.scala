@@ -1,7 +1,6 @@
 package gov.irs.twe.parser
 
 import gov.irs.twe.TweTemplateEngine
-import scala.collection.mutable
 import scala.xml.Elem
 
 abstract class Html extends FlowNode
@@ -23,38 +22,27 @@ case class HtmlWithChildren(openTag: String, closeTag: String, children: Seq[Flo
   }
 }
 
-object Html extends FlowNodeParserWithCounts {
+object Html extends FlowNodeParser {
   override def fromXml(
       htmlElement: Elem,
       flowParser: FlowParser,
-      level: Int,
-      tagCounts: mutable.Map[Int, mutable.Map[String, Int]],
+      parentTranslationContext: TranslationContext,
   ): Html = {
     val openTag = getOpenTag(htmlElement)
     val closeTag = getClosingTag(htmlElement)
     if (isLeafNode(htmlElement)) {
-      val updatedCount = getAndUpdateTagCounts(tagCounts, htmlElement, level)
-      val parentContext = flowParser.translationContext
-      val translationKey = s"${parentContext.mkString(".")}.$updatedCount"
-      val mapToBeUpdated = flowParser.translationMap.getMap(parentContext)
-      mapToBeUpdated += updatedCount -> htmlElement.head.child.mkString.strip
+      val childKey = parentTranslationContext.nextChildKey(htmlElement.label)
+      val translationKey = parentTranslationContext.fullKey(childKey)
+      parentTranslationContext.updateValue(childKey, htmlElement.head.child.mkString.strip)
 
+      // Since this is a leaf node we just pass in the translation key directly and don't update translationContext
       HtmlLeafNode(htmlElement, openTag, closeTag, translationKey)
     } else {
-      var children: Seq[FlowNode] = Seq.empty
-      var lvl = level
-      if (htmlElement.label == "ul" | htmlElement.label == "ol") {
-        val updatedCount = getAndUpdateTagCounts(tagCounts, htmlElement, level)
-        val parentContext = flowParser.translationContext
-        val mapToBeUpdated = flowParser.translationMap.getMap(parentContext)
-        mapToBeUpdated += updatedCount -> mutable.LinkedHashMap.empty[String, Any]
-
-        flowParser.translationContext = flowParser.translationContext :+ updatedCount
-        children = flowParser.parseChildElements(htmlElement, level = lvl)
-        flowParser.translationContext = flowParser.translationContext.dropRight(1)
-      } else {
-        children = flowParser.parseChildElements(htmlElement, level = lvl, tagCounts = tagCounts)
-      }
+      val ignoredElements = List("div", "details", "summary")
+      val translationContext =
+        if (ignoredElements.contains(htmlElement.label)) parentTranslationContext
+        else parentTranslationContext.forChildWithoutUniqueId(htmlElement.label)
+      val children = flowParser.parseChildElements(htmlElement, translationContext)
       HtmlWithChildren(openTag, closeTag, children)
     }
   }

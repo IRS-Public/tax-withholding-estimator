@@ -5,11 +5,10 @@ import gov.irs.twe.parser.{ Condition, FgDetail }
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
 import org.thymeleaf.TemplateEngine
-import scala.collection.mutable
 import scala.xml.Elem
 
 case class FgDetail(
-    summaryKey: String,
+    translationContext: TranslationContext,
     children: Seq[FlowNode],
     useChevron: Boolean,
     detailsClass: Option[String],
@@ -19,6 +18,7 @@ case class FgDetail(
 ) extends FlowNode {
   override def html(templateEngine: TweTemplateEngine): String = {
     val context = new Context()
+    val summaryKey = translationContext.fullKey("summary")
     val summary = templateEngine.messageResolver.resolveMessage(summaryKey)
     context.setVariable("summary", summary)
     val childrenHtml = children.html(templateEngine)
@@ -34,15 +34,13 @@ case class FgDetail(
   }
 }
 
-object FgDetail extends FlowNodeParserWithCounts {
+object FgDetail extends FlowNodeParser {
   private val VALID_HEADING_TAGS = Set("h2", "h3", "h4", "h5", "h6")
 
   override def fromXml(
       fgDetailElement: Elem,
       flowNodeParser: FlowParser,
-      level: Int = 0,
-      // This default value should only be used for tests, worth refactoring the tests that rely on this
-      tagCounts: mutable.Map[Int, mutable.Map[String, Int]] = mutable.Map.empty,
+      parentTranslationContext: TranslationContext,
   ): FgDetail = {
     val summary = (fgDetailElement \ "summary").headOption match {
       case Some(summaryNode) => summaryNode.child.map(_.toString).mkString.strip
@@ -56,20 +54,13 @@ object FgDetail extends FlowNodeParserWithCounts {
     val open = (fgDetailElement \@ "open").strip.equalsIgnoreCase("true")
     val condition = Condition.getCondition(fgDetailElement, flowNodeParser.factDictionary)
 
-    val fgDetailWithCount = getAndUpdateTagCounts(tagCounts, fgDetailElement, level)
-    val mapToBeUpdated = flowNodeParser.translationMap.getMap(flowNodeParser.translationContext)
-    mapToBeUpdated += fgDetailWithCount -> mutable.LinkedHashMap.empty[String, Any]
-
-    val currentMapLevel = mapToBeUpdated.getMap(List(fgDetailWithCount))
+    val translationContext = parentTranslationContext.forChildWithoutUniqueId(fgDetailElement.label)
     if (summary.nonEmpty) {
-      currentMapLevel += "summary" -> summary
+      translationContext.updateValue("summary", summary)
     }
 
-    flowNodeParser.translationContext = flowNodeParser.translationContext :+ fgDetailWithCount
-    val summaryKey = flowNodeParser.translationContext.mkString(".") + ".summary"
-    val childrenHtml = flowNodeParser.parseChildElements(fgDetailElement, List("summary"), level)
-    flowNodeParser.translationContext = flowNodeParser.translationContext.dropRight(1)
+    val childrenHtml = flowNodeParser.parseChildElements(fgDetailElement, translationContext, List("summary"))
 
-    FgDetail(summaryKey, childrenHtml, useChevron, detailsClass, headingTag, open, condition)
+    FgDetail(translationContext, childrenHtml, useChevron, detailsClass, headingTag, open, condition)
   }
 }

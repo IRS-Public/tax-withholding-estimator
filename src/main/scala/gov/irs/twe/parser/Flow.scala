@@ -17,14 +17,15 @@ object Flow {
     }
 
     val flowParser = FlowParser(factDictionary)
+    val rootContext = TranslationContext()
 
     // FlowConfig is expected to have only `page` child elements relevant to parsing
     val pages = (flowConfig \ "page").collect { case pageElement: Elem =>
-      Page.fromXml(pageElement, flowParser)
+      Page.fromXml(pageElement, flowParser, rootContext)
     }.toList
     Log.info(s"Generated flow with ${pages.length} pages")
 
-    generateFlowLocaleFile(flowParser.translationMap)
+    generateFlowLocaleFile(rootContext.translationMap)
 
     Flow(pages)
   }

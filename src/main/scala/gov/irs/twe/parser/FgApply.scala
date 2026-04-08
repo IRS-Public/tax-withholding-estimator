@@ -5,7 +5,6 @@ import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.Utils.validateFact
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
-import scala.collection.mutable
 import scala.xml.Elem
 
 case class FgApply(path: String, value: String) extends FlowNode {
@@ -18,7 +17,11 @@ case class FgApply(path: String, value: String) extends FlowNode {
 }
 
 object FgApply extends FlowNodeParser {
-  override def fromXml(fgApplyElement: Elem, flowParser: FlowParser, level: Int): FgApply = {
+  override def fromXml(
+      fgApplyElement: Elem,
+      flowParser: FlowParser,
+      parentTranslationContext: TranslationContext,
+  ): FgApply = {
     val path = fgApplyElement \@ "path"
     if (path.isEmpty) {
       throw new InvalidFormConfig("fg-apply attribute `path` is required but was missing or empty")

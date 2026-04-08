@@ -14,8 +14,8 @@ case class Section(children: Seq[FlowNode]) extends FlowNode {
   }
 }
 object Section extends FlowNodeParser {
-  override def fromXml(section: Elem, flowParser: FlowParser, level: Int): Section = {
-    val children = flowParser.parseChildElements(section, level = level)
+  override def fromXml(section: Elem, flowParser: FlowParser, parentTranslationContext: TranslationContext): Section = {
+    val children = flowParser.parseChildElements(section, parentTranslationContext)
 
     Section(children)
   }

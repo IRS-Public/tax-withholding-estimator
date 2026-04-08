@@ -2,7 +2,6 @@ package gov.irs.twe.parser
 
 import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.exceptions.InvalidFormConfig
-import scala.collection.mutable
 import scala.xml.Elem
 
 enum FlowNodeType {
@@ -35,14 +34,10 @@ object FlowNodeType:
 case class FlowParser(
     factDictionary: FactDictionary,
 ) {
-  var translationContext: List[String] = List.empty[String]
-  val translationMap = mutable.LinkedHashMap.empty[String, Any]
-
   def parseChildElements(
       parent: Elem,
+      parentTranslationContext: TranslationContext,
       excludedLabels: Seq[String] = Seq.empty[String],
-      level: Int = 0,
-      tagCounts: mutable.Map[Int, mutable.Map[String, Int]] = mutable.Map(),
   ): Seq[FlowNode] = {
     val childElements = (parent \ "_").filter(c => !excludedLabels.contains(c.label))
 
@@ -50,46 +45,28 @@ case class FlowParser(
       throw InvalidFormConfig(s"Encountered an empty element for which there is no parser configured: $parent")
     }
     childElements.collect { case element: Elem =>
-      // These elements are effectively ignored from a translations pov and thus level is not incremented
-      val ignoredElements = List("div", "details", "summary")
-      val updatedLevel = if (ignoredElements.contains(element.label)) level else level + 1
-      parseElement(element, updatedLevel, tagCounts)
+      parseElement(element, parentTranslationContext)
     }
   }
 
   private def parseElement(
       element: Elem,
-      level: Int = 0,
-      tagCounts: mutable.Map[Int, mutable.Map[String, Int]],
+      parentTranslationContext: TranslationContext,
   ): FlowNode =
     FlowNodeType.fromLabel(element.label) match {
-      case FlowNodeType.FG_ALERT                   => FgAlert.fromXml(element, this, level, tagCounts)
-      case FlowNodeType.FG_APPLY                   => FgApply.fromXml(element, this, level)
-      case FlowNodeType.FG_COLLECTION              => FgCollection.fromXml(element, this, level)
-      case FlowNodeType.FG_DETAIL                  => FgDetail.fromXml(element, this, level, tagCounts)
-      case FlowNodeType.FG_SET                     => FgSet.fromXml(element, this, level)
-      case FlowNodeType.FG_WITHHOLDING_ADJUSTMENTS => FgWithholdingAdjustments.fromXml(element, this, level)
-      case FlowNodeType.HTML                       => Html.fromXml(element, this, level, tagCounts)
-      case FlowNodeType.MODAL                      => Modal.fromXml(element, this, level)
-      case FlowNodeType.SECTION                    => Section.fromXml(element, this, level)
-      case FlowNodeType.PAGE                       =>
+      case FlowNodeType.FG_ALERT                   => FgAlert.fromXml(element, this, parentTranslationContext)
+      case FlowNodeType.FG_APPLY                   => FgApply.fromXml(element, this, parentTranslationContext)
+      case FlowNodeType.FG_COLLECTION              => FgCollection.fromXml(element, this, parentTranslationContext)
+      case FlowNodeType.FG_DETAIL                  => FgDetail.fromXml(element, this, parentTranslationContext)
+      case FlowNodeType.FG_SET                     => FgSet.fromXml(element, this, parentTranslationContext)
+      case FlowNodeType.FG_WITHHOLDING_ADJUSTMENTS =>
+        FgWithholdingAdjustments.fromXml(element, this, parentTranslationContext)
+      case FlowNodeType.HTML    => Html.fromXml(element, this, parentTranslationContext)
+      case FlowNodeType.MODAL   => Modal.fromXml(element, this, parentTranslationContext)
+      case FlowNodeType.SECTION => Section.fromXml(element, this, parentTranslationContext)
+      case FlowNodeType.PAGE    =>
         throw InvalidFormConfig(
           s"Encountered 'page' element outside of flow config root. Pages are only supported as top-level flow config elements.",
         )
     }
-}
-
-extension (translationMap: mutable.LinkedHashMap[String, Any]) {
-  def getMap(keys: List[String]): mutable.LinkedHashMap[String, Any] = {
-    val output = keys.foldLeft(Option(translationMap: Any)) {
-      case (Some(m: mutable.LinkedHashMap[String, Any] @unchecked), key) => m.get(key)
-      case _ => throw new IllegalArgumentException("invalid key path to translation map")
-    }
-    output.get match
-      case m: mutable.LinkedHashMap[String, Any] @unchecked => m
-      case _                                                =>
-        throw new IllegalArgumentException(
-          s"expected value to be of type mutable.LinkedHashMap[String, Any], but was ${output.get.getClass.getName}",
-        )
-  }
 }

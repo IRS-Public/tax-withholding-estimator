@@ -6,20 +6,20 @@ import gov.irs.twe.parser.Condition
 import gov.irs.twe.parser.Utils.validateFact
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
-import scala.collection.mutable
 import scala.xml.Elem
 
 case class FgCollection(
     path: String,
     disallowEmpty: String,
     condition: Option[Condition],
+    translationContext: TranslationContext,
     children: Seq[FlowNode],
     determiner: String,
-    translationKeyBase: String,
 ) extends FlowNode {
   def html(templateEngine: TweTemplateEngine): String = {
     val context = new Context()
     context.setVariable("path", path)
+    val translationKeyBase = translationContext.fullKey()
     val itemName = templateEngine.messageResolver.resolveMessage(translationKeyBase + ".itemName")
     context.setVariable("itemName", itemName)
     context.setVariable("disallowEmpty", disallowEmpty)
@@ -34,7 +34,11 @@ case class FgCollection(
 }
 
 object FgCollection extends FlowNodeParser {
-  override def fromXml(fgCollectionElement: Elem, flowParser: FlowParser, level: Int): FgCollection = {
+  override def fromXml(
+      fgCollectionElement: Elem,
+      flowParser: FlowParser,
+      parentTranslationContext: TranslationContext,
+  ): FgCollection = {
     val factDictionary = flowParser.factDictionary
 
     val path = fgCollectionElement \@ "path"
@@ -49,18 +53,12 @@ object FgCollection extends FlowNodeParser {
 
     validateFgCollection(path, factDictionary)
 
-    val mapAtParentLevel = flowParser.translationMap.getMap(flowParser.translationContext)
-    val collectionKey = "collection" + path
-    mapAtParentLevel += collectionKey -> mutable.LinkedHashMap.empty[String, Any]
-    val currentMapLevel = mapAtParentLevel.getMap(List(collectionKey))
-    currentMapLevel += "itemName" -> itemName
+    val translationContext = parentTranslationContext.forChildWithId("collection" + path)
+    translationContext.updateValue("itemName", itemName)
 
-    flowParser.translationContext = flowParser.translationContext :+ collectionKey
-    val translationKeyBase = flowParser.translationContext.mkString(".")
-    val children = flowParser.parseChildElements(fgCollectionElement, level = level)
-    flowParser.translationContext = flowParser.translationContext.dropRight(1)
+    val children = flowParser.parseChildElements(fgCollectionElement, translationContext)
 
-    FgCollection(path, disallowEmpty, condition, children, determiner, translationKeyBase)
+    FgCollection(path, disallowEmpty, condition, translationContext, children, determiner)
   }
 
   private def validateFgCollection(path: String, factDictionary: FactDictionary): Unit = {

@@ -38,7 +38,7 @@ object FgWithholdingAdjustments extends FlowNodeParser {
   override def fromXml(
       fgWithholdingAdjustmentsElement: Elem,
       flowParser: FlowParser,
-      level: Int,
+      parentTranslationContext: TranslationContext,
   ): FgWithholdingAdjustments = {
 
     val path = fgWithholdingAdjustmentsElement \@ "path"
