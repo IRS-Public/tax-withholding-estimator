@@ -8,6 +8,7 @@ import scala.xml.Elem
 
 case class Flow(
     pages: List[Page],
+    translationContext: TranslationContext,
 )
 
 object Flow {
@@ -25,8 +26,6 @@ object Flow {
     }.toList
     Log.info(s"Generated flow with ${pages.length} pages")
 
-    generateFlowLocaleFile(rootContext.translationMap)
-
-    Flow(pages)
+    Flow(pages, rootContext)
   }
 }

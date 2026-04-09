@@ -19,10 +19,14 @@ case class Locale(languageCode: String) {
     .parse(localeFile.reader())
     .getOrElse(throw new Exception(s"Failed to parse the content at $localeFilePath"))
 
-  private val flowContentString = os.read(generatedFlowContentPath)
-  private val flowContent = yaml.scalayaml.Parser
-    .parse(flowContentString)
-    .getOrElse(throw new Exception(s"Failed to parse the content at $localeFilePath"))
+  private val flowContent = if (os.exists(generatedFlowContentPath)) {
+    val flowContentString = os.read(generatedFlowContentPath)
+    yaml.scalayaml.Parser
+      .parse(flowContentString)
+      .getOrElse(throw new Exception(s"Failed to parse the content at $generatedFlowContentPath"))
+  } else {
+    Json.obj()
+  }
 
   def get(key: String): Json = {
     // Look at the main content file first, then the automatically-generated one

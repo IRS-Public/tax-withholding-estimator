@@ -39,6 +39,7 @@ val flagRegex = new Regex("""--(\w*)""")
 
   val tweFactDictionary = loadTweFactDictionary()
   val flow = Flow.fromXmlConfig(resolvedConfig, tweFactDictionary.factDictionary)
+  generateFlowLocaleFile(flow.translationContext.translationMap)
   val site = Website.generate(flow, tweFactDictionary.xml, flags)
 
   // Delete out/ directory and add files to it
