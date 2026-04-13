@@ -1,5 +1,6 @@
 package gov.irs.twe
 
+import gov.irs.twe.build.Flags
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.generators.Website
 import gov.irs.twe.parser.Flow
@@ -46,7 +47,7 @@ val flagRegex = new Regex("""--(\w*)""")
   val outDir = os.pwd / "out"
   site.save(outDir / "app/tax-withholding-estimator")
 
-  if !flags.contains("serve") then return // Only start smol if 'serve' flag is set
+  if !flags.contains(Flags.serve) then return // Only start smol if 'serve' flag is set
 
   val host = "localhost"
   val port = sys.props

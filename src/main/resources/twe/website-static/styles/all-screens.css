@@ -1,30 +1,94 @@
 /* Force all content to be visible */
+
 .hidden {
   display: block;
   opacity: 1;
+}
+span.hidden{
+  display: inline;
 }
 .fg-show.hidden {
   display: inline;
 }
 
 @media screen {
-  [condition] {
-    position: relative;
+
+  .view--column {
+    main {
+      background-color: transparent;
+      box-shadow: none;
+      padding: 0;
+    }
+    .screen__content {
+      background-color: white;
+      border: 1px solid var(--base-lighter);
+      border-radius: 8px;
+      margin: 0 0 var(--units-8);
+      padding: var(--units-8);
+
+      h1 {
+        margin: 0;
+      }
+    }
   }
 
-  [condition]::before {
-    background-color: var(--warning);
-    padding: 0 var(--units-05);
-    margin-right: var(--units-05);
-    border-radius: var(--units-1);
-    content: 'condition: ' attr(operator) ' ' attr(condition);
-    position: absolute;
-    top: 0;
-    right: 0;
+  .display-conditions {
+    div[condition],
+    p[condition],
+    ul[condition],
+    h3[condition],
+    h4[condition],
+    h5[condition],
+    fg-set[condition],
+    fg-withholding-adjustments[condition],
+    fg-alert[condition] {
+      border: 4px solid var(--accent-warm);
+      padding: 0 var(--units-2) var(--units-2);
+      position: relative;
+      margin-bottom: var(--units-05);
+    }
+
+    .fact-name {
+      background-color: var(--accent-warm);
+      color: var(--base-darkest);
+      display: block;
+      font-size: 1rem;
+      left: 0;
+      margin: 0 -1rem var(--units-1);
+      padding: 0 var(--units-05);
+      top: 0;
+    }
+
+    span[condition] {
+      background-color: var(--warning-lighter);
+      border: 1px solid var(--accent-warm);
+      color: var(--base-dark);
+      font-style: italic;
+      padding: 0 .5ch;
+
+      .fact-name {
+        background-color: transparent;
+        display: inline;
+        color: var(--base-dark);
+        font-style: normal;
+        font-weight: normal;
+        margin: 0;
+        margin-left: .5ch;
+
+        &::before {
+          content: "(";
+        }
+        &::after {
+          content: ")";
+        }
+      }
+    }
   }
 
-  .screen {
-    min-height: 100vh;
+  body:not(.display-conditions) {
+    .fact-name {
+      display: none;
+    }
   }
 }
 

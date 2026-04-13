@@ -1,5 +1,6 @@
 package gov.irs.twe.generators
 
+import gov.irs.twe.build.Flags
 import gov.irs.twe.parser.Flow
 import gov.irs.twe.TweTemplateEngine
 import org.jsoup.parser.Tag
@@ -66,7 +67,7 @@ object Website {
     val navPages = flow.pages.filter(p => !p.exclude)
     val excludedPageLength = flow.pages.length - navPages.size
 
-    val pages = flow.pages.zipWithIndex.map { (page, index) =>
+    var pages = flow.pages.zipWithIndex.map { (page, index) =>
       val titleValue = templateEngine.messageResolver.resolveMessage(page.titleKey)
       val title = s"Tax Withholding Estimator - ${titleValue} | Internal Revenue Service"
 
@@ -100,6 +101,12 @@ object Website {
       val content = templateEngine.process("page", context)
       WebsitePage(page.route, content)
     }
+
+    if (flags.contains(Flags.allScreens)) {
+      val allScreens = AllScreens.generate(flow)
+      pages = pages :+ allScreens
+    }
+
     Website(pages, dictionaryXml)
   }
 }

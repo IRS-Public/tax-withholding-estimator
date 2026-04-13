@@ -1,48 +1,60 @@
 package gov.irs.twe.generators
 
 import gov.irs.factgraph.FactDictionary
+import gov.irs.twe.build.Flags
 import gov.irs.twe.parser.Flow
 import org.jsoup.Jsoup
 import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers.*
+import org.scalatest.BeforeAndAfterAll
+import scala.jdk.CollectionConverters.ListHasAsScala
 
-class WebsiteSpec extends AnyFunSpec {
+class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
 
-  describe("basic form config") {
-    val basicDictionaryConfig = <FactDictionaryModule>
-      <Facts>
-        <Fact path="/filer/name">
-          <Name>Name</Name>
-          <Writable><String/></Writable>
-        </Fact>
-      </Facts>
+  private val basicDictionaryConfig = <FactDictionaryModule>
+    <Facts>
+      <Fact path="/filer/name">
+        <Name>Name</Name>
+        <Writable>
+          <String/>
+        </Writable>
+      </Fact>
 
       <Fact path="/isUsCitizenFullYear">
         <Name>Citizenship</Name>
         <Description>Whether the filer was a U.S. Citizen for all of the tax year</Description>
 
-        <Writable><Boolean /></Writable>
+        <Writable>
+          <Boolean/>
+        </Writable>
       </Fact>
-    </FactDictionaryModule>
+    </Facts>
+  </FactDictionaryModule>
 
-    val basicFormConfig = <FlowConfig>
-      <page route="/" title="Basic Test Form">
-        <section>
-          <fg-set path="/filer/name">
-            <question>What is your <strong>full</strong> name?</question>
-            <input type="text"/>
-          </fg-set>
+  private val basicFormConfig = <FlowConfig>
+    <page route="/" title="Basic Test Form">
+      <section>
+        <fg-set path="/filer/name">
+          <question>What is your
+            <strong>full</strong>
+            name?</question>
+          <input type="text"/>
+        </fg-set>
 
-          <fg-set path="/isUsCitizenFullYear">
-            <question>Were you a <strong>U.S. Citizen</strong> for all of the tax year?</question>
-            <input type="boolean"/>
-          </fg-set>
-        </section>
-      </page>
-    </FlowConfig>
+        <fg-set path="/isUsCitizenFullYear">
+          <question>Were you a
+            <strong>U.S. Citizen</strong>
+            for all of the tax year?</question>
+          <input type="boolean"/>
+        </fg-set>
+      </section>
+    </page>
+  </FlowConfig>
 
-    val factDictionary = FactDictionary.fromXml(basicDictionaryConfig)
-    val flow = Flow.fromXmlConfig(basicFormConfig, factDictionary)
+  private val factDictionary = FactDictionary.fromXml(basicDictionaryConfig)
+  private val flow = Flow.fromXmlConfig(basicFormConfig, factDictionary)
 
+  describe("basic form config") {
     val site = Website.generate(flow, basicDictionaryConfig, Map())
     val document = Jsoup.parse(site.pages.head.content)
 
@@ -50,10 +62,26 @@ class WebsiteSpec extends AnyFunSpec {
       assert(document.body() != null)
     }
 
-    it("contains 3 <fg-set>s") {
+    it("contains the expected <fg-set> elements") {
       val fgSets = document.body().select("fg-set")
-      assert(fgSets.size() == 3) // The boolean has two
+      fgSets.eachAttr("path").asScala should contain theSameElementsAs Seq(
+        "/filer/name",
+        "/isUsCitizenFullYear",
+        "/overrideDate", // From audit panel
+      )
+    }
+
+    it("creates a flow with the expected number of pages") {
+      site.pages.map(_.route) should contain theSameElementsAs Seq("/")
     }
   }
 
+  describe("with allScreens flag enabled") {
+    val flags = Map(Flags.allScreens -> true)
+    val site = Website.generate(flow, basicDictionaryConfig, flags)
+
+    it("includes /all-screens as the last page in the generated site") {
+      site.pages.map(_.route) should contain theSameElementsInOrderAs Seq("/", "/all-screens")
+    }
+  }
 }

@@ -45,6 +45,6 @@ object AllScreens {
 
     val content = templateEngine.process("all-screens", context)
 
-    WebsitePage("all-screens.html", content)
+    WebsitePage("/all-screens", content)
   }
 }
