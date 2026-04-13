@@ -73,7 +73,6 @@ class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
     }
 
     it("creates a flow with the expected number of pages") {
-      println(site.pages)
       site.pages.map(_.route) should contain theSameElementsAs Seq("/")
     }
   }
