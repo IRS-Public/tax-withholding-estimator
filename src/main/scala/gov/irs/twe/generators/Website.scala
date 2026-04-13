@@ -9,7 +9,7 @@ import org.thymeleaf.context.Context
 import os.Path
 import scala.jdk.CollectionConverters.*
 
-case class WebsitePage(route: String, content: String) {
+case class WebsitePage(route: String, content: String, languageCode: String) {
   def html(): String = {
     // This step largely serves to make the output easy to read in view-source
     val document = Jsoup.parse(content)
@@ -32,7 +32,14 @@ case class WebsitePage(route: String, content: String) {
   }
 
   def filepath(root: Path): Path = {
-    if (route == "/") root / "index.html" else root / route.substring(1) / "index.html"
+    val isTranslated = languageCode != "en"
+    val isNamedRoute = route != "/"
+
+    var path = root
+    if (isTranslated) path = path / languageCode
+    if (isNamedRoute) path = path / route.substring(1)
+
+    path / "index.html"
   }
 }
 
@@ -56,50 +63,55 @@ case class Website(pages: List[WebsitePage], factDictionary: xml.Elem) {
 }
 
 object Website {
-  private val templateEngine = new TweTemplateEngine()
-
   def generate(
       flow: Flow,
       dictionaryXml: xml.Elem,
       flags: Map[String, Boolean],
   ): Website = {
-    val templateEngine = new TweTemplateEngine()
-    val navPages = flow.pages.filter(p => !p.exclude)
-    val excludedPageLength = flow.pages.length - navPages.size
+    val locales = if (flags.contains(Flags.spanishTranslations)) List("en", "es") else List("en")
+    var pages = locales.flatMap { languageCode =>
+      val templateEngine = new TweTemplateEngine(languageCode)
+      val navPages = flow.pages.filter(p => !p.exclude)
+      val excludedPageLength = flow.pages.length - navPages.size
 
-    var pages = flow.pages.zipWithIndex.map { (page, index) =>
-      val titleValue = templateEngine.messageResolver.resolveMessage(page.titleKey)
-      val title = s"Tax Withholding Estimator - ${titleValue} | Internal Revenue Service"
+      flow.pages.zipWithIndex.map { (page, index) =>
+        val titleValue = templateEngine.messageResolver.resolveMessage(page.titleKey)
+        val titlePrefix = templateEngine.messageResolver.resolveMessage("title.prefix")
+        val titleSuffix = templateEngine.messageResolver.resolveMessage("title.suffix")
 
-      val context = new Context()
-      context.setVariable("exclude", page.exclude)
-      context.setVariable("title", title)
-      context.setVariable("stepTitle", titleValue)
-      context.setVariable("stepIndex", (index - excludedPageLength) % flow.pages.length)
-      context.setVariable("stepTotal", navPages.size)
-      context.setVariable("pages", navPages.asJava) // th:each requires Java Iterables
-      context.setVariable("flags", flags.asJava)
+        val title = s"$titlePrefix - $titleValue | $titleSuffix"
 
-      // Add a link for the next page if it's not the last one
-      if (index < flow.pages.size - 1) {
-        val nextPageHref = flow.pages(index + 1).href
-        context.setVariable("nextPageHref", nextPageHref)
+        val context = new Context()
+        context.setVariable("exclude", page.exclude)
+        context.setVariable("title", title)
+        context.setVariable("stepTitle", titleValue)
+        context.setVariable("stepIndex", (index - excludedPageLength) % flow.pages.length)
+        context.setVariable("stepTotal", navPages.size)
+        context.setVariable("pages", navPages.asJava) // th:each requires Java Iterables
+        context.setVariable("flags", flags.asJava)
+        context.setVariable("languageCode", languageCode)
+
+        // Add a link for the next page if it's not the last one
+        if (index < flow.pages.size - 1) {
+          val nextPageHref = flow.pages(index + 1).href(languageCode)
+          context.setVariable("nextPageHref", nextPageHref)
+        }
+        // Add a link for the last page if it's not the first one
+        if (index > 0) {
+          val lastPageHref = flow.pages(index - 1).href(languageCode)
+          context.setVariable("lastPageHref", lastPageHref)
+        } else {
+          context.setVariable("first", true)
+        }
+
+        // Turn all the pages into HTML representations and join them together
+        val pageHtml = page.html(templateEngine)
+
+        context.setVariable("pageHtml", pageHtml)
+
+        val content = templateEngine.process("page", context)
+        WebsitePage(page.route, content, languageCode)
       }
-      // Add a link for the last page if it's not the first one
-      if (index > 0) {
-        val lastPageHref = flow.pages(index - 1).href
-        context.setVariable("lastPageHref", lastPageHref)
-      } else {
-        context.setVariable("first", true)
-      }
-
-      // Turn all the pages into HTML representations and join them together
-      val pageHtml = page.html(templateEngine)
-
-      context.setVariable("pageHtml", pageHtml)
-
-      val content = templateEngine.process("page", context)
-      WebsitePage(page.route, content)
     }
 
     if (flags.contains(Flags.allScreens)) {

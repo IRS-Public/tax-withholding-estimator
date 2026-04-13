@@ -15,11 +15,11 @@ FG_TARGET_DIR := ./src/main/resources/twe/website-static/vendor/fact-graph
 
 .PHONY: dev
 dev: ## Build and run development server, watching for changes (Default)
-	sbt -Dsmol.port=$(PORT) '~run --serve --auditMode --allScreens'
+	sbt -Dsmol.port=$(PORT) '~run --serve --auditMode --allScreens --spanishTranslations'
 
 .PHONY: debug
 debug: ## Same as `dev`, but also opens a port to attach a debugger (like your IDE)
-	sbt -Dsmol.port=$(PORT) -jvm-debug $(DEBUGGER_PORT) '~run --serve --auditMode --allScreens'
+	sbt -Dsmol.port=$(PORT) -jvm-debug $(DEBUGGER_PORT) '~run --serve --auditMode --allScreens --spanishTranslations'
 
 help: ## Print the help documentation
 	@grep -E '^[/a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

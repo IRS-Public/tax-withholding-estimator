@@ -13,7 +13,12 @@ case class Page(
     children: Seq[FlowNode],
 ) extends FlowNode {
   val titleKey: String = translationContext.fullKey("title")
-  val href: String = "/app/tax-withholding-estimator" + route + (if (route == "/") "" else "/")
+
+  def href(languageCode: String): String = {
+    val languagePortion = if (languageCode == "en") "" else s"/$languageCode"
+    val routePortion = if (route == "/") "/" else s"$route/"
+    s"/app/tax-withholding-estimator$languagePortion$routePortion"
+  }
 
   override def html(templateEngine: TweTemplateEngine): String = {
     val pageContent = children.html(templateEngine)

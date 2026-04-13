@@ -42,6 +42,10 @@ components:
   select:
     select: "--Select one --"
 
+title:
+  prefix: Tax Withholding Estimator
+  suffix: Internal Revenue Service
+
 layout:
   title: Tax Withholding Estimator
   skip-to-main: Skip to main content

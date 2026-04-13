@@ -1,0 +1,187 @@
+components:
+  fg-set:
+    required:
+  fg-collection:
+    buttons:
+      remove: "Placeholder {0}"
+      add: "Placeholder {0}"
+      add-with-determiner: "Placeholder {1} {0}"
+    remove-item-modal:
+      heading:
+        remove: "Placeholder {0}?"
+      body: "Placeholder {0}."
+      footer:
+        confirm: "Placeholder {0}"
+        cancel: "Placeholder {0}"
+    determiners:
+      another:
+      more:
+  modal:
+    close:
+    ok:
+  boolean:
+    yes:
+    no:
+  date:
+    month:
+    day:
+    year:
+    select:
+    january:
+    february:
+    march:
+    april:
+    may:
+    june:
+    july:
+    august:
+    september:
+    october:
+    november:
+    december:
+  select:
+    select:
+
+title:
+  prefix:
+  suffix:
+
+layout:
+  title:
+  skip-to-main:
+  identifier:
+    agency-identifier:
+    disclaimer:
+    about:
+    accessibility:
+    privacy-policy:
+    important-links:
+  usgov:
+    name:
+  irs:
+    name:
+    domain:
+
+  banner:
+    how-you-know:
+    official-domain:
+    official-organization:
+    secure-https:
+    disclaimer:
+    lock-1:
+    lock-2:
+
+buttons:
+  next:
+  continue:
+  back:
+  submit:
+
+alerts:
+  warning:
+    heading:
+    complete-required:
+
+step-indicator:
+  completed:
+  not-completed:
+  step:
+  of:
+
+errors:
+  # Dollar errors
+  CombinedHyphensAndParentheses:
+  InvalidCharacters:
+  InvalidDollar:
+  InvalidHyphens:
+  InvalidParentheses:
+  TooManyDecimals:
+  TooManyFractionalDigits:
+
+  # Day errors
+  InvalidDay:
+  InvalidDayDueToLeapYear:
+  InvalidMonth:
+  InvalidDate:
+  InvalidLimit:
+
+  # Enum errors
+  BlankEnum:
+  InvalidEnum:
+
+  Default:
+
+  # Limit errors
+  Max:
+  Min:
+
+audit:
+  fact-select:
+    question:
+    blank:
+  collection-id-label:
+  fact:
+    type:
+    value:
+    remove:
+    definition:
+
+results:
+  fg-withholding-adjustments:
+    w-4:
+      summary:
+      download-and-submit:
+      update-employer-software:
+      download-pre-filled:
+      download-blank:
+      recommendations:
+        caption:
+        field:
+        recommendation:
+        1-a-field:
+        1-a-recommendation:
+        1-b-field:
+        1-b-recommendation:
+        1-c-field:
+        1-c-recommendation:
+        2-c-field:
+        2-c-recommendation:
+        3-field:
+        3-recommendation:
+        4-a-field:
+        4-a-recommendation:
+        4-b-field:
+        4-b-recommendation:
+        4-c-field:
+        4-c-recommendation:
+        5-field:
+        5-recommendation:
+      time-sensitivity:
+    w-4p:
+      summary:
+      download-and-submit:
+      download-pre-filled:
+      download-blank:
+      recommendations:
+        caption:
+        field:
+        recommendation:
+        1-a-field:
+        1-a-recommendation:
+        1-b-field:
+        1-b-recommendation:
+        1-c-field:
+        1-c-recommendation:
+        2-field:
+        2-recommendation:
+        3-field:
+        3-recommendation:
+        4-a-field:
+        4-a-recommendation:
+        4-b-field:
+        4-b-recommendation:
+        4-c-field:
+        4-c-recommendation:
+        5-field:
+        5-recommendation:
+      time-sensitivity:

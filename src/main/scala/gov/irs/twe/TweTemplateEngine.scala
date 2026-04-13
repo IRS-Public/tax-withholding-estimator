@@ -35,16 +35,16 @@ case class TweMessageResolver(locale: Locale) extends AbstractMessageResolver:
 
   /** Custom convenience overload for contractually obligated resolveMessage override
     */
-  def resolveMessage(key: String): String = resolveMessage(null, null, key, null)
+  def resolveMessage(key: String): String = Option(resolveMessage(null, null, key, null)).getOrElse(s"??$key??")
 
-class TweTemplateEngine {
+class TweTemplateEngine(languageCode: String = "en") {
   private val resolver = new ClassLoaderTemplateResolver()
   resolver.setTemplateMode(TemplateMode.HTML)
   resolver.setCharacterEncoding("UTF-8")
   resolver.setPrefix("/twe/templates/")
   resolver.setSuffix(".html")
 
-  private val locale = Locale("en")
+  private val locale = Locale(languageCode)
   private val templateEngine = new TemplateEngine()
   val messageResolver = TweMessageResolver(locale)
   templateEngine.setTemplateResolver(resolver)

@@ -3,6 +3,7 @@ out/
 
 # sbt
 target/
+!target/flow_en.yaml
 projects/*/
 
 # node

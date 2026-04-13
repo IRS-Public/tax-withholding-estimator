@@ -4,7 +4,7 @@
         th:each="page, iterStat : ${pages}"
         th:if="${iterStat.index < stepIndex}">
         <span class="usa-step-indicator__segment-label">
-          <a class="usa-step-indicator__link" th:href="${page.href()}">
+          <a class="usa-step-indicator__link" th:href="${page.href(languageCode)}">
             <span th:text="#{${page.titleKey}}"></span>
             <span class="usa-sr-only" th:text="#{step-indicator.completed}"></span>
           </a>

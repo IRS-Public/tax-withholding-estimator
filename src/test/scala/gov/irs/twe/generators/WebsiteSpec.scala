@@ -7,6 +7,7 @@ import org.jsoup.Jsoup
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers.*
 import org.scalatest.BeforeAndAfterAll
+import os.Path
 import scala.jdk.CollectionConverters.ListHasAsScala
 
 class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
@@ -72,16 +73,76 @@ class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
     }
 
     it("creates a flow with the expected number of pages") {
+      println(site.pages)
       site.pages.map(_.route) should contain theSameElementsAs Seq("/")
     }
   }
 
-  describe("with allScreens flag enabled") {
-    val flags = Map(Flags.allScreens -> true)
-    val site = Website.generate(flow, basicDictionaryConfig, flags)
+  describe("WebsitePage") {
+    val mockContent = "<html></html>"
+    val rootFilePath = Path("/tmp/app/tax-withholding-estimator")
 
-    it("includes /all-screens as the last page in the generated site") {
-      site.pages.map(_.route) should contain theSameElementsInOrderAs Seq("/", "/all-screens")
+    describe("filepath") {
+      it("Uses the root path correctly for route `/`") {
+        // given
+        val route = "/"
+        val languageCode = "en"
+        val websitePage = WebsitePage(route, mockContent, languageCode)
+
+        // when
+        val filepath = websitePage.filepath(rootFilePath)
+
+        // then
+        assert(filepath == rootFilePath / "index.html")
+      }
+
+      it("Sets the path correctly for a named route") {
+        // given
+        val route = "/named"
+        val languageCode = "en"
+        val websitePage = WebsitePage(route, mockContent, languageCode)
+
+        // when
+        val filepath = websitePage.filepath(rootFilePath)
+
+        // then
+        assert(filepath == rootFilePath / "named" / "index.html")
+      }
+
+      it("Uses the root path correctly for route `/` with translations") {
+        // given
+        val route = "/"
+        val languageCode = "es"
+        val websitePage = WebsitePage(route, mockContent, languageCode)
+
+        // when
+        val filepath = websitePage.filepath(rootFilePath)
+
+        // then
+        assert(filepath == rootFilePath / languageCode / "index.html")
+      }
+
+      it("Sets the path correctly for a named route with translations") {
+        // given
+        val route = "/named"
+        val languageCode = "es"
+        val websitePage = WebsitePage(route, mockContent, languageCode)
+
+        // when
+        val filepath = websitePage.filepath(rootFilePath)
+
+        // then
+        assert(filepath == rootFilePath / languageCode / "named" / "index.html")
+      }
+    }
+
+    describe("with allScreens flag enabled") {
+      val flags = Map(Flags.allScreens -> true)
+      val site = Website.generate(flow, basicDictionaryConfig, flags)
+
+      it("includes /all-screens as the last page in the generated site") {
+        site.pages.map(_.route) should contain theSameElementsInOrderAs Seq("/", "/all-screens")
+      }
     }
   }
 }
