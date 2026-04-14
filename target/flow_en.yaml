@@ -1999,8 +1999,7 @@
     p-1: Use <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-schedule-r-form-1040">Schedule
       R</a> to calculate the credit amount.
     p-2: If you're filing as Married Filing Separately, you can only claim this credit
-      if you meet <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p524#en_US_2023_publink100038676">specific
-      criteria.</a>
+      if you didn't live with your spouse at any time during <fg-show path="/taxYear"/>.
     p-3: If you're filing as Head of Household, you can only claim this credit if
       you meet <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p524#en_US_2023_publink100038676">specific
       criteria.</a>

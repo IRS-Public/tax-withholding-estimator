@@ -10,6 +10,67 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/flowIsEligibleForEDC">
+      <Description>If taxpayers are MFS and do not live together all year, or any non-MFS status, they are eligible </Description>
+      <Derived>
+        <LessThan>
+          <Left>
+            <Dependency path="/agi"/>
+          </Left>
+          <Right>
+            <Dependency path="/maxAGIForElderlyAndDisabledTaxCredit"/>
+          </Right>
+        </LessThan>
+      </Derived>
+    </Fact>
+    <Fact path="/maxAGIForElderlyAndDisabledTaxCredit">
+      <TaxYear>2025</TaxYear>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/isFilingStatusMFJ"/>
+            </When>
+            <Then>
+              <!-- Uses upper limit & assumes both qualify -->
+              <Dollar>25000</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFS"/>
+                <Not>
+                  <Dependency path="/isMFSLivedTogether"/>
+                </Not>
+              </All>
+            </When>
+            <Then>
+              <Dollar>12500</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="/isFilingStatusMFS"/>
+                <Dependency path="/isMFSLivedTogether"/>
+              </All>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>17500</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/maxElderlyAndDisabledTaxCredit">
       <TaxYear>2025</TaxYear>
       <Derived>

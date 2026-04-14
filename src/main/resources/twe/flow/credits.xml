@@ -136,16 +136,15 @@
         <input type="dollar"/>
       </fg-set>
 
-      <h3 condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue">Credit for the Elderly or the Disabled</h3>
-      <p condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue">This credit helps older adults and people with qualifying disabilities lower their taxes.</p>
-      <p condition="/eitherPrimaryOrSecondaryFilersAge65OrOlder" operator="isTrue">
-        <modal-link for="modal-credit-elderly-disabled-who-can-claim">Who can claim the credit for the elderly or the disabled?</modal-link>
-      </p>
+      <div condition="/flowIsEligibleForEDC" operator="isTrue">
+        <h3>Credit for the Elderly or the Disabled</h3>
+        <p>This credit helps older adults and people with qualifying disabilities lower their taxes.</p>
+        <p><modal-link for="modal-credit-elderly-disabled-who-can-claim">Who can claim the credit for the elderly or the disabled?</modal-link></p>
 
-      <fg-set path="/elderlyAndDisabledTaxCreditAmount" if-true="/eitherPrimaryOrSecondaryFilersAge65OrOlder" optional="true">
-        <question>Amount of the elderly and disabled credit you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to claim in <fg-show path="/taxYear"/></question>
-        <input type="dollar"/>
-      </fg-set>
+        <fg-set path="/elderlyAndDisabledTaxCreditAmount" optional="true">
+          <question>Amount of the elderly and disabled credit you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to claim in <fg-show path="/taxYear"/></question>        <input type="dollar"/>
+        </fg-set>
+      </div>
 
       <h3>Foreign Tax Credit</h3>
       <p>The foreign tax credit reduces your U.S. taxes when you pay or owe taxes to a foreign country or U.S. territory.</p>
@@ -388,7 +387,7 @@
           <li>Your total nontaxable Social Security, pensions, annuities, or disability income is generally less than $5,000 ($7,500 if married filing jointly)</li>
         </ul>
         <p>Use <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-schedule-r-form-1040">Schedule R</a> to calculate the credit amount.</p>
-        <p condition="/isFilingStatusMFS" operator="isTrue">If you're filing as Married Filing Separately, you can only claim this credit if you meet <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p524#en_US_2023_publink100038676">specific criteria.</a></p>
+        <p condition="/isFilingStatusMFS" operator="isTrue">If you're filing as Married Filing Separately, you can only claim this credit if you didn't live with your spouse at any time during <fg-show path="/taxYear"/>.</p>
         <p condition="/isFilingStatusHOH" operator="isTrue">If you're filing as Head of Household, you can only claim this credit if you meet <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p524#en_US_2023_publink100038676">specific criteria.</a></p>
         <p>
           <strong>How to check if you claimed this credit last year</strong>
