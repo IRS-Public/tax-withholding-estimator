@@ -182,6 +182,49 @@
         </Limit>
       </Writable>
     </Fact>
+    <Fact path="/jobs/*/unboundedDefaultMostRecentPayDate">
+      <Description>
+        Calculates the default for the most recent pay date, which is determined to be 7 days after the most recent pay period end. This value is not bounded by the year end.
+      </Description>
+      <Derived>
+        <Add>
+          <Dependency path="../mostRecentPayPeriodEnd"/>
+          <Days>7</Days>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/defaultMostRecentPayDate">
+      <Description>
+        Calculates the default for the most recent pay date, which is determined to be 7 days after the most recent pay period end.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Equal>
+                <Left>
+                  <Dependency path="../unboundedDefaultMostRecentPayDate/year"/>
+                </Left>
+                <Right>
+                  <Dependency path="../mostRecentPayPeriodEnd/year"/>
+                </Right>
+              </Equal>
+            </When>
+            <Then>
+              <Dependency path="../unboundedDefaultMostRecentPayDate"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="/yearEndDate"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/mostRecentPayDate">
       <Description>
         The date on which pay was received, corresponding to the most recent pay period that ended
@@ -192,6 +235,9 @@
           <Dependency path="/yearEndDate"/>
         </Limit>
       </Writable>
+      <Placeholder>
+        <Dependency path="../defaultMostRecentPayDate"/>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/consistentPay">
       <Writable>

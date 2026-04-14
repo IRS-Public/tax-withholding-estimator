@@ -97,7 +97,11 @@ class FgSet extends HTMLElement {
             return input.value.trim() !== '' && input.value !== '- Select -'
           })
 
-          if (allFilled) {
+          const noneFilled = Array.from(this.inputs).every(input => {
+            return input.value.trim() === ''
+          })
+
+          if (allFilled || noneFilled) {
             this.onChange()
           }
         })
@@ -221,7 +225,12 @@ class FgSet extends HTMLElement {
   validateRequiredFields () {
     const isMissing = !this.isComplete()
     if (isMissing) {
-      this.setValidationError('This question is required')
+      // Optional date fields have a unique validation error message. Since they have multiple inputs, if the user fills in any of them, they must fill in all of them.
+      if (this.inputType === 'date' && this.optional) {
+        this.setValidationError('Enter a complete date or leave blank')
+      } else {
+        this.setValidationError('This question is required')
+      }
     } else {
       this.clearValidationError()
     }
@@ -249,6 +258,16 @@ class FgSet extends HTMLElement {
   }
 
   isComplete () {
+    if (this.inputType === 'date') {
+      const month = this.querySelector('select[name*="-month"]')?.value
+      const day = this.querySelector('input[name*="-day"]')?.value
+      const year = this.querySelector('input[name*="-year"]')?.value
+      const allFilled = month && day && year
+      const noneFilled = !month && !day && !year && this.optional
+      // A date is "complete" if it's all filled or not filled at all.
+      // It's incomplete if it's partially filled.
+      return allFilled || noneFilled
+    }
     return factGraph.get(this.path).complete
   }
 
@@ -403,9 +422,8 @@ class FgSet extends HTMLElement {
   setFact () {
     console.debug(`Setting fact ${this.path}`)
     const value = this.getFactValueFromInputValue()
-
     let res = {}
-    if (value === '' || value === null) {
+    if (value === '' || value === null || value === '--00') {
       console.debug('Value was blank, deleting fact')
       factGraph.delete(this.path)
     } else {
@@ -809,11 +827,14 @@ function validateSectionForNavigation () {
   // Loop through fields and mark incomplete if empty and required
   for (const fgSet of fgSets) {
     // It's only blocking if it's not optional, not complete, and not the child of a hidden element
-    if (!fgSet.optional && !fgSet.isComplete() && !fgSet.closest('.hidden')) {
-      const fieldName = fgSet.path
-      missingFields.push(fieldName)
-      if (!fgSet.validateRequiredFields()) {
-        hasValidationErrors = false
+    const isPartiallyFilledDate = fgSet.inputType === 'date' && !fgSet.isComplete()
+    if ((!fgSet.optional && !factGraph.get(fgSet.path).complete) || isPartiallyFilledDate) {
+      if (!fgSet.closest('.hidden')) {
+        const fieldName = fgSet.path
+        missingFields.push(fieldName)
+        if (!fgSet.validateRequiredFields()) {
+          hasValidationErrors = false
+        }
       }
     }
   }

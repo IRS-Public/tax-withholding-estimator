@@ -5,6 +5,7 @@ import gov.irs.factgraph.types.Day
 import gov.irs.factgraph.types.Dollar
 import gov.irs.factgraph.types.Enum
 import gov.irs.factgraph.types.Rational
+import gov.irs.factgraph.types.WritableType
 import gov.irs.factgraph.Path
 import java.util.UUID
 import org.scalatest.funsuite.AnyFunSuite
@@ -136,6 +137,30 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
       3,
       242.86,
       "weekly - minimal amount worked this year but has lagging payments from prior year",
+    ),
+    (
+      weekly,
+      "2025-01-01",
+      "2025-10-25",
+      "2025-07-26",
+      "",
+      Some(13),
+      Some(298),
+      13,
+      1300,
+      "weekly - defaults recent pay date to seven days after pay period end when left blank",
+    ),
+    (
+      weekly,
+      "2026-01-01",
+      "2026-12-31",
+      "2026-12-27",
+      "",
+      Some(1),
+      Some(361),
+      0,
+      0,
+      "weekly - defaults recent pay date to year end when seven day default crosses into next year",
     ),
     // Biweekly Pay Periods
     (
@@ -506,19 +531,19 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
           description,
       ) =>
         When(description)
-        var graph = makeGraphWith(
-          factDictionary,
+        val graphFacts = Seq[(Path, WritableType)](
           jobs -> Collection(uuidVector),
           payFrequency -> frequency,
           startDate -> Day(startDateValue),
           endDate -> Day(endDateValue),
           recentPayPeriodEnd -> Day(recentPayPeriodEndValue),
-          recentPayDate -> Day(recentPayDateValue),
           averagePayPerPayPeriodForWithholding -> Dollar(100),
           isPastJob -> false,
           isFutureJob -> false,
           isCurrentJob -> true,
-        )
+        ) ++ (if (recentPayDateValue.nonEmpty) Seq(recentPayDate -> Day(recentPayDateValue)) else Seq.empty)
+
+        var graph = makeGraphWith(factDictionary, graphFacts*)
 
         val tentativePayPeriods = graph.get(tentativeRemainingPayPeriods)
         val trueRemainingPayPeriods = graph.get(remainingPayPeriodsInteger)
