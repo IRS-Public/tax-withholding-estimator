@@ -1,6 +1,7 @@
 package gov.irs.twe.parser
 
 import gov.irs.factgraph.FactDictionary
+import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.{ Condition, FgDetail }
 import gov.irs.twe.TweTemplateEngine
 import org.thymeleaf.context.Context
@@ -44,7 +45,7 @@ object FgDetail extends FlowNodeParser {
   ): FgDetail = {
     val summary = (fgDetailElement \ "summary").headOption match {
       case Some(summaryNode) => summaryNode.child.map(_.toString).mkString.strip
-      case None              => ""
+      case None              => throw InvalidFormConfig("Summary field required")
     }
     val useChevron = (fgDetailElement \@ "icon") == "chevron"
     val classAttribute = (fgDetailElement \@ "class").strip
@@ -54,10 +55,8 @@ object FgDetail extends FlowNodeParser {
     val open = (fgDetailElement \@ "open").strip.equalsIgnoreCase("true")
     val condition = Condition.getCondition(fgDetailElement, flowNodeParser.factDictionary)
 
-    val translationContext = parentTranslationContext.forChildWithoutUniqueId(fgDetailElement.label)
-    if (summary.nonEmpty) {
-      translationContext.updateValue("summary", summary)
-    }
+    val translationContext = parentTranslationContext.forChildWithoutUniqueId(fgDetailElement.label, summary)
+    translationContext.updateValue("summary", summary)
 
     val childrenHtml = flowNodeParser.parseChildElements(fgDetailElement, translationContext, List("summary"))
 

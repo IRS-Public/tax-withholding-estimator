@@ -31,9 +31,10 @@ object Html extends FlowNodeParser {
     val openTag = getOpenTag(htmlElement)
     val closeTag = getClosingTag(htmlElement)
     if (isLeafNode(htmlElement)) {
-      val childKey = parentTranslationContext.nextChildKey(htmlElement.label)
+      val content = htmlElement.head.child.mkString.strip
+      val childKey = parentTranslationContext.getHashKey(htmlElement.label, content)
       val translationKey = parentTranslationContext.fullKey(childKey)
-      parentTranslationContext.updateValue(childKey, htmlElement.head.child.mkString.strip)
+      parentTranslationContext.updateValue(childKey, content)
 
       // Since this is a leaf node we just pass in the translation key directly and don't update translationContext
       HtmlLeafNode(htmlElement, openTag, closeTag, translationKey)

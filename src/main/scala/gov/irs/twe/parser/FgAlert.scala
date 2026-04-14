@@ -43,7 +43,7 @@ object FgAlert extends FlowNodeParser {
       Condition(conditionPath, ConditionOperator.fromAttribute(conditionOperator)),
     )
 
-    val translationContext = parentTranslationContext.forChildWithoutUniqueId(fgAlertElement.label)
+    val translationContext = parentTranslationContext.forChildWithoutUniqueId(fgAlertElement.label, heading)
     translationContext.updateValue("heading", heading)
     val children = flowParser.parseChildElements(fgAlertElement, translationContext, List("heading"))
 

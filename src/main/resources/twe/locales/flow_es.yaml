@@ -1,7 +1,7 @@
 /:
   title:
-  h2-0:
-  p-0:
+  h2-5e286b:
+  p-5c8119:
   /primaryFilerAge65OrOlder:
     question:
   /primaryFilerIsBlind:
@@ -33,10 +33,9 @@
         name:
       'false':
         name:
-  h3-0:
-  p-1:
-  p-2:
-  p-3:
+  h3-784c01:
+  p-aedcaf:
+  p-416169:
   /secondaryFilerAge65OrOlder:
     question:
   /secondaryFilerIsBlind:
@@ -46,72 +45,72 @@
     modalLink:
   modal-claiming-dependents:
     heading:
-    p-0:
+    p-fc792e:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-    p-1:
-    p-2:
+      li-7673e2:
+      li-e9750c:
+      li-683f65:
+    p-6b3acc:
+    p-40e480:
   modal-primary-claimed-as-dependent:
     heading:
-    p-0:
-    p-1:
+    p-d3187d:
+    p-762495:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-    p-2:
-    p-3:
+      li-b17276:
+      li-c82d5e:
+      li-5a5073:
+    p-752de3:
+    p-5a0201:
   modal-filing-status:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
+    p-c0b92c:
+    p-391f95:
+    p-496916:
+    p-49f30f:
     ul-0:
-      li-0:
-    p-4:
+      li-c717a5:
+    p-5f63cd:
     ul-1:
-      li-0:
-    p-5:
+      li-6aab7e:
+    p-80c02f:
     ul-2:
-      li-0:
-      li-1:
-    p-6:
+      li-595e35:
+      li-1e72dd:
+    p-d69332:
     ul-3:
-      li-0:
-      li-1:
-    p-7:
+      li-dfe41a:
+      li-38ff2f:
+    p-be481b:
     ul-4:
-      li-0:
-      li-1:
-      li-2:
-      li-3:
-    p-8:
+      li-2bf38a:
+      li-4ef74f:
+      li-939762:
+      li-bad5a3:
+    p-5b3ae2:
   modal-secondary-claimed-as-dependent:
     heading:
-    p-0:
-    p-1:
-    p-2:
+    p-94ceb2:
+    p-f489ed:
+    p-94a316:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-    p-3:
-    p-4:
+      li-a00f03:
+      li-06b095:
+      li-7b9e81:
+    p-8725bb:
+    p-53afc1:
 /income:
   title:
-  h2-0:
-  p-0:
-  p-1:
-  h3-0:
-  fg-alert-0:
+  h2-fdf8c2:
+  p-ed5944:
+  p-389582:
+  h3-39ed29:
+  fg-alert-974b2e:
     heading:
-    p-0:
-  p-2:
+    p-242cef:
+  p-0ec9f9:
   collection/jobs:
-    itemName: Placeholder job
+    itemName:
     /jobs/*/filerAssignment:
       question:
       options:
@@ -126,7 +125,7 @@
           name:
         'false':
           name:
-    h5-0:
+    h5-d3b69e:
     /jobs/*/isAllYear:
       question:
       options:
@@ -152,10 +151,10 @@
           name:
         monthly:
           name:
-    h5-1:
-    p-0:
-    h5-2:
-    p-1:
+    h5-4f6501:
+    p-5bef91:
+    h5-bee04a:
+    p-0ae3e5:
     /jobs/*/mostRecentPayPeriodEnd:
       question:
       modalLink:
@@ -172,7 +171,7 @@
       question:
       hint:
       modalLink:
-    p-2:
+    p-853eac:
     /jobs/*/pastPaycheckIncome1:
       question:
       hint:
@@ -200,23 +199,23 @@
       question:
       hint:
       modalLink:
-    h5-3:
-    p-3:
-    p-4:
-    p-5:
-    fg-detail-0:
+    h5-64d83a:
+    p-ef5522:
+    p-7389da:
+    p-402e29:
+    fg-detail-bbdbfc:
       summary:
-      p-0:
-      p-1:
-      p-2:
+      p-c3c8eb:
+      p-d353b7:
+      p-af9c2c:
       /jobs/*/qualifiedTipIncome:
         question:
         hint:
         modalLink:
-    fg-detail-1:
+    fg-detail-de7b9c:
       summary:
-      p-0:
-      p-1:
+      p-bc05b9:
+      p-1c212b:
       /jobs/*/overtimeCompensationTotal:
         question:
         hint:
@@ -229,8 +228,8 @@
             name:
           two:
             name:
-    h5-4:
-    p-6:
+    h5-9f886e:
+    p-6f0cc9:
     /jobs/*/amountWithheldLastPaycheck:
       question:
       hint:
@@ -239,81 +238,81 @@
       question:
       hint:
       modalLink:
-    h5-5:
-    p-7:
-    p-8:
-    fg-detail-2:
+    h5-4504e1:
+    p-89f8df:
+    p-de6d98:
+    fg-detail-023b9b:
       summary:
-      p-0:
-      p-1:
-      p-2:
+      p-456da9:
+      p-918295:
+      p-d1f764:
       ul-0:
-        li-0:
-        li-1:
-        li-2:
-        li-3:
-        li-4:
-        li-5:
-        li-6:
-      p-3:
+        li-b63157:
+        li-b5f269:
+        li-a6c25b:
+        li-5cebaa:
+        li-b4faec:
+        li-9685cf:
+        li-6120e8:
+      p-119440:
       /jobs/*/retirementPlanContributionsPerPayPeriod:
         question:
       /jobs/*/retirementPlanContributionsToDate:
         question:
         hint:
-    fg-detail-3:
+    fg-detail-c4e577:
       summary:
-      p-0:
-      p-1:
-      p-2:
+      p-06e7e2:
+      p-1e7779:
+      p-1404d4:
       ul-0:
-        li-0:
-        li-1:
-      p-3:
+        li-7b0c41:
+        li-07aff3:
+      p-5a0ed2:
       ul-1:
-        li-0:
-        li-1:
+        li-a867f4:
+        li-a981e6:
       /jobs/*/healthInsuranceContributionsPerPayPeriod:
         question:
       /jobs/*/healthInsuranceContributionsToDate:
         question:
         hint:
-    fg-detail-4:
+    fg-detail-855fc0:
       summary:
-      p-0:
-      p-1:
-      p-2:
+      p-5e048a:
+      p-e1e101:
+      p-27a801:
       /jobs/*/hsaOrFsaContributionsPerPayPeriod:
         question:
       /jobs/*/hsaOrFsaContributionsToDate:
         question:
         hint:
-    fg-detail-5:
+    fg-detail-6dc47b:
       summary:
-      p-0:
-      p-1:
-      p-2:
+      p-bccdfc:
+      p-140bd8:
+      p-4f3f66:
       ul-0:
-        li-0:
-        li-1:
-        li-2:
-        li-3:
-        li-4:
-        li-5:
-        li-6:
-      p-3:
+        li-660334:
+        li-aa4a77:
+        li-66356e:
+        li-f54649:
+        li-921253:
+        li-4a41d5:
+        li-fe33dd:
+      p-c08338:
       ul-1:
-        li-0:
-        li-1:
+        li-a867f4:
+        li-a981e6:
       /jobs/*/otherPreTaxContributionsPerPayPeriod:
         question:
       /jobs/*/otherPreTaxContributionsToDate:
         question:
         hint:
-  h3-1:
-  p-3:
+  h3-4ef0c3:
+  p-6b097c:
   collection/pensions:
-    itemName: Placeholder pension
+    itemName:
     /pensions/*/filerAssignment:
       question:
       options:
@@ -321,7 +320,7 @@
           name:
         spouse:
           name:
-    h5-0:
+    h5-d3b69e:
     /pensions/*/isAllYear:
       question:
       options:
@@ -346,10 +345,10 @@
           name:
         monthly:
           name:
-    h5-1:
-    p-0:
-    h5-2:
-    p-1:
+    h5-631cd8:
+    p-b5e9f9:
+    h5-bee04a:
+    p-936eda:
     /pensions/*/mostRecentPayDate:
       question:
     /pensions/*/averagePayPerPayPeriodForWithholding:
@@ -359,8 +358,7 @@
       question:
       hint:
       modalLink:
-    h5-3:
-    p-2:
+    h5-9f886e:
     /pensions/*/averageWithholdingPerPayPeriod:
       question:
       hint:
@@ -369,62 +367,62 @@
       question:
       hint:
       modalLink:
-    h5-4:
-    p-3:
-    fg-detail-0:
+    h5-4504e1:
+    p-74eba3:
+    fg-detail-c4e577:
       summary:
-      p-0:
-      p-1:
-      p-2:
+      p-06e7e2:
+      p-af178f:
+      p-21161b:
       ul-0:
-        li-0:
-        li-1:
-      p-3:
+        li-7b0c41:
+        li-07aff3:
+      p-5a0ed2:
       ul-1:
-        li-0:
-        li-1:
+        li-a867f4:
+        li-a981e6:
       /pensions/*/healthInsuranceContributionsPerPayPeriod:
         question:
       /pensions/*/healthInsuranceContributionsToDate:
         question:
         hint:
-    fg-detail-1:
+    fg-detail-855fc0:
       summary:
-      p-0:
-      p-1:
-      p-2:
+      p-5e048a:
+      p-187adb:
+      p-27a801:
       /pensions/*/hsaOrFsaContributionsPerPayPeriod:
         question:
       /pensions/*/hsaOrFsaContributionsToDate:
         question:
         hint:
-    fg-detail-2:
+    fg-detail-6dc47b:
       summary:
-      p-0:
-      p-1:
-      p-2:
+      p-bccdfc:
+      p-29747e:
+      p-4f3f66:
       ul-0:
-        li-0:
-        li-1:
-        li-2:
-        li-3:
-        li-4:
-        li-5:
-        li-6:
-      p-3:
+        li-660334:
+        li-aa4a77:
+        li-66356e:
+        li-f54649:
+        li-921253:
+        li-4a41d5:
+        li-fe33dd:
+      p-5a0ed2:
       ul-1:
-        li-0:
-        li-1:
+        li-a867f4:
+        li-a981e6:
       /pensions/*/otherPreTaxContributionsPerPayPeriod:
         question:
       /pensions/*/otherPreTaxContributionsToDate:
         question:
         hint:
-  h3-2:
-  p-4:
-  p-5:
+  h3-3767e5:
+  p-4586da:
+  p-d93391:
   collection/selfEmploymentSources:
-    itemName: Placeholder self-employment income
+    itemName:
     /selfEmploymentSources/*/filerAssignment:
       question:
       options:
@@ -439,10 +437,10 @@
       question:
       hint:
       modalLink:
-  h3-3:
-  p-6:
+  h3-941f47:
+  p-0c991a:
   collection/socialSecuritySources:
-    itemName: Placeholder social Security income
+    itemName:
     /socialSecuritySources/*/filerAssignment:
       question:
       options:
@@ -450,7 +448,7 @@
           name:
         spouse:
           name:
-    h5-0:
+    h5-d3b69e:
     /socialSecuritySources/*/isAllYear:
       question:
       options:
@@ -464,14 +462,14 @@
     /socialSecuritySources/*/endDate:
       question:
       hint:
-    h5-1:
-    p-0:
-    h5-2:
+    h5-e0f74c:
+    p-216488:
+    h5-1f08d0:
     /socialSecuritySources/*/monthlyIncome:
       question:
       hint:
       modalLink:
-    h5-3:
+    h5-9f886e:
     /socialSecuritySources/*/withheldRate:
       question:
       hint:
@@ -487,38 +485,38 @@
           name:
         twentyTwo:
           name:
-  h3-4:
-  p-7:
+  h3-09f887:
+  p-c25e0b:
   /unemploymentIncome:
     question:
     hint:
   /unemploymentIncomeWithholding:
     question:
     modalLink:
-  h3-5:
-  p-8:
+  h3-0b2817:
+  p-b18d71:
   /preTaxRetirementAccountIncome:
     question:
     hint:
-  h3-6:
-  p-9:
-  fg-detail-0:
+  h3-89425f:
+  p-614f3a:
+  fg-detail-b4c28b:
     summary:
-    p-0:
+    p-7164c2:
     /taxableInterestIncome:
       question:
-  fg-detail-1:
+  fg-detail-39fb22:
     summary:
-    p-0:
-    p-1:
+    p-b595ad:
+    p-98b838:
     /ordinaryDividendsIncome:
       question:
     /qualifiedDividendsIncome:
       question:
-  fg-detail-2:
+  fg-detail-89ef66:
     summary:
-    p-0:
-    p-1:
+    p-c7eaa1:
+    p-51406f:
     /shortTermCapitalGainsIncome:
       question:
     /shortTermCapitalLoss:
@@ -527,422 +525,422 @@
       question:
     /longTermCapitalLoss:
       question:
-  fg-detail-3:
+  fg-detail-28fc9b:
     summary:
-    p-0:
+    p-1ee2d6:
     /rentalIncome:
       question:
       hint:
-  fg-detail-4:
+  fg-detail-3026f7:
     summary:
-    p-0:
+    p-56e5d9:
     /royaltyIncome:
       question:
-  fg-detail-5:
+  fg-detail-b186f4:
     summary:
-    p-0:
-    p-1:
+    p-b595ad:
+    p-8fca11:
     /sCorpPassiveIncome:
       question:
     /sCorpNonPassiveIncome:
       question:
-  h3-7:
-  p-10:
+  h3-95eb01:
+  p-a4536a:
   ul-0:
-    li-0:
-    li-1:
-    li-2:
-    li-3:
-    li-4:
-  p-11:
+    li-6c1f6e:
+    li-b9815d:
+    li-98533d:
+    li-479a5d:
+    li-55fa19:
+  p-48332b:
   /nonSpecificOtherIncome:
     question:
     hint:
   /otherIncomeWithholding:
     question:
     hint:
-  h3-8:
-  p-12:
-  p-13:
+  h3-536be3:
+  p-67bec4:
+  p-8f958a:
   /totalEstimatedTaxesPaid:
     question:
     hint:
   modal-pay-frequency-en:
     heading:
-    p-0:
+    p-f8e48f:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-      li-3:
-    p-1:
+      li-ae23d7:
+      li-9e775f:
+      li-569d8d:
+      li-fdcbf1:
+    p-8ef9ed:
   modal-job-pay-dates-en:
     heading:
-    p-0:
+    p-8b4b93:
     ul-0:
-      li-0:
-      li-1:
+      li-8a677f:
+      li-1b998e:
   modal-job-gross-pay-period-en:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
+    p-86ad55:
+    p-a88bb0:
+    p-654d7e:
+    p-22c78c:
   modal-what-counts-social-security:
     heading:
-    p-0:
-    p-1:
+    p-00bbe8:
+    p-39e713:
   modal-fed-tax-social-security-pay-period:
     heading:
-    p-0:
-    p-1:
+    p-82e34c:
+    p-716710:
     ol-0:
-      li-0:
-      li-1:
-      li-2:
-    p-2:
+      li-ea5ad7:
+      li-5b74be:
+      li-53a1fa:
+    p-b74063:
   modal-fed-social-security-tax-withheld:
     heading:
-    p-0:
-    p-1:
-    p-2:
+    p-1a87a7:
+    p-a147e9:
+    p-88d383:
     ol-0:
-      li-0:
-      li-1:
-    p-3:
-    p-4:
+      li-ea5ad7:
+      li-ae75a0:
+    p-2f6487:
+    p-c1b4cc:
   modal-what-counts-job:
     heading:
-    p-0:
-    p-1:
+    p-cc1a45:
+    p-fcadfe:
     ul-0:
-      li-0:
-      li-1:
-    p-2:
+      li-ad6e01:
+      li-78d8a9:
+    p-8bf756:
   modal-what-counts-pension:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
+    p-131b40:
+    p-acdc8a:
+    p-8ef182:
+    p-c74e46:
   modal-pension-gross-pay-period:
     heading:
-    p-0:
-    p-1:
-    p-2:
+    p-fef4bf:
+    p-c19981:
+    p-0f1994:
     ol-0:
-      li-0:
-      li-1:
+      li-8cda67:
+      li-88cea7:
   modal-pension-gross-ytd-end:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
+    p-1f18fb:
+    p-818dfb:
+    p-83d213:
+    p-9475e2:
     ol-0:
-      li-0:
-      li-1:
-      li-2:
+      li-8cda67:
+      li-88cea7:
+      li-8ed353:
   modal-fed-tax-pension-pay-period:
     heading:
-    p-0:
-    p-1:
+    p-eb3a66:
+    p-6b6de8:
     ul-0:
-      li-0:
-      li-1:
-    p-2:
+      li-b14438:
+      li-16154b:
+    p-1754a4:
     ol-0:
-      li-0:
-      li-1:
-    p-3:
+      li-62615d:
+      li-71dfdf:
+    p-d6e23c:
   modal-fed-pension-tax-ytd:
     heading:
-    p-0:
-    p-1:
+    p-737d99:
+    p-29415d:
     ul-0:
-      li-0:
-      li-1:
-    p-2:
+      li-b14438:
+      li-16154b:
+    p-e5ca13:
     ol-0:
-      li-0:
-      li-1:
-      li-2:
-    p-3:
+      li-5b0ddc:
+      li-71dfdf:
+      li-8ed353:
+    p-d6e23c:
   modal-what-counts-self-employment:
     heading:
-    p-0:
-    p-1:
-    p-2:
+    p-fd0d43:
+    p-07a211:
+    p-089c0d:
   modal-self-employment-gross-total:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
-    p-6:
+    p-47ef44:
+    p-7caa26:
+    p-2c88f0:
+    p-947881:
+    p-807ad5:
+    p-0651e4:
+    p-55c57e:
   modal-self-employment-deductions:
     heading:
-    p-0:
-    p-1:
+    p-90fb6d:
+    p-643fbe:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-      li-3:
-      li-4:
-      li-5:
-      li-6:
-      li-7:
-      li-8:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
+      li-6a4179:
+      li-e2f63f:
+      li-7f4118:
+      li-9f53a8:
+      li-eaff1b:
+      li-6c49ac:
+      li-761662:
+      li-719fec:
+      li-849c98:
+    p-359e1c:
+    p-0651e4:
+    p-203379:
+    p-4ca1ce:
   modal-what-counts-unemployment:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
+    p-5c629b:
+    p-d575d4:
+    p-c2b99e:
+    p-9e9dfa:
   modal-fed-unemployment-tax-withheld-en:
     heading:
-    p-0:
-    p-1:
+    p-097607:
+    p-68c79a:
     ul-0:
-      li-0:
-      li-1:
-    p-2:
+      li-00bded:
+      li-68b85b:
+    p-b82dc7:
   modal-what-counts-pre-tax-retirement:
     heading:
-    p-0:
-    p-1:
-    p-2:
+    p-a7106a:
+    p-a88342:
+    p-5a0ed2:
     ul-0:
-      li-0:
-      li-1:
+      li-20ffee:
+      li-f28c25:
   modal-estimate-interest-income-en:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
+    p-cda131:
+    p-a2889a:
+    p-5a5d76:
+    p-bc395c:
+    p-f1a76a:
     ul-0:
-      li-0:
+      li-7fd107:
   modal-what-are-dividends-en:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
+    p-79b2c0:
+    p-504f40:
+    p-8bdec9:
+    p-65a8c3:
+    p-5258da:
+    p-c52a86:
     ul-0:
-      li-0:
-      li-1:
+      li-8406bc:
+      li-5810f9:
   modal-what-are-short-long-term-gains-losses-en:
     heading:
-    p-0:
+    p-f18360:
     ul-0:
-      li-0:
-      li-1:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
+      li-57b37b:
+      li-02555a:
+    p-750d95:
+    p-99bae4:
+    p-6412ce:
+    p-62a198:
+    p-dff0b2:
   modal-rental-expenses-net-income-en:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
+    p-8093b7:
+    p-21afbd:
+    p-cd2d5f:
+    p-e79a7f:
+    p-bc395c:
+    p-ed014a:
     ul-0:
-      li-0:
+      li-3cc72a:
   modal-estimate-royalty-income-en:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
+    p-7d15b4:
+    p-53dd3a:
+    p-bc395c:
+    p-c92501:
     ul-0:
-      li-0:
+      li-90f9a8:
   modal-estimate-s-corp-partnership-income-en:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
+    p-ba76b7:
+    p-04160c:
+    p-e63f56:
+    p-8b6f8b:
+    p-7e4500:
     ul-0:
-      li-0:
-      li-1:
+      li-b8bcfa:
+      li-f37c1e:
   modal-estimate-future-bonus-en:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
+    p-185c7d:
+    p-74fc7e:
+    p-c6a009:
+    p-e4a5c2:
   modal-job-check-bonus-en:
     heading:
-    p-0:
-    p-1:
+    p-9a2f97:
+    p-76b2cb:
     ol-0:
-      li-0:
-      li-1:
-    p-2:
+      li-5e0c98:
+      li-c46d32:
+    p-529826:
   modal-job-gross-ytd-end-en:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
+    p-1f18fb:
+    p-dd6213:
+    p-654d7e:
+    p-a181b2:
   modal-estimate-tips-en:
     heading:
-    p-0:
-    p-1:
+    p-cf271a:
+    p-1bf124:
     ul-0:
-      li-0:
-    p-2:
-    p-3:
-    p-4:
+      li-934301:
+    p-368b23:
+    p-bb8a8e:
+    p-ae35ae:
   modal-estimate-overtime-en:
     heading:
-    p-0:
-    p-1:
+    p-d2bd4e:
+    p-b3d7ea:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
+      li-f9b117:
+      li-766c0d:
+      li-89431a:
+    p-368b23:
+    p-c62d72:
+    p-5d7be0:
+    p-c62c8e:
   modal-estimate-overtime-rate-en:
     heading:
-    p-0:
+    p-73dc6c:
     ul-0:
-      li-0:
+      li-a0e864:
   modal-fed-tax-pay-period-en:
     heading:
-    p-0:
-    p-1:
+    p-3d5320:
+    p-33ac3f:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-    p-2:
+      li-8bab4d:
+      li-9defdf:
+      li-c119f5:
+    p-d6e23c:
   modal-fed-tax-ytd-en:
     heading:
-    p-0:
-    p-1:
+    p-01be0a:
+    p-583ef9:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-    p-2:
+      li-92a8b4:
+      li-9defdf:
+      li-af3b9e:
+    p-d6e23c:
 /adjustments:
   title:
-  h2-0:
-  p-0:
-  p-1:
-  p-2:
-  h3-0:
-  p-3:
-  p-4:
-  p-5:
+  h2-9fa8b1:
+  p-efc304:
+  p-624555:
+  p-9b971e:
+  h3-2c7735:
+  p-29379e:
+  p-3519c2:
+  p-cf7cae:
   /studentLoanInterestAmount:
     question:
     hint:
-  h3-1:
-  p-6:
-  p-7:
+  h3-9166fe:
+  p-b30c3d:
+  p-dd188e:
   ul-0:
-    li-0:
-    li-1:
-    li-2:
-  p-8:
+    li-0b8a3d:
+    li-c31915:
+    li-f3a059:
+  p-b20cac:
   /educatorExpenses/:
     question:
     hint:
-  h3-2:
-  p-9:
-  p-10:
-  p-11:
+  h3-e640b9:
+  p-3269b3:
+  p-523de9:
+  p-2bd31f:
   /deductionForTraditionalIRAContribution:
     question:
-  h3-3:
-  p-12:
-  p-13:
+  h3-f9e99b:
+  p-8a03a1:
+  p-f0de33:
   ul-1:
-    li-0:
-    li-1:
-    li-2:
-  p-14:
+    li-05453e:
+    li-292ab3:
+    li-4bca7f:
+  p-345fbc:
   ul-2:
-    li-0:
-    li-1:
-    li-2:
-    li-3:
-  p-15:
-  p-16:
-  p-17:
+    li-ff93fe:
+    li-200ab4:
+    li-e7dbe4:
+    li-765afa:
+  p-af5a4a:
+  p-09dfdf:
+  p-3248f2:
   /selfEmploymentRetirementPlanContributions:
     question:
-  h3-4:
-  p-18:
-  p-19:
-  p-20:
+  h3-940849:
+  p-fc912f:
+  p-739bad:
+  p-427dc4:
   /hsaContributionAmount:
     question:
-  h3-5:
-  p-21:
-  p-22:
+  h3-5574f6:
+  p-e03d05:
+  p-0c3c0d:
   /alimonyPaid:
     question:
-  h3-6:
-  p-23:
-  p-24:
+  h3-913117:
+  p-5c9299:
+  p-0dd4e9:
   /penaltyForEarlySavingsWithdrawal:
     question:
-  h3-7:
-  p-25:
+  h3-640ae5:
+  p-bc1f1a:
   ul-3:
-    li-0:
-    li-1:
-  p-26:
+    li-a1710a:
+    li-b646ac:
+  p-b7904a:
   /movingExpensesForArmedServicesMembers:
     question:
-  h3-8:
-  p-27:
+  h3-bcc8a5:
+  p-9fb630:
   ul-4:
-    li-0:
-    li-1:
-  p-28:
+    li-a7cbed:
+    li-e1fa4e:
+  p-30ab2e:
   /businessCreditsForEligible:
     question:
-  h3-9:
-  p-29:
-  p-30:
-  p-31:
+  h3-5c4fd4:
+  p-105416:
+  p-082b2a:
+  p-13dece:
   /selfEmploymentHealthInsuranceContributions:
     question:
   modal-what-are-adjustments:
     heading:
-    p-0:
+    p-c60313:
 /deductions:
   title:
-  h2-0:
-  p-0:
-  p-1:
-  p-2:
-  p-3:
-  p-4:
-  p-5:
+  h2-414252:
+  p-cbf5dd:
+  p-4f0299:
+  p-d4ef4d:
+  p-550c0f:
+  p-ade196:
+  p-b3aa46:
   /wantsStandardDeduction:
     question:
     options:
@@ -950,152 +948,152 @@
         name:
       'false':
         name:
-  h3-0:
-  p-6:
-  p-7:
-  p-8:
-  p-9:
-  h4-0:
-  p-10:
-  p-11:
+  h3-a1ad7c:
+  p-c47c3b:
+  p-71dd8c:
+  p-fb9061:
+  p-fd1ad1:
+  h4-a883ab:
+  p-29bab3:
+  p-5ea630:
   ul-0:
-    li-0:
-    li-1:
-  p-12:
+    li-f7cfbc:
+    li-da32d6:
+  p-b6c1cd:
   ul-1:
-    li-0:
-    li-1:
-  p-13:
+    li-1c452e:
+    li-2afba5:
+  p-91100f:
   /stateAndLocalTaxPayments:
     question:
     hint:
-  h4-1:
-  p-14:
-  p-15:
+  h4-627030:
+  p-693a4b:
+  p-6109d4:
   /cashCharitableContributions:
     question:
-  h4-2:
-  p-16:
-  p-17:
+  h4-0aecd8:
+  p-ca41f8:
+  p-94189b:
   /qualifiedMortgageInterestAndInvestmentInterestExpenses:
     question:
-  h4-3:
-  p-18:
-  p-19:
+  h4-b16091:
+  p-a5b47a:
+  p-2a876a:
   ul-2:
-    li-0:
-    li-1:
-    li-2:
-    li-3:
+    li-d21e4b:
+    li-1a3c7d:
+    li-46b019:
+    li-5d7fc7:
   /qualifiedMortgageInsurancePremiums:
     question:
-  h4-4:
-  p-20:
-  p-21:
+  h4-2ad5b3:
+  p-30a251:
+  p-ebaf9f:
   /medicalAndDentalExpenses:
     question:
     hint:
-  h4-5:
-  p-22:
-  p-23:
-  p-24:
-  p-25:
+  h4-e628b2:
+  p-200f68:
+  p-41e072:
+  p-3d9f6e:
+  p-39aa78:
   /casualtyLossesTotal:
     question:
-  h4-6:
-  p-26:
+  h4-fcd750:
+  p-e4b51d:
   ul-3:
-    li-0:
-    li-1:
-    li-2:
-    li-3:
-    li-4:
-    li-5:
-    li-6:
-    li-7:
-    li-8:
-    li-9:
-    li-10:
-    li-11:
-  p-27:
+    li-78ebd4:
+    li-bde3ca:
+    li-7a25f3:
+    li-e782c2:
+    li-8a47cf:
+    li-b60c39:
+    li-84271d:
+    li-df57a9:
+    li-9fbb8c:
+    li-202051:
+    li-5c9c06:
+    li-d57dd2:
+  p-3c5570:
   /otherDeductionsTotal:
     question:
-  h4-7:
-  p-28:
+  h4-ab9771:
+  p-db6824:
   modal-standard-deduction-or-itemize-deductions:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
-    p-6:
+    p-05b623:
+    p-612298:
+    p-b8a25f:
+    p-9d31c1:
+    p-a2eb42:
+    p-617b6e:
+    p-531543:
   modal-standard-deduction-amount:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
+    p-0e3533:
+    p-dafa6d:
+    p-bb6ae9:
+    p-3fc80f:
+    p-d9e6c0:
+    p-bc0d47:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-      li-3:
-      li-4:
-      li-5:
-    p-6:
+      li-09216d:
+      li-603910:
+      li-b4e324:
+      li-80f87f:
+      li-6a4489:
+      li-e4bf17:
+    p-722e90:
 /additional-deductions:
   title:
-  h2-0:
-  p-0:
-  p-1:
-  h3-0:
-  p-2:
-  p-3:
+  h2-e64960:
+  p-9a1bd3:
+  p-13d235:
+  h3-cf5852:
+  p-b36cd1:
+  p-d8609e:
   ul-0:
-    li-0:
-    li-1:
-    li-2:
-    li-3:
-    li-4:
-    li-5:
-  p-4:
-  p-5:
+    li-069b30:
+    li-060bf2:
+    li-5fa5bb:
+    li-1e7cc9:
+    li-95186c:
+    li-53c28e:
+  p-76b3ac:
+  p-795838:
   /nonItemizerCharitableContributionDeductionAmount:
     question:
     hint:
-  h3-1:
-  p-6:
-  p-7:
+  h3-88e0af:
+  p-f250e6:
+  p-51dacf:
   /primaryTaxpayerElectsForSeniorDeduction:
     question:
     hint:
   /secondaryTaxpayerElectsForSeniorDeduction:
     question:
     hint:
-  h3-2:
-  p-8:
-  p-9:
+  h3-f830e5:
+  p-b98393:
+  p-d7066d:
   ul-1:
-    li-0:
-    li-1:
-    li-2:
-  p-10:
+    li-de646c:
+    li-c01c71:
+    li-2e73bf:
+  p-9b605a:
   ul-2:
-    li-0:
-    li-1:
-    li-2:
-    li-3:
-  p-11:
-  p-12:
+    li-13960a:
+    li-1ac6c8:
+    li-14ccc7:
+    li-71d229:
+  p-62c99d:
+  p-43c67d:
   /personalVehicleLoanInterestAmount:
     question:
-  h3-3:
-  p-13:
-  p-14:
+  h3-8e5d10:
+  p-36f6a7:
+  p-433a95:
   /wantsDerivedQBIDeduction:
     question:
     options:
@@ -1103,44 +1101,44 @@
         name:
       'false':
         name:
-  h3-4:
-  p-15:
+  h3-090c33:
+  p-911b92:
   ol-0:
-    li-0:
-    li-1:
-    li-2:
-  p-16:
+    li-eb6dd8:
+    li-5b1108:
+    li-afd842:
+  p-fb0f3c:
   /qBIDeductionOverrideAmount:
     question:
     hint:
 /credits:
   title:
-  h2-0:
-  p-0:
-  p-1:
-  h3-0:
-  p-2:
-  p-3:
+  h2-948a2e:
+  p-4dde1f:
+  p-7a9f8f:
+  h3-ade5c7:
+  p-8adaa9:
+  p-fbbde4:
   /ctcEligibleDependents:
     question:
     hint:
-  h3-1:
-  p-4:
-  p-5:
+  h3-6a0442:
+  p-5b5094:
+  p-386206:
   /odcEligibleDependents:
     question:
     hint:
-  h3-2:
-  p-6:
-  p-7:
+  h3-bd6ff3:
+  p-b0becb:
+  p-c6bd24:
   /cdccQualifyingPersons:
     question:
   /cdccQualifyingExpenses:
     question:
     hint:
-  h3-3:
-  p-8:
-  p-9:
+  h3-f87a1a:
+  p-623bc8:
+  p-4b9b00:
   /eitcQualifyingChildren:
     question:
     hint:
@@ -1150,385 +1148,385 @@
   /secondaryFilerAge25OrOlderForEitc:
     question:
     hint:
-  h3-4:
-  p-10:
-  p-11:
+  h3-d83ef2:
+  p-5661e0:
+  p-8c58ba:
   /retirementSavingsContributionsTaxCreditAmount:
     question:
     hint:
-  h3-5:
-  p-12:
-  p-13:
+  h3-63f260:
+  p-1a3e61:
+  p-48ee6d:
   /qualifyingStudents:
     question:
   /aotcQualifiedEducationExpenses:
     question:
     hint:
-  h3-6:
-  p-14:
-  p-15:
+  h3-5869f0:
+  p-dbcaea:
+  p-4e793b:
   /llcQualifiedEducationExpenses:
     question:
     hint:
-  h3-7:
-  p-16:
-  p-17:
+  h3-40bd58:
+  p-6d6078:
+  p-007627:
   /adoptionEligibleChildren:
     question:
   /estimatedTotalQualifiedAdoptionExpenses:
     question:
     hint:
-  h3-8:
-  p-18:
-  p-19:
+  h3-e318a2:
+  p-371ffe:
+  p-77d648:
   /elderlyAndDisabledTaxCreditAmount:
     question:
-  h3-9:
-  p-20:
-  p-21:
+  h3-8c57ba:
+  p-3995ab:
+  p-2c1569:
   /schedule3Line1:
     question:
-  h3-10:
-  p-22:
-  p-23:
+  h3-a99804:
+  p-961cbd:
+  p-821d31:
   /schedule3Line6a:
     question:
-  h3-11:
-  p-24:
-  p-25:
+  h3-f75ee7:
+  p-40c9a3:
+  p-46de1e:
   /tentativeSchedule3Line6g:
     question:
     hint:
-  h3-12:
-  p-26:
-  p-27:
+  h3-795a8a:
+  p-df114f:
+  p-847a3c:
   /alternativeMinimumTaxCreditAmount:
     question:
   modal-ctc-who-can-claim:
     heading:
-    p-0:
+    p-7c2fab:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-      li-3:
-      li-4:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
+      li-a2f84f:
+      li-d11eda:
+      li-a17024:
+      li-8b8bcb:
+      li-f5b72f:
+    p-c67be7:
+    p-24b934:
+    p-e97b0b:
+    p-23670a:
   modal-odc-who-can-claim:
     heading:
-    p-0:
+    p-25ea3f:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-      li-3:
-      li-4:
-      li-5:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
+      li-ec8076:
+      li-3f5be2:
+      li-271d52:
+      li-3cdb99:
+      li-54fdde:
+      li-38e383:
+    p-b1ce93:
+    p-24b934:
+    p-a212c5:
+    p-8e621a:
   modal-cdcc-who-can-claim-and-eligible-expenses:
     heading:
-    p-0:
-    p-1:
-    p-2:
+    p-999ac9:
+    p-0e2159:
+    p-af5726:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-      li-3:
-    p-3:
+      li-b23a11:
+      li-6f4e69:
+      li-594aa1:
+      li-531e5e:
+    p-7189e3:
     ul-1:
-      li-0:
-      li-1:
-      li-2:
-      li-3:
-    p-4:
-    p-5:
-    p-6:
-    p-7:
-    p-8:
-    p-9:
+      li-0f6e34:
+      li-cc9c3b:
+      li-241e17:
+      li-dc8f3c:
+    p-ee8680:
+    p-ded29b:
+    p-a01583:
+    p-24b934:
+    p-df5230:
+    p-6173e1:
   modal-eitc-who-can-claim:
     heading:
-    p-0:
-    p-1:
+    p-787c0c:
+    p-e38ed9:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-      li-3:
-      li-4:
-    p-2:
-    p-3:
-    p-4:
+      li-df44ee:
+      li-0192a3:
+      li-5ef8aa:
+      li-15bfc0:
+      li-1b1f15:
+    p-76b6a9:
+    p-d178a7:
+    p-9e7c3b:
     ul-1:
-      li-0:
-      li-1:
-      li-2:
-    p-5:
-    p-6:
-    p-7:
+      li-e27492:
+      li-32aee0:
+      li-15bfc0:
+    p-24b934:
+    p-cdce6e:
+    p-cda0a1:
   modal-retirement-savings-credit-who-can-claim:
     heading:
-    p-0:
-    p-1:
+    p-82bd3c:
+    p-4d4371:
     ul-0:
-      li-0:
-      li-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
-    p-6:
-    p-7:
+      li-51e5b0:
+      li-b4ffe6:
+    p-c1babe:
+    p-79b58a:
+    p-d2238c:
+    p-24b934:
+    p-e930e0:
+    p-4f7230:
   modal-aotc-who-can-claim-and-eligible-expenses:
     heading:
-    p-0:
+    p-a7fc1e:
     ul-0:
-      li-0:
-      li-1:
-    p-1:
+      li-c490a5:
+      li-fad0e9:
+    p-7f6a17:
     ul-1:
-      li-0:
-      li-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
-    p-6:
-    p-7:
+      li-fb3acc:
+      li-1fae55:
+    p-1f5c56:
+    p-26f710:
+    p-658bee:
+    p-24b934:
+    p-a99490:
+    p-9d7d7d:
   modal-llc-who-can-claim:
     heading:
-    p-0:
+    p-f5b472:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
+      li-a144eb:
+      li-51b299:
+      li-cdf538:
+    p-52848c:
+    p-839872:
+    p-24b934:
+    p-9f907d:
+    p-5d0cbb:
   modal-adoption-credit-who-can-claim:
     heading:
-    p-0:
+    p-ab884c:
     ul-0:
-      li-0:
-      li-1:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
-    p-6:
+      li-1221c2:
+      li-7f01ec:
+    p-837b60:
+    p-c92b21:
+    p-0dfb21:
+    p-24b934:
+    p-e45e2b:
+    p-5683ce:
   modal-credit-elderly-disabled-who-can-claim:
     heading:
-    p-0:
+    p-f6aeb3:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
-    p-6:
+      li-b9be11:
+      li-80d712:
+      li-486ff8:
+    p-c6a647:
+    p-cd18b6:
+    p-be3be3:
+    p-24b934:
+    p-efe4ff:
+    p-22e34a:
   modal-foreign-tax-credit-who-can-claim:
     heading:
-    p-0:
+    p-f75b59:
     ul-0:
-      li-0:
-      li-1:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
+      li-4b51b6:
+      li-2dc959:
+    p-944458:
+    p-24b934:
+    p-beb725:
+    p-913a55:
   modal-what-are-business-credits:
     heading:
-    p-0:
+    p-e6c933:
     ul-0:
-      li-0:
-      li-1:
-      li-2:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
+      li-f80e57:
+      li-4715cf:
+      li-40aa29:
+    p-97e52e:
+    p-24b934:
+    p-a0a8dd:
+    p-985345:
   modal-mortgage-interest-credit-who-can-claim:
     heading:
-    p-0:
+    p-bcd520:
     ul-0:
-      li-0:
-      li-1:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
-    p-5:
+      li-cc8a12:
+      li-18244c:
+    p-f226d2:
+    p-2bce1f:
+    p-24b934:
+    p-7b5370:
+    p-0ea3a2:
   modal-amt-who-can-claim:
     heading:
-    p-0:
+    p-a7cc79:
     ul-0:
-      li-0:
-      li-1:
-    p-1:
-    p-2:
-    p-3:
-    p-4:
+      li-67f80f:
+      li-f5e817:
+    p-63fead:
+    p-24b934:
+    p-cb09e9:
+    p-dbd9a0:
 /results:
   title:
-  h2-0:
-  fg-alert-0:
+  h2-dd9460:
+  fg-alert-18ebd6:
     heading:
-    p-0:
-  p-0:
-  p-1:
-  p-2:
-  p-3:
-  p-4:
-  p-5:
-  p-6:
-  p-7:
-  p-8:
-  p-9:
-  p-10:
-  h3-0:
-  h3-1:
-  p-11:
-  p-12:
-  fg-detail-0:
+    p-0f5e39:
+  p-771faa:
+  p-257121:
+  p-1a7d9b:
+  p-acd885:
+  p-f27357:
+  p-d0bb10:
+  p-e9b831:
+  p-f934df:
+  p-609593:
+  p-445e9f:
+  p-bf0181:
+  h3-5359f4:
+  h3-566afa:
+  p-7d3cba:
+  p-c219b9:
+  fg-detail-10027e:
     summary:
-    p-0:
+    p-afddd1:
     table-0:
-      caption-0:
+      caption-e01d39:
       thead-0:
         tr-0:
-          th-0:
-          th-1:
+          th-b5a7ad:
+          th-b2f406:
       tbody-0:
         tr-0:
-          th-0:
-          td-0:
+          th-856987:
+          td-17a912:
         tr-1:
-          th-0:
-          td-0:
+          th-c91335:
+          td-2967ae:
         tr-2:
-          th-0:
-          td-0:
+          th-9fa8b1:
+          td-e2119c:
         tr-3:
-          th-0:
-          td-0:
+          th-2eed62:
+          td-366809:
         tr-4:
-          th-0:
-          td-0:
+          th-e64960:
+          td-187e4c:
         tr-5:
-          th-0:
-          td-0:
-    p-1:
+          th-b0360a:
+          td-275c50:
+    p-cec781:
     table-1:
-      caption-0:
+      caption-77613d:
       thead-0:
         tr-0:
-          th-0:
-          th-1:
+          th-b5a7ad:
+          th-b2f406:
       tbody-0:
         tr-0:
-          th-0:
-          td-0:
-    p-2:
+          th-821cfd:
+          td-828fe6:
+    p-a8bf0e:
     table-2:
-      caption-0:
+      caption-e87ca9:
       thead-0:
         tr-0:
-          th-0:
-          th-1:
+          th-b5a7ad:
+          th-b2f406:
       tbody-0:
         tr-0:
-          th-0:
-          td-0:
+          th-948a2e:
+          td-bd1cfa:
         tr-1:
-          th-0:
-          td-0:
+          th-7dd632:
+          td-8a394b:
         tr-2:
-          th-0:
-          td-0:
+          th-af2744:
+          td-35558f:
         tr-3:
-          th-0:
-          td-0:
-    p-3:
-    p-4:
-  h3-2:
-  h3-3:
-  h3-4:
-  p-13:
-  p-14:
-  p-15:
-  p-16:
-  p-17:
-  p-18:
-  h4-0:
-  h4-1:
-  h4-2:
-  p-19:
+          th-80026f:
+          td-1bd203:
+    p-5d3b06:
+    p-09327c:
+  h3-13ef28:
+  h3-335363:
+  h3-d387b7:
+  p-ce18bb:
+  p-d5c719:
+  p-460908:
+  p-8bea5a:
+  p-b5cd3f:
+  p-a6f011:
+  h4-f1b89b:
+  h4-7d0acd:
+  h4-9cfae7:
+  p-47f861:
   modal-what-is-form-w-4:
     heading:
-    p-0:
-    p-1:
-    p-2:
+    p-52482e:
+    p-14dbf9:
+    p-a2bc8b:
   modal-what-is-form-w-4p:
     heading:
-    p-0:
-    p-1:
-    p-2:
+    p-f9b7ba:
+    p-7ca1e5:
+    p-d5bee2:
   modal-what-is-form-w-4-and-w-4p:
     heading:
-    p-0:
-    p-1:
-    p-2:
-    p-3:
+    p-a06431:
+    p-790f19:
+    p-a2bc8b:
+    p-d5bee2:
   modal-why-step-1-c:
     heading:
-    p-0:
-    p-1:
+    p-e46111:
+    p-205b43:
   modal-why-w-4p-step-2:
     heading:
-    p-0:
-    p-1:
+    p-8310ca:
+    p-1eb372:
   modal-why-w-4-step-2-c:
     heading:
-    p-0:
-    p-1:
+    p-7790ad:
+    p-6eeb8d:
   modal-why-step-3:
     heading:
-    p-0:
-    p-1:
+    p-ba1822:
+    p-e659ce:
   modal-why-w-4-step-4-a:
     heading:
-    p-0:
-    p-1:
+    p-837e9a:
+    p-0909a7:
   modal-why-w-4p-step-4-a:
     heading:
-    p-0:
-    p-1:
+    p-28bdd1:
+    p-0909a7:
   modal-why-w-4-step-4-b:
     heading:
-    p-0:
-    p-1:
+    p-837e9a:
+    p-1bdcd8:
   modal-why-w-4p-step-4-b:
     heading:
-    p-0:
-    p-1:
+    p-28bdd1:
+    p-1bdcd8:
   modal-why-w-4-step-4-c:
     heading:
-    p-0:
-    p-1:
+    p-837e9a:
+    p-fb9379:
   modal-why-w-4p-step-4-c:
     heading:
-    p-0:
-    p-1:
+    p-28bdd1:
+    p-dd38c7:
