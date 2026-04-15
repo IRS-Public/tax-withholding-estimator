@@ -4,6 +4,9 @@ ThisBuild / scalaVersion := "3.7.2"
 // Set default class for "run"
 Compile / mainClass := Some("gov.irs.twe.main")
 
+// Prevent additional compilation when the generated locale file is created
+Compile / unmanagedResources / excludeFilter := (Compile / unmanagedResources / excludeFilter).value || "flow_en.yaml"
+
 scalafmtConfig := file(".scalafmt.conf")
 
 // Also re-build on XML changes
@@ -30,8 +33,8 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "io.circe" %% "circe-core",
       "io.circe" %% "circe-generic",
-      "io.circe" %% "circe-parser"
-      ).map(_ % "0.14.15"),
+      "io.circe" %% "circe-parser",
+    ).map(_ % "0.14.15"),
     libraryDependencies += "io.circe" %% "circe-yaml" % "0.16.0",
     libraryDependencies += "io.circe" %% "circe-yaml-scalayaml" % "0.16.0",
 
@@ -40,4 +43,4 @@ lazy val root = (project in file("."))
 
     // Local server
     libraryDependencies += "org.smol-utils" %% "smol" % "0.1.2",
-    )
+  )

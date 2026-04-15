@@ -6,9 +6,7 @@ import io.circe.yaml.Printer
 import scala.collection.mutable
 import scala.io.Source
 
-// This is in /target for now, but I will figure out an idiomatic place for it to go where we can commit it.
-// It isn't in /resources because that triggers a rebuild loop.
-private val generatedFlowContentPath = os.pwd / "target" / s"flow_en.yaml"
+val generatedFlowContentPath = os.pwd / "src" / "main" / "resources" / "twe" / "locales" / s"flow_en.yaml"
 private def translatedFlowContentPath(languageCode: String) =
   os.pwd / "src" / "main" / "resources" / "twe" / "locales" / s"flow_$languageCode.yaml"
 
@@ -49,7 +47,7 @@ implicit val anyEncoder: Encoder[Any] = Encoder.instance {
 def generateFlowLocaleFile(translationMap: mutable.LinkedHashMap[String, Any]): Unit = {
   val json = translationMap.asJson
   val yamlString = Printer(dropNullKeys = true, preserveOrder = true).pretty(json)
-  os.write.over(generatedFlowContentPath, yamlString)
+  os.write.over(generatedFlowContentPath, s"# DO NOT EDIT, THIS IS A GENERATED FILE\n$yamlString")
   Log.info(s"Generated flow content at ${generatedFlowContentPath}")
 }
 
