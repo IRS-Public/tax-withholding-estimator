@@ -1,7 +1,21 @@
-#audit-panel {
+.audit-panel-resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.audit-panel {
+  --audit-panel-handle-width: 0.75rem;
+  display: none;
+  position: relative;
+
   button {
     display: block;
     margin: 1rem 0;
+  }
+
+  h1,
+  h2 {
+    font-weight: 600;
   }
 
   .inline {
@@ -19,11 +33,118 @@
   }
 }
 
+#show-audit-panel {
+  position: fixed;
+  z-index: 1000;
+  top: 6rem;
+  border: 1px solid var(--base-lighter);
+  right: -1px;
+  background: white;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover {
+    color: var(--primary)
+  }
+
+  .usa-tooltip {
+    padding: .5rem;
+  }
+}
+
+#close-audit-panel {
+  align-items: center;
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.5rem;
+  position: absolute;
+  top: var(--units-2);
+  right: var(--units-2);
+}
+
+/* Audit panel content styles */
+.audit-panel-open {
+  display: flex;
+  overflow: hidden;
+  height: 100vh;
+
+  .app-container {
+    width: calc(100vw - var(--audit-panel-width, 38vw));
+    height: 100vh;
+    position: relative; /* Fixes firefox issue */
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  .audit-panel {
+    background: white;
+    display: block;
+    height: 100vh;
+    width: var(--audit-panel-width, 38vw);
+    overflow: hidden;
+  }
+
+  .audit-panel__content {
+    height: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+    position: relative;
+    padding: var(--units-4);
+  }
+
+  #show-audit-panel {
+    display: none;
+  }
+}
+
+.audit-panel__resizer {
+  border-left: 2px solid var(--base-lighter);
+  bottom: 0;
+  cursor: col-resize;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1rem;
+  z-index: 1;
+
+  &:hover {
+    border-left-color: var(--blue-40v);
+  }
+
+  &:focus {
+    outline: .25rem solid var(--blue-40v);
+    outline-offset: -.125rem;
+  }
+}
+
+
 .audit-panel__section {
     border: 1px solid var(--base-lighter);
     margin: 1rem 0;
     padding: .5rem 2rem;
     border-radius: 4px;
+}
+
+/* User will have to toggle between the audit panel and the main content on small screens, but we can still allow its use on narrower screens */
+@media (max-width: 579px) {
+  .audit-panel-open {
+    .app-container {
+      width: 0;
+    }
+
+    .audit-panel {
+      width: 100vw;
+    }
+  }
+
+  .audit-panel__resizer {
+    display: none;
+  }
 }
 
 @keyframes fadeInOut {

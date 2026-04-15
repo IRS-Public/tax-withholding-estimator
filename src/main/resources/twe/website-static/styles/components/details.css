@@ -3,61 +3,63 @@
   to mimic the USWDS accordion style.
 */
 
-.flow details {
-  margin: var(--flow-spacing--sm) 0;
+.flow, .audit-panel {
+  details {
+    margin: var(--flow-spacing--sm) 0;
 
-  /* Corrects box model for nested usa-input-group */
-  .usa-input-group,
-  .usa-accordion__button,
-  input,
-  select {
-    box-sizing: border-box;
+    /* Corrects box model for nested usa-input-group */
+    .usa-input-group,
+    .usa-accordion__button,
+    input,
+    select {
+      box-sizing: border-box;
+    }
+
+    &:last-child {
+      margin-bottom: var(--flow-spacing);
+    }
   }
 
-  &:last-child {
-    margin-bottom: var(--flow-spacing);
-  }
-}
+  details > summary:not(.fg-collection__item-button) {
+      background-color: var(--base-lightest);
 
-.flow details > summary:not(.fg-collection__item-button) {
+    }
+
+  details > summary {
+    display: block;
     background-color: var(--base-lightest);
-
-  }
-
-.flow details > summary {
-  display: block;
-  background-color: var(--base-lightest);
-  background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/add.svg"), linear-gradient(transparent, transparent);
-  background-repeat: no-repeat;
-  background-position: right var(--units-205) center;
-  background-size: var(--units-3);
-  cursor: pointer;
-  font-weight: 700;
-  margin: 0;
-  padding: var(--units-2) var(--units-7) var(--units-2) var(--units-205);
-  text-decoration: none;
-
-  &:hover {
-    background-color: var(--gray-10);
-  }
-
-  &:focus {
-    outline: var(--units-05) solid var(--blue-40v);
-    outline-offset: 0;
-  }
-
-  h2, h3, h4, h5 {
-    font-size: var(--font-size-md);
+    background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/add.svg"), linear-gradient(transparent, transparent);
+    background-repeat: no-repeat;
+    background-position: right var(--units-205) center;
+    background-size: var(--units-3);
+    cursor: pointer;
+    font-weight: 700;
     margin: 0;
+    padding: var(--units-2) var(--units-7) var(--units-2) var(--units-205);
+    text-decoration: none;
+
+    &:hover {
+      background-color: var(--gray-10);
+    }
+
+    &:focus {
+      outline: var(--units-05) solid var(--blue-40v);
+      outline-offset: 0;
+    }
+
+    h2, h3, h4, h5 {
+      font-size: var(--font-size-md);
+      margin: 0;
+    }
   }
-}
 
-.flow details[open] > summary {
-  background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/remove.svg"), linear-gradient(transparent, transparent);
-}
+  details[open] > summary {
+    background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/remove.svg"), linear-gradient(transparent, transparent);
+  }
 
-.flow details[open] .details-content {
-  border: var(--units-05) solid var(--base-lightest); ;
-  border-top: none;
-  padding: var(--units-1) var(--units-205) var(--units-205);
+  details[open] .details-content {
+    border: var(--units-05) solid var(--base-lightest); ;
+    border-top: none;
+    padding: var(--units-1) var(--units-205) var(--units-205);
+  }
 }

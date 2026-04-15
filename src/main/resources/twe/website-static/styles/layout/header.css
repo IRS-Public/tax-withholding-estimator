@@ -17,7 +17,7 @@
   width: 6.25rem;
   max-height: 36px;
   vertical-align: middle;
-  @media (min-width: 880px) {
+  @container app (min-width: 880px) {
     width: 7.25rem;
   }
 }

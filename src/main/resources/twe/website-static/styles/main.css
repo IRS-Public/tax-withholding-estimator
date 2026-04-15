@@ -23,6 +23,7 @@
 
 /* Utilities */
 @import "utilities/utilities.css";
+@import "utilities/display-conditions.css";
 
 @view-transition {
   navigation: auto;

@@ -1,24 +1,27 @@
 body {
-  @media (min-width: 880px) {
-    background-color: var(--base-lightest);
-  }
+  background-color: var(--base-lightest);
 }
 
-main, #audit-panel {
+.app-container {
+  container-type: inline-size;
+  container-name: app;
+}
+
+main {
   background-color: white;
+  margin: 0 auto;
+  padding: var(--units-2) var(--units-2) var(--units-6);
 
-  margin: 0 auto var(--units-6);
-  padding: 0 var(--units-2) var(--units-2) var(--units-2);
-
-  @media (min-width: 880px) {
+  @container app (min-width: 880px) {
     box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-top: var(--units-4);
+    margin-bottom: var(--units-6);
     max-width: 800px;
     padding: var(--units-6) var(--units-8) var(--units-8) var(--units-8);
   }
 
-   @media (min-width: 1024px) {
+   @container app (min-width: 1024px) {
     max-width: 954px;
    }
 }
@@ -61,11 +64,11 @@ main h1 {
 .flow h2 {
   font-size: var(--font-size-10);
 
-  @media (min-width: 640px) {
+  @container app (min-width: 640px) {
     font-size: var(--font-size-11);
   }
 
-  @media (min-width: 880px) {
+  @container app (min-width: 880px) {
     font-size: var(--font-size-12);
   }
 }
@@ -78,11 +81,11 @@ main h1 {
   padding-top: var(--flow-spacing);
   margin: var(--flow-spacing--offset) 0 var(--flow-spacing--sm);
 
-  @media (min-width: 640px) {
+  @container app (min-width: 640px) {
     font-size: var(--font-size-10);
   }
 
-  @media (min-width: 880px) {
+  @container app (min-width: 880px) {
     font-size: var(--font-size-11);
   }
 }
@@ -104,11 +107,11 @@ main h1 {
 .flow h5:not(.usa-alert__heading, details > summary > h5) {
   font-size: var(--font-size-8);
 
-  @media (min-width: 640px) {
+  @container app (min-width: 640px) {
     font-size: var(--font-size-9);
   }
 
-  @media (min-width: 880px) {
+  @container app (min-width: 880px) {
     font-size: var(--font-size-10);
   }
 }
