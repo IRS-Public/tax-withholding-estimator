@@ -62,4 +62,12 @@
     border-top: none;
     padding: var(--units-1) var(--units-205) var(--units-205);
   }
+
+  details.fg-detail--chevron > summary {
+    background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/expand_more.svg"), linear-gradient(transparent, transparent);
+  }
+
+  details.fg-detail--chevron[open] > summary {
+    background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/expand_less.svg"), linear-gradient(transparent, transparent);
+  }
 }
