@@ -1013,13 +1013,13 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/standardOrItemizedDeduction", 16100)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 42689)
     scenario.assertEquals("/selfEmploymentTax", 268)
-    scenario.assertEquals("/additionalMedicareTax", 225)
+    scenario.assertOffset("/additionalMedicareTax", 218, 7) // Pending new sheet
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 43182)
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 43175, 7)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 8077)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 753)
+    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4c", 750, 3) // Pending new sheet
   }
 
   // Column BU
@@ -1030,15 +1030,15 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/taxableIncome", 283232)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 400)
     scenario.assertEquals("/selfEmploymentTax", 536)
-    scenario.assertEquals("/additionalMedicareTax", 450)
+    scenario.assertOffset("/additionalMedicareTax", 436, 14)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertOffset("/tentativeTaxNetNonRefundableCredits", 67900, 1)
-    scenario.assertOffset("/totalTaxNetRefundableCredits", 68886, 1)
+    scenario.assertOffset("/tentativeTaxNetNonRefundableCredits", 67900, 1) // Pending new sheet
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 68872, 15)
 
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 69332)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 422)
+    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4c", 417, 5) // Pending new sheet
   }
 
   // Column BV
@@ -1052,13 +1052,12 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 29710)
     scenario.assertEquals("/selfEmploymentTax", 7065)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/additionalMedicareTax", 72)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 36847)
+    scenario.assertOffset("/additionalMedicareTax", 38, 34) // Pending new sheet
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 36813, 34)
+    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 864, -55) // Pending new sheet
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 37174)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 808, 1)
-
   }
 
   // Column BW
@@ -1070,7 +1069,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertOffset("/qualifiedBusinessIncomeDeduction", 2870, 1)
     scenario.assertEquals("/selfEmploymentTax", 1339)
     scenario.assertEquals("/netInvestmentIncomeTax", 1140)
-    scenario.assertEquals("/additionalMedicareTax", 522)
+    scenario.assertOffset("/additionalMedicareTax", 488, 34) // Pending new sheet
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 76460)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
@@ -1088,12 +1087,12 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 357330)
     scenario.assertEquals("/taxableIncome", 340830)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 400)
-    scenario.assertEquals("/additionalMedicareTax", 1197)
+    scenario.assertOffset("/additionalMedicareTax", 1163, 34) // Pending new sheet
     scenario.assertEquals("/selfEmploymentTax", 1339)
     scenario.assertEquals("/netInvestmentIncomeTax", 3800)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 88060)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 94396)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 48416)
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 94362, 34)
+    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 48471, -55) // Pending new sheet
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 148930)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
   }
@@ -1349,14 +1348,14 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 789403)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 10000)
     scenario.assertEquals("/netInvestmentIncomeTax", 6080)
-    scenario.assertEquals("/additionalMedicareTax", 3510)
+    scenario.assertOffset("/additionalMedicareTax", 3407, 103) // Pending new sheet
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 400)
     scenario.assertEquals("/selfEmploymentTax", 21194)
     scenario.assertEquals("/adoptionCreditRefundable", 0)
     scenario.assertEquals("/adoptionCreditNonRefundable", 0)
     scenario.assertEquals("/qualifiedMortgageInsurancePremiumDeductionTotal", 0)
     scenario.assertEquals("/taxableIncome", 734069)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 225247)
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 225144, 103) // Pending new sheet
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 194463)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 194463)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)

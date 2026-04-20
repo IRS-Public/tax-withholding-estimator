@@ -115,16 +115,14 @@
         The following simplifying assumption was made for user convenience: we derive Form 8959 Line 8 from /netSelfEmploymentIncomeSelf and/or Spouse instead of /scheduleSELine6Self and/or Spouse</Description>
       <Derived>
         <Add>
-          <!--          <Dependency path="/scheduleSELine6Self"/>-->
-          <Dependency path="/netSelfEmploymentIncomeSelf"/>
+          <Dependency path="/scheduleSELine6Self"/>
           <Switch>
             <Case>
               <When>
                 <Dependency path="/isFilingStatusMFJ"/>
               </When>
               <Then>
-                <!--                <Dependency path="/scheduleSELine6Spouse"/>-->
-                <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+                <Dependency path="/scheduleSELine6Spouse"/>
               </Then>
             </Case>
             <Case>
