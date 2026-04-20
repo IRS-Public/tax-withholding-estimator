@@ -104,11 +104,14 @@ errors:
   InvalidMonth:
   InvalidDate:
   InvalidLimit:
+  IncompleteWritableDate:
 
   # Enum errors
   BlankEnum:
   InvalidEnum:
 
+  # Generic errors
+  Required:
   Default:
 
   # Limit errors

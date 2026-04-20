@@ -226,11 +226,11 @@ class FgSet extends HTMLElement {
     const isMissing = !this.isComplete()
     if (isMissing) {
       // Optional date fields have a unique validation error message. Since they have multiple inputs, if the user fills in any of them, they must fill in all of them.
-      if (this.inputType === 'date' && this.optional) {
-        this.setValidationError('Enter a complete date or leave blank')
-      } else {
-        this.setValidationError('This question is required')
-      }
+      const errorKey = (this.inputType === 'date' && this.optional)
+        ? 'errors.IncompleteWritableDate'
+        : 'errors.Required'
+      const errorMessage = document.getElementById(errorKey).innerText
+      this.setValidationError(errorMessage)
     } else {
       this.clearValidationError()
     }

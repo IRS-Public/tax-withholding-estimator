@@ -110,11 +110,15 @@ errors:
   InvalidMonth: Enter a valid month.
   InvalidDate: Enter a valid date.
   InvalidLimit: Invalid limit set. # Server error
+  IncompleteWritableDate: Enter a complete date or leave blank
+
 
   # Enum errors
   BlankEnum: Value was blank. # Server error
   InvalidEnum: Value not found. # Server error
 
+  # Generic errors
+  Required: This question is required
   Default: Sorry, something went wrong # Server error
 
   # Limit errors
