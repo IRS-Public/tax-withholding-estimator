@@ -1,6 +1,6 @@
 components:
   fg-set:
-    required:
+    required: (Requerido)
   fg-collection:
     buttons:
       remove: "Placeholder {0}"
@@ -20,8 +20,8 @@ components:
     close:
     ok:
   boolean:
-    yes:
-    no:
+    yes: Sí
+    no: No
   date:
     month:
     day:
@@ -47,7 +47,7 @@ title:
   suffix:
 
 layout:
-  title:
+  title: Estimador para Retención de Impuestos
   skip-to-main:
   identifier:
     agency-identifier:
@@ -72,9 +72,9 @@ layout:
     lock-2:
 
 buttons:
-  next:
+  next: Siguiente
   continue:
-  back:
+  back: Volver
   submit:
 
 alerts:
@@ -86,7 +86,7 @@ step-indicator:
   completed:
   not-completed:
   step:
-  of:
+  of: de
 
 errors:
   # Dollar errors
