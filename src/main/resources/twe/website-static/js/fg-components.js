@@ -818,6 +818,7 @@ function handleSectionContinue (event) {
   }
   return true
 }
+window.handleSectionContinue = handleSectionContinue
 
 function validateSectionForNavigation () {
   const fgSets = document.querySelectorAll('fg-set:not(.hidden)')
@@ -892,34 +893,6 @@ function generateUUID () {
     return (Math.random() * 16 | 0).toString(16)
   })
 }
-
-export function displayConditions () {
-  document.body.classList.add('display-conditions')
-  document.querySelectorAll('[condition]').forEach(el => {
-    const operator = el.getAttribute('operator')
-    const condition = el.getAttribute('condition')
-    if (operator && condition) {
-      const factSpan = document.createElement('span')
-      factSpan.className = 'fact-name'
-      factSpan.textContent = `condition: ${operator} ${condition}`
-
-      if (el.tagName.toLowerCase() === 'span') {
-        el.appendChild(factSpan)
-      } else {
-        el.prepend(factSpan)
-      }
-    }
-  })
-}
-
-export function hideConditions () {
-  document.body.classList.remove('display-conditions')
-  document.querySelectorAll('.fact-name').forEach(el => el.remove())
-}
-
-window.displayConditions = displayConditions
-window.hideConditions = hideConditions
-window.handleSectionContinue = handleSectionContinue
 
 // Add show/hide functionality to all elements
 document.addEventListener('fg-update', showOrHideAllElements)

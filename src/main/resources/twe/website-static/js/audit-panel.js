@@ -1,5 +1,3 @@
-import { displayConditions, hideConditions } from './fg-components.js'
-
 const parser = new DOMParser()
 const XML_SERIALIZER = new XMLSerializer()
 
@@ -17,6 +15,32 @@ const AUDIT_PANEL_DEFAULT_WIDTH = 38
 const AUDIT_PANEL_MIN_WIDTH = 320
 const AUDIT_PANEL_MAX_WIDTH_RATIO = 0.7
 const AUDIT_PANEL_KEYBOARD_STEP = 24
+
+export function displayConditions () {
+  document.body.classList.add('display-conditions')
+  document.querySelectorAll('[condition]').forEach(el => {
+    const operator = el.getAttribute('operator')
+    const condition = el.getAttribute('condition')
+    if (operator && condition) {
+      const factSpan = document.createElement('span')
+      factSpan.className = 'fact-name'
+      factSpan.textContent = `condition: ${operator} ${condition}`
+
+      if (el.tagName.toLowerCase() === 'span') {
+        el.appendChild(factSpan)
+      } else {
+        el.prepend(factSpan)
+      }
+    }
+  })
+}
+
+export function hideConditions () {
+  document.body.classList.remove('display-conditions')
+  document.querySelectorAll('.fact-name').forEach(el => el.remove())
+}
+window.displayConditions = displayConditions
+window.hideConditions = hideConditions
 
 // Save the open/closed state of the audit panel in session storage so it persists across page reloads and forward navigation.
 function getAuditPanelStorage () {
