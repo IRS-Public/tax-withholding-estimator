@@ -1651,15 +1651,20 @@
     question: Car loan interest you <span condition="/isFilingStatusMFJ" operator="isTrue">and
       your spouse</span> expect to pay in <fg-show path="/taxYear"/>
   h3-8e5d10: Qualified business income (QBI)
-  p-36f6a7: If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your
-    spouse</span> own a partnership, S-corporation, or are self employed, you may
-    be able to claim a deduction if you have QBI in <fg-show path="/taxYear"/>. This
-    deduction may be reduced or eliminated for some service businesses.
-  p-433a95: <strong>Based on your answers, you <span condition="/isFilingStatusMFJ"
-    operator="isTrue">and your spouse</span> had a QBI of <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/>.</strong>
+  p-2a6643: |-
+    If you <span condition="/isFilingStatusMFJ" operator="isTrue"> or your spouse</span>
+            own a partnership, S-corporation, or are self employed, you may be able to claim a
+            deduction if you have QBI in <fg-show path="/lastTaxYear"/>.
+            This deduction may be reduced or eliminated for some service businesses.
+  p-c43979: |-
+    <strong>
+              Based on your answers, you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> had a QBI of
+              <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/>.
+            </strong>
   /wantsDerivedQBIDeduction:
     question: Choose if you want to use the QBI amount we calculated from your answers
       or if you want to enter a different amount.
+    modalLink: <modal-link for="modal-qbi-when">When should I enter a different amount?</modal-link>
     options:
       'true':
         name: Use <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/> for this
@@ -1681,6 +1686,22 @@
     question: Estimated QBI for you <span condition="/isFilingStatusMFJ" operator="isTrue">and
       your spouse</span> in <fg-show path="/taxYear"/>
     hint: If you’re not sure, it’s okay to enter $0.
+  modal-qbi-when:
+    heading: When should I enter a different amount?
+    p-3c9516: |-
+      If you don't own or operate a trade or business, you may want to enter $0 for the Qualified
+                Business Income (QBI) deduction.
+    p-51c6e8: |-
+      If your adjusted gross income will be greater than <fg-show path="/qbiPhaseInThreshold"/>
+                you may want to enter a different amount.
+    p-92b07b: |-
+      Calculate your QBI deduction using
+                <a target="_blank" href="https://www.irs.gov/forms-pubs/about-form-8995">Form 8995-A</a>.
+                You can also use the QBI deduction you claimed last year as an estimate. You'll find it
+                on line 13a of your <fg-show path="/previousTaxYear"/> Form 1040.
+    p-24ae98: <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction"
+      class="usa-link">Learn more about QBI. <span class="usa-sr-only">(opens in a
+      new tab)</span></a>
 /credits:
   title: Credits
   h2-948a2e: Credits

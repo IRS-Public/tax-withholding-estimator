@@ -1092,10 +1092,11 @@
   /personalVehicleLoanInterestAmount:
     question:
   h3-8e5d10:
-  p-36f6a7:
-  p-433a95:
+  p-2a6643:
+  p-c43979:
   /wantsDerivedQBIDeduction:
     question:
+    modalLink:
     options:
       'true':
         name:
@@ -1111,6 +1112,12 @@
   /qBIDeductionOverrideAmount:
     question:
     hint:
+  modal-qbi-when:
+    heading:
+    p-3c9516:
+    p-51c6e8:
+    p-92b07b:
+    p-24ae98:
 /credits:
   title:
   h2-948a2e:

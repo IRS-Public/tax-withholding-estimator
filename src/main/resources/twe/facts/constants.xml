@@ -9,6 +9,41 @@
         <Int>2026</Int>
       </Derived>
     </Fact>
+    <Fact path="/nextTaxYear">
+      <Description>Next tax year</Description>
+      <Derived>
+        <Add>
+          <Dependency path="/taxYear"/>
+          <Int>1</Int>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/lastTaxYear">
+      <Description>Previous tax year</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/taxYear"/>
+          </Minuend>
+          <Subtrahends>
+            <Int>1</Int>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/taxYearMinusTwo">
+      <Description>Tax year minus two years</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/taxYear"/>
+          </Minuend>
+          <Subtrahends>
+            <Int>2</Int>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
     <Fact path="/yearStartDate">
       <TaxYear>2026</TaxYear>
       <Derived>
