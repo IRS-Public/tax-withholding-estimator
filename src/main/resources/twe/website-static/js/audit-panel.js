@@ -162,11 +162,15 @@ class AuditedFact extends HTMLElement {
     this.factValueElem.innerText = `${factValueString} ${factCompleteString}`
 
     // Serialize and sanitize the fact definition for inclusion as HTML
+    // Replace brackets with HTML entities to prevent the XML from being rendered, and remove leading indentation after first line for readability
     // We do this because the definition will have live <a> links in it
     const xmlDefinition = factDictionaryXml.querySelector(`Fact[path="${this.abstractPath}"]`)
     const stringDefinition = XML_SERIALIZER.serializeToString(xmlDefinition)
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
+      .split('\n')
+      .map((line, index) => index === 0 ? line : line.replace(/^ {4}/, ''))
+      .join('\n')
 
     // Enhance the definition by adding links to dependencies
     const dependencyNodes = Array.from(xmlDefinition.querySelectorAll('Dependency'))
