@@ -36,11 +36,12 @@
       </Placeholder>
     </Fact>
     <Fact path="/deductionForTraditionalIRAContributionMax">
-      <Description>Max contribution for traditional IRAs (excluding payroll deductions) is $8000 per year. $7000 is the limit for those under 50, but we only know if someone is under 65 or not
-        We are agnostic to filing status so double to 16000 and do not take MAGI into account for simplified computation
+      <Description>Max contribution for traditional IRAs (excluding payroll deductions) is $8600 per year. $7500 is the limit for those under 50, but we only know if someone is under 65 or not
+        We are agnostic to filing status so double to 17200 and do not take MAGI into account for simplified computation
       </Description>
+      <TaxYear>2026</TaxYear>
       <Derived>
-        <Dollar>16000</Dollar>
+        <Dollar>17200</Dollar>
       </Derived>
     </Fact>
     <Fact path="/traditionalIRAContributionDeduction">

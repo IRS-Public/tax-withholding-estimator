@@ -49,14 +49,14 @@ class AdjustmentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
       (single, "5000", "5000"),
       (single, "8000", "8000"),
       (single, "16000", "16000"),
-      (single, "16700", "16000"),
-      (single, "20000", "16000"),
+      (single, "16700", "16700"),
+      (single, "20000", "17200"),
       (mfj, "5000", "5000"),
       (mfj, "8000", "8000"),
       (mfj, "16000", "16000"),
-      (mfj, "16600", "16000"),
-      (mfj, "16700", "16000"),
-      (mfj, "20000", "16000"),
+      (mfj, "16600", "16600"),
+      (mfj, "16700", "16700"),
+      (mfj, "20000", "17200"),
     )
 
     forAll(dataTable) {
