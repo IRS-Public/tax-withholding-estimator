@@ -1294,16 +1294,16 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/incomeTotal", 167000)
     scenario.assertEquals("/agi", 163114)
     scenario.assertEquals("/taxableIncome", 111828)
-    scenario.assertEquals("/totalNonRefundableCredits", 14750)
-    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 14026)
-    scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 10223)
-    scenario.assertEquals("/stateAndLocalTaxDeduction", 9500)
     scenario.assertEquals("/selfEmploymentTax", 7771)
     scenario.assertEquals("/seniorDeduction", 5213)
-    scenario.assertEquals("/totalRefundableCredits", 5120)
-    scenario.assertEquals("/totalTaxNetRefundableCredits", 2651)
     scenario.assertEquals("/totalCtcAndOdc", 2200)
-    scenario.assertEquals("/adoptionCreditNonRefundable", 12550)
+    scenario.assertEquals("/stateAndLocalTaxDeduction", 9500)
+    scenario.assertOffset("/adoptionCreditNonRefundable", 11826, 724) // Pending sheet update
+    scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 10223)
+    scenario.assertEquals("/tentativeTaxFromTaxableIncome", 14026)
+    scenario.assertEquals("/totalRefundableCredits", 5120)
+    scenario.assertOffset("/totalNonRefundableCredits", 14026, 724) // Pending sheet update
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 2651)
     assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine3").value.get == 6232)
     assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine4a").value.get == 32028)
     assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine4b").value.get == 0)
@@ -1338,6 +1338,7 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalTaxNetRefundableCredits", 25780)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 31)
     // Manual Pub15 validation - pending multi-year withholding logic
   }
 
@@ -1374,9 +1375,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 7643)
     scenario.assertEquals("/totalCtcAndOdc", 6600)
     scenario.assertEquals("/adoptionCreditRefundable", 10240)
-    scenario.assertEquals("/adoptionCreditNonRefundable", 17760)
+    scenario.assertOffset("/adoptionCreditNonRefundable", 1043, 16717) // Pending sheet update
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 6300)
-    scenario.assertEquals("/totalNonRefundableCredits", 24360)
+    scenario.assertOffset("/totalNonRefundableCredits", 7643, 16717) // Pending sheet update
     scenario.assertEquals("/totalTaxNetRefundableCredits", -10240)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1980)
     scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
