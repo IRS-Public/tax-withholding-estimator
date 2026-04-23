@@ -103,15 +103,27 @@
       </fg-set>
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">Casualty losses</h4>
       <div condition="/wantsItemizedDeduction" operator="isTrue">
-        <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> experience any casualty, disaster, or theft losses due to a state or federally declared disaster, you can deduct those losses.</p>
-        <p>You can also deduct losses due to theft related to a transaction entered into for profit.</p>
-        <p>The losses must not be covered by insurance.</p>
+        <p>
+          If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span>
+          had casualty, disaster, or theft losses from a state or federally declared disaster, you
+          may be able to deduct them.
+        </p>
+        <p>
+          You can also deduct losses from thefts related to transactions made for profit, including
+          some financial scams.
+        </p>
+        <p>
+          Some casualty losses require you to subtract $100 per event and
+          <fg-show path="/casualtyLossesAgiLimit"/>
+          from your deduction. That's 10% of your adjusted gross income (AGI). Check which rules
+          apply before entering an amount.
+        </p>
         <p>
           <a target="_blank" href="https://www.irs.gov/taxtopics/tc515" class="usa-link">Learn more about casualty losses.</a>
         </p>
       </div>
       <fg-set path="/casualtyLossesTotal" if-true="/wantsItemizedDeduction">
-        <question>Estimated casualty losses in <fg-show path="/taxYear"/></question>
+        <question>Casualty losses you expect to deduct in <fg-show path="/taxYear"/></question>
         <input type="dollar"/>
       </fg-set>
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">Other itemized deductions</h4>

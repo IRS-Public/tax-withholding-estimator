@@ -276,7 +276,6 @@
           <Dependency path="/tentativeNonRefundableAdoptionCreditAmountWithCarryforward"/>
           <Dependency path="/adoptionCreditLimitWorksheetLine5"/>
         </LesserOf>
-
       </Derived>
     </Fact>
   </Facts>

@@ -198,10 +198,31 @@
         </GreaterOf>
       </Derived>
     </Fact>
+    <Fact path="/casualtyLossesAgiLimit">
+      <Description>
+        10% of the taxpayer's AGI. This is not used to calculate the Casualty Losses deduction,
+        only to better inform the taxpayer how the deduction is calculated.
+      </Description>
+      <Derived>
+        <Divide>
+          <Dividend>
+            <Dependency path="/agi"/>
+          </Dividend>
+          <Divisors>
+            <Int>10</Int>
+          </Divisors>
+        </Divide>
+      </Derived>
+    </Fact>
     <Fact path="/casualtyLossesTotal">
       <Name>Total of all casualty loss items </Name>
-      <Description>Casualty and theft losses relating to your home, household items, and vehicles if the loss is attributable to a federally-declared disaster or a State declared disaster
-        The following simplifying assumption was made for user convenience: Do not apply the dollar and AGI limit, i.e. only itemized if the casualty loss is in excess of $100 from each casualty, to the extent that the total exceeds 10% of AGI.
+      <Description>
+        Casualty and theft losses relating to your home, household items, and vehicles if the loss
+        is attributable to a federally-declared disaster or a State declared disaster
+
+        The following simplifying assumption was made for user convenience: Do not apply the dollar
+        and AGI limit, i.e. only itemized if the casualty loss is in excess of $100 from each
+        casualty, to the extent that the total exceeds 10% of AGI.
       </Description>
       <Writable>
         <Dollar/>
