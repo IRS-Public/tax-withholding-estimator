@@ -197,16 +197,6 @@
         <data type="anyURI"/>
       </attribute>
       <optional>
-        <attribute name="item-name">
-          <text/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="determiner">
-          <text/>
-        </attribute>
-      </optional>
-      <optional>
         <attribute name="disallow-empty">
           <choice>
             <value>true</value>

@@ -22,7 +22,7 @@
       <p>
         <modal-link for="modal-what-counts-job">What counts as a job?</modal-link>
       </p>
-      <fg-collection path="/jobs" item-name="job" determiner="another">
+      <fg-collection path="/jobs">
         <fg-set path="/jobs/*/filerAssignment" if-true="/isFilingStatusMFJ">
           <question>Who is this income for?</question>
           <input type="enum" options-path="/jobs/*/filerAssignmentOption">
@@ -355,7 +355,7 @@
       <p>
         <modal-link for="modal-what-counts-pension">What counts as a pension or annuity?</modal-link>
       </p>
-      <fg-collection path="/pensions" item-name="pension or annuity income" determiner="another">
+      <fg-collection path="/pensions">
         <fg-set path="/pensions/*/filerAssignment" if-true="/isFilingStatusMFJ">
           <question>Who is this pension or annuity paid to?</question>
           <input type="enum" options-path="/filerAssignmentOption">
@@ -514,7 +514,7 @@
       <p>
         <modal-link for="modal-what-counts-self-employment">What counts as self-employment income?</modal-link>
       </p>
-      <fg-collection path="/selfEmploymentSources" item-name="self-employment income" determiner="more">
+      <fg-collection path="/selfEmploymentSources">
         <fg-set path="/selfEmploymentSources/*/filerAssignment" if-true="/isFilingStatusMFJ">
           <question>Who is this income for?</question>
           <input type="enum" options-path="/selfEmploymentSources/*/filerAssignmentOption">
@@ -538,7 +538,7 @@
       <p>
         <modal-link for="modal-what-counts-social-security">What counts as Social Security income?</modal-link>
       </p>
-      <fg-collection path="/socialSecuritySources" item-name="Social Security income" determiner="more">
+      <fg-collection path="/socialSecuritySources">
         <fg-set path="/socialSecuritySources/*/filerAssignment" if-true="/isFilingStatusMFJ">
           <question>Who is this Social Security income paid to?</question>
           <input type="enum" options-path="/filerAssignmentOption">

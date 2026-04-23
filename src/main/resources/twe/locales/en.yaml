@@ -2,6 +2,19 @@ components:
   fg-set:
     required: "(Required)"
   fg-collection:
+    paths:
+      /jobs:
+        name: job
+        determiner: another
+      /pensions:
+        name: pension or annuity income
+        determiner: another
+      /selfEmploymentSources:
+        name: self-employment income
+        determiner: more
+      /socialSecuritySources:
+        name: Social Security income
+        determiner: more
     buttons:
       remove: "Remove {0}"
       add: "Add {0}"
@@ -13,9 +26,6 @@ components:
       footer:
         confirm: "Yes, remove this {0}"
         cancel: "No, keep this {0}"
-    determiners:
-      another: another
-      more: more
   modal:
     close: Close this window
     ok: Okay

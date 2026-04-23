@@ -2,6 +2,19 @@ components:
   fg-set:
     required: (Requerido)
   fg-collection:
+    paths:
+      /jobs:
+        name:
+        determiner:
+      /pensions:
+        name:
+        determiner:
+      /selfEmploymentSources:
+        name:
+        determiner:
+      /socialSecuritySources:
+        name:
+        determiner:
     buttons:
       remove: "Placeholder {0}"
       add: "Placeholder {0}"
@@ -13,9 +26,6 @@ components:
       footer:
         confirm: "Placeholder {0}"
         cancel: "Placeholder {0}"
-    determiners:
-      another:
-      more:
   modal:
     close:
     ok:

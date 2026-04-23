@@ -149,7 +149,6 @@
       new tab)</span></a>
   p-0ec9f9: <modal-link for="modal-what-counts-job">What counts as a job?</modal-link>
   collection/jobs:
-    itemName: job
     /jobs/*/filerAssignment:
       question: Who is this income for?
       options:
@@ -434,7 +433,6 @@
   p-6b097c: <modal-link for="modal-what-counts-pension">What counts as a pension or
     annuity?</modal-link>
   collection/pensions:
-    itemName: pension or annuity income
     /pensions/*/filerAssignment:
       question: Who is this pension or annuity paid to?
       options:
@@ -574,7 +572,6 @@
   p-d93391: <modal-link for="modal-what-counts-self-employment">What counts as self-employment
     income?</modal-link>
   collection/selfEmploymentSources:
-    itemName: self-employment income
     /selfEmploymentSources/*/filerAssignment:
       question: Who is this income for?
       options:
@@ -600,7 +597,6 @@
   p-0c991a: <modal-link for="modal-what-counts-social-security">What counts as Social
     Security income?</modal-link>
   collection/socialSecuritySources:
-    itemName: Social Security income
     /socialSecuritySources/*/filerAssignment:
       question: Who is this Social Security income paid to?
       options:

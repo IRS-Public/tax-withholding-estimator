@@ -110,7 +110,6 @@
     p-242cef:
   p-0ec9f9:
   collection/jobs:
-    itemName:
     /jobs/*/filerAssignment:
       question:
       options:
@@ -312,7 +311,6 @@
   h3-4ef0c3:
   p-6b097c:
   collection/pensions:
-    itemName:
     /pensions/*/filerAssignment:
       question:
       options:
@@ -422,7 +420,6 @@
   p-4586da:
   p-d93391:
   collection/selfEmploymentSources:
-    itemName:
     /selfEmploymentSources/*/filerAssignment:
       question:
       options:
@@ -440,7 +437,6 @@
   h3-941f47:
   p-0c991a:
   collection/socialSecuritySources:
-    itemName:
     /socialSecuritySources/*/filerAssignment:
       question:
       options:

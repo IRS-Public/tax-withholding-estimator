@@ -1,8 +1,10 @@
 <fg-collection
-        th:attr="path=${path}, condition=${condition}, operator=${operator}, itemName=${itemName}, disallowEmpty=${disallowEmpty}, determiner=${determiner}"
+        th:attr="path=${path}, condition=${condition}, operator=${operator}, disallowEmpty=${disallowEmpty}",
         th:with="
-            removeModalId='fg-collection-remove-'+${itemName.replaceAll(' ', '-').strip()}+'-modal',
-            itemNameTitleCase=${itemName.substring(0,1).toUpperCase() + itemName.substring(1)}
+            collectionName=#{components.fg-collection.paths.__${path}__.name},
+            determiner=#{components.fg-collection.paths.__${path}__.determiner},
+            removeModalId='fg-collection-remove-'+${collectionName.replaceAll(' ', '-').strip()}+'-modal',
+            collectionNameHeading=${collectionName.substring(0,1).toUpperCase() + collectionName.substring(1)}
         "
 >
     <div class="fg-collection__item-container margin-bottom-3">
@@ -10,7 +12,7 @@
             <details class="fg-collection__details">
                 <summary class="fg-collection__item-button">
                     <h4>
-                        <span th:text="${itemNameTitleCase}"></span>
+                        <span th:text="${collectionNameHeading}"></span>
                         <span class="collection-item-number"></span>
                     </h4>
                 </summary>
@@ -23,7 +25,7 @@
                                 <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#delete"></use>
                             </svg>
                             <span>
-                                <th:block th:text="#{components.fg-collection.buttons.remove(${itemName})}"></th:block>
+                                <th:block th:text="#{components.fg-collection.buttons.remove(${collectionName})}"></th:block>
                                 <span class="collection-item-number"></span>
                             </span>
                         </modal-link>
@@ -37,19 +39,13 @@
             class="usa-icon usa-icon--size-3 margin-left-neg-1 margin-y-neg-05">
             <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#add"></use>
         </svg>
-        <th:block th:if="${determiner == ''}" th:text="#{components.fg-collection.buttons.add(${itemName})}"></th:block>
-        <th:block
-            th:if="${determiner != ''}"
-            th:with="determinerTranslation=#{components.fg-collection.determiners.__${determiner}__}"
-        >
-            <span class="fg-collection__without-determiner" th:text="#{components.fg-collection.buttons.add(${itemName})}"></span>
-            <span class="fg-collection__with-determiner" th:text="#{components.fg-collection.buttons.add-with-determiner(${itemName}, ${determinerTranslation})}"></span>
-        </th:block>
+        <span class="fg-collection__without-determiner" th:text="#{components.fg-collection.buttons.add(${collectionName})}"></span>
+        <span class="fg-collection__with-determiner" th:text="#{components.fg-collection.buttons.add-with-determiner(${collectionName}, ${determiner})}"></span>
     </button>
     <div th:replace="~{nodes/modal-dialog :: modal(
             modalId=${removeModalId},
-            modalHeading=#{components.fg-collection.remove-item-modal.heading.remove(${itemName})},
-            modalContent=#{components.fg-collection.remove-item-modal.body(${itemName})},
+            modalHeading=#{components.fg-collection.remove-item-modal.heading.remove(${collectionName})},
+            modalContent=#{components.fg-collection.remove-item-modal.body(${collectionName})},
             footerContent=~{:: removeItemModalFooter}
     )}">
         <div class="usa-modal__button-group" th:fragment="removeItemModalFooter">
@@ -57,14 +53,14 @@
                     type="button"
                     class="usa-button fg-collection__remove-item-modal__button-confirm"
                     data-close-modal
-                    th:text="#{components.fg-collection.remove-item-modal.footer.confirm(${itemName})}">
+                    th:text="#{components.fg-collection.remove-item-modal.footer.confirm(${collectionName})}">
                 Yes, remove this item
             </button>
             <button
                     type="button"
                     class="usa-button usa-button--outline"
                     data-close-modal
-                    th:text="#{components.fg-collection.remove-item-modal.footer.cancel(${itemName})}">
+                    th:text="#{components.fg-collection.remove-item-modal.footer.cancel(${collectionName})}">
                 No, keep this item
             </button>
         </div>
