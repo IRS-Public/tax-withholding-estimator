@@ -34,3 +34,7 @@ h2 + fg-set {
   margin-top: var(--flow-spacing--offset);
   padding-top: var(--flow-spacing);
 }
+
+fg-set span[condition]:not(.hidden) {
+  display: inline-block;
+}

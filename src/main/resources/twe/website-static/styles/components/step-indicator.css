@@ -22,3 +22,8 @@
   text-decoration: underline;
 }
 
+/* This corrects and issue where the screen reader text for was being read immediately after the step label as a single word. */
+.usa-step-indicator__segment-label span:first-child::after {
+  content: " ";
+  white-space: pre;
+}

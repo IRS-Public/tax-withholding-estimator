@@ -49,4 +49,10 @@
       }
     }
   }
+
+  /* This overrides our fix for a JAWS issue where it reads
+   some of the conditional content as a single word. */
+  fg-set span[condition]:not(.hidden) {
+    display: inline;
+  }
 }
