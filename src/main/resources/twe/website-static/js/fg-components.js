@@ -161,7 +161,7 @@ class FgSet extends HTMLElement {
     const elementWithDescription = this.querySelector('[aria-describedby]')
     const ariaDescription = elementWithDescription?.getAttribute('aria-describedby')
 
-    if (elementWithDescription) {
+    if (elementWithDescription && ariaDescription) {
       const updatedIds = ariaDescription
         .split(' ')
         .filter(id => id.trim() && id !== errorId)
@@ -179,7 +179,6 @@ class FgSet extends HTMLElement {
     this.querySelector('.usa-label--error')?.classList.remove('usa-label--error')
     this.querySelectorAll('.usa-input-group, .usa-select, .usa-input').forEach(item => {
       item.classList.remove('usa-input--error')
-      item.removeAttribute('aria-describedby')
     })
     this.querySelectorAll('.usa-input[aria-invalid="true"], .usa-select[aria-invalid="true"]').forEach(item => item?.setAttribute('aria-invalid', 'false'))
   }
@@ -206,17 +205,19 @@ class FgSet extends HTMLElement {
       detailsContent.open = true
     }
 
-    // Set aria-description
-    const existingAriaDescribedby = elementWithDescription.getAttribute('aria-describedby')
-    elementWithDescription.setAttribute('aria-describedby', `${existingAriaDescribedby || ''} ${errorId}`.trim())
-
     // Set the modifier classes for errors
     this.querySelector('.usa-form-group')?.classList.add('usa-form-group--error')
     this.querySelector('.usa-legend, .usa-label')?.classList.add('usa-label--error')
     this.querySelectorAll('.usa-input-group, .usa-select, .usa-input').forEach(item => {
       item.classList.add('usa-input--error')
-      item.setAttribute('aria-describedby', `${errorId}`)
     })
+
+    // Set the aria description, use existing description if it)
+    const existingAriaDescribedby = elementWithDescription.getAttribute('aria-describedby') || ''
+    const updatedAriaDescribedBy = `${existingAriaDescribedby} ${errorId}`
+    elementWithDescription.setAttribute('aria-describedby', updatedAriaDescribedBy)
+
+    // Set aria-invalid to true for screen readers, but only on form controls, not fieldsets
     this.querySelectorAll('.usa-input[aria-invalid="false"], .usa-select[aria-invalid="false"]').forEach(item => {
       item.setAttribute('aria-invalid', 'true')
     })

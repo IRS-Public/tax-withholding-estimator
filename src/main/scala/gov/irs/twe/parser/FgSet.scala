@@ -14,6 +14,7 @@ case class FgSet(
     condition: Option[Condition],
     input: Input,
     optional: Boolean,
+    hasHint: Boolean,
     translationContext: TranslationContext,
 ) extends FlowNode {
   override def html(templateEngine: TweTemplateEngine): String = {
@@ -29,6 +30,7 @@ case class FgSet(
     context.setVariable("usesFieldset", usesFieldset)
     val contentKey = translationContext.fullKey()
     context.setVariable("contentKey", contentKey)
+    context.setVariable("hintId", if (hasHint) s"$path-hint" else null)
 
     input match {
       case Input.select(options, optionsPath, _) =>
@@ -145,6 +147,6 @@ object FgSet extends FlowNodeParser {
       })
     }
 
-    FgSet(path, condition, input, isOptional, translationContext)
+    FgSet(path, condition, input, isOptional, hint.nonEmpty, translationContext)
   }
 }

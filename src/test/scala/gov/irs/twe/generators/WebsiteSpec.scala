@@ -3,12 +3,14 @@ package gov.irs.twe.generators
 import gov.irs.factgraph.FactDictionary
 import gov.irs.twe.build.Flags
 import gov.irs.twe.parser.Flow
+import org.jsoup.nodes.Document
 import org.jsoup.Jsoup
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers.*
 import org.scalatest.BeforeAndAfterAll
 import os.Path
 import scala.jdk.CollectionConverters.ListHasAsScala
+import scala.xml.Elem
 
 class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
 
@@ -27,6 +29,17 @@ class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
 
         <Writable>
           <Boolean/>
+        </Writable>
+      </Fact>
+    </Facts>
+  </FactDictionaryModule>
+
+  private val dollarDictionaryConfig = <FactDictionaryModule>
+    <Facts>
+      <Fact path="/income/bonus">
+        <Name>Bonus</Name>
+        <Writable>
+          <Dollar/>
         </Writable>
       </Fact>
     </Facts>
@@ -142,6 +155,111 @@ class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
       it("includes /all-screens as the last page in the generated site") {
         site.pages.map(_.route) should contain theSameElementsInOrderAs Seq("/", "/all-screens")
       }
+    }
+  }
+
+  describe("hint aria-describedby rendering") {
+    def renderDocument(formConfig: Elem, dictionaryConfig: Elem): Document = {
+      val factDictionary = FactDictionary.fromXml(dictionaryConfig)
+      val renderedFlow = Flow.fromXmlConfig(formConfig, factDictionary)
+      val site = Website.generate(renderedFlow, dictionaryConfig, Map())
+      Jsoup.parse(site.pages.head.content)
+    }
+
+    def assertAriaDescribedBy(
+        formConfig: Elem,
+        dictionaryConfig: Elem,
+        selector: String,
+        expectedValue: Option[String],
+    ): Unit = {
+      val element = renderDocument(formConfig, dictionaryConfig).select(selector)
+
+      expectedValue match {
+        case Some(value) => element.attr("aria-describedby") shouldBe value
+        case None        => element.hasAttr("aria-describedby") shouldBe false
+      }
+    }
+
+    it("renders on dollar input with hint") {
+      val formConfigWithDollarHint = <FlowConfig>
+        <page route="/" title="Dollar Hint Test Form">
+          <section>
+            <fg-set path="/income/bonus">
+              <question>What is your bonus?</question>
+              <hint>Enter the annual amount.</hint>
+              <input type="dollar"/>
+            </fg-set>
+          </section>
+        </page>
+      </FlowConfig>
+
+      assertAriaDescribedBy(
+        formConfigWithDollarHint,
+        dollarDictionaryConfig,
+        "input[name=/income/bonus]",
+        Some("/income/bonus-hint"),
+      )
+    }
+
+    it("does not render on dollar input without hint") {
+      val formConfigWithoutHint = <FlowConfig>
+        <page route="/" title="Dollar No Hint Test Form">
+          <section>
+            <fg-set path="/income/bonus">
+              <question>What is your bonus?</question>
+              <input type="dollar"/>
+            </fg-set>
+          </section>
+        </page>
+      </FlowConfig>
+
+      assertAriaDescribedBy(
+        formConfigWithoutHint,
+        dollarDictionaryConfig,
+        "input[name=/income/bonus]",
+        None,
+      )
+    }
+
+    it("renders on boolean fieldset with hint") {
+      val formConfigWithBooleanHint = <FlowConfig>
+        <page route="/" title="Boolean Hint Test Form">
+          <section>
+            <fg-set path="/isUsCitizenFullYear">
+              <question>Were you a U.S. Citizen for all of the tax year?</question>
+              <hint>If you were not a U.S. Citizen for the entire year, select No.</hint>
+              <input type="boolean"/>
+            </fg-set>
+          </section>
+        </page>
+      </FlowConfig>
+
+      assertAriaDescribedBy(
+        formConfigWithBooleanHint,
+        basicDictionaryConfig,
+        ".usa-fieldset",
+        Some("/isUsCitizenFullYear-hint"),
+      )
+    }
+
+    it("does not render on boolean fieldset without hint") {
+      val formConfigWithoutBooleanHint = <FlowConfig>
+        <page route="/" title="Boolean No Hint Test Form">
+          <section>
+            <fg-set path="/isUsCitizenFullYear">
+              <question>Were you a U.S. Citizen for all of the tax year?</question>
+              <input type="boolean"/>
+            </fg-set>
+          </section>
+        </page>
+      </FlowConfig>
+
+      assertAriaDescribedBy(
+        formConfigWithoutBooleanHint,
+        basicDictionaryConfig,
+        ".usa-fieldset",
+        None,
+      )
     }
   }
 }
