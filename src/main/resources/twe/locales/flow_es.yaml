@@ -10,7 +10,7 @@
     question: ¿Piensas reclamar dependientes en tu declaración del <fg-show path="/taxYear"/>?
     modalLink: <modal-link for="modal-claiming-dependents">¿A quién puedo reclamar como dependiente?</modal-link>
   /primaryFilerIsClaimedOnAnotherReturn:
-    question: ¿Otra persona podrá reclamarte como dependiente en su declaración?
+    question: ¿Otra persona podrá reclamarte como dependiente en su declaración del <fg-show path="/taxYear"/>?
     modalLink: <modal-link for="modal-primary-claimed-as-dependent">¿Cómo puedo saber si soy dependiente de alguien?</modal-link>
   /filingStatus:
     question: ¿Cuál estado civil usarás para presentar tu declaración del impuesto federal en el <fg-show path="/taxYear"/>?
@@ -27,7 +27,7 @@
       qualifiedSurvivingSpouse:
         name: Esposo(a) sobreviviente calificado
   /isMFSLivedTogether:
-    question: <¿Tú y tu esposo(a) vivirán juntos todo el <fg-show path="/taxYear"/>?>
+    question: ¿Tú y tu esposo(a) vivirán juntos todo el <fg-show path="/taxYear"/>?
     options:
       'true':
         name: Sí, viviremos juntos todo el año
@@ -41,7 +41,7 @@
   /secondaryFilerIsBlind:
     question: ¿Tu esposo(a) es ciego?
   /secondaryFilerIsClaimedOnAnotherReturn:
-    question: ¿Otra persona podrá reclamar a tu esposo(a) como dependiente en su declaración?
+    question: ¿Otra persona podrá reclamar a tu esposo(a) como dependiente en su declaración del <fg-show path="/taxYear"/>?
     modalLink: <modal-link for="modal-secondary-claimed-as-dependent">¿Cómo saber si mi esposo(a) puede ser un dependiente?</modal-link>
   modal-claiming-dependents:
     heading: ¿A quién puedo reclamar como dependiente?
@@ -60,34 +60,34 @@
       li-b17276: Tu relación a esa persona
       li-c82d5e: Cuánto te apoyaron económicamente y de otras formas
       li-5a5073: Si viviste con ellos y por cuánto tiempo
-    p-752de3: Revisa la tabla 5 de la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501">Publicación 501 del IRS</a> para determinar si alguien puede reclamarte como dependiente.
+    p-752de3: Revisa la tabla 5 de la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">Publicación 501 del IRS</a> para determinar si alguien puede reclamarte como dependiente.
     p-5a0201: Ten en cuenta que no eres dependiente de otra persona si pagaste por más de la mitad de tus costos de vida (o si lo hizo tu esposo(a)).
   modal-filing-status:
     heading: ¿Cuál estado civil debo usar?
-    p-c0b92c: Si no hubo un cambio en tu estado civil o situación familiar este año, podrías usar el estado civil de tu declaración del <fg-show path="/nextTaxYear"/>.
+    p-c0b92c: Si no hubo un cambio en tu estado civil o situación familiar este año, podrías usar el estado civil de tu declaración del <fg-show path="/lastTaxYear"/>.
     p-391f95: Si hubo un cambio en tu estado civil o situación familiar en el último año, podrías necesitar usar un estado civil diferente para una estimado más preciso.
     p-496916: Cada estado civil tiene requisitos diferentes.
-    p-49f30f: <b>Soltero(a):</b>
+    p-49f30f: <strong>Soltero(a):</strong>
     ul-0:
       li-c717a5: No puedes estar casado(a)
-    p-5f63cd: "Casado que presenta una declaración conjunta:"
+    p-5f63cd: <strong>Casado que presenta una declaración conjunta:</strong>
     ul-1:
       li-6aab7e: Estás casado(a) o tu esposo(a) falleció durante el año
-    p-80c02f: "Casado que presenta una declaración por separado:"
+    p-80c02f: <strong>Casado que presenta una declaración por separado:</strong>
     ul-2:
       li-595e35: Estás casado(a)
       li-1e72dd: No presentarás una declaración con tu esposo(a) (la mayoría de las personas ahorra dinero presentando una declaración conjunta)
-    p-d69332: <b>Cabeza de familia:</b>
+    p-d69332: <strong>Cabeza de familia:</strong>
     ul-3:
       li-dfe41a: No puedes estar casado (o no se te considera casado para propósitos de impuestos)
       li-38ff2f: Pagaste más de la mitad del costo de mantener un hogar para un miembro de tu familia o miembro de tu hogar durante un período específico de tiempo y esta persona tiene que cumplir con ciertos requisitos
-    p-be481b: <b>Esposo(a) sobreviviente calificado:</b>
+    p-be481b: <strong>Esposo(a) sobreviviente calificado:</strong>
     ul-4:
       li-2bf38a: Tu esposo(a) falleció en el <fg-show path="/lastTaxYear"/> ó <fg-show path="/taxYearMinusTwo"/>
-      li-4ef74f: No te volviste a casar antes del <fg-show path="/lastTaxYear"/>
+      li-4ef74f: No te volviste a casar antes del <fg-show path="/taxYear"/>
       li-939762: Tienes un hijo(a) dependiente que vive contigo todo el año
       li-bad5a3: Pagas más de la mitad del costo de mantener tu hogar
-    p-5b3ae2: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/filing/filing-status">Conoce más sobre cada estado civil</a>
+    p-b4bd3e: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/filing/filing-status">Conoce más sobre cada estado civil</a>
   modal-secondary-claimed-as-dependent:
     heading: ¿Cómo saber si mi esposo(a) puede ser un dependiente?
     p-94ceb2: No puedes reclamar a tu esposo(a) como dependiente, aun si dependió de ti económicamente.
@@ -97,7 +97,7 @@
       li-a00f03: La relación de tu esposo(a) con esa persona
       li-06b095: Cuánto apoyaron a tu esposo(a), tanto económicamente y de otras formas
       li-7b9e81: Si tu esposo(a) vivió con ellos y por cuánto tiempo
-    p-8725bb: Revisa la tabla 5 de la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501">Publicación 501 del IRS</a> para determinar si alguien puede reclamarle como dependiente.
+    p-8725bb: Revisa la tabla 5 de la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">Publicación 501 del IRS</a> para determinar si alguien puede reclamarle como dependiente.
     p-53afc1: Ten en cuenta que tu esposo(a) no califica como dependiente si pagó más de la mitad de sus propios costos de vida, o si los pagaste tú.
 /income:
   title:

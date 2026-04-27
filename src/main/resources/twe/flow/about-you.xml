@@ -133,7 +133,7 @@
           <li>You pay more than half the cost of keeping up your home</li>
         </ul>
         <p>
-          <a target="_blank" href="https://www.irs.gov/filing/filing-status">Learn more about filing statuses<span class="usa-sr-only"> (opens in a new tab)</span>.</a>
+          <a target="_blank" class="usa-link" href="https://www.irs.gov/filing/filing-status">Learn more about filing statuses<span class="usa-sr-only"> (opens in a new tab)</span>.</a>
         </p>
       </modal-content>
     </modal-dialog>

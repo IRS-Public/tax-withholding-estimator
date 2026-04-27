@@ -110,7 +110,7 @@
       li-4ef74f: You didn't remarry before <fg-show path="/taxYear"/>
       li-939762: You have a dependent child who lives with you all year
       li-bad5a3: You pay more than half the cost of keeping up your home
-    p-5b3ae2: <a target="_blank" href="https://www.irs.gov/filing/filing-status">Learn
+    p-b4bd3e: <a target="_blank" class="usa-link" href="https://www.irs.gov/filing/filing-status">Learn
       more about filing statuses<span class="usa-sr-only"> (opens in a new tab)</span>.</a>
   modal-secondary-claimed-as-dependent:
     heading: How do I know if my spouse could be a dependent?
