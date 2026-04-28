@@ -25,7 +25,7 @@
       <main id="main-content">
         <h1 th:text="#{layout.title}"></h1>
 
-        <button class="hidden" id="show-audit-panel" type="button" title="Open audit panel">
+        <button class="hidden" id="show-audit-panel" type="button" aria-label="Open audit panel">
           <span class="usa-tooltip" data-position="left" title="Open audit panel">
           <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
             <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#settings"></use>
@@ -60,7 +60,8 @@
         <div id="page-content-wrapper" class="hidden">
           <div th:utext="${pageHtml}"></div>
           <div class="form-actions" th:if="${nextPageHref}">
-            <a class="usa-button" th:href="${nextPageHref}" onclick="return handleSectionContinue(event)">
+            <!-- [html-validate-disable-next prefer-native-element -- Do not remove the .usa-button class - this class enables Space key functionality from USWDS needed for `role="button"`] -->
+            <a role="button" class="usa-button" th:href="${nextPageHref}" onclick="return handleSectionContinue(event)">
               [[#{buttons.next}]]
               <svg aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
                 <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
