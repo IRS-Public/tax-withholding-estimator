@@ -88,6 +88,7 @@ object Website {
         context.setVariable("stepIndex", (index - excludedPageLength) % flow.pages.length)
         context.setVariable("stepTotal", navPages.size)
         context.setVariable("pages", navPages.asJava) // th:each requires Java Iterables
+        context.setVariable("currentPageRoute", page.route)
         context.setVariable("flags", flags.asJava)
         context.setVariable("languageCode", languageCode)
 

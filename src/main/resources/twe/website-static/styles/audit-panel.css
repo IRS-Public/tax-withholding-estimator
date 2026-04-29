@@ -36,7 +36,7 @@
 #show-audit-panel {
   position: fixed;
   z-index: 1000;
-  top: 6rem;
+  top: 7rem;
   border: 1px solid var(--base-lighter);
   right: -1px;
   background: white;

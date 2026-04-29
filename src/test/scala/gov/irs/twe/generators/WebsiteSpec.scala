@@ -156,6 +156,17 @@ class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
         site.pages.map(_.route) should contain theSameElementsInOrderAs Seq("/", "/all-screens")
       }
     }
+
+    describe("with languageSwitcher flag enabled") {
+      val flags = Map(Flags.languageSwitcher -> true)
+      val site = Website.generate(flow, basicDictionaryConfig, flags)
+
+      it("includes the language switcher in the header") {
+        val document = Jsoup.parse(site.pages.head.content)
+        val languageSwitcher = document.select(".language-switcher")
+        languageSwitcher should not be empty
+      }
+    }
   }
 
   describe("hint aria-describedby rendering") {

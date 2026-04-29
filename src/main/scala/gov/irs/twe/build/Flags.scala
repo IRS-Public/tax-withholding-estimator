@@ -5,4 +5,5 @@ object Flags {
   val allScreens = "allScreens"
   val auditMode = "auditMode"
   val spanishTranslations = "spanishTranslations"
+  val languageSwitcher = "languageSwitcher"
 }

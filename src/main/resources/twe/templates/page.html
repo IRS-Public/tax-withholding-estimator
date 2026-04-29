@@ -17,6 +17,9 @@
             <a href="https://www.irs.gov" th:aria-label="#{layout.irs.domain}">
               <img src="/app/tax-withholding-estimator/resources/img/irs-logo.svg" alt="" />
             </a>
+            <div th:if="${flags.languageSwitcher}" class="language-switcher">
+              <a th:if="${languageCode == 'en'}" th:href="'/' + 'app/tax-withholding-estimator/es' + ${currentPageRoute}" class="usa-button usa-button--inverse">Español</a>
+              <a th:if="${languageCode == 'es'}" th:href="'/' + 'app/tax-withholding-estimator' + ${currentPageRoute}" class="usa-button usa-button--inverse">English</a>
           </div>
         </div>
       </header>

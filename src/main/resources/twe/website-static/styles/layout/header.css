@@ -1,7 +1,14 @@
 .logo-banner {
-  width: 100%;
   background-color: var(--primary);
   padding: var(--units-2) 0;
+  width: 100%;
+}
+
+.logo-banner .grid-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .logo-banner a {

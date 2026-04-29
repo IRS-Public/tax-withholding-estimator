@@ -1,0 +1,8 @@
+.usa-button.usa-button--inverse {
+  background-color: white;
+  color: var(--primary);
+
+  &:hover {
+    background-color: var(--primary-lightest);
+  }
+}
