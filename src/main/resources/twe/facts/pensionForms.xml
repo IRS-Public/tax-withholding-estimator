@@ -97,7 +97,7 @@
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../w4pLine4a"/>
+            <Dependency path="../w4pLine4aWithSplitWithholdingStrategy"/>
           </Left>
           <Right>
             <Dollar>0</Dollar>
@@ -110,7 +110,7 @@
       <Derived>
         <Add>
           <Dependency path="../pub15TWorksheet1bAnnualIncome"/>
-          <Dependency path="../w4pLine4a"/>
+          <Dependency path="../w4pLine4aWithSplitWithholdingStrategy"/>
         </Add>
       </Derived>
     </Fact>
@@ -164,7 +164,7 @@
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../w4pLine4b"/>
+            <Dependency path="../w4pLine4bWithSplitWithholdingStrategy"/>
           </Left>
           <Right>
             <Dollar>0</Dollar>
@@ -202,7 +202,7 @@
       <Derived>
         <Add>
           <Dependency path="../pub15TWorksheet1bLine1g"/>
-          <Dependency path="../w4pLine4b"/>
+          <Dependency path="../w4pLine4bWithSplitWithholdingStrategy"/>
         </Add>
       </Derived>
     </Fact>
@@ -1027,7 +1027,7 @@
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../w4pLine3"/>
+            <Dependency path="../w4pLine3WithSplitWithholdingStrategy"/>
           </Left>
           <Right>
             <Dollar>0</Dollar>
@@ -1050,7 +1050,7 @@
             </Minuend>
             <Subtrahends>
               <!-- Pub. 15-T, Worksheet 1B, Line 3a -->
-              <Dependency path="../w4pLine3"/>
+              <Dependency path="../w4pLine3WithSplitWithholdingStrategy"/>
             </Subtrahends>
           </Subtract>
         </GreaterOf>
@@ -1132,7 +1132,7 @@
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../w4pLine4c"/>
+            <Dependency path="../w4pLine4cWithSplitWithholdingStrategy"/>
           </Left>
           <Right>
             <Dollar>0</Dollar>
@@ -1152,7 +1152,7 @@
         <Add>
           <Dependency path="../pub15TWorksheet1bLine4a"/>
           <!-- Pub. 15-T, Worksheet 1B, Line 4b -->
-          <Dependency path="../w4pLine4c"/>
+          <Dependency path="../w4pLine4cWithSplitWithholdingStrategy"/>
         </Add>
       </Derived>
     </Fact>

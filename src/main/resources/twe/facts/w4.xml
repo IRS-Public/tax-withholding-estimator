@@ -85,7 +85,7 @@
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../w4Line4a"/>
+            <Dependency path="../w4Line4aWithSplitWithholdingStrategy"/>
           </Left>
           <Right>
             <Dollar>0</Dollar>
@@ -142,7 +142,7 @@
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../w4Line4b"/>
+            <Dependency path="../w4Line4bWithSplitWithholdingStrategy"/>
           </Left>
           <Right>
             <Dollar>0</Dollar>
@@ -201,7 +201,7 @@
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../w4Line3"/>
+            <Dependency path="../w4Line3WithSplitWithholdingStrategy"/>
           </Left>
           <Right>
             <Dollar>0</Dollar>
@@ -268,7 +268,7 @@
       <Derived>
         <Equal>
           <Left>
-            <Dependency path="../w4Line4c"/>
+            <Dependency path="../w4Line4cWithSplitWithholdingStrategy"/>
           </Left>
           <Right>
             <Dollar>0</Dollar>

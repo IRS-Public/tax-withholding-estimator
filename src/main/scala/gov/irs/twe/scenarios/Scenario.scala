@@ -307,6 +307,9 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
     }
   })
 
+  // Set isAllYear based on whether a job end date is provided
+  List(JOB_1_ID, JOB_2_ID, JOB_3_ID, JOB_4_ID).foreach(jobId => factGraph.set(s"/jobs/#$jobId/isAllYear", false))
+
   factGraph.save()
   Scenario(csv, factGraph)
 }
@@ -545,14 +548,36 @@ private val DERIVED_FACT_TO_SHEET_ROW = Map(
   "/adoptionCreditRefundable" -> "Refundable Adoption credit",
   "/adoptionCreditNonRefundable" -> "Non-Ref Adoption credit",
   "/qualifiedMortgageInsurancePremiumDeductionTotal" -> "Mortgate insurance premium deduction",
-  // TODO: This is not going to scale when the jobs that aren't Job 1 have withholdings
-  // TODO: This doesn't work if Job 1 isn't the highest paying job and is selected for extra withholdings
-  "/jobSelectedForExtraWithholding/w4Line3" -> "W-4 Line3Amount1",
-  "/jobSelectedForExtraWithholding/w4Line4a" -> "W-4 Line4aAmount1",
-  "/jobSelectedForExtraWithholding/w4Line4b" -> "W-4 Line4bAmount1",
-  "/jobSelectedForExtraWithholding/w4Line4c" -> "W-4 Line4cAmount1",
-  "/pensionSelectedForExtraWithholding/w4pLine3" -> "W-4 Line3Amount1",
-  "/pensionSelectedForExtraWithholding/w4pLine4a" -> "W-4 Line4aAmount1",
-  "/pensionSelectedForExtraWithholding/w4pLine4b" -> "W-4 Line4bAmount1",
-  "/pensionSelectedForExtraWithholding/w4pLine4c" -> "W-4 Line4cAmount1",
+  s"/jobs/#$JOB_1_ID/w4Line3WithSplitWithholdingStrategy" -> "W-4 Line3Amount1",
+  s"/jobs/#$JOB_1_ID/w4Line4aWithSplitWithholdingStrategy" -> "W-4 Line4aAmount1",
+  s"/jobs/#$JOB_1_ID/w4Line4bWithSplitWithholdingStrategy" -> "W-4 Line4bAmount1",
+  s"/jobs/#$JOB_1_ID/w4Line4cWithSplitWithholdingStrategy" -> "W-4 Line4cAmount1",
+  s"/jobs/#$JOB_2_ID/w4Line3WithSplitWithholdingStrategy" -> "W-4 Line3Amount2",
+  s"/jobs/#$JOB_2_ID/w4Line4aWithSplitWithholdingStrategy" -> "W-4 Line4aAmount2",
+  s"/jobs/#$JOB_2_ID/w4Line4bWithSplitWithholdingStrategy" -> "W-4 Line4bAmount2",
+  s"/jobs/#$JOB_2_ID/w4Line4cWithSplitWithholdingStrategy" -> "W-4 Line4cAmount2",
+  s"/jobs/#$JOB_3_ID/w4Line3WithSplitWithholdingStrategy" -> "W-4 Line3Amount3",
+  s"/jobs/#$JOB_3_ID/w4Line4aWithSplitWithholdingStrategy" -> "W-4 Line4aAmount3",
+  s"/jobs/#$JOB_3_ID/w4Line4bWithSplitWithholdingStrategy" -> "W-4 Line4bAmount3",
+  s"/jobs/#$JOB_3_ID/w4Line4cWithSplitWithholdingStrategy" -> "W-4 Line4cAmount3",
+  s"/jobs/#$JOB_4_ID/w4Line3WithSplitWithholdingStrategy" -> "W-4 Line3Amount4",
+  s"/jobs/#$JOB_4_ID/w4Line4aWithSplitWithholdingStrategy" -> "W-4 Line4aAmount4",
+  s"/jobs/#$JOB_4_ID/w4Line4bWithSplitWithholdingStrategy" -> "W-4 Line4bAmount4",
+  s"/jobs/#$JOB_4_ID/w4Line4cWithSplitWithholdingStrategy" -> "W-4 Line4cAmount4",
+  s"/pensions/#$JOB_1_ID/w4pLine3WithSplitWithholdingStrategy" -> "W-4 Line3Amount1",
+  s"/pensions/#$JOB_1_ID/w4pLine4aWithSplitWithholdingStrategy" -> "W-4 Line4aAmount1",
+  s"/pensions/#$JOB_1_ID/w4pLine4bWithSplitWithholdingStrategy" -> "W-4 Line4bAmount1",
+  s"/pensions/#$JOB_1_ID/w4pLine4cWithSplitWithholdingStrategy" -> "W-4 Line4cAmount1",
+  s"/pensions/#$JOB_2_ID/w4pLine3WithSplitWithholdingStrategy" -> "W-4 Line3Amount2",
+  s"/pensions/#$JOB_2_ID/w4pLine4aWithSplitWithholdingStrategy" -> "W-4 Line4aAmount2",
+  s"/pensions/#$JOB_2_ID/w4pLine4bWithSplitWithholdingStrategy" -> "W-4 Line4bAmount2",
+  s"/pensions/#$JOB_2_ID/w4pLine4cWithSplitWithholdingStrategy" -> "W-4 Line4cAmount2",
+  s"/pensions/#$JOB_3_ID/w4pLine3WithSplitWithholdingStrategy" -> "W-4 Line3Amount3",
+  s"/pensions/#$JOB_3_ID/w4pLine4aWithSplitWithholdingStrategy" -> "W-4 Line4aAmount3",
+  s"/pensions/#$JOB_3_ID/w4pLine4bWithSplitWithholdingStrategy" -> "W-4 Line4bAmount3",
+  s"/pensions/#$JOB_3_ID/w4pLine4cWithSplitWithholdingStrategy" -> "W-4 Line4cAmount3",
+  s"/pensions/#$JOB_4_ID/w4pLine3WithSplitWithholdingStrategy" -> "W-4 Line3Amount4",
+  s"/pensions/#$JOB_4_ID/w4pLine4aWithSplitWithholdingStrategy" -> "W-4 Line4aAmount4",
+  s"/pensions/#$JOB_4_ID/w4pLine4bWithSplitWithholdingStrategy" -> "W-4 Line4bAmount4",
+  s"/pensions/#$JOB_4_ID/w4pLine4cWithSplitWithholdingStrategy" -> "W-4 Line4cAmount4",
 )

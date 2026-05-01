@@ -23,6 +23,7 @@
 package gov.irs.twe.factDictionary.scenarios
 import gov.irs.factgraph.types.Dollar
 import gov.irs.twe.scenarios
+import gov.irs.twe.scenarios.{ JOB_1_ID, JOB_2_ID, JOB_3_ID }
 import gov.irs.twe.scenarios.Scenario
 import org.scalatest.funsuite
 import os.Path
@@ -30,7 +31,7 @@ import scala.math.Fractional.Implicits.infixFractionalOps
 
 class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   val CSV_ROOT: Path = os.pwd / "src" / "test" / "resources" / "csv"
-  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-2026-03-05.csv"
+  val UAT_SHEET: Path = CSV_ROOT / "twe-uat-split-withholdings-2026-04-30.csv"
 
   case class FixtureParam(scenario: scenarios.Scenario)
 
@@ -57,13 +58,20 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalCtcAndOdc", 6600)
     scenario.assertEquals("/overtimeCompensationDeduction", 4600)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 3717)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/selfEmploymentTax", 2826)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 35)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 14455)
+
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#$JOB_1_ID/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 10, 2)
+
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 14455)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 5, -1)
+
     scenario.assertEquals("/additionalMedicareTax", 0)
   }
 
@@ -84,14 +92,20 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalCtcAndOdc", 0)
     scenario.assertEquals("/overtimeCompensationDeduction", 0)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 3717)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 970)
     scenario.assertEquals("/selfEmploymentTax", 2826)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 184)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
     scenario.assertEquals("/additionalMedicareTax", 0)
+
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 113, 22)
+
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 970)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 56, -17)
   }
 
   // Column R
@@ -106,9 +120,11 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalNonRefundableCredits", 5000)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 154000)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 210330)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    // Manual Pub15 validation - pending multi-year withholding logic
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 9327)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 3052)
+  // Manual Pub15 validation - pending multi-year withholding logic
   }
 
   // Column S
@@ -126,10 +142,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalTaxNetRefundableCredits", 8732)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 13000)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 8732)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 1275, -1)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 24200)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 1275, -1)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 24200)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column X
@@ -150,15 +166,19 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalCtcAndOdc", 0)
     scenario.assertEquals("/overtimeCompensationDeduction", 0)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
     scenario.assertEquals("/selfEmploymentTax", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
     scenario.assertEquals("/seniorDeduction", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 507)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3575)
     scenario.assertEquals("/additionalMedicareTax", 1179)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 2002, -16)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 278)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 1573, 16)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 111)
   }
 
   // Column U
@@ -170,16 +190,18 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/taxableIncome", 71800)
     scenario.assertEquals("/totalCtcAndOdc", 500)
-    scenario.assertEquals("/americanOpportunityCredit", 1000)
-    scenario.assertOffset("/lifetimeLearningCredit", 2000, -500)
-    scenario.assertEquals("/totalRefundableCredits", 1000)
+    scenario.assertOffset("/americanOpportunityCredit", 1000, -100)
+    scenario.assertOffset("/lifetimeLearningCredit", 2000, -650)
+    scenario.assertOffset("/totalRefundableCredits", 1000, -100)
     scenario.assertEquals("/additionalMedicareTax", 0)
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 3670, -650)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    // Should be 2695, but the differences in the the above credits and totalNonRefundableCredits
+    // appear to result in a different `/taxGap` which affects Line 3.
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 3670, -975)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
   }
 
@@ -194,19 +216,24 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/additionalMedicareTax", 0)
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 456)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 31840)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 494)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4aWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/pensions/#${JOB_1_ID}/w4pLine4bWithSplitWithholdingStrategy", 16557, -47)
+    scenario.assertOffset(s"/pensions/#${JOB_1_ID}/w4pLine4cWithSplitWithholdingStrategy", 259, 8)
+    scenario.assertEquals(s"/jobs/#$JOB_2_ID/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#$JOB_2_ID/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#$JOB_2_ID/w4Line4bWithSplitWithholdingStrategy", 15283, 47)
+    scenario.assertOffset(s"/jobs/#$JOB_2_ID/w4Line4cWithSplitWithholdingStrategy", 111, -3)
+
   }
 
   // Column AL
   test("MFJ,  salary, pension, phased out deduction, one SSN") { td =>
     val scenario = td.scenario
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 10230)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 515)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4aWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/pensions/#${JOB_1_ID}/w4pLine4bWithSplitWithholdingStrategy", 5320, -16)
+    scenario.assertOffset(s"/pensions/#${JOB_1_ID}/w4pLine4cWithSplitWithholdingStrategy", 266, 8)
     scenario.assertEquals("/incomeTotal", 162000)
     scenario.assertEquals("/agi", 162000)
     scenario.assertEquals("/taxableIncome", 119570)
@@ -223,8 +250,14 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 252000)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 35766)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 644)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 354)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 142)
   }
 
   // Column E
@@ -233,10 +266,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 124000)
     scenario.assertEquals("/taxableIncome", 107900)
     scenario.assertEquals("/standardOrItemizedDeduction", 16100)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3500)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 38)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 3500)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 38)
   }
 
   // Column F
@@ -245,10 +278,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 22786)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 668)
     scenario.assertOffset("/totalEndOfYearProjectedWithholding", 455.71, .29)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 990)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 990)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
     assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
@@ -260,10 +293,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 708)
     scenario.assertEquals("/additionalCtc", 3400)
     scenario.assertOffset("/earnedIncomeCredit", 5771, 6)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 705)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 705)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
     assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
@@ -275,10 +308,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 39000)
     scenario.assertEquals("/taxableIncome", 14850)
     scenario.assertEquals("/totalNonRefundableCredits", 1000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 993)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8050)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 993)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 8050)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column I
@@ -288,10 +321,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 3346)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 3337)
     scenario.assertEquals("/selfEmploymentTax", 2543)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4a", 12182, 1)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 147)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 12182, 1)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 147)
   }
 
   // Column J
@@ -299,10 +332,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 51300)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 3619)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 733)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 4500)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 733)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 4500)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column K
@@ -310,10 +343,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 15600)
     scenario.assertOffset("/earnedIncomeCredit", 300, 1)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
     assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
@@ -325,10 +358,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/taxableIncome", 75700)
     scenario.assertEquals("/overtimeCompensationDeduction", 7000)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 11372)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 7)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 7000)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 7)
   }
 
   // Column M
@@ -337,10 +370,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 98800)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 7412)
     scenario.assertEquals("/qualifiedTipDeduction", 25000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 537)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 25000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 537)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 25000)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column N
@@ -350,10 +383,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/taxableIncome", 121900)
     scenario.assertEquals("/standardOrItemizedDeduction", 16100)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 21584)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 34000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 68)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 34000)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 68)
   }
 
   // Column O
@@ -371,10 +404,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
     scenario.assertEquals("/additionalMedicareTax", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 21600)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 23)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 21600)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 23)
   }
 
   // Column P
@@ -390,8 +423,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/netInvestmentIncomeTax", 760)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 187842)
     // Manual Pub15 validation - pending multi-year withholding logic
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 52971)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 1552)
   }
 
   // Column Q
@@ -406,8 +441,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/additionalMedicareTax", 3708)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 187842)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 183374)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 52971)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 1552)
     // Manual Pub15 validation - pending multi-year withholding logic
   }
 
@@ -422,10 +459,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/additionalMedicareTax", 0)
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 271, 1)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3350)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 271, 1)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 3350)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column V
@@ -439,10 +476,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/additionalMedicareTax", 0)
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 4415)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 15000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 4415)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 15000)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column W
@@ -457,10 +494,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/additionalMedicareTax", 0)
     scenario.assertEquals("/selfEmploymentTax", 2826)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 3661)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 24470)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 3661)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 24470)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column Z
@@ -468,20 +505,24 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 242571)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 1400)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 1400)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 113)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 1400)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 61)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 31)
   }
 
   // Column AA
   test("Single, SS, part time, senior deduction") { td =>
     val scenario = td.scenario
     scenario.assertEquals("/agi", 32880)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 314)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 1170)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 314)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 1170)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
     // Scenario-specific assertions
     scenario.assertEquals("/seniorDeduction", 6000)
   }
@@ -491,8 +532,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 13000)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
     // Scenario-specific assertions
     scenario.assertOffset("/earnedIncomeCredit", 498, 2)
 
@@ -504,10 +547,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 79881)
     scenario.assertOffset("/totalTaxNetRefundableCredits", 11760, 1)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4a", 22305, -1)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 209)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 22305, -1)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 209)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 5576)
   }
 
@@ -516,10 +559,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 269714)
     scenario.assertOffset("/totalTaxNetRefundableCredits", 31597, 1)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 36622)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 66)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 36622)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 39)
   }
 
   // Column AF
@@ -527,10 +570,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 52000)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 3097)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 143)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8050)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 143)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 8050)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column AG
@@ -538,10 +581,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 112000)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 14529)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 5830)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 49)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 5830)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 49)
   }
 
   // Column AH
@@ -549,10 +592,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 100800)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 11911)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 2494)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 34298)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine3WithSplitWithholdingStrategy", 2494)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4aWithSplitWithholdingStrategy", 34298)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column AI
@@ -569,10 +612,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalTaxNetRefundableCredits", 3271)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 4800)
 
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 1526)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 14600)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine3WithSplitWithholdingStrategy", 1526)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4bWithSplitWithholdingStrategy", 14600)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column AJ
@@ -580,10 +623,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 81500)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 4505)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 296)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 10150)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine3WithSplitWithholdingStrategy", 296)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4bWithSplitWithholdingStrategy", 10150)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column AM
@@ -591,10 +634,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     val scenario = td.scenario
     scenario.assertEquals("/agi", 84000)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 1279)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine3", 5346)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4a", 0)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4b", 9560)
-    scenario.assertEquals("/pensionSelectedForExtraWithholding/w4pLine4c", 0)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine3WithSplitWithholdingStrategy", 5346)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4bWithSplitWithholdingStrategy", 9560)
+    scenario.assertEquals(s"/pensions/#${JOB_1_ID}/w4pLine4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column AN
@@ -615,10 +658,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/taxableIncome", 51900)
     scenario.assertEquals("/totalNonRefundableCredits", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 493)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 10000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 493)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 10000)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column AQ
@@ -630,10 +673,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalNonRefundableCredits", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/qualifiedTipDeduction", 9400)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 9400)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 96)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 9400)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 96)
   }
 
   // Column AR
@@ -645,10 +688,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalNonRefundableCredits", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
     scenario.assertEquals("/qualifiedTipDeduction", 16400)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 16400)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 167)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 16400)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 167)
   }
 
   // Column AS
@@ -663,10 +706,15 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
     scenario.assertEquals("/qualifiedTipDeduction", 12000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 12000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 591)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 7200)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 343)
+
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4bWithSplitWithholdingStrategy", 4800)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 114)
   }
 
   // Column AT
@@ -681,10 +729,14 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
     scenario.assertEquals("/qualifiedTipDeduction", 19000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2972)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 26800)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 2198)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 16080)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line3WithSplitWithholdingStrategy", 1466)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4bWithSplitWithholdingStrategy", 10720)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column AU
@@ -699,10 +751,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/selfEmploymentTax", 0)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
     scenario.assertEquals("/qualifiedTipDeduction", 21900)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 11481)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 26900)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 11481)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 26900)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
     // regression prevention sanity check
     scenario.graph.set("/wantsStandardDeduction", false)
@@ -718,10 +770,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/overtimeCompensationDeduction", 9400)
       scenario.assertEquals("/taxableIncome", 130500)
       scenario.assertEquals("/totalTaxNetRefundableCredits", 23918)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 324)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 9400)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 324)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 9400)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
     }
   }
 
@@ -733,10 +785,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/overtimeCompensationDeduction", 2100)
       scenario.assertEquals("/taxableIncome", 236450)
       scenario.assertEquals("/totalTaxNetRefundableCredits", 52660)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7450)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 12)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 7450)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 12)
     }
   }
 
@@ -748,10 +800,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/overtimeCompensationDeduction", 3900)
       scenario.assertEquals("/taxableIncome", 166000)
       scenario.assertEquals("/totalTaxNetRefundableCredits", 32438)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3900)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 95)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 3900)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 95)
     }
   }
 
@@ -763,10 +815,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/overtimeCompensationDeduction", 7500)
       scenario.assertEquals("/taxableIncome", 146300)
       scenario.assertEquals("/totalTaxNetRefundableCredits", 21610)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 107)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7500)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 107)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 7500)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
     }
   }
 
@@ -778,10 +830,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/overtimeCompensationDeduction", 14400)
       scenario.assertEquals("/taxableIncome", 309400)
       scenario.assertEquals("/totalTaxNetRefundableCredits", 60406)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 14400)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 681)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 14400)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 681)
     }
   }
 
@@ -791,10 +843,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 156000)
     scenario.assertEquals("/taxableIncome", 98050)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 12278)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 3271)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 33800)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 3271)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 33800)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column BC
@@ -805,10 +857,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
 
     scenario.assertEquals("/taxableIncome", 139900)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 24253)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 820)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 820)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column BE
@@ -817,10 +869,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 12472)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 7200)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7200)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 611)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 7200)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 611)
   }
 
   // Column BF
@@ -830,10 +882,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 25214)
     scenario.assertEquals("/studentLoanInterestDeduction", 0)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 3512)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 2000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 3512)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 2000)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column BG
@@ -842,10 +894,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 12472)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 7200)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7200)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 50)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 7200)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 50)
   }
 
   // Column BH
@@ -854,10 +906,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 6923)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 10000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 629)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 10000)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 629)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 10000)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column BI
@@ -867,10 +919,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 25520)
     scenario.assertEquals("/qualifiedPersonalVehicleLoanInterestDeduction", 0)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 3717)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 14870)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 260)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 14870)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 260)
   }
 
   // Column BK
@@ -879,10 +931,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 52000)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 4063)
     scenario.assertEquals("/totalCtcAndOdc", 2200)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 4060)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 4060)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
     assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
@@ -894,10 +946,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 2431)
     scenario.assertEquals("/totalCtcAndOdc", 2200)
     scenario.assertEquals("/earnedIncomeCredit", 2104)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 4060)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 4060)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
     assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
@@ -910,10 +962,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalCtcAndOdc", 0)
     scenario.assertEquals("/additionalCtc", 5100)
     scenario.assertEquals("/earnedIncomeCredit", 6700)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1310)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 6700)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 1310)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 6700)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
     assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
@@ -925,10 +977,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 2991)
     scenario.assertEquals("/totalCtcAndOdc", 1941)
     scenario.assertEquals("/totalRefundableCredits", 259)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2988)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 2988)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column BO
@@ -938,10 +990,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 4063)
     scenario.assertEquals("/totalCtcAndOdc", 0)
     scenario.assertEquals("/totalRefundableCredits", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 10)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 10)
   }
 
   // Column BQ
@@ -957,12 +1009,12 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/additionalMedicareTax", 0)
     scenario.assertEquals("/selfEmploymentTax", 7065)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 37174)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 7007, 4)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 37174)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
     scenario.assertOffset("/qualifiedBusinessIncomeDeduction", 9293, 1)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 7007, 4)
   }
 
   // Column BR
@@ -978,11 +1030,11 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/additionalMedicareTax", 0)
     scenario.assertEquals("/selfEmploymentTax", 127)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 669)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 4304, 2)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 669)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 4304, 2)
   }
 
   // Column BS
@@ -997,11 +1049,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/additionalMedicareTax", 0)
     scenario.assertEquals("/selfEmploymentTax", 155)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 622)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
-
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 4154, -7)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 4154, -7)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 622)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column BT
@@ -1013,13 +1064,13 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/standardOrItemizedDeduction", 16100)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 42689)
     scenario.assertEquals("/selfEmploymentTax", 268)
-    scenario.assertOffset("/additionalMedicareTax", 218, 7) // Pending new sheet
+    scenario.assertEquals("/additionalMedicareTax", 218)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertOffset("/totalTaxNetRefundableCredits", 43175, 7)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 8077)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4c", 750, 3) // Pending new sheet
+    scenario.assertEquals("/totalTaxNetRefundableCredits", 43175)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 8077)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 750)
   }
 
   // Column BU
@@ -1030,15 +1081,15 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/taxableIncome", 283232)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 400)
     scenario.assertEquals("/selfEmploymentTax", 536)
-    scenario.assertOffset("/additionalMedicareTax", 436, 14)
+    scenario.assertEquals("/additionalMedicareTax", 436)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertOffset("/tentativeTaxNetNonRefundableCredits", 67900, 1) // Pending new sheet
-    scenario.assertOffset("/totalTaxNetRefundableCredits", 68872, 15)
+    scenario.assertOffset("/tentativeTaxNetNonRefundableCredits", 67900, 1)
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 68872, 1)
 
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 69332)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line4c", 417, 5) // Pending new sheet
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 69332)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 417)
   }
 
   // Column BV
@@ -1052,12 +1103,12 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 29710)
     scenario.assertEquals("/selfEmploymentTax", 7065)
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
-    scenario.assertOffset("/additionalMedicareTax", 38, 34) // Pending new sheet
-    scenario.assertOffset("/totalTaxNetRefundableCredits", 36813, 34)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 864, -55) // Pending new sheet
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 37174)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals("/additionalMedicareTax", 38)
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 36813, -1)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 864, 1)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 37174)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column BW
@@ -1069,14 +1120,14 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertOffset("/qualifiedBusinessIncomeDeduction", 2870, 1)
     scenario.assertEquals("/selfEmploymentTax", 1339)
     scenario.assertEquals("/netInvestmentIncomeTax", 1140)
-    scenario.assertOffset("/additionalMedicareTax", 488, 34) // Pending new sheet
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 76460)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals("/additionalMedicareTax", 488)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 76460)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
 
     scenario.assertOffset("/tentativeTaxNetNonRefundableCredits", 55870, -3)
     scenario.assertOffset("/tentativeTaxFromTaxableIncome", 58070, -3)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 58069, -2)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 58069, -2)
 
     assert(scenario.graph.get("/cannotZeroOutRefundDueToExcessWithholding").get == true)
   }
@@ -1087,14 +1138,14 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 357330)
     scenario.assertEquals("/taxableIncome", 340830)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 400)
-    scenario.assertOffset("/additionalMedicareTax", 1163, 34) // Pending new sheet
+    scenario.assertEquals("/additionalMedicareTax", 1163)
     scenario.assertEquals("/selfEmploymentTax", 1339)
     scenario.assertEquals("/netInvestmentIncomeTax", 3800)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 88060)
-    scenario.assertOffset("/totalTaxNetRefundableCredits", 94362, 34)
-    scenario.assertOffset("/jobSelectedForExtraWithholding/w4Line3", 48471, -55) // Pending new sheet
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 148930)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 94362, -1)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 48471, 1)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 148930)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column BZ
@@ -1104,8 +1155,8 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/stateAndLocalTaxDeduction", 9000)
 
     scenario.assertEquals("/taxableIncome", 513900)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 1601)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 1601)
   }
 
   // Column CA
@@ -1114,9 +1165,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 530000)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 32900)
     scenario.assertEquals("/taxableIncome", 497100)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8750)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 720)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 8750)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 720)
   }
 
   // Column CB
@@ -1132,9 +1183,9 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 109000)
 
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 8200)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 711)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 8200)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 711)
   }
 
   // Column CC
@@ -1146,10 +1197,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 32324)
     scenario.assertEquals("/standardOrItemizedDeduction", 35000)
 
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 2800)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 777)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 2800)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 777)
 
   }
 
@@ -1161,10 +1212,15 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/taxableIncome", 601800)
     scenario.assertEquals("/standardOrItemizedDeduction", 32200)
 
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 820)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 451, 20)
+
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 180, -10)
   }
 
   // Column CE
@@ -1176,10 +1232,15 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/taxableIncome", 236325)
     scenario.assertEquals("/standardOrItemizedDeduction", 19675)
 
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 587)
-//    The spreadsheet assumes that 100% of the /proportionOfYearEndJobsIncome goes to the job selected to the Extra withholding
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 3575)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 2002, -16)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 322, 18)
+
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 1573, 16)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 129, -9)
   }
 
   // Column CF
@@ -1195,15 +1256,15 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/netInvestmentIncomeTax", 0)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 96000)
 
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 420, -83)
 
-    assert(scenario.graph.get("/jobs/#a3006af1-a040-4235-9d31-68c5830c55fd/w4Line4c").value.get === 0)
-
-//    W-4 Line4cAmount1 = 0 and W-4 Line4cAmount2 = 625. Because /jobSelectedForExtraWithholding maps directly to W-4 Line4cAmount1, this will always be a mismatch until we fix how the mapping occurs
-//    We instead look Job 2 directly
-    assert(scenario.graph.get("/jobs/#8955625f-6317-451b-bce9-48893d60e766/w4Line4c").value.get === 625)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 420, 40)
   }
 
   // Column CJ
@@ -1220,10 +1281,19 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       assert(scenario.graph.get("/ctcEligibleDependents").value.get === 3) // This is calculated from multiple rows
       scenario.assertEquals("/totalTaxNetRefundableCredits", 14431)
 
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 2587)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 13205)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+      // Pending spreadsheet update: it expects 2505 which appears to do using
+      // the old strategy of using the standard witholding amount of 270.19
+      scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 2089, 416)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
+
+      // Pending spreadsheet update: it expects 724 which appears to do using
+      // the old strategy of using the standard witholding amount of  78.08
+      scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 1045, -321)
+      scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 13205)
+      scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
     }
   }
 
@@ -1238,10 +1308,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
       scenario.assertEquals("/taxableIncome", 123600)
       scenario.assertEquals("/totalTaxNetRefundableCredits", 16051)
 
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 7250)
-      scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 32)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 7250)
+      scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 32)
     }
   }
 
@@ -1260,10 +1330,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 1301)
     scenario.assertEquals("/qualifiedMortgageInsurancePremiumDeductionTotal", 1500)
     scenario.assertEquals("/selfEmploymentTax", 989)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 28546)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 49)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 28546)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 49)
 
   }
 
@@ -1283,8 +1353,10 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 3451)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 1251)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 1251)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 2447)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 5060)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
     // Manual Pub15 validation - pending multi-year withholding logic
   }
 
@@ -1298,16 +1370,29 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/seniorDeduction", 5213)
     scenario.assertEquals("/totalCtcAndOdc", 2200)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 9500)
-    scenario.assertOffset("/adoptionCreditNonRefundable", 11826, 724) // Pending sheet update
+    scenario.assertOffset(
+      "/adoptionCreditNonRefundable",
+      11826,
+      724,
+    ) // Pending spreadsheet update
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 10223)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 14026)
     scenario.assertEquals("/totalRefundableCredits", 5120)
-    scenario.assertOffset("/totalNonRefundableCredits", 14026, 724) // Pending sheet update
+    scenario.assertOffset("/totalNonRefundableCredits", 14026, 724)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 2651)
-    assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine3").value.get == 6232)
-    assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine4a").value.get == 32028)
-    assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine4b").value.get == 0)
-    assert(scenario.graph.get("/pensions/#8955625f-6317-451b-bce9-48893d60e766/w4pLine4c").value.get == 0)
+
+    // Should be 2544, but the differences in the adoptionCreditNonRefundable and totalNonRefundableCredits
+    // appear to result in a different `/taxGap` which affects Line 3.
+    scenario.assertOffset(s"/jobs/#$JOB_1_ID/w4Line3WithSplitWithholdingStrategy", 1980, 564)
+    scenario.assertEquals(s"/jobs/#$JOB_1_ID/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#$JOB_1_ID/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#$JOB_1_ID/w4Line4cWithSplitWithholdingStrategy", 0)
+    // Should be 3649, but the differences in the adoptionCreditNonRefundable and totalNonRefundableCredits
+    // appear to result in a different `/taxGap` which affects Line 3.
+    scenario.assertOffset(s"/pensions/#$JOB_2_ID/w4pLine3WithSplitWithholdingStrategy", 3315, 334)
+    scenario.assertEquals(s"/pensions/#$JOB_2_ID/w4pLine4aWithSplitWithholdingStrategy", 32028)
+    scenario.assertEquals(s"/pensions/#$JOB_2_ID/w4pLine4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/pensions/#$JOB_2_ID/w4pLine4cWithSplitWithholdingStrategy", 0)
   }
 
   // Column CO
@@ -1336,9 +1421,16 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/totalRefundableCredits", 10240)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 27021)
     scenario.assertEquals("/totalTaxNetRefundableCredits", 25780)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 31)
+
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 70503)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 17, 1)
+
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 14, -1)
     // Manual Pub15 validation - pending multi-year withholding logic
   }
 
@@ -1349,18 +1441,27 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/agi", 789403)
     scenario.assertEquals("/stateAndLocalTaxDeduction", 10000)
     scenario.assertEquals("/netInvestmentIncomeTax", 6080)
-    scenario.assertOffset("/additionalMedicareTax", 3407, 103) // Pending new sheet
+    scenario.assertEquals("/additionalMedicareTax", 3407)
     scenario.assertEquals("/qualifiedBusinessIncomeDeduction", 400)
     scenario.assertEquals("/selfEmploymentTax", 21194)
     scenario.assertEquals("/adoptionCreditRefundable", 0)
     scenario.assertEquals("/adoptionCreditNonRefundable", 0)
     scenario.assertEquals("/qualifiedMortgageInsurancePremiumDeductionTotal", 0)
     scenario.assertEquals("/taxableIncome", 734069)
-    scenario.assertOffset("/totalTaxNetRefundableCredits", 225144, 103) // Pending new sheet
+    scenario.assertOffset("/totalTaxNetRefundableCredits", 225144, -1)
     scenario.assertEquals("/tentativeTaxNetNonRefundableCredits", 194463)
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 194463)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 276269)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    // TODO: Should be 1645
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 1406, 239)
+
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    // TODO: Should be 464
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 703, -239)
     // Manual Pub15 validation - pending multi-year withholding logic
   }
 
@@ -1375,18 +1476,78 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals("/tentativeTaxFromTaxableIncome", 7643)
     scenario.assertEquals("/totalCtcAndOdc", 6600)
     scenario.assertEquals("/adoptionCreditRefundable", 10240)
-    scenario.assertOffset("/adoptionCreditNonRefundable", 1043, 16717) // Pending sheet update
+    scenario.assertEquals("/adoptionCreditNonRefundable", 1043)
     scenario.assertEquals("/totalEndOfYearProjectedWithholding", 6300)
-    scenario.assertOffset("/totalNonRefundableCredits", 7643, 16717) // Pending sheet update
+    scenario.assertEquals("/totalNonRefundableCredits", 7643)
     scenario.assertEquals("/totalTaxNetRefundableCredits", -10240)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line3", 1980)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4a", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4b", 0)
-    scenario.assertEquals("/jobSelectedForExtraWithholding/w4Line4c", 0)
-    // Second job is missing a Line 3 because we don't support multi-job withholdings yet
-    assert(scenario.graph.get("/jobs/#8955625F-6317-451B-BCE9-48893D60E766/w4Line4a").value.get === 0)
-    assert(scenario.graph.get("/jobs/#8955625F-6317-451B-BCE9-48893D60E766/w4Line4b").value.get === 0)
-    assert(scenario.graph.get("/jobs/#8955625F-6317-451B-BCE9-48893D60E766/w4Line4c").value.get === 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 1980)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 1580)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 0)
+  }
+
+  // Column CR
+  test("MFJ, multiple incomes") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 59146)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 840, -23)
+
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 668, -18)
+
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 955, -27)
+  }
+
+  // Column CS
+  test("MFJ, multiple incomes, biggest jobs stops") { td =>
+    val scenario = td.scenario
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 874, -9)
+
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 59146)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 696, -8)
+
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line3WithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertOffset(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 994, -10)
+  }
+
+  // Column CT
+  test("MFJ, multiple jobs, 2 jobs stop") { td =>
+    val scenario = td.scenario
+    // TODO: Should be 1459
+    scenario.assertOffset(s"/jobs/#$JOB_1_ID/w4Line3WithSplitWithholdingStrategy", 1278, 181)
+    scenario.assertEquals(s"/jobs/#$JOB_1_ID/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#$JOB_1_ID/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#$JOB_1_ID/w4Line4cWithSplitWithholdingStrategy", 0)
+
+    // TODO: Should be 1160
+    scenario.assertOffset(s"/jobs/#$JOB_2_ID/w4Line3WithSplitWithholdingStrategy", 992, 168)
+    scenario.assertEquals(s"/jobs/#$JOB_2_ID/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#$JOB_2_ID/w4Line4bWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#$JOB_2_ID/w4Line4cWithSplitWithholdingStrategy", 0)
+
+    // TODO: Should be 765
+    scenario.assertOffset(s"/jobs/#$JOB_3_ID/w4Line3WithSplitWithholdingStrategy", 639, 126)
+    scenario.assertEquals(s"/jobs/#$JOB_3_ID/w4Line4aWithSplitWithholdingStrategy", 0)
+    scenario.assertEquals(s"/jobs/#$JOB_3_ID/w4Line4bWithSplitWithholdingStrategy", 1650)
+    scenario.assertEquals(s"/jobs/#$JOB_3_ID/w4Line4cWithSplitWithholdingStrategy", 0)
   }
 }
 

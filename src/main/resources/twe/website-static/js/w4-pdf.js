@@ -59,13 +59,13 @@ async function downloadW4 (factGraph, jobId) {
   // -- Line 1(c)
   const filingStatus = factGraph.get('/filingStatus').get.toString()
   // -- Line 3 amount
-  const credits = shouldLeaveW4Line3Blank ? '' : factGraph.get(`/jobs/#${jobId}/w4Line3`).get.toString()
+  const credits = shouldLeaveW4Line3Blank ? '' : factGraph.get(`/jobs/#${jobId}/w4Line3WithSplitWithholdingStrategy`).get.toString()
   // -- Line 4(a) amount
-  const nonJobIncome = shouldLeaveW4Line4aBlank ? '' : factGraph.get(`/jobs/#${jobId}/w4Line4a`).get.toString()
+  const nonJobIncome = shouldLeaveW4Line4aBlank ? '' : factGraph.get(`/jobs/#${jobId}/w4Line4aWithSplitWithholdingStrategy`).get.toString()
   // -- Line 4(b) amount
-  const deductions = shouldLeaveW4Line4bBlank ? '' : factGraph.get(`/jobs/#${jobId}/w4Line4b`).get.toString()
+  const deductions = shouldLeaveW4Line4bBlank ? '' : factGraph.get(`/jobs/#${jobId}/w4Line4bWithSplitWithholdingStrategy`).get.toString()
   // -- Line 4(c) amount
-  const extraWithholding = shouldLeaveW4Line4cBlank ? '' : factGraph.get(`/jobs/#${jobId}/w4Line4c`).get.toString()
+  const extraWithholding = shouldLeaveW4Line4cBlank ? '' : factGraph.get(`/jobs/#${jobId}/w4Line4cWithSplitWithholdingStrategy`).get.toString()
 
   const values = {
     filingStatus,
@@ -94,13 +94,13 @@ async function downloadW4P (factGraph, pensionId) {
   // -- Line 1(c)
   const filingStatus = factGraph.get('/filingStatus').get.toString()
   // -- Line 3 amount
-  const credits = shouldLeaveW4pLine3Blank ? '' : factGraph.get(`/pensions/#${pensionId}/w4pLine3`).get.toString()
+  const credits = shouldLeaveW4pLine3Blank ? '' : factGraph.get(`/pensions/#${pensionId}/w4pLine3WithSplitWithholdingStrategy`).get.toString()
   // -- Line 4(a) amount
-  const nonJobIncome = shouldLeaveW4pLine4aBlank ? '' : factGraph.get(`/pensions/#${pensionId}/w4pLine4a`).get.toString()
+  const nonJobIncome = shouldLeaveW4pLine4aBlank ? '' : factGraph.get(`/pensions/#${pensionId}/w4pLine4aWithSplitWithholdingStrategy`).get.toString()
   // -- Line 4(b) amount
-  const deductions = shouldLeaveW4pLine4bBlank ? '' : factGraph.get(`/pensions/#${pensionId}/w4pLine4b`).get.toString()
+  const deductions = shouldLeaveW4pLine4bBlank ? '' : factGraph.get(`/pensions/#${pensionId}/w4pLine4bWithSplitWithholdingStrategy`).get.toString()
   // -- Line 4(c) amount
-  const extraWithholding = shouldLeaveW4pLine4cBlank ? '' : factGraph.get(`/pensions/#${pensionId}/w4pLine4c`).get.toString()
+  const extraWithholding = shouldLeaveW4pLine4cBlank ? '' : factGraph.get(`/pensions/#${pensionId}/w4pLine4cWithSplitWithholdingStrategy`).get.toString()
 
   const values = {
     filingStatus,

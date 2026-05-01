@@ -1,0 +1,1087 @@
+<?xml version="1.0"?>
+<FactDictionaryModule>
+  <Facts>
+    <!--
+    ════════════════════════════════════════════════════════════════════
+    JOB SELECTION
+    ════════════════════════════════════════════════════════════════════
+    -->
+    <Fact path="/jobs/*/jobContinuesToDecember31">
+      <Description>
+        The job's end date is December 31 (i.e., it continues through the end of the tax year).
+      </Description>
+      <Derived>
+        <All>
+          <Not>
+            <Dependency path="../isPastJob"/>
+          </Not>
+          <Equal>
+            <Left>
+              <Dependency path="../endDate"/>
+            </Left>
+            <Right>
+              <Dependency path="/yearEndDate"/>
+            </Right>
+          </Equal>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/continuingSourcesExist">
+      <Derived>
+        <Any>
+          <Dependency path="/continuingPensionsExist"/>
+          <Dependency path="/continuingJobsExist"/>
+        </Any>
+      </Derived>
+    </Fact>
+    <Fact path="/continuingPensionsExist">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <CollectionSize>
+              <Dependency path="/pensionsAvailableForExtraWithholdingContinuingToDecember31"/>
+            </CollectionSize>
+          </Left>
+          <Right>
+            <Int>0</Int>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/continuingJobsExist">
+      <Description>
+        Has at least one job that continues to December 31.
+      </Description>
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <CollectionSize>
+              <Dependency path="/jobsAvailableForExtraWithholdingContinuingToDecember31"/>
+            </CollectionSize>
+          </Left>
+          <Right>
+            <Int>0</Int>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/jobsAvailableForExtraWithholdingContinuingToDecember31">
+      <Description>
+        Eligible jobs that continue to December 31. Used to scope
+        totalAnnualizedIncomeContinuingJobs to continuing jobs only.
+      </Description>
+      <Derived>
+        <Filter path="/jobsAvailableForExtraWithholding">
+          <Dependency path="jobContinuesToDecember31"/>
+        </Filter>
+      </Derived>
+    </Fact>
+    <!--
+    ════════════════════════════════════════════════════════════════════
+    PENSION SELECTION
+    ════════════════════════════════════════════════════════════════════
+    -->
+    <Fact path="/pensions/*/pensionContinuesToDecember31">
+      <Description>
+        The pension's end date is December 31 (i.e., it continues through the end of the tax year).
+        Mirrors jobContinuesToDecember31.
+      </Description>
+      <Derived>
+        <All>
+          <Not>
+            <Dependency path="../isPastJob"/>
+          </Not>
+          <Equal>
+            <Left>
+              <Dependency path="../endDate"/>
+            </Left>
+            <Right>
+              <Dependency path="/yearEndDate"/>
+            </Right>
+          </Equal>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/pensionsAvailableForExtraWithholdingContinuingToDecember31">
+      <Description>
+        Eligible pensions that continue to December 31.
+      </Description>
+      <Derived>
+        <Filter path="/pensionsAvailableForExtraWithholding">
+          <Dependency path="pensionContinuesToDecember31"/>
+        </Filter>
+      </Derived>
+    </Fact>
+    <!--
+    ════════════════════════════════════════════════════════════════════
+    NET 4a / 4b DIRECTION AND MAGNITUDE
+    ════════════════════════════════════════════════════════════════════
+    -->
+    <Fact path="/net4aOr4bIsIncomeIncrease">
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <Dependency path="/w4Line4NetChange"/>
+          </Left>
+          <Right>
+            <Dollar>0</Dollar>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/net4aOr4bNetAmount">
+      <Description>
+        The absolute value of the net W-4 4a/4b adjustment. Uses /w4Line4NetChange directly,
+        consistent with the original per-job facts.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/net4aOr4bIsIncomeIncrease"/>
+            </When>
+            <Then>
+              <Dependency path="/w4Line4NetChange"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Multiply>
+                <Dependency path="/w4Line4NetChange"/>
+                <Int>-1</Int>
+              </Multiply>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <!--
+    ════════════════════════════════════════════════════════════════════
+    PER-JOB SPLIT ALLOCATION — LINES 4a AND 4b
+    ════════════════════════════════════════════════════════════════════
+    -->
+    <Fact path="/jobs/*/w4Line4aWithSplitWithholdingStrategy">
+      <Description>
+        1. Consider jobs/pensions that go to December 31. If all jobs/pensions end before December 31, jump to step (2).
+           1. Add annualized income and calculate percentages for each continuing job.
+           2. Allocate 4a to the job/pension with the highest percentage. If all jobs/pensions are the same, apply to the first.
+        2. If all jobs/pensions end earlier, use different proportions based on income left in the year, similarly to 3/4c
+           1. Allocate 4a to the job/pension with highest percentage of income for the rest of the year
+        End
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/net4aOr4bIsIncomeIncrease"/>
+            </When>
+            <Then>
+              <Switch>
+                <Case>
+                  <When>
+                    <All>
+                      <!-- 1. Consider jobs/pensions that go to December 31.-->
+                      <Dependency path="/continuingSourcesExist"/>
+                      <!-- Allocate 4a to the job/pension with the highest percentage -->
+                      <Equal>
+                        <Left>
+                          <Dependency path=".."/>
+                        </Left>
+                        <Right>
+                          <Dependency path="/jobSelectedForExtraSplitWithholdingBasedOnAnnualizedIncomeShare"/>
+                        </Right>
+                      </Equal>
+                    </All>
+                  </When>
+                  <Then>
+                    <Dependency path="/net4aOr4bNetAmount"/>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <!-- 2. If all jobs/pensions end earlier -->
+                    <Not>
+                      <Dependency path="/continuingSourcesExist"/>
+                    </Not>
+                  </When>
+                  <Then>
+                    <!-- Allocate 4a to the job/pension with highest percentage of income for the rest of the year -->
+                    <Switch>
+                      <Case>
+                        <When>
+                          <Equal>
+                            <Left>
+                              <Dependency path=".."/>
+                            </Left>
+                            <Right>
+                              <Dependency path="/jobSelectedForExtraSplitWithholdingBasedOnFutureIncomeShare"/>
+                            </Right>
+                          </Equal>
+                        </When>
+                        <Then>
+                          <Dependency path="/net4aOr4bNetAmount"/>
+                        </Then>
+                      </Case>
+                    </Switch>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Dollar>0</Dollar>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+              <!-- Value is 4b instead, set 4a to 0 -->
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/w4Line4bWithSplitWithholdingStrategy">
+      <Description>
+        1. Consider jobs/pensions that go to December 31. If all jobs/pensions end before December 31, jump to step (2).
+           1. Add annualized income and calculate percentages for each continuing job/pension
+           3. Allocate 4b proportionally to total annualized income. End
+        2. If all jobs/pensions end earlier &#x2013; use different proportions based on income left in the year
+           1. Allocate 4b according to proportions for income for the rest of the year
+        End
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <!-- Value is 4a instead, set 4b to 0 -->
+              <Dependency path="/net4aOr4bIsIncomeIncrease"/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <!-- 1. Consider jobs/pensions that go to December 31.-->
+              <Dependency path="/continuingSourcesExist"/>
+            </When>
+            <Then>
+              <!-- Allocate 4b proportionally to total annualized income -->
+              <Round>
+                <Multiply>
+                  <Dollar>-1</Dollar>
+                  <Dependency path="/w4Line4NetChange"/>
+                  <Dependency path="../continuingAnnualizedIncomeShare"/>
+                </Multiply>
+              </Round>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <!-- 2. If all jobs/pensions end earlier -->
+              <True/>
+            </When>
+            <Then>
+              <!-- Allocate 4b according to proportions for income for the rest of the year -->
+              <Multiply>
+                <Dollar>-1</Dollar>
+                <Dependency path="/w4Line4NetChange"/>
+                <Dependency path="../futureIncomeShare"/>
+              </Multiply>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <!--
+    ════════════════════════════════════════════════════════════════════
+    JOB LINES 4c AND 3 — PROPORTIONAL DISTRIBUTION
+    ════════════════════════════════════════════════════════════════════
+    -->
+    <Fact path="/jobs/*/w4Line4cWithSplitWithholdingStrategy">
+      <Description>
+        W-4 Line 4(c) under split withholding strategy. Distributed proportionally across
+        total job income, divided by each job's own effective pay periods. Uses taxGap
+        consistent with the original w4Line4c fact.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/taxGap"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Round>
+                <Divide>
+                  <Dividend>
+                    <Multiply>
+                      <Dependency path="/taxGap"/>
+                      <Dependency path="../futureTentativeIncome"/>
+                    </Multiply>
+                  </Dividend>
+                  <Divisors>
+                    <Multiply>
+                      <Dependency path="/totalFutureIncomeAllSourcesForSplitWithholding"/>
+                      <Dependency path="../payPeriodsWithW4Changes"/>
+                    </Multiply>
+                  </Divisors>
+                </Divide>
+              </Round>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/w4Line3WithSplitWithholdingStrategy">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <LessThan>
+                <Left>
+                  <Dependency path="/taxGap"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </LessThan>
+            </When>
+            <Then>
+              <LesserOf>
+                <Round>
+                  <Divide>
+                    <Dividend>
+                      <Multiply>
+                        <Dependency path="../creditsNeededToFullyBridgeTaxGap"/>
+                        <Dependency path="../futureTentativeIncome"/>
+                      </Multiply>
+                    </Dividend>
+                    <Divisors>
+                      <Dependency path="/totalFutureIncomeAllSourcesForSplitWithholding"/>
+                    </Divisors>
+                  </Divide>
+                </Round>
+                <Round>
+                  <LesserOf>
+                    <!-- bridge gap to zero -->
+                    <Dependency path="../creditsNeededToFullyBridgeTaxGap"/>
+                    <!-- Withhold zero -->
+                    <Dependency path="../tentativeAnnualWithholdingAmount"/>
+                  </LesserOf>
+                </Round>
+              </LesserOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/w4pLine4aWithSplitWithholdingStrategy">
+      <Description>
+        1. Consider jobs/pensions that go to December 31. If all jobs/pensions end before December 31, jump to step (2).
+           1. Add annualized income and calculate percentages for each continuing job.
+           2. Allocate 4a to the job/pension with the highest percentage. If all jobs/pensions are the same, apply to the first.
+        2. If all jobs/pensions end earlier, use different proportions based on income left in the year, similarly to 3/4c
+           1. Allocate 4a to the job/pension with highest percentage of income for the rest of the year
+        End
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="/net4aOr4bIsIncomeIncrease"/>
+            </When>
+            <Then>
+              <Switch>
+                <Case>
+                  <When>
+                    <All>
+                      <!-- 1. Consider jobs/pensions that go to December 31.-->
+                      <Dependency path="/continuingSourcesExist"/>
+                      <!-- Allocate 4a to the job/pension with the highest percentage -->
+                      <Equal>
+                        <Left>
+                          <Dependency path=".."/>
+                        </Left>
+                        <Right>
+                          <Dependency path="/pensionSelectedForExtraSplitWithholdingBasedOnAnnualizedIncomeShare"/>
+                        </Right>
+                      </Equal>
+                    </All>
+                  </When>
+                  <Then>
+                    <Dependency path="/net4aOr4bNetAmount"/>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <!-- 2. If all jobs/pensions end earlier -->
+                    <Not>
+                      <Dependency path="/continuingSourcesExist"/>
+                    </Not>
+                  </When>
+                  <Then>
+                    <!-- Allocate 4a to the job/pension with highest percentage of income for the rest of the year -->
+                    <Switch>
+                      <Case>
+                        <When>
+                          <Equal>
+                            <Left>
+                              <Dependency path=".."/>
+                            </Left>
+                            <Right>
+                              <Dependency path="/pensionSelectedForExtraSplitWithholdingBasedOnFutureIncomeShare"/>
+                            </Right>
+                          </Equal>
+                        </When>
+                        <Then>
+                          <Dependency path="/net4aOr4bNetAmount"/>
+                        </Then>
+                      </Case>
+                    </Switch>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Dollar>0</Dollar>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+              <!-- Value is 4b instead, set 4a to 0 -->
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/w4pLine4bWithSplitWithholdingStrategy">
+      <Description>
+        1. Consider jobs/pensions that go to December 31. If all jobs/pensions end before December 31, jump to step (2).
+          1. Add annualized income and calculate percentages for each continuing job/pension
+          3. Allocate 4b proportionally to total annualized income. End
+        2. If all jobs/pensions end earlier &#x2013; use different proportions based on income left in the year
+          1. Allocate 4b according to proportions for income for the rest of the year
+        End
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <!-- Value is 4a instead, set 4b to 0 -->
+              <Dependency path="/net4aOr4bIsIncomeIncrease"/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <!-- 1. Consider jobs/pensions that go to December 31.-->
+              <Dependency path="/continuingSourcesExist"/>
+            </When>
+            <Then>
+              <!-- Allocate 4b proportionally to total annualized income -->
+              <Round>
+                <Multiply>
+                  <Dollar>-1</Dollar>
+                  <Dependency path="/w4Line4NetChange"/>
+                  <Dependency path="../continuingAnnualizedIncomeShare"/>
+                </Multiply>
+              </Round>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <!-- 2. If all jobs/pensions end earlier -->
+              <True/>
+            </When>
+            <Then>
+              <!-- Allocate 4b according to proportions for income for the rest of the year -->
+              <Multiply>
+                <Dollar>-1</Dollar>
+                <Dependency path="/w4Line4NetChange"/>
+                <Dependency path="../futureIncomeShare"/>
+              </Multiply>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/w4pLine4cWithSplitWithholdingStrategy">
+      <Description>
+        W-4P Line 4(c) under split withholding strategy. Distributed proportionally across all
+        eligible jobs and pensions by each pension's income share of the combined total, divided by
+        each pension's own effective pay periods.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <GreaterThan>
+                <Left>
+                  <Dependency path="/taxGap"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </GreaterThan>
+            </When>
+            <Then>
+              <Round>
+                <Divide>
+                  <Dividend>
+                    <Multiply>
+                      <Dependency path="/taxGap"/>
+                      <Dependency path="../futureTentativeIncome"/>
+                    </Multiply>
+                  </Dividend>
+                  <Divisors>
+                    <Multiply>
+                      <Dependency path="/totalFutureIncomeAllSourcesForSplitWithholding"/>
+                      <Dependency path="../payPeriodsWithW4pChanges"/>
+                    </Multiply>
+                  </Divisors>
+                </Divide>
+              </Round>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/w4pLine3WithSplitWithholdingStrategy">
+      <Description>
+        W-4P Line 3 under split withholding strategy.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <LessThan>
+                <Left>
+                  <Dependency path="/taxGap"/>
+                </Left>
+                <Right>
+                  <Dollar>0</Dollar>
+                </Right>
+              </LessThan>
+            </When>
+            <Then>
+              <LesserOf>
+                <Round>
+                  <Divide>
+                    <Dividend>
+                      <Multiply>
+                        <Dependency path="../creditsNeededToFullyBridgeTaxGap"/>
+                        <Dependency path="../futureTentativeIncome"/>
+                      </Multiply>
+                    </Dividend>
+                    <Divisors>
+                      <Dependency path="/totalFutureIncomeAllSourcesForSplitWithholding"/>
+                    </Divisors>
+                  </Divide>
+                </Round>
+                <Round>
+                  <LesserOf>
+                    <!-- bridge gap to zero -->
+                    <Dependency path="../creditsNeededToFullyBridgeTaxGap"/>
+                    <!-- Withhold zero -->
+                    <Dependency path="../tentativeAnnualWithholdingAmount"/>
+                  </LesserOf>
+                </Round>
+              </LesserOf>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <!-- Annualized income split -->
+    <Fact path="/jobSelectedForExtraSplitWithholdingBasedOnAnnualizedIncomeShare">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <IsComplete>
+                  <Dependency path="/jobWithHighestAnnualizedIncomeShare"/>
+                </IsComplete>
+                <Any>
+                  <Not>
+                    <IsComplete>
+                      <Dependency path="/pensionWithHighestAnnualizedIncomeShare"/>
+                    </IsComplete>
+                  </Not>
+                  <GreaterThanOrEqual>
+                    <Left>
+                      <Dependency path="/jobWithHighestAnnualizedIncomeShare/continuingAnnualizedIncomeShare"/>
+                    </Left>
+                    <Right>
+                      <Dependency path="/pensionWithHighestAnnualizedIncomeShare/continuingAnnualizedIncomeShare"/>
+                    </Right>
+                  </GreaterThanOrEqual>
+                </Any>
+              </All>
+            </When>
+            <Then>
+              <Dependency path="/jobWithHighestAnnualizedIncomeShare"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensionSelectedForExtraSplitWithholdingBasedOnAnnualizedIncomeShare">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <IsComplete>
+                  <Dependency path="/pensionWithHighestAnnualizedIncomeShare"/>
+                </IsComplete>
+                <Any>
+                  <Not>
+                    <IsComplete>
+                      <Dependency path="/jobWithHighestAnnualizedIncomeShare"/>
+                    </IsComplete>
+                  </Not>
+                  <GreaterThanOrEqual>
+                    <Left>
+                      <Dependency path="/pensionWithHighestAnnualizedIncomeShare/continuingAnnualizedIncomeShare"/>
+                    </Left>
+                    <Right>
+                      <Dependency path="/jobWithHighestAnnualizedIncomeShare/continuingAnnualizedIncomeShare"/>
+                    </Right>
+                  </GreaterThanOrEqual>
+                </Any>
+              </All>
+            </When>
+            <Then>
+              <Dependency path="/pensionWithHighestAnnualizedIncomeShare"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobWithHighestAnnualizedIncomeShare">
+      <Derived>
+        <IndexOf>
+          <Collection>
+            <Filter path="/jobsAvailableForExtraWithholdingContinuingToDecember31">
+              <Equal>
+                <Left>
+                  <Maximum>
+                    <Dependency path="/jobsAvailableForExtraWithholdingContinuingToDecember31/*/continuingAnnualizedIncomeShare"/>
+                  </Maximum>
+                </Left>
+                <Right>
+                  <Dependency path="continuingAnnualizedIncomeShare"/>
+                </Right>
+              </Equal>
+            </Filter>
+          </Collection>
+          <Index>
+            <Int>0</Int>
+          </Index>
+        </IndexOf>
+      </Derived>
+    </Fact>
+    <Fact path="/pensionWithHighestAnnualizedIncomeShare">
+      <Derived>
+        <IndexOf>
+          <Collection>
+            <Filter path="/pensionsAvailableForExtraWithholdingContinuingToDecember31">
+              <Equal>
+                <Left>
+                  <Maximum>
+                    <Dependency path="/pensionsAvailableForExtraWithholdingContinuingToDecember31/*/continuingAnnualizedIncomeShare"/>
+                  </Maximum>
+                </Left>
+                <Right>
+                  <Dependency path="continuingAnnualizedIncomeShare"/>
+                </Right>
+              </Equal>
+            </Filter>
+          </Collection>
+          <Index>
+            <Int>0</Int>
+          </Index>
+        </IndexOf>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/continuingAnnualizedIncomeShare">
+      <Description>
+        Note: Only precise to two decimal places, resulting in slight differences in 4b Scenario values
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../jobContinuesToDecember31"/>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Dependency path="../annualizedIncome"/>
+                </Dividend>
+                <Divisors>
+                  <Dependency path="/totalContinuingAnnualizedIncomeAllSources"/>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/continuingAnnualizedIncomeShare">
+      <Description>
+        Note: Only precise to two decimal places, resulting in slight differences in 4b Scenario values
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../pensionContinuesToDecember31"/>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Dependency path="../pub15TWorksheet1bAnnualIncome"/>
+                </Dividend>
+                <Divisors>
+                  <Dependency path="/totalContinuingAnnualizedIncomeAllSources"/>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dollar>0</Dollar>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/totalContinuingAnnualizedIncomeAllSources">
+      <Derived>
+        <Add>
+          <Dependency path="/totalContinuingAnnualizedIncomeJobs"/>
+          <Dependency path="/totalContinuingAnnualizedIncomePensions"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/totalContinuingAnnualizedIncomeJobs">
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/jobsAvailableForExtraWithholdingContinuingToDecember31/*/annualizedIncome"/>
+        </CollectionSum>
+      </Derived>
+    </Fact>
+    <Fact path="/totalContinuingAnnualizedIncomePensions">
+      <Derived>
+        <CollectionSum>
+          <Dependency path="/pensionsAvailableForExtraWithholdingContinuingToDecember31/*/pub15TWorksheet1bAnnualIncome"/>
+        </CollectionSum>
+      </Derived>
+    </Fact>
+    <!-- Future income split -->
+    <Fact path="/jobSelectedForExtraSplitWithholdingBasedOnFutureIncomeShare">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <IsComplete>
+                  <Dependency path="/jobWithHighestFutureIncomeShare"/>
+                </IsComplete>
+                <Any>
+                  <Not>
+                    <IsComplete>
+                      <Dependency path="/pensionWithHighestFutureIncomeShare"/>
+                    </IsComplete>
+                  </Not>
+                  <GreaterThanOrEqual>
+                    <Left>
+                      <Dependency path="/jobWithHighestFutureIncomeShare/futureIncomeShare"/>
+                    </Left>
+                    <Right>
+                      <Dependency path="/pensionWithHighestFutureIncomeShare/futureIncomeShare"/>
+                    </Right>
+                  </GreaterThanOrEqual>
+                </Any>
+              </All>
+            </When>
+            <Then>
+              <Dependency path="/jobWithHighestFutureIncomeShare"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/pensionSelectedForExtraSplitWithholdingBasedOnFutureIncomeShare">
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <IsComplete>
+                  <Dependency path="/pensionWithHighestFutureIncomeShare"/>
+                </IsComplete>
+                <Any>
+                  <Not>
+                    <IsComplete>
+                      <Dependency path="/jobWithHighestFutureIncomeShare"/>
+                    </IsComplete>
+                  </Not>
+                  <GreaterThanOrEqual>
+                    <Left>
+                      <Dependency path="/pensionWithHighestFutureIncomeShare/futureIncomeShare"/>
+                    </Left>
+                    <Right>
+                      <Dependency path="/jobWithHighestFutureIncomeShare/futureIncomeShare"/>
+                    </Right>
+                  </GreaterThanOrEqual>
+                </Any>
+              </All>
+            </When>
+            <Then>
+              <Dependency path="/pensionWithHighestFutureIncomeShare"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobWithHighestFutureIncomeShare">
+      <Derived>
+        <IndexOf>
+          <Collection>
+            <Filter path="/jobsAvailableForExtraWithholding">
+              <Equal>
+                <Left>
+                  <Maximum>
+                    <Dependency path="/jobsAvailableForExtraWithholding/*/futureIncomeShare"/>
+                  </Maximum>
+                </Left>
+                <Right>
+                  <Dependency path="futureIncomeShare"/>
+                </Right>
+              </Equal>
+            </Filter>
+          </Collection>
+          <Index>
+            <Int>0</Int>
+          </Index>
+        </IndexOf>
+      </Derived>
+    </Fact>
+    <Fact path="/pensionWithHighestFutureIncomeShare">
+      <Derived>
+        <IndexOf>
+          <Collection>
+            <Filter path="/pensionsAvailableForExtraWithholding">
+              <Equal>
+                <Left>
+                  <Maximum>
+                    <Dependency path="/pensionsAvailableForExtraWithholding/*/futureIncomeShare"/>
+                  </Maximum>
+                </Left>
+                <Right>
+                  <Dependency path="futureIncomeShare"/>
+                </Right>
+              </Equal>
+            </Filter>
+          </Collection>
+          <Index>
+            <Int>0</Int>
+          </Index>
+        </IndexOf>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/futureIncomeShare">
+      <Derived>
+        <Divide>
+          <Dividend>
+            <Dependency path="../futureTentativeIncome"/>
+          </Dividend>
+          <Divisors>
+            <Dependency path="/totalFutureIncomeAllSourcesForSplitWithholding"/>
+          </Divisors>
+        </Divide>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/futureIncomeShare">
+      <Derived>
+        <Divide>
+          <Dividend>
+            <Dependency path="../futureTentativeIncome"/>
+          </Dividend>
+          <Divisors>
+            <Dependency path="/totalFutureIncomeAllSourcesForSplitWithholding"/>
+          </Divisors>
+        </Divide>
+      </Derived>
+    </Fact>
+    <Fact path="/totalFutureIncomeAllSourcesForSplitWithholding">
+      <Derived>
+        <GreaterOf>
+          <Dollar>1</Dollar>
+          <Add>
+            <CollectionSum>
+              <Dependency path="/jobsAvailableForExtraWithholding/*/futureTentativeIncome"/>
+            </CollectionSum>
+            <CollectionSum>
+              <Dependency path="/pensionsAvailableForExtraWithholding/*/futureTentativeIncome"/>
+            </CollectionSum>
+          </Add>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/futureTentativeIncome">
+      <Description>
+        The income this job will earn after the W-4 takes effect.
+        Mirrors futureTentativeWithholding but for income rather than withholding.
+      </Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="../averagePayPerPayPeriodForWithholding"/>
+          <GreaterOf>
+            <Rational>0/1</Rational>
+            <Subtract>
+              <Minuend>
+                <Dependency path="../remainingPayPeriodsRational"/>
+              </Minuend>
+              <Subtrahends>
+                <Multiply>
+                  <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                  <Rational>1/1</Rational>
+                </Multiply>
+              </Subtrahends>
+            </Subtract>
+          </GreaterOf>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/futureTentativeIncome">
+      <Description>
+        The income this pension will pay after the W-4P takes effect &#x2014; after the lag periods.
+      </Description>
+      <Derived>
+        <Multiply>
+          <Dependency path="../averagePayPerPayPeriodForWithholding"/>
+          <GreaterOf>
+            <Rational>0/1</Rational>
+            <Subtract>
+              <Minuend>
+                <Dependency path="../remainingPayPeriodsRational"/>
+              </Minuend>
+              <Subtrahends>
+                <Multiply>
+                  <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                  <Rational>1/1</Rational>
+                </Multiply>
+              </Subtrahends>
+            </Subtract>
+          </GreaterOf>
+        </Multiply>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/payPeriodsWithW4Changes">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="../remainingPayPeriodsRational"/>
+          </Minuend>
+          <Subtrahends>
+            <Multiply>
+              <Rational>1/1</Rational>
+              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+            </Multiply>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/payPeriodsWithW4pChanges">
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="../remainingPayPeriodsRational"/>
+          </Minuend>
+          <Subtrahends>
+            <Multiply>
+              <Rational>1/1</Rational>
+              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+            </Multiply>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+  </Facts>
+</FactDictionaryModule>
