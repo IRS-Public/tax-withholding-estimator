@@ -23,7 +23,7 @@
     "repositoryURL": "https://github.com/IRS-Public/tax-withholding-estimator",
     "repositoryVisibility": "public",
     "homepageURL": "https://apps.irs.gov/app/tax-withholding-estimator/",
-    "disclaimerURL": "https://github.com/IRSDigitalService/tax-withholding-estimator?tab=readme-ov-file#legal-disclaimer-public-repository-access",
+    "disclaimerURL": "https://github.com/IRS-Public/tax-withholding-estimator?tab=readme-ov-file#legal-disclaimer-public-repository-access",
     "vcs": "git",
     "platforms": [
         "web"
