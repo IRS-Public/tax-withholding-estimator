@@ -174,13 +174,13 @@ results:
         2-c-field: 'Step 2 (c): Multiple jobs or spouse works'
         2-c-recommendation: <p>Don’t check this box</p><p><modal-link for="modal-why-w-4-step-2-c">Why?</modal-link></p>
         3-field: 'Step 3: Credits total'
-        3-recommendation: <p><span condition="jobs/*/shouldLeaveW4Line3Blank" operator="isFalse"><fg-show path="jobs/*/w4Line3WithSplitWithholdingStrategy"/></span><span condition="jobs/*/shouldLeaveW4Line3Blank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-step-3">Why?</modal-link></p>
+        3-recommendation: <p><span condition="/jobs/*/shouldLeaveW4Line3Blank" operator="isFalse"><fg-show path="/jobs/*/w4Line3WithSplitWithholdingStrategy"/></span><span condition="/jobs/*/shouldLeaveW4Line3Blank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-step-3">Why?</modal-link></p>
         4-a-field: 'Step 4 (a): Other income (not from jobs)'
-        4-a-recommendation: <p><span condition="jobs/*/shouldLeaveW4Line4aBlank" operator="isFalse"><fg-show path="jobs/*/w4Line4aWithSplitWithholdingStrategy"/></span><span condition="jobs/*/shouldLeaveW4Line4aBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4-step-4-a">Why?</modal-link></p>
+        4-a-recommendation: <p><span condition="/jobs/*/shouldLeaveW4Line4aBlank" operator="isFalse"><fg-show path="/jobs/*/w4Line4aWithSplitWithholdingStrategy"/></span><span condition="/jobs/*/shouldLeaveW4Line4aBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4-step-4-a">Why?</modal-link></p>
         4-b-field: 'Step 4 (b): Deductions'
-        4-b-recommendation: <p><span condition="jobs/*/shouldLeaveW4Line4bBlank" operator="isFalse"><fg-show path="jobs/*/w4Line4bWithSplitWithholdingStrategy"/></span><span condition="jobs/*/shouldLeaveW4Line4bBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4-step-4-b">Why?</modal-link></p>
+        4-b-recommendation: <p><span condition="/jobs/*/shouldLeaveW4Line4bBlank" operator="isFalse"><fg-show path="/jobs/*/w4Line4bWithSplitWithholdingStrategy"/></span><span condition="/jobs/*/shouldLeaveW4Line4bBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4-step-4-b">Why?</modal-link></p>
         4-c-field: 'Step 4 (c): Extra withholding'
-        4-c-recommendation: <p><span condition="jobs/*/shouldLeaveW4Line4cBlank" operator="isFalse"><fg-show path="jobs/*/w4Line4cWithSplitWithholdingStrategy"/></span><span condition="jobs/*/shouldLeaveW4Line4cBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4-step-4-c">Why?</modal-link></p>
+        4-c-recommendation: <p><span condition="/jobs/*/shouldLeaveW4Line4cBlank" operator="isFalse"><fg-show path="/jobs/*/w4Line4cWithSplitWithholdingStrategy"/></span><span condition="/jobs/*/shouldLeaveW4Line4cBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4-step-4-c">Why?</modal-link></p>
         5-field: 'Step 5: Sign Here'
         5-recommendation: Sign and enter the date
       time-sensitivity: Withholding updates are time sensitive. Submit your completed form to <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span> employer as soon as possible.
@@ -202,13 +202,13 @@ results:
         2-field: 'Step 2: Multiple jobs or pensions'
         2-recommendation: <p>Leave blank</p><p><modal-link for="modal-why-w-4p-step-2">Why?</modal-link></p>
         3-field: 'Step 3: Credits total'
-        3-recommendation: <p><span condition="pensions/*/shouldLeaveW4pLine3Blank" operator="isFalse"><fg-show path="pensions/*/w4pLine3WithSplitWithholdingStrategy"/></span><span condition="pensions/*/shouldLeaveW4pLine3Blank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-step-3">Why?</modal-link></p>
+        3-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine3Blank" operator="isFalse"><fg-show path="/pensions/*/w4pLine3WithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine3Blank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-step-3">Why?</modal-link></p>
         4-a-field: 'Step 4 (a): Other income (not from jobs)'
-        4-a-recommendation: <p><span condition="pensions/*/shouldLeaveW4pLine4aBlank" operator="isFalse"><fg-show path="pensions/*/w4pLine4aWithSplitWithholdingStrategy"/></span><span condition="pensions/*/shouldLeaveW4pLine4aBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4p-step-4-a">Why?</modal-link></p>
+        4-a-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine4aBlank" operator="isFalse"><fg-show path="/pensions/*/w4pLine4aWithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine4aBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4p-step-4-a">Why?</modal-link></p>
         4-b-field: 'Step 4 (b): Deductions'
-        4-b-recommendation: <p><span condition="pensions/*/shouldLeaveW4pLine4bBlank" operator="isFalse"><fg-show path="pensions/*/w4pLine4bWithSplitWithholdingStrategy"/></span><span condition="pensions/*/shouldLeaveW4pLine4bBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4p-step-4-b">Why?</modal-link></p>
+        4-b-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine4bBlank" operator="isFalse"><fg-show path="/pensions/*/w4pLine4bWithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine4bBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4p-step-4-b">Why?</modal-link></p>
         4-c-field: 'Step 4 (c): Extra withholding'
-        4-c-recommendation: <p><span condition="pensions/*/shouldLeaveW4pLine4cBlank" operator="isFalse"><fg-show path="pensions/*/w4pLine4cWithSplitWithholdingStrategy"/></span><span condition="pensions/*/shouldLeaveW4pLine4cBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4p-step-4-c">Why?</modal-link></p>
+        4-c-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine4cBlank" operator="isFalse"><fg-show path="/pensions/*/w4pLine4cWithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine4cBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4p-step-4-c">Why?</modal-link></p>
         5-field: 'Step 5: Sign Here'
         5-recommendation: Sign and enter the date
       time-sensitivity: Withholding updates are time sensitive. Submit your completed form to <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> pension or annuity provider as soon as possible.
