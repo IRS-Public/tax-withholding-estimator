@@ -118,9 +118,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 ```
 
-## Running on a Windows VM (Parallels)
-
-`crypto.randomUUID` has wide support but requires secure contexts in some browsers or operating systems ([more on crypto.randomUUID](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID)). This is the case with doing local development with Windows on a virtual machine.
+## Running on a Windows VM (Parallels) from MacOS
 
 Running the app in Windows on a VM also requires a few extra steps involving a `socat` relay.
 
@@ -129,10 +127,29 @@ Running the app in Windows on a VM also requires a few extra steps involving a `
 brew install socat
 ```
 
-**2. Run the app**
-In a terminal window, run the app as you normally would with `make`
+**2. Update the following code**
 
-**3. Set up the proxy in project root folder in another terminal window**
+`crypto.randomUUID` has wide support but requires secure contexts in some browsers or operating systems ([more on crypto.randomUUID](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID)). This is the case with doing local development with Windows on a virtual machine. Use this fall back to work with collections, such as in the income section.
+
+In `fg-components.js`, replace the `console.error` with the following code (just be sure to change it back before committing your work):
+
+```js
+const bytes = (typeof crypto !== 'undefined' && crypto.getRandomValues)
+    ? Array.from(crypto.getRandomValues(new Uint8Array(16)))
+    : Array.from({ length: 16 }, () => Math.floor(Math.random() * 256))
+
+  // Generate an RFC 4122 version 4 UUID so Fact Graph accepts collection item IDs.
+  bytes[6] = (bytes[6] & 0x0f) | 0x40
+  bytes[8] = (bytes[8] & 0x3f) | 0x80
+
+  const hex = Array.from(bytes, byte => byte.toString(16).padStart(2, '0'))
+  return `${hex[0]}${hex[1]}${hex[2]}${hex[3]}-${hex[4]}${hex[5]}-${hex[6]}${hex[7]}-${hex[8]}${hex[9]}-${hex[10]}${hex[11]}${hex[12]}${hex[13]}${hex[14]}${hex[15]}`
+```
+
+**3. Run the app**
+In a terminal window, run the app as you normally would with `make dev`
+
+**4. Set up the proxy in project root folder in another terminal window**
 ```bash
 socat TCP-LISTEN:3000,bind=10.211.55.2,fork TCP:127.0.0.1:3000
 ```
@@ -141,6 +158,12 @@ socat TCP-LISTEN:3000,bind=10.211.55.2,fork TCP:127.0.0.1:3000
 ```
 http://10.211.55.2:3000/twe
 ```
+
+## Running from a Windows VM or Windows-based Machine
+
+In order to run to the Tax Withholding Estimator from a Windows, you will need to either install [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/about), or if you prefer, use the package manager [**Chocolatey**](https://chocolatey.org/) and run `choco install make`.
+
+Follow the rest of the onboarding instructions.
 
 ## Pre-commit Hooks
 
