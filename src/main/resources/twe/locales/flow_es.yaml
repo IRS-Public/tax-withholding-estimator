@@ -1115,273 +1115,273 @@
     p-92b07b:
     p-24ae98:
 /credits:
-  title:
-  h2-948a2e:
-  p-4dde1f:
-  p-7a9f8f:
-  h3-ade5c7:
-  p-8adaa9:
-  p-fbbde4:
+  title: Créditos
+  h2-948a2e: Créditos
+  p-4dde1f: Los créditos reducen directamente la cantidad de impuestos que debes, dólar por dólar. Algunos créditos pueden aumentar tu reembolso si la cantidad combinada es mayor al impuesto que debes.
+  p-7a9f8f: Este estimador solo tiene algunos créditos. Podrían haber otros créditos para los que calificas y que pueden impactar el estimado de tu reembolso o el impuesto que debes.
+  h3-ade5c7: Crédito por hijos (CTC)
+  p-8adaa9: El CTC ayuda a las familias criando hijos por medio de un crédito tributario de hasta <fg-show path="/maxCtcAmount"/> por cada hijo calificado.
+  p-fbbde4: <modal-link for="modal-ctc-who-can-claim">¿Quién puede reclamar el CTC?</modal-link>
   /ctcEligibleDependents:
-    question:
-    hint:
-  h3-6a0442:
-  p-5b5094:
-  p-386206:
+    question: Número de hijos
+    hint: No cuentes a un hijo si no tiene número de Seguro Social (SSN) válido para trabajar. Si <span condition="/isFilingStatusMFJ" operator="isFalse">tú no tienes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tú y tu esposo(a) no tienen</span> un SSN, deja esta casilla en blanco.
+  h3-6a0442: Crédito por otros dependientes (ODC)
+  p-5b5094: Los contribuyentes que no califican para el Crédito tributario por hijos, podrían reclamar el ODC.
+  p-386206: <modal-link for="modal-odc-who-can-claim">¿Quién puede reclamar el ODC?</modal-link>
   /odcEligibleDependents:
-    question:
-    hint:
-  h3-bd6ff3:
-  p-b0becb:
-  p-c6bd24:
+    question: Número de otros dependientes
+    hint: Deja esta casilla en blanco si no eres un ciudadano, nacional, o residente legal de los Estados Unidos. No incluyas dependientes que ya mencionaste en el Crédito por hijos.
+  h3-bd6ff3: Crédito por el cuidado de hijos y dependientes (CDCC)
+  p-b0becb: El CDCC ayuda a los contribuyentes que pagan por el cuidado de un familiar o de un miembro del hogar mientras trabajan o buscan trabajo.
+  p-c6bd24: <modal-link for="modal-cdcc-who-can-claim-and-eligible-expenses">¿Quién puede reclamar el CDCC y cuáles gastos son elegibles?</modal-link>
   /cdccQualifyingPersons:
-    question:
+    question: Número de hijos y dependientes calificados
   /cdccQualifyingExpenses:
-    question:
-    hint:
-  h3-f87a1a:
-  p-623bc8:
-  p-4b9b00:
+    question: Gastos anuales estimados para el <fg-show path="/taxYear"/>
+    hint: (El máximo es <fg-show path="/cdccMaxClaimableExpenseWithOneQP"/> para una persona y <fg-show path="/cdccMaxClaimableExpenseWithTwoQP"/> para dos o más personas)
+  h3-f87a1a: Crédito por ingreso del trabajo (EITC)
+  p-623bc8: El EITC ayuda a los trabajadores y familias de ingresos bajos a moderados a reducir sus impuestos.
+  p-4b9b00: <modal-link for="modal-eitc-who-can-claim">¿Quién puede reclamar el crédito por ingreso del trabajo (EITC)?</modal-link>
   /eitcQualifyingChildren:
-    question:
-    hint:
+    question: Número de hijos calificados
+    hint: No cuentes a un hijo si no tiene un número de Seguro Social. Si <span condition="/isFilingStatusMFJ" operator="isFalse">tú no tienes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tú o tu esposo(a) no tienen</span> un SSN, deja esta casilla en blanco.
   /primaryFilerAge25OrOlderForEitc:
-    question:
-    hint:
+    question: ¿Tendrás 25 años o más para el 1 de enero del <fg-show path="/nextTaxYear"/>?
+    hint: Elige “No” si no tienes un número de Seguro Social.
   /secondaryFilerAge25OrOlderForEitc:
-    question:
-    hint:
-  h3-d83ef2:
-  p-5661e0:
-  p-8c58ba:
+    question: ¿Tu esposo(a) tendrá 25 años o más para el 1 de enero del <fg-show path="/nextTaxYear"/>?
+    hint: Elige “No” si no tiene un número de Seguro Social.
+  h3-d83ef2: Crédito del ahorrador
+  p-5661e0: El crédito del ahorrador es un beneficio tributario que ayuda a los contribuyentes de ingresos bajos a moderados a ahorrar para la jubilación. Ingresa el monto total del crédito que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> reclamar por contribuciones a una cuenta IRA tradicional, Roth IRA, 401(k), 403(b), o planes similares.
+  p-8c58ba: <modal-link for="modal-retirement-savings-credit-who-can-claim">¿Quién puede reclamar el crédito del ahorrador y cómo puedo estimarlo?</modal-link>
   /retirementSavingsContributionsTaxCreditAmount:
-    question:
-    hint:
-  h3-63f260:
-  p-1a3e61:
-  p-48ee6d:
+    question: Crédito del ahorrador <span condition="/isFilingStatusMFJ" operator="isFalse">que piensas</span><span condition="/isFilingStatusMFJ" operator="isTrue">que piensan</span> tomar en el <fg-show path="/taxYear"/>
+    hint: (máximo <fg-show path="/retirementSavingsContributionsMaximumAmount"/>)
+  h3-63f260: Crédito de la oportunidad estadounidense (AOTC)
+  p-1a3e61: El AOTC ayuda a compensar el costo de la matrícula, cuotas y otros gastos durante los primeros cuatro años de la universidad.
+  p-48ee6d: <modal-link for="modal-aotc-who-can-claim-and-eligible-expenses">¿Quién puede reclamar el crédito de AOTC y qué tipos de gastos califican?</modal-link>
   /qualifyingStudents:
-    question:
+    question: Número de estudiantes universitarios
   /aotcQualifiedEducationExpenses:
-    question:
-    hint:
-  h3-5869f0:
-  p-dbcaea:
-  p-4e793b:
+    question: Monto estimado de costos o matrícula universitaria en el <fg-show path="/taxYear"/>
+    hint: (máximo <fg-show path="/maxAotcAdjustedQualifiedExpenseCap"/> por estudiante)
+  h3-5869f0: Crédito vitalicio de educación (LLC)
+  p-dbcaea: El LLC ayuda a compensar el costo de cursos universitarios, certificaciones profesionales y capacitaciónes para habilidades laborales. No puedes reclamar el AOTC y el LLC para el mismo estudiante.
+  p-4e793b: <modal-link for="modal-llc-who-can-claim">¿Quién puede reclamar el LLC?</modal-link>
   /llcQualifiedEducationExpenses:
-    question:
-    hint:
-  h3-40bd58:
-  p-6d6078:
-  p-007627:
+    question: Monto estimado de costos o matrícula universitaria en el <fg-show path="/taxYear"/>
+    hint: (máximo $10,000)
+  h3-40bd58: Crédito por adopción
+  p-6d6078: El crédito por adopción ayuda a las familias a compensar los costos de adoptar a un niño elegible.
+  p-007627: <modal-link for="modal-adoption-credit-who-can-claim">¿Quién puede reclamar el crédito por adopción?</modal-link>
   /adoptionEligibleChildren:
-    question:
+    question: Número de niños adoptados
   /estimatedTotalQualifiedAdoptionExpenses:
-    question:
-    hint:
-  h3-e318a2:
-  p-371ffe:
-  p-77d648:
+    question: Gastos por adopción que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> tener en el <fg-show path="/taxYear"/>
+    hint: (máximo <fg-show path="/maxAdoptionCreditPerChild"/> por niño)
+  h3-e318a2: Crédito para adultos mayores o personas con una discapacidad
+  p-371ffe: Este crédito ayuda a adultos mayores y personas con una discapacidad calificada a reducir sus impuestos.
+  p-77d648: <modal-link for="modal-credit-elderly-disabled-who-can-claim">¿Quién puede reclamar el crédito para adultos mayores o personas con una discapacidad?</modal-link>
   /elderlyAndDisabledTaxCreditAmount:
-    question:
-  h3-8c57ba:
-  p-3995ab:
-  p-2c1569:
+    question: Monto de crédito para adultos mayores o personas con una discapacidad que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> reclamar en el <fg-show path="/taxYear"/>
+  h3-8c57ba: Crédito por impuestos extranjeros
+  p-3995ab: El crédito por impuestos extranjeros reduce tus impuestos en los Estados Unidos cuando pagas o debes impuestos en un país extranjero o en un territorio de los Estados Unidos.
+  p-2c1569: <modal-link for="modal-foreign-tax-credit-who-can-claim">¿Quién puede reclamar el crédito por impuestos extranjeros?</modal-link>
   /schedule3Line1:
-    question:
-  h3-a99804:
-  p-961cbd:
-  p-821d31:
+    question: Impuestos extranjeros que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
+  h3-a99804: Créditos para negocios
+  p-961cbd: Los créditos empresariales incluyen varios créditos individuales que recompensan a las empresas por acciones como la contratación y apoyo a los trabajadores, las inversiones en energía o la investigación y el desarrollo.
+  p-821d31: <modal-link for="modal-what-are-business-credits">¿Qué son los créditos empresariales?</modal-link>
   /schedule3Line6a:
-    question:
-  h3-f75ee7:
-  p-40c9a3:
-  p-46de1e:
+    question: Monto de créditos para negocios que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> tomar en el <fg-show path="/taxYear"/>
+  h3-f75ee7: Crédito de interés hipotecario
+  p-40c9a3: El crédito de interés hipotecario reduce los impuestos para propietarios de vivienda con recursos bajos o moderados y quienes reciben un certificado de crédito hipotecario de su gobierno estatal o local.
+  p-46de1e: <modal-link for="modal-mortgage-interest-credit-who-can-claim">¿Quién puede reclamar el crédito de interés hipotecario?</modal-link>
   /tentativeSchedule3Line6g:
-    question:
-    hint:
-  h3-795a8a:
-  p-df114f:
-  p-847a3c:
+    question: Monto estimado del crédito <span condition="/isFilingStatusMFJ" operator="isFalse">por interés hipotecario que piensas</span><span condition="/isFilingStatusMFJ" operator="isTrue">de interés hipotecario que piensan</span> tomar en el <fg-show path="/taxYear"/>
+    hint: (máximo $2,000)
+  h3-795a8a: Crédito por el impuesto mínimo alternativo (AMT)
+  p-df114f: El AMT le permite a los contribuyentes de altos ingresos recuperar el exceso de impuestos pagados bajo el AMT en años anteriores.
+  p-847a3c: <modal-link for="modal-amt-who-can-claim">¿Quién puede reclamar el crédito AMT?</modal-link>
   /alternativeMinimumTaxCreditAmount:
-    question:
+    question: Monto del crédito AMT que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas tomar</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan tomar</span> en el <fg-show path="/taxYear"/>
   modal-ctc-who-can-claim:
-    heading:
-    p-7c2fab:
+    heading: ¿Quién puede reclamar el crédito por hijos (CTC)?
+    p-7c2fab: "Para reclamar el CTC, debes tener un hijo(a) calificado que:"
     ul-0:
-      li-a2f84f:
-      li-d11eda:
-      li-a17024:
-      li-8b8bcb:
-      li-f5b72f:
-    p-c67be7:
-    p-24b934:
-    p-e97b0b:
-    p-23670a:
+      li-a2f84f: Sea tu hijo dependiente, hijastro, hijo de crianza, hermano o descendiente (nieto, sobrino o sobrina)
+      li-d11eda: Sea menor de 17 años al final del <fg-show path="/taxYear"/>
+      li-a17024: Viva contigo en los Estados Unidos más de la mitad del año
+      li-8b8bcb: Tenga un número de Seguro Social (SSN) válido para trabajar (tú o tu esposo(a) también deben tener un SSN)
+      li-f5b72f: No se mantenga por sí mismo o piense presentar una declaración conjunta (a menos que sea para reclamar un reembolso)
+    p-c67be7: Puedes reclamar hasta <fg-show path="/maxCtcAmount"/> por hijo calificado.
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-e97b0b: Revisa la línea 4 en el Anexo 8812 por un número mayor a 0. El Anexo 8812 se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-23670a: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/child-tax-credit">Conoce más sobre el CTC.</a>
   modal-odc-who-can-claim:
-    heading:
-    p-25ea3f:
+    heading: ¿Quién puede reclamar el crédito por otros dependientes (ODC)?
+    p-25ea3f: "Para reclamar el ODC, debes tener un dependiente calificado que:"
     ul-0:
-      li-ec8076:
-      li-3f5be2:
-      li-271d52:
-      li-3cdb99:
-      li-54fdde:
-      li-38e383:
-    p-b1ce93:
-    p-24b934:
-    p-a212c5:
-    p-8e621a:
+      li-ec8076: Pienses reclamar como dependiente en tu declaración de impuestos
+      li-3f5be2: Tenga un ingreso bruto menor a <fg-show path="/odcDependentGrossIncomeThreshold"/>
+      li-271d52: Viva contigo en los Estados Unidos más de la mitad del año si es un niño(a), o todo el año si es un adulto, a menos que sea <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000220957">un tipo específico de pariente (en inglés)</a>
+      li-3cdb99: Tenga un número de Seguro Social, número de Identificación Personal del Contribuyente (ITIN), o un número de Identificación del Contribuyente para Adopciones (ATIN)
+      li-54fdde: No se mantenga a sí mismo y no piense presentar una declaración conjunta
+      li-38e383: No mencionarás para reclamar el crédito por hijos
+    p-b1ce93: Puedes reclamar hasta <fg-show path="/maxOdcAmount"/> por cada dependiente calificado de cualquier edad.
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-a212c5: Revisa la línea 6 en el Anexo 8812 por un número mayor a 0. El Anexo 8812 se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-8e621a: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/newsroom/understanding-the-credit-for-other-dependents">Conoce más sobre el ODC.</a>
   modal-cdcc-who-can-claim-and-eligible-expenses:
-    heading:
-    p-999ac9:
-    p-0e2159:
-    p-af5726:
+    heading: ¿Quién puede reclamar el crédito por el cuidado de hijos y dependientes (CDCC) y cuáles gastos son elegibles?
+    p-999ac9: Para reclamar el CDCC, debes pagar por el cuidado de un niño(a) menor de 13 años, o para tu esposo(a) o un dependiente que viva contigo y no pueda cuidar de sí mismo.
+    p-0e2159: La persona que presta el cuidado no puede ser tu esposo(a), el padre del niño u otro dependiente.
+    p-af5726: "Gastos que califican:"
     ul-0:
-      li-b23a11:
-      li-6f4e69:
-      li-594aa1:
-      li-531e5e:
-    p-7189e3:
+      li-b23a11: Guardería, preescolar (antes del kindergarten)
+      li-6f4e69: Cuidado antes y después de la escuela
+      li-594aa1: Campamentos diurnos
+      li-531e5e: Cuidado para un esposo(a) o dependiente que no puede cuidar de sí mismo(a)
+    p-7189e3: "Gastos que no califican:"
     ul-1:
-      li-0f6e34:
-      li-cc9c3b:
-      li-241e17:
-      li-dc8f3c:
-    p-ee8680:
-    p-ded29b:
-    p-a01583:
-    p-24b934:
-    p-df5230:
-    p-6173e1:
+      li-0f6e34: Campamentos de un día para otro
+      li-cc9c3b: Matrícula para escuelas privadas
+      li-241e17: Comida, alojamiento, o vestimenta a menos que estén directamente relacionados al cuidado
+      li-dc8f3c: Pagos a tu esposo(a), el padre del hijo(a), u otro dependiente por el cuidado
+    p-ee8680: Esta no es una lista completa. Revisa la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203292">Publicación 503 (en inglés)</a> para conocer más sobre los gastos que califican.
+    p-ded29b: Puedes reclamar hasta <fg-show path="/cdccMaxClaimableExpenseWithOneQP"/> por una persona o <fg-show path="/cdccMaxClaimableExpenseWithTwoQP"/> por dos o más personas.
+    p-a01583: Si estás casado(a) y presentas una declaración separada, solo podrás reclamar este crédito si tú y tu esposo(a) están legalmente separados o viven separados y cumplen con <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203323">otros criterios (en inglés).</a>
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-df5230: Revisa la línea 2 en el Anexo 3. El Anexo 3 se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-6173e1: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/taxtopics/tc602">Conoce más sobre el CDCC.</a>
   modal-eitc-who-can-claim:
-    heading:
-    p-787c0c:
-    p-e38ed9:
+    heading: ¿Quién puede reclamar el crédito por ingreso del trabajo (EITC)?
+    p-787c0c: <strong>Si tienes hijos y quieres reclamar el EITC,</strong> debes ser un trabajador de ingresos bajos o moderados y tener un hijo calificado.
+    p-e38ed9: "Un hijo(a) calificado para el EITC debe:"
     ul-0:
-      li-df44ee:
-      li-0192a3:
-      li-5ef8aa:
-      li-15bfc0:
-      li-1b1f15:
-    p-76b6a9:
-    p-d178a7:
-    p-9e7c3b:
+      li-df44ee: Ser tu hijo, hijastro, hijo adoptivo, hermano o descendiente (nieto, sobrino)
+      li-0192a3: Ser menor de 19 años al final del <fg-show path="/taxYear"/>, menor de 24 años al final del <fg-show path="/taxYear"/> si es estudiante a tiempo completo, o de cualquier edad si tiene una discapacidad permanente
+      li-5ef8aa: Vivir contigo en los Estados Unidos más de la mitad del año
+      li-15bfc0: Tener un número de Seguro Social válido para trabajar
+      li-1b1f15: No presentar una declaración conjunta (excepto para reclamar un reembolso)
+    p-76b6a9: Puedes reclamar hasta 3 hijos calificados.
+    p-d178a7: Si estás casado(a) y presentas una declaración por separado, sólo puedes reclamar este crédito si cumples con <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/earned-income-tax-credit/who-qualifies-for-the-earned-income-tax-credit-eitc#marriedfilingseparate">requisitos específicos para el EITC.</a>
+    p-9e7c3b: "<strong>Si no tienes hijos y quieres reclamar el EITC,</strong>  debes ser un trabajador con ingresos bajos o moderados que:"
     ul-1:
-      li-e27492:
-      li-32aee0:
-      li-15bfc0:
-    p-24b934:
-    p-cdce6e:
-    p-cda0a1:
+      li-e27492: Tenga al menos 25 años pero menos de 65 al 1 de enero del <fg-show path="/nextTaxYear"/>
+      li-32aee0: Haya vivido en los Estados Unidos más de la mitad del año
+      li-15bfc0: Tenga un número de Seguro Social válido para trabajar
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-cdce6e: Revisa la línea 27a en el Formulario 1040 de tu declaración del impuesto federal.
+    p-cda0a1: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/earned-income-tax-credit-eitc">Conoce más sobre el EITC.</a>
   modal-retirement-savings-credit-who-can-claim:
-    heading:
-    p-82bd3c:
-    p-4d4371:
+    heading: ¿Quién puede reclamar el crédito del ahorrador y cómo puedo estimarlo?
+    p-82bd3c: Para reclamar el crédito del ahorrador, debes hacer contribuciones a una IRA tradicional, Roth IRA, 401(k), 403(b), o un plan similar.
+    p-4d4371: "Las siguientes contribuciones no califican:"
     ul-0:
-      li-51e5b0:
-      li-b4ffe6:
-    p-c1babe:
-    p-79b58a:
-    p-d2238c:
-    p-24b934:
-    p-e930e0:
-    p-4f7230:
+      li-51e5b0: Contribuciones o aportaciones complementarias del empleador
+      li-b4ffe6: Contribuciones transferidas
+    p-c1babe: Para estimar el monto de tu crédito, multiplica las contribuciones que esperas hacer en el <fg-show path="/taxYear"/> a tu plan de jubilación por <fg-show path="/retirementSavingsMultiplier"/>%. Este porcentaje se basa en tu estado civil y el estimado de tu ingreso bruto ajustado.
+    p-79b58a: Puedes reclamar hasta <fg-show path="/retirementSavingsMaximumAmountNonMFJ"/> (<fg-show path="/retirementSavingsMaximumAmountMFJ"/> si presentas una declaración conjunta).
+    p-d2238c: Si es difícil de estimar, puedes dejar este estimado de crédito en blanco.
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-e930e0: Si esperas que el monto de ahorros para tu plan de jubilación sea parecido al del año pasado, puedes usar la misma cantidad. Revisa la línea 4 del Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-4f7230: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/taxtopics/tc610">Conoce más sobre el crédito del ahorrador.</a>
   modal-aotc-who-can-claim-and-eligible-expenses:
-    heading:
-    p-a7fc1e:
+    heading: ¿Quién puede reclamar el crédito de la oportunidad estadounidense (AOTC) y qué tipos de gastos califican?
+    p-a7fc1e: "Para reclamar el AOTC, tú, tu esposo(a) o tu dependiente debe:"
     ul-0:
-      li-c490a5:
-      li-fad0e9:
-    p-7f6a17:
+      li-c490a5: Estar en los primeros 4 años de educación superior
+      li-fad0e9: Estar inscrito por lo menos a medio-tiempo para una credencial o grado
+    p-7f6a17: 'Puedes reclamar hasta <fg-show path="/maxAotcPerQualifyingStudent"/> por cada estudiante, incluyendo:'
     ul-1:
-      li-fb3acc:
-      li-1fae55:
-    p-1f5c56:
-    p-26f710:
-    p-658bee:
-    p-24b934:
-    p-a99490:
-    p-9d7d7d:
+      li-fb3acc: 100% de los primeros $2,000 en gastos
+      li-1fae55: 25% de los siguientes $2,000 en gastos
+    p-1f5c56: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/qualified-ed-expenses">Los gastos educativos (en inglés)</a> incluyen matrículas, costos, libros, materiales y otros. Puedes reclamar gastos hechos por ti, tu esposo(a), tu dependiente o un tercero.
+    p-26f710: Un estudiante no puede reclamar este crédito más de 4 veces.
+    p-658bee: No puedes reclamar el Crédito de la oportunidad estadounidense y el Crédito vitalicio de educación para el mismo estudiante.
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-a99490: Revisa la línea 27 en el Anexo 8863 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-9d7d7d: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/american-opportunity-tax-credit">Conoce más sobre el AOTC (en inglés).</a>
   modal-llc-who-can-claim:
-    heading:
-    p-f5b472:
+    heading: ¿Quién puede reclamar el crédito vitalicio de educación (LLC)?
+    p-f5b472: "Para reclamar el LLC, tú, tu esposo(a) o tu dependiente deben:"
     ul-0:
-      li-a144eb:
-      li-51b299:
-      li-cdf538:
-    p-52848c:
-    p-839872:
-    p-24b934:
-    p-9f907d:
-    p-5d0cbb:
+      li-a144eb: Pagar matrícula o costos por cursos universitarios, certificaciones profesionales o capacitaciones de habilidades laborales
+      li-51b299: Inscribirse o tomar clases en <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/eligible-educational-institution">una institución educativa elegible (en inglés)</a>
+      li-cdf538: Inscribirse en uno o más cursos en un periodo académico del <fg-show path="/taxYear"/>
+    p-52848c: Puedes reclamar hasta el 20% de los primeros $10,000 en gastos y un máximo de <fg-show path="/maxLlcAmountForTaxYear"/> por declaración de impuesto federal. Puedes reclamar gastos hechos por ti, tu esposo(a), tu dependiente o una tercera parte.
+    p-839872: No puedes reclamar el Crédito de la oportunidad estadounidense y el LLC para el mismo estudiante.
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-9f907d: Revisa la línea 31 en el Formulario 8863 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-5d0cbb: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/llc">Conoce más sobre el LLC (en inglés).</a>
   modal-adoption-credit-who-can-claim:
-    heading:
-    p-ab884c:
+    heading: ¿Quién puede reclamar el crédito por adopción?
+    p-ab884c: "Para reclamar el crédito por adopción, tú o tu esposo(a) deben:"
     ul-0:
-      li-1221c2:
-      li-7f01ec:
-    p-837b60:
-    p-c92b21:
-    p-0dfb21:
-    p-24b934:
-    p-e45e2b:
-    p-5683ce:
+      li-1221c2: Tener <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/adoption-credit#qualifiedexpenses">gastos de adopción calificados</a> como costos de adopción, costos judiciales, honorarios de un abogado, o viajes
+      li-7f01ec: Haber adoptado a un niño(a) menor de 18 años o una persona física o mentalmente incapaz de cuidar de sí misma
+    p-837b60: Puedes reclamar hasta <fg-show path="/maxAdoptionCreditPerChild"/> en gastos calificados por un hijo(a) adoptivo. <a target="_blank" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e531">Las fechas para reclamar gastos (en inglés)</a> dependen del tipo de adopción, estatus de la adopción y cuándo sucedieron los gastos.
+    p-c92b21: Este crédito es parcialmente reembolsable. Puede reducir tus impuestos y darte un reembolso de hasta <fg-show path="/maxRefundableAdoptionCreditAmount"/> si reduce la cantidad que debes a $0. Los montos no utilizados pueden usarse dentro de un periodo de 5 años.
+    p-0dfb21: Si estás casado(a) y presentas una declaración separada, sólo puedes reclamar este crédito si no vives con tu esposo(a) y cumples con <a target="_blank" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e498">criterios adicionales (en inglés).</a>
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-e45e2b: Revisa el Formulario 8839 (Gastos de adopción calificados) que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-5683ce: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8839">Conoce más sobre el crédito por adopción.</a>
   modal-credit-elderly-disabled-who-can-claim:
-    heading:
-    p-f6aeb3:
+    heading: ¿Quién puede reclamar el crédito para adultos mayores o personas con una discapacidad?
+    p-f6aeb3: "Podrías calificar si:"
     ul-0:
-      li-b9be11:
-      li-80d712:
-      li-486ff8:
-    p-c6a647:
-    p-cd18b6:
-    p-be3be3:
-    p-24b934:
-    p-efe4ff:
-    p-22e34a:
+      li-b9be11: Tienes 65 años o más para el 1 de enero del <fg-show path="/nextTaxYear"/>, o estás jubilado por una discapacidad total y permanente y recibes ingresos por discapacidad tributables
+      li-80d712: Tu ingreso bruto ajustado (AGI) es generalmente menos de $17,500 (o $25,000 si estás casado y presentas una declaración conjunta)
+      li-486ff8: Tus ingresos no sujetos a impuestos por Seguro Social, pensiones, anualidades o discapacidad es generalmente menos de $5,000 (o $7,500 si estás casado y presentas una declaración conjunta)
+    p-c6a647: Usa el <a target="_blank" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-schedule-r-form-1040">Anexo R</a> para calcular el monto del crédito.
+    p-cd18b6: Si presentas una declaración como Casado(a) que presenta una declaración por separado, sólo puedes reclamar este crédito si no viviste con tu esposo(a) en ningún momento del <fg-show path="/taxYear"/>.
+    p-be3be3: Si declaras impuestos como Cabeza de familia, sólo puedes reclamar este crédito si cumples con el <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p524#en_US_2023_publink100038676">criterio específico (en inglés).</a>
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-efe4ff: Revisa la línea 6d en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-22e34a: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/credit-for-the-elderly-or-the-disabled">Conoce más sobre el crédito para adultos mayores o personas con una discapacidad.</a>
   modal-foreign-tax-credit-who-can-claim:
-    heading:
-    p-f75b59:
+    heading: ¿Quién puede reclamar el crédito por impuestos extranjeros?
+    p-f75b59: "Para reclamar el crédito por impuestos extranjeros, tú o tu esposo(a) deben:"
     ul-0:
-      li-4b51b6:
-      li-2dc959:
-    p-944458:
-    p-24b934:
-    p-beb725:
-    p-913a55:
+      li-4b51b6: Pagar o deber impuestos a un país extranjero o a un territorio de los Estados Unidos y
+      li-2dc959: Estar sujetos al impuesto estadounidense sobre los mismos ingresos
+    p-944458: Si piensas tomar la deducción detallada por impuestos extranjeros, no podrás reclamar este crédito.
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-beb725: Revisa la línea 1 en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-913a55: <a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/international-taxpayers/foreign-tax-credit">Conoce más sobre el crédito por impuestos extranjeros (en inglés).</a>
   modal-what-are-business-credits:
-    heading:
-    p-e6c933:
+    heading: ¿Qué son créditos para negocios?
+    p-e6c933: "Los créditos empresariales son un grupo de créditos tributarios que incluyen incentivos por actividades como:"
     ul-0:
-      li-f80e57:
-      li-4715cf:
-      li-40aa29:
-    p-97e52e:
-    p-24b934:
-    p-a0a8dd:
-    p-985345:
+      li-f80e57: Contrataciones y apoyo a trabajadores
+      li-4715cf: Inversiones relacionadas a la energía
+      li-40aa29: Investigaciones y desarrollo
+    p-97e52e: Para reclamar estos créditos, podrías tener que enviar el Formulario 3800.
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-a0a8dd: Revisa la línea 6a en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-985345: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/businesses/small-businesses-self-employed/business-tax-credits">Conoce más sobre los créditos empresariales.</a>
   modal-mortgage-interest-credit-who-can-claim:
-    heading:
-    p-bcd520:
+    heading: ¿Quién puede reclamar el crédito de interés hipotecario?
+    p-bcd520: "Para reclamar el crédito de interés hipotecario, tú y tu esposo(a) deben:"
     ul-0:
-      li-cc8a12:
-      li-18244c:
-    p-f226d2:
-    p-2bce1f:
-    p-24b934:
-    p-7b5370:
-    p-0ea3a2:
+      li-cc8a12: Tener un Certificado de Crédito Hipotecario (MCC) calificado, emitido por tu gobierno estatal o local
+      li-18244c: Pagar intereses hipotecarios sobre tu vivienda principal
+    p-f226d2: El MCC indicará el porcentaje de intereses que puedes reclamar como crédito. Si no tienes un MCC, no podrás reclamar este crédito.
+    p-2bce1f: Este crédito está limitado a $2,000 por año.
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-7b5370: Revisa la línea 6g en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-0ea3a2: <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p530#en_US_2023_publink100011906">Conoce más sobre el crédito de interés hipotecario (en inglés).</a>
   modal-amt-who-can-claim:
-    heading:
-    p-a7cc79:
+    heading: ¿Quién puede reclamar el crédito por el impuesto mínimo alternativo (AMT)?
+    p-a7cc79: "Para reclamar el AMT, tú o tu esposo(a) deben:"
     ul-0:
-      li-67f80f:
-      li-f5e817:
-    p-63fead:
-    p-24b934:
-    p-cb09e9:
-    p-dbd9a0:
+      li-67f80f: Haber debido AMT el año anterior
+      li-f5e817: No estar sujetos al AMT en el año actual
+    p-63fead: Puedes reclamar este crédito con el Formulario 8801.
+    p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
+    p-cb09e9: Revisa la línea 6b en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
+    p-dbd9a0: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8801">Conoce más sobre el AMT (en inglés).</a>
 /results:
   title:
   h2-dd9460:
