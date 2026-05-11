@@ -87,7 +87,7 @@
       li-4ef74f: No te volviste a casar antes del <fg-show path="/taxYear"/>
       li-939762: Tienes un hijo(a) dependiente que vive contigo todo el año
       li-bad5a3: Pagas más de la mitad del costo de mantener tu hogar
-    p-b4bd3e: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/filing/filing-status">Conoce más sobre cada estado civil</a>
+    p-b4bd3e: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/filing/filing-status">Conoce más sobre cada estado civil<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
   modal-secondary-claimed-as-dependent:
     heading: ¿Cómo saber si mi esposo(a) puede ser un dependiente?
     p-94ceb2: No puedes reclamar a tu esposo(a) como dependiente, aun si dependió de ti económicamente.
@@ -97,7 +97,7 @@
       li-a00f03: La relación de tu esposo(a) con esa persona
       li-06b095: Cuánto apoyaron a tu esposo(a), tanto económicamente y de otras formas
       li-7b9e81: Si tu esposo(a) vivió con ellos y por cuánto tiempo
-    p-8725bb: Revisa la tabla 5 de la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">Publicación 501 del IRS</a> para determinar si alguien puede reclamarle como dependiente.
+    p-8725bb: Revisa la tabla 5 de la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">Publicación 501 del IRS</a> para determinar si alguien puede reclamarle como dependiente.
     p-53afc1: Ten en cuenta que tu esposo(a) no califica como dependiente si pagó más de la mitad de sus propios costos de vida, o si los pagaste tú.
 /income:
   title:
