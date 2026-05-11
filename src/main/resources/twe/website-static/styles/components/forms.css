@@ -20,7 +20,8 @@ h2 + fg-set {
   font-weight: bold;
   margin-top: 0;
 
-  .usa-hint {
+  .usa-hint--required {
+    color: var(--secondary-dark);
     font-weight: normal;
   }
 }

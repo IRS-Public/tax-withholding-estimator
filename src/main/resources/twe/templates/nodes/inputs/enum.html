@@ -1,7 +1,7 @@
 <fieldset class="usa-fieldset" th:attr="aria-describedby=${hintId}">
     <legend class="usa-legend twe-question">
         <div th:utext="#{${contentKey} + .question}" th:remove="tag"></div>
-        <span th:if="${!optional}" aria-hidden="true" class="usa-hint" th:text="#{components.fg-set.required}"></span>
+        <span th:if="${!optional}" aria-hidden="true" class="usa-hint--required" th:text="#{components.fg-set.required}"></span>
     </legend>
     <div th:replace="nodes/hint"></div>
     <div th:replace="nodes/modal-link"></div>
