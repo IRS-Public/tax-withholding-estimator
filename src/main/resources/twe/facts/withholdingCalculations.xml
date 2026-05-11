@@ -1446,38 +1446,28 @@
         remainder of the year will not bring them to a zero balance.
       </Description>
       <Derived>
-        <Any>
-          <All>
-            <!-- If job is selected for extra withholding -->
-            <IsComplete>
-              <Dependency path="/jobSelectedForExtraWithholding"/>
-            </IsComplete>
-            <!-- and tentativeAnnualWithholdingAmount is lower than creditsNeededToFullyBridgeTaxGap -->
-            <LessThan>
-              <Left>
-                <Dependency path="/jobSelectedForExtraWithholding/tentativeAnnualWithholdingAmount"/>
-              </Left>
-              <Right>
-                <Dependency path="/jobSelectedForExtraWithholding/creditsNeededToFullyBridgeTaxGap"/>
-              </Right>
-            </LessThan>
-          </All>
-          <All>
-            <!-- If pension is selected for extra withholding -->
-            <IsComplete>
-              <Dependency path="/pensionSelectedForExtraWithholding"/>
-            </IsComplete>
-            <!-- and tentativeAnnualWithholdingAmount is lower than creditsNeededToFullyBridgeTaxGap -->
-            <LessThan>
-              <Left>
-                <Dependency path="/pensionSelectedForExtraWithholding/tentativeAnnualWithholdingAmount"/>
-              </Left>
-              <Right>
-                <Dependency path="/pensionSelectedForExtraWithholding/creditsNeededToFullyBridgeTaxGap"/>
-              </Right>
-            </LessThan>
-          </All>
-        </Any>
+        <LessThan>
+          <Left>
+            <Add>
+              <CollectionSum>
+                <Dependency path="/jobsAvailableForExtraWithholding/*/tentativeAnnualWithholdingAmount" />
+              </CollectionSum>
+              <CollectionSum>
+                <Dependency path="/pensionsAvailableForExtraWithholding/*/tentativeAnnualWithholdingAmount" />
+              </CollectionSum>
+            </Add>
+          </Left>
+          <Right>
+            <Add>
+              <CollectionSum>
+                <Dependency path="/jobsAvailableForExtraWithholding/*/creditsNeededToFullyBridgeTaxGap" />
+              </CollectionSum>
+              <CollectionSum>
+                <Dependency path="/pensionsAvailableForExtraWithholding/*/creditsNeededToFullyBridgeTaxGap" />
+              </CollectionSum>
+            </Add>
+          </Right>
+        </LessThan>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/pub15TWorksheet1aLine3b">
@@ -1534,6 +1524,23 @@
         </Add>
       </Derived>
     </Fact>
+
+    <Fact path="/withholdingAmountPerPayPeriodTotalForJobsAndPensions">
+      <Description>
+        The total amount to withhold from the employee's wages this pay period for all jobs and pensions.
+      </Description>
+      <Derived>
+        <Add>
+          <CollectionSum>
+            <Dependency path="/jobsAvailableForExtraWithholding/*/withholdingAmountPerPayPeriod" />
+          </CollectionSum>
+          <CollectionSum>
+            <Dependency path="/pensionsAvailableForExtraWithholding/*/withholdingAmountPerPayPeriod" />
+          </CollectionSum>
+        </Add>
+      </Derived>
+    </Fact>
+
     <Fact path="/mayNeedToMakeEstimatedPayments">
       <Description>
         Whether the taxpayer needs to make estimated payments to make up the balance.
@@ -1542,50 +1549,31 @@
         with the calculation is helpful to the taxpayer here) than the amount of money available.
       </Description>
       <Derived>
-        <Any>
-          <All>
-            <IsComplete>
-              <Dependency path="/jobSelectedForExtraWithholding"/>
-            </IsComplete>
-            <GreaterThan>
-              <Left>
-                <Dependency path="/jobSelectedForExtraWithholding/withholdingAmountPerPayPeriod"/>
-              </Left>
-              <Right>
-                <Dollar>0</Dollar>
-              </Right>
-            </GreaterThan>
-            <GreaterThanOrEqual>
-              <Left>
-                <Dependency path="/jobSelectedForExtraWithholding/withholdingAmountPerPayPeriod"/>
-              </Left>
-              <Right>
-                <Dependency path="/jobSelectedForExtraWithholding/averageTaxablePayPerPayPeriod"/>
-              </Right>
-            </GreaterThanOrEqual>
-          </All>
-          <All>
-            <IsComplete>
-              <Dependency path="/pensionSelectedForExtraWithholding"/>
-            </IsComplete>
-            <GreaterThan>
-              <Left>
-                <Dependency path="/pensionSelectedForExtraWithholding/withholdingAmountPerPayPeriod"/>
-              </Left>
-              <Right>
-                <Dollar>0</Dollar>
-              </Right>
-            </GreaterThan>
-            <GreaterThanOrEqual>
-              <Left>
-                <Dependency path="/pensionSelectedForExtraWithholding/withholdingAmountPerPayPeriod"/>
-              </Left>
-              <Right>
-                <Dependency path="/pensionSelectedForExtraWithholding/averagePayPerPayPeriodForWithholding"/>
-              </Right>
-            </GreaterThanOrEqual>
-          </All>
-        </Any>
+        <All>
+          <GreaterThan>
+            <Left>
+              <Dependency path="/withholdingAmountPerPayPeriodTotalForJobsAndPensions"/>
+            </Left>
+            <Right>
+              <Dollar>0</Dollar>
+            </Right>
+          </GreaterThan>
+          <GreaterThanOrEqual>
+            <Left>
+              <Dependency path="/withholdingAmountPerPayPeriodTotalForJobsAndPensions"/>
+            </Left>
+            <Right>
+              <Add>
+                <CollectionSum>
+                  <Dependency path="/jobsAvailableForExtraWithholding/*/averageTaxablePayPerPayPeriod" />
+                </CollectionSum>
+                <CollectionSum>
+                  <Dependency path="/pensionsAvailableForExtraWithholding/*/averagePayPerPayPeriodForWithholding" />
+                </CollectionSum>
+              </Add>
+            </Right>
+          </GreaterThanOrEqual>
+        </All>
       </Derived>
     </Fact>
     <Fact path="/eligibleRemainingPayPeriodsGreaterThanZero">
@@ -1594,15 +1582,21 @@
         changes made with the W-4.
       </Description>
       <Derived>
-        <Any>
-          <!-- For both job and pension, IsComplete if /remainingPayPeriodsInteger > /payPeriodsBeforeW4ChangesAppear -->
-          <IsComplete>
-            <Dependency path="/jobSelectedForExtraWithholding"/>
-          </IsComplete>
-          <IsComplete>
-            <Dependency path="/pensionSelectedForExtraWithholding"/>
-          </IsComplete>
-        </Any>
+        <GreaterThan>
+          <Left>
+            <Add>
+              <CollectionSize>
+                <Dependency path="/jobsAvailableForExtraWithholding" />
+              </CollectionSize>
+              <CollectionSize>
+                <Dependency path="/pensionsAvailableForExtraWithholding" />
+              </CollectionSize>
+            </Add>
+          </Left>
+          <Right>
+            <Int>0</Int>
+          </Right>
+        </GreaterThan>
       </Derived>
     </Fact>
   </Facts>
