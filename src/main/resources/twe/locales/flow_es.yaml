@@ -929,118 +929,124 @@
     heading:
     p-c60313:
 /deductions:
-  title:
-  h2-414252:
-  p-cbf5dd:
-  p-4f0299:
-  p-d4ef4d:
-  p-550c0f:
-  p-ade196:
-  p-b3aa46:
+  title: Elección de deducción
+  h2-414252: Deducción estándar o detallada
+  p-cbf5dd: Cuando preparas tu declaración de impuestos, puedes reducir la cantidad de tus ingresos sujeta a impuestos al elegir <modal-link for="modal-standard-deduction-or-itemize-deductions">deducciones estándar o detalladas</modal-link>.
+  p-4f0299: La mayoría elige deducciones estándar porque la cantidad es mayor de lo que recibirían al detallar sus deducciones.
+  p-d4ef4d: Si eliges detallar tus deducciones, te preguntaremos sobre tus gastos y calcularemos la cantidad total para ti.
+  p-550c0f: Si tu estatus civil es Casado(a) que presenta una declaración por separado, debes tomar el mismo tipo de deducción que tu esposo(a).
+  p-ade196: <modal-link for="modal-standard-deduction-amount">Según tus respuestas</modal-link>, tu deducción estándar es de <fg-show path="/standardDeduction"/>.
+  p-b3aa46: Según tus respuestas, tu deducción estándar es de <fg-show path="/standardDeduction"/>.
   /wantsStandardDeduction:
-    question:
+    question: Elige si quieres tomar la deducción estándar o detallar tus deducciones.
     options:
       'true':
-        name:
+        name: Usar la deducción estándar (<fg-show path="/standardDeduction"/>)
       'false':
-        name:
-  h3-a1ad7c:
-  p-c47c3b:
-  p-71dd8c:
-  p-fb9061:
-  p-fd1ad1:
-  h4-a883ab:
-  p-29bab3:
-  p-5ea630:
+        name: Detallar deducciones
+  h3-a1ad7c: Deducciones detalladas
+  p-c47c3b: Si eliges tomar la deducción detallada, necesitaremos hacerte más preguntas.
+  p-71dd8c: Si el total de tus deducciones detalladas es mayor a la deducción estándar, usaremos esa cantidad para calcular tus resultados. Esto te favorece más.
+  p-fb9061: Elegiste usar la deducción estándar en vez de la deducción detallada. Continúa a la siguiente página.
+  p-86e60d: Estima el monto de las deducciones que <span condition="/isFilingStatusMFJ" operator="isFalse">piensas</span><span condition="/isFilingStatusMFJ" operator="isTrue">piensan</span> tomar este año.
+  h4-a883ab: Impuesto local y estatal
+  p-29bab3: Si <span condition="/isFilingStatusMFJ" operator="isFalse">pagas</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagan</span> impuestos locales y estatales, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir hasta <fg-show path="/stateAndLocalTaxDeductionLimit"/>.
+  p-5ea630: '<span condition="/isFilingStatusMFJ" operator="isFalse">Puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">Pueden</span> deducir:'
   ul-0:
-    li-f7cfbc:
-    li-da32d6:
-  p-b6c1cd:
+    li-f7cfbc: Impuesto estatal y local a los bienes inmuebles
+    li-da32d6: Impuesto estatal y local a la propiedad
+  p-b6c1cd: 'También <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir uno de los siguientes:'
   ul-1:
-    li-1c452e:
-    li-2afba5:
-  p-91100f:
+    li-1c452e: Impuesto estatal y local sobre los ingresos
+    li-2afba5: Impuesto estatal y local sobre las ventas
+  p-91100f: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc503" class="usa-link">Conoce más sobre los impuestos locales y estatales.</a>
   /stateAndLocalTaxPayments:
-    question:
-    hint:
-  h4-627030:
-  p-693a4b:
-  p-6109d4:
+    question: Impuestos locales y estatales que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
+    hint: (máximo <fg-show path="/stateAndLocalTaxDeductionLimit"/>)
+  h4-627030: Donaciones caritativas
+  p-693a4b: Si <span condition="/isFilingStatusMFJ" operator="isFalse">haces</span><span condition="/isFilingStatusMFJ" operator="isTrue">hacen</span> una donación a una organización calificada, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducirla.
+  p-e1d782: <a target="_blank" href="https://www.irs.gov/es/charities-non-profits/charitable-organizations/charitable-contribution-deductions" class="usa-link">Conoce más sobre las donaciones caritativas.</a>
   /cashCharitableContributions:
-    question:
-  h4-0aecd8:
-  p-ca41f8:
-  p-94189b:
+    question: Donaciones caritativas que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
+  h4-0aecd8: Intereses hipotecarios calificados e intereses por inversiones
+  p-ca41f8: Si <span condition="/isFilingStatusMFJ" operator="isFalse">pides</span><span condition="/isFilingStatusMFJ" operator="isTrue">piden</span> un préstamo para comprar una propiedad primaria, secundaria, o de inversión, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir los intereses y puntos que <span condition="/isFilingStatusMFJ" operator="isFalse">pagaste</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagaron</span> para ese préstamo.
+  p-94189b: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc505" class="usa-link">Conoce más sobre los intereses hipotecarios y por inversiones.</a>
   /qualifiedMortgageInterestAndInvestmentInterestExpenses:
-    question:
-  h4-b16091:
-  p-a5b47a:
-  p-2a876a:
+    question: Intereses calificados que <span condition="/isFilingStatusMFJ" operator="isFalse">piensas</span><span condition="/isFilingStatusMFJ" operator="isTrue">piensan</span> pagar en el <fg-show path="/taxYear"/>
+  h4-b16091: Primas de seguro hipotecario
+  p-a5b47a: Si <span condition="/isFilingStatusMFJ" operator="isFalse">debes</span><span condition="/isFilingStatusMFJ" operator="isTrue">deben</span> pagar seguro hipotecario en el <fg-show path="/taxYear"/>, <span condition="/isFilingStatusMFJ" operator="isFalse">podrías</span><span condition="/isFilingStatusMFJ" operator="isTrue">podrían</span> deducirlo. <span condition="/isFilingStatusMFJ" operator="isFalse">Tu</span><span condition="/isFilingStatusMFJ" operator="isTrue">El</span> contrato de seguro hipotecario debe haberse emitido en o después del 2007 para una propiedad primaria o secundaria.
+  p-2a876a: 'Los seguros hipotecarios calificados incluyen:'
   ul-2:
-    li-d21e4b:
-    li-1a3c7d:
-    li-46b019:
-    li-5d7fc7:
+    li-d21e4b: Seguro hipotecario privado relacionado a préstamos convencionales
+    li-1a3c7d: Primas de seguro hipotecario relacionado a préstamos de la Administración Federal de Vivienda
+    li-46b019: Costos de financiamiento relacionados a préstamos de Asuntos Veteranos
+    li-5d7fc7: Costos y garantías relacionados a préstamos de la Administración de Vivienda Rural
   /qualifiedMortgageInsurancePremiums:
-    question:
-  h4-2ad5b3:
-  p-30a251:
-  p-ebaf9f:
+    question: Primas de seguro hipotecario que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
+  h4-2ad5b3: Deducción por gastos médicos y dentales
+  p-30a251: Si <span condition="/isFilingStatusMFJ" operator="isFalse">pagas</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagan</span> de <span condition="/isFilingStatusMFJ" operator="isFalse">tu</span><span condition="/isFilingStatusMFJ" operator="isTrue">su</span> bolsillo (y el seguro médico no <span condition="/isFilingStatusMFJ" operator="isFalse">te</span><span condition="/isFilingStatusMFJ" operator="isTrue">les</span> reembolsa) por gastos médicos y dentales o primas, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir el monto total de <span condition="/isFilingStatusMFJ" operator="isFalse">tus</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus</span> gastos por encima de <fg-show path="/medicalAndDentalExpensesFloor"/>.
+  p-ebaf9f: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc502" class="usa-link">Conoce más sobre los gastos médicos y dentales.</a>
   /medicalAndDentalExpenses:
-    question:
-    hint:
-  h4-e628b2:
-  p-e1d1d9:
-  p-999102:
-  p-10956c:
-  p-39aa78:
+    question: Gastos médicos y dentales que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
+    hint: No incluyas primas de seguro que ya agregaste en la sección de Ingresos o Ajustes.
+  h4-e628b2: Pérdidas imprevistas (fortuitas)
+  p-e1d1d9: Si <span condition="/isFilingStatusMFJ" operator="isFalse">sufres</span><span condition="/isFilingStatusMFJ" operator="isTrue">sufren</span> pérdidas por accidentes, desastres, o robos debido a un desastre declarado a nivel federal o estatal, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducirlas.
+  p-999102: También <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir pérdidas por robo relacionadas a transacciones lucrativas, incluyendo estafas.
+  p-10956c: Algunas pérdidas imprevistas requieren que restes $100 por evento y <fg-show path="/casualtyLossesAgiLimit"/> de tu deducción. Esto sería el 10% de <span condition="/isFilingStatusMFJ" operator="isFalse">tu</span><span condition="/isFilingStatusMFJ" operator="isTrue">su</span> ingreso bruto ajustado (AGI). Confirma cuáles reglas <span condition="/isFilingStatusMFJ" operator="isFalse">te</span><span condition="/isFilingStatusMFJ" operator="isTrue">les</span> aplican antes de ingresar una cantidad.
+  p-39aa78: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc515" class="usa-link">Conoce más sobre las pérdidas imprevistas.</a>
   /casualtyLossesTotal:
-    question:
-  h4-fcd750:
-  p-e4b51d:
+    question: Pérdidas imprevistas estimadas para el <fg-show path="/taxYear"/>
+  h4-fcd750: Otras deducciones detalladas
+  p-e4b51d: '<span condition="/isFilingStatusMFJ" operator="isFalse">Podrías</span><span condition="/isFilingStatusMFJ" operator="isTrue">Podrían</span> deducir estos gastos:'
   ul-3:
-    li-78ebd4:
-    li-bde3ca:
-    li-7a25f3:
-    li-e782c2:
-    li-8a47cf:
-    li-b60c39:
-    li-84271d:
-    li-df57a9:
-    li-9fbb8c:
-    li-202051:
-    li-5c9c06:
-    li-d57dd2:
-  p-3c5570:
+    li-78ebd4: Prima amortizable sobre bonos sujetos a impuestos
+    li-bde3ca: Pérdidas fortuitas y por robo relacionadas a una propiedad que genera ingresos
+    li-7a25f3: Deducciones en exceso (incluyendo gastos administrativos) permitidas a un beneficiario al finalizar un patrimonio o fideicomiso
+    li-e782c2: Impuesto federal sobre el patrimonio de una persona fallecida
+    li-8a47cf: Montos pagados como parte de tu profesión o negocios que representan una restitución, remediación, o se pagaron para cumplir con la ley
+    li-b60c39: 90% de las pérdidas por juegos de azar y hasta el total de las ganancias
+    li-84271d: Gastos de trabajo relacionados con una discapacidad
+    li-df57a9: Pérdidas por inversiones de estilo Ponzi
+    li-9fbb8c: Reembolsos de más de $3,000 por un reclamo de derecho
+    li-202051: Costos deducibles relacionados a cualquier acción que involucre un reclamo por discriminación
+    li-5c9c06: Inversiones en una anualidad que no se recuperaron
+    li-d57dd2: Una pérdida ordinaria relacionada a un instrumento de deuda de pago contingente, o un instrumento de deuda indexado a la inflación (p. ej., un título del Tesoro, protegido contra la inflación)
+  p-3c5570: <a target="_blank" href="https://www.irs.gov/publications/p529" class="usa-link">Conoce más sobre otras deducciones.</a>
   /otherDeductionsTotal:
-    question:
-  h4-ab9771:
-  p-db6824:
+    question: Estimado de otras deducciones para el <fg-show path="/taxYear"/>
+  h4-ab9771: 'Total de deducciones detalladas: <fg-show path="/itemizedDeductionTotal"/>'
+  p-db6824: 'Cuando calculemos tus resultados, usaremos el monto mayor: la deducción estándar o el total de tus deducciones detalladas.'
   modal-standard-deduction-or-itemize-deductions:
-    heading:
-    p-05b623:
-    p-612298:
-    p-b8a25f:
-    p-9d31c1:
-    p-a2eb42:
-    p-617b6e:
-    p-531543:
+    heading: ¿Qué es una deducción estándar y una deducción detallada?
+    p-05b623: La deducción <strong>estándar</strong> y la <strong>detallada</strong> son formas de reducir el monto de tus ingresos sujetos a impuestos.
+    p-612298: La deducción estándar es una cantidad fija que se resta de tus ingresos. Se calcula según tu estado civil al declarar impuestos y según si tú o tu esposo(a) tienen 65 o más, son ciegos, o alguien más puede reclamarlos como un dependiente en el año fiscal.
+    p-b8a25f: Detallar deducciones significa totalizar cada deducción del <a target="_blank" href="https://www.irs.gov/es/forms-pubs/about-schedule-a-form-1040" class="usa-link">Anexo A<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a> para la que calificas, artículo por artículo.
+    p-9d31c1: La mayoría de personas toman la deducción estándar, pero podrías querer intentar detallar tus deducciones si tienes una hipoteca, donaciones caritativas grandes o gastos médicos altos.
+    p-a2eb42: Ahorrarás dinero al elegir la opción que se calcule como la mayor deducción.
+    p-617b6e: No puedes tomar la deducción estándar si detallas tus deducciones.
+    p-531543: <a target="_blank" href="https://www.irs.gov/es/newsroom/tax-basics-understanding-the-difference-between-standard-and-itemized-deductions" class="usa-link">Conoce más sobre la deducción estándar y la detallada.<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
   modal-standard-deduction-amount:
-    heading:
-    p-0e3533:
-    p-dafa6d:
-    p-bb6ae9:
-    p-3fc80f:
-    p-d9e6c0:
-    p-bc0d47:
+    heading: El monto de tu deducción estándar se basa en tus respuestas.
+    p-0e3533: Tu deducción estándar es limitada porque otro contribuyente puede reclamarte como un dependiente.
+    p-dafa6d: Tu deducción estándar es limitada porque otro contribuyente puede reclamarte, reclamar a tu esposo(a) o reclamarlos a ambos como un dependiente.
+    p-bb6ae9: Tu deducción estándar es limitada porque otro contribuyente puede reclamarte, reclamar a tu esposo(a) o reclamarlos a ambos como un dependiente.
+    p-3fc80f: 'Se utiliza la mayor de estas dos cantidades: <fg-show path="/tentativeMinimumStandardDeduction"/>, o tus ingresos recibidos más <fg-show path="/earnedIncomeBump"/> (pero no puede ser mayor a <fg-show path="/filingStatusStandardDeduction"/>).'
+    p-d9e6c0: 'Sobre esa cantidad, se agrega otro monto porque:'
+    p-bc0d47: '<span condition="/isFilingStatusMFJ" operator="isTrue">Su</span><span condition="/isFilingStatusMFJ" operator="isFalse">Tu</span>
+      deducción estándar se basa en el estado civil de <span condition="/isFilingStatusMFJ"
+      operator="isTrue">Casado(a) que presenta una declaración conjunta</span><span condition="/isFilingStatusMFS"
+      operator="isTrue">Casado(a) que presenta una declaración por separado</span><span condition="/isFilingStatusSingle"
+      operator="isTrue">Soltero(a)</span><span condition="/isFilingStatusHOH" operator="isTrue">Cabeza
+      de familia</span><span condition="/isFilingStatusQSS" operator="isTrue">Esposo(a) sobreviviente
+      calificado</span> y un monto adicional porque:'
     ul-0:
-      li-09216d:
-      li-603910:
-      li-b4e324:
-      li-80f87f:
-      li-6a4489:
-      li-e4bf17:
-    p-722e90:
+      li-09216d: Tendrás 65 años o más a fin de año
+      li-603910: Tu esposo(a) tendrá 65 años o más a fin de año
+      li-b4e324: Tendrán 65 años o más a fin de año
+      li-80f87f: Eres ciego(a)
+      li-6a4489: Tu esposo(a) es ciego(a)
+      li-e4bf17: Uno o ambos de ustedes es ciego(a)
+    p-722e90: <a target="_blank" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000221051" class="usa-link">Conoce más sobre la deducción estándar.<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
 /additional-deductions:
   title:
   h2-e64960:

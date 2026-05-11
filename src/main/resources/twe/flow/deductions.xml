@@ -29,7 +29,7 @@
         <p condition="/wantsStandardDeduction" operator="isIncomplete">If the total of your itemized deductions is higher than the standard deduction, we use that amount to calculate your results. This is more advantageous for you.</p>
       </div>
       <p condition="/wantsStandardDeduction" operator="isTrueAndComplete">You chose to apply the standard deduction instead of itemizing. You can continue to the next page.</p>
-      <p condition="/wantsItemizedDeduction" operator="isTrue">Estimate the amount for deductions you plan to take this year.</p>
+      <p condition="/wantsItemizedDeduction" operator="isTrue">Estimate the amount for deductions you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> plan to take this year.</p>
       <h4 condition="/wantsItemizedDeduction" operator="isTrue">State and local taxes</h4>
       <div condition="/wantsItemizedDeduction" operator="isTrue">
         <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> pay state and local taxes, you can deduct up to <fg-show path="/stateAndLocalTaxDeductionLimit"/>.</p>
@@ -56,7 +56,7 @@
       <div condition="/wantsItemizedDeduction" operator="isTrue">
         <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> donate to a qualifying organization, you can deduct those donations.</p>
         <p>
-          <a target="_blank" href="https://www.irs.gov/charities-non-profits/charitable-organizations/" class="usa-link">Learn more about gifts to charity.</a>
+          <a target="_blank" href="https://www.irs.gov/charities-non-profits/charitable-organizations/charitable-contribution-deductions" class="usa-link">Learn more about gifts to charity.</a>
         </p>
       </div>
       <fg-set path="/cashCharitableContributions" if-true="/wantsItemizedDeduction">

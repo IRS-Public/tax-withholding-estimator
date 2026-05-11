@@ -18,8 +18,11 @@ class YamlValidatorSpec extends AnyFunSpec {
 
   private val ignoredTranslationKeys: Set[String] = Set(
     // If a translation key is verified to be correct, but causes the test to fail in a way that we cannot update the
-    // test logic to account for, it can be added here. Use the full path like so:
-    // "/.modal-filing-status.p-b4bd3e"
+    // test logic to account for, its full path can be added here:
+    "/deductions.p-5ea630",
+    "/deductions.p-b6c1cd",
+    "/deductions.p-999102",
+    "/deductions.p-10956c",
   )
   private val ignoredAttributeValues = Set("href")
 

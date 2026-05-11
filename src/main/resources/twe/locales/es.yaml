@@ -53,8 +53,8 @@ components:
     select:
 
 title:
-  prefix:
-  suffix:
+  prefix: Estimador para Retención de Impuestos
+  suffix: Servicio de Impuestos Internos
 
 layout:
   title: Estimador para Retención de Impuestos

@@ -1436,7 +1436,8 @@
     we use that amount to calculate your results. This is more advantageous for you.
   p-fb9061: You chose to apply the standard deduction instead of itemizing. You can
     continue to the next page.
-  p-fd1ad1: Estimate the amount for deductions you plan to take this year.
+  p-86e60d: Estimate the amount for deductions you <span condition="/isFilingStatusMFJ"
+    operator="isTrue">and your spouse</span> plan to take this year.
   h4-a883ab: State and local taxes
   p-29bab3: If you <span condition="/isFilingStatusMFJ" operator="isTrue">and your
     spouse</span> pay state and local taxes, you can deduct up to <fg-show path="/stateAndLocalTaxDeductionLimit"/>.
@@ -1457,7 +1458,7 @@
   h4-627030: Gifts to charity
   p-693a4b: If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your
     spouse</span> donate to a qualifying organization, you can deduct those donations.
-  p-6109d4: <a target="_blank" href="https://www.irs.gov/charities-non-profits/charitable-organizations/"
+  p-e1d782: <a target="_blank" href="https://www.irs.gov/charities-non-profits/charitable-organizations/charitable-contribution-deductions"
     class="usa-link">Learn more about gifts to charity.</a>
   /cashCharitableContributions:
     question: Gifts to charity you <span condition="/isFilingStatusMFJ" operator="isTrue">and
