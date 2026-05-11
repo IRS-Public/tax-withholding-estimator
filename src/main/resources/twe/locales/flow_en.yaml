@@ -282,15 +282,14 @@
       modalLink: <modal-link for="modal-job-gross-ytd-end-en">How do I find the gross
         income so far in <fg-show path="/taxYear"/>?</modal-link>
     h5-64d83a: Estimated tips and overtime
-    p-ef5522: For 2025 through 2028, there are new deductions for tips and overtime.
-      If you meet the eligibility requirements, you may be able to deduct (subtract)
+    p-902fc0: For 2025 through 2028, there are new deductions for tips and overtime.
+      If <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse
+      meets</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you
+      meet</span> the eligibility requirements, you may be able to deduct (subtract)
       qualified tips and qualified overtime pay from your income.
-    p-7389da: |-
-      If <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse meets</span>
-                  <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you meet</span> the eligibility requirements, you may be able to deduct (subtract) tips and overtime pay from your income, so you won’t have to pay tax on it.
-    p-402e29: |-
-      If this section doesn’t apply to <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
-                  <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>, it’s okay to leave this blank.
+    p-089a35: If this section doesn’t apply to <span condition="/jobs/*/isFilerAssignmentSelf"
+      operator="isFalse">your spouse,</span><span condition="/jobs/*/isFilerAssignmentSelf"
+      operator="isTrue">you,</span> it’s okay to leave this blank.
     fg-detail-bbdbfc:
       summary: Estimated tips
       p-c3c8eb: |-
