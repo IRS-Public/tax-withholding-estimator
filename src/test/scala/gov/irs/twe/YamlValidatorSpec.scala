@@ -19,6 +19,10 @@ class YamlValidatorSpec extends AnyFunSpec {
   private val ignoredTranslationKeys: Set[String] = Set(
     // If a translation key is verified to be correct, but causes the test to fail in a way that we cannot update the
     // test logic to account for, its full path can be added here:
+    "/adjustments.p-3269b3",
+    "/adjustments.ul-1.li-05453e",
+    "/adjustments.ul-4.li-a7cbed",
+    "/adjustments.ul-4.li-e1fa4e",
     "/deductions.p-5ea630",
     "/deductions.p-b6c1cd",
     "/deductions.p-999102",

@@ -840,94 +840,101 @@
       li-af3b9e:
     p-d6e23c:
 /adjustments:
-  title:
-  h2-9fa8b1:
-  p-efc304:
-  p-624555:
-  p-9b971e:
-  h3-2c7735:
-  p-29379e:
-  p-3519c2:
-  p-cf7cae:
+  title: Ajustes
+  h2-9fa8b1: Ajustes
+  p-efc304: Estima el monto de ajustes que <span condition="/isFilingStatusMFJ"
+    operator="isFalse">piensas</span><span condition="/isFilingStatusMFJ" operator="isTrue">piensan</span> tomar este año.
+  p-624555: <modal-link for="modal-what-are-adjustments">¿Qué son ajustes?</modal-link>
+  p-9b971e: Este estimador sólo acepta algunos ajustes. Podrían haber otros ajustes para los que calificas y que podrían impactar tu estimado.
+  h3-2c7735: Deducción del interés de un préstamo estudiantil
+  p-29379e: Si eres legalmente responsable de pagar el interés en un préstamo estudiantil calificado, puedes deducir hasta <fg-show path="/maxStudentLoanDeduction"/> en pagos de interés. El préstamo debe ser para ti, tu esposo(a) o un dependiente.
+  p-3519c2: Esto incluye pagos de interés prepagados, tanto requeridos como voluntarios.
+  p-cf7cae: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc456" class="usa-link">
+    Conoce más sobre el interés de un préstamo estudiantil. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /studentLoanInterestAmount:
-    question:
-    hint:
-  h3-9166fe:
-  p-b30c3d:
-  p-dd188e:
+    question: Interés de préstamo estudiantil que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
+    hint: (máximo <fg-show path="/maxStudentLoanDeduction"/>)
+  h3-9166fe: Deducción para el educador
+  p-b30c3d: Si eres un educador de K-12 puedes deducir hasta <fg-show path="/maxEducatorExpensesNotMFJ"/> por gastos no reembolsados en el <fg-show path="/taxYear"/>. <span condition="/isFilingStatusMFJ"
+    operator="isTrue">Si presentas una declaración conjunta y ambos son educadores, pueden deducir hasta <fg-show path="/maxEducatorExpensesMFJ"/>.</span>
+  p-dd188e: 'Los gastos calificados incluyen:'
   ul-0:
-    li-0b8a3d:
-    li-c31915:
-    li-f3a059:
-  p-b20cac:
+    li-0b8a3d: Cursos de desarrollo profesional
+    li-c31915: Libros, útiles, equipo de computador (incluyendo programas y servicios relacionados)
+    li-f3a059: Otros equipos y materiales suplementarios que uses en el salón de clase
+  p-b20cac: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc458" class="usa-link">Conoce más sobre gastos del educador. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /educatorExpenses/:
-    question:
-    hint:
-  h3-e640b9:
-  p-3269b3:
-  p-523de9:
-  p-2bd31f:
+    question: Gastos del educador que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> deducir en el <fg-show path="/taxYear"/>
+    hint: (máximo <fg-show path="/maxEducatorExpensesLimit"/>)
+  h3-e640b9: Deducción por una cuenta IRA tradicional (pre-impuestos)
+  p-3269b3: Si contribuyes a una cuenta de jubilación IRA tradicional (pre-impuestos) fuera de las contribuciones de tu nómina en el <fg-show path="/taxYear"/>, podrías reclamar una deducción.
+  p-523de9: <strong>No incluyas</strong> cantidades que ya incluiste en uno de tus trabajos, contribuciones a cuentas IRA Roth, o contribuciones a otras cuentas de jubilación.
+  p-2bd31f: <a target="_blank" href="https://www.irs.gov/es/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits"
+    class="usa-link">Conoce más sobre contribuciones a cuentas de jubilación IRA. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /deductionForTraditionalIRAContribution:
-    question:
-  h3-f9e99b:
-  p-8a03a1:
-  p-f0de33:
+    question: Contribuciones a una cuenta de jubilación IRA tradicional que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
+  h3-f9e99b: Deducción por un plan de jubilación para un trabajador por cuenta propia
+  p-8a03a1: Si <span condition="/isFilingStatusMFJ" operator="isFalse">trabajas</span><span condition="/isFilingStatusMFJ" operator="isTrue">trabajan</span> por tu cuenta y <span condition="/isFilingStatusMFJ" operator="isFalse">haces</span><span condition="/isFilingStatusMFJ" operator="isTrue">hacen</span> contribuciones en el <fg-show path="/taxYear"/> a un plan de jubilación calificado, podrías ser <span condition="/isFilingStatusMFJ" operator="isFalse">elegible</span><span condition="/isFilingStatusMFJ" operator="isTrue">elegibles</span> para esta deducción.
+  p-f0de33: 'Para calificar <span condition="/isFilingStatusMFJ" operator="isFalse">debes</span><span condition="/isFilingStatusMFJ" operator="isTrue">deben</span>:'
   ul-1:
-    li-05453e:
-    li-292ab3:
-    li-4bca7f:
-  p-345fbc:
+    li-05453e: Ser <span condition="/isFilingStatusMFJ" operator="isFalse">el propietario único</span><span condition="/isFilingStatusMFJ" operator="isTrue">propietarios únicos</span> del negocio
+    li-292ab3: Ser parte de una asociación de negocios, o
+    li-4bca7f: Tener una compañía de responsabilidad limitada
+  p-345fbc: 'Los planes elegibles podrían incluir:'
   ul-2:
-    li-ff93fe:
-    li-200ab4:
-    li-e7dbe4:
-    li-765afa:
-  p-af5a4a:
-  p-09dfdf:
-  p-3248f2:
+    li-ff93fe: Plan de pensión simplificado del empleado (SEP)
+    li-200ab4: Plan SIMPLE (Savings Incentive Match Plan for Employees)
+    li-e7dbe4: Solo-401(k)
+    li-765afa: Otros planes de jubilación calificados
+  p-af5a4a: <strong>No incluyas</strong> contribuciones a cuentas individuales de jubilación (IRA).
+  p-09dfdf: Debes usar reglas especiales para calcular las contribuciones a un plan de jubilación.
+  p-3248f2: <a target="_blank" href="https://www.irs.gov/es/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction"
+    class="usa-link">Conoce más sobre las contribuciones a planes de jubilación para trabajadores por cuenta propia. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /selfEmploymentRetirementPlanContributions:
-    question:
-  h3-940849:
-  p-fc912f:
-  p-739bad:
-  p-427dc4:
+    question: Contribuciones a un plan de jubilación de ingresos por trabajo por cuenta propia que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
+  h3-940849: Deducción por una Cuenta de ahorros para la salud (HSA)
+  p-fc912f: Si <span condition="/isFilingStatusMFJ" operator="isFalse">contribuyes</span><span condition="/isFilingStatusMFJ" operator="isTrue">contribuyen</span> a una cuenta HSA fuera de las contribuciones de <span condition="/isFilingStatusMFJ" operator="isFalse">tu nómina</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus nóminas</span> en el <fg-show path="/taxYear"/>, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> reclamar una deducción.
+  p-739bad: <strong>No incluyas</strong> cantidades que ya incluiste en uno de tus trabajos.
+  p-427dc4: <a target="_blank" href="https://www.irs.gov/forms-pubs/about-publication-969"
+    class="usa-link">Conoce más sobre las contribuciones a una cuenta HSA (en inglés). <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /hsaContributionAmount:
-    question:
-  h3-5574f6:
-  p-e03d05:
-  p-0c3c0d:
+    question: Contribuciones a una cuenta HSA que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
+  h3-5574f6: Deducción por pensión alimenticia
+  p-e03d05: Puedes deducir la pensión alimenticia que le pagaste en el <fg-show path="/taxYear"/> a un esposo(a) o ex esposo(a) bajo un instrumento de divorcio o separación hecho antes del 2019.
+  p-0c3c0d: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc452" class="usa-link">Conoce más sobre la pensión alimenticia. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /alimonyPaid:
-    question:
-  h3-913117:
-  p-5c9299:
-  p-0dd4e9:
+    question: Pensión alimenticia que esperas pagar en el <fg-show path="/taxYear"/>
+  h3-913117: Multa por retiro anticipado de ahorros
+  p-5c9299: Si <span condition="/isFilingStatusMFJ" operator="isFalse">retiraste</span><span condition="/isFilingStatusMFJ" operator="isTrue">retiraron</span> fondos de un certificado de depósito u otra cuenta de interés diferido antes del tiempo acordado, <span condition="/isFilingStatusMFJ" operator="isFalse">tu</span><span condition="/isFilingStatusMFJ" operator="isTrue">su</span> institución financiera podría <span condition="/isFilingStatusMFJ" operator="isFalse">haberte</span><span condition="/isFilingStatusMFJ" operator="isTrue">haberles</span> cobrado una multa en el <fg-show path="/taxYear"/>. <span condition="/isFilingStatusMFJ" operator="isFalse">Puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">Pueden</span> deducir el monto de la multa.
+  p-0dd4e9: <a target="_blank" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-exceptions-to-tax-on-early-distributions"
+    class="usa-link">Conoce más sobre las multas por retiro anticipado (en inglés). <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /penaltyForEarlySavingsWithdrawal:
-    question:
-  h3-640ae5:
-  p-bc1f1a:
+    question: Monto de la multa que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
+  h3-640ae5: Gastos de mudanza para la comunidad militar y de inteligencia
+  p-bc1f1a: 'Puedes deducir gastos de mudanza hechos en el <fg-show path="/taxYear"/> y que no se hayan reembolsado si:'
   ul-3:
-    li-a1710a:
-    li-b646ac:
-  p-b7904a:
+    li-a1710a: <span condition="/isFilingStatusMFJ" operator="isFalse">Eres miembro</span><span condition="/isFilingStatusMFJ" operator="isTrue">Tú o tu esposo(a) son miembros</span> de las Fuerzas Armadas en deber activo y la mudanza fue a causa de una orden militar y un cambio de estación permanente, o
+    li-b646ac: <span condition="/isFilingStatusMFJ" operator="isFalse">Eres empleado o te </span><span condition="/isFilingStatusMFJ" operator="isTrue">Tú o tu esposo(a) son empleados o les</span> han designado a la comunidad de inteligencia y la mudanza fue a causa de un cambio de asignación que requirió relocalización
+  p-b7904a: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc455" class="usa-link">Conoce más sobre los gastos de mudanza para la comunidad militar y de inteligencia. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /movingExpensesForArmedServicesMembers:
-    question:
-  h3-bcc8a5:
-  p-9fb630:
+    question: Gastos de mudanza que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
+  h3-bcc8a5: Algunos gastos de negocios
+  p-9fb630: '<span condition="/isFilingStatusMFJ" operator="isFalse">Si eres</span><span condition="/isFilingStatusMFJ" operator="isTrue">Si tú o tu esposo(a) son</span> parte de la reserva de las Fuerzas Armadas, <span condition="/isFilingStatusMFJ" operator="isFalse">un artista intérprete</span><span condition="/isFilingStatusMFJ" operator="isTrue">artistas intérpretes</span>, <span condition="/isFilingStatusMFJ" operator="isFalse">funcionario</span><span condition="/isFilingStatusMFJ" operator="isTrue">funcionarios</span> del gobierno estatal o local que cobra honorarios, o <span condition="/isFilingStatusMFJ" operator="isFalse">un empleado</span><span condition="/isFilingStatusMFJ" operator="isTrue">empleados</span> con una discapacidad y gastos de trabajo relacionados a esta, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir gastos en el <fg-show path="/taxYear"/> que:'
   ul-4:
-    li-a7cbed:
-    li-e1fa4e:
-  p-30ab2e:
+    li-a7cbed: Son comunes y aceptados en <span condition="/isFilingStatusMFJ" operator="isFalse">tu campo</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus campos</span> de trabajo, negocios o profesión
+    li-e1fa4e: Son útiles y apropiados para <span condition="/isFilingStatusMFJ" operator="isFalse">tus</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus</span> negocios
+  p-30ab2e: <a target="_blank" href="https://www.irs.gov/instructions/i2106" class="usa-link">Conoce más sobre algunos gastos de negocios (en inglés). <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /businessCreditsForEligible:
-    question:
-  h3-5c4fd4:
-  p-105416:
-  p-082b2a:
-  p-13dece:
+    question: Gastos de negocio elegibles que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
+  h3-5c4fd4: Deducción por seguro médico del trabajador por cuenta propia
+  p-105416: <span condition="/isFilingStatusMFJ" operator="isFalse">Si trabajas</span><span condition="/isFilingStatusMFJ" operator="isTrue">Tú o tu esposo(a) trabajan</span> por cuenta propia y <span condition="/isFilingStatusMFJ" operator="isFalse">tienes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tienen</span> ganancias netas este año, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir las primas del <fg-show path="/taxYear"/> del seguro médico.
+  p-082b2a: 'Las primas elegibles son: médicas, dentales, de visión y seguro de cuidado a largo plazo. La póliza puede ser para ti, tu esposo(a) o un dependiente. La póliza también puede cubrir a un hijo(a) si es menor de 27 años a fin del año, aun si no es tu dependiente.'
+  p-13dece: <a target="_blank" href="https://www.irs.gov/es/node/131041" class="usa-link">Conoce más sobre las deducciones por seguro médico para el trabajador por cuenta propia (en inglés). <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /selfEmploymentHealthInsuranceContributions:
-    question:
+    question: Primas de seguro médico que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
   modal-what-are-adjustments:
-    heading:
-    p-c60313:
+    heading: ¿Qué son ajustes?
+    p-c60313: Los ajustes son un tipo de deducción. Son gastos, pagos y contribuciones que podrías restar del total de tus ingresos para reducir la cantidad que está sujeta a impuestos.
 /deductions:
   title: Elección de deducción
   h2-414252: Deducción estándar o detallada
