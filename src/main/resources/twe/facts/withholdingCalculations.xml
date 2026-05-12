@@ -1450,20 +1450,20 @@
           <Left>
             <Add>
               <CollectionSum>
-                <Dependency path="/jobsAvailableForExtraWithholding/*/tentativeAnnualWithholdingAmount" />
+                <Dependency path="/jobsAvailableForExtraWithholding/*/tentativeAnnualWithholdingAmount"/>
               </CollectionSum>
               <CollectionSum>
-                <Dependency path="/pensionsAvailableForExtraWithholding/*/tentativeAnnualWithholdingAmount" />
+                <Dependency path="/pensionsAvailableForExtraWithholding/*/tentativeAnnualWithholdingAmount"/>
               </CollectionSum>
             </Add>
           </Left>
           <Right>
             <Add>
               <CollectionSum>
-                <Dependency path="/jobsAvailableForExtraWithholding/*/creditsNeededToFullyBridgeTaxGap" />
+                <Dependency path="/jobsAvailableForExtraWithholding/*/creditsNeededToFullyBridgeTaxGap"/>
               </CollectionSum>
               <CollectionSum>
-                <Dependency path="/pensionsAvailableForExtraWithholding/*/creditsNeededToFullyBridgeTaxGap" />
+                <Dependency path="/pensionsAvailableForExtraWithholding/*/creditsNeededToFullyBridgeTaxGap"/>
               </CollectionSum>
             </Add>
           </Right>
@@ -1524,7 +1524,6 @@
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/withholdingAmountPerPayPeriodTotalForJobsAndPensions">
       <Description>
         The total amount to withhold from the employee's wages this pay period for all jobs and pensions.
@@ -1532,15 +1531,14 @@
       <Derived>
         <Add>
           <CollectionSum>
-            <Dependency path="/jobsAvailableForExtraWithholding/*/withholdingAmountPerPayPeriod" />
+            <Dependency path="/jobsAvailableForExtraWithholding/*/withholdingAmountPerPayPeriod"/>
           </CollectionSum>
           <CollectionSum>
-            <Dependency path="/pensionsAvailableForExtraWithholding/*/withholdingAmountPerPayPeriod" />
+            <Dependency path="/pensionsAvailableForExtraWithholding/*/withholdingAmountPerPayPeriod"/>
           </CollectionSum>
         </Add>
       </Derived>
     </Fact>
-
     <Fact path="/mayNeedToMakeEstimatedPayments">
       <Description>
         Whether the taxpayer needs to make estimated payments to make up the balance.
@@ -1565,10 +1563,10 @@
             <Right>
               <Add>
                 <CollectionSum>
-                  <Dependency path="/jobsAvailableForExtraWithholding/*/averageTaxablePayPerPayPeriod" />
+                  <Dependency path="/jobsAvailableForExtraWithholding/*/averageTaxablePayPerPayPeriod"/>
                 </CollectionSum>
                 <CollectionSum>
-                  <Dependency path="/pensionsAvailableForExtraWithholding/*/averagePayPerPayPeriodForWithholding" />
+                  <Dependency path="/pensionsAvailableForExtraWithholding/*/averagePayPerPayPeriodForWithholding"/>
                 </CollectionSum>
               </Add>
             </Right>
@@ -1586,10 +1584,10 @@
           <Left>
             <Add>
               <CollectionSize>
-                <Dependency path="/jobsAvailableForExtraWithholding" />
+                <Dependency path="/jobsAvailableForExtraWithholding"/>
               </CollectionSize>
               <CollectionSize>
-                <Dependency path="/pensionsAvailableForExtraWithholding" />
+                <Dependency path="/pensionsAvailableForExtraWithholding"/>
               </CollectionSize>
             </Add>
           </Left>

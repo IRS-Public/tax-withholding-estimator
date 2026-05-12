@@ -27,6 +27,9 @@ class YamlValidatorSpec extends AnyFunSpec {
     "/deductions.p-b6c1cd",
     "/deductions.p-999102",
     "/deductions.p-10956c",
+    "/additional-deductions.p-13d235",
+    "/additional-deductions./wantsDerivedQBIDeduction.question",
+    "/additional-deductions./qBIDeductionOverrideAmount.question",
   )
   private val ignoredAttributeValues = Set("href")
 

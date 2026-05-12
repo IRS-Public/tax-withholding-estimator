@@ -1054,78 +1054,82 @@
       li-e4bf17: Uno o ambos de ustedes es ciego(a)
     p-722e90: <a target="_blank" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000221051" class="usa-link">Conoce más sobre la deducción estándar.<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
 /additional-deductions:
-  title:
-  h2-e64960:
-  p-9a1bd3:
-  p-13d235:
-  h3-cf5852:
-  p-b36cd1:
-  p-d8609e:
+  title: Deducciones adicionales
+  h2-e64960: Deducciones adicionales
+  p-9a1bd3: <span condition="/isFilingStatusMFJ" operator="isFalse">Puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">Pueden</span> estimar el monto de deducciones adicionales que <span condition="/isFilingStatusMFJ" operator="isFalse">piensas</span><span condition="/isFilingStatusMFJ" operator="isTrue">piensan</span> tomar este año.
+  p-13d235: Ya sea que <span condition="/isFilingStatusMFJ" operator="isFalse">tomes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tomen</span> la deducción estándar o la detallada, estas deducciones pueden reducir aun más la cantidad de <span condition="/isFilingStatusMFJ" operator="isFalse">tus</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus</span> ingresos que estaría sujeta a impuestos.
+  h3-cf5852: Donaciones caritativas en efectivo
+  p-b36cd1: Si tomas la deducción estándar y haces una donación a una organización calificada en el <fg-show path="/taxYear"/>, puedes deducir donaciones en efectivo hasta <fg-show path="/actualNonItemizerCharitableContributionDeductionMax"/>.
+  p-d8609e: 'Las donaciones en efectivo incluyen pagos hechos en las siguientes formas:'
   ul-0:
-    li-069b30:
-    li-060bf2:
-    li-5fa5bb:
-    li-1e7cc9:
-    li-95186c:
-    li-53c28e:
-  p-76b3ac:
-  p-795838:
+    li-069b30: Efectivo
+    li-060bf2: Cheque
+    li-5fa5bb: Transferencia electrónica de fondos, o servicio de pago en línea
+    li-1e7cc9: Tarjeta de débito o crédito
+    li-95186c: Deducción en tu nómina
+    li-53c28e: Transferencia de una tarjeta de regalo que puede canjearse por efectivo
+  p-76b3ac: <strong>El estimador usará la deducción estándar</strong> porque es mayor que tu deducción detallada. Si agregaste donaciones caritativas en efectivo, vuelve a agregar esas mismas donaciones aquí.
+  p-795838: <a target="_blank" href="https://www.irs.gov/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance"
+    class="usa-link">Conoce más sobre las donaciones caritativas en efectivo.</a>
   /nonItemizerCharitableContributionDeductionAmount:
-    question:
-    hint:
-  h3-88e0af:
-  p-f250e6:
-  p-51dacf:
+    question: Donaciones caritativas en efectivo que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
+    hint: (max <fg-show path="/actualNonItemizerCharitableContributionDeductionMax"/>)
+  h3-88e0af: Deducción adicional para adultos mayores
+  p-f250e6: Desde el 2025 hasta el 2028, los contribuyentes de 65 años o más podrán reclamar una deducción adicional de hasta <fg-show path="/maxSeniorDeductionAmount"/>.
+  p-51dacf: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
+    class="usa-link">Conoce más sobre la deducción adicional para adultos mayores.</a>
   /primaryTaxpayerElectsForSeniorDeduction:
-    question:
-    hint:
+    question: ¿Piensas tomar la deducción adicional para adultos mayores?
+    hint: Elige “No” si no tienes un número de Seguro Social
   /secondaryTaxpayerElectsForSeniorDeduction:
-    question:
-    hint:
-  h3-f830e5:
-  p-b98393:
-  p-d7066d:
+    question: ¿Tu esposo(a) piensa tomar la deducción adicional para adultos mayores?
+    hint: Elige “No” si no tiene un número de Seguro Social
+  h3-f830e5: Deducción de intereses de préstamos para automóviles
+  p-b98393: Si <span condition="/isFilingStatusMFJ" operator="isFalse">pagaste</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagaron</span> intereses por un préstamo de un automóvil en el <fg-show path="/taxYear"/>, <span condition="/isFilingStatusMFJ" operator="isFalse">podrías</span><span condition="/isFilingStatusMFJ" operator="isTrue">podrían</span> deducir hasta <fg-show path="/maxQPVLIDAmount"/> de los intereses que <span condition="/isFilingStatusMFJ" operator="isFalse">pagaste</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagaron</span>.
+  p-d7066d: 'Para calificar para la deducción, el interés debe pagarse en un préstamo que:'
   ul-1:
-    li-de646c:
-    li-c01c71:
-    li-2e73bf:
-  p-9b605a:
+    li-de646c: Se originó en el 2025 o después
+    li-c01c71: Está respaldado por un gravamen en el auto (esto es un derecho legal del prestamista para asegurar el pago del préstamo)
+    li-2e73bf: Se usó para comprar un vehículo calificado para uso personal
+  p-9b605a: 'Un vehículo calificado es un auto, minivan, van, vehículo deportivo de utilidad, camioneta, o motocicleta que:'
   ul-2:
-    li-13960a:
-    li-1ac6c8:
-    li-14ccc7:
-    li-71d229:
-  p-62c99d:
-  p-43c67d:
+    li-13960a: Es nuevo (no usado)
+    li-1ac6c8: Tuvo su ensamblaje final en los Estados Unidos
+    li-14ccc7: Tiene un peso bruto menor a 14,000 libras
+    li-71d229: Se manufacturó para uso principalmente en calles públicas, carreteras y autopistas
+  p-62c99d: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
+    class="usa-link">Conoce más sobre los intereses de préstamos para autos calificados.</a>
+  p-43c67d: <a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Revisa si tu auto se ensambló en los Estados Unidos.</a>
   /personalVehicleLoanInterestAmount:
-    question:
-  h3-8e5d10:
-  p-2a6643:
-  p-c43979:
+    question: Intereses del préstamo para un auto que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
+  h3-8e5d10: Ingreso calificado de un negocio (QBI)
+  p-2a6643: Si <span condition="/isFilingStatusMFJ" operator="isFalse">eres dueño</span><span condition="/isFilingStatusMFJ" operator="isTrue">son dueños</span> en una asociación, corporación S, o <span condition="/isFilingStatusMFJ" operator="isFalse">tienes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tienen</span> trabajo por cuenta propia, <span condition="/isFilingStatusMFJ" operator="isFalse">podrías</span><span condition="/isFilingStatusMFJ" operator="isTrue">podrían</span> tomar una deducción si <span condition="/isFilingStatusMFJ" operator="isFalse">tienes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tienen</span> QBI en el <fg-show path="/lastTaxYear"/>. Esta deducción puede reducirse o eliminarse para algunas empresas de servicios.
+  p-c43979: <strong>Según <span condition="/isFilingStatusMFJ" operator="isFalse">tus</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus</span> respuestas, <span condition="/isFilingStatusMFJ" operator="isFalse">tu</span><span condition="/isFilingStatusMFJ" operator="isTrue">el</span> QBI es de <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/>.</strong>
   /wantsDerivedQBIDeduction:
-    question:
-    modalLink:
+    question: <span condition="/isFilingStatusMFJ" operator="isFalse">Elige si quieres</span><span condition="/isFilingStatusMFJ" operator="isTrue">Elijan si quieren</span> usar el monto de QBI que calculamos según <span condition="/isFilingStatusMFJ" operator="isFalse">tus</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus</span> respuestas o si <span condition="/isFilingStatusMFJ" operator="isFalse">quieres</span><span condition="/isFilingStatusMFJ" operator="isTrue">quieren</span> ingresar un monto diferente.
+    modalLink: <modal-link for="modal-qbi-when">¿Cuándo debería ingresar un monto diferente?</modal-link>
     options:
       'true':
-        name:
+        name: Utilizar <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/> para este estimado
       'false':
-        name:
-  h3-090c33:
-  p-911b92:
+        name: Ingresar un monto diferente para este estimado
+  h3-090c33: Estimado del ingreso calificado de un negocio (QBI)
+  p-911b92: 'Para estimar el QBI calcula: '
   ol-0:
-    li-eb6dd8:
-    li-5b1108:
-    li-afd842:
-  p-fb0f3c:
+    li-eb6dd8: Los ingresos de negocios que esperas en el <fg-show path="/taxYear"/>
+    li-5b1108: Resta los gastos comunes del negocio (como renta, materiales, y beneficios de los empleados)
+    li-afd842: Resta deducciones relacionas con el empleo por cuenta propia (como primas de seguro de salud para el trabajador por cuenta propia, contribuciones a planes de jubilación para el trabajador por cuenta propia, y la mitad de tu impuesto al trabajador por cuenta propia)
+  p-fb0f3c: <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction"
+    class="usa-link">Conoce más sobre el ingreso calificado de un negocio</a>
   /qBIDeductionOverrideAmount:
-    question:
-    hint:
+    question: Monto estimado de QBI para el <fg-show path="/taxYear"/>
+    hint: Si tienes dudas, puedes ingresar $0.
   modal-qbi-when:
-    heading:
-    p-3c9516:
-    p-51c6e8:
-    p-92b07b:
-    p-24ae98:
+    heading: ¿Cuándo debería ingresar un monto diferente?
+    p-3c9516: Si no eres dueño o no te beneficias economicamente de un negocio o comercio, podrías querer ingresar $0 para la deducción por ingreso calificado de un negocio (QBI)
+    p-51c6e8: Si tu ingreso bruto ajustado será mayor a <fg-show path="/qbiPhaseInThreshold"/>, podrías querer ingresar un monto diferente.
+    p-92b07b: Calcula la deducción de tu QBI con el <a target="_blank" href="https://www.irs.gov/forms-pubs/about-form-8995">Formulario 8995-A</a>. También puedes usar la misma deducción para QBI que usaste el año pasado como estimado. La encontrarás en la línea 13a de tu Formulario 1040 del <fg-show path="/previousTaxYear"/>.
+    p-24ae98: <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction" class="usa-link">Conoce más sobre el QBI. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
 /credits:
   title: Créditos
   h2-948a2e: Créditos
