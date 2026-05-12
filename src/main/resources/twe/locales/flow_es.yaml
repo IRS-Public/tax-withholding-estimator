@@ -1114,13 +1114,13 @@
       'false':
         name: Ingresar un monto diferente para este estimado
   h3-090c33: Estimado del ingreso calificado de un negocio (QBI)
-  p-911b92: 'Para estimar el QBI calcula: '
+  p-911b92: 'Para estimar el QBI calcula:'
   ol-0:
     li-eb6dd8: Los ingresos de negocios que esperas en el <fg-show path="/taxYear"/>
     li-5b1108: Resta los gastos comunes del negocio (como renta, materiales, y beneficios de los empleados)
     li-afd842: Resta deducciones relacionas con el empleo por cuenta propia (como primas de seguro de salud para el trabajador por cuenta propia, contribuciones a planes de jubilación para el trabajador por cuenta propia, y la mitad de tu impuesto al trabajador por cuenta propia)
   p-fb0f3c: <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction"
-    class="usa-link">Conoce más sobre el ingreso calificado de un negocio</a>
+    class="usa-link">Conoce más sobre el ingreso calificado de un negocio.</a>
   /qBIDeductionOverrideAmount:
     question: Monto estimado de QBI para el <fg-show path="/taxYear"/>
     hint: Si tienes dudas, puedes ingresar $0.
