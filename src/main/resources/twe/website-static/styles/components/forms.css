@@ -34,6 +34,31 @@ h2 + fg-set {
   border-top: 2px solid var(--base-lighter);
   margin-top: var(--flow-spacing--offset);
   padding-top: var(--flow-spacing);
+  @container app (min-width: 480px) {
+    display: flex;
+  }
+  .usa-button {
+    @container app (max-width: 480px) {
+      width: 100%;
+    }
+    @container app (min-width: 480px) {
+      display: inline-flex;
+    }
+  }
+  .back-btn--mobile {
+    display: none;
+    @container app (max-width: 480px) {
+      display: inline-flex;
+      margin-top: var(--flow-spacing--sm);
+    }
+  }
+
+  .back-btn--desktop {
+    display: none;
+    @container app (min-width: 480px) {
+      display: inline-flex;
+    }
+  }
 }
 
 fg-set span[condition]:not(.hidden) {

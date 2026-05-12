@@ -61,13 +61,26 @@
         <div id="page-content-wrapper" class="hidden">
           <div th:utext="${pageHtml}"></div>
           <div class="form-actions" th:if="${nextPageHref}">
-            <!-- [html-validate-disable-next prefer-native-element -- Do not remove the .usa-button class - this class enables Space key functionality from USWDS needed for `role="button"`] -->
+            <!-- [html-validate-disable prefer-native-element -- Do not remove the .usa-button class - this class enables Space key functionality from USWDS needed for `role="button"`] -->
+            <a role="button" class="usa-button usa-button--outline back-btn--desktop" th:if="${lastPageHref}" th:href="${lastPageHref}">
+              <svg aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-left-neg-1 margin-y-neg-05">
+                <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
+              </svg>
+              [[#{buttons.back}]]
+            </a>
             <a role="button" class="usa-button" th:href="${nextPageHref}" onclick="return handleSectionContinue(event)">
               [[#{buttons.next}]]
               <svg aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-right-neg-1 margin-y-neg-05">
                 <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_next"></use>
               </svg>
             </a>
+            <a role="button" class="usa-button usa-button--outline back-btn--mobile" th:if="${lastPageHref}" th:href="${lastPageHref}">
+              <svg aria-hidden="true" role="img" focusable="false" class="usa-icon usa-icon--size-3 margin-left-neg-1 margin-y-neg-05">
+                <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#navigate_before"></use>
+              </svg>
+              [[#{buttons.back}]]
+            </a>
+            <!-- [html-validate-enable prefer-native-element] -->
           </div>
         </div>
 
