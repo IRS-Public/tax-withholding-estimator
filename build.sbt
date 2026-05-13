@@ -26,7 +26,7 @@ lazy val root = (project in file("."))
     libraryDependencies += "gov.irs" %% "factgraph" % "3.1.0-SNAPSHOT",
 
     // Templating libraries
-    libraryDependencies += "org.thymeleaf" % "thymeleaf" % "3.1.3.RELEASE",
+    libraryDependencies += "org.thymeleaf" % "thymeleaf" % "3.1.5.RELEASE",
     libraryDependencies += "org.jsoup" % "jsoup" % "1.21.1",
 
     // JSON and YAML utilities
