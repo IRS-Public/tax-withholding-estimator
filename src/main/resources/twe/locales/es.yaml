@@ -142,59 +142,59 @@ audit:
 results:
   fg-withholding-adjustments:
     w-4:
-      summary:
-      download-and-submit:
-      update-employer-software:
-      download-pre-filled:
-      download-blank:
+      summary: Cambia <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> <fg-show path="/jobs/*/grossIncome"/> W-2 job
+      download-and-submit: Descarga y completa el Formulario W-4 con nuestras recomendaciones. Luego, envía el formulario a <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> empleador.
+      update-employer-software: O puedes usar nuestras recomendaciones para cambiar <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tus</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">sus</span> retenciones directamente en el sistema de pago de <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> empleador.
+      download-pre-filled: Descargar el Formulario W-4 pre-llenado
+      download-blank: Descargar el Formulario W-4 en blanco
       recommendations:
-        caption:
-        field:
-        recommendation:
-        1-a-field:
-        1-a-recommendation:
-        1-b-field:
-        1-b-recommendation:
-        1-c-field:
-        1-c-recommendation:
-        2-c-field:
-        2-c-recommendation:
-        3-field:
-        3-recommendation:
-        4-a-field:
-        4-a-recommendation:
-        4-b-field:
-        4-b-recommendation:
-        4-c-field:
-        4-c-recommendation:
-        5-field:
-        5-recommendation:
-      time-sensitivity:
+        caption: Instrucciones del Formulario W-4
+        field: Casilla del Formulario W-4
+        recommendation: Cómo responder
+        1-a-field: 'Paso 1 (a): Información personal'
+        1-a-recommendation: Llena <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> nombre y dirección
+        1-b-field: 'Paso 1 (b): Número de Seguro Social'
+        1-b-recommendation: Llena <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> número de Seguro Social
+        1-c-field: 'Paso 1 (c): Estado civil'
+        1-c-recommendation: <p><span condition="/isFilingStatusMFJ" operator="isTrue">Casado(a) que presenta una declaración conjunta</span><span condition="/isFilingStatusMFS" operator="isTrue">Casado(a) que presenta una declaración por separado</span><span condition="/isFilingStatusSingle" operator="isTrue">Soltero(a)</span><span condition="/isFilingStatusHOH" operator="isTrue">Cabeza de familia</span><span condition="/isFilingStatusQSS" operator="isTrue">Esposo(a) sobreviviente calificado</span></p><p><modal-link for="modal-why-step-1-c">¿Por qué?</modal-link></p>
+        2-c-field: 'Paso 2 (c): Trabajos múltiples o si tu esposo(a) trabaja'
+        2-c-recommendation: <p>No marques esta casilla</p><p><modal-link for="modal-why-w-4-step-2-c">Why?</modal-link></p>
+        3-field: 'Paso 3: Total de créditos'
+        3-recommendation: <p><span condition="/jobs/*/shouldLeaveW4Line3Blank" operator="isFalse"><fg-show path="/jobs/*/w4Line3WithSplitWithholdingStrategy"/></span><span condition="/jobs/*/shouldLeaveW4Line3Blank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-step-3">¿Por qué?</modal-link></p>
+        4-a-field: 'Paso 4 (a): Otros ingresos (no de trabajos)'
+        4-a-recommendation: <p><span condition="/jobs/*/shouldLeaveW4Line4aBlank" operator="isFalse"><fg-show path="/jobs/*/w4Line4aWithSplitWithholdingStrategy"/></span><span condition="/jobs/*/shouldLeaveW4Line4aBlank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-w-4-step-4-a">¿Por qué?</modal-link></p>
+        4-b-field: 'Paso 4 (b): Deducciones'
+        4-b-recommendation: <p><span condition="/jobs/*/shouldLeaveW4Line4bBlank" operator="isFalse"><fg-show path="/jobs/*/w4Line4bWithSplitWithholdingStrategy"/></span><span condition="/jobs/*/shouldLeaveW4Line4bBlank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-w-4-step-4-b">¿Por qué?</modal-link></p>
+        4-c-field: 'Paso 4 (c): Retenciones adicionales'
+        4-c-recommendation: <p><span condition="/jobs/*/shouldLeaveW4Line4cBlank" operator="isFalse"><fg-show path="/jobs/*/w4Line4cWithSplitWithholdingStrategy"/></span><span condition="/jobs/*/shouldLeaveW4Line4cBlank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-w-4-step-4-c">¿Por qué?</modal-link></p>
+        5-field: 'Paso 5: Firma aquí'
+        5-recommendation: Firma y fecha
+      time-sensitivity: Los cambios a tus retenciones son de prioridad. Envía el formulario con <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> información a <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> empleador lo antes posible.
     w-4p:
-      summary:
-      download-and-submit:
-      download-pre-filled:
-      download-blank:
+      summary: Cambia <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> <fg-show path="/pensions/*/grossIncome"/> pensión o anualidad
+      download-and-submit: Descarga y completa el Formulario W-4P con nuestras recomendaciones. Luego, envía el formulario a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> proveedor de pensión o anualidad.
+      download-pre-filled: Descargar el Formulario W-4P pre-llenado
+      download-blank: Descargar el Formulario W-4P en blanco
       recommendations:
-        caption:
-        field:
-        recommendation:
-        1-a-field:
-        1-a-recommendation:
-        1-b-field:
-        1-b-recommendation:
-        1-c-field:
-        1-c-recommendation:
-        2-field:
-        2-recommendation:
-        3-field:
-        3-recommendation:
-        4-a-field:
-        4-a-recommendation:
-        4-b-field:
-        4-b-recommendation:
-        4-c-field:
-        4-c-recommendation:
-        5-field:
-        5-recommendation:
-      time-sensitivity:
+        caption: Instrucciones del Formulario W-4P
+        field: Casilla del Formulario W-4P
+        recommendation: Cómo responder
+        1-a-field: 'Paso 1 (a): Información personal'
+        1-a-recommendation: Llena <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> nombre y dirección
+        1-b-field: 'Paso 1 (b): Número de Seguro Social'
+        1-b-recommendation: Llena <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> número de Seguro Social
+        1-c-field: 'Paso 1 (c): Estado civil'
+        1-c-recommendation: <p><span condition="/isFilingStatusMFJ" operator="isTrue">Casado(a) que presenta una declaración conjunta</span><span condition="/isFilingStatusMFS" operator="isTrue">Casado(a) que presenta una declaración por separado</span><span condition="/isFilingStatusSingle" operator="isTrue">Soltero(a)</span><span condition="/isFilingStatusHOH" operator="isTrue">Cabeza de familia</span><span condition="/isFilingStatusQSS" operator="isTrue">Esposo(a) sobreviviente calificado</span></p><p><modal-link for="modal-why-step-1-c">¿Por qué?</modal-link></p>
+        2-field: 'Paso 2: Trabajos múltiples o pensiones'
+        2-recommendation:  <p>Deja la casilla en blanco</p><p><modal-link for="modal-why-w-4p-step-2">¿Por qué?</modal-link></p>
+        3-field: 'Paso 3: Total de créditos'
+        3-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine3Blank" operator="isFalse"><fg-show path="/pensions/*/w4pLine3WithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine3Blank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-step-3">¿Por qué?</modal-link></p>
+        4-a-field: 'Paso 4 (a): Otros ingresos (no de trabajos)'
+        4-a-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine4aBlank" operator="isFalse"><fg-show path="/pensions/*/w4pLine4aWithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine4aBlank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-w-4p-step-4-a">¿Por qué?</modal-link></p>
+        4-b-field: 'Paso 4 (b): Deducciones'
+        4-b-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine4bBlank" operator="isFalse"><fg-show path="/pensions/*/w4pLine4bWithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine4bBlank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-w-4p-step-4-b">¿Por qué?</modal-link></p>
+        4-c-field: 'Paso 4 (c): Retenciones adicionales'
+        4-c-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine4cBlank" operator="isFalse"><fg-show path="/pensions/*/w4pLine4cWithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine4cBlank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-w-4p-step-4-c">¿Por qué?</modal-link></p>
+        5-field: 'Paso 5: Firma aquí'
+        5-recommendation: Firma y fecha
+      time-sensitivity: Los cambios a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tus</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">sus</span> retenciones son de prioridad. Envía el formulario con <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> información a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> proveedor de pensión o anualidad lo antes posible.

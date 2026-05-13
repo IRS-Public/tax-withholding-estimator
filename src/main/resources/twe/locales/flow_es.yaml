@@ -1399,153 +1399,172 @@
     p-cb09e9: Revisa la línea 6b en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
     p-dbd9a0: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8801">Conoce más sobre el AMT (en inglés).</a>
 /results:
-  title:
-  h2-dd9460:
+  title: Resultado
+  h2-dd9460: Resultado de tus retenciones
   fg-alert-18ebd6:
-    heading:
-    p-0f5e39:
-  p-771faa:
-  p-257121:
-  p-1a7d9b:
-  p-acd885:
-  p-f27357:
-  p-d0bb10:
-  p-e9b831:
-  p-f934df:
-  p-609593:
-  p-445e9f:
-  p-bf0181:
-  h3-5359f4:
-  h3-566afa:
-  p-7d3cba:
-  p-c219b9:
+    heading: Necesitas completar los pasos anteriores
+    p-0f5e39: 'Para usar el estimador necesitas completar <a href="/app/tax-withholding-estimator/">Paso 1: Acerca de ti</a>'
+  p-771faa: Según tu información, estimamos que <strong>retienes más impuestos de lo necesario.</strong>
+  p-257121: Probablemente recibas un reembolso en tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
+  p-1a7d9b: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si quisieras recibir más dinero en cada cheque y reducir tu reembolso estimado, puedes <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">cambiar tus retenciones</a> a $0.</span>
+  p-acd885: |-
+    <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si mantienes tus retenciones como están, probablemente</span>
+    <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">Probablemente</span> recibas un reembolso en tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
+  p-f27357: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si quisieras recibir más dinero en cada cheque y reducir tu reembolso estimado, puedes <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">cambiar tus retenciones</a>.</span>
+  p-d0bb10: Según tu informacion, estimamos que <strong>no estás reteniendo suficientes impuestos.</strong>
+  p-e9b831: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si mantienes tus retenciones como están, probablemente</span><span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">Probablemente</span> debas impuestos en tu declaración del impuesto federal del <fg-show path="/taxYear"/>. <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">Podrías tener que pagar una multa además del impuesto que adeudas si debes por lo menos $1,000 y más del 10% del total del impuesto que debes pagar.</span>
+  p-f934df: <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isFalse">Si quieres reducir la cantidad de impuestos que debes,</span>
+              <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">Si quieres reducir la cantidad de impuestos que debes y evitar pagar una multa,</span>
+              <span condition="/mayNeedToMakeEstimatedPayments" operator="isFalse">
+                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue"> puedes reducir el dinero que recibes en cada cheque <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">cambiando tus retenciones.</a></span>
+                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse"> puedes hacer <a class="usa-link" href="https://www.irs.gov/es/businesses/small-businesses-self-employed/estimated-taxes">pagos del impuesto estimado</a> para cubrir la diferencia entre el cambio en tus retenciones y el impuesto que debes.</span>
+              </span>
+              <span condition="/mayNeedToMakeEstimatedPayments" operator="isTrue">
+                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue"> puedes reducir el dinero que recibes en cada cheque <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">cambiando tus retenciones</a> y haciendo <a class="usa-link" href="https://www.irs.gov/es/businesses/small-businesses-self-employed/estimated-taxes">pagos del impuesto estimado</a> para cubrir la diferencia entre el cambio en tus retenciones y el impuesto que debes.</span>
+                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse"> puedes hacer <a class="usa-link" href="https://www.irs.gov/es/businesses/small-businesses-self-employed/estimated-taxes">pagos del impuesto estimado</a> para cubrir la diferencia entre el cambio en tus retenciones y el impuesto que debes.</span>
+              </span>
+  p-609593: Según tu informacion, estimamos que <strong>estás reteniendo suficiente para cubrir tu impuesto federal.</strong>
+  p-445e9f: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si mantienes tus retenciones como están, probablemente</span>
+              <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">Probablemente</span> no debas impuestos en tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
+  p-bf0181: Si <a class="usa-link" href="#heading-adjust-withholding">cambias tus retenciones</a>, cambiará el monto que adeudas de impuesto federal y el dinero que recibes en cada cheque.
+  h3-5359f4: Reembolso estimado del impuesto federal
+  h3-566afa: Deuda estimada del impuesto federal
+  p-7d3cba: <fg-show path="/withholdingGap"/>
+  p-c219b9: <fg-show path="/withholdingSurplus"/>
   fg-detail-10027e:
-    summary:
-    p-afddd1:
+    summary: Tu cálculo
+    p-afddd1: Primero calculamos tus ingresos sujetos a impuestos (tributables).
     table-0:
-      caption-e01d39:
+      caption-e01d39: Desglose de los imponibles tributables
       thead-0:
         tr-0:
-          th-b5a7ad:
-          th-b2f406:
+          th-b5a7ad: Descripción
+          th-b2f406: El monto
       tbody-0:
         tr-0:
-          th-856987:
-          td-17a912:
+          th-856987: Ingreso bruto
+          td-17a912: <fg-show path="/grossIncomeTotal"/>
         tr-1:
-          th-c91335:
-          td-2967ae:
+          th-c91335: Deducciones de la nómina
+          td-2967ae: -<fg-show path="/preTaxDeductionsTotal"/>
         tr-2:
-          th-9fa8b1:
-          td-e2119c:
+          th-9fa8b1: Ajustes
+          td-e2119c: -<fg-show path="/adjustmentsToIncome"/>
         tr-3:
-          th-2eed62:
-          td-366809:
+          th-2eed62: <span condition="/standardDeductionWillBeUsed" operator="isTrue">Deducción estándar</span>
+                            <span condition="/standardDeductionWillBeUsed" operator="isFalse">Deducción detallada</span>
+          td-366809: -<fg-show path="/standardOrItemizedDeduction"/>
         tr-4:
-          th-e64960:
-          td-187e4c:
+          th-e64960: Deducciones adicionales
+          td-187e4c: -<fg-show path="/additionalDeductions"/>
         tr-5:
-          th-b0360a:
-          td-275c50:
-    p-cec781:
+          th-b0360a: Ingresos tributables
+          td-275c50: <fg-show path="/taxableIncome"/>
+    p-cec781: Luego, usamos las categorías de impuestos junto a tus ingresos tributables para estimar tu obligación tributaria en tu declaración del <fg-show path="/taxYear"/>.
     table-1:
-      caption-77613d:
+      caption-77613d: Desglose de la obligación tributaria estimada en el <fg-show path="/taxYear"/>
       thead-0:
         tr-0:
-          th-b5a7ad:
-          th-b2f406:
+          th-b5a7ad: Descripción
+          th-b2f406: El monto
       tbody-0:
         tr-0:
-          th-821cfd:
-          td-828fe6:
-    p-a8bf0e:
+          th-821cfd: Obligación tributaria estimada en el <fg-show path="/taxYear"/>
+          td-828fe6: <fg-show path="/totalTaxObligationBeforeCreditsAndDeductions"/>
+    p-a8bf0e: Finalmente, aplicamos tus créditos y restamos todo pago que ya hiciste hacia tus impuestos federales.
     table-2:
-      caption-e87ca9:
+      caption-e87ca9: Desglose del saldo de impuestos federales
       thead-0:
         tr-0:
-          th-b5a7ad:
-          th-b2f406:
+          th-b5a7ad: Descripción
+          th-b2f406: El monto
       tbody-0:
         tr-0:
-          th-948a2e:
-          td-bd1cfa:
+          th-948a2e: Créditos
+          td-bd1cfa: -<fg-show path="/totalCredits"/>
         tr-1:
-          th-7dd632:
-          td-8a394b:
+          th-7dd632: Retención del impuesto federal
+          td-8a394b: -<fg-show path="/totalEndOfYearProjectedWithholding"/>
         tr-2:
-          th-af2744:
-          td-35558f:
+          th-af2744: Pagos de impuesto estimados
+          td-35558f: -<fg-show path="/totalEstimatedTaxesPaid"/>
         tr-3:
-          th-80026f:
-          td-1bd203:
-    p-5d3b06:
-    p-09327c:
-  h3-13ef28:
-  h3-335363:
-  h3-d387b7:
-  p-ce18bb:
-  p-d5c719:
-  p-460908:
-  p-8bea5a:
-  p-b5cd3f:
-  p-a6f011:
-  h4-f1b89b:
-  h4-7d0acd:
-  h4-9cfae7:
-  p-47f861:
+          th-80026f: <span condition="/isOverwithheld" operator="isFalse">Deuda estimada del impuesto federal del <fg-show path="/taxYear"/></span>
+                            <span condition="/isOverwithheld" operator="isTrue">Reembolso estimado del impuesto federal del <fg-show path="/taxYear"/></span>
+          td-1bd203: <span condition="/isOverwithheld" operator="isFalse">
+                              <fg-show path="/withholdingGap"/>
+                            </span>
+                            <span condition="/isOverwithheld" operator="isTrue">
+                              <fg-show path="/withholdingSurplus"/>
+                            </span>
+    p-5d3b06: Si debes por lo menos $1,000 y debes más del 10% del total del impuesto que debes pagar, podrías tener que pagar una multa además del impuesto federal que debes.
+    p-09327c: 'Nota: Este estimado depende de que tu información sea precisa. El IRS no garantiza la exactitud de este estimado y no acepta cualquier responsabilidad que pueda resultar de usar este cálculo.'
+  h3-13ef28: ¿Cómo cambiar tus retenciones para recibir más dinero en cada cheque y reducir tu reembolso estimado?
+  h3-335363: ¿Cómo cambiar tus retenciones para reducir el monto que adeudas y reducir el dinero que recibes en cada cheque?
+  h3-d387b7: ¿Cómo cambiar tus retenciones?
+  p-ce18bb: Usa nuestras recomendaciones para completar el Formulario W-4.
+  p-d5c719: <modal-link for="modal-what-is-form-w-4">¿Qué es un Formulario W-4?</modal-link>
+  p-460908: Usa nuestras recomendaciones para completar el Formulario W-4P.
+  p-8bea5a: <modal-link for="modal-what-is-form-w-4p">¿Qué es un Formulario W-4P?</modal-link>
+  p-b5cd3f: Usa nuestras recomendaciones para completar el Formulario W-4 y el W-4P.
+  p-a6f011: <modal-link for="modal-what-is-form-w-4-and-w-4p">¿Qué es un Formulario W-4 y el W-4P?</modal-link>
+  h4-f1b89b: Tus retenciones
+  h4-7d0acd: Las retenciones de tu esposo(a)
+  h4-9cfae7: Revisa tus retenciones cada enero
+  p-47f861: Esto te ayudará a decidir si necesitas hacer cambios para el año fiscal.
   modal-what-is-form-w-4:
-    heading:
-    p-52482e:
-    p-14dbf9:
-    p-a2bc8b:
+    heading: ¿Qué es un Formulario W-4?
+    p-52482e: Necesitas enviar el Formulario W-4 a cada uno de tus empleadores para ayudarles a retener la cantidad correcta de impuestos de tus cheques a lo largo del año.
+    p-14dbf9: Retener impuestos en la tasa correcta asegura que no retengas en exceso y recibas un pago menor en cada cheque, o que retengas muy poco y debas mucho dinero o tal vez multas a fin de año.
+    p-a2bc8b: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-form-w-4">Conoce más sobre el Formulario W-4.</a>
   modal-what-is-form-w-4p:
-    heading:
-    p-f9b7ba:
-    p-7ca1e5:
-    p-d5bee2:
+    heading: ¿Qué es un Formulario W-4P?
+    p-f9b7ba: Necesitas enviar el Formulario W-4P a tu proveedor de pensión o anualidad para ayudarles a retener la cantidad correcta de impuestos de tus pagos de pensión a lo largo del año.
+    p-7ca1e5: Retener impuestos en la tasa correcta asegura que no retengas en exceso y recibas un pago menor en cada cheque, o que retengas muy poco y debas mucho dinero o tal vez multas a fin de año.
+    p-d5bee2: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-form-w-4-p">Conoce más sobre el Formulario W-4P.</a>
   modal-what-is-form-w-4-and-w-4p:
-    heading:
-    p-a06431:
-    p-790f19:
-    p-a2bc8b:
-    p-d5bee2:
+    heading: ¿Qué es un Formulario W-4 y W-4P?
+    p-a06431: Necesitas enviar el Formulario W-4 a cada uno de tus empleadores, o el Formulario W-4P a tu proveedor de pensión o anualidad para ayudarles a retener la cantidad correcta de impuestos de tus cheques o pagos de pensión a lo largo del año.
+    p-790f19: Retener impuestos en la tasa correcta asegura que no retengas en exceso y recibas un pago menor en cada cheque, o evitar que retengas muy poco y debas mucho dinero o tal vez multas a fin de año.
+    p-a2bc8b: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-form-w-4">Conoce más sobre el Formulario W-4.</a>
+    p-d5bee2: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Conoce más sobre el Formulario W-4P.</a>
   modal-why-step-1-c:
-    heading:
-    p-e46111:
-    p-205b43:
+    heading: ¿Por qué se recomienda esto?
+    p-e46111: Este es el estado civil que elegiste en el paso 1 del estimador.
+    p-205b43: Tu estado civil afecta tu deducción estándar y los créditos y deducciones para los que eres elegible.
   modal-why-w-4p-step-2:
-    heading:
-    p-8310ca:
-    p-1eb372:
+    heading: ¿Por qué se recomienda esto?
+    p-8310ca: Este paso te ayuda a decidir el trabajo o pensión del que debes retener impuestos.
+    p-1eb372: Ya completaste este paso al utilizar el estimador.
   modal-why-w-4-step-2-c:
-    heading:
-    p-7790ad:
-    p-6eeb8d:
+    heading: ¿Por qué se recomienda esto?
+    p-7790ad: Aquí es donde puedes indicar si tienes más de un trabajo, o si tú y tu esposo(a) trabajan (si presentan una declaración juntos).
+    p-6eeb8d: No marques esta casilla porque el estimador ya toma en cuenta múltiples trabajos (si los ingresaste) para que no tengas que darle esta información a tu empleador.
   modal-why-step-3:
-    heading:
-    p-ba1822:
-    p-e659ce:
+    heading: ¿Por qué se recomienda esto?
+    p-ba1822: El paso 3 muestra el total de los créditos que piensas reclamar en el <fg-show path="/taxYear"/>.
+    p-e659ce: Este total se basa en la información que llenaste en el estimador sobre tus ingresos, dependientes y los créditos para los que piensas que calificarás.
   modal-why-w-4-step-4-a:
-    heading:
-    p-837e9a:
-    p-0909a7:
+    heading: ¿Por qué se recomienda esto?
+    p-837e9a: El paso 4 toma en cuenta las diferencias entre los ingresos que recibes de este trabajo y tus otros ingresos tributables. Las cantidades que ingresas aquí ayudan a ajustar tus retenciones tomando en cuenta esta diferencia.
+    p-0909a7: <strong>El paso 4(a)</strong> se utiliza si agregaste otras formas de ingresos tributables en el estimador que no originan de trabajos, pensiones o anualidades.
   modal-why-w-4p-step-4-a:
-    heading:
-    p-28bdd1:
-    p-0909a7:
+    heading: ¿Por qué se recomienda esto?
+    p-28bdd1: El paso 4 toma en cuenta las diferencias entre los ingresos que recibes de este pensión o anualidad y tus otros ingresos tributables. Las cantidades que ingresas aquí ayudan a ajustar tus retenciones tomando en cuenta esta diferencia.
+    p-0909a7: <strong>El paso 4(a)</strong> se utiliza si agregaste otras formas de ingresos tributables en el estimador que no originan de trabajos, pensiones o anualidades.
   modal-why-w-4-step-4-b:
-    heading:
-    p-837e9a:
-    p-1bdcd8:
+    heading: ¿Por qué se recomienda esto?
+    p-837e9a: El paso 4 toma en cuenta las diferencias entre los ingresos que recibes de este trabajo y tus otros ingresos tributables. Las cantidades que ingresas aquí ayudan a ajustar tus retenciones tomando en cuenta esta diferencia.
+    p-1bdcd8: <strong>El paso 4(b)</strong> incluyes las deducciones y ajustes que ingresaste en el estimador. Esto puede ayudarte a reducir la cantidad de tus ingresos tributables y del monto que debes retener.
   modal-why-w-4p-step-4-b:
-    heading:
-    p-28bdd1:
-    p-1bdcd8:
+    heading: ¿Por qué se recomienda esto?
+    p-28bdd1: El paso 4 toma en cuenta las diferencias entre los ingresos que recibes de este pensión o anualidad y tus otros ingresos tributables. Las cantidades que ingresas aquí ayudan a ajustar tus retenciones tomando en cuenta esta diferencia.
+    p-1bdcd8: <strong>El paso 4(b)</strong> incluyes las deducciones y ajustes que ingresaste en el estimador. Esto puede ayudarte a reducir la cantidad de tus ingresos tributables y del monto que debes retener.
   modal-why-w-4-step-4-c:
-    heading:
-    p-837e9a:
-    p-fb9379:
+    heading: ¿Por qué se recomienda esto?
+    p-837e9a: El paso 4 toma en cuenta las diferencias entre los ingresos que recibes de este trabajo y tus otros ingresos tributables. Las cantidades que ingresas aquí ayudan a ajustar tus retenciones tomando en cuenta esta diferencia.
+    p-fb9379: <strong>El paso 4(c)</strong> se utiliza si necesitas retener más de tus cheques. De lo contrario, puedes dejar esta casilla en blanco.
   modal-why-w-4p-step-4-c:
-    heading:
-    p-28bdd1:
-    p-dd38c7:
+    heading: ¿Por qué se recomienda esto?
+    p-28bdd1: El paso 4 toma en cuenta las diferencias entre los ingresos que recibes de este pensión o anualidad y tus otros ingresos tributables. Las cantidades que ingresas aquí ayudan a ajustar tus retenciones tomando en cuenta esta diferencia.
+    p-dd38c7: <strong>El paso 4(c)</strong> se utiliza si necesitas retener más de tus pagos. De lo contrario, puedes dejar esta casilla en blanco.
