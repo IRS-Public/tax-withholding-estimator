@@ -156,7 +156,7 @@ socat TCP-LISTEN:3000,bind=10.211.55.2,fork TCP:127.0.0.1:3000
 
 **4. Visit this URL in Windows on Parallels**
 ```
-http://10.211.55.2:3000/twe
+http://10.211.55.2:3000/app/tax-withholding-estimator/
 ```
 
 ## Running from a Windows VM or Windows-based Machine
@@ -192,22 +192,25 @@ TWE uses the minimized USWDS v3.13.0 CSS file. However, some changes to the defa
 
 If the USWDS needs to be updated, you will need clone the USWDS repo and recompile it to make the following changes to typography settings in `_settings-typography.scss`.
 
-```
+```scss
 $theme-font-weight-semibold: false !default;
 ```
+
 changes to:
-```
+
+```scss
 $theme-font-weight-semibold: 600 !default;
 ```
+
 Then run `npm run build`.
 
 Make sure the minimized CSS file is placed reflects the correct version number.
-
+You can verify the vendored CSS still includes semibold support by running `make validate-uswds`.
 
 ## Audit Mode
 
 TWE comes bundled with an "Audit Mode" that lets users see how TWE arrives at its calculations.
-It can be toggled by running `enableAduitMode()` and `disableAuditMode()` in the browser console.
+It can be toggled by running `enableAuditMode()` and `disableAuditMode()` in the browser console.
 
 ### Updating the vendored copy of the Fact Graph
 

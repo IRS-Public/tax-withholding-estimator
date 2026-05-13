@@ -67,6 +67,7 @@ ci: ## Run most of the CI checks locally
 	make validate-xml
 	make validate-html
 	make validate-js
+	make validate-uswds
 	make validate-scala
 	# Skip semgrep (locally) for now
 
@@ -81,6 +82,10 @@ validate-html: ## Validate .html files
 .PHONY: validate-js
 validate-js: ## Run javascript linter
 	npm --prefix $(TWE_RESOURCES_DIR) run lint
+
+.PHONY: validate-uswds
+validate-uswds: ## Validate vendored USWDS semibold support
+	./scripts/check-uswds-semibold.sh
 
 .PHONY: validate-scala
 validate-scala: ## Validate Scala code

@@ -1,53 +1,9 @@
 # Non-Dev TWE 2.0 Local Setup
-**Table of Contents**
-- [Local Setup for Mac](#local-setup-for-mac)
-  - [Configure commit email address](#configure-commit-email-address)
-  - [Getting Started](#getting-started)
-  - [Install Homebrew](#install-homebrew)
-  - [Download Repos & Dependencies](#download-repos--install-dependencies)
-  - [Terminal Tips & Tricks](#terminal-tips--tricks)
-- [Local Setup for Windows](#local-setup-for-windows)
-  - [Download Repos & Dependencies](#download-repos--install-dependencies-1)
-- [Run TWE Locally](#run-twe-locally)
-  - [Compile FactGraph](#compile-factgraph)
-  - [Run TWE](#run-twe)
-  - [Kill TWE](#kill-twe)
-  - [Update TWE](#update-twe)
 
 ## Local Setup for Mac
-### Configure commit email address
 
-All commits from IRS staff on this project must be authored using your GitHub-provided `noreply` email address.
+Here's how to set up your Mac for local development
 
-To achieve this, you'll need to make sure that commits authored via the GitHub web UI as well as local `git` use the GitHub-provided `noreply` email address:
-
-1. Enable private email address
-    1. Go to [your GitHub email settings](https://github.com/settings/emails)
-    2. Enable `Keep my email address private`
-    3. Note and copy the GitHub email address that is displayed. It looks like `{ID}+{USERNAME}@users.noreply.github.com` ([reference](https://docs.github.com/en/account-and-profile/reference/email-addresses-reference#your-noreply-email-address))
-    4. Enable `Block command line pushes that expose my email` (Optional)
-2. Set your local `git` email address for authoring commits
-    1. Configure your local `git` `user.email` setting
-        * If you would like to use your no-reply email address for _all_ local development, run
-           ```shell
-           git config --global user.email "YOUR_NO_REPLY_EMAIL"
-           ```
-        * If you prefer to only use the no-reply email address for development in your Tax Withholding Estimator working copy, run
-          ```shell
-          # Ensure you're in the directory for this git project
-          cd ./path/to/tax-withholding-estimator/
-          # Set your git email config for this repository only
-          git config user.email "YOUR_NO_REPLY_EMAIL"
-          ```
-    2. Verify the configuration by having `git` echo the `user.email` configuration
-       ```shell
-       $ git config --global user.email
-       YOUR_ID+YOUR_USERNAME@users.noreply.github.com
-       ```
-
-For more details, see:
-* [Setting your commit email address](https://docs.github.com/en/account-and-profile/how-tos/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address#setting-your-email-address-for-a-single-repository).
-* [Your no-reply email address](https://docs.github.com/en/account-and-profile/reference/email-addresses-reference#your-noreply-email-address)
 ### Getting started
 * You must be local admin. Check this by opening your User & Groups settings and confirming if your user is 'Admin' or 'Standard'
 * Use spotlight to find the Terminal application in your Utilties folder
@@ -108,8 +64,8 @@ Once you've compiled the fact-graph and run `make publish` you're ready to run T
 * With twe running in the background, you can open your browser and navigate to: http://localhost:3000/
 * Note: you'll need to do this every time you want to run TWE (or just leave it running in the background)
 
-### Kill TWE
-* Use `ctrl+c` to kill the process
+### Stop running TWE
+* Use `ctrl+c` to quit the process
 * From here you can quit terminal
 
 ### Update TWE
@@ -117,3 +73,8 @@ Once you've compiled the fact-graph and run `make publish` you're ready to run T
 * Click the 'Fetch origin' button (top right corner) and wait for it to load
 * This can be done while TWE is running in the background. It should update automatically
 
+## Making commits
+
+If you want to commit any code and want to use GitHub’s `noreply` address, follow the [onboarding instructions for IRS staff](./onboarding-irs.md#configure-commit-email-address).
+
+Follow GitHub’s instructions to [add](https://github.com/git-guides/git-add), [commit](https://github.com/git-guides/git-commit), [push](https://github.com/git-guides/git-push), and [open a Pull Request](https://github.com/git-guides#open-a-pull-request) on Github.

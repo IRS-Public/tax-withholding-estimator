@@ -317,10 +317,10 @@ TWE 1.0 and 2.0 are both static applications that do all their calculations clie
 This is the correct architecture, and it dramatically limits the security profile of TWE.
 Static websites are not vulernable to [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/) attacks, because they have no user-generated content. The application is not running on authenticated IRS hardware and has no access to PII.
 
-TWE 2.0 also raises the bar by including as few dependencencies as possible, limiting the possibility for supply chain attacks.
+TWE 2.0 also raises the bar by including as few dependencies as possible, limiting the possibility for supply chain attacks.
 All managed TWE dependencies are declared in the `build.sbt` file and will be scanned the same way the Fact Graph dependencies are.
 
-The only depenencies not in `build.sbt` are vendored builds of:
+The only dependencies not in `build.sbt` are vendored builds of:
 
 * The United States Web Design System
 * The Fact Graph (note that this does include the Fact Graph dependencies)
@@ -339,12 +339,12 @@ It does need to consume the Fact Graph as a library (to validate the facts when 
 
 Writing TWE 2.0 in Scala has one significant benefit:
 it demystifies Scala and provides a far friendlier on-ramp to the language than the Fact Graph does.
-The Fact Graph (necessarily) uses advanced functional programming techniques to model a complicated calculation engine (the risks associated with this complexity are breifly addressed in the Fact Graph 3.1 ADR);
+The Fact Graph (necessarily) uses advanced functional programming techniques to model a complicated calculation engine (the risks associated with this complexity are briefly addressed in the Fact Graph 3.1 ADR);
 TWE 2.0, however, mostly just transforms XML into HTML, which is a straightforward programming task.
 TWE 2.0 gives engineers a much gentler introduction to the Scala programming environment, and its integration with the Fact Graph is already leading to downstream Fact Graph improvements.
 
 All this having been said: Scala is not considered a standard language choice at the IRS, and hearing that a program is written in Scala sparks immediate—and reasonable—suspicion that the program will be un-maintainable.
-Given that maintainability by IRS engineers is a non-negotiable goal (and GFE-based maintainability an important strech goal), it's fair to ask whether TWE 2.0 could accomplish its goals with an implmentation in a language that would raise fewer eyebrows.
+Given that maintainability by IRS engineers is a non-negotiable goal (and GFE-based maintainability an important stretch goal), it's fair to ask whether TWE 2.0 could accomplish its goals with an implementation in a language that would raise fewer eyebrows.
 
 It could.
 TWE 2.0 could be written in Java, and it is designed so that a Java port would be a reasonable thing to do, even before the launch date of January 1, 2026.
