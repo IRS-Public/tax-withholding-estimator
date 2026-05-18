@@ -149,6 +149,9 @@
     <optional>
       <ref name="PayrollMonthsBetweenContent"></ref>
     </optional>
+    <optional>
+      <ref name="AddPayrollMonthsContent"/>
+    </optional>
   </define>
   <define name="LogicalContent">
     <optional>
@@ -756,10 +759,12 @@
       <choice>
         <ref name="IntContent"/>
         <ref name="DependencyContent"/>
+        <ref name="NumericContent"/>
       </choice>
       <choice>
         <ref name="IntContent"/>
         <ref name="DependencyContent"/>
+        <ref name="NumericContent"/>
       </choice>
     </element>
   </define>

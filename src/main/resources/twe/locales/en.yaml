@@ -185,8 +185,8 @@ results:
         5-recommendation: Sign and enter the date
       time-sensitivity: Withholding updates are time sensitive. Submit your completed form to <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span> employer as soon as possible.
     w-4p:
-      summary: Adjust <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> <fg-show path="/pensions/*/grossIncome"/> pension or annuity
-      download-and-submit: Download and complete Form W-4P using our recommendations below, then submit it to <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> pension or annuity provider.
+      summary: Adjust <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> <fg-show path="/pensions/*/grossIncome"/> <span condition="/pensions/*/isInFuture" operator="isTrue">future</span> pension or annuity
+      download-and-submit: Download and complete Form W-4P using our recommendations below, then submit it to <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> <span condition="/pensions/*/isInFuture" operator="isTrue">new</span> pension or annuity provider.
       download-pre-filled: Download pre-filled Form W-4P
       download-blank: Download blank Form W-4P
       recommendations:
@@ -211,4 +211,4 @@ results:
         4-c-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine4cBlank" operator="isFalse"><fg-show path="/pensions/*/w4pLine4cWithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine4cBlank" operator="isTrue">Leave blank</span></p><p><modal-link for="modal-why-w-4p-step-4-c">Why?</modal-link></p>
         5-field: 'Step 5: Sign Here'
         5-recommendation: Sign and enter the date
-      time-sensitivity: Withholding updates are time sensitive. Submit your completed form to <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> pension or annuity provider as soon as possible.
+      time-sensitivity: Withholding updates are time sensitive. Submit your completed form to <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> <span condition="/pensions/*/isInFuture" operator="isTrue">new</span> pension or annuity provider as soon as possible.

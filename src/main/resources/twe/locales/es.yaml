@@ -171,8 +171,8 @@ results:
         5-recommendation: Firma y fecha
       time-sensitivity: Los cambios a tus retenciones son de prioridad. Envía el formulario con <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> información a <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> empleador lo antes posible.
     w-4p:
-      summary: Cambia <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> <fg-show path="/pensions/*/grossIncome"/> pensión o anualidad
-      download-and-submit: Descarga y completa el Formulario W-4P con nuestras recomendaciones. Luego, envía el formulario a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> proveedor de pensión o anualidad.
+      summary:
+      download-and-submit:
       download-pre-filled: Descargar el Formulario W-4P pre-llenado
       download-blank: Descargar el Formulario W-4P en blanco
       recommendations:
@@ -197,4 +197,4 @@ results:
         4-c-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine4cBlank" operator="isFalse"><fg-show path="/pensions/*/w4pLine4cWithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine4cBlank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-w-4p-step-4-c">¿Por qué?</modal-link></p>
         5-field: 'Paso 5: Firma aquí'
         5-recommendation: Firma y fecha
-      time-sensitivity: Los cambios a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tus</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">sus</span> retenciones son de prioridad. Envía el formulario con <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> información a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> proveedor de pensión o anualidad lo antes posible.
+      time-sensitivity:

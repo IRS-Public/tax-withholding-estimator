@@ -1,1 +1,1 @@
-<div th:if="${#messages.msgOrNull(contentKey + '.hint')}" class="usa-hint" th:id="${path} + '-hint'" th:utext="#{${contentKey} + .hint}"></div>
+<div th:if="${hint != null}" class="usa-hint" th:attr="condition=${hint.conditionPath}, operator=${hint.conditionOperator}" th:id="${path} + '-hint'" th:utext="#{${contentKey} + .hint}"></div>

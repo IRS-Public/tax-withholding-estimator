@@ -233,6 +233,45 @@
         </Equal>
       </Derived>
     </Fact>
+    <Fact path="/pensions/*/payrollMonthsBetweenStartAndEndMinus1">
+      <Description>Helper fact to reduce duplication</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <PayrollMonthsBetween>
+              <StartDate>
+                <Dependency path="../startDate"/>
+              </StartDate>
+              <EndDate>
+                <Dependency path="../endDate"/>
+              </EndDate>
+            </PayrollMonthsBetween>
+          </Minuend>
+          <Subtrahends>
+            <Int>1</Int>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/extraDaysInLastPeriodForSemiMonthly">
+      <Description>For future pensions, helper fact to reduce duplication</Description>
+      <Derived>
+        <Modulo>
+          <Subtract>
+            <Minuend>
+              <Dependency path="../endDate"/>
+            </Minuend>
+            <Subtrahends>
+              <AddPayrollMonths>
+                <Dependency path="../startDate"/>
+                <Dependency path="../payrollMonthsBetweenStartAndEndMinus1"/>
+              </AddPayrollMonths>
+            </Subtrahends>
+          </Subtract>
+          <Dependency path="../payPeriodLength"/>
+        </Modulo>
+      </Derived>
+    </Fact>
     <Fact path="/pensions/*/remainingPayPeriodsInteger">
       <Description>
         The number of pay periods remaining in the year. If the taxpayer is only working for part of
@@ -257,6 +296,87 @@
             </When>
             <Then>
               <Int>0</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isInFuture"/>
+            </When>
+            <Then>
+              <Switch>
+                <Case>
+                  <When>
+                    <Dependency path="../isPayFrequencyMonthly"/>
+                  </When>
+                  <Then>
+                    <PayrollMonthsBetween>
+                      <StartDate>
+                        <Dependency path="../startDate"/>
+                      </StartDate>
+                      <EndDate>
+                        <Dependency path="../endDate"/>
+                      </EndDate>
+                    </PayrollMonthsBetween>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <Dependency path="../isPayFrequencySemiMonthly"/>
+                  </When>
+                  <Then>
+                    <Add>
+                      <Multiply>
+                        <Dependency path="../payrollMonthsBetweenStartAndEndMinus1"/>
+                        <Int>2</Int>
+                      </Multiply>
+                      <Ceiling>
+                        <Divide>
+                          <Dividend>
+                            <Subtract>
+                              <Minuend>
+                                <Dependency path="../endDate"/>
+                              </Minuend>
+                              <Subtrahends>
+                                <AddPayrollMonths>
+                                  <Dependency path="../startDate"/>
+                                  <Dependency path="../payrollMonthsBetweenStartAndEndMinus1"/>
+                                </AddPayrollMonths>
+                              </Subtrahends>
+                            </Subtract>
+                          </Dividend>
+                          <Divisors>
+                            <Dependency path="../payPeriodLength"/>
+                          </Divisors>
+                        </Divide>
+                      </Ceiling>
+                    </Add>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Ceiling>
+                      <Divide>
+                        <Dividend>
+                          <Subtract>
+                            <Minuend>
+                              <Dependency path="../endDate/ordinal"/>
+                            </Minuend>
+                            <Subtrahends>
+                              <Dependency path="../startDate/ordinal"/>
+                            </Subtrahends>
+                          </Subtract>
+                        </Dividend>
+                        <Divisors>
+                          <Dependency path="../payPeriodLength"/>
+                        </Divisors>
+                      </Divide>
+                    </Ceiling>
+                  </Then>
+                </Case>
+              </Switch>
             </Then>
           </Case>
           <Case>
@@ -757,14 +877,86 @@
     <Fact path="/pensions/*/hasPartialPayPeriod">
       <Description>Is paid for a partial partial period</Description>
       <Derived>
-        <LessThan>
-          <Left>
-            <Dependency path="../endDate/ordinal"/>
-          </Left>
-          <Right>
-            <Dependency path="../ordinalEffectiveEndDate"/>
-          </Right>
-        </LessThan>
+        <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isInFuture"/>
+            </When>
+            <Then>
+              <Switch>
+                <Case>
+                  <When>
+                    <Dependency path="../isPayFrequencyMonthly"/>
+                  </When>
+                  <Then>
+                    <GreaterThan>
+                      <Left>
+                        <AddPayrollMonths>
+                          <Dependency path="../startDate"/>
+                          <Dependency path="../remainingPayPeriodsInteger"/>
+                        </AddPayrollMonths>
+                      </Left>
+                      <Right>
+                        <Dependency path="../endDate"/>
+                      </Right>
+                    </GreaterThan>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <Dependency path="../isPayFrequencySemiMonthly"/>
+                  </When>
+                  <Then>
+                    <NotEqual>
+                      <Left>
+                        <Dependency path="../extraDaysInLastPeriodForSemiMonthly"/>
+                      </Left>
+                      <Right>
+                        <Int>0</Int>
+                      </Right>
+                    </NotEqual>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <GreaterThan>
+                      <Left>
+                        <Add>
+                          <Dependency path="../startDate/ordinal"/>
+                          <Multiply>
+                            <Dependency path="../remainingPayPeriodsInteger"/>
+                            <Dependency path="../payPeriodLength"/>
+                          </Multiply>
+                        </Add>
+                      </Left>
+                      <Right>
+                        <Dependency path="../endDate/ordinal"/>
+                      </Right>
+                    </GreaterThan>
+                  </Then>
+                </Case>
+              </Switch>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <LessThan>
+                <Left>
+                  <Dependency path="../endDate/ordinal"/>
+                </Left>
+                <Right>
+                  <Dependency path="../ordinalEffectiveEndDate"/>
+                </Right>
+              </LessThan>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/pensions/*/fullPayPeriods">
@@ -1000,6 +1192,86 @@
             </When>
             <Then>
               <Rational>0/1</Rational>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="../isInFuture"/>
+                <Dependency path="../hasPartialPayPeriod"/>
+              </All>
+            </When>
+            <Then>
+              <Switch>
+                <Case>
+                  <When>
+                    <Dependency path="../isPayFrequencyMonthly"/>
+                  </When>
+                  <Then>
+                    <Divide>
+                      <Dividend>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../endDate"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <AddPayrollMonths>
+                              <Dependency path="../startDate"/>
+                              <Dependency path="../fullPayPeriods"/>
+                            </AddPayrollMonths>
+                          </Subtrahends>
+                        </Subtract>
+                      </Dividend>
+                      <Divisors>
+                        <Dependency path="../payPeriodLength"/>
+                      </Divisors>
+                    </Divide>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <Dependency path="../isPayFrequencySemiMonthly"/>
+                  </When>
+                  <Then>
+                    <Divide>
+                      <Dividend>
+                        <Dependency path="../extraDaysInLastPeriodForSemiMonthly"/>
+                      </Dividend>
+                      <Divisors>
+                        <Dependency path="../payPeriodLength"/>
+                      </Divisors>
+                    </Divide>
+                  </Then>
+                </Case>
+                <Case>
+                  <When>
+                    <True/>
+                  </When>
+                  <Then>
+                    <Divide>
+                      <Dividend>
+                        <Subtract>
+                          <Minuend>
+                            <Dependency path="../endDate/ordinal"/>
+                          </Minuend>
+                          <Subtrahends>
+                            <Add>
+                              <Dependency path="../startDate/ordinal"/>
+                              <Multiply>
+                                <Dependency path="../fullPayPeriods"/>
+                                <Dependency path="../payPeriodLength"/>
+                              </Multiply>
+                            </Add>
+                          </Subtrahends>
+                        </Subtract>
+                      </Dividend>
+                      <Divisors>
+                        <Dependency path="../payPeriodLength"/>
+                      </Divisors>
+                    </Divide>
+                  </Then>
+                </Case>
+              </Switch>
             </Then>
           </Case>
           <Case>

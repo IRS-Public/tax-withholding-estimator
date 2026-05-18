@@ -331,6 +331,14 @@
         <Switch>
           <Case>
             <When>
+              <Dependency path="../isInFuture"/>
+            </When>
+            <Then>
+              <Int>0</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
               <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>

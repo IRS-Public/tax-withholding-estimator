@@ -61,11 +61,22 @@
         <Boolean/>
       </Writable>
     </Fact>
-    <Fact path="/pensions/*/flowIsAllYearComplete">
+    <Fact path="/pensions/*/flowInitialQuestionsComplete">
       <Derived>
-        <IsComplete>
-          <Dependency path="../isAllYear"/>
-        </IsComplete>
+        <All>
+          <IsComplete>
+            <Dependency path="../filerAssignment"/>
+          </IsComplete>
+          <IsComplete>
+            <Dependency path="../startDate"/>
+          </IsComplete>
+          <IsComplete>
+            <Dependency path="../endDate"/>
+          </IsComplete>
+          <IsComplete>
+            <Dependency path="../payFrequency"/>
+          </IsComplete>
+        </All>
       </Derived>
     </Fact>
     <Fact path="/pensions/*/startDate">
@@ -116,23 +127,45 @@
       <Writable>
         <Dollar/>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <Fact path="/pensions/*/yearToDateIncome">
+      <Override>
+        <Condition>
+          <Dependency path="../isInFuture"/>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
       <Writable>
         <Dollar/>
       </Writable>
+    </Fact>
+    <Fact path="/pensions/*/expectedWithholdingPerPayPeriodForFutureJob">
+      <Derived>
+        <Divide>
+          <Dividend>
+            <Dependency path="../tentativeAnnualWithholdingAmount"/>
+          </Dividend>
+          <Divisors>
+            <Dependency path="../payPeriodsPerYear"/>
+          </Divisors>
+        </Divide>
+      </Derived>
     </Fact>
     <Fact path="/pensions/*/averageWithholdingPerPayPeriod">
       <Description>Average withholding from a specific pension per pay-period.</Description>
+      <Override>
+        <Condition>
+          <Dependency path="../isInFuture"/>
+        </Condition>
+        <Default>
+          <Dependency path="../expectedWithholdingPerPayPeriodForFutureJob"/>
+        </Default>
+      </Override>
       <Writable>
         <Dollar/>
       </Writable>
-      <Placeholder>
-        <Dollar>0</Dollar>
-      </Placeholder>
     </Fact>
     <!-- Pre-tax calculations -->
     <Fact path="/pensions/*/healthInsuranceContributionsPerPayPeriod">
@@ -226,6 +259,14 @@
       </Derived>
     </Fact>
     <Fact path="/pensions/*/yearToDateWithholding">
+      <Override>
+        <Condition>
+          <Dependency path="../isInFuture"/>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
       <Writable>
         <Dollar/>
       </Writable>
@@ -460,6 +501,14 @@
         <Switch>
           <Case>
             <When>
+              <Dependency path="../isInFuture"/>
+            </When>
+            <Then>
+              <Int>0</Int>
+            </Then>
+          </Case>
+          <Case>
+            <When>
               <Dependency path="../isPayFrequencyWeekly"/>
             </When>
             <Then>
@@ -560,18 +609,38 @@
         </LessThanOrEqual>
       </Derived>
     </Fact>
-    <Fact path="/pensions/*/isPastJobIncompleteOrFalse">
+    <Fact path="/pensions/*/isCurrentJob">
       <Derived>
-        <Any>
-          <Not>
-            <IsComplete>
-              <Dependency path="../isPastJob"/>
-            </IsComplete>
-          </Not>
-          <Not>
-            <Dependency path="../isPastJob"/>
-          </Not>
-        </Any>
+        <All>
+          <LessThan>
+            <Left>
+              <Dependency path="/today"/>
+            </Left>
+            <Right>
+              <Dependency path="../endDate"/>
+            </Right>
+          </LessThan>
+          <GreaterThanOrEqual>
+            <Left>
+              <Dependency path="/today"/>
+            </Left>
+            <Right>
+              <Dependency path="../startDate"/>
+            </Right>
+          </GreaterThanOrEqual>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/isInFuture">
+      <Derived>
+        <LessThan>
+          <Left>
+            <Dependency path="/today"/>
+          </Left>
+          <Right>
+            <Dependency path="../startDate"/>
+          </Right>
+        </LessThan>
       </Derived>
     </Fact>
     <!-- Income/withholding Calculations -->
@@ -637,7 +706,9 @@
         <Switch>
           <Case>
             <When>
-              <Dependency path="../isPastJob"/>
+              <Not>
+                <Dependency path="../isCurrentJob"/>
+              </Not>
             </When>
             <Then>
               <Dollar>0</Dollar>
@@ -666,7 +737,7 @@
     </Fact>
     <Fact path="/pensions/*/futureTentativeWithholding">
       <Description> Future tentative withholding: result from Pub 15-T Worksheet 1A
-      For now, we treat this as a "given" that won't change. Probably will need to revisit
+        For now, we treat this as a "given" that won't change. Probably will need to revisit
         this when we get to reducing below tentative withholding. </Description>
       <Derived>
         <Switch>
@@ -676,6 +747,24 @@
             </When>
             <Then>
               <Dollar>0</Dollar>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Dependency path="../isInFuture"/>
+            </When>
+            <Then>
+              <Multiply>
+                <Divide>
+                  <Dividend>
+                    <Dependency path="../tentativeAnnualWithholdingAmount"/>
+                  </Dividend>
+                  <Divisors>
+                    <Dependency path="../payPeriodsPerYear"/>
+                  </Divisors>
+                </Divide>
+                <Dependency path="../remainingPayPeriodsRational"/>
+              </Multiply>
             </Then>
           </Case>
           <Case>

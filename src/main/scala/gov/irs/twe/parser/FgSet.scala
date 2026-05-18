@@ -9,13 +9,16 @@ import scala.jdk.CollectionConverters.IterableHasAsJava
 import scala.xml.Elem
 
 case class ThymeleafOption(name: String, value: String, description: String)
+case class Hint(conditionPath: String, conditionOperator: String)
+case class ModalLink(conditionPath: String, conditionOperator: String)
 case class FgSet(
     path: String,
     condition: Option[Condition],
     input: Input,
     optional: Boolean,
-    hasHint: Boolean,
     translationContext: TranslationContext,
+    hint: Option[Hint],
+    modalLink: Option[ModalLink],
 ) extends FlowNode {
   override def html(templateEngine: TweTemplateEngine): String = {
     val usesFieldset =
@@ -30,7 +33,9 @@ case class FgSet(
     context.setVariable("usesFieldset", usesFieldset)
     val contentKey = translationContext.fullKey()
     context.setVariable("contentKey", contentKey)
-    context.setVariable("hintId", if (hasHint) s"$path-hint" else null)
+    context.setVariable("hint", hint.orNull)
+    context.setVariable("modalLink", modalLink.orNull)
+    context.setVariable("hintId", if (hint.nonEmpty) s"$path-hint" else null)
 
     input match {
       case Input.select(options, optionsPath, _) =>
@@ -107,17 +112,32 @@ object FgSet extends FlowNodeParser {
     }
 
     val condition = Condition.getCondition(fgSetElement, factDictionary)
+
+    val translationContext = parentTranslationContext.forChildWithId(path)
+    translationContext.updateValue("question", question)
+
     val hintNode = fgSetElement \ "hint"
-    val hint = if (hintNode.isEmpty) {
-      None
-    } else {
-      Some(hintNode.head.child.mkString.strip)
+    val hint = hintNode.map { node =>
+      val conditionPath = node \@ "condition"
+      val conditionOperator = node \@ "operator"
+      val condition = Option.when(conditionPath.nonEmpty && conditionOperator.nonEmpty)(
+        Condition(conditionPath, ConditionOperator.fromAttribute(conditionOperator)),
+      )
+      val content = node.head.child.mkString.strip
+      translationContext.updateValue("hint", content)
+      Hint(condition.map(_.path).orNull, condition.map(_.operator.toString).orNull)
     }
+
     val modalLinkNode = fgSetElement \ "modal-link"
-    val modalLink = if (modalLinkNode.isEmpty) {
-      None
-    } else {
-      Some(modalLinkNode.head.toString.strip)
+    val modalLink = modalLinkNode.map { node =>
+      val conditionPath = node \@ "condition"
+      val conditionOperator = node \@ "operator"
+      val condition = Option.when(conditionPath.nonEmpty && conditionOperator.nonEmpty)(
+        Condition(conditionPath, ConditionOperator.fromAttribute(conditionOperator)),
+      )
+      val content = node.head.mkString.strip
+      translationContext.updateValue("modalLink", content)
+      ModalLink(condition.map(_.path).orNull, condition.map(_.operator.toString).orNull)
     }
 
     val options = (fgSetElement \\ "option").map { option =>
@@ -126,16 +146,6 @@ object FgSet extends FlowNodeParser {
       val description = option \@ "description-key"
       val descriptionValue = Option(description).filter(_.nonEmpty)
       FgSetOption(value, name, descriptionValue)
-    }
-
-    val translationContext = parentTranslationContext.forChildWithId(path)
-
-    translationContext.updateValue("question", question)
-    if (hint.nonEmpty) {
-      translationContext.updateValue("hint", hint.get)
-    }
-    if (modalLink.nonEmpty) {
-      translationContext.updateValue("modalLink", modalLink.get)
     }
 
     if (options.nonEmpty) {
@@ -147,6 +157,6 @@ object FgSet extends FlowNodeParser {
       })
     }
 
-    FgSet(path, condition, input, isOptional, hint.nonEmpty, translationContext)
+    FgSet(path, condition, input, isOptional, translationContext, hint.headOption, modalLink.headOption)
   }
 }

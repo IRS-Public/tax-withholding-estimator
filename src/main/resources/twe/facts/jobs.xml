@@ -892,7 +892,7 @@
         </All>
       </Derived>
     </Fact>
-    <Fact path="/jobs/*/isFutureJob">
+    <Fact path="/jobs/*/isInFuture">
       <Derived>
         <LessThan>
           <Left>

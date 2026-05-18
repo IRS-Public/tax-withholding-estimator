@@ -378,8 +378,8 @@
           <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
-        <fg-set path="/pensions/*/payFrequency" if-true="/pensions/*/flowIsAllYearComplete">
-          <question>How frequently are <span condition="/pensions/*/notSpouses" operator="isTrue">you</span><span condition="/pensions/*/notSpouses" operator="isFalse">they</span> paid?</question>
+        <fg-set path="/pensions/*/payFrequency">
+          <question>How frequently <span condition="/pensions/*/isInFuture" operator="isIncompleteOrFalse">are</span><span condition="/pensions/*/isInFuture" operator="isTrue">do</span> <span condition="/pensions/*/notSpouses" operator="isTrue">you</span><span condition="/pensions/*/notSpouses" operator="isFalse">they</span> <span condition="/pensions/*/isInFuture" operator="isTrue">expect to be</span> paid?</question>
           <input type="enum" options-path="/payFrequencyOptions">
             <option value="weekly">Weekly</option>
             <option value="biWeekly">Every two weeks</option>
@@ -387,52 +387,64 @@
             <option value="monthly">Once a month</option>
           </input>
         </fg-set>
-        <h5 condition="/pensions/*/flowIsAllYearComplete" operator="isFalse">Pension or annuity details</h5>
-        <p condition="/pensions/*/flowIsAllYearComplete" operator="isFalse">Once we know more about your pension or annuity, we’ll ask you additional questions.</p>
-        <div condition="/pensions/*/flowIsAllYearComplete" operator="isTrue">
-          <h5>Dates and income</h5>
-          <p>Use the most recent pension or annuity statement to enter the following information.</p>
-          <fg-set path="/pensions/*/mostRecentPayDate" if-true="/pensions/*/isPastJobIncompleteOrFalse">
+        <h5 condition="/pensions/*/flowInitialQuestionsComplete" operator="isFalse">Pension or annuity details</h5>
+        <p condition="/pensions/*/flowInitialQuestionsComplete" operator="isFalse">Once we know more about your pension or annuity, we’ll ask you additional questions.</p>
+        <div condition="/pensions/*/flowInitialQuestionsComplete" operator="isTrue">
+          <h5 condition="/pensions/*/isCurrentJob" operator="isTrue">Dates and income</h5>
+          <h5 condition="/pensions/*/isPastJob" operator="isTrue">Income</h5>
+          <h5 condition="/pensions/*/isInFuture" operator="isTrue">Expected income</h5>
+          <p condition="/pensions/*/isInFuture" operator="isFalse">Use the most recent pension or annuity statement to enter the following information.</p>
+          <fg-set path="/pensions/*/mostRecentPayDate" if-true="/pensions/*/isCurrentJob">
             <question>What’s the date of <span condition="/pensions/*/notSpouses" operator="isTrue">your</span><span condition="/pensions/*/notSpouses" operator="isFalse">their</span> most recent pension or annuity payment?</question>
             <input type="date"/>
           </fg-set>
-          <fg-set path="/pensions/*/averagePayPerPayPeriodForWithholding" if-true="/pensions/*/isPastJobIncompleteOrFalse">
-            <question>What’s the gross income for the most recent pension or annuity payment?</question>
-            <modal-link for="modal-pension-gross-pay-period">How do I find the gross income for the most recent payment?</modal-link>
+          <fg-set path="/pensions/*/averagePayPerPayPeriodForWithholding" if-false="/pensions/*/isPastJob">
+            <question>
+              <span condition="/pensions/*/isCurrentJob" operator="isTrue">What’s the gross income for the most recent pension or annuity payment?</span>
+              <span condition="/pensions/*/isInFuture" operator="isTrue">What do you expect <span condition="/pensions/*/notSpouses" operator="isTrue">your</span><span condition="/pensions/*/notSpouses" operator="isFalse">their</span> pension or annuity payment to be each pay period?</span>
+            </question>
+            <modal-link condition="/pensions/*/isCurrentJob" operator="isTrue" for="modal-pension-gross-pay-period">How do I find the gross income for the most recent payment?</modal-link>
+            <hint condition="/pensions/*/isInFuture" operator="isTrue">It’s okay to estimate.</hint>
             <input type="dollar"/>
           </fg-set>
-          <fg-set path="/pensions/*/yearToDateIncome">
+          <fg-set path="/pensions/*/yearToDateIncome" if-false="/pensions/*/isInFuture">
             <question>What’s the gross income <span condition="/pensions/*/notSpouses" operator="isTrue">you have</span><span condition="/pensions/*/notSpouses" operator="isFalse">your spouse has</span> received so far in <fg-show path="/taxYear"/>?</question>
             <hint>This might be labeled year-to-date or YTD on your statement.<span condition="/pensions/*/isPastJob" operator="isTrue"> If you’re expecting a final payment, include that additional amount.</span></hint>
             <modal-link for="modal-pension-gross-ytd-end">How do I find the gross income so far in <fg-show path="/taxYear"/>?</modal-link>
             <input type="dollar"/>
           </fg-set>
-        </div>
-        <div condition="/pensions/*/flowIsAllYearComplete" operator="isTrue">
-          <h5>Federal taxes</h5>
-          <p>Use the most recent pension or annuity statement to enter the following information.</p>
-          <fg-set path="/pensions/*/averageWithholdingPerPayPeriod" if-true="/pensions/*/isPastJobIncompleteOrFalse">
-            <question>Federal taxes withheld (paid) for the most recent payment</question>
-            <hint>Don’t include state and local taxes, Medicare, or Social Security.</hint>
-            <modal-link for="modal-fed-tax-pension-pay-period">How do I find federal taxes withheld for the most recent payment?</modal-link>
-            <input type="dollar"/>
-          </fg-set>
-          <fg-set path="/pensions/*/yearToDateWithholding">
-            <question>Federal taxes withheld (paid) so far in <fg-show path="/taxYear"/></question>
-            <hint>This might be labeled year-to-date or YTD on your statement. Don't include state and local taxes, Medicare, or Social Security.</hint>
-            <modal-link for="modal-fed-pension-tax-ytd">How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>?</modal-link>
-            <input type="dollar"/>
-          </fg-set>
-        </div>
-        <div condition="/pensions/*/flowIsAllYearComplete" operator="isTrue">
-          <h5>Contributions</h5>
-          <p>Check your <span condition="/pensions/*/notSpouses" operator="isFalse">spouse’s</span> pension or annuity statement for pre-tax contributions to help pay for benefits.</p>
+          <div condition="/pensions/*/isInFuture" operator="isFalse">
+            <h5>Federal taxes</h5>
+            <p>Use the most recent pension or annuity statement to enter the following information.</p>
+            <fg-set path="/pensions/*/averageWithholdingPerPayPeriod" if-true="/pensions/*/isCurrentJob">
+              <question>Federal taxes withheld (paid) for the most recent payment</question>
+              <hint>Don’t include state and local taxes, Medicare, or Social Security.</hint>
+              <modal-link for="modal-fed-tax-pension-pay-period">How do I find federal taxes withheld for the most recent payment?</modal-link>
+              <input type="dollar"/>
+            </fg-set>
+            <fg-set path="/pensions/*/yearToDateWithholding">
+              <question>Federal taxes withheld (paid) so far in <fg-show path="/taxYear"/></question>
+              <hint>This might be labeled year-to-date or YTD on your statement. Don't include state and local taxes, Medicare, or Social Security.</hint>
+              <modal-link for="modal-fed-pension-tax-ytd">How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>?</modal-link>
+              <input type="dollar"/>
+            </fg-set>
+            <h5>Contributions</h5>
+            <p>Check your <span condition="/pensions/*/notSpouses" operator="isFalse">spouse’s</span> pension or annuity statement for pre-tax contributions to help pay for benefits.</p>
+          </div>
+          <div condition="/pensions/*/isInFuture" operator="isTrue">
+            <h5>Expected contributions</h5>
+            <p>Some contributions you make through your pension or annuity reduce the amount you need to pay in taxes, like:</p>
+            <ul>
+              <li>Health insurance premiums (if pre-tax)</li>
+              <li>HSA/FSA contributions</li>
+            </ul>
+          </div>
           <fg-detail icon="chevron">
             <summary>Health insurance</summary>
-            <p>Enter the total contributions made to pay for health coverage.</p>
-            <p> Health coverage contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
+            <p>Enter the total contributions <span condition="/pensions/*/isInFuture" operator="isFalse">made</span><span condition="/pensions/*/isInFuture" operator="isTrue">you expect to make</span> to pay for health coverage.</p>
+            <p condition="/pensions/*/isInFuture" operator="isFalse">Health coverage contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
             <p>
-              <strong>Include contributions for: </strong>
+              <strong>Include contributions for:</strong>
             </p>
             <ul>
               <li>Health insurance plans</li>
@@ -445,11 +457,11 @@
               <li>Long-term care contributions</li>
               <li>Employer contributions</li>
             </ul>
-            <fg-set path="/pensions/*/healthInsuranceContributionsPerPayPeriod" if-false="/pensions/*/isPastJobIncompleteOrFalse">
+            <fg-set path="/pensions/*/healthInsuranceContributionsPerPayPeriod" if-false="/pensions/*/isPastJob">
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
-            <fg-set path="/pensions/*/healthInsuranceContributionsToDate">
+            <fg-set path="/pensions/*/healthInsuranceContributionsToDate" if-false="/pensions/*/isInFuture">
               <question>Amount so far in <fg-show path="/taxYear"/></question>
               <hint>This might be labeled year-to-date or YTD on your statement.</hint>
               <input type="dollar"/>
@@ -457,14 +469,14 @@
           </fg-detail>
           <fg-detail icon="chevron">
             <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
-            <p>Enter total contributions to your <span condition="/isFilingStatusMFJ" operator="isTrue">spouse’s</span> Health Savings Account (HSA) or Flexible Spending Account (FSA).</p>
-            <p>HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
+            <p>Enter contributions <span condition="/pensions/*/isInFuture" operator="isFalse">made</span><span condition="/pensions/*/isInFuture" operator="isTrue">you expect to make</span> to a Health Savings Account (HSA) or Flexible Spending Account (FSA).</p>
+            <p condition="/pensions/*/isInFuture" operator="isFalse">HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
             <p>Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.</p>
-            <fg-set path="/pensions/*/hsaOrFsaContributionsPerPayPeriod" if-false="/pensions/*/isPastJobIncompleteOrFalse">
+            <fg-set path="/pensions/*/hsaOrFsaContributionsPerPayPeriod" if-false="/pensions/*/isPastJob">
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
-            <fg-set path="/pensions/*/hsaOrFsaContributionsToDate">
+            <fg-set path="/pensions/*/hsaOrFsaContributionsToDate" if-false="/pensions/*/isInFuture">
               <question>Amount so far in <fg-show path="/taxYear"/></question>
               <hint>This might be labeled year-to-date or YTD on your statement.</hint>
               <input type="dollar"/>
@@ -472,10 +484,10 @@
           </fg-detail>
           <fg-detail icon="chevron">
             <summary>Other pre-tax benefits</summary>
-            <p>Enter the total contributions made to pay for other pre-tax benefits.</p>
-            <p>Benefits contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
+            <p>Enter contributions <span condition="/pensions/*/isInFuture" operator="isFalse">made</span><span condition="/pensions/*/isInFuture" operator="isTrue">you expect to make</span> to other pre-tax benefits.</p>
+            <p condition="/pensions/*/isInFuture" operator="isFalse">Benefits contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
             <p>
-              <strong>Common pre-tax benefits may include: </strong>
+              <strong>Common pre-tax benefits may include:</strong>
             </p>
             <ul>
               <li>Accident insurance plans</li>
@@ -493,11 +505,11 @@
               <li>Long-term care contributions</li>
               <li>Employer contributions</li>
             </ul>
-            <fg-set path="/pensions/*/otherPreTaxContributionsPerPayPeriod" if-false="/pensions/*/isPastJobIncompleteOrFalse">
+            <fg-set path="/pensions/*/otherPreTaxContributionsPerPayPeriod" if-false="/pensions/*/isPastJob">
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
-            <fg-set path="/pensions/*/otherPreTaxContributionsToDate">
+            <fg-set path="/pensions/*/otherPreTaxContributionsToDate" if-false="/pensions/*/isInFuture">
               <question>Amount so far in <fg-show path="/taxYear"/></question>
               <hint>This might be labeled year-to-date or YTD on your statement.</hint>
               <input type="dollar"/>

@@ -460,8 +460,11 @@
         expect to receive this pension or annuity?
       hint: It’s okay to estimate.
     /pensions/*/payFrequency:
-      question: How frequently are <span condition="/pensions/*/notSpouses" operator="isTrue">you</span><span
-        condition="/pensions/*/notSpouses" operator="isFalse">they</span> paid?
+      question: How frequently <span condition="/pensions/*/isInFuture" operator="isIncompleteOrFalse">are</span><span
+        condition="/pensions/*/isInFuture" operator="isTrue">do</span> <span condition="/pensions/*/notSpouses"
+        operator="isTrue">you</span><span condition="/pensions/*/notSpouses" operator="isFalse">they</span>
+        <span condition="/pensions/*/isInFuture" operator="isTrue">expect to be</span>
+        paid?
       options:
         weekly:
           name: Weekly
@@ -475,6 +478,8 @@
     p-b5e9f9: Once we know more about your pension or annuity, we’ll ask you additional
       questions.
     h5-bee04a: Dates and income
+    h5-1f08d0: Income
+    h5-715b08: Expected income
     p-936eda: Use the most recent pension or annuity statement to enter the following
       information.
     /pensions/*/mostRecentPayDate:
@@ -482,9 +487,13 @@
         condition="/pensions/*/notSpouses" operator="isFalse">their</span> most recent
         pension or annuity payment?
     /pensions/*/averagePayPerPayPeriodForWithholding:
-      question: What’s the gross income for the most recent pension or annuity payment?
-      modalLink: <modal-link for="modal-pension-gross-pay-period">How do I find the
-        gross income for the most recent payment?</modal-link>
+      question: |-
+        <span condition="/pensions/*/isCurrentJob" operator="isTrue">What’s the gross income for the most recent pension or annuity payment?</span>
+                      <span condition="/pensions/*/isInFuture" operator="isTrue">What do you expect <span condition="/pensions/*/notSpouses" operator="isTrue">your</span><span condition="/pensions/*/notSpouses" operator="isFalse">their</span> pension or annuity payment to be each pay period?</span>
+      hint: It’s okay to estimate.
+      modalLink: <modal-link condition="/pensions/*/isCurrentJob" operator="isTrue"
+        for="modal-pension-gross-pay-period">How do I find the gross income for the
+        most recent payment?</modal-link>
     /pensions/*/yearToDateIncome:
       question: What’s the gross income <span condition="/pensions/*/notSpouses" operator="isTrue">you
         have</span><span condition="/pensions/*/notSpouses" operator="isFalse">your
@@ -509,12 +518,20 @@
     h5-4504e1: Contributions
     p-74eba3: Check your <span condition="/pensions/*/notSpouses" operator="isFalse">spouse’s</span>
       pension or annuity statement for pre-tax contributions to help pay for benefits.
+    h5-d1a574: Expected contributions
+    p-e93c90: 'Some contributions you make through your pension or annuity reduce
+      the amount you need to pay in taxes, like:'
+    ul-0:
+      li-b9f883: Health insurance premiums (if pre-tax)
+      li-773daf: HSA/FSA contributions
     fg-detail-c4e577:
       summary: Health insurance
-      p-06e7e2: Enter the total contributions made to pay for health coverage.
+      p-45339c: Enter the total contributions <span condition="/pensions/*/isInFuture"
+        operator="isFalse">made</span><span condition="/pensions/*/isInFuture" operator="isTrue">you
+        expect to make</span> to pay for health coverage.
       p-af178f: Health coverage contributions can usually be found under a <strong>Deductions</strong>
         or <strong>Pre-Tax</strong> section on a statement.
-      p-21161b: '<strong>Include contributions for: </strong>'
+      p-1404d4: <strong>Include contributions for:</strong>
       ul-0:
         li-7b0c41: Health insurance plans
         li-07aff3: Dental or vision insurance plans
@@ -529,9 +546,9 @@
         hint: This might be labeled year-to-date or YTD on your statement.
     fg-detail-855fc0:
       summary: Health Savings Account (HSA) or Flexible Spending Account (FSA)
-      p-5e048a: Enter total contributions to your <span condition="/isFilingStatusMFJ"
-        operator="isTrue">spouse’s</span> Health Savings Account (HSA) or Flexible
-        Spending Account (FSA).
+      p-cac8c1: Enter contributions <span condition="/pensions/*/isInFuture" operator="isFalse">made</span><span
+        condition="/pensions/*/isInFuture" operator="isTrue">you expect to make</span>
+        to a Health Savings Account (HSA) or Flexible Spending Account (FSA).
       p-187adb: HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong>
         or <strong>Pre-Tax</strong> section on a statement.
       p-27a801: Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a>
@@ -543,10 +560,12 @@
         hint: This might be labeled year-to-date or YTD on your statement.
     fg-detail-6dc47b:
       summary: Other pre-tax benefits
-      p-bccdfc: Enter the total contributions made to pay for other pre-tax benefits.
+      p-d3d852: Enter contributions <span condition="/pensions/*/isInFuture" operator="isFalse">made</span><span
+        condition="/pensions/*/isInFuture" operator="isTrue">you expect to make</span>
+        to other pre-tax benefits.
       p-29747e: Benefits contributions can usually be found under a <strong>Deductions</strong>
         or <strong>Pre-Tax</strong> section on a statement.
-      p-4f3f66: '<strong>Common pre-tax benefits may include: </strong>'
+      p-4ec357: <strong>Common pre-tax benefits may include:</strong>
       ul-0:
         li-660334: Accident insurance plans
         li-aa4a77: Dependent care assistance plans
@@ -2119,6 +2138,11 @@
     heading: You still need to complete earlier steps
     p-0f5e39: 'To use the estimator, you’ll have to go back and complete <a href="/app/tax-withholding-estimator/">Step
       1: About You</a>'
+  p-5ccbb3: Based on what you entered, we estimate that you’ll have more federal taxes
+    withheld than you need.
+  p-b3b8d7: If you’d like to get more take-home pay and reduce your estimated refund,
+    <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjusting
+    your withholding</a> for your new income.
   p-771faa: Based on what you entered, we estimate that <strong>you’re withholding
     more taxes than you need to.</strong>
   p-257121: You’ll likely get a tax refund when you file your <fg-show path="/taxYear"/>
@@ -2134,29 +2158,45 @@
     you’d like to get more take-home pay and reduce your estimated refund, you can
     <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">adjust
     your withholding</a>.</span>
+  p-ba4944: Based on what you entered, we estimate that <strong>you’ll owe taxes</strong>
+    when you file your <fg-show path="/taxYear"/> federal tax return.
+  p-05fd7f: To get your tax balance closer to $0, <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjust
+    your withholding</a> for your new income.
   p-d0bb10: Based on what you entered, we estimate that <strong>you’re not withholding
     enough taxes.</strong>
-  p-e9b831: |-
+  p-8f668e: |-
     <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">If you keep your withholding the same, you’ll</span>
               <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">You'll</span> likely owe taxes when you file your <fg-show path="/taxYear"/> federal tax return. <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">
-                You may have to pay a penalty in addition to what you owe if you owe at least $1,000 and more than 10 percent of your tax bill.
-              </span>
-  p-f934df: |-
+                  You may have to pay a penalty in addition to what you owe if you owe at least $1,000 and more than 10 percent of your tax bill.
+                </span>
+  p-da9eff: |-
     <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isFalse">If you’d like to get your tax balance closer to $0,</span>
-              <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">If you’d like to get your tax balance closer to $0 and avoid paying a penalty,</span>
-              <span condition="/mayNeedToMakeEstimatedPayments" operator="isFalse">
-                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">you can reduce your take-home pay by <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjusting your withholding</a>.</span>
-                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">you can make <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed.</span>
-              </span>
-              <span condition="/mayNeedToMakeEstimatedPayments" operator="isTrue">
-                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">you can reduce your take-home pay by <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjusting your withholding</a> and making <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed.</span>
-                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">you can make <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed.</span>
-              </span>
+                <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">If you’d like to get your tax balance closer to $0 and avoid paying a penalty,</span>
+                <span condition="/mayNeedToMakeEstimatedPayments" operator="isFalse">
+                  <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">you can reduce your take-home pay by <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjusting your withholding</a>.</span>
+                  <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">you can make <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed.</span>
+                </span>
+                <span condition="/mayNeedToMakeEstimatedPayments" operator="isTrue">
+                  <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">you can reduce your take-home pay by <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">adjusting your withholding</a> and making <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed.</span>
+                  <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">you can make <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">estimated tax payments</a> to make up for the difference between your withholding adjustment and tax owed.</span>
+                </span>
+  p-45fe55: Based on what you entered, your default withholding should cover your
+    federal taxes.
+  p-d8ceb8: To set this up with your new income, complete <a class="usa-link" href="#heading-adjust-withholding"><span
+    condition="/hasJobsAvailableForExtraWithholdingButNotPensions" operator="isTrue">Form
+    W-4</span><span condition="/hasPensionsAvailableForExtraWithholdingButNotJobs"
+    operator="isTrue">Form W-4P</span><span condition="/hasJobsAndPensionsAvailableForExtraWithholding"
+    operator="isTrue">Forms W-4 and W-4P</span></a> using our recommendations.
+  p-effd4c: Based on what you entered, your current withholding covers your federal
+    taxes. When you get your new income, your tax situation will change.
+  p-2e81bb: To stay on track, <a class="usa-link" href="#heading-adjust-withholding">adjust
+    your withholding</a> for your new <span condition="/hasCurrentJob" operator="isTrue">and
+    current</span> income.
   p-609593: Based on what you entered, we estimate that <strong>you’re withholding
     enough to cover your federal taxes.</strong>
-  p-445e9f: |-
+  p-3094c9: |-
     <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">If you keep your withholding the same, it’s</span>
-              <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">It’s</span> likely you won’t owe federal taxes when you file your <fg-show path="/taxYear"/> federal tax return.
+                  <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">It’s</span> likely you won’t owe federal taxes when you file your <fg-show path="/taxYear"/> federal tax return.
   p-bf0181: If you <a class="usa-link" href="#heading-adjust-withholding">adjust your
     withholding</a>, your federal tax balance and take-home pay will change.
   h3-5359f4: Estimated federal tax refund
@@ -2239,6 +2279,10 @@
     p-09327c: 'Note: This estimate depends on the accuracy of your information. The
       IRS does not guarantee the accuracy of this estimate and accepts no liability
       resulting from your use of this estimation.'
+  fg-alert-effbdc:
+    heading: Your estimate may be less accurate because it includes future income
+    p-e8e494: Check your withholding again once you receive your first paystub or
+      statement showing this new income.
   h3-13ef28: How to adjust your withholding to get more take-home pay, which will
     reduce your estimated refund
   h3-335363: How to adjust your withholding to get your tax balance closer to $0,

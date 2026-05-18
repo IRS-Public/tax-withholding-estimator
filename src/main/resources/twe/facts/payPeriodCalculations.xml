@@ -1162,7 +1162,7 @@
           </Case>
           <Case>
             <When>
-              <Dependency path="../isFutureJob"/>
+              <Dependency path="../isInFuture"/>
             </When>
             <Then>
               <Subtract>

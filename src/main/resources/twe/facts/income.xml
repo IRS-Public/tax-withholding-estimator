@@ -729,5 +729,86 @@ and car loan interest deduction
         </All>
       </Derived>
     </Fact>
+    <Fact path="/hasFutureJob">
+      <!-- TODO: Needs to be updated when we support jobs -->
+      <Derived>
+        <GreaterThan>
+          <Left>
+            <CollectionSize>
+              <Filter path="/pensions">
+                <Dependency path="isInFuture"/>
+              </Filter>
+            </CollectionSize>
+          </Left>
+          <Right>
+            <Int>0</Int>
+          </Right>
+        </GreaterThan>
+      </Derived>
+    </Fact>
+    <Fact path="/hasOnlyFutureJobsOrPensions">
+      <Derived>
+        <All>
+          <Equal>
+            <Left>
+              <CollectionSize>
+                <Filter path="/pensions">
+                  <Dependency path="isInFuture"/>
+                </Filter>
+              </CollectionSize>
+            </Left>
+            <Right>
+              <CollectionSize>
+                <Dependency path="/pensions"/>
+              </CollectionSize>
+            </Right>
+          </Equal>
+          <Equal>
+            <Left>
+              <CollectionSize>
+                <Filter path="/jobs">
+                  <Dependency path="isInFuture"/>
+                </Filter>
+              </CollectionSize>
+            </Left>
+            <Right>
+              <CollectionSize>
+                <Dependency path="/jobs"/>
+              </CollectionSize>
+            </Right>
+          </Equal>
+        </All>
+      </Derived>
+    </Fact>
+    <Fact path="/hasCurrentJob">
+      <Derived>
+        <Any>
+          <GreaterThan>
+            <Left>
+              <CollectionSize>
+                <Filter path="/pensions">
+                  <Dependency path="isCurrentJob"/>
+                </Filter>
+              </CollectionSize>
+            </Left>
+            <Right>
+              <Int>0</Int>
+            </Right>
+          </GreaterThan>
+          <GreaterThan>
+            <Left>
+              <CollectionSize>
+                <Filter path="/jobs">
+                  <Dependency path="isCurrentJob"/>
+                </Filter>
+              </CollectionSize>
+            </Left>
+            <Right>
+              <Int>0</Int>
+            </Right>
+          </GreaterThan>
+        </Any>
+      </Derived>
+    </Fact>
   </Facts>
 </FactDictionaryModule>

@@ -345,11 +345,14 @@
     h5-631cd8:
     p-b5e9f9:
     h5-bee04a:
+    h5-1f08d0:
+    h5-715b08:
     p-936eda:
     /pensions/*/mostRecentPayDate:
       question:
     /pensions/*/averagePayPerPayPeriodForWithholding:
       question:
+      hint:
       modalLink:
     /pensions/*/yearToDateIncome:
       question:
@@ -366,11 +369,16 @@
       modalLink:
     h5-4504e1:
     p-74eba3:
+    h5-d1a574:
+    p-e93c90:
+    ul-0:
+      li-b9f883:
+      li-773daf:
     fg-detail-c4e577:
       summary:
-      p-06e7e2:
+      p-45339c:
       p-af178f:
-      p-21161b:
+      p-1404d4:
       ul-0:
         li-7b0c41:
         li-07aff3:
@@ -385,7 +393,7 @@
         hint:
     fg-detail-855fc0:
       summary:
-      p-5e048a:
+      p-cac8c1:
       p-187adb:
       p-27a801:
       /pensions/*/hsaOrFsaContributionsPerPayPeriod:
@@ -395,9 +403,9 @@
         hint:
     fg-detail-6dc47b:
       summary:
-      p-bccdfc:
+      p-d3d852:
       p-29747e:
-      p-4f3f66:
+      p-4ec357:
       ul-0:
         li-660334:
         li-aa4a77:
@@ -1404,6 +1412,8 @@
   fg-alert-18ebd6:
     heading: Necesitas completar los pasos anteriores
     p-0f5e39: 'Para usar el estimador necesitas completar <a href="/app/tax-withholding-estimator/">Paso 1: Acerca de ti</a>'
+  p-5ccbb3:
+  p-b3b8d7:
   p-771faa: Según tu información, estimamos que <strong>retienes más impuestos de lo necesario.</strong>
   p-257121: Probablemente recibas un reembolso en tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
   p-1a7d9b: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si quisieras recibir más dinero en cada cheque y reducir tu reembolso estimado, puedes <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">cambiar tus retenciones</a> a $0.</span>
@@ -1411,21 +1421,17 @@
     <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si mantienes tus retenciones como están, probablemente</span>
     <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">Probablemente</span> recibas un reembolso en tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
   p-f27357: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si quisieras recibir más dinero en cada cheque y reducir tu reembolso estimado, puedes <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">cambiar tus retenciones</a>.</span>
+  p-ba4944:
+  p-05fd7f:
   p-d0bb10: Según tu informacion, estimamos que <strong>no estás reteniendo suficientes impuestos.</strong>
-  p-e9b831: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si mantienes tus retenciones como están, probablemente</span><span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">Probablemente</span> debas impuestos en tu declaración del impuesto federal del <fg-show path="/taxYear"/>. <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">Podrías tener que pagar una multa además del impuesto que adeudas si debes por lo menos $1,000 y más del 10% del total del impuesto que debes pagar.</span>
-  p-f934df: <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isFalse">Si quieres reducir la cantidad de impuestos que debes,</span>
-              <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">Si quieres reducir la cantidad de impuestos que debes y evitar pagar una multa,</span>
-              <span condition="/mayNeedToMakeEstimatedPayments" operator="isFalse">
-                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue"> puedes reducir el dinero que recibes en cada cheque <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">cambiando tus retenciones.</a></span>
-                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse"> puedes hacer <a class="usa-link" href="https://www.irs.gov/es/businesses/small-businesses-self-employed/estimated-taxes">pagos del impuesto estimado</a> para cubrir la diferencia entre el cambio en tus retenciones y el impuesto que debes.</span>
-              </span>
-              <span condition="/mayNeedToMakeEstimatedPayments" operator="isTrue">
-                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue"> puedes reducir el dinero que recibes en cada cheque <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">cambiando tus retenciones</a> y haciendo <a class="usa-link" href="https://www.irs.gov/es/businesses/small-businesses-self-employed/estimated-taxes">pagos del impuesto estimado</a> para cubrir la diferencia entre el cambio en tus retenciones y el impuesto que debes.</span>
-                <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse"> puedes hacer <a class="usa-link" href="https://www.irs.gov/es/businesses/small-businesses-self-employed/estimated-taxes">pagos del impuesto estimado</a> para cubrir la diferencia entre el cambio en tus retenciones y el impuesto que debes.</span>
-              </span>
+  p-8f668e:
+  p-da9eff:
+  p-45fe55:
+  p-d8ceb8:
+  p-effd4c:
+  p-2e81bb:
   p-609593: Según tu informacion, estimamos que <strong>estás reteniendo suficiente para cubrir tu impuesto federal.</strong>
-  p-445e9f: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si mantienes tus retenciones como están, probablemente</span>
-              <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">Probablemente</span> no debas impuestos en tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
+  p-3094c9:
   p-bf0181: Si <a class="usa-link" href="#heading-adjust-withholding">cambias tus retenciones</a>, cambiará el monto que adeudas de impuesto federal y el dinero que recibes en cada cheque.
   h3-5359f4: Reembolso estimado del impuesto federal
   h3-566afa: Deuda estimada del impuesto federal
@@ -1499,6 +1505,9 @@
                             </span>
     p-5d3b06: Si debes por lo menos $1,000 y debes más del 10% del total del impuesto que debes pagar, podrías tener que pagar una multa además del impuesto federal que debes.
     p-09327c: 'Nota: Este estimado depende de que tu información sea precisa. El IRS no garantiza la exactitud de este estimado y no acepta cualquier responsabilidad que pueda resultar de usar este cálculo.'
+  fg-alert-effbdc:
+    heading:
+    p-e8e494:
   h3-13ef28: ¿Cómo cambiar tus retenciones para recibir más dinero en cada cheque y reducir tu reembolso estimado?
   h3-335363: ¿Cómo cambiar tus retenciones para reducir el monto que adeudas y reducir el dinero que recibes en cada cheque?
   h3-d387b7: ¿Cómo cambiar tus retenciones?

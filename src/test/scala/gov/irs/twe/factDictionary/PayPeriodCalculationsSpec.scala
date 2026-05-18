@@ -32,7 +32,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
   val averagePayPerPayPeriodForWithholding = Path(s"/jobs/#$dummyUUID/averagePayPerPayPeriodForWithholding")
   val isPastJob = Path(s"/jobs/#$dummyUUID/isPastJob")
   val isCurrentJob = Path(s"/jobs/#$dummyUUID/isCurrentJob")
-  val isFutureJob = Path(s"/jobs/#$dummyUUID/isFutureJob")
+  val isInFuture = Path(s"/jobs/#$dummyUUID/isInFuture")
 
   // TODO! Add cases where the most recent pay date is before the start date
   val weekly = Enum("weekly", "/payFrequencyOptions");
@@ -539,7 +539,7 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
           recentPayPeriodEnd -> Day(recentPayPeriodEndValue),
           averagePayPerPayPeriodForWithholding -> Dollar(100),
           isPastJob -> false,
-          isFutureJob -> false,
+          isInFuture -> false,
           isCurrentJob -> true,
         ) ++ (if (recentPayDateValue.nonEmpty) Seq(recentPayDate -> Day(recentPayDateValue)) else Seq.empty)
 
@@ -1059,11 +1059,99 @@ class PayPeriodCalculationsSpec extends AnyFunSuite with GivenWhenThen with Tabl
           endDate -> Day(endDateValue),
           isPastJob -> false,
           isCurrentJob -> false,
-          isFutureJob -> true,
+          isInFuture -> true,
         )
 
         val fractRemainingPayPeriods = graph.get(Path(s"/jobs/#${dummyUUID}/partialPayPeriods"))
         assert(fractRemainingPayPeriods.value.contains(expectedFractional))
+    }
+  }
+
+  test("remainingPayPeriodsInteger for future pensions") {
+    val testTable = Table(
+      (
+        "startDateValue",
+        "endDateValue",
+        "frequencyValue",
+        "expectedRemainingPayPeriodsInteger",
+      ),
+      (
+        "2026-06-25",
+        "2026-12-31",
+        weekly,
+        27,
+      ),
+      (
+        "2026-06-24",
+        "2026-12-31",
+        weekly,
+        28,
+      ),
+      (
+        "2026-06-23",
+        "2026-12-31",
+        biWeekly,
+        14,
+      ),
+      (
+        "2026-05-31",
+        "2026-11-30",
+        monthly,
+        6,
+      ),
+      (
+        "2026-02-28",
+        "2026-03-31",
+        monthly,
+        2,
+      ),
+      (
+        "2026-06-23",
+        "2026-12-24",
+        monthly,
+        7,
+      ),
+      (
+        "2026-05-31",
+        "2026-11-30",
+        semiMonthly,
+        12,
+      ),
+      (
+        "2026-02-28",
+        "2026-03-31",
+        semiMonthly,
+        2,
+      ),
+      (
+        "2026-06-23",
+        "2026-12-24",
+        semiMonthly,
+        13,
+      ),
+    )
+
+    forAll(testTable) {
+      (
+          startDateValue,
+          endDateValue,
+          frequency,
+          expectedRemainingPayPeriodsInteger,
+      ) =>
+        When(s"pension starting: ${startDateValue} and ending: ${endDateValue} with payFreq of: ${frequency}")
+        var graph = makeGraphWith(
+          factDictionary,
+          pensions -> pensionsCollection,
+          Path(s"/pensions/#${pension1Id}/startDate") -> Day(startDateValue),
+          Path(s"/pensions/#${pension1Id}/endDate") -> Day(endDateValue),
+          Path(s"/pensions/#${pension1Id}/payFrequency") -> frequency,
+          Path(s"/pensions/#${pension1Id}/isPastJob") -> false,
+          Path(s"/pensions/#${pension1Id}/isCurrentJob") -> false,
+          Path(s"/pensions/#${pension1Id}/isInFuture") -> true,
+        )
+
+        val remainingPayPeriodsInteger = graph.get(Path(s"/pensions/#${pension1Id}/remainingPayPeriodsInteger"))
+        assert(remainingPayPeriodsInteger.value.contains(expectedRemainingPayPeriodsInteger))
     }
   }
 
