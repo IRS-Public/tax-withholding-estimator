@@ -358,7 +358,7 @@
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-adoption-credit-who-can-claim">
-      <modal-heading>Who can claim the Adoption Credit?</modal-heading>
+      <modal-heading>Who can claim the adoption credit?</modal-heading>
       <modal-content>
         <p>To claim the adoption credit, you or your spouse must:</p>
         <ul>
