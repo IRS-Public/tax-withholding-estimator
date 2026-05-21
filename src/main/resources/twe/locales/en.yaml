@@ -62,12 +62,16 @@ layout:
   identifier:
     agency-identifier: Agency identifier
     disclaimer: An official website of the <a class="usa-link" target="_blank" href="https://irs.gov">IRS<span class="usa-sr-only"> (opens in a new tab)</span></a>
-    about: About
-    accessibility: Accessibility
-    privacy-policy: Privacy policy
+    about:
+      text: About
+      link: https://www.irs.gov/about-irs
+    accessibility:
+      text: Accessibility
+      link: https://www.irs.gov/accessibility
+    privacy-policy:
+      text: Privacy policy
+      link: https://www.irs.gov/privacy-disclosure/irs-privacy-policy
     important-links: Important links
-  usgov:
-    name: United States government
   irs:
     name: IRS
     domain: IRS.gov

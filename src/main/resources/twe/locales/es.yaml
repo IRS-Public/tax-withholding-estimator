@@ -60,17 +60,21 @@ layout:
   title: Estimador para Retención de Impuestos
   skip-to-main:
   identifier:
-    agency-identifier:
-    disclaimer:
+    agency-identifier: Identificador de la agencia
+    disclaimer: Un sitio web oficial del <a class="usa-link" target="_blank" href="https://irs.gov">IRS<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
     about:
+      text: Acerca del IRS
+      link: https://www.irs.gov/es/about-irs
     accessibility:
+      text: Accesibilidad
+      link: https://www.irs.gov/es/accessibility
     privacy-policy:
-    important-links:
-  usgov:
-    name:
+      text: Política de privacidad
+      link: https://www.irs.gov/es/privacy-disclosure/irs-privacy-policy
+    important-links: Enlaces importantes
   irs:
-    name:
-    domain:
+    name: IRS
+    domain: IRS.gov
 
   banner:
     how-you-know: Así es como usted puede verificarlo
