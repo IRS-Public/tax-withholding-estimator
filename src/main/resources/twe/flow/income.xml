@@ -15,8 +15,11 @@
 
       <h3>Jobs with an employer (W-2)</h3>
       <fg-alert alert-type="error" condition="/declaredDoneAddingIncome" operator="isTrue">
-        <heading>You need to have a job or pension to continue</heading>
-        <p class="usa-alert__text"> To continue using the estimator, you need to have at least one job or pension that regularly withholds federal income taxes. If you don’t pay any taxes on your income through withholding, you may want to plan to <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <heading>You <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> need to have at least one job, pension, or annuity that regularly withholds federal income taxes.</heading>
+        <p class="usa-alert__text"> Add a job, pension, or annuity to continue using the estimator. If you don’t have a job, pension, or annuity that withholds federal income taxes, you may want to plan to  <a target="_blank"
+        href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes"
+      class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a
+      new tab)</span></a>
         </p>
       </fg-alert>
       <p>
@@ -607,7 +610,8 @@
         <hint>Gross means the total amount of income before taxes or deductions.</hint>
       </fg-set>
       <fg-set path="/unemploymentIncomeWithholding">
-        <question>Did you choose to withhold federal tax from your unemployment income?</question>
+        <question>Did you <span condition="/isFilingStatusMFJ"
+      operator="isTrue">and your spouse</span> choose to withhold federal tax from your unemployment income?</question>
         <modal-link for="modal-fed-unemployment-tax-withheld-en">How do I know if I have taxes withheld?</modal-link>
         <input type="boolean"/>
       </fg-set>

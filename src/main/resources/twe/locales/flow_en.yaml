@@ -139,14 +139,13 @@
   p-389582: To use this estimator, you need to have income from a job, pension, or
     annuity.
   h3-39ed29: Jobs with an employer (W-2)
-  fg-alert-974b2e:
-    heading: You need to have a job or pension to continue
-    p-242cef: To continue using the estimator, you need to have at least one job or
-      pension that regularly withholds federal income taxes. If you don’t pay any
-      taxes on your income through withholding, you may want to plan to <a target="_blank"
-      href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes"
-      class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a
-      new tab)</span></a>
+  fg-alert-eadda7:
+    heading: You <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span>
+      need to have at least one job, pension, or annuity that regularly withholds
+      federal income taxes.
+    p-d4a8fe: |-
+      Add a job, pension, or annuity to continue using the estimator. If you don’t have a job, pension, or annuity that withholds federal income taxes, you may want to plan to  <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a
+            new tab)</span></a>
   p-0ec9f9: <modal-link for="modal-what-counts-job">What counts as a job?</modal-link>
   collection/jobs:
     /jobs/*/filerAssignment:
@@ -684,7 +683,8 @@
       operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/>
     hint: Gross means the total amount of income before taxes or deductions.
   /unemploymentIncomeWithholding:
-    question: Did you choose to withhold federal tax from your unemployment income?
+    question: Did you <span condition="/isFilingStatusMFJ" operator="isTrue">and your
+      spouse</span> choose to withhold federal tax from your unemployment income?
     modalLink: <modal-link for="modal-fed-unemployment-tax-withheld-en">How do I know
       if I have taxes withheld?</modal-link>
   h3-0b2817: Pre-tax retirement account income

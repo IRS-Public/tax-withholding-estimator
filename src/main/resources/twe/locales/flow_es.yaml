@@ -100,752 +100,847 @@
     p-8725bb: Revisa la tabla 5 de la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">Publicación 501 del IRS</a> para determinar si alguien puede reclamarle como dependiente.
     p-53afc1: Ten en cuenta que tu esposo(a) no califica como dependiente si pagó más de la mitad de sus propios costos de vida, o si los pagaste tú.
 /income:
-  title:
-  h2-fdf8c2:
-  p-ed5944:
-  p-389582:
-  h3-39ed29:
-  fg-alert-974b2e:
-    heading:
-    p-242cef:
-  p-0ec9f9:
+  title: Ingresos y pagos de impuestos
+  h2-fdf8c2: Ingresos y pagos de impuestos del <fg-show path="/taxYear"/>
+  p-ed5944: Indica el ingreso total, retención del impuesto federal y pagos de impuestos estimados que <span condition="/isFilingStatusMFJ" operator="isTrue">tú y tu esposo(a) esperan</span><span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span> en el <fg-show path="/taxYear"/>.
+  p-389582: Para usar este estimador necesitas tener ingresos de un trabajo, pensión, o anualidad.
+  h3-39ed29: Trabajos con un empleador (W-2)
+  fg-alert-eadda7:
+    heading: <span condition="/isFilingStatusMFJ" operator="isFalse">Debes</span><span condition="/isFilingStatusMFJ" operator="isTrue">Tu o tu esposo(a) deben</span> tener por lo menos un trabajo, pensión o anualidad que regularmente retenga impuesto federal.
+    p-d4a8fe: Agrega un trabajo, pensión o anualidad para seguir usando el estimador. Si no tienes un trabajo, pensión o anualidad que retenga impuesto federal, podrías planificar pagar <a target="_blank"
+      href="https://www.irs.gov/es/businesses/small-businesses-self-employed/estimated-taxes"
+      class="usa-link">impuestos estimados. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+  p-0ec9f9: <modal-link for="modal-what-counts-job">¿Qué cuenta como un trabajo?</modal-link>
   collection/jobs:
     /jobs/*/filerAssignment:
-      question:
+      question: ¿Quién recibe estos ingresos?
       options:
         self:
-          name:
+          name: Yo
         spouse:
-          name:
+          name: Mi esposo(a)
     /jobs/*/isHourlyJob:
-      question:
+      question: ¿Este trabajo paga por hora o paga un salario?
       options:
         'true':
-          name:
+          name: Por hora (la paga cambia según la cantidad de horas que trabajaste)
         'false':
-          name:
-    h5-d3b69e:
+          name: Salario (la paga es casi igual en cada periodo de pago)
+    h5-d3b69e: Duración
     /jobs/*/isAllYear:
-      question:
+      question: <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">¿Espera</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">¿Esperas</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">¿Esperas</span> tener este trabajo todo el año o solo parte del año?
       options:
         'true':
-          name:
+          name: Todo el año (1 de enero al 31 de diciembre del <fg-show path="/taxYear"/>)
         'false':
-          name:
+          name: Parte del año
     /jobs/*/writableStartDate:
-      question:
-      hint:
+      question: ¿Cuál es el primer día del <fg-show path="/taxYear"/> en el que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">espera</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">esperas</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">esperas</span> tener este trabajo?
+      hint: Puedes estimar la fecha.
     /jobs/*/writableEndDate:
-      question:
-      hint:
+      question: ¿Cuál es el último día del <fg-show path="/taxYear"/> que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">espera</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">esperas</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">esperas</span> tener este trabajo?
+      hint: Puedes estimar la fecha.
     /jobs/*/payFrequency:
-      question:
-      modalLink:
+      question: ¿Con qué frecuencia <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">te</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">le</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">le</span> pagan?
+      modalLink: <modal-link for="modal-pay-frequency-en">Conoce más sobre la frecuencia de pago.</modal-link>
       options:
         weekly:
-          name:
+          name: Semanal
         biWeekly:
-          name:
+          name: Cada dos semanas
         semiMonthly:
-          name:
+          name: Dos veces al mes
         monthly:
-          name:
-    h5-4f6501:
-    p-5bef91:
-    h5-bee04a:
-    p-0ae3e5:
+          name: Una vez al mes
+    h5-4f6501: Detalles
+    p-5bef91: Te haremos preguntas adicionales cuando sepamos más sobre tus ingresos.
+    h5-bee04a: Fechas e ingresos
+    p-0ae3e5: Usa el cheque más reciente del <fg-show path="/taxYear"/> para llenar la siguiente información.
     /jobs/*/mostRecentPayPeriodEnd:
-      question:
-      modalLink:
+      question: ¿Cuándo terminó el periodo de pago más reciente del <fg-show path="/taxYear"/>?
+      modalLink: <modal-link for="modal-job-pay-dates-en">¿Cómo encuentro la fecha del periodo de pago y la fecha de pago?</modal-link>
     /jobs/*/mostRecentPayDate:
-      question:
+      question: ¿Cuándo fue <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> fecha de pago más reciente del <fg-show path="/taxYear"/>?
     /jobs/*/consistentPay:
-      question:
+      question: ¿Qué tan parecido es el monto de pago de cada cheque?
       options:
         'true':
-          name:
+          name: El pago es casi igual en cada cheque
         'false':
-          name:
+          name: El pago es muy diferente cada cheque
     /jobs/*/amountLastPaycheck:
-      question:
-      hint:
-      modalLink:
-    p-853eac:
+      question: ¿Cuál es el ingreso bruto en este periodo de pago?
+      hint: Esto incluye bonos, propinas y pago por horas extra.
+      modalLink: <modal-link for="modal-job-gross-pay-period-en">¿Qué significa ingreso bruto por periodo de pago y dónde puedo encontrarlo?</modal-link>
+    p-853eac: Como la paga es muy diferente en cada cheque, usaremos dos o tres de los talones de cheque más recientes para obtener un promedio.
     /jobs/*/pastPaycheckIncome1:
-      question:
-      hint:
-      modalLink:
+      question: En el último talón de cheque del <fg-show path="/taxYear"/>, ¿cuál es el ingreso bruto por periodo de pago?
+      hint: Esto incluye bonos, propinas y pago por horas extra.
+      modalLink: <modal-link for="modal-job-gross-pay-period-en">¿Cómo puedo encontrar el ingreso bruto por periodo de pago?</modal-link>
     /jobs/*/pastPaycheckIncome2:
-      question:
+      question: En el penúltimo talón de cheque, ¿cuál es el ingreso bruto por periodo de pago?
     /jobs/*/pastPaycheckIncome3:
-      question:
-      hint:
+      question: En el antepenúltimo talón de cheque, ¿cuál es el ingreso bruto por periodo de pago?
+      hint: Si no tienes un tercer talón de cheque, puedes dejar esta casilla en blanco.
     /jobs/*/mostRecentPayPeriodHasBonus:
-      question:
-      modalLink:
+      question: <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">¿Recibió</span>
+                      <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">¿Recibiste</span> un bono en <span condition="/jobs/*/consistentPay" operator="isTrue">este periodo</span>
+                      <span condition="/jobs/*/consistentPay" operator="isFalse">estos periodos</span>
+      modalLink: <modal-link for="modal-job-check-bonus-en">¿Cómo puedo revisar si recibí un bono en este periodo de pago?</modal-link>
       options:
         'true':
-          name:
+          name: Sí, hay un bono en <span condition="/jobs/*/consistentPay" operator="isTrue">este periodo</span>
+                            <span condition="/jobs/*/consistentPay" operator="isFalse">estos periodos</span>
         'false':
-          name:
+          name: No, <span condition="/jobs/*/consistentPay" operator="isTrue">este periodo</span>
+                            <span condition="/jobs/*/consistentPay" operator="isFalse">estos periodos</span> de pago sólo <span condition="/jobs/*/consistentPay" operator="isTrue">tiene</span>
+                            <span condition="/jobs/*/consistentPay" operator="isFalse">tienen</span> el sueldo normal
     /jobs/*/mostRecentPayPeriodBonusAmount:
-      question:
+      question: ¿Cuánto es el monto del bono que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">recibió</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">recibiste</span> en <span condition="/jobs/*/consistentPay" operator="isTrue">este periodo</span><span condition="/jobs/*/consistentPay" operator="isFalse">estos periodos</span> de pago?
     /jobs/*/totalFutureBonus:
-      question:
-      hint:
-      modalLink:
+      question: Estima el monto de los bonos que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">piensas</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">piensa</span> que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">recibirá</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">recibirás</span> durante el resto del <fg-show path="/taxYear"/>
+      hint: Si no lo sabes, puedes dejarlo en blanco.
+      modalLink: <modal-link for="modal-estimate-future-bonus-en">¿Cómo puedo estimar bonos futuros?</modal-link>
     /jobs/*/yearToDateIncome:
-      question:
-      hint:
-      modalLink:
-    h5-64d83a:
-    p-902fc0:
-    p-089a35:
+      question: ¿Cuánto <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">ha</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">has</span> recibido en ingreso bruto en lo que va del <fg-show path="/taxYear"/>?
+      hint: Esto puede llamarse “year-to-date” o “YTD” en tu talón de cheque. Incluye bonos, propinas, y pago por tiempo extra.
+      modalLink: <modal-link for="modal-job-gross-ytd-end-en">¿Cómo puedo encontrar el ingreso bruto en lo que va del <fg-show path="/taxYear"/>?</modal-link>
+    h5-64d83a: Propinas y horas extra estimadas
+    p-902fc0: Existen nuevas deducciones para propinas y horas extra desde el año 2025 al 2028. Si cumples con los requisitos para ser elegible, <span condition="/jobs/*/isFilerAssignmentSelf"
+        operator="isFalse">podría</span><span condition="/jobs/*/isFilerAssignmentSelf"
+        operator="isTrue">podrías</span> deducir (restar) de <span condition="/jobs/*/isFilerAssignmentSelf"
+        operator="isFalse">su</span><span condition="/jobs/*/isFilerAssignmentSelf"
+        operator="isTrue">tu</span> sueldo las propinas y tiempo extra calificados.
+    p-089a35: Si esta sección no <span condition="/jobs/*/isFilerAssignmentSelf"
+        operator="isFalse">le</span><span condition="/jobs/*/isFilerAssignmentSelf"
+        operator="isTrue">te</span> aplica, puedes dejarla en blanco.
     fg-detail-bbdbfc:
-      summary:
-      p-c3c8eb:
-      p-d353b7:
-      p-af9c2c:
+      summary: Propinas estimadas
+      p-c3c8eb: Las propinas son pagos voluntarios en efectivo o crédito recibidos de clientes o arreglos para compartir propinas.
+      p-d353b7: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Conoce más sobre la deducción de propinas.</a>
+      p-af9c2c: Para ser elegible para la deducción de propinas, debes tener un <a target="_blank" href="https://www.irs.gov/forms-pubs/occupations-that-customarily-and-regularly-received-tips-on-or-before-december-31-2024">trabajo</a> que el IRS reconozca como un trabajo que recibe propinas regularmente.
       /jobs/*/qualifiedTipIncome:
-        question:
-        hint:
-        modalLink:
+        question: Total de propinas estimadas para el <fg-show path="/taxYear"/>
+        hint: Puedes dejar esta casilla en blanco si no <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">tiene</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tienes</span> un número de Seguro Social.
+        modalLink: <modal-link for="modal-estimate-tips-en">¿Cómo puedo estimar propinas?</modal-link>
     fg-detail-de7b9c:
-      summary:
-      p-bc05b9:
-      p-1c212b:
+      summary: Horas extra estimadas
+      p-bc05b9: Las horas extra son un pago adicional que recibes por trabajar más de 40 horas por semana. Solo incluye el tiempo extra que tu empleador tiene requerido pagarte bajo la Ley de Normas Justas de Trabajo (FLSA).
+      p-1c212b: <a target="_blank" href="https://www.irs.gov/es/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025">Conoce más sobre la deducción por horas extra.</a>
       /jobs/*/overtimeCompensationTotal:
-        question:
-        hint:
-        modalLink:
+        question: Total de pago estimado por horas extra en el <fg-show path="/taxYear"/>
+        hint: Puedes dejar esta casilla en blanco si no <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">tiene</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tienes</span> un número de Seguro Social.
+        modalLink: <modal-link for="modal-estimate-overtime-en">¿Cómo puedo estimar las horas extra?</modal-link>
       /jobs/*/overtimeCompensationRate:
-        question:
-        modalLink:
+        question: ¿Cuánto te pagan por horas extra?
+        modalLink: <modal-link for="modal-estimate-overtime-rate-en">¿Qué pasa si me pagan una tarifa por horas extra?</modal-link>
         options:
           onePointFive:
-            name:
+            name: 1.5 veces mi paga regular
           two:
-            name:
-    h5-9f886e:
-    p-6f0cc9:
+            name: 2.0 veces mi paga regular
+    h5-9f886e: Impuesto federal
+    p-6f0cc9: Usa el talón de cheque más reciente para ingresar la siguiente información.
     /jobs/*/amountWithheldLastPaycheck:
-      question:
-      hint:
-      modalLink:
+      question: Impuesto federal retenido (pagado) en este periodo de pago
+      hint: No incluyas impuestos estatales, locales, Medicare o Seguro Social.
+      modalLink: <modal-link for="modal-fed-tax-pay-period-en">
+                      ¿Cómo puedo encontrar el impuesto federal retenido por periodo de pago?
+                    </modal-link>
     /jobs/*/yearToDateWithholding:
-      question:
-      hint:
-      modalLink:
-    h5-4504e1:
-    p-89f8df:
-    p-de6d98:
+      question: Impuesto federal retenido (pagado) en lo que va del <fg-show path="/taxYear"/>
+      hint: Podría llamarse año hasta la fecha (year-to-date) o YTD en tu talón de cheque. No incluyas impuestos estatales o locales, Medicare o Seguro Social.
+      modalLink: <modal-link for="modal-fed-tax-ytd-en"> ¿Cómo puedo encontrar el impuesto federal retenido en lo que va del <fg-show path="/taxYear"/>? </modal-link>
+    h5-4504e1: Contribuciones
+    p-89f8df: Consulta <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span> talón de cheque para conocer las contribuciones pre-impuestos (también las llaman “payroll deductions”) que ayudan a pagar por beneficios.
+    p-de6d98: Estas contribuciones pueden encontrarse bajo las secciones de <strong>deducciones</strong> o <strong>pre-impuestos</strong> (“Deductions” o “Pre-Tax”).
     fg-detail-023b9b:
-      summary:
-      p-456da9:
-      p-918295:
-      p-d1f764:
+      summary: Planes de jubilación
+      p-456da9: Ingresa el total de las contribuciones hechas a planes de jubilación.
+      p-918295: Usualmente, estas contribuciones pueden encontrarse en la sección de <strong>Deducciones</strong> o <strong>Pre-tax</strong> en tu talón de cheque.
+      p-d1f764: "Incluye contribuciones hechas a cualquiera de estos planes:"
       ul-0:
-        li-b63157:
-        li-b5f269:
-        li-a6c25b:
-        li-5cebaa:
-        li-b4faec:
-        li-9685cf:
-        li-6120e8:
-      p-119440:
+        li-b63157: 401(k)
+        li-b5f269: 403(b)
+        li-a6c25b: 457(b)
+        li-5cebaa: Plan de Ahorros para la jubilación para empleados federales
+        li-b4faec: Planes de Pensión simplificada para el empleado con reducción salarial (SARSEP)
+        li-9685cf: Planes SIMPLE IRA o SIMPLE 401(k)
+        li-6120e8: Planes no calificados de compensación diferida
+      p-119440: <strong>No incluyas</strong> contribuciones a planes Roth.
       /jobs/*/retirementPlanContributionsPerPayPeriod:
-        question:
+        question: Cantidad por periodo de pago
       /jobs/*/retirementPlanContributionsToDate:
-        question:
-        hint:
+        question: Cantidad en lo que va del <fg-show path="/taxYear"/>
+        hint: Puede llamarse año hasta la fecha (year-to-date) o YTD en tu talón de cheque.
     fg-detail-c4e577:
-      summary:
-      p-06e7e2:
-      p-1e7779:
-      p-1404d4:
+      summary: Seguro de salud
+      p-06e7e2: Ingresa el total de contribuciones que hiciste para pagar por cobertura médica.
+      p-1e7779: Usualmente, las contribuciones para cobertura médica pueden encontrarse en la sección de <strong>Deducciones</strong> o <strong>Pre-tax</strong> de un talón de cheque.
+      p-1404d4: <strong>Incluye contribuciones para:</strong>
       ul-0:
-        li-7b0c41:
-        li-07aff3:
-      p-5a0ed2:
+        li-7b0c41: Planes de seguro de salud
+        li-07aff3: Planes de seguro dental o de visión
+      p-5a0ed2: <strong>No incluyas:</strong>
       ul-1:
-        li-a867f4:
-        li-a981e6:
+        li-a867f4: Contribuciones para cuidado a largo plazo
+        li-a981e6: Contribuciones del empleador
       /jobs/*/healthInsuranceContributionsPerPayPeriod:
-        question:
+        question: Cantidad por periodo de pago
       /jobs/*/healthInsuranceContributionsToDate:
-        question:
-        hint:
+        question: Cantidad en lo que va del <fg-show path="/taxYear"/>
+        hint: Puede llamarse año hasta la fecha (year-to-date) o YTD en tu talón de cheque.
     fg-detail-855fc0:
-      summary:
-      p-5e048a:
-      p-e1e101:
-      p-27a801:
+      summary: Cuenta de ahorros para la salud (HSA) o Cuenta de gastos flexibles (FSA)
+      p-5e048a: Ingresa el total de contribuciones a <span condition="/isFilingStatusMFJ"
+        operator="isTrue">su</span><span condition="/isFilingStatusMFJ"
+        operator="isFalse">tu</span> Cuenta de ahorros para la salud (HSA) o Cuenta de gastos flexibles (FSA).
+      p-e1e101: Usualmente, el monto de las contribuciones a las cuentas HSA y FSA pueden encontrarse en la sección de <strong>Deducciones</strong> o <strong>Pre-tax</strong> de un talón de cheque.
+      p-27a801: Conoce más sobre las contribuciones a las <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> y <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
       /jobs/*/hsaOrFsaContributionsPerPayPeriod:
-        question:
+        question: Cantidad por periodo de pago
       /jobs/*/hsaOrFsaContributionsToDate:
-        question:
-        hint:
+        question: Cantidad en lo que va del <fg-show path="/taxYear"/>
+        hint: Puede llamarse año hasta la fecha (year-to-date) o YTD en tu talón de cheque.
     fg-detail-6dc47b:
-      summary:
-      p-bccdfc:
-      p-140bd8:
-      p-4f3f66:
+      summary: Otros beneficios pre-impuestos
+      p-bccdfc: Ingresa el total de contribuciones que hiciste para pagar por otros beneficios pre-impuestos.
+      p-140bd8: Usualmente, las contribuciones para beneficios pueden encontrarse en la sección de <strong>Deducciones</strong> o <strong>Pre-tax</strong> de un talón de cheque.
+      p-4f3f66: '<strong>Los beneficios pre-impuestos pueden incluir:</strong>'
       ul-0:
-        li-660334:
-        li-aa4a77:
-        li-66356e:
-        li-f54649:
-        li-921253:
-        li-4a41d5:
-        li-fe33dd:
-      p-c08338:
+        li-660334: Planes de seguro contra accidentes
+        li-aa4a77: Planes de asistencia con el cuidado de dependientes
+        li-66356e: Seguro de vida temporal colectivo sobre la vida de los empleados
+        li-f54649: Asistencia calificada para adopciones
+        li-921253: Seguro contra muerte accidental o desmembramiento
+        li-4a41d5: Cobertura a corto y largo plazo para discapacidades
+        li-fe33dd: Beneficio calificado de transporte
+      p-c08338: <strong>No incluyas:</strong>
       ul-1:
-        li-a867f4:
-        li-a981e6:
+        li-a867f4: Contribuciones para cuidado a largo plazo
+        li-a981e6: Contribuciones del empleador
       /jobs/*/otherPreTaxContributionsPerPayPeriod:
-        question:
+        question: Cantidad por periodo de pago
       /jobs/*/otherPreTaxContributionsToDate:
-        question:
-        hint:
-  h3-4ef0c3:
-  p-6b097c:
+        question: Cantidad en lo que va del <fg-show path="/taxYear"/>
+        hint: Puede llamarse año hasta la fecha (year-to-date) o YTD en tu talón de cheque.
+  h3-4ef0c3: Ingresos por pensión o anualidades
+  p-6b097c: <modal-link for="modal-what-counts-pension">¿Qué cuenta como una pensión o anualidad?</modal-link>
   collection/pensions:
     /pensions/*/filerAssignment:
-      question:
+      question: ¿Quién recibe esta pensión o anualidad?
       options:
         self:
-          name:
+          name: Yo
         spouse:
-          name:
-    h5-d3b69e:
+          name: Mi esposo(a)
+    h5-d3b69e: Duración
     /pensions/*/isAllYear:
-      question:
+      question: <span condition="/pensions/*/notSpouses" operator="isTrue">Esperas</span><span
+        condition="/pensions/*/notSpouses" operator="isFalse">Espera</span> recibir esta pensión o anualidad todo el año o solo parte del año?
       options:
         'true':
-          name:
+          name: Todo el año (1 de enero al 31 de diciembre del <fg-show path="/taxYear"/>)
         'false':
-          name:
+          name: Parte del año
     /pensions/*/startDate:
-      question:
-      hint:
+      question: ¿Cuál es el primer día del <fg-show path="/taxYear"/> en el que <span condition="/pensions/*/notSpouses" operator="isTrue">esperas</span><span
+        condition="/pensions/*/notSpouses" operator="isFalse">espera</span> recibir esta pensión o anualidad?
+      hint:  Puedes estimar la fecha.
     /pensions/*/endDate:
-      question:
-      hint:
+      question: ¿Cuál es el último día del <fg-show path="/taxYear"/> en el que <span condition="/pensions/*/notSpouses" operator="isTrue">esperas</span><span
+        condition="/pensions/*/notSpouses" operator="isFalse">espera</span> recibir esta pensión o anualidad?
+      hint: Puedes estimar la fecha.
     /pensions/*/payFrequency:
-      question:
+    #TODO: future jobs - remove from YamlValidatorSpec ignore list when updated
+      question: ¿Con qué frecuencia <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">espera</span> recibir paga?
       options:
         weekly:
-          name:
+          name: Semanal
         biWeekly:
-          name:
+          name: Cada dos semanas
         semiMonthly:
-          name:
+          name: Dos veces al mes
         monthly:
-          name:
-    h5-631cd8:
-    p-b5e9f9:
-    h5-bee04a:
-    h5-1f08d0:
-    h5-715b08:
-    p-936eda:
+          name: Una vez al mes
+    h5-631cd8: Detalles de la pensión o anualidad
+    p-b5e9f9: Te haremos preguntas adicionales cuando sepamos más sobre tu pensión o anualidad.
+    h5-bee04a: Fechas e ingresos
+    h5-1f08d0: Ingresos
+    h5-715b08: Ingresos esperados
+    p-936eda: Usa el estado de cuenta más reciente de tu pensión o anualidad para llenar la siguiente información.
     /pensions/*/mostRecentPayDate:
-      question:
+      question: ¿Cuál es la fecha de <span condition="/pensions/*/notSpouses" operator="isTrue">tu</span><span
+        condition="/pensions/*/notSpouses" operator="isFalse">su</span> pago de pensión o anualidad más reciente?
     /pensions/*/averagePayPerPayPeriodForWithholding:
-      question:
-      hint:
-      modalLink:
+      question: ¿Cuánto es el ingreso bruto en <span condition="/pensions/*/notSpouses" operator="isTrue">tu</span><span
+        condition="/pensions/*/notSpouses" operator="isFalse">su</span> pago más reciente de pensión o anualidad?
+      hint: Puedes estimar el monto.
+      modalLink: <modal-link condition="/pensions/*/isCurrentJob" operator="isTrue"
+        for="modal-pension-gross-pay-period">¿Cómo puedo encontrar el ingreso bruto en el pago más reciente?</modal-link>
     /pensions/*/yearToDateIncome:
-      question:
-      hint:
-      modalLink:
-    h5-9f886e:
+      question: ¿Cuánto es el ingreso bruto que <span condition="/pensions/*/notSpouses" operator="isTrue">has</span><span
+        condition="/pensions/*/notSpouses" operator="isFalse">ha</span> recibido en lo que va del <fg-show path="/taxYear"/>?
+      hint: Esto podría llamarse año hasta la fecha (year to date) o YTD en tu estado de cuenta. <span condition="/pensions/*/isPastJob"
+        operator="isTrue">Si esperas un último pago, incluye esa cantidad.</span>
+      modalLink: <modal-link for="modal-pension-gross-ytd-end">¿Cómo puedo encontrar el ingreso bruto recibido en lo que va del <fg-show path="/taxYear"/>?</modal-link>
+    h5-9f886e: Impuesto federal
     /pensions/*/averageWithholdingPerPayPeriod:
-      question:
-      hint:
-      modalLink:
+      question: Impuesto federal retenido (pagado) en el pago más reciente
+      hint: No incluyas impuestos estatales y locales, Medicare o Seguro Social.
+      modalLink: <modal-link for="modal-fed-tax-pension-pay-period">¿Cómo puedo encontrar el impuesto federal retenido en el pago más reciente?</modal-link>
     /pensions/*/yearToDateWithholding:
-      question:
-      hint:
-      modalLink:
-    h5-4504e1:
-    p-74eba3:
-    h5-d1a574:
-    p-e93c90:
+      question: Impuesto federal retenido (pagado) en lo que va del <fg-show path="/taxYear"/>
+      hint: Esto podría llamarse año hasta la fecha (year to date) o YTD en tu estado de cuenta. No incluyas impuestos estatales y locales, Medicare o Seguro Social.
+      modalLink: <modal-link for="modal-fed-pension-tax-ytd">¿Cómo puedo encontrar el impuesto federal retenido en lo que va del <fg-show path="/taxYear"/>?</modal-link>
+    h5-4504e1: Contribuciones
+    p-74eba3: Revisa el estado de cuenta de <span condition="/pensions/*/notSpouses"
+        operator="isFalse">su</span><span condition="/pensions/*/notSpouses"
+        operator="isTrue">tu</span> pensión o anualidad para conocer las contribuciones pre-impuestos que ayudan a pagar por beneficios.
+    h5-d1a574: Contribuciones esperadas
+    p-e93c90: 'Algunas contribuciones pre-impuestos hechas a través de tu pensión o anualidad reducen el monto que debes pagar en impuestos:'
     ul-0:
-      li-b9f883:
-      li-773daf:
+      li-b9f883: Primas de seguro de salud (si son pre-impuestos)
+      li-773daf: Contribuciones a una HSA/FSA
     fg-detail-c4e577:
-      summary:
-      p-45339c:
-      p-af178f:
-      p-1404d4:
+      summary: Seguro de salud
+      p-45339c: Ingresa el total de contribuciones que <span condition="/pensions/*/isInFuture"
+        operator="isFalse">hiciste</span><span condition="/pensions/*/isInFuture" operator="isTrue">esperas hacer</span> a un plan de salud.
+      p-af178f: Usualmente, las contribuciones para cobertura médica pueden encontrarse en la sección de <strong>Deducciones</strong> o <strong>Pre-tax</strong> de un estado de cuenta.
+      p-1404d4: '<strong>Incluye contribuciones para:</strong>'
       ul-0:
-        li-7b0c41:
-        li-07aff3:
-      p-5a0ed2:
+        li-7b0c41: Planes de seguro de salud
+        li-07aff3: Planes de seguro dental o de visión
+      p-5a0ed2: '<strong>No incluyas:</strong>'
       ul-1:
-        li-a867f4:
-        li-a981e6:
+        li-a867f4: Contribuciones para cuidado a largo plazo
+        li-a981e6: Contribuciones del empleador
       /pensions/*/healthInsuranceContributionsPerPayPeriod:
-        question:
+        question: Cantidad por periodo de pago
       /pensions/*/healthInsuranceContributionsToDate:
-        question:
-        hint:
+        question: Cantidad en lo que va del <fg-show path="/taxYear"/>
+        hint: Puede llamarse año hasta la fecha (year-to-date) o YTD en tu estado de cuenta.
     fg-detail-855fc0:
-      summary:
-      p-cac8c1:
-      p-187adb:
-      p-27a801:
+      summary: Cuenta de ahorros para la salud (HSA) o Cuenta de gastos flexibles (FSA)
+      p-cac8c1: Ingresa el monto de las contribuciones que <span condition="/pensions/*/isInFuture" operator="isFalse">hiciste</span><span
+        condition="/pensions/*/isInFuture" operator="isTrue">esperas hacer</span> a una Cuenta de ahorro para la salud (HSA) o a una Cuenta de gastos flexibles (FSA).
+      p-187adb: Usualmente, el monto de las contribuciones a las cuentas HSA y FSA pueden encontrarse en la sección de <strong>Deducciones</strong> o <strong>Pre-tax</strong> de un estado de cuenta.
+      p-27a801: Conoce más sobre las contribuciones a las <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> y <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
       /pensions/*/hsaOrFsaContributionsPerPayPeriod:
-        question:
+        question: Cantidad por periodo de pago
       /pensions/*/hsaOrFsaContributionsToDate:
-        question:
-        hint:
+        question: Cantidad en lo que va del <fg-show path="/taxYear"/>
+        hint: Puede llamarse año hasta la fecha (year-to-date) o YTD en tu estado de cuenta.
     fg-detail-6dc47b:
-      summary:
-      p-d3d852:
-      p-29747e:
-      p-4ec357:
+      summary: Otros beneficios pre-impuestos
+      p-d3d852: Ingresa el monto de las contribuciones que <span condition="/pensions/*/isInFuture" operator="isFalse">hiciste</span><span
+        condition="/pensions/*/isInFuture" operator="isTrue">esperas hacer</span> a otros beneficios pre-impuestos.
+      p-29747e: Usualmente, las contribuciones para beneficios pueden encontrarse en la sección de <strong>Deducciones</strong> o <strong>Pre-tax</strong> de un estado de cuenta.
+      p-4ec357: '<strong>Los beneficios pre-impuestos pueden incluir:</strong>'
       ul-0:
-        li-660334:
-        li-aa4a77:
-        li-66356e:
-        li-f54649:
-        li-921253:
-        li-4a41d5:
-        li-fe33dd:
-      p-5a0ed2:
+        li-660334: Planes de seguro contra accidentes
+        li-aa4a77: Planes de asistencia con el cuidado de dependientes
+        li-66356e: Seguro de vida temporal colectivo sobre la vida de los empleados
+        li-f54649: Asistencia calificada para adopciones
+        li-921253: Seguro contra muerte accidental o desmembramiento
+        li-4a41d5: Cobertura a corto y largo plazo para discapacidades
+        li-fe33dd: Beneficio calificado de transporte
+      p-5a0ed2: '<strong>No incluyas:</strong>'
       ul-1:
-        li-a867f4:
-        li-a981e6:
+        li-a867f4: Contribuciones para cuidado a largo plazo
+        li-a981e6: Contribuciones del empleador
       /pensions/*/otherPreTaxContributionsPerPayPeriod:
-        question:
+        question: Cantidad por periodo de pago
       /pensions/*/otherPreTaxContributionsToDate:
-        question:
-        hint:
-  h3-3767e5:
-  p-4586da:
-  p-d93391:
+        question: Cantidad en lo que va del <fg-show path="/taxYear"/>
+        hint: Puede llamarse año hasta la fecha (year-to-date) o YTD en tu estado de cuenta.
+  h3-3767e5: Ingresos de trabajo por cuenta propia
+  p-4586da: Esto incluye ingresos por una sociedad, comercio o negocio de <span condition="/isFilingStatusMFJ" operator="isFalse">tu propiedad</span><span
+        condition="/isFilingStatusMFJ" operator="isTrue">tuyo o de tu esposo(a)</span>. También puede incluir ingresos como trabajador independiente, contratista o de economía por encargo.
+  p-d93391: <modal-link for="modal-what-counts-self-employment">¿Qué cuenta como un trabajo por cuenta propia?</modal-link>
   collection/selfEmploymentSources:
     /selfEmploymentSources/*/filerAssignment:
-      question:
+      question: ¿Quién recibe este ingreso?
       options:
         self:
-          name:
+          name: Yo
         spouse:
-          name:
+          name: Mi esposo(a)
     /selfEmploymentSources/*/grossIncome:
-      question:
-      modalLink:
+      question: ¿Cuánto es el ingreso bruto total que <span condition="/selfEmploymentSources/*/notSpouses"
+        operator="isTrue">esperas</span><span condition="/selfEmploymentSources/*/notSpouses"
+        operator="isFalse">espera</span> recibir de este trabajo por cuenta propia en el <fg-show path="/taxYear"/>?
+      modalLink: <modal-link for="modal-self-employment-gross-total">¿Qué es el ingreso bruto y dónde puedo encontrarlo?</modal-link>
     /selfEmploymentSources/*/workRelatedExpenses:
-      question:
-      hint:
-      modalLink:
-  h3-941f47:
-  p-0c991a:
+      question: Total de los gastos relacionados al trabajo por cuenta propia que <span condition="/selfEmploymentSources/*/notSpouses"
+        operator="isTrue">esperas</span><span condition="/selfEmploymentSources/*/notSpouses"
+        operator="isFalse">espera</span> deducir en el <fg-show path="/taxYear"/>
+      hint: Puedes estimarlo o dejarlo en blanco.
+      modalLink: <modal-link for="modal-self-employment-deductions">¿Qué significa restar gastos?</modal-link>
+  h3-941f47: Ingresos por Seguro Social
+  p-0c991a: <modal-link for="modal-what-counts-social-security">¿Qué cuenta como ingresos por Seguro Social?</modal-link>
   collection/socialSecuritySources:
     /socialSecuritySources/*/filerAssignment:
-      question:
+      question: ¿Quién recibe este ingreso por Seguro Social?
       options:
         self:
-          name:
+          name: Yo
         spouse:
-          name:
-    h5-d3b69e:
+          name: Mi esposo(a)
+    h5-d3b69e: Duración
     /socialSecuritySources/*/isAllYear:
-      question:
+      question: ¿<span condition="/socialSecuritySources/*/notSpouses"
+        operator="isTrue">Esperas</span><span condition="/socialSecuritySources/*/notSpouses"
+        operator="isFalse">Espera</span> recibir ingresos por Seguro Social todo el año o solo parte del año?
       options:
         'true':
-          name:
+          name: Todo el año (1 de enero al 31 de diciembre del <fg-show path="/taxYear"/>)
         'false':
-          name:
+          name: Parte del año
     /socialSecuritySources/*/startDate:
-      question:
-      hint:
+      question: ¿Cuál es el primer día del <fg-show path="/taxYear"/> en el que <span condition="/socialSecuritySources/*/notSpouses"
+        operator="isTrue">esperas</span><span condition="/socialSecuritySources/*/notSpouses"
+        operator="isFalse">espera</span> recibir este ingreso por Seguro Social?
+      hint: Puedes estimar la fecha.
     /socialSecuritySources/*/endDate:
-      question:
-      hint:
-    h5-e0f74c:
-    p-216488:
-    h5-1f08d0:
+      question: ¿Cuál es el último día del <fg-show path="/taxYear"/> en el que <span condition="/socialSecuritySources/*/notSpouses"
+        operator="isTrue">esperas</span><span condition="/socialSecuritySources/*/notSpouses"
+        operator="isFalse">espera</span> recibir este ingreso por Seguro Social?
+      hint: Puedes estimar la fecha.
+    h5-e0f74c: Detalles sobre Seguro Social
+    p-216488: Te haremos preguntas adicionales cuando sepamos más sobre tus ingresos por Seguro Social.
+    h5-1f08d0: Ingresos
     /socialSecuritySources/*/monthlyIncome:
-      question:
-      hint:
-      modalLink:
-    h5-9f886e:
+    #TODO: future jobs
+      question: ¿Cuánto es el monto mensual del beneficio por Seguro Social que <span condition="/socialSecuritySources/*/notSpouses"
+        operator="isTrue">recibes</span><span condition="/socialSecuritySources/*/notSpouses"
+        operator="isFalse">recibe</span>?
+      hint: Incluye el monto total antes de descontar las primas de Medicare y otras deducciones.
+      modalLink: <modal-link for="modal-fed-tax-social-security-pay-period">¿Qué significa monto mensual de beneficio y dónde puedo encontrarlo?</modal-link>
+    h5-9f886e: Impuesto federal
     /socialSecuritySources/*/withheldRate:
-      question:
-      hint:
-      modalLink:
+      question: ¿Qué porcentaje del beneficio mensual por Seguro Social se retiene para el impuesto federal?
+      hint: Si no <span condition="/socialSecuritySources/*/notSpouses"
+        operator="isTrue">elegiste</span><span condition="/socialSecuritySources/*/notSpouses"
+        operator="isFalse">eligió</span> retener impuesto federal, elige 0%.
+      modalLink: <modal-link for="modal-fed-social-security-tax-withheld">¿Cómo puedo saber si me retienen impuestos?</modal-link>
       options:
         zero:
-          name:
+          name: 0%
         seven:
-          name:
+          name: 7%
         ten:
-          name:
+          name: 10%
         twelve:
-          name:
+          name: 12%
         twentyTwo:
-          name:
-  h3-09f887:
-  p-c25e0b:
+          name: 22%
+  h3-09f887: Ingresos por desempleo
+  p-c25e0b: <modal-link for="modal-what-counts-unemployment">¿Qué cuenta como ingresos por desempleo?</modal-link>
   /unemploymentIncome:
-    question:
-    hint:
+    question: Ingreso bruto por desempleo que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
+    hint: El ingreso bruto es el total de ingresos antes de restarle impuestos o deducciones.
   /unemploymentIncomeWithholding:
-    question:
-    modalLink:
-  h3-0b2817:
-  p-b18d71:
+    question: ¿<span condition="/isFilingStatusMFJ"
+        operator="isFalse">Elegiste</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">Eligieron</span> retener el impuesto federal de <span condition="/isFilingStatusMFJ"
+        operator="isFalse">tus</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">sus</span> ingresos por desempleo?
+    modalLink: <modal-link for="modal-fed-unemployment-tax-withheld-en">¿Cómo puedo saber si me retuvieron impuestos?</modal-link>
+  h3-0b2817: Ingresos por cuentas de jubilación pre-impuestos
+  p-b18d71: <modal-link for="modal-what-counts-pre-tax-retirement">¿Qué cuenta como una distribución de una cuenta de jubilación pre-impuestos?</modal-link>
   /preTaxRetirementAccountIncome:
-    question:
-    hint:
-  h3-89425f:
-  p-614f3a:
+    question: Distribuciones totales que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir de cuentas de jubilación pre-impuestos en el <fg-show path="/taxYear"/>
+    hint: No incluyas distribuciones de cuentas Roth (post-impuestos).
+  h3-89425f: Ingresos por inversiones
+  p-614f3a: Aun si <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir una pequeña cantidad de ingresos por inversiones, agregar esta cantidad <span condition="/isFilingStatusMFJ"
+        operator="isFalse">te</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">les</span> ayudará a calcular el estimado más preciso.
   fg-detail-b4c28b:
-    summary:
-    p-7164c2:
+    summary: Ingresos por intereses
+    p-7164c2: <modal-link for="modal-estimate-interest-income-en">¿Qué es un ingreso por intereses y cómo puedo estimarlo?</modal-link>
     /taxableInterestIncome:
-      question:
+      question: Ingresos por intereses que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
   fg-detail-39fb22:
-    summary:
-    p-b595ad:
-    p-98b838:
+    summary: Dividendos ordinarios o calificados
+    p-b595ad: Ingresa el monto total que esperas recibir en el <fg-show path="/taxYear"/>.
+    p-98b838: <modal-link for="modal-what-are-dividends-en">¿Qué son dividendos y cómo puedo estimarlos?</modal-link>
     /ordinaryDividendsIncome:
-      question:
+      question: Ingresos por dividendos ordinarios que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
     /qualifiedDividendsIncome:
-      question:
+      question: Ingresos por dividendos calificados que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
   fg-detail-89ef66:
-    summary:
-    p-c7eaa1:
-    p-51406f:
+    summary: Ganancias y pérdidas a corto o largo plazo
+    p-c7eaa1: Ingresa los montos totales que esperas ganar y perder en el <fg-show path="/taxYear"/>.
+    p-51406f: <modal-link for="modal-what-are-short-long-term-gains-losses-en">¿Qué son ganancias y pérdidas a corto y largo plazo y cómo puedo estimarlas?</modal-link>
     /shortTermCapitalGainsIncome:
-      question:
+      question: Ganancias a corto plazo que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
     /shortTermCapitalLoss:
-      question:
+      question: Pérdidas a corto plazo que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> en el <fg-show path="/taxYear"/>
     /longTermCapitalGainsIncome:
-      question:
+      question: Ganancias a largo plazo que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
     /longTermCapitalLoss:
-      question:
+      question: Pérdidas a largo plazo que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> en el <fg-show path="/taxYear"/>
   fg-detail-28fc9b:
-    summary:
-    p-1ee2d6:
+    summary: Ingreso por rentas
+    p-1ee2d6: <modal-link for="modal-rental-expenses-net-income-en">¿Qué son gastos relacionados a rentas y cómo puedo estimar el ingreso neto por rentas? </modal-link>
     /rentalIncome:
-      question:
-      hint:
+      question: Ingreso neto por rentas que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
+      hint: El ingreso neto es el total menos cualquier gasto.
   fg-detail-3026f7:
-    summary:
-    p-56e5d9:
+    summary: Regalías
+    p-56e5d9: <modal-link for="modal-estimate-royalty-income-en">¿Cómo puedo estimar ingresos por regalías?</modal-link>
     /royaltyIncome:
-      question:
+      question: Ingresos por regalías que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
   fg-detail-b186f4:
-    summary:
-    p-b595ad:
-    p-8fca11:
+    summary: Ingresos pasivos o activos de corporaciones S o asociaciones
+    p-b595ad: Ingresa los montos totales que esperas ganar en el <fg-show path="/taxYear"/>.
+    p-8fca11: <modal-link for="modal-estimate-s-corp-partnership-income-en">¿Cómo puedo estimar ingresos de corporaciones S o asociaciones?</modal-link>
     /sCorpPassiveIncome:
-      question:
+      question: Ingresos pasivos de corporaciones S o asociaciones que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
     /sCorpNonPassiveIncome:
-      question:
-  h3-95eb01:
-  p-a4536a:
+      question: Ingresos activos de corporaciones S o asociaciones que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
+  h3-95eb01: Otros ingresos tributables no incluidos anteriormente
+  p-a4536a: 'Estima cualquier otro ingreso tributable que piensas <span condition="/isFilingStatusMFJ"
+        operator="isFalse">recibir</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">que tú o tu esposo(a) recibirán</span> en el <fg-show path="/taxYear"/>, incluyendo:'
   ul-0:
-    li-6c1f6e:
-    li-b9815d:
-    li-98533d:
-    li-479a5d:
-    li-55fa19:
-  p-48332b:
+    li-6c1f6e: Becas tributables
+    li-b9815d: Ganancias por juegos de azar
+    li-98533d: Pensión conyugal por decretos de divorcio pre-2019
+    li-479a5d: Compensaciones y daños y perjuicios otorgados por una corte (a menos que sean por lesiones físicas o enfermedad)
+    li-55fa19: Honorarios por servicios que proporcionaste
+  p-48332b: <a target="_blank" href="https://www.irs.gov/es/filing/taxable-income" class="usa-link
+    usa-link--external">Conoce más sobre otros ingresos tributables.<span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /nonSpecificOtherIncome:
-    question:
-    hint:
+    question: Total de otros ingresos que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">esperan</span> recibir en el <fg-show path="/taxYear"/>
+    hint: Escribe una cantidad total para todos los otros ingresos.
   /otherIncomeWithholding:
-    question:
-    hint:
-  h3-536be3:
-  p-67bec4:
-  p-8f958a:
+    question: Impuesto federal retenido de <span condition="/isFilingStatusMFJ"
+        operator="isFalse">tus</span> otros ingresos <span condition="/isFilingStatusMFJ"
+        operator="isTrue">tuyos y de tu esposo(a)</span> en lo que va del <fg-show path="/taxYear"/>
+    hint: Si no estás seguro, deja la casilla en blanco.
+  h3-536be3: Impuestos estimados pagados
+  p-67bec4: Además del impuesto ya retenido de tus ingresos, los pagos estimados se hacen directamente al IRS, usualmente a través de tu cuenta en línea del IRS o con el Formulario 1040-ES.
+  p-8f958a: <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes"
+    class="usa-link usa-link--external">Conoce más sobre los pagos estimados.<span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /totalEstimatedTaxesPaid:
-    question:
-    hint:
+    question: Pagos de impuestos estimados que <span condition="/isFilingStatusMFJ"
+        operator="isFalse">hiciste</span><span condition="/isFilingStatusMFJ"
+        operator="isTrue">hicieron</span> en lo que va del <fg-show path="/taxYear"/>
+    hint: No incluyas impuestos retenidos de tus cheques de sueldo y otros ingresos.
   modal-pay-frequency-en:
-    heading:
-    p-f8e48f:
+    heading: Conoce más sobre la frecuencia de pago
+    p-f8e48f: La frecuencia de pago es qué tan seguido una persona recibe pagos de su empleador o pensión.
     ul-0:
-      li-ae23d7:
-      li-9e775f:
-      li-569d8d:
-      li-fdcbf1:
-    p-8ef9ed:
+      li-ae23d7: <strong>Semanal:</strong> Se le paga una vez por semana.
+      li-9e775f: <strong>Cada dos semanas:</strong> Se le paga una semana sí y otra no. Recibe dos o tres pagos al mes.
+      li-569d8d: <strong>Dos veces al mes:</strong> Siempre se le paga dos veces al mes o en ciertas fechas. Por ejemplo, los días 1 y 15 de cada mes.
+      li-fdcbf1: <strong>Una vez al mes:</strong> Se le paga una vez por mes.
+    p-8ef9ed: Si la frecuencia de tus pagos no coincide con alguna de estas opciones, elige la opción más parecida y ajusta el monto de tu pago según tu elección.
   modal-job-pay-dates-en:
-    heading:
-    p-8b4b93:
+    heading: ¿Dónde encuentro el período de pago y la fecha de pago?
+    p-8b4b93: Puedes encontrar el periodo de pago y la fecha de pago en el talón de cheque, el documento que acompaña el cheque e incluye los detalles del pago.
     ul-0:
-      li-8a677f:
-      li-1b998e:
+      li-8a677f: '<strong>Periodo de pago:</strong> Los días que trabajaste y por los que se te está pagando. A menudo indica una fecha de comienzo (start date) y la fecha del último día trabajado (end date).'
+      li-1b998e: '<strong>Fecha de pago:</strong> El día que se emite o fecha el cheque de pago.'
   modal-job-gross-pay-period-en:
-    heading:
-    p-86ad55:
-    p-a88bb0:
-    p-654d7e:
-    p-22c78c:
+    heading: ¿Cómo puedo encontrar el ingreso bruto por periodo de pago?
+    p-86ad55: El ingreso bruto por periodo de pago es el total que te pagan por las fechas indicadas en el cheque antes de retener impuestos o quitar deducciones.
+    p-a88bb0: Si hay un pago adicional como un bono, propinas o pago por horas extra, también se incluirá en la cantidad de ingreso bruto.
+    p-654d7e: <strong>Dónde encontrarlo</strong>
+    p-22c78c: Revisa el talón de cheque por el <strong>monto bruto por periodo de pago.</strong> Este sólo incluye el pago por los días que trabajaste por este cheque.
   modal-what-counts-social-security:
-    heading:
-    p-00bbe8:
-    p-39e713:
+    heading: ¿Qué cuenta como ingresos de Seguro Social?
+    p-00bbe8: Los ingresos de Seguro Social son pagos para jubilados, personas con discapacidades y sus familias a través de la Administración de Seguro Social (SSA). Para reportar estos ingresos a fin de año, la SSA enviará el Formulario SSA-1099.
+    p-39e713: <strong>No incluyas</strong> pagos de Seguridad de Ingreso Suplementario (SSI). Este estimador aún no acepta pagos de SSI.
   modal-fed-tax-social-security-pay-period:
-    heading:
-    p-82e34c:
-    p-716710:
+    heading: ¿Qué significa monto mensual de beneficio y dónde lo encuentro?
+    p-82e34c: El monto mensual del beneficio es el total que recibes del Seguro Social cada mes <strong>antes de</strong> descontar primas de Medicare, impuestos u otras deducciones.
+    p-716710: 'Puedes estimar la cantidad, pero para encontrar la cantidad exacta:'
     ol-0:
-      li-ea5ad7:
-      li-5b74be:
-      li-53a1fa:
-    p-b74063:
+      li-ea5ad7: Ingresa a tu <a target="_blank" href="https://www.ssa.gov/myaccount/"
+        class="usa-link">cuenta de my Social Security<span class="usa-sr-only"/></a>
+      li-5b74be: Navega a la sección de <strong>Beneficios y Pagos</strong> (Benefits and Payments)
+      li-53a1fa: Encontrarás el total del beneficio mensual antes de deducciones en el resumen de <strong>Beneficios</strong>
+    p-b74063: Si necesitas ayuda para encontrar el monto del beneficio mensual, puedes llamar a la Administración del Seguro Social al 1-800-772-1213.
   modal-fed-social-security-tax-withheld:
-    heading:
-    p-1a87a7:
-    p-a147e9:
-    p-88d383:
+    heading: ¿Cómo puedo saber si me retienen impuestos?
+    p-1a87a7: La Administración del Seguro Social no retiene impuestos de tus ingresos por Seguro Social de forma automática.
+    p-a147e9: Puedes solicitar que retengan el impuesto federal de tus ingresos por Seguro Social.
+    p-88d383: 'Para revisar si retienen impuesto federal de tus ingresos por Seguro Social:'
     ol-0:
-      li-ea5ad7:
-      li-ae75a0:
-    p-2f6487:
-    p-c1b4cc:
+      li-ea5ad7: Ingresa a tu <a target="_blank" href="https://www.ssa.gov/myaccount/"
+        class="usa-link">cuenta de my Social Security (en inglés)<span class="usa-sr-only"/></a>
+      li-ae75a0: Elige <strong>Retención voluntaria de impuestos</strong> (Voluntary Tax Withholding) para conocer el porcentaje que se retiene
+    p-2f6487: Si no solicitaste que te retengan impuestos, el porcentaje será 0%.
+    p-c1b4cc: Si no tienes una cuenta en línea o necesitas ayuda para revisar tu retención del impuesto federal, puedes llamar a la Administración del Seguro Social al 1-800-772-1213.
   modal-what-counts-job:
-    heading:
-    p-cc1a45:
-    p-fcadfe:
+    heading: ¿Qué cuenta como un trabajo?
+    p-cc1a45: Un trabajo es cuando recibes ingresos por trabajar para un empleador. A fin de año, el empleador te enviará un Formulario W-2 para reportar estos ingresos.
+    p-fcadfe: '<strong>No incluyas</strong> ingresos que recibiste a través de:'
     ul-0:
-      li-ad6e01:
-      li-78d8a9:
-    p-8bf756:
+      li-ad6e01: Una sociedad, comercio o negocio que es tuyo
+      li-78d8a9: Trabajos, servicios, o bienes a pedido como trabajador independiente, contratista, o trabajador por encargo
+    p-8bf756: Agrega estos ingresos en la sección de <strong>Ingresos de trabajo por cuenta propia</strong>.
   modal-what-counts-pension:
-    heading:
-    p-131b40:
-    p-acdc8a:
-    p-8ef182:
-    p-c74e46:
+    heading: ¿Qué cuenta como una pensión o anualidad?
+    p-131b40: Una pensión es, por lo general, una serie de pagos determinados que se hacen luego de tu jubilación. Los pagos de pensión se hacen de forma regular y se basan en factores como años de servicio y salarios anteriores.
+    p-acdc8a: Una anualidad es una serie de pagos bajo contrato que se hacen en intérvalos regularles por un tiempo mayor a un año.
+    p-8ef182: Al final del año, el proveedor de la pensión o anualidad te enviará el Formulario 1099-R para reportar tus ingresos.
+    p-c74e46: <strong>No incluyas</strong> distribuciones o retiros de planes 401(k), 403(b) o 457(b), o de un plan de jubilación individual (IRA). Agrega estos ingresos en la sección “Ingresos por cuentas de jubilación pre-impuestos”
   modal-pension-gross-pay-period:
-    heading:
-    p-fef4bf:
-    p-c19981:
-    p-0f1994:
+    heading: ¿Cómo puedo encontrar el ingreso bruto en el pago más reciente?
+    p-fef4bf: Este es el total de tu último pago de pensión o anualidad antes que se le apliquen impuestos o deducciones.
+    p-c19981: Revisa el monto del pago bruto <strong>en tu estado de cuenta más reciente</strong>.
+    p-0f1994: 'Si el monto anual de tu pensión o anualidad será el mismo que el año pasado, también puedes revisar el Formulario 1099-R del <fg-show path="/lastTaxYear"/>. Para estimar el monto bruto de tu pago más reciente:'
     ol-0:
-      li-8cda67:
-      li-88cea7:
+      li-8cda67: Encuentra la casilla 1 en el Formulario 1099-R. Este muestra el ingreso bruto de todo el año pasado
+      li-88cea7: Divide el monto bruto del año pasado entre el número de pagos que esperas recibir en el <fg-show path="/taxYear"/>
   modal-pension-gross-ytd-end:
-    heading:
-    p-1f18fb:
-    p-818dfb:
-    p-83d213:
-    p-9475e2:
+    heading: ¿Cómo puedo encontrar el ingreso bruto recibido en lo que va del <fg-show path="/taxYear"/>?
+    p-1f18fb: El ingreso bruto es el monto total que se te pagó antes de restarle impuestos o deducciones.
+    p-818dfb: Busca el ingreso bruto en lo que va del año <strong>en tu estado de cuenta más reciente.</strong> Podría llamarse ingreso bruto este año hasta la fecha (year-to-date) o YTD.
+    p-83d213: <strong>Si no tienes un estado de cuenta,</strong> pero conoces el monto bruto por pago, puedes hacer un estimado multiplicando el monto bruto de un pago por el número de pagos que has recibido en lo que va del <fg-show path="/taxYear"/>.
+    p-9475e2: 'Si el monto anual de tu pensión o anualidad será el mismo que el año pasado, puedes revisar el Formulario 1099-R del <fg-show path="/lastTaxYear"/>. Para estimar el ingreso bruto en lo que va del año:'
     ol-0:
-      li-8cda67:
-      li-88cea7:
-      li-8ed353:
+      li-8cda67: Encuentra la casilla 1 en el Formulario 1099-R. Este muestra el ingreso bruto de todo el año pasado
+      li-88cea7: Divide el monto bruto del año pasado entre el número de pagos que esperas recibir en el <fg-show path="/taxYear"/>
+      li-8ed353: Luego, multiplica el resultado por el número de pagos que has recibido en lo que va del <fg-show path="/taxYear"/>
   modal-fed-tax-pension-pay-period:
-    heading:
-    p-eb3a66:
-    p-6b6de8:
+    heading: ¿Cómo puedo encontrar el impuesto federal retenido en el pago más reciente?
+    p-eb3a66: Este monto se retiene del pago de tu pensión o anualidad para cubrir el impuesto federal.
+    p-6b6de8: Busca el impuesto federal retenido de cada pago <strong>en tu estado de cuenta más reciente.</strong>
     ul-0:
-      li-b14438:
-      li-16154b:
-    p-1754a4:
+      li-b14438: Podría aparecer en una sola línea llamada Impuestos, FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax o algo similar
+      li-16154b: Si pediste retener una cantidad adicional para el impuesto federal, ese monto podría aparecer en una línea separada. Asegúrate de sumar ambas cantidades
+    p-1754a4: 'Si el monto anual de tu pensión o anualidad será igual al monto del año pasado, puedes usar el Formulario 1099-R del <fg-show path="/lastTaxYear"/> como referencia. Para estimar cuánto impuesto federal se retuvo del pago mas reciente:'
     ol-0:
-      li-62615d:
-      li-71dfdf:
-    p-d6e23c:
+      li-62615d: Busca la casilla 4 en el Formulario 1099-R. Esta indica el impuesto federal retenido el año pasado
+      li-71dfdf: Divide el monto retenido el año pasado entre el número de pagos que esperas recibir en el <fg-show path="/taxYear"/>
+    p-d6e23c: <strong>No incluyas</strong> impuestos estatales y locales, Medicare, Seguro Social u otras cantidades retenidas.
   modal-fed-pension-tax-ytd:
-    heading:
-    p-737d99:
-    p-29415d:
+    heading: ¿Cómo puedo encontrar el impuesto federal retenido en lo que va del <fg-show path="/taxYear"/>?
+    p-737d99: Este monto se retiene del pago de tu pensión o anualidad para cubrir el impuesto federal a lo largo del año.
+    p-29415d: Busca el impuesto federal pagado en lo que va del año <strong>en tu estado de cuenta más reciente.</strong> Podría llamarse impuesto federal retenido este año hasta la fecha (year-to-date) o YTD.
     ul-0:
-      li-b14438:
-      li-16154b:
-    p-e5ca13:
+      li-b14438: Podría aparecer en una sola línea llamada Impuestos, FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax o algo similar
+      li-16154b: Si pediste retener una cantidad adicional para el impuesto federal, ese monto podría aparecer en una línea separada. Asegúrate de sumar ambas cantidades
+    p-e5ca13: 'Si el monto anual de tu pensión o anualidad será igual al monto del año pasado, puedes usar el Formulario 1099-R del <fg-show path="/lastTaxYear"/> como referencia. Para estimar cuánto impuesto federal se retuvo hasta la fecha:'
     ol-0:
-      li-5b0ddc:
-      li-71dfdf:
-      li-8ed353:
-    p-d6e23c:
+      li-5b0ddc: Busca la casilla 4 en el Formulario 1099-R. Esta indica el impuesto federal retenido el año pasado
+      li-71dfdf: Divide el monto retenido el año pasado entre el número de pagos que esperas recibir en el <fg-show path="/taxYear"/>
+      li-8ed353: Luego, multiplica el resultado por el número de pagos que has recibido en lo que va del <fg-show path="/taxYear"/>
+    p-d6e23c: <strong>No incluyas</strong> impuestos estatales y locales, Medicare, Seguro Social u otras cantidades retenidas.
   modal-what-counts-self-employment:
-    heading:
-    p-fd0d43:
-    p-07a211:
-    p-089c0d:
+    heading: ¿Qué cuenta como un trabajo por cuenta propia?
+    p-fd0d43: Los ingresos de trabajo por cuenta propia se ganan a través de una sociedad, comercio o negocio que sea tuyo. También puedes ganarlos al brindar servicios o bienes a pedido como trabajador independiente, contratista, o trabajador por encargo.
+    p-07a211: Para reportar estos ingresos a fin de año, el pagador (la persona, negocio y organización que te pagó) te enviará un Formulario 1099-NEC, Formulario 1099-K o el Formulario 1099-MISC.
+    p-089c0d: <strong>No incluyas</strong> ingresos que hayas recibido al trabajar para un empleador. Si el pagador te envía un Formulario W-2 con el impuesto federal retenido, agrega estos ingresos en la sección de <strong>Trabajos con un empleador (W-2)</strong>.
   modal-self-employment-gross-total:
-    heading:
-    p-47ef44:
-    p-7caa26:
-    p-2c88f0:
-    p-947881:
-    p-807ad5:
-    p-0651e4:
-    p-55c57e:
+    heading: ¿Qué es el ingreso bruto y dónde lo encuentro?
+    p-47ef44: <strong>¿Qué es?</strong>
+    p-7caa26: El ingreso bruto es el monto total que esperas recibir este año antes de descontar impuestos, deducciones o gastos.
+    p-2c88f0: Si esperas recibir cualquier pago adicional este año como bonos, propinas o pagos por horas extra, inclúyelos en el total del ingreso bruto.
+    p-947881: <strong>¿Dónde lo encuentro?</strong>
+    p-807ad5: Puedes estimar el total del ingreso bruto llevando la cuenta de cuánto recibes de tus trabajos por cuenta propia. Podrías necesitar estimar tus ingresos por trabajos por cuenta propia para todo el año.
+    p-0651e4: <strong>¿Cómo puedo revisar la declaración de impuestos del año pasado?</strong>
+    p-55c57e: Si trabajaste por cuenta propia el año pasado y esperas recibir la misma cantidad este año, puedes encontrar el ingreso bruto en la línea 7 del Anexo C.
   modal-self-employment-deductions:
-    heading:
-    p-90fb6d:
-    p-643fbe:
+    heading: ¿Qué significa restar gastos?
+    p-90fb6d: Cuando trabajas por cuenta propia, por encargo, o eres dueño de un negocio, podrías restar algunos gastos de tus ingresos para pagar menos impuestos.
+    p-643fbe: 'Gastos de negocios podrían incluir:'
     ul-0:
-      li-6a4179:
-      li-e2f63f:
-      li-7f4118:
-      li-9f53a8:
-      li-eaff1b:
-      li-6c49ac:
-      li-761662:
-      li-719fec:
-      li-849c98:
-    p-359e1c:
-    p-0651e4:
-    p-203379:
-    p-4ca1ce:
+      li-6a4179: Gastos de la oficina en casa
+      li-e2f63f: Gastos de un auto o camioneta
+      li-7f4118: Renta
+      li-9f53a8: Pagos a empleados y pensiones
+      li-eaff1b: Seguros
+      li-6c49ac: Intereses de deudas
+      li-761662: Servicios profesionales o legales
+      li-719fec: Impuestos
+      li-849c98: Viajes y comidas
+    p-359e1c: Estas deducciones son diferentes a las deducciones personales que puedes hacer si eliges detallar tus deducciones. Puedes deducir tus gastos del negocio aquí y aun así elegir una deducción estándar después.
+    p-0651e4: <strong>¿Cómo puedo revisar la declaración de impuestos del año pasado?</strong>
+    p-203379: Si trabajaste por cuenta propia el año pasado y esperas que tus gastos del negocio sean iguales, puedes encontrar tus gastos deducibles en la línea 28 del Anexo C.
+    p-4ca1ce: <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Conoce más sobre los gastos del negocio</a>
   modal-what-counts-unemployment:
-    heading:
-    p-5c629b:
-    p-d575d4:
-    p-c2b99e:
-    p-9e9dfa:
+    heading: ¿Qué cuenta como ingresos por desempleo?
+    p-5c629b: El ingreso por desempleo es un programa conjunto estatal y federal que proporciona beneficios monetarios para trabajadores elegibles.
+    p-d575d4: Para recibir desempleo, debes haber perdido tu trabajo por motivos fuera de tu control y cumplir con otros requisitos.
+    p-c2b99e: A fin de año debes recibir el Formulario 1099-G que indica el monto que recibiste en el año.
+    p-9e9dfa: <a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Conoce más sobre el ingreso por desempleo.</a>
   modal-fed-unemployment-tax-withheld-en:
-    heading:
-    p-097607:
-    p-68c79a:
+    heading: ¿Cómo puedo saber si me retuvieron impuestos?
+    p-097607: Puedes elegir que retengan el 10% del impuesto federal de tus ingresos por desempleo. Para esto, envía el Formulario W-4V a la oficina de desempleo.
+    p-68c79a: '<strong>Como revisar si se te retienen impuestos:</strong>'
     ul-0:
-      li-00bded:
-      li-68b85b:
-    p-b82dc7:
+      li-00bded: Revisa tu estado de cuenta de desempleo y busca la retención de impuesto federal
+      li-68b85b: Llama a la oficina de desempleo y pregunta sobre tus retenciones
+    p-b82dc7: Si no elegiste retener impuestos, elige “no”.
   modal-what-counts-pre-tax-retirement:
-    heading:
-    p-a7106a:
-    p-a88342:
-    p-5a0ed2:
+    heading: ¿Qué cuenta como una distribución de una cuenta de jubilación pre-impuestos?
+    p-a7106a: Una distribución es cualquier retiro de fondos pre-impuestos de una cuenta 401(k), 403(b), 457(b) o plan de jubilación individual tradicional (IRA). Esto incluye distribuciones en la jubilación, retiros tempranos, distribuciones mínimas requeridas (RMDs), y conversiones de pre-impuestos a Roth.
+    p-a88342: A fin de año, tu institución financiera te enviará un Formulario 1099-R para reportar estos ingresos.
+    p-5a0ed2: '<strong>No incluyas:</strong>'
     ul-0:
-      li-20ffee:
-      li-f28c25:
+      li-20ffee: Distribuciones de cuentas Roth (post-impuestos).
+      li-f28c25: Otras formas de ingresos por jubilación como pensiones, anualidades, Seguro Social, u otros ingresos por inversiones. Esos los ingresarás en otra sección.
   modal-estimate-interest-income-en:
-    heading:
-    p-cda131:
-    p-a2889a:
-    p-5a5d76:
-    p-bc395c:
-    p-f1a76a:
+    heading: ¿Qué son ingresos por intereses y cómo puedo estimarlos?
+    p-cda131: Tipos comunes de ingresos por intereses incluyen intereses bancarios o de préstamos.
+    p-a2889a: Para estimar tus ingresos por intereses, revisa tus declaraciones bancarias para conocer cuánto ganaste en intereses cada mes. Multiplica el promedio mensual por 12 para obtener el estimado del año.
+    p-5a5d76: Al calcular ingresos por intereses, es mejor estimar una cantidad mayor. Si haces un cálculo muy bajo, podrías no retener suficiente impuesto federal a lo largo del año.
+    p-bc395c: <strong>Cómo revisar la declaración del año pasado</strong>
+    p-f1a76a: 'Si ganaste ingresos por intereses el año pasado y crees que ganarás una cantidad similar este año, busca un monto en:'
     ul-0:
-      li-7fd107:
+      li-7fd107: La línea 2b del Formulario 1040 de tu declaración del impuesto federal del <fg-show path="/lastTaxYear"/>
   modal-what-are-dividends-en:
-    heading:
-    p-79b2c0:
-    p-504f40:
-    p-8bdec9:
-    p-65a8c3:
-    p-5258da:
-    p-c52a86:
+    heading: ¿Qué son dividendos y cómo puedo estimarlos?
+    p-79b2c0: Dividendos ordinarios o calificados son pagos que las corporaciones hacen a sus partes interesadas y se basa en las ganancias de una compañía. La diferencia entre ambos es que los dividendos calificados pagan impuestos en una tasa más baja.
+    p-504f40: <strong>Cómo estimar dividendos</strong>
+    p-8bdec9: Generalmente, los dividendos se pagan cada tres meses. Para estimar tus dividendos, revisa tus estados de cuenta financieros para ver cuánto ganaste en dividendos en lo que va del año. Multiplica tu dividendo trimestral por cuatro (u otro número si no es trimestral) para obtener tu estimado para el año.
+    p-65a8c3: Al calcular dividendos, es mejor estimar una cantidad mayor. Si haces un cálculo muy bajo, podrías no retener suficiente impuesto federal a lo largo del año.
+    p-5258da: <strong>Cómo revisar la declaración del año pasado</strong>
+    p-c52a86: 'Si crees que recibirás los mismos dividendos este año, utiliza el monto del año pasado como tu estimado. Revisa el Formulario 1040 de tu declaración de impuestos del <fg-show path="/lastTaxYear"/>:'
     ul-0:
-      li-8406bc:
-      li-5810f9:
+      li-8406bc: La línea 3b menos la línea 3a para dividendos ordinarios
+      li-5810f9: La línea 3a para dividendos calificados
   modal-what-are-short-long-term-gains-losses-en:
-    heading:
-    p-f18360:
+    heading: ¿Qué son ganancias y pérdidas a corto y largo plazo, y cómo puedo estimarlas?
+    p-f18360: 'La cantidad de tiempo que tienes un bien determina el tipo de ganancia o pérdida:'
     ul-0:
-      li-57b37b:
-      li-02555a:
-    p-750d95:
-    p-99bae4:
-    p-6412ce:
-    p-62a198:
-    p-dff0b2:
+      li-57b37b: <strong>Ganancias o pérdidas a corto plazo,</strong> si tienes un bien por menos de un año.
+      li-02555a: <strong>Ganancias o pérdidas a largo plazo,</strong> si tienen un bien por más de un año.
+    p-750d95: <strong>Cómo revisar ganancias y pérdidas</strong>
+    p-99bae4: Si tienes una inversión o cuenta de corretaje, revisa tu cuenta o tu último estado de cuenta para conocer cualquier ganancia o pérdida a corto o largo plazo este año.
+    p-6412ce: <strong>Cómo estimar ganancias y pérdidas</strong>
+    p-62a198: Si piensas vender bienes antes del fin de año, incluye en tu total las ganancias o pérdidas estimadas.
+    p-dff0b2: Cuando estimes ganancias a corto o largo plazo, es mejor estimar una cantidad mayor. Si calculas muy poco, podrías no retener suficiente impuesto federal a lo largo del año.
   modal-rental-expenses-net-income-en:
-    heading:
-    p-8093b7:
-    p-21afbd:
-    p-cd2d5f:
-    p-e79a7f:
-    p-bc395c:
-    p-ed014a:
+    heading: ¿Qué son gastos relacionados a rentas y cómo puedo estimar el ingreso neto por rentas?
+    p-8093b7: Los <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">gastos de alquiler (en inglés)<span class="usa-sr-only">(abre en una nueva pestaña)</span></a> incluyen costos de mantenimiento, seguro, impuestos e intereses.
+    p-21afbd: <strong>Cómo estimar ingresos netos por alquiler</strong>
+    p-cd2d5f: Primero, suma todo el dinero que esperas recibir de tus inquilinos durante el año. Luego, resta tus gastos por alquiler.
+    p-e79a7f: Cuando calcules tus gastos por alquiler, es mejor estimar una cantidad mayor. Si calculas muy poco, podrías no retener suficiente impuesto federal a lo largo del año.
+    p-bc395c: <strong>Cómo revisar la declaración de impuestos del año pasado</strong>
+    p-ed014a: 'Si ganaste ingresos por alquiler el año pasado y piensas que ganarás un monto similar este año, revisa los siguientes formularios del <fg-show path="/lastTaxYear"/>:'
     ul-0:
-      li-3cc72a:
+      li-3cc72a: Anexo E (Formulario 1040), Parte I, línea 21, Columnas A - C
   modal-estimate-royalty-income-en:
-    heading:
-    p-7d15b4:
-    p-53dd3a:
-    p-bc395c:
-    p-c92501:
+    heading: ¿Cómo puedo estimar los ingresos por regalías?
+    p-7d15b4: Revisa tus acuerdos de licencia o declaraciones de la editorial para conocer los calendarios o porcentajes de pago esperados.
+    p-53dd3a: Al calcular ingresos de regalías futuras, es mejor estimar una cantidad mayor. Si calculas muy poco, podrías no retener suficiente impuesto federal a lo largo del año.
+    p-bc395c: <strong>Cómo revisar la declaración de impuestos del año pasado</strong>
+    p-c92501: 'Si ganaste regalías el año pasado y piensas que ganarás un monto similar este año, revisa los siguientes formularios del <fg-show path="/lastTaxYear"/>:'
     ul-0:
-      li-90f9a8:
+      li-90f9a8: Anexo E (Formulario 1040), Parte 1, línea 23b
   modal-estimate-s-corp-partnership-income-en:
-    heading:
-    p-ba76b7:
-    p-04160c:
-    p-e63f56:
-    p-8b6f8b:
-    p-7e4500:
+    heading: ¿Cómo puedo estimar ingresos por una corporación S o una asociación?
+    p-ba76b7: Puedes usar los informes para inversores, declaraciones de ganancias y pérdidas, u otra información del negocio para calcular las ganancias anuales. Multiplica esas ganancias por tu porcentaje de propiedad o participación distributiva.
+    p-04160c: Cuando estimes ingresos de una corporación S o de asociaciones, es mejor estimar una cantidad mayor. Si calculas muy poco, podrías no retener suficiente impuesto federal a lo largo del año.
+    p-e63f56: No incluyas los ingresos que hayas anotado en la sección de trabajo por cuenta propia.
+    p-8b6f8b: <strong>Cómo revisar la declaración de impuestos del año pasado</strong>
+    p-7e4500: 'Si el año pasado recibiste ganancias de una corporación S o una asociación y crees que recibirás una cantidad similar este año, revisa estos documentos en tu declaración del <fg-show path="/lastTaxYear"/>:'
     ul-0:
-      li-b8bcfa:
-      li-f37c1e:
+      li-b8bcfa: Para ingresos pasivos, anexo E (Formulario 1040), Parte II, Línea 29a, Columna h
+      li-f37c1e: Para ingresos activos, anexo E (Formulario 1040), Parte II, Línea 29a, columna k
   modal-estimate-future-bonus-en:
-    heading:
-    p-185c7d:
-    p-74fc7e:
-    p-c6a009:
-    p-e4a5c2:
+    heading: ¿Cómo puedo estimar bonos futuros?
+    p-185c7d: Usualmente, los bonos son un pago único y adicional a tu salario regular.
+    p-74fc7e: Si esperas recibir un bono de tu empleador a fin de año o fin de trimestre, incluye esa cantidad.
+    p-c6a009: Está bien incluir una idea de la cantidad que recibirás. También puedes dejar la casilla de bonos futuros en blanco.
+    p-e4a5c2: No incluyas pagos de bonos pasados que hayas recibido este año.
   modal-job-check-bonus-en:
-    heading:
-    p-9a2f97:
-    p-76b2cb:
+    heading: ¿Cómo puedo revisar si recibí un bono en este periodo de pago?
+    p-9a2f97: Usualmente, los bonos son un pago único y adicional a tu salario regular.
+    p-76b2cb: Para revisar si recibiste un bono en el <strong>periodo de pago actual:</strong>
     ol-0:
-      li-5e0c98:
-      li-c46d32:
-    p-529826:
+      li-5e0c98: Encuentra la entrada de ingreso bruto o total para el periodo de pago. Este sólo incluye el pago por los días que trabajaste por este cheque.
+      li-c46d32: Revisa si hay un monto llamado bono (bonus, en inglés), incluído en el ingreso total o bruto para este periodo de pago.
+    p-529826: <strong>No incluyas</strong> bonos que aparezcan en el monto acumulado del año (YTD, en inglés). Sólo cuenta bonos del cheque actual. No incluyas pago por horas extra.
   modal-job-gross-ytd-end-en:
-    heading:
-    p-1f18fb:
-    p-dd6213:
-    p-654d7e:
-    p-a181b2:
+    heading: ¿Cómo puedo encontrar el ingreso bruto en lo que van del <fg-show path="/taxYear"/>?
+    p-1f18fb: El ingreso bruto es el monto total de tu sueldo antes de restarle impuestos y otras deducciones.
+    p-dd6213: Si recibiste cualquier pago adicional este año, como un bono, propinas o tiempo extra, estará incluido en el ingreso bruto.
+    p-654d7e: <strong>Dónde encontrarlo</strong>
+    p-a181b2: Revisa el monto acumulado del año (YTD, en inglés) en tu talón de cheque de pago. Este incluye toda tu paga del <fg-show path="/taxYear"/> hasta la fecha.
   modal-estimate-tips-en:
-    heading:
-    p-cf271a:
-    p-1bf124:
+    heading: ¿Cómo puedo estimar propinas?
+    p-cf271a: 'Para estimar el total de propinas que recibirás en el <fg-show path="/taxYear"/>:'
+    p-1bf124: <strong>Primero,</strong> revisa tu talón de cheque para ver las <strong>propinas hasta la fecha</strong> (“year-to-date tips”). Esto incluye todas las propinas que has recibido hasta el momento.
     ul-0:
-      li-934301:
-    p-368b23:
-    p-bb8a8e:
-    p-ae35ae:
+      li-934301: En un talón de cheque, las propinas podrían llamarse Otros o Propinas (“Other,” “Tips”)
+    p-368b23: <strong>Luego,</strong> suma las cantidades que crees que recibirás el resto del <fg-show path="/taxYear"/>.
+    p-bb8a8e: Si es difícil de estimar, está bien usar el monto que has recibido hasta ahora, o dejar la casilla en blanco.
+    p-ae35ae: Evita usar una cantidad mayor a lo que puedes estimar con seguridad. Esto podría hacer tu estimado menos preciso.
   modal-estimate-overtime-en:
-    heading:
-    p-d2bd4e:
-    p-b3d7ea:
+    heading: ¿Cómo puedo estimar las horas extra?
+    p-d2bd4e: 'Para estimar tu total por horas extra en el <fg-show path="/taxYear"/>:'
+    p-b3d7ea: <strong>Primero,</strong> revisa tu talón de cheque para ver las <strong>horas extra del año</strong> (“year-to-date-overtime”). Esto incluye todas las horas extra por las que te pagaron en lo que va del año.
     ul-0:
-      li-f9b117:
-      li-766c0d:
-      li-89431a:
-    p-368b23:
-    p-c62d72:
-    p-5d7be0:
-    p-c62c8e:
+      li-f9b117: El pago por horas extra podría llamarse horas OT, pago OT, pago 1.5 o tiempo y medio en tu talón de cheque (“OT hours”, “OT pay”, “1.5 pay” o “time-and-a-half”)
+      li-766c0d: Si las horas extra aparecen en varias líneas del talón de cheque, súmalas
+      li-89431a: Solo incluye las horas extra que acumulaste por trabajar más de 40 horas por semana
+    p-368b23: <strong>Luego,</strong> agrega toda cantidad que piensas que recibirás en lo que queda del <fg-show path="/taxYear"/>.
+    p-c62d72: Si es difícil de calcular, puedes ingresar sólo lo que has recibido hasta el momento o dejar la casilla en blanco.
+    p-5d7be0: Evita usar una cantidad mayor a lo que puedes estimar con seguridad. Esto podría hacer tu estimado menos preciso.
+    p-c62c8e: El pago por horas extra que no se require según la sección 7 del FLSA (p. ej., por ley estatal o contrato de sindicato) no es deducible y no debe ingresarse en el estimado.
   modal-estimate-overtime-rate-en:
-    heading:
-    p-73dc6c:
+    heading: ¿Qué pasa si me pagan una tarifa diferente por horas extra?
+    p-73dc6c: 'Si te pagan por tiempo extra con una tarifa diferente a 1.5 o 2 veces tu sueldo regular:'
     ul-0:
-      li-a0e864:
+      li-a0e864: Elige la opción más cercana a tu tarifa de paga por horas extra
   modal-fed-tax-pay-period-en:
-    heading:
-    p-3d5320:
-    p-33ac3f:
+    heading: ¿Cómo puedo encontrar el impuesto federal retenido por periodo de pago?
+    p-3d5320: Esta es una cantidad que se retiene de tu cheque para pagar el impuesto federal a lo largo del año.
+    p-33ac3f: 'Dónde encontrar el impuesto federal que se retuvo <strong>por periodo de pago</strong> en tu talón de cheque:'
     ul-0:
-      li-8bab4d:
-      li-9defdf:
-      li-c119f5:
-    p-d6e23c:
+      li-8bab4d: El impuesto federal retenido podría aparecer como una sola línea etiquetada <strong>Impuestos</strong>. Si pediste que retuvieran un monto adicional de tu cheque para el impuesto federal, podría aparecer en una línea aparte. Asegúrate de agregar ambas cantidades.
+      li-9defdf: También podría aparecer bajo el nombre FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax o algo similar.
+      li-c119f5: Revisa la cantidad por periodo de pago. Sólo debe incluir el impuesto federal retenido de este cheque.
+    p-d6e23c: <strong>No incluyas</strong> impuestos estatales, locales, Medicare, Seguro Social u otras cantidades retenidas.
   modal-fed-tax-ytd-en:
-    heading:
-    p-01be0a:
-    p-583ef9:
+    heading: ¿Cómo puedo encontrar el impuesto federal retenido en lo que va del <fg-show path="/taxYear"/>?
+    p-01be0a: Esta es una cantidad que se retiene de tu cheque para pagar el impuesto federal a lo largo del año.
+    p-583ef9: 'Dónde encontrar el impuesto federal retenido en <strong>lo que va del año</strong> en tu talón de cheque:'
     ul-0:
-      li-92a8b4:
-      li-9defdf:
-      li-af3b9e:
-    p-d6e23c:
+      li-92a8b4: El impuesto federal retenido podría aparecer como una sola línea etiquetada <strong>Impuestos</strong>. Si pediste que retuvieran un monto adicional de tu cheque para el impuesto federal, podría aparecer en una línea aparte. Asegúrate de agregar ambas cantidades.
+      li-9defdf: También podría aparecer bajo el nombre FIT, FITW, FITC, Fed W/H, Fed tax, Fed withholding, Federal income tax o algo similar.
+      li-af3b9e: Revisa la <strong>cantidad acumulada del año</strong> (year-to-date o YTD). Esto incluye todo el impuesto federal que se retuvo para el año hasta el momento.
+    p-d6e23c: <strong>No incluyas</strong> impuestos estatales, locales, Medicare, Seguro Social u otras cantidades retenidas.
 /adjustments:
   title: Ajustes
   h2-9fa8b1: Ajustes
@@ -1412,6 +1507,7 @@
   fg-alert-18ebd6:
     heading: Necesitas completar los pasos anteriores
     p-0f5e39: 'Para usar el estimador necesitas completar <a href="/app/tax-withholding-estimator/">Paso 1: Acerca de ti</a>'
+
   p-5ccbb3:
   p-b3b8d7:
   p-771faa: Según tu información, estimamos que <strong>retienes más impuestos de lo necesario.</strong>
@@ -1421,6 +1517,7 @@
     <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si mantienes tus retenciones como están, probablemente</span>
     <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">Probablemente</span> recibas un reembolso en tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
   p-f27357: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si quisieras recibir más dinero en cada cheque y reducir tu reembolso estimado, puedes <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">cambiar tus retenciones</a>.</span>
+  #TODO: future jobs(?)
   p-ba4944:
   p-05fd7f:
   p-d0bb10: Según tu informacion, estimamos que <strong>no estás reteniendo suficientes impuestos.</strong>
@@ -1505,6 +1602,7 @@
                             </span>
     p-5d3b06: Si debes por lo menos $1,000 y debes más del 10% del total del impuesto que debes pagar, podrías tener que pagar una multa además del impuesto federal que debes.
     p-09327c: 'Nota: Este estimado depende de que tu información sea precisa. El IRS no garantiza la exactitud de este estimado y no acepta cualquier responsabilidad que pueda resultar de usar este cálculo.'
+  #TODO: future jobs
   fg-alert-effbdc:
     heading:
     p-e8e494:

@@ -4,28 +4,28 @@ components:
   fg-collection:
     paths:
       /jobs:
-        name:
-        determiner:
+        name: trabajo
+        determiner: otro
       /pensions:
-        name:
-        determiner:
+        name: pensión o anualidad
+        determiner: otro
       /selfEmploymentSources:
-        name:
+        name: trabajo por cuenta propia
         determiner:
       /socialSecuritySources:
-        name:
+        name:  ingresos por Seguro Social
         determiner:
     buttons:
-      remove: "Placeholder {0}"
-      add: "Placeholder {0}"
-      add-with-determiner: "Placeholder {1} {0}"
+      remove: "Eliminar {0}"
+      add: "Agregar {0}"
+      add-with-determiner: "Agregar {1} {0}"
     remove-item-modal:
       heading:
-        remove: "Placeholder {0}?"
-      body: "Placeholder {0}."
+        remove: "¿Seguro que quieres eliminar {0}?"
+      body: "Esto borrará toda la información que llenaste sobre este {0}."
       footer:
-        confirm: "Placeholder {0}"
-        cancel: "Placeholder {0}"
+        confirm: "Sí, eliminar este {0}"
+        cancel: "No, mantener este {0}"
   modal:
     close:
     ok:
