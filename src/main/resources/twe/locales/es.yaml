@@ -97,9 +97,9 @@ alerts:
     complete-required:
 
 step-indicator:
-  completed:
-  not-completed:
-  step:
+  completed: completo
+  not-completed: incompleto
+  step: Paso
   of: de
 
 errors:
