@@ -28,7 +28,6 @@ components:
         cancel: "No, keep this {0}"
   modal:
     close: Close this window
-    ok: Okay
   boolean:
     yes: "Yes"
     no: "No"
@@ -50,7 +49,7 @@ components:
     november: November
     december: December
   select:
-    select: "--Select one --"
+    select: "-- Select one --"
 
 title:
   prefix: Tax Withholding Estimator
@@ -104,7 +103,7 @@ step-indicator:
 
 # Note that these errors use CamelCase because they come from the Fact Graph. Some of these errors
 # are user errors (i.e. they entered an amount larger than the limit) but not all of them are (i.e.
-# if the limit is misconfigured). I've tried to the denote the ones that should only appear if
+# if the limit is misconfigured). I've tried to denote the ones that should only appear if
 # there's a bug that needs to be fixed.
 errors:
   # Dollar errors
@@ -124,7 +123,7 @@ errors:
   InvalidMonth: Enter a valid month.
   InvalidDate: Enter a valid date.
   InvalidLimit: Invalid limit set. # Server error
-  IncompleteWritableDate: Enter a complete date or leave blank
+  IncompleteWritableDate: Enter a complete date or leave blank.
 
 
   # Enum errors
@@ -132,8 +131,8 @@ errors:
   InvalidEnum: Value not found. # Server error
 
   # Generic errors
-  Required: This question is required
-  Default: Sorry, something went wrong # Server error
+  Required: This question is required.
+  Default: Sorry, something went wrong. # Server error
 
   # Limit errors
   #

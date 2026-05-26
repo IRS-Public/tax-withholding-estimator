@@ -27,8 +27,7 @@ components:
         confirm: "Sí, eliminar este {0}"
         cancel: "No, mantener este {0}"
   modal:
-    close:
-    ok:
+    close: Cerrar esta ventana
   boolean:
     yes: Sí
     no: No
@@ -50,7 +49,7 @@ components:
     november: Noviembre
     december: Diciembre
   select:
-    select:
+    select: "-- Elegir --"
 
 title:
   prefix: Estimador para Retención de Impuestos
@@ -58,7 +57,7 @@ title:
 
 layout:
   title: Estimador para Retención de Impuestos
-  skip-to-main:
+  skip-to-main: Saltar al contenido principal
   identifier:
     agency-identifier: Identificador de la agencia
     disclaimer: Un sitio web oficial del <a class="usa-link" target="_blank" href="https://irs.gov">IRS<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
@@ -93,8 +92,8 @@ buttons:
 
 alerts:
   warning:
-    heading:
-    complete-required:
+    heading: Alerta
+    complete-required: Por favor, completa los campos requeridos.
 
 step-indicator:
   completed: completo
@@ -104,33 +103,33 @@ step-indicator:
 
 errors:
   # Dollar errors
-  CombinedHyphensAndParentheses:
-  InvalidCharacters:
-  InvalidDollar:
-  InvalidHyphens:
-  InvalidParentheses:
-  TooManyDecimals:
-  TooManyFractionalDigits:
+  CombinedHyphensAndParentheses: Usa sólo números y un decimal.
+  InvalidCharacters: Usa sólo números y un decimal.
+  InvalidDollar: Usa sólo números y un decimal.
+  InvalidHyphens: Usa sólo números y un decimal.
+  InvalidParentheses: Usa sólo números y un decimal.
+  TooManyDecimals: Usa sólo números y un decimal.
+  TooManyFractionalDigits: Usa sólo dos dígitos para el decimal.
 
   # Day errors
-  InvalidDay:
-  InvalidDayDueToLeapYear:
-  InvalidMonth:
-  InvalidDate:
-  InvalidLimit:
-  IncompleteWritableDate:
+  InvalidDay: Ingresa un día válido.
+  InvalidDayDueToLeapYear: Este día es inválido por ser año bisiesto.
+  InvalidMonth: Ingresa un mes válido.
+  InvalidDate: Ingresa una fecha válida.
+  InvalidLimit: El límite establecido no es válido.
+  IncompleteWritableDate: Ingresa una fecha completa o déjala en blanco.
 
   # Enum errors
-  BlankEnum:
-  InvalidEnum:
+  BlankEnum: El valor estaba en blanco.
+  InvalidEnum: No se encontró el valor.
 
   # Generic errors
-  Required:
-  Default:
+  Required: Esta pregunta es requerida.
+  Default: Lo sentimos, algo salió mal.
 
   # Limit errors
-  Max:
-  Min:
+  Max: Ingresa una cantidad menor a
+  Min: Ingresa una cantidad mayor a
 
 audit:
   fact-select:
