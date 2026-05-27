@@ -86,7 +86,10 @@ class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
     }
 
     it("creates a flow with the expected number of pages") {
-      site.pages.map(_.route) should contain theSameElementsAs Seq("/")
+      site.pages.map(page => (page.route, page.languageCode)) should contain theSameElementsAs Seq(
+        ("/", "en"),
+        ("/", "es"),
+      )
     }
   }
 
@@ -153,7 +156,11 @@ class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
       val site = Website.generate(flow, basicDictionaryConfig, flags)
 
       it("includes /all-screens as the last page in the generated site") {
-        site.pages.map(_.route) should contain theSameElementsInOrderAs Seq("/", "/all-screens")
+        site.pages.map(page => (page.route, page.languageCode)) should contain theSameElementsInOrderAs Seq(
+          ("/", "en"),
+          ("/", "es"),
+          ("/all-screens", "en"),
+        )
       }
     }
 

@@ -68,7 +68,7 @@ object Website {
       dictionaryXml: xml.Elem,
       flags: Map[String, Boolean],
   ): Website = {
-    val locales = if (flags.contains(Flags.spanishTranslations)) List("en", "es") else List("en")
+    val locales = List("en", "es")
     var pages = locales.flatMap { languageCode =>
       val templateEngine = new TweTemplateEngine(languageCode)
       val navPages = flow.pages.filter(p => !p.exclude)
