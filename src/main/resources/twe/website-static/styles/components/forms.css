@@ -26,6 +26,12 @@ h2 + fg-set {
   }
 }
 
+.usa-input[readonly] {
+  background-color: var(--base-lighter);
+  border-color: var(--base-lighter);
+  color: var(--text-secondary);
+}
+
 .usa-radio {
   max-width: 30rem
 }

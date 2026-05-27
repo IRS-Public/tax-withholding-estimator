@@ -262,9 +262,9 @@ class FgSet extends HTMLElement {
     if (this.inputType === 'date') {
       const month = this.querySelector('select[name*="-month"]')?.value
       const day = this.querySelector('input[name*="-day"]')?.value
-      const year = this.querySelector('input[name*="-year"]')?.value
+      const year = this.querySelector('select[name*="-year"], input[name*="-year"]')?.value
       const allFilled = month && day && year
-      const noneFilled = !month && !day && !year && this.optional
+      const noneFilled = !month && !day && this.optional
       // A date is "complete" if it's all filled or not filled at all.
       // It's incomplete if it's partially filled.
       return allFilled || noneFilled
@@ -297,7 +297,7 @@ class FgSet extends HTMLElement {
       case 'date': {
         this.querySelector('select[name*="-month"]').value = ''
         this.querySelector('input[name*="-day"]').value = ''
-        this.querySelector('input[name*="-year"]').value = ''
+        this.querySelector('select[name*="-year"], input[name*="-year"]').value = ''
         break
       }
       case 'int':
@@ -356,7 +356,7 @@ class FgSet extends HTMLElement {
       case 'date': {
         const monthSelect = this.querySelector('select[name*="-month"]')
         const dayInput = this.querySelector('input[name*="-day"]')
-        const yearInput = this.querySelector('input[name*="-year"]')
+        const yearInput = this.querySelector('select[name*="-year"], input[name*="-year"]')
 
         if (value) {
           // When the fact has all three fields filled out, set it up
@@ -404,7 +404,7 @@ class FgSet extends HTMLElement {
       case 'date': {
         const month = this.querySelector('select[name*="-month"]')?.value
         const day = this.querySelector('input[name*="-day"]')?.value
-        const year = this.querySelector('input[name*="-year"]')?.value
+        const year = this.querySelector('select[name*="-year"], input[name*="-year"]')?.value
         // Adding padStart to day changes user's input from 1 to 01
         return `${year}-${month}-${day.padStart(2, '0')}`
       }

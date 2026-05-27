@@ -1,5 +1,6 @@
 package gov.irs.twe.parser
 
+import gov.irs.factgraph.FactDictionary
 import gov.irs.factgraph.Path
 import gov.irs.twe.exceptions.InvalidFormConfig
 import gov.irs.twe.parser.Utils.validateFact
@@ -19,6 +20,9 @@ case class FgSet(
     translationContext: TranslationContext,
     hint: Option[Hint],
     modalLink: Option[ModalLink],
+    taxYear: Option[String],
+    previousYears: Int,
+    futureYears: Int,
 ) extends FlowNode {
   override def html(templateEngine: TweTemplateEngine): String = {
     val usesFieldset =
@@ -36,6 +40,10 @@ case class FgSet(
     context.setVariable("hint", hint.orNull)
     context.setVariable("modalLink", modalLink.orNull)
     context.setVariable("hintId", if (hint.nonEmpty) s"$path-hint" else null)
+    context.setVariable("taxYear", taxYear.orNull)
+    context.setVariable("taxYearNumber", taxYear.map(_.toInt).map(Int.box).orNull)
+    context.setVariable("previousYears", Int.box(previousYears))
+    context.setVariable("futureYears", Int.box(futureYears))
 
     input match {
       case Input.select(options, optionsPath, _) =>
@@ -75,6 +83,17 @@ case class FgSetOption(
 )
 
 object FgSet extends FlowNodeParser {
+  private def extractFactValue(factDictionary: FactDictionary, path: String): String = {
+    val factNode = factDictionary.getDefinitionsAsNodes()(Path(path))
+    val intValue = (factNode \ "Derived" \ "Int").text.trim
+    val taxYearValue = (factNode \ "TaxYear").text.trim
+
+    Option
+      .when(intValue.nonEmpty)(intValue)
+      .orElse(Option.when(taxYearValue.nonEmpty)(taxYearValue))
+      .getOrElse(throw InvalidFormConfig(s"Fact $path must contain a literal value"))
+  }
+
   override def fromXml(
       fgSetElement: Elem,
       flowParser: FlowParser,
@@ -97,7 +116,7 @@ object FgSet extends FlowNodeParser {
       case Input.int(_)        => typeNode != "IntNode"
       case Input.boolean(_, _) => typeNode != "BooleanNode"
       case Input.dollar(_)     => typeNode != "DollarNode"
-      case Input.date(_)       => typeNode != "DayNode"
+      case Input.date(_, _, _) => typeNode != "DayNode"
       // We could make this more strict
       case Input.select(_, _, _)         => typeNode != "EnumNode"
       case Input.enumInput(_, _, _)      => typeNode != "EnumNode"
@@ -157,6 +176,32 @@ object FgSet extends FlowNodeParser {
       })
     }
 
-    FgSet(path, condition, input, isOptional, translationContext, hint.headOption, modalLink.headOption)
+    val dateTaxYear = input match {
+      case Input.date(_, _, _) => Some(extractFactValue(factDictionary, "/taxYear"))
+      case _                   => None
+    }
+
+    val previousYears = input match {
+      case Input.date(_, previousYears, _) => previousYears
+      case _                               => 0
+    }
+
+    val futureYears = input match {
+      case Input.date(_, _, futureYears) => futureYears
+      case _                             => 0
+    }
+
+    FgSet(
+      path,
+      condition,
+      input,
+      isOptional,
+      translationContext,
+      hint.headOption,
+      modalLink.headOption,
+      dateTaxYear,
+      previousYears,
+      futureYears,
+    )
   }
 }

@@ -34,9 +34,20 @@
         </div>
         <div class="usa-form-group usa-form-group--year">
             <label class="usa-label" th:for="${path} +'-year'" th:text="#{components.date.year}"></label>
-            <input class="usa-input" th:id="${path} +'-year'" th:name="${path} +'-year'"
-                   minlength="4" maxlength="4" pattern="[0-9]*" inputmode="numeric"
-                   value="" th:required="${not optional}" aria-invalid="false"/>
+            <select th:if="${previousYears > 0 or futureYears > 0}" class="usa-select" th:id="${path} +'-year'" th:name="${path} +'-year'"
+                aria-invalid="false" th:required="${not optional}"
+            >
+                <option th:if="${previousYears > 0}" th:each="offset : ${#numbers.sequence(previousYears, 1)}"
+                    th:with="previousTaxYear=${#numbers.formatInteger(taxYearNumber - offset, 1)}"
+                        th:value="${previousTaxYear}"
+                        th:text="${previousTaxYear}"></option>
+                <option th:value="${taxYear}" selected th:text="${taxYear}"></option>
+                <option th:if="${futureYears > 0}" th:each="offset : ${#numbers.sequence(1, futureYears)}"
+                    th:with="nextTaxYear=${#numbers.formatInteger(taxYearNumber + offset, 1)}"
+                        th:value="${nextTaxYear}"
+                        th:text="${nextTaxYear}"></option>
+            </select>
+            <input class="usa-input" th:if="${previousYears == 0 and futureYears == 0}" th:id="${path} +'-year'" th:name="${path} +'-year'" th:value="${taxYear}" type="text" readonly />
         </div>
     </div>
 </fieldset>

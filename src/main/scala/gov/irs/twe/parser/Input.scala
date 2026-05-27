@@ -14,7 +14,7 @@ enum Input {
   case enumInput(options: List[HtmlOption], optionsPath: String, optional: Boolean = false)
   case multiEnumInput(options: List[HtmlOption], optionsPath: String, optional: Boolean = false)
   case dollar(optional: Boolean = false)
-  case date(optional: Boolean = false)
+  case date(optional: Boolean = false, previousYears: Int = 0, futureYears: Int = 0)
 
   def typeString: String = this match {
     case Input.text(_)                 => "text"
@@ -24,11 +24,30 @@ enum Input {
     case Input.multiEnumInput(_, _, _) => "multi-enum"
     case Input.dollar(_)               => "dollar"
     case Input.select(_, _, _)         => "select"
-    case Input.date(_)                 => "date"
+    case Input.date(_, _, _)           => "date"
   }
 }
 
 object Input {
+  private def extractYearCount(attributeValue: String, attributeName: String, path: String): Int = {
+    if (attributeValue.isEmpty) 0
+    else {
+      val yearCount = attributeValue.toIntOption.getOrElse {
+        throw InvalidFormConfig(
+          s"Date input $attributeName must be a non-negative integer, got '$attributeValue' at path $path",
+        )
+      }
+
+      if (yearCount < 0) {
+        throw InvalidFormConfig(
+          s"Date input $attributeName must be a non-negative integer, got '$attributeValue' at path $path",
+        )
+      }
+
+      yearCount
+    }
+  }
+
   def extractFromFgSet(node: xml.Node, isOptional: Boolean, factDictionary: FactDictionary): Input = {
     val path = node \@ "path"
 
@@ -95,8 +114,12 @@ object Input {
         }.toList
         Input.multiEnumInput(options, optionsPath, isOptional)
       case "dollar" => Input.dollar(isOptional)
-      case "date"   => Input.date(isOptional)
-      case x        => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
+      case "date"   =>
+        val previousYears = extractYearCount(inputNode \@ "previous-years", "previous-years", path)
+        val futureYears = extractYearCount(inputNode \@ "future-years", "future-years", path)
+
+        Input.date(isOptional, previousYears, futureYears)
+      case x => throw InvalidFormConfig(s"Unexpected input type \"$x\" for question $path")
     }
   }
 }

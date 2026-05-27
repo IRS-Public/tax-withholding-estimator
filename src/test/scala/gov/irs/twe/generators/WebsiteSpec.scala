@@ -45,6 +45,33 @@ class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
     </Facts>
   </FactDictionaryModule>
 
+  private val dateDictionaryConfig = <FactDictionaryModule>
+    <Facts>
+      <Fact path="/taxYear">
+        <Description>The tax year of the return.</Description>
+        <TaxYear>2026</TaxYear>
+        <Derived>
+          <Int>2026</Int>
+        </Derived>
+      </Fact>
+
+      <Fact path="/lastTaxYear">
+        <Description>Previous tax year.</Description>
+        <TaxYear>2025</TaxYear>
+        <Derived>
+          <Int>2025</Int>
+        </Derived>
+      </Fact>
+
+      <Fact path="/eventDate">
+        <Name>Event Date</Name>
+        <Writable>
+          <Day/>
+        </Writable>
+      </Fact>
+    </Facts>
+  </FactDictionaryModule>
+
   private val basicFormConfig = <FlowConfig>
     <page route="/" title="Basic Test Form">
       <section>
@@ -278,6 +305,97 @@ class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
         ".usa-fieldset",
         None,
       )
+    }
+  }
+
+  describe("date input year rendering") {
+    it("renders only the current tax year by default") {
+      val formConfigWithDateInput = <FlowConfig>
+        <page route="/" title="Date Input Test Form">
+          <section>
+            <fg-set path="/eventDate">
+              <question>When did this happen?</question>
+              <input type="date"/>
+            </fg-set>
+          </section>
+        </page>
+      </FlowConfig>
+
+      val factDictionary = FactDictionary.fromXml(dateDictionaryConfig)
+      val flow = Flow.fromXmlConfig(formConfigWithDateInput, factDictionary)
+      val site = Website.generate(flow, dateDictionaryConfig, Map())
+      val document = Jsoup.parse(site.pages.head.content)
+      val yearInput = document.select("input[name=/eventDate-year]")
+
+      yearInput.attr("type") shouldBe "text"
+      yearInput.hasAttr("readonly") shouldBe true
+      yearInput.attr("value") shouldBe "2026"
+    }
+
+    it("renders the requested number of previous tax years when previous-years is set") {
+      val formConfigWithPreviousYears = <FlowConfig>
+        <page route="/" title="Date Input Previous Years Test Form">
+          <section>
+            <fg-set path="/eventDate">
+              <question>When did this happen?</question>
+              <input type="date" previous-years="2"/>
+            </fg-set>
+          </section>
+        </page>
+      </FlowConfig>
+
+      val factDictionary = FactDictionary.fromXml(dateDictionaryConfig)
+      val flow = Flow.fromXmlConfig(formConfigWithPreviousYears, factDictionary)
+      val site = Website.generate(flow, dateDictionaryConfig, Map())
+      val document = Jsoup.parse(site.pages.head.content)
+      val yearOptions = document.select("select[name=/eventDate-year] option")
+
+      yearOptions.eachAttr("value").asScala should contain theSameElementsInOrderAs Seq("2024", "2025", "2026")
+      yearOptions.eachText().asScala should contain theSameElementsInOrderAs Seq("2024", "2025", "2026")
+    }
+
+    it("renders the requested number of future tax years when future-years is set") {
+      val formConfigWithFutureYears = <FlowConfig>
+        <page route="/" title="Date Input Future Years Test Form">
+          <section>
+            <fg-set path="/eventDate">
+              <question>When did this happen?</question>
+              <input type="date" future-years="2"/>
+            </fg-set>
+          </section>
+        </page>
+      </FlowConfig>
+
+      val factDictionary = FactDictionary.fromXml(dateDictionaryConfig)
+      val flow = Flow.fromXmlConfig(formConfigWithFutureYears, factDictionary)
+      val site = Website.generate(flow, dateDictionaryConfig, Map())
+      val document = Jsoup.parse(site.pages.head.content)
+      val yearOptions = document.select("select[name=/eventDate-year] option")
+
+      yearOptions.eachAttr("value").asScala should contain theSameElementsInOrderAs Seq("2026", "2027", "2028")
+      yearOptions.eachText().asScala should contain theSameElementsInOrderAs Seq("2026", "2027", "2028")
+    }
+
+    it("renders previous and future tax years together when both attributes are set") {
+      val formConfigWithPreviousAndFutureYears = <FlowConfig>
+        <page route="/" title="Date Input Previous And Future Years Test Form">
+          <section>
+            <fg-set path="/eventDate">
+              <question>When did this happen?</question>
+              <input type="date" previous-years="1" future-years="1"/>
+            </fg-set>
+          </section>
+        </page>
+      </FlowConfig>
+
+      val factDictionary = FactDictionary.fromXml(dateDictionaryConfig)
+      val flow = Flow.fromXmlConfig(formConfigWithPreviousAndFutureYears, factDictionary)
+      val site = Website.generate(flow, dateDictionaryConfig, Map())
+      val document = Jsoup.parse(site.pages.head.content)
+      val yearOptions = document.select("select[name=/eventDate-year] option")
+
+      yearOptions.eachAttr("value").asScala should contain theSameElementsInOrderAs Seq("2025", "2026", "2027")
+      yearOptions.eachText().asScala should contain theSameElementsInOrderAs Seq("2025", "2026", "2027")
     }
   }
 }

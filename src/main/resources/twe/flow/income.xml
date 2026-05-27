@@ -88,7 +88,7 @@
           <fg-set path="/jobs/*/mostRecentPayPeriodEnd" if-false="/jobs/*/isPastJob">
             <question>When did the most recent pay period in <fg-show path="/taxYear"/> end?</question>
             <modal-link for="modal-job-pay-dates-en">How do I find the pay period and pay date?</modal-link>
-            <input type="date"/>
+            <input type="date" previous-years="1"/>
           </fg-set>
           <fg-set path="/jobs/*/mostRecentPayDate" if-false="/jobs/*/isPastJob">
             <question> When was <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span>
