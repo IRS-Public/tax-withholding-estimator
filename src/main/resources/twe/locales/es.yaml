@@ -145,7 +145,7 @@ audit:
 results:
   fg-withholding-adjustments:
     w-4:
-      summary: Cambia <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> <fg-show path="/jobs/*/grossIncome"/> W-2 job
+      summary: Cambia <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> <fg-show path="/jobs/*/grossIncome"/> trabajo con W-2
       download-and-submit: Descarga y completa el Formulario W-4 con nuestras recomendaciones. Luego, envía el formulario a <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> empleador.
       update-employer-software: O puedes usar nuestras recomendaciones para cambiar <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tus</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">sus</span> retenciones directamente en el sistema de pago de <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> empleador.
       download-pre-filled: Descargar el Formulario W-4 pre-llenado
@@ -174,8 +174,8 @@ results:
         5-recommendation: Firma y fecha
       time-sensitivity: Los cambios a tus retenciones son de prioridad. Envía el formulario con <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> información a <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> empleador lo antes posible.
     w-4p:
-      summary:
-      download-and-submit:
+      summary: Cambia <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> <span condition="/pensions/*/isInFuture" operator="isTrue">futura</span> pensión o anualidad de <fg-show path="/pensions/*/grossIncome"/>
+      download-and-submit: Descarga y completa el Formulario W-4P con nuestras recomendaciones. Luego, envía el formulario a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> <span condition="/pensions/*/isInFuture" operator="isTrue">nuevo</span> proveedor de pensión o anualidad.
       download-pre-filled: Descargar el Formulario W-4P pre-llenado
       download-blank: Descargar el Formulario W-4P en blanco
       recommendations:
@@ -200,4 +200,4 @@ results:
         4-c-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine4cBlank" operator="isFalse"><fg-show path="/pensions/*/w4pLine4cWithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine4cBlank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-w-4p-step-4-c">¿Por qué?</modal-link></p>
         5-field: 'Paso 5: Firma aquí'
         5-recommendation: Firma y fecha
-      time-sensitivity:
+      time-sensitivity: Los cambios a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tus</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">sus</span> retenciones son de prioridad. Envía el formulario con <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> información a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> <span condition="/pensions/*/isInFuture" operator="isTrue">nuevo</span> proveedor de pensión o anualidad lo antes posible.
