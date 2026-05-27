@@ -11,10 +11,10 @@ components:
         determiner: otro
       /selfEmploymentSources:
         name: trabajo por cuenta propia
-        determiner:
+        determiner: otro
       /socialSecuritySources:
-        name:  ingresos por Seguro Social
-        determiner:
+        name: ingresos por Seguro Social
+        determiner: otro
     buttons:
       remove: "Eliminar {0}"
       add: "Agregar {0}"
@@ -86,9 +86,7 @@ layout:
 
 buttons:
   next: Siguiente
-  continue:
   back: Volver
-  submit:
 
 alerts:
   warning:
@@ -133,19 +131,19 @@ errors:
 
 audit:
   fact-select:
-    question:
-    blank:
-  collection-id-label:
+    question: Ruta del hecho
+    blank: -- Elegir una ruta --
+  collection-id-label: ID de la colección
   fact:
-    type:
-    value:
-    remove:
-    definition:
+    type: "Tipo de hecho:"
+    value: "Valor:"
+    remove: "Eliminar hecho"
+    definition: "Definición XML"
 
 results:
   fg-withholding-adjustments:
     w-4:
-      summary: Cambia <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> <fg-show path="/jobs/*/grossIncome"/> trabajo con W-2
+      summary: Cambia <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> <fg-show path="/jobs/*/grossIncome"/> Trabajo con W-2
       download-and-submit: Descarga y completa el Formulario W-4 con nuestras recomendaciones. Luego, envía el formulario a <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> empleador.
       update-employer-software: O puedes usar nuestras recomendaciones para cambiar <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tus</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">sus</span> retenciones directamente en el sistema de pago de <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> empleador.
       download-pre-filled: Descargar el Formulario W-4 pre-llenado
@@ -161,7 +159,7 @@ results:
         1-c-field: 'Paso 1 (c): Estado civil'
         1-c-recommendation: <p><span condition="/isFilingStatusMFJ" operator="isTrue">Casado(a) que presenta una declaración conjunta</span><span condition="/isFilingStatusMFS" operator="isTrue">Casado(a) que presenta una declaración por separado</span><span condition="/isFilingStatusSingle" operator="isTrue">Soltero(a)</span><span condition="/isFilingStatusHOH" operator="isTrue">Cabeza de familia</span><span condition="/isFilingStatusQSS" operator="isTrue">Esposo(a) sobreviviente calificado</span></p><p><modal-link for="modal-why-step-1-c">¿Por qué?</modal-link></p>
         2-c-field: 'Paso 2 (c): Trabajos múltiples o si tu esposo(a) trabaja'
-        2-c-recommendation: <p>No marques esta casilla</p><p><modal-link for="modal-why-w-4-step-2-c">Why?</modal-link></p>
+        2-c-recommendation: <p>No marques esta casilla</p><p><modal-link for="modal-why-w-4-step-2-c">¿Por qué?</modal-link></p>
         3-field: 'Paso 3: Total de créditos'
         3-recommendation: <p><span condition="/jobs/*/shouldLeaveW4Line3Blank" operator="isFalse"><fg-show path="/jobs/*/w4Line3WithSplitWithholdingStrategy"/></span><span condition="/jobs/*/shouldLeaveW4Line3Blank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-step-3">¿Por qué?</modal-link></p>
         4-a-field: 'Paso 4 (a): Otros ingresos (no de trabajos)'
@@ -189,7 +187,7 @@ results:
         1-c-field: 'Paso 1 (c): Estado civil'
         1-c-recommendation: <p><span condition="/isFilingStatusMFJ" operator="isTrue">Casado(a) que presenta una declaración conjunta</span><span condition="/isFilingStatusMFS" operator="isTrue">Casado(a) que presenta una declaración por separado</span><span condition="/isFilingStatusSingle" operator="isTrue">Soltero(a)</span><span condition="/isFilingStatusHOH" operator="isTrue">Cabeza de familia</span><span condition="/isFilingStatusQSS" operator="isTrue">Esposo(a) sobreviviente calificado</span></p><p><modal-link for="modal-why-step-1-c">¿Por qué?</modal-link></p>
         2-field: 'Paso 2: Trabajos múltiples o pensiones'
-        2-recommendation:  <p>Deja la casilla en blanco</p><p><modal-link for="modal-why-w-4p-step-2">¿Por qué?</modal-link></p>
+        2-recommendation: <p>Deja la casilla en blanco</p><p><modal-link for="modal-why-w-4p-step-2">¿Por qué?</modal-link></p>
         3-field: 'Paso 3: Total de créditos'
         3-recommendation: <p><span condition="/pensions/*/shouldLeaveW4pLine3Blank" operator="isFalse"><fg-show path="/pensions/*/w4pLine3WithSplitWithholdingStrategy"/></span><span condition="/pensions/*/shouldLeaveW4pLine3Blank" operator="isTrue">Déjalo en blanco</span></p><p><modal-link for="modal-why-step-3">¿Por qué?</modal-link></p>
         4-a-field: 'Paso 4 (a): Otros ingresos (no de trabajos)'

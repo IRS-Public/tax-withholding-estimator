@@ -86,9 +86,7 @@ layout:
 
 buttons:
   next: Next
-  continue: Continue
   back: Back
-  submit: Submit
 
 alerts:
   warning:
