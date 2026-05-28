@@ -1,9 +1,5 @@
 const parser = new DOMParser()
 const XML_SERIALIZER = new XMLSerializer()
-
-const res = await fetch('/app/tax-withholding-estimator/resources/fact-dictionary.xml')
-const text = await res.text()
-const factDictionaryXml = parser.parseFromString(text, 'application/xml')
 const factSelect = document.querySelector('#fact-select')
 const openAuditPanelButton = document.querySelector('#show-audit-panel')
 const closeAuditPanelButton = document.querySelector('#close-audit-panel')
@@ -15,6 +11,22 @@ const AUDIT_PANEL_DEFAULT_WIDTH = 38
 const AUDIT_PANEL_MIN_WIDTH = 320
 const AUDIT_PANEL_MAX_WIDTH_RATIO = 0.7
 const AUDIT_PANEL_KEYBOARD_STEP = 24
+
+let factDictionaryXml
+let factDictionaryXmlPromise
+
+function loadFactDictionaryXml () {
+  if (!factDictionaryXmlPromise) {
+    factDictionaryXmlPromise = fetch('/app/tax-withholding-estimator/resources/fact-dictionary.xml')
+      .then(response => response.text())
+      .then((text) => {
+        factDictionaryXml = parser.parseFromString(text, 'application/xml')
+        return factDictionaryXml
+      })
+  }
+
+  return factDictionaryXmlPromise
+}
 
 export function displayConditions () {
   document.body.classList.add('display-conditions')
@@ -267,7 +279,7 @@ async function copyFactGraphToClipboard () {
 window.copyFactGraphToClipboard = copyFactGraphToClipboard
 
 // Enable audit mode
-export function enable () {
+function enableAuditMode () {
   // This focus handling is a bit of a hack, but it ensures that the track facts in the audit panel are not stealing focus when navigating with the keyboard.
   document.documentElement.tabIndex = -1
   document.documentElement.focus()
@@ -472,6 +484,14 @@ export function enable () {
       })
     })
   }
+}
+
+export function enable () {
+  loadFactDictionaryXml().then(() => {
+    enableAuditMode()
+  }).catch((error) => {
+    console.error('Unable to load fact dictionary for audit mode.', error)
+  })
 }
 
 // Disable audit mode and clear all tracked facts and stored state
