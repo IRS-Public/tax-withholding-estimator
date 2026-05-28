@@ -1117,7 +1117,9 @@
         <p>Bonus pay is usually a one-time payment in addition to regular wages.</p>
         <p>If you expect to receive a year-end or quarterly bonus from the employer, include that amount here.</p>
         <p>It’s okay to enter your best guess of what you will receive. You can also leave future bonus pay blank.</p>
-        <p>Don’t include any past bonus pay that you already received this year.</p>
+        <p><strong>Don’t include</strong> any past bonus pay that you already received this year.</p>
+        <p>If you expect to earn $1 million or more in bonuses for <fg-show path="/taxYear"/>, the estimator can’t calculate your withholding accurately. This includes any bonuses you’ve already received this year.</p>
+        <p>Check <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication 15</a> for help calculating withholding on high bonus pay, or consider consulting a tax professional.</p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-job-check-bonus-en">

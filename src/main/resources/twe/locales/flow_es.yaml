@@ -878,11 +878,13 @@
       li-b8bcfa: Para ingresos pasivos, anexo E (Formulario 1040), Parte II, Línea 29a, Columna h
       li-f37c1e: Para ingresos activos, anexo E (Formulario 1040), Parte II, Línea 29a, columna k
   modal-estimate-future-bonus-en:
-    heading: ¿Cómo puedo estimar bonos futuros?
-    p-185c7d: Usualmente, los bonos son un pago único y adicional a tu salario regular.
-    p-74fc7e: Si esperas recibir un bono de tu empleador a fin de año o fin de trimestre, incluye esa cantidad.
+    heading: ¿Cómo puedo estimar el monto de bonos futuros?
+    p-185c7d: Usualmente, un bono es un pago único adicional a tu salario.
+    p-74fc7e: Si esperas recibir un bono a fin de año o a fin de trimestre, incluye esta cantidad.
     p-c6a009: Está bien incluir una idea de la cantidad que recibirás. También puedes dejar la casilla de bonos futuros en blanco.
-    p-e4a5c2: No incluyas pagos de bonos pasados que hayas recibido este año.
+    p-9b4c52: <strong>No incluyas</strong> pagos de bonos pasados que ya recibiste este año.
+    p-1b848e: Si en el <fg-show path="/taxYear"/> esperas ganar $1 millón o más en bonos, el estimador no podrá hace un cálculo preciso para tu estimado. Esto incluye todo bono que ya recibiste este año.
+    p-74606c: Revisa la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15sp#es_ES_2026_publink1000143523">Publicación 15</a> para ayuda con el cálculo de retenciones en bonos de monto alto, o considera consultar con un profesional de impuestos.
   modal-job-check-bonus-en:
     heading: ¿Cómo puedo revisar si recibí un bono en este periodo de pago?
     p-9a2f97: Usualmente, los bonos son un pago único y adicional a tu salario regular.
