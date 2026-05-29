@@ -576,19 +576,28 @@
           <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
-        <h5 condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isFalse">Social Security details</h5>
-        <p condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isFalse">Once we know more about your income, we’ll ask you additional questions.</p>
-        <h5 condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Income</h5>
-        <fg-set path="/socialSecuritySources/*/monthlyIncome" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
-          <question>What’s the monthly benefit amount <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">receive</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">received</span> from Social Security?</question>
+        <h5 condition="/socialSecuritySources/*/flowInitialQuestionsComplete" operator="isFalse">Social Security details</h5>
+        <p condition="/socialSecuritySources/*/flowInitialQuestionsComplete" operator="isFalse">Once we know more about your income, we’ll ask you additional questions.</p>
+        <h5 condition="/socialSecuritySources/*/flowInitialQuestionsComplete" operator="isTrue">Income</h5>
+        <fg-set path="/socialSecuritySources/*/monthlyIncome" if-true="/socialSecuritySources/*/flowInitialQuestionsComplete">
+          <question>
+            <span condition="/socialSecuritySources/*/isInFuture" operator="isFalse">What’s the monthly benefit amount <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> <span condition="/socialSecuritySources/*/isInPast" operator="isFalse">receive</span><span condition="/socialSecuritySources/*/isInPast" operator="isTrue">received</span> from Social Security?</span>
+            <span condition="/socialSecuritySources/*/isInFuture" operator="isTrue">What do <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> expect <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">your</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">their</span> monthly Social Security benefit will be?</span>
+          </question>
+          <hint>
+            <span condition="/socialSecuritySources/*/isInFuture" operator="isFalse">Include the total amount before any Medicare premiums and other deductions are taken out.</span>
+            <span condition="/socialSecuritySources/*/isInFuture" operator="isTrue">It’s okay to estimate.</span>
+          </hint>
           <modal-link for="modal-fed-tax-social-security-pay-period">What’s the monthly benefit amount and where do I find it?</modal-link>
-          <hint>Include the total amount before any Medicare premiums and other deductions are taken out.</hint>
           <input type="dollar"/>
         </fg-set>
-        <h5 condition="/socialSecuritySources/*/flowIsAllYearComplete" operator="isTrue">Federal taxes</h5>
-        <fg-set path="/socialSecuritySources/*/withheldRate" if-true="/socialSecuritySources/*/flowIsAllYearComplete">
-          <question>What percent of your monthly Social Security benefit <span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isTrue">is</span><span condition="/socialSecuritySources/*/isFutureOrUnknown" operator="isFalse">was</span> withheld for federal tax?</question>
-          <hint>If <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> haven’t chosen to withhold federal taxes, select 0%.</hint>
+        <h5 condition="/socialSecuritySources/*/flowInitialQuestionsComplete" operator="isTrue">Federal taxes</h5>
+        <fg-set path="/socialSecuritySources/*/withheldRate" if-true="/socialSecuritySources/*/flowInitialQuestionsComplete">
+          <question>
+            <span condition="/socialSecuritySources/*/isInFuture" operator="isFalse">What percent of your monthly Social Security benefit <span condition="/socialSecuritySources/*/isInPast" operator="isFalse">is</span><span condition="/socialSecuritySources/*/isInPast" operator="isTrue">was</span> withheld for federal tax?</span>
+            <span condition="/socialSecuritySources/*/isInFuture" operator="isTrue">How much federal tax do you plan to withhold from <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">your</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">their</span> monthly Social Security benefit?</span>
+          </question>
+          <hint>If <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span> haven’t chosen to withhold federal taxes or if you're unsure, select 0%.</hint>
           <modal-link for="modal-fed-social-security-tax-withheld">How do I know if I have taxes withheld?</modal-link>
           <input type="enum" options-path="/socialSecurityWithheldTaxesOptions">
             <option value="zero">0%</option>
@@ -606,8 +615,8 @@
       </p>
       <fg-set path="/unemploymentIncome">
         <question>Total gross unemployment income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/></question>
-        <input type="dollar"/>
         <hint>Gross means the total amount of income before taxes or deductions.</hint>
+        <input type="dollar"/>
       </fg-set>
       <fg-set path="/unemploymentIncomeWithholding">
         <question>Did you <span condition="/isFilingStatusMFJ"

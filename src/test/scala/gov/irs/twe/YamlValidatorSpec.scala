@@ -20,7 +20,6 @@ class YamlValidatorSpec extends AnyFunSpec {
     // If a translation key is verified to be correct, but causes the test to fail in a way that we cannot update the
     // test logic to account for, its full path can be added here:
     "/income.collection/jobs.fg-detail-bbdbfc.p-af9c2c",
-    "/income.collection/socialSecuritySources./socialSecuritySources/*/monthlyIncome.question",
     "/income.collection/socialSecuritySources./socialSecuritySources/*/withheldRate.question", // ES exclusively uses /socialSecuritySources/*/notSpouses
     "/income./unemploymentIncomeWithholding.question",
     "/income.modal-job-gross-ytd-end.p-a181b2",

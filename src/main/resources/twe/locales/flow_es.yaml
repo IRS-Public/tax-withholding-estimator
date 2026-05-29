@@ -507,17 +507,18 @@
     p-216488: Te haremos preguntas adicionales cuando sepamos más sobre tus ingresos por Seguro Social.
     h5-1f08d0: Ingresos
     /socialSecuritySources/*/monthlyIncome:
-      question: ¿Cuánto es el monto mensual del beneficio por Seguro Social que <span condition="/socialSecuritySources/*/notSpouses"
-        operator="isTrue">recibes</span><span condition="/socialSecuritySources/*/notSpouses"
-        operator="isFalse">recibe</span>?
-      hint: Incluye el monto total antes de descontar las primas de Medicare y otras deducciones.
+      question: <span condition="/socialSecuritySources/*/isInFuture" operator="isFalse">¿Cuánto es el monto mensual del beneficio por Seguro Social que <span condition="/socialSecuritySources/*/isInPast" operator="isFalse"><span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">recibes</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">recibe</span></span><span condition="/socialSecuritySources/*/isInPast" operator="isTrue"><span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">recibiste</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">recibió</span></span>?</span>
+        <span condition="/socialSecuritySources/*/isInFuture" operator="isTrue">¿Cuánto será el monto de tu beneficio de Seguro Social?</span>
+      hint: <span condition="/socialSecuritySources/*/isInFuture" operator="isFalse">Incluye el monto total antes de descontar las primas de Medicare y otras deducciones.</span>
+        <span condition="/socialSecuritySources/*/isInFuture" operator="isTrue">Puedes estimar el monto.</span>
       modalLink: <modal-link for="modal-fed-tax-social-security-pay-period">¿Qué significa monto mensual de beneficio y dónde puedo encontrarlo?</modal-link>
     h5-9f886e: Impuesto federal
     /socialSecuritySources/*/withheldRate:
-      question: ¿Qué porcentaje del beneficio mensual por Seguro Social se retiene para el impuesto federal?
+      question: <span condition="/socialSecuritySources/*/isInFuture" operator="isFalse">¿Qué porcentaje del beneficio mensual por Seguro Social se <span condition="/socialSecuritySources/*/isInPast" operator="isFalse">retiene</span><span condition="/socialSecuritySources/*/isInPast" operator="isTrue">retuvo</span> para el impuesto federal?</span>
+        <span condition="/socialSecuritySources/*/isInFuture" operator="isTrue">¿Cuánto impuesto federal esperas retener del monto de tu beneficio mensual de Seguro Social?</span>
       hint: Si no <span condition="/socialSecuritySources/*/notSpouses"
         operator="isTrue">elegiste</span><span condition="/socialSecuritySources/*/notSpouses"
-        operator="isFalse">elegió</span> retener impuesto federal, elige 0%.
+        operator="isFalse">eligió</span> retener impuestos o si tienes dudas, elige 0%.
       modalLink: <modal-link for="modal-fed-social-security-tax-withheld">¿Cómo puedo saber si me retienen impuestos?</modal-link>
       options:
         zero:

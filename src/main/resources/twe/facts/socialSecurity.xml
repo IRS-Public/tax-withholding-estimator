@@ -48,11 +48,19 @@
         </Any>
       </Derived>
     </Fact>
-    <Fact path="/socialSecuritySources/*/flowIsAllYearComplete">
+    <Fact path="/socialSecuritySources/*/flowInitialQuestionsComplete">
       <Derived>
-        <IsComplete>
-          <Dependency path="../isAllYear"/>
-        </IsComplete>
+        <All>
+          <IsComplete>
+            <Dependency path="../filerAssignment"/>
+          </IsComplete>
+          <IsComplete>
+            <Dependency path="../startDate"/>
+          </IsComplete>
+          <IsComplete>
+            <Dependency path="../endDate"/>
+          </IsComplete>
+        </All>
       </Derived>
     </Fact>
     <Fact path="/socialSecuritySources/*/startDate">
@@ -192,32 +200,30 @@
         </Switch>
       </Derived>
     </Fact>
-    <Fact path="/socialSecuritySources/*/hasEnded">
-      <Description>If the social secuirty source has already ended or ended today</Description>
+    <Fact path="/socialSecuritySources/*/isInPast">
+      <Description>Whether the social security income is in the past</Description>
       <Derived>
-        <GreaterThanOrEqual>
+        <LessThanOrEqual>
+          <Left>
+            <Dependency path="../endDate"/>
+          </Left>
+          <Right>
+            <Dependency path="/today"/>
+          </Right>
+        </LessThanOrEqual>
+      </Derived>
+    </Fact>
+    <Fact path="/socialSecuritySources/*/isInFuture">
+      <Description>Whether the social security income begins in the future</Description>
+      <Derived>
+        <LessThan>
           <Left>
             <Dependency path="/today"/>
           </Left>
           <Right>
-            <Dependency path="../endDate"/>
+            <Dependency path="../startDate"/>
           </Right>
-        </GreaterThanOrEqual>
-      </Derived>
-    </Fact>
-    <Fact path="/socialSecuritySources/*/isFutureOrUnknown">
-      <Description>Whether the social security income is still continues into the future or we don't know yet</Description>
-      <Derived>
-        <Any>
-          <Not>
-            <IsComplete>
-              <Dependency path="../endDate"/>
-            </IsComplete>
-          </Not>
-          <Not>
-            <Dependency path="../hasEnded"/>
-          </Not>
-        </Any>
+        </LessThan>
       </Derived>
     </Fact>
     <Fact path="/socialSecuritySources/*/totalIncome">
