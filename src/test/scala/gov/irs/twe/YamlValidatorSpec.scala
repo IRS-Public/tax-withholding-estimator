@@ -23,8 +23,8 @@ class YamlValidatorSpec extends AnyFunSpec {
     "/income.collection/socialSecuritySources./socialSecuritySources/*/monthlyIncome.question",
     "/income.collection/socialSecuritySources./socialSecuritySources/*/withheldRate.question", // ES exclusively uses /socialSecuritySources/*/notSpouses
     "/income./unemploymentIncomeWithholding.question",
-    "/income.modal-job-gross-ytd-end-en.p-a181b2",
-    "/income.modal-fed-tax-pay-period-en.ul-0.li-c119f5",
+    "/income.modal-job-gross-ytd-end.p-a181b2",
+    "/income.modal-fed-tax-pay-period.ul-0.li-c119f5",
     "/adjustments.p-3269b3",
     "/adjustments.ul-1.li-05453e",
     "/adjustments.ul-4.li-a7cbed",

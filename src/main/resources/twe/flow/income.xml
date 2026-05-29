@@ -70,7 +70,7 @@
             <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
             <!-- isIncomplete default needed because this appears before filer selected -->
             <span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">you</span> paid?</question>
-          <modal-link for="modal-pay-frequency-en">Learn more about pay frequency.</modal-link>
+          <modal-link for="modal-pay-frequency">Learn more about pay frequency.</modal-link>
           <input type="enum" options-path="/payFrequencyOptions">
             <option value="weekly">Weekly</option>
             <option value="biWeekly">Every two weeks</option>
@@ -87,7 +87,7 @@
           <p condition="/jobs/*/isPastJob" operator="isFalse"> Use the most recent paystub from <fg-show path="/taxYear"/> to enter the following information. </p>
           <fg-set path="/jobs/*/mostRecentPayPeriodEnd" if-false="/jobs/*/isPastJob">
             <question>When did the most recent pay period in <fg-show path="/taxYear"/> end?</question>
-            <modal-link for="modal-job-pay-dates-en">How do I find the pay period and pay date?</modal-link>
+            <modal-link for="modal-job-pay-dates">How do I find the pay period and pay date?</modal-link>
             <input type="date" previous-years="1"/>
           </fg-set>
           <fg-set path="/jobs/*/mostRecentPayDate" if-false="/jobs/*/isPastJob">
@@ -105,14 +105,14 @@
           <fg-set path="/jobs/*/amountLastPaycheck" if-true="/jobs/*/flowShowSinglePayPeriodQuestion">
             <question>What’s the gross income for this pay period?</question>
             <hint>This will include any bonus, tip, and overtime pay.</hint>
-            <modal-link for="modal-job-gross-pay-period-en">How do I find the gross income per pay period?</modal-link>
+            <modal-link for="modal-job-gross-pay-period">How do I find the gross income per pay period?</modal-link>
             <input type="dollar"/>
           </fg-set>
           <p condition="/jobs/*/consistentPay" operator="isFalse">Since the pay is very different each paycheck, we’ll use two or three of your most recent paystubs to get an average.</p>
           <fg-set path="/jobs/*/pastPaycheckIncome1" if-false="/jobs/*/consistentPay">
             <question>On the most recent paystub from <fg-show path="/taxYear"/>, what’s the gross income per pay period?</question>
             <hint>This will include any bonus, tip, and overtime pay.</hint>
-            <modal-link for="modal-job-gross-pay-period-en">How do I find the gross income per pay period?</modal-link>
+            <modal-link for="modal-job-gross-pay-period">How do I find the gross income per pay period?</modal-link>
             <input type="dollar"/>
           </fg-set>
           <fg-set path="/jobs/*/pastPaycheckIncome2" if-false="/jobs/*/consistentPay">
@@ -131,7 +131,7 @@
                 period?</span>
               <span condition="/jobs/*/consistentPay" operator="isFalse">in these pay
                 periods?</span></question>
-            <modal-link for="modal-job-check-bonus-en">How do I check if there's a bonus this pay
+            <modal-link for="modal-job-check-bonus">How do I check if there's a bonus this pay
               period?</modal-link>
             <input type="boolean">
               <option value="true">Yes, there's bonus pay in <span condition="/jobs/*/consistentPay"
@@ -158,14 +158,14 @@
               <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span> will earn for the rest of <fg-show path="/taxYear"/>
             </question>
             <hint>If you don’t know, leave this blank.</hint>
-            <modal-link for="modal-estimate-future-bonus-en">How do I estimate future bonus pay?</modal-link>
+            <modal-link for="modal-estimate-future-bonus">How do I estimate future bonus pay?</modal-link>
             <input type="dollar"/>
           </fg-set>
           <fg-set path="/jobs/*/yearToDateIncome">
             <question>What’s the gross income <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse has</span>
             <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you have</span> received so far in <fg-show path="/taxYear"/>? </question>
             <hint>This might be labeled year-to-date or YTD on your paystub and will include any bonus, tip, and overtime pay.</hint>
-            <modal-link for="modal-job-gross-ytd-end-en">How do I find the gross income so far in <fg-show path="/taxYear"/>?</modal-link>
+            <modal-link for="modal-job-gross-ytd-end">How do I find the gross income so far in <fg-show path="/taxYear"/>?</modal-link>
             <input type="dollar"/>
           </fg-set>
         </div>
@@ -192,7 +192,7 @@
             <fg-set path="/jobs/*/qualifiedTipIncome">
               <question>Total estimated tips for <fg-show path="/taxYear"/></question>
               <hint>Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you don’t</span> have a Social Security number.</hint>
-              <modal-link for="modal-estimate-tips-en">How can I estimate tips?</modal-link>
+              <modal-link for="modal-estimate-tips">How can I estimate tips?</modal-link>
               <input type="dollar"/>
             </fg-set>
           </fg-detail>
@@ -207,12 +207,12 @@
             <fg-set path="/jobs/*/overtimeCompensationTotal">
               <question>Total estimated overtime pay for <fg-show path="/taxYear"/></question>
               <hint>Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you don’t</span> have a Social Security number.</hint>
-              <modal-link for="modal-estimate-overtime-en">How can I estimate overtime?</modal-link>
+              <modal-link for="modal-estimate-overtime">How can I estimate overtime?</modal-link>
               <input type="dollar"/>
             </fg-set>
             <fg-set path="/jobs/*/overtimeCompensationRate">
               <question>What is the rate at which you get paid overtime?</question>
-              <modal-link for="modal-estimate-overtime-rate-en">What if I get paid a different overtime rate?</modal-link>
+              <modal-link for="modal-estimate-overtime-rate">What if I get paid a different overtime rate?</modal-link>
               <input type="enum" options-path="/jobs/*/overtimeCompensationRate">
                 <option value="onePointFive">1.5 times my regular pay</option>
                 <option value="two">2.0 times my regular pay</option>
@@ -227,7 +227,7 @@
             <question>Federal taxes withheld (paid) for this pay period</question>
             <hint>Don’t include state and local taxes, Medicare, or Social Security.</hint>
             <input type="dollar"/>
-            <modal-link for="modal-fed-tax-pay-period-en">
+            <modal-link for="modal-fed-tax-pay-period">
               How do I find federal taxes withheld per pay period?
             </modal-link>
           </fg-set>
@@ -238,7 +238,7 @@
               local taxes, Medicare, or Social Security.
             </hint>
             <input type="dollar"/>
-            <modal-link for="modal-fed-tax-ytd-en"> How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>? </modal-link>
+            <modal-link for="modal-fed-tax-ytd"> How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>? </modal-link>
           </fg-set>
         </div>
         <div condition="/jobs/*/flowInitialQuestionsComplete" operator="isTrueAndComplete">
@@ -611,8 +611,8 @@
       </fg-set>
       <fg-set path="/unemploymentIncomeWithholding">
         <question>Did you <span condition="/isFilingStatusMFJ"
-      operator="isTrue">and your spouse</span> choose to withhold federal tax from your unemployment income?</question>
-        <modal-link for="modal-fed-unemployment-tax-withheld-en">How do I know if I have taxes withheld?</modal-link>
+            operator="isTrue">and your spouse</span> choose to withhold federal tax from your unemployment income?</question>
+        <modal-link for="modal-fed-unemployment-tax-withheld">How do I know if I have taxes withheld?</modal-link>
         <input type="boolean"/>
       </fg-set>
 
@@ -633,7 +633,7 @@
       <fg-detail icon="chevron">
         <summary>Interest income</summary>
         <p>
-          <modal-link for="modal-estimate-interest-income-en">What's interest income and how can I estimate it?</modal-link>
+          <modal-link for="modal-estimate-interest-income">What's interest income and how can I estimate it?</modal-link>
         </p>
         <fg-set path="/taxableInterestIncome">
           <question>Interest income you<span condition="/isFilingStatusMFJ" operator="isTrue"> and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
@@ -644,7 +644,7 @@
         <summary>Ordinary or qualified dividends</summary>
         <p>Enter the total amounts you expect to earn in <fg-show path="/taxYear"/>.</p>
         <p>
-          <modal-link for="modal-what-are-dividends-en">What are dividends and how can I estimate them?</modal-link>
+          <modal-link for="modal-what-are-dividends">What are dividends and how can I estimate them?</modal-link>
         </p>
         <fg-set path="/ordinaryDividendsIncome">
           <question>Ordinary dividend income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
@@ -659,7 +659,7 @@
         <summary>Short-term or long-term gains and losses</summary>
         <p>Enter the total amounts you expect to earn and lose in <fg-show path="/taxYear"/>.</p>
         <p>
-          <modal-link for="modal-what-are-short-long-term-gains-losses-en">What are short- and long-term gains and losses, and how can I estimate them?</modal-link>
+          <modal-link for="modal-what-are-short-long-term-gains-losses">What are short- and long-term gains and losses, and how can I estimate them?</modal-link>
         </p>
         <fg-set path="/shortTermCapitalGainsIncome">
           <question>Short-term gains you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
@@ -681,7 +681,7 @@
       <fg-detail icon="chevron">
         <summary>Rental income</summary>
         <p>
-          <modal-link for="modal-rental-expenses-net-income-en">What are rental expenses and how can I estimate net rental income?</modal-link>
+          <modal-link for="modal-rental-expenses-net-income">What are rental expenses and how can I estimate net rental income?</modal-link>
         </p>
         <fg-set path="/rentalIncome">
           <question>Net amount of rental income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
@@ -692,7 +692,7 @@
       <fg-detail icon="chevron">
         <summary>Royalties</summary>
         <p>
-          <modal-link for="modal-estimate-royalty-income-en">How can I estimate royalty income?</modal-link>
+          <modal-link for="modal-estimate-royalty-income">How can I estimate royalty income?</modal-link>
         </p>
         <fg-set path="/royaltyIncome">
           <question>Royalty income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
@@ -703,7 +703,7 @@
         <summary>Passive or non-passive income from S-corporations or partnerships</summary>
         <p>Enter the total amounts you expect to earn in <fg-show path="/taxYear"/>.</p>
         <p>
-          <modal-link for="modal-estimate-s-corp-partnership-income-en">How can I estimate income from S-corporations or partnerships?</modal-link>
+          <modal-link for="modal-estimate-s-corp-partnership-income">How can I estimate income from S-corporations or partnerships?</modal-link>
         </p>
         <fg-set path="/sCorpPassiveIncome">
           <question>Passive income from S-corporations or partnerships you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/></question>
@@ -750,7 +750,7 @@
       </fg-set>
     </section>
 
-    <modal-dialog id="modal-pay-frequency-en">
+    <modal-dialog id="modal-pay-frequency">
       <modal-heading>Learn more about pay frequency</modal-heading>
       <modal-content>
         <p>
@@ -765,7 +765,7 @@
         <p>If your pay frequency doesn’t match one of these, then choose the closest option and adjust your pay accordingly.</p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-job-pay-dates-en">
+    <modal-dialog id="modal-job-pay-dates">
       <modal-heading>Learn more about pay frequency</modal-heading>
       <modal-content>
         <p>
@@ -778,7 +778,7 @@
         </ul>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-job-gross-pay-period-en">
+    <modal-dialog id="modal-job-gross-pay-period">
       <modal-heading>How do I find the gross income per pay period?</modal-heading>
       <modal-content>
         <p>
@@ -982,7 +982,7 @@
         </p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-fed-unemployment-tax-withheld-en">
+    <modal-dialog id="modal-fed-unemployment-tax-withheld">
       <modal-heading>How do I know if I have taxes withheld?</modal-heading>
       <modal-content>
         <p>You can choose to have 10% federal income tax withheld from your unemployment compensation by submitting Form W-4V to the unemployment office.</p>
@@ -1010,7 +1010,7 @@
         </ul>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-estimate-interest-income-en">
+    <modal-dialog id="modal-estimate-interest-income">
       <modal-heading>What's interest income and how can I estimate it?</modal-heading>
       <modal-content>
         <p>Common types of interest income include interest earned from bank accounts or from lending money.</p>
@@ -1025,7 +1025,7 @@
         </ul>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-what-are-dividends-en">
+    <modal-dialog id="modal-what-are-dividends">
       <modal-heading>What are dividends and how can I estimate them?</modal-heading>
       <modal-content>
         <p>Ordinary or qualified dividends are payments made by corporations to shareholders based on a company’s profits. The main difference between the two is that qualified dividends are taxed at a lower rate.</p>
@@ -1044,7 +1044,7 @@
         </ul>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-what-are-short-long-term-gains-losses-en">
+    <modal-dialog id="modal-what-are-short-long-term-gains-losses">
       <modal-heading>What are short- and long-term gains and losses, and how can I estimate them?</modal-heading>
       <modal-content>
         <p>The length of time you hold an asset determines what type of gain or loss it is:</p>
@@ -1063,7 +1063,7 @@
         <p>When estimating short- and long-term gains, it's better to guess a higher amount. If you underestimate, it can lead to not withholding enough federal tax throughout the year.</p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-rental-expenses-net-income-en">
+    <modal-dialog id="modal-rental-expenses-net-income">
       <modal-heading>What are rental expenses and how can I estimate net rental income?</modal-heading>
       <modal-content>
         <p><a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">Rental expenses<span class="usa-sr-only"> (opens in a new tab)</span></a> include maintenance costs, insurance, taxes, and interest.</p>
@@ -1081,7 +1081,7 @@
         </ul>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-estimate-royalty-income-en">
+    <modal-dialog id="modal-estimate-royalty-income">
       <modal-heading>How can I estimate royalty income?</modal-heading>
       <modal-content>
         <p>Check your licensing agreements or publisher statements for expected payment schedules or percentages.</p>
@@ -1095,7 +1095,7 @@
         </ul>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-estimate-s-corp-partnership-income-en">
+    <modal-dialog id="modal-estimate-s-corp-partnership-income">
       <modal-heading>How can I estimate income from S-corporations or partnerships?</modal-heading>
       <modal-content>
         <p>You can use investor reports, profit/ loss statements, or other business data to predict annual earnings. Multiply those earnings by your ownership percentage or distributive share.</p>
@@ -1111,7 +1111,7 @@
         </ul>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-estimate-future-bonus-en">
+    <modal-dialog id="modal-estimate-future-bonus">
       <modal-heading>How do I estimate future bonus pay?</modal-heading>
       <modal-content>
         <p>Bonus pay is usually a one-time payment in addition to regular wages.</p>
@@ -1122,7 +1122,7 @@
         <p>Check <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication 15</a> for help calculating withholding on high bonus pay, or consider consulting a tax professional.</p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-job-check-bonus-en">
+    <modal-dialog id="modal-job-check-bonus">
       <modal-heading>How do I check if there's a bonus this pay period?</modal-heading>
       <modal-content>
         <p>Bonus pay is usually a one-time payment in addition to your regular wages.</p>
@@ -1134,7 +1134,7 @@
         <p><strong>Don’t include</strong> bonuses that appear in the year-to-date (YTD) amount. Only enter bonus pay from the current pay period. Don’t include overtime pay.</p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-job-gross-ytd-end-en">
+    <modal-dialog id="modal-job-gross-ytd-end">
       <modal-heading>How do I find the gross income so far in <fg-show path="/taxYear"/>?</modal-heading>
       <modal-content>
         <p>Gross income is the total amount you’ve been paid, before any taxes or deductions are taken out.</p>
@@ -1145,7 +1145,7 @@
         <p> Check the paystub for the <strong>gross amount year-to-date</strong> or <strong>YTD</strong>, which includes all your pay so far in <fg-show path="/taxYear"/>. </p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-estimate-tips-en">
+    <modal-dialog id="modal-estimate-tips">
       <modal-heading>How can I estimate tips?</modal-heading>
       <modal-content>
         <p>To estimate the total amount of tips you’ll get in <fg-show path="/taxYear"/>:</p>
@@ -1159,7 +1159,7 @@
         <p>Avoid entering a higher amount than you’re sure of for tips, because this can make your estimate less accurate.</p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-estimate-overtime-en">
+    <modal-dialog id="modal-estimate-overtime">
       <modal-heading>How can I estimate overtime?</modal-heading>
       <modal-content>
         <p>To estimate the total amount of overtime you’ll get in <fg-show path="/taxYear"/>:</p>
@@ -1187,7 +1187,7 @@
         </p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-estimate-overtime-rate-en">
+    <modal-dialog id="modal-estimate-overtime-rate">
       <modal-heading>What if I get paid a different overtime rate?</modal-heading>
       <modal-content>
         <p>
@@ -1199,7 +1199,7 @@
         </ul>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-fed-tax-pay-period-en">
+    <modal-dialog id="modal-fed-tax-pay-period">
       <modal-heading>How do I find federal taxes withheld per pay period?</modal-heading>
       <modal-content>
         <p>These are amounts withheld, or taken out of your paycheck to pay for federal taxes.</p>
@@ -1212,7 +1212,7 @@
         <p><strong>Don’t include</strong> state taxes, local taxes, Medicare, Social Security, or other amounts withheld.</p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-fed-tax-ytd-en">
+    <modal-dialog id="modal-fed-tax-ytd">
       <modal-heading>How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>?</modal-heading>
       <modal-content>
         <p>These are amounts withheld, or taken out of a paycheck to pay for federal taxes throughout the year.</p>

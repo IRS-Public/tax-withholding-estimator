@@ -192,7 +192,7 @@
                     <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
                     <!-- isIncomplete default needed because this appears before filer selected -->
                     <span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">you</span> paid?
-      modalLink: <modal-link for="modal-pay-frequency-en">Learn more about pay frequency.</modal-link>
+      modalLink: <modal-link for="modal-pay-frequency">Learn more about pay frequency.</modal-link>
       options:
         weekly:
           name: Weekly
@@ -210,7 +210,7 @@
     /jobs/*/mostRecentPayPeriodEnd:
       question: When did the most recent pay period in <fg-show path="/taxYear"/>
         end?
-      modalLink: <modal-link for="modal-job-pay-dates-en">How do I find the pay period
+      modalLink: <modal-link for="modal-job-pay-dates">How do I find the pay period
         and pay date?</modal-link>
     /jobs/*/mostRecentPayDate:
       question: |-
@@ -226,16 +226,16 @@
     /jobs/*/amountLastPaycheck:
       question: What’s the gross income for this pay period?
       hint: This will include any bonus, tip, and overtime pay.
-      modalLink: <modal-link for="modal-job-gross-pay-period-en">How do I find the
-        gross income per pay period?</modal-link>
+      modalLink: <modal-link for="modal-job-gross-pay-period">How do I find the gross
+        income per pay period?</modal-link>
     p-853eac: Since the pay is very different each paycheck, we’ll use two or three
       of your most recent paystubs to get an average.
     /jobs/*/pastPaycheckIncome1:
       question: On the most recent paystub from <fg-show path="/taxYear"/>, what’s
         the gross income per pay period?
       hint: This will include any bonus, tip, and overtime pay.
-      modalLink: <modal-link for="modal-job-gross-pay-period-en">How do I find the
-        gross income per pay period?</modal-link>
+      modalLink: <modal-link for="modal-job-gross-pay-period">How do I find the gross
+        income per pay period?</modal-link>
     /jobs/*/pastPaycheckIncome2:
       question: On the second paystub, what’s the gross income per pay period?
     /jobs/*/pastPaycheckIncome3:
@@ -250,7 +250,7 @@
                       <span condition="/jobs/*/consistentPay" operator="isFalse">in these pay
                         periods?</span>
       modalLink: |-
-        <modal-link for="modal-job-check-bonus-en">How do I check if there's a bonus this pay
+        <modal-link for="modal-job-check-bonus">How do I check if there's a bonus this pay
                       period?</modal-link>
       options:
         'true':
@@ -270,15 +270,15 @@
         Enter an estimate for any bonus pay you think <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
                       <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span> will earn for the rest of <fg-show path="/taxYear"/>
       hint: If you don’t know, leave this blank.
-      modalLink: <modal-link for="modal-estimate-future-bonus-en">How do I estimate
-        future bonus pay?</modal-link>
+      modalLink: <modal-link for="modal-estimate-future-bonus">How do I estimate future
+        bonus pay?</modal-link>
     /jobs/*/yearToDateIncome:
       question: |-
         What’s the gross income <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse has</span>
                     <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you have</span> received so far in <fg-show path="/taxYear"/>?
       hint: This might be labeled year-to-date or YTD on your paystub and will include
         any bonus, tip, and overtime pay.
-      modalLink: <modal-link for="modal-job-gross-ytd-end-en">How do I find the gross
+      modalLink: <modal-link for="modal-job-gross-ytd-end">How do I find the gross
         income so far in <fg-show path="/taxYear"/>?</modal-link>
     h5-64d83a: Estimated tips and overtime
     p-902fc0: For 2025 through 2028, there are new deductions for tips and overtime.
@@ -305,7 +305,7 @@
         hint: Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf"
           operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf"
           operator="isTrue">you don’t</span> have a Social Security number.
-        modalLink: <modal-link for="modal-estimate-tips-en">How can I estimate tips?</modal-link>
+        modalLink: <modal-link for="modal-estimate-tips">How can I estimate tips?</modal-link>
     fg-detail-de7b9c:
       summary: Estimated overtime
       p-bc05b9: Overtime is extra pay earned by working more than 40 hours per week.
@@ -318,12 +318,11 @@
         hint: Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf"
           operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf"
           operator="isTrue">you don’t</span> have a Social Security number.
-        modalLink: <modal-link for="modal-estimate-overtime-en">How can I estimate
-          overtime?</modal-link>
+        modalLink: <modal-link for="modal-estimate-overtime">How can I estimate overtime?</modal-link>
       /jobs/*/overtimeCompensationRate:
         question: What is the rate at which you get paid overtime?
-        modalLink: <modal-link for="modal-estimate-overtime-rate-en">What if I get
-          paid a different overtime rate?</modal-link>
+        modalLink: <modal-link for="modal-estimate-overtime-rate">What if I get paid
+          a different overtime rate?</modal-link>
         options:
           onePointFive:
             name: 1.5 times my regular pay
@@ -335,7 +334,7 @@
       question: Federal taxes withheld (paid) for this pay period
       hint: Don’t include state and local taxes, Medicare, or Social Security.
       modalLink: |-
-        <modal-link for="modal-fed-tax-pay-period-en">
+        <modal-link for="modal-fed-tax-pay-period">
                       How do I find federal taxes withheld per pay period?
                     </modal-link>
     /jobs/*/yearToDateWithholding:
@@ -343,7 +342,7 @@
       hint: |-
         This might be labeled year-to-date or YTD on your paystub. Don't include state and
                       local taxes, Medicare, or Social Security.
-      modalLink: <modal-link for="modal-fed-tax-ytd-en"> How do I find federal taxes
+      modalLink: <modal-link for="modal-fed-tax-ytd"> How do I find federal taxes
         withheld so far in <fg-show path="/taxYear"/>? </modal-link>
     h5-4504e1: Contributions
     p-89f8df: |-
@@ -685,7 +684,7 @@
   /unemploymentIncomeWithholding:
     question: Did you <span condition="/isFilingStatusMFJ" operator="isTrue">and your
       spouse</span> choose to withhold federal tax from your unemployment income?
-    modalLink: <modal-link for="modal-fed-unemployment-tax-withheld-en">How do I know
+    modalLink: <modal-link for="modal-fed-unemployment-tax-withheld">How do I know
       if I have taxes withheld?</modal-link>
   h3-0b2817: Pre-tax retirement account income
   p-b18d71: |-
@@ -703,16 +702,16 @@
     this amount will help get the most accurate withholding estimate.
   fg-detail-b4c28b:
     summary: Interest income
-    p-7164c2: <modal-link for="modal-estimate-interest-income-en">What's interest
-      income and how can I estimate it?</modal-link>
+    p-374cf5: <modal-link for="modal-estimate-interest-income">What's interest income
+      and how can I estimate it?</modal-link>
     /taxableInterestIncome:
       question: Interest income you<span condition="/isFilingStatusMFJ" operator="isTrue">
         and your spouse</span> expect to earn in <fg-show path="/taxYear"/>
   fg-detail-39fb22:
     summary: Ordinary or qualified dividends
     p-b595ad: Enter the total amounts you expect to earn in <fg-show path="/taxYear"/>.
-    p-98b838: <modal-link for="modal-what-are-dividends-en">What are dividends and
-      how can I estimate them?</modal-link>
+    p-8b4827: <modal-link for="modal-what-are-dividends">What are dividends and how
+      can I estimate them?</modal-link>
     /ordinaryDividendsIncome:
       question: Ordinary dividend income you <span condition="/isFilingStatusMFJ"
         operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/>
@@ -722,8 +721,8 @@
   fg-detail-89ef66:
     summary: Short-term or long-term gains and losses
     p-c7eaa1: Enter the total amounts you expect to earn and lose in <fg-show path="/taxYear"/>.
-    p-51406f: <modal-link for="modal-what-are-short-long-term-gains-losses-en">What
-      are short- and long-term gains and losses, and how can I estimate them?</modal-link>
+    p-ec38e9: <modal-link for="modal-what-are-short-long-term-gains-losses">What are
+      short- and long-term gains and losses, and how can I estimate them?</modal-link>
     /shortTermCapitalGainsIncome:
       question: Short-term gains you <span condition="/isFilingStatusMFJ" operator="isTrue">and
         your spouse</span> expect to earn in <fg-show path="/taxYear"/>
@@ -738,24 +737,24 @@
         your spouse</span> expect in <fg-show path="/taxYear"/>
   fg-detail-28fc9b:
     summary: Rental income
-    p-1ee2d6: <modal-link for="modal-rental-expenses-net-income-en">What are rental
-      expenses and how can I estimate net rental income?</modal-link>
+    p-08d984: <modal-link for="modal-rental-expenses-net-income">What are rental expenses
+      and how can I estimate net rental income?</modal-link>
     /rentalIncome:
       question: Net amount of rental income you <span condition="/isFilingStatusMFJ"
         operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/>
       hint: Net is the total minus any expenses.
   fg-detail-3026f7:
     summary: Royalties
-    p-56e5d9: <modal-link for="modal-estimate-royalty-income-en">How can I estimate
-      royalty income?</modal-link>
+    p-2034c2: <modal-link for="modal-estimate-royalty-income">How can I estimate royalty
+      income?</modal-link>
     /royaltyIncome:
       question: Royalty income you <span condition="/isFilingStatusMFJ" operator="isTrue">and
         your spouse</span> expect to earn in <fg-show path="/taxYear"/>
   fg-detail-b186f4:
     summary: Passive or non-passive income from S-corporations or partnerships
     p-b595ad: Enter the total amounts you expect to earn in <fg-show path="/taxYear"/>.
-    p-8fca11: <modal-link for="modal-estimate-s-corp-partnership-income-en">How can
-      I estimate income from S-corporations or partnerships?</modal-link>
+    p-95e1b7: <modal-link for="modal-estimate-s-corp-partnership-income">How can I
+      estimate income from S-corporations or partnerships?</modal-link>
     /sCorpPassiveIncome:
       question: Passive income from S-corporations or partnerships you <span condition="/isFilingStatusMFJ"
         operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/>
@@ -794,7 +793,7 @@
     question: Estimated tax payments you <span condition="/isFilingStatusMFJ" operator="isTrue">and
       your spouse</span> made so far in <fg-show path="/taxYear"/>
     hint: Don't include taxes withheld from paychecks and other income.
-  modal-pay-frequency-en:
+  modal-pay-frequency:
     heading: Learn more about pay frequency
     p-f8e48f: Pay frequency is how often a person gets paid by an employer or pension.
     ul-0:
@@ -806,7 +805,7 @@
       li-fdcbf1: '<strong>Once monthly</strong>: Paid one time per month'
     p-8ef9ed: If your pay frequency doesn’t match one of these, then choose the closest
       option and adjust your pay accordingly.
-  modal-job-pay-dates-en:
+  modal-job-pay-dates:
     heading: Learn more about pay frequency
     p-8b4b93: |-
       You can find the pay period and pay date on the paystub, the statement that comes with a
@@ -816,7 +815,7 @@
         paid for, sometimes shown as a start and end date'
       li-1b998e: '<strong>Pay date</strong>: The date when the paycheck is issued
         or dated'
-  modal-job-gross-pay-period-en:
+  modal-job-gross-pay-period:
     heading: How do I find the gross income per pay period?
     p-86ad55: |-
       Gross income per pay period is the total amount you’re paid for the dates on a single
@@ -1024,7 +1023,7 @@
       paid to you during the year.
     p-9e9dfa: <a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Learn
       more about unemployment income.</a>
-  modal-fed-unemployment-tax-withheld-en:
+  modal-fed-unemployment-tax-withheld:
     heading: How do I know if I have taxes withheld?
     p-097607: You can choose to have 10% federal income tax withheld from your unemployment
       compensation by submitting Form W-4V to the unemployment office.
@@ -1046,7 +1045,7 @@
       li-20ffee: Distributions from Roth (post-tax) accounts.
       li-f28c25: Other forms of retirement income, like pensions, annuities, Social
         Security, or other investment income. You’ll enter them in other sections.
-  modal-estimate-interest-income-en:
+  modal-estimate-interest-income:
     heading: What's interest income and how can I estimate it?
     p-cda131: Common types of interest income include interest earned from bank accounts
       or from lending money.
@@ -1062,7 +1061,7 @@
     ul-0:
       li-7fd107: Line 2b on Form 1040 of your <fg-show path="/lastTaxYear"/> federal
         tax return
-  modal-what-are-dividends-en:
+  modal-what-are-dividends:
     heading: What are dividends and how can I estimate them?
     p-79b2c0: Ordinary or qualified dividends are payments made by corporations to
       shareholders based on a company’s profits. The main difference between the two
@@ -1082,7 +1081,7 @@
     ul-0:
       li-8406bc: Line 3b minus line 3a for ordinary dividends
       li-5810f9: Line 3a for qualified dividends
-  modal-what-are-short-long-term-gains-losses-en:
+  modal-what-are-short-long-term-gains-losses:
     heading: What are short- and long-term gains and losses, and how can I estimate
       them?
     p-f18360: 'The length of time you hold an asset determines what type of gain or
@@ -1102,7 +1101,7 @@
     p-dff0b2: When estimating short- and long-term gains, it's better to guess a higher
       amount. If you underestimate, it can lead to not withholding enough federal
       tax throughout the year.
-  modal-rental-expenses-net-income-en:
+  modal-rental-expenses-net-income:
     heading: What are rental expenses and how can I estimate net rental income?
     p-8093b7: <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">Rental
       expenses<span class="usa-sr-only"> (opens in a new tab)</span></a> include maintenance
@@ -1118,7 +1117,7 @@
       amount this year, check your <fg-show path="/lastTaxYear"/> forms:'
     ul-0:
       li-3cc72a: Schedule E (Form 1040), Part I, line 21, Columns A - C
-  modal-estimate-royalty-income-en:
+  modal-estimate-royalty-income:
     heading: How can I estimate royalty income?
     p-7d15b4: Check your licensing agreements or publisher statements for expected
       payment schedules or percentages.
@@ -1130,7 +1129,7 @@
       amount this year, check your <fg-show path="/lastTaxYear"/> forms:'
     ul-0:
       li-90f9a8: Schedule E (Form 1040), Part I, line 23b
-  modal-estimate-s-corp-partnership-income-en:
+  modal-estimate-s-corp-partnership-income:
     heading: How can I estimate income from S-corporations or partnerships?
     p-ba76b7: You can use investor reports, profit/ loss statements, or other business
       data to predict annual earnings. Multiply those earnings by your ownership percentage
@@ -1148,7 +1147,7 @@
         income
       li-f37c1e: Schedule E (Form 1040), Part II, Line 29a, Column k, for non-passive
         income
-  modal-estimate-future-bonus-en:
+  modal-estimate-future-bonus:
     heading: How do I estimate future bonus pay?
     p-185c7d: Bonus pay is usually a one-time payment in addition to regular wages.
     p-74fc7e: If you expect to receive a year-end or quarterly bonus from the employer,
@@ -1163,7 +1162,7 @@
     p-74606c: Check <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication
       15</a> for help calculating withholding on high bonus pay, or consider consulting
       a tax professional.
-  modal-job-check-bonus-en:
+  modal-job-check-bonus:
     heading: How do I check if there's a bonus this pay period?
     p-9a2f97: Bonus pay is usually a one-time payment in addition to your regular
       wages.
@@ -1176,7 +1175,7 @@
     p-529826: <strong>Don’t include</strong> bonuses that appear in the year-to-date
       (YTD) amount. Only enter bonus pay from the current pay period. Don’t include
       overtime pay.
-  modal-job-gross-ytd-end-en:
+  modal-job-gross-ytd-end:
     heading: How do I find the gross income so far in <fg-show path="/taxYear"/>?
     p-1f18fb: Gross income is the total amount you’ve been paid, before any taxes
       or deductions are taken out.
@@ -1185,7 +1184,7 @@
     p-654d7e: <strong>Where to find it</strong>
     p-a181b2: Check the paystub for the <strong>gross amount year-to-date</strong>
       or <strong>YTD</strong>, which includes all your pay so far in <fg-show path="/taxYear"/>.
-  modal-estimate-tips-en:
+  modal-estimate-tips:
     heading: How can I estimate tips?
     p-cf271a: 'To estimate the total amount of tips you’ll get in <fg-show path="/taxYear"/>:'
     p-1bf124: <strong>First</strong>, check your paystub for <strong>year-to-date
@@ -1198,7 +1197,7 @@
       so far, or to leave tips blank.
     p-ae35ae: Avoid entering a higher amount than you’re sure of for tips, because
       this can make your estimate less accurate.
-  modal-estimate-overtime-en:
+  modal-estimate-overtime:
     heading: How can I estimate overtime?
     p-d2bd4e: 'To estimate the total amount of overtime you’ll get in <fg-show path="/taxYear"/>:'
     p-b3d7ea: <strong>First</strong>, check your paystub for <strong>year-to-date
@@ -1219,14 +1218,14 @@
     p-c62c8e: Overtime pay that is not required by section 7 of the Fair Labor Standards
       Act (e.g., due to state law or union contract) is not deductible and should
       not be entered.
-  modal-estimate-overtime-rate-en:
+  modal-estimate-overtime-rate:
     heading: What if I get paid a different overtime rate?
     p-73dc6c: |-
       If you’re paid for overtime at a different rate than 1.5 times or 2.0 times your regular
                 pay:
     ul-0:
       li-a0e864: Select the option that’s closest to your overtime pay rate
-  modal-fed-tax-pay-period-en:
+  modal-fed-tax-pay-period:
     heading: How do I find federal taxes withheld per pay period?
     p-3d5320: These are amounts withheld, or taken out of your paycheck to pay for
       federal taxes.
@@ -1242,7 +1241,7 @@
         includes the federal taxes paid on this paycheck
     p-d6e23c: <strong>Don’t include</strong> state taxes, local taxes, Medicare, Social
       Security, or other amounts withheld.
-  modal-fed-tax-ytd-en:
+  modal-fed-tax-ytd:
     heading: How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>?
     p-01be0a: These are amounts withheld, or taken out of a paycheck to pay for federal
       taxes throughout the year.
