@@ -1012,20 +1012,7 @@
       <Derived>
         <Multiply>
           <Dependency path="../averagePayPerPayPeriodForWithholding"/>
-          <GreaterOf>
-            <Rational>0/1</Rational>
-            <Subtract>
-              <Minuend>
-                <Dependency path="../remainingPayPeriodsRational"/>
-              </Minuend>
-              <Subtrahends>
-                <Multiply>
-                  <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
-                  <Rational>1/1</Rational>
-                </Multiply>
-              </Subtrahends>
-            </Subtract>
-          </GreaterOf>
+          <Dependency path="../payPeriodsWithW4Changes"/>
         </Multiply>
       </Derived>
     </Fact>
@@ -1036,51 +1023,148 @@
       <Derived>
         <Multiply>
           <Dependency path="../averagePayPerPayPeriodForWithholding"/>
-          <GreaterOf>
-            <Rational>0/1</Rational>
-            <Subtract>
-              <Minuend>
-                <Dependency path="../remainingPayPeriodsRational"/>
-              </Minuend>
-              <Subtrahends>
-                <Multiply>
-                  <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
-                  <Rational>1/1</Rational>
-                </Multiply>
-              </Subtrahends>
-            </Subtract>
-          </GreaterOf>
+          <Dependency path="../payPeriodsWithW4pChanges"/>
         </Multiply>
       </Derived>
     </Fact>
     <Fact path="/jobs/*/payPeriodsWithW4Changes">
       <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="../remainingPayPeriodsRational"/>
-          </Minuend>
-          <Subtrahends>
-            <Multiply>
-              <Rational>1/1</Rational>
-              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
-            </Multiply>
-          </Subtrahends>
-        </Subtract>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <!-- Job goes all year -->
+                <GreaterThanOrEqual>
+                  <Left>
+                    <Dependency path="../endDate"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/yearEndDate"/>
+                  </Right>
+                </GreaterThanOrEqual>
+                <!-- The final pay period overlaps the new year -->
+                <Dependency path="../hasPartialPayPeriod"/>
+              </All>
+            </When>
+            <Then>
+              <Multiply>
+                <Rational>1/1</Rational>
+                <Dependency path="../fullPayPeriodsWithW4Changes"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../payPeriodsWithW4ChangesRational"/>
+            </Then>
+          </Case>
+        </Switch>
       </Derived>
     </Fact>
     <Fact path="/pensions/*/payPeriodsWithW4pChanges">
       <Derived>
-        <Subtract>
-          <Minuend>
-            <Dependency path="../remainingPayPeriodsRational"/>
-          </Minuend>
-          <Subtrahends>
-            <Multiply>
-              <Rational>1/1</Rational>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <!-- Pension goes all year -->
+                <GreaterThanOrEqual>
+                  <Left>
+                    <Dependency path="../endDate"/>
+                  </Left>
+                  <Right>
+                    <Dependency path="/yearEndDate"/>
+                  </Right>
+                </GreaterThanOrEqual>
+                <!-- The final pay period overlaps the new year -->
+                <Dependency path="../hasPartialPayPeriod"/>
+              </All>
+            </When>
+            <Then>
+              <Multiply>
+                <Rational>1/1</Rational>
+                <Dependency path="../fullPayPeriodsWithW4pChanges"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../payPeriodsWithW4pChangesRational"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/fullPayPeriodsWithW4Changes">
+      <Derived>
+        <GreaterOf>
+          <Int>0</Int>
+          <Subtract>
+            <Minuend>
+              <Dependency path="../fullPayPeriods"/>
+            </Minuend>
+            <Subtrahends>
               <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
-            </Multiply>
-          </Subtrahends>
-        </Subtract>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/payPeriodsWithW4ChangesRational">
+      <Derived>
+        <GreaterOf>
+          <Rational>0/1</Rational>
+          <Subtract>
+            <Minuend>
+              <Dependency path="../remainingPayPeriodsRational"/>
+            </Minuend>
+            <Subtrahends>
+              <Multiply>
+                <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                <Rational>1/1</Rational>
+              </Multiply>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/fullPayPeriodsWithW4pChanges">
+      <Derived>
+        <GreaterOf>
+          <Int>0</Int>
+          <Subtract>
+            <Minuend>
+              <Dependency path="../fullPayPeriods"/>
+            </Minuend>
+            <Subtrahends>
+              <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
+      </Derived>
+    </Fact>
+    <Fact path="/pensions/*/payPeriodsWithW4pChangesRational">
+      <Derived>
+        <GreaterOf>
+          <Rational>0/1</Rational>
+          <Subtract>
+            <Minuend>
+              <Dependency path="../remainingPayPeriodsRational"/>
+            </Minuend>
+            <Subtrahends>
+              <Multiply>
+                <Dependency path="../payPeriodsBeforeW4ChangesAppear"/>
+                <Rational>1/1</Rational>
+              </Multiply>
+            </Subtrahends>
+          </Subtract>
+        </GreaterOf>
       </Derived>
     </Fact>
   </Facts>

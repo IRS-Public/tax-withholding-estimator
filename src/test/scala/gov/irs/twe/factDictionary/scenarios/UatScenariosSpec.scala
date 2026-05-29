@@ -1454,14 +1454,12 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 276269)
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    // TODO: Should be 1645
-    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 1406, 239)
+    scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 1406)
 
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    // TODO: Should be 464
-    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 703, -239)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 703)
     // Manual Pub15 validation - pending multi-year withholding logic
   }
 
@@ -1496,17 +1494,17 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 59146)
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 840, -23)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 833, -35)
 
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 668, -18)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 663, -28)
 
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 955, -27)
+    scenario.assertOffset(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 947, -40)
   }
 
   // Column CS
@@ -1515,17 +1513,17 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 874, -9)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 868, -40)
 
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 59146)
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 696, -8)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 690, -31)
 
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 994, -10)
+    scenario.assertOffset(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 986, -45)
   }
 
   // Column CT
