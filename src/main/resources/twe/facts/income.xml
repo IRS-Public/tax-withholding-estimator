@@ -127,7 +127,9 @@
       </Placeholder>
     </Fact>
     <Fact path="/preTaxRetirementAccountIncome">
-      <Description>Total distributions from pre-tax retirement accounts</Description>
+      <Description>
+        Form 1040 line 4b. Total taxable distributions from pre-tax retirement accounts.
+      </Description>
       <Writable>
         <Dollar/>
       </Writable>
@@ -659,6 +661,7 @@ and car loan interest deduction
           <Dependency path="/pensionsIncomeTotal"/>
           <Dependency path="/otherIncomeWithoutSSABenefitsTaxableAmountTotal"/>
           <Dependency path="/excessBusinessLossAdjustment"/>
+          <Dependency path="/preTaxRetirementAccountIncome"/>
         </Add>
       </Derived>
     </Fact>
