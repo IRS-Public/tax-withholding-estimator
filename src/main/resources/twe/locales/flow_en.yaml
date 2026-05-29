@@ -2194,8 +2194,9 @@
     W-4</span><span condition="/hasPensionsAvailableForExtraWithholdingButNotJobs"
     operator="isTrue">Form W-4P</span><span condition="/hasJobsAndPensionsAvailableForExtraWithholding"
     operator="isTrue">Forms W-4 and W-4P</span></a> using our recommendations.
-  p-effd4c: Based on what you entered, your current withholding covers your federal
-    taxes. When you get your new income, your tax situation will change.
+  p-dac7cb: Based on what you entered, <strong>your current withholding covers your
+    federal taxes.</strong> When you get your new income, your tax situation will
+    change.
   p-2e81bb: To stay on track, <a class="usa-link" href="#heading-adjust-withholding">adjust
     your withholding</a> for your new <span condition="/hasCurrentJob" operator="isTrue">and
     current</span> income.

@@ -69,7 +69,7 @@
         </div>
         <div condition="/hasOnlyFutureJobsOrPensions" operator="isFalse">
           <div condition="/hasFutureJob" operator="isTrue">
-            <p>Based on what you entered, your current withholding covers your federal taxes. When you get your new income, your tax situation will change.</p>
+            <p>Based on what you entered, <strong>your current withholding covers your federal taxes.</strong> When you get your new income, your tax situation will change.</p>
             <p>To stay on track, <a class="usa-link" href="#heading-adjust-withholding">adjust your withholding</a> for your new <span condition="/hasCurrentJob" operator="isTrue">and current</span> income.</p>
           </div>
           <div condition="/hasFutureJob" operator="isFalse">

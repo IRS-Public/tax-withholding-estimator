@@ -19,11 +19,9 @@ class YamlValidatorSpec extends AnyFunSpec {
   private val ignoredTranslationKeys: Set[String] = Set(
     // If a translation key is verified to be correct, but causes the test to fail in a way that we cannot update the
     // test logic to account for, its full path can be added here:
-    "/income.collection/pensions./pensions/*/averagePayPerPayPeriodForWithholding.question",
-    "/income.collection/pensions./pensions/*/payFrequency.question",
-    "/income.collection/socialSecuritySources./socialSecuritySources/*/monthlyIncome.question",
-    "/income.collection/socialSecuritySources./socialSecuritySources/*/withheldRate.question",
     "/income.collection/jobs.fg-detail-bbdbfc.p-af9c2c",
+    "/income.collection/socialSecuritySources./socialSecuritySources/*/monthlyIncome.question",
+    "/income.collection/socialSecuritySources./socialSecuritySources/*/withheldRate.question", // ES exclusively uses /socialSecuritySources/*/notSpouses
     "/income./unemploymentIncomeWithholding.question",
     "/income.modal-job-gross-ytd-end-en.p-a181b2",
     "/income.modal-fed-tax-pay-period-en.ul-0.li-c119f5",

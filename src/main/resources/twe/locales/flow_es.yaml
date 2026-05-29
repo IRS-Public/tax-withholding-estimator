@@ -330,15 +330,15 @@
   p-6b097c: <modal-link for="modal-what-counts-pension">¿Qué cuenta como una pensión o anualidad?</modal-link>
   collection/pensions:
     /pensions/*/filerAssignment:
-      question: ¿Quién recibe esta pensión o anualidad?
+      question: ¿A quién le paga esta pensión o anualidad?
       options:
         self:
-          name: Yo
+          name: A mi
         spouse:
-          name: Mi esposo(a)
+          name: A mi esposo(a)
     h5-d3b69e: Duración
     /pensions/*/isAllYear:
-      question: <span condition="/pensions/*/notSpouses" operator="isTrue">Esperas</span><span
+      question: ¿<span condition="/pensions/*/notSpouses" operator="isTrue">Esperas</span><span
         condition="/pensions/*/notSpouses" operator="isFalse">Espera</span> recibir esta pensión o anualidad todo el año o solo parte del año?
       options:
         'true':
@@ -354,8 +354,7 @@
         condition="/pensions/*/notSpouses" operator="isFalse">espera</span> recibir esta pensión o anualidad?
       hint: Puedes estimar la fecha.
     /pensions/*/payFrequency:
-    #TODO: future jobs - remove from YamlValidatorSpec ignore list when updated
-      question: ¿Con qué frecuencia <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">espera</span> recibir paga?
+      question: ¿Con qué frecuencia <span condition="/pensions/*/isInFuture" operator="isTrue"><span condition="/pensions/*/notSpouses" operator="isTrue">esperas</span><span condition="/pensions/*/notSpouses" operator="isFalse">espera</span> recibir pagos</span><span condition="/pensions/*/isInFuture" operator="isIncompleteOrFalse"><span condition="/pensions/*/notSpouses" operator="isTrue">te</span><span condition="/pensions/*/notSpouses" operator="isFalse">le</span> pagan</span>?
       options:
         weekly:
           name: Semanal
@@ -375,8 +374,9 @@
       question: ¿Cuál es la fecha de <span condition="/pensions/*/notSpouses" operator="isTrue">tu</span><span
         condition="/pensions/*/notSpouses" operator="isFalse">su</span> pago de pensión o anualidad más reciente?
     /pensions/*/averagePayPerPayPeriodForWithholding:
-      question: ¿Cuánto es el ingreso bruto en <span condition="/pensions/*/notSpouses" operator="isTrue">tu</span><span
-        condition="/pensions/*/notSpouses" operator="isFalse">su</span> pago más reciente de pensión o anualidad?
+      question: <span condition="/pensions/*/isCurrentJob" operator="isTrue">¿Cuánto es el ingreso bruto en <span condition="/pensions/*/notSpouses" operator="isTrue">tu</span><span
+        condition="/pensions/*/notSpouses" operator="isFalse">su</span> pago más reciente de pensión o anualidad?</span>
+        <span condition="/pensions/*/isInFuture" operator="isTrue">¿Cuánto <span condition="/pensions/*/notSpouses" operator="isTrue">esperas</span><span condition="/pensions/*/notSpouses" operator="isFalse">espera</span> que sea el monto de <span condition="/pensions/*/notSpouses" operator="isTrue">tu</span><span condition="/pensions/*/notSpouses" operator="isFalse">su</span> pensión o anualidad en cada periodo de pago?</span>
       hint: Puedes estimar el monto.
       modalLink: <modal-link condition="/pensions/*/isCurrentJob" operator="isTrue"
         for="modal-pension-gross-pay-period">¿Cómo puedo encontrar el ingreso bruto en el pago más reciente?</modal-link>
@@ -483,37 +483,30 @@
   p-0c991a: <modal-link for="modal-what-counts-social-security">¿Qué cuenta como ingresos por Seguro Social?</modal-link>
   collection/socialSecuritySources:
     /socialSecuritySources/*/filerAssignment:
-      question: ¿Quién recibe este ingreso por Seguro Social?
+      question: ¿A quién se le paga este ingreso de Seguro Social?
       options:
         self:
-          name: Yo
+          name: A mi
         spouse:
-          name: Mi esposo(a)
+          name: A mi esposo(a)
     h5-d3b69e: Duración
     /socialSecuritySources/*/isAllYear:
-      question: ¿<span condition="/socialSecuritySources/*/notSpouses"
-        operator="isTrue">Esperas</span><span condition="/socialSecuritySources/*/notSpouses"
-        operator="isFalse">Espera</span> recibir ingresos por Seguro Social todo el año o solo parte del año?
+      question: ¿<span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">Esperas</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">Espera</span> recibir ingresos por Seguro Social todo el año o solo parte del año?
       options:
         'true':
           name: Todo el año (1 de enero al 31 de diciembre del <fg-show path="/taxYear"/>)
         'false':
           name: Parte del año
     /socialSecuritySources/*/startDate:
-      question: ¿Cuál es el primer día del <fg-show path="/taxYear"/> en el que <span condition="/socialSecuritySources/*/notSpouses"
-        operator="isTrue">esperas</span><span condition="/socialSecuritySources/*/notSpouses"
-        operator="isFalse">espera</span> recibir este ingreso por Seguro Social?
+      question: ¿Cuál es el primer día del <fg-show path="/taxYear"/> que <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">esperas</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">espera</span> recibir ingresos de Seguro Social?
       hint: Puedes estimar la fecha.
     /socialSecuritySources/*/endDate:
-      question: ¿Cuál es el último día del <fg-show path="/taxYear"/> en el que <span condition="/socialSecuritySources/*/notSpouses"
-        operator="isTrue">esperas</span><span condition="/socialSecuritySources/*/notSpouses"
-        operator="isFalse">espera</span> recibir este ingreso por Seguro Social?
+      question: ¿Cuál es el último día del <fg-show path="/taxYear"/> que <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">esperas</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">espera</span> recibir ingresos de Seguro Social?
       hint: Puedes estimar la fecha.
     h5-e0f74c: Detalles sobre Seguro Social
     p-216488: Te haremos preguntas adicionales cuando sepamos más sobre tus ingresos por Seguro Social.
     h5-1f08d0: Ingresos
     /socialSecuritySources/*/monthlyIncome:
-    #TODO: future jobs
       question: ¿Cuánto es el monto mensual del beneficio por Seguro Social que <span condition="/socialSecuritySources/*/notSpouses"
         operator="isTrue">recibes</span><span condition="/socialSecuritySources/*/notSpouses"
         operator="isFalse">recibe</span>?
@@ -524,7 +517,7 @@
       question: ¿Qué porcentaje del beneficio mensual por Seguro Social se retiene para el impuesto federal?
       hint: Si no <span condition="/socialSecuritySources/*/notSpouses"
         operator="isTrue">elegiste</span><span condition="/socialSecuritySources/*/notSpouses"
-        operator="isFalse">eligió</span> retener impuesto federal, elige 0%.
+        operator="isFalse">elegió</span> retener impuesto federal, elige 0%.
       modalLink: <modal-link for="modal-fed-social-security-tax-withheld">¿Cómo puedo saber si me retienen impuestos?</modal-link>
       options:
         zero:
@@ -1509,9 +1502,8 @@
   fg-alert-18ebd6:
     heading: Necesitas completar los pasos anteriores
     p-0f5e39: 'Para usar el estimador necesitas completar <a href="/app/tax-withholding-estimator/">Paso 1: Acerca de ti</a>'
-
-  p-5ccbb3:
-  p-b3b8d7:
+  p-5ccbb3: Según tu información, estimamos que retendrás más impuestos de lo necesario.
+  p-b3b8d7: Si quisieras recibir más dinero en cada cheque y reducir tu reembolso estimado, puedes <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">cambiar las retenciones</a> de tu nueva fuente de ingresos.
   p-771faa: Según tu información, estimamos que <strong>retienes más impuestos de lo necesario.</strong>
   p-257121: Probablemente recibas un reembolso en tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
   p-1a7d9b: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si quisieras recibir más dinero en cada cheque y reducir tu reembolso estimado, puedes <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">cambiar tus retenciones</a> a $0.</span>
@@ -1519,18 +1511,33 @@
     <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si mantienes tus retenciones como están, probablemente</span>
     <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">Probablemente</span> recibas un reembolso en tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
   p-f27357: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si quisieras recibir más dinero en cada cheque y reducir tu reembolso estimado, puedes <a class="usa-link" href="#heading-adjust-withholding-for-more-take-home-pay">cambiar tus retenciones</a>.</span>
-  #TODO: future jobs(?)
-  p-ba4944:
-  p-05fd7f:
+  p-ba4944: Según tu información, estimamos que <strong>adeudarás impuestos</strong> cuando presentes tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
+  p-05fd7f: Para reducir el monto que adeudas, <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">cambia las retenciones</a> de tu nueva fuente de ingresos.
   p-d0bb10: Según tu informacion, estimamos que <strong>no estás reteniendo suficientes impuestos.</strong>
-  p-8f668e:
-  p-da9eff:
-  p-45fe55:
-  p-d8ceb8:
-  p-effd4c:
-  p-2e81bb:
+  p-8f668e: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si mantienes tus retenciones como están, probablemente </span>
+              <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">Probablemente</span> debas impuestos en tu declaración del impuesto federal del <fg-show path="/taxYear"/>. <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">
+                  Podrías tener que pagar una multa además del impuesto que adeudas si debes por lo menos $1,000 y más del 10% del total del impuesto que debes pagar.
+                </span>
+  p-da9eff: <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isFalse">Si quieres reducir la cantidad de impuestos que debes,</span>
+                <span condition="/mayBeSubjectToUnderpaymentPenalty" operator="isTrue">Si quieres reducir la cantidad de impuestos que debes y evitar pagar una multa,</span>
+                <span condition="/mayNeedToMakeEstimatedPayments" operator="isFalse">
+                  <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">puedes reducir el dinero que recibes en cada cheque <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">cambiando tus retenciones.</a></span>
+                  <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">y haciendo <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">pagos del impuesto estimado</a> para cubrir la diferencia entre el cambio en tus retenciones y el impuesto que debes.</span>
+                </span>
+                <span condition="/mayNeedToMakeEstimatedPayments" operator="isTrue">
+                  <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">puedes reducir el dinero que recibes en cada cheque <a class="usa-link" href="#heading-adjust-withholding-for-lower-tax-balance">cambiando tus retenciones</a> y haciendo <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">pagos del impuesto estimado</a> para cubrir la diferencia entre el cambio en tus retenciones y el impuesto que debes.</span>
+                  <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">haciendo <a class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes">pagos del impuesto estimado</a> para cubrir la diferencia entre el cambio en tus retenciones y el impuesto que debes.</span>
+                </span>
+  p-45fe55: Según tu información, estimamos que tus retenciones actuales deberían cubrir tu impuesto federal.
+  p-d8ceb8: Para establecer estas retenciones con tu nueva fuente de ingresos, llena <a class="usa-link" href="#heading-adjust-withholding"><span
+    condition="/hasJobsAvailableForExtraWithholdingButNotPensions" operator="isTrue">un nuevo Formulario W-4</span><span condition="/hasPensionsAvailableForExtraWithholdingButNotJobs"
+    operator="isTrue">un nuevo Formulario W-4P</span><span condition="/hasJobsAndPensionsAvailableForExtraWithholding"
+    operator="isTrue">un nuevo Formulario W-4 y W-4P</span></a> usando nuestras recomendaciones.
+  p-dac7cb: Según tu informacion, estimamos que <strong>estás reteniendo suficiente para cubrir tu impuesto federal.</strong> Cuando recibas tus nuevos ingresos, tu situación tributaria cambiará.
+  p-2e81bb: Para mantener tus resultados, <a class="usa-link" href="#heading-adjust-withholding">cambia las retenciones</a> de tus ingresos nuevos <span condition="/hasCurrentJob" operator="isTrue">y actuales</span>.
   p-609593: Según tu informacion, estimamos que <strong>estás reteniendo suficiente para cubrir tu impuesto federal.</strong>
-  p-3094c9:
+  p-3094c9: <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isTrue">Si mantienes tus retenciones como están, probablemente</span>
+                  <span condition="/eligibleRemainingPayPeriodsGreaterThanZero" operator="isFalse">Probablemente</span> no debas impuestos en tu declaración del impuesto federal del <fg-show path="/taxYear"/>.
   p-bf0181: Si <a class="usa-link" href="#heading-adjust-withholding">cambias tus retenciones</a>, cambiará el monto que adeudas de impuesto federal y el dinero que recibes en cada cheque.
   h3-5359f4: Reembolso estimado del impuesto federal
   h3-566afa: Deuda estimada del impuesto federal
@@ -1604,10 +1611,9 @@
                             </span>
     p-5d3b06: Si debes por lo menos $1,000 y debes más del 10% del total del impuesto que debes pagar, podrías tener que pagar una multa además del impuesto federal que debes.
     p-09327c: 'Nota: Este estimado depende de que tu información sea precisa. El IRS no garantiza la exactitud de este estimado y no acepta cualquier responsabilidad que pueda resultar de usar este cálculo.'
-  #TODO: future jobs
   fg-alert-effbdc:
-    heading:
-    p-e8e494:
+    heading: Tu estimado podría ser menos preciso porque incluye ingresos futuros
+    p-e8e494: Revisa tus retenciones luego de recibir el primer talón de cheque o estado de cuenta de este nuevo ingreso.
   h3-13ef28: ¿Cómo cambiar tus retenciones para recibir más dinero en cada cheque y reducir tu reembolso estimado?
   h3-335363: ¿Cómo cambiar tus retenciones para reducir el monto que adeudas y reducir el dinero que recibes en cada cheque?
   h3-d387b7: ¿Cómo cambiar tus retenciones?
