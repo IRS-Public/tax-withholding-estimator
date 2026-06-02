@@ -576,6 +576,20 @@
           </Case>
           <Case>
             <When>
+              <Dependency path="../isInFuture"/>
+            </When>
+            <Then>
+              <Add>
+                <Dependency path="../startDate/ordinal"/>
+                <Multiply>
+                  <Dependency path="../remainingPayPeriodsInteger"/>
+                  <Dependency path="../payPeriodLength"/>
+                </Multiply>
+              </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
               <True/>
             </When>
             <Then>
@@ -1206,6 +1220,16 @@
       </Description>
       <Derived>
         <Switch>
+          <Case>
+            <When>
+              <Dependency path="../isInFuture"/>
+            </When>
+            <Then>
+              <Ceiling>
+                <Dependency path="../futurePartialPayPeriods"/>
+              </Ceiling>
+            </Then>
+          </Case>
           <Case>
             <When>
               <Dependency path="../isPastJob"/>

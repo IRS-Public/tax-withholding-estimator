@@ -178,20 +178,25 @@
       question: |-
         What’s the first day in <fg-show path="/taxYear"/>
                     <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span> expect to have this job?
+                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
+                    expect to have this job?
       hint: It’s okay to estimate.
     /jobs/*/writableEndDate:
       question: |-
         What’s the last day in <fg-show path="/taxYear"/>
                     <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span> expect to have this job?
+                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
+                    expect to have this job?
       hint: It’s okay to estimate.
     /jobs/*/payFrequency:
       question: |-
-        How frequently are <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
-                    <!-- isIncomplete default needed because this appears before filer selected -->
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">you</span> paid?
+        How frequently
+                    <span condition="/jobs/*/isInFuture" operator="isFalse">are</span>
+                    <span condition="/jobs/*/isInFuture" operator="isTrue">do</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
+                    <span condition="/jobs/*/isInFuture" operator="isTrue">expect to be</span>
+                    paid?
       modalLink: <modal-link for="modal-pay-frequency">Learn more about pay frequency.</modal-link>
       options:
         weekly:
@@ -202,8 +207,30 @@
           name: Twice monthly
         monthly:
           name: Once a month
+    /jobs/*/hoursPerPayPeriod:
+      question: |-
+        How many hours do
+                      <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
+                      <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
+                      expect to be paid?
+      hint: It’s okay to estimate.
     h5-4f6501: Job Details
-    p-5bef91: Once we know more about your income, we'll ask you additional questions.
+    p-216488: Once we know more about your income, we’ll ask you additional questions.
+    h5-715b08: Expected income
+    /jobs/*/expectedFutureAnnualSalary:
+      question: |-
+        What do you expect
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">your</span>
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">their</span>
+                        annual salary to be?
+      hint: Enter the full amount. We’ll calculate the part-year portion for you.
+        Don’t include tips or overtime pay.
+    /jobs/*/expectedFuturePayPerHour:
+      question: |-
+        How much do <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
+                    expect to be paid per hour?
+      hint: Don’t include tips or overtime pay.
     h5-bee04a: Dates and income
     p-0ae3e5: Use the most recent paystub from <fg-show path="/taxYear"/> to enter
       the following information.
@@ -214,8 +241,10 @@
         and pay date?</modal-link>
     /jobs/*/mostRecentPayDate:
       question: |-
-        When was <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">their</span>
-                      <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span> most recent pay date in <fg-show path="/taxYear"/>?
+        When was
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">their</span>
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">your</span>
+                        most recent pay date in <fg-show path="/taxYear"/>?
     /jobs/*/consistentPay:
       question: How steady is the pay from paycheck to paycheck?
       options:
@@ -243,35 +272,57 @@
       hint: If you don’t have a third paystub, leave this blank.
     /jobs/*/mostRecentPayPeriodHasBonus:
       question: |-
-        Did <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your
-                        spouse</span>
-                      <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span> receive a bonus <span condition="/jobs/*/consistentPay" operator="isTrue">this pay
-                        period?</span>
-                      <span condition="/jobs/*/consistentPay" operator="isFalse">in these pay
-                        periods?</span>
-      modalLink: |-
-        <modal-link for="modal-job-check-bonus">How do I check if there's a bonus this pay
-                      period?</modal-link>
+        Did
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">your spouse</span>
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
+                        receive a bonus
+                        <span condition="/jobs/*/consistentPay" operator="isTrue">this pay period?</span>
+                        <span condition="/jobs/*/consistentPay" operator="isFalse">in these pay periods?</span>
+      modalLink: <modal-link for="modal-job-check-bonus">How do I check if there’s
+        a bonus this pay period?</modal-link>
       options:
         'true':
           name: |-
-            Yes, there's bonus pay in <span condition="/jobs/*/consistentPay" operator="isTrue">this pay period</span>
-                            <span condition="/jobs/*/consistentPay" operator="isFalse">these pay periods</span>
+            Yes, there’s bonus pay in
+                              <span condition="/jobs/*/consistentPay" operator="isTrue">this pay period</span>
+                              <span condition="/jobs/*/consistentPay" operator="isFalse">these pay periods</span>
         'false':
           name: |-
-            No, there's only regular pay in <span condition="/jobs/*/consistentPay" operator="isTrue">this pay period</span>
-                            <span condition="/jobs/*/consistentPay" operator="isFalse">these pay periods</span>
+            No, there’s only regular pay in
+                              <span condition="/jobs/*/consistentPay" operator="isTrue">this pay period</span>
+                              <span condition="/jobs/*/consistentPay" operator="isFalse">these pay periods</span>
     /jobs/*/mostRecentPayPeriodBonusAmount:
       question: |-
-        How much <span condition="/jobs/*/consistentPay" operator="isFalse">total </span> bonus pay did <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your
-                        spouse</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span> earn in <span condition="/jobs/*/consistentPay" operator="isTrue">this pay period?</span><span condition="/jobs/*/consistentPay" operator="isFalse">these pay periods?</span>
+        How much
+                        <span condition="/jobs/*/consistentPay" operator="isFalse">total </span>
+                        bonus pay did
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">your spouse</span>
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
+                        earn in
+                        <span condition="/jobs/*/consistentPay" operator="isTrue">this pay period?</span>
+                        <span condition="/jobs/*/consistentPay" operator="isFalse">these pay periods?</span>
     /jobs/*/totalFutureBonus:
       question: |-
-        Enter an estimate for any bonus pay you think <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
-                      <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span> will earn for the rest of <fg-show path="/taxYear"/>
-      hint: If you don’t know, leave this blank.
-      modalLink: <modal-link for="modal-estimate-future-bonus">How do I estimate future
-        bonus pay?</modal-link>
+        <span condition="/jobs/*/isInFuture" operator="isTrue">Bonus pay
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
+                        expect to earn in <fg-show path="/taxYear"/>
+                      </span>
+                      <span condition="/jobs/*/isInFuture" operator="isFalse">Enter an estimate for any bonus pay you think
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">your spouse</span>
+                        <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
+                        will earn for the rest of <fg-show path="/taxYear"/>
+                      </span>
+      hint: |-
+        <span condition="/jobs/*/isInFuture" operator="isTrue">It’s okay to estimate or leave this blank.</span>
+                      <span condition="/jobs/*/isInFuture" operator="isFalse">If you don’t know, leave this blank.</span>
+      modalLink: |-
+        <modal-link for="modal-estimate-future-bonus">
+                      <span condition="/jobs/*/isInFuture" operator="isTrue">What counts as bonus pay?</span>
+                      <span condition="/jobs/*/isInFuture" operator="isFalse">How do I estimate future bonus pay?</span>
+                    </modal-link>
+    p-07e933: '<strong>Estimated <fg-show path="/taxYear"/> income: <fg-show path="/jobs/*/expectedFutureIncome"/></strong>'
+    p-372bcf: If this amount looks wrong, update your previous answers.
     /jobs/*/yearToDateIncome:
       question: |-
         What’s the gross income <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse has</span>
@@ -296,10 +347,10 @@
                       tip‑sharing arrangements.
       p-d353b7: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Learn
         more about the no tax on tips deduction.</a>
-      p-af9c2c: |-
+      p-9a0b89: |-
         To be eligible for the no tax on tips deduction, <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
                       <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span> must have an <a target="_blank" href="https://www.irs.gov/forms-pubs/occupations-that-customarily-and-regularly-received-tips-on-or-before-december-31-2024">
-                        occupation</a> that's recognized by the IRS as regularly receiving tips.
+                        occupation</a> that’s recognized by the IRS as regularly receiving tips.
       /jobs/*/qualifiedTipIncome:
         question: Total estimated tips for <fg-show path="/taxYear"/>
         hint: Leave this blank if <span condition="/jobs/*/isFilerAssignmentSelf"
@@ -340,13 +391,13 @@
     /jobs/*/yearToDateWithholding:
       question: Federal taxes withheld (paid) so far in <fg-show path="/taxYear"/>
       hint: |-
-        This might be labeled year-to-date or YTD on your paystub. Don't include state and
+        This might be labeled year-to-date or YTD on your paystub. Don’t include state and
                       local taxes, Medicare, or Social Security.
       modalLink: <modal-link for="modal-fed-tax-ytd"> How do I find federal taxes
         withheld so far in <fg-show path="/taxYear"/>? </modal-link>
     h5-4504e1: Contributions
-    p-89f8df: |-
-      Check <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse's</span>
+    p-1c3f63: |-
+      Check <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse’s</span>
                   <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span> paystub for pre-tax contributions (or payroll deductions) to help pay for benefits.
     p-de6d98: These contribution amounts can usually be found under a <strong>Deductions</strong>
       or <strong>Pre-Tax</strong> section.
@@ -417,7 +468,7 @@
         li-921253: Accidental death or dismemberment insurance
         li-4a41d5: Long-term and short-term disability coverage
         li-fe33dd: Qualified transportation fringe benefit
-      p-c08338: <strong>Don't include:</strong>
+      p-5a0ed2: <strong>Don’t include:</strong>
       ul-1:
         li-a867f4: Long-term care contributions
         li-a981e6: Employer contributions
@@ -509,7 +560,7 @@
         federal taxes withheld for the most recent payment?</modal-link>
     /pensions/*/yearToDateWithholding:
       question: Federal taxes withheld (paid) so far in <fg-show path="/taxYear"/>
-      hint: This might be labeled year-to-date or YTD on your statement. Don't include
+      hint: This might be labeled year-to-date or YTD on your statement. Don’t include
         state and local taxes, Medicare, or Social Security.
       modalLink: <modal-link for="modal-fed-pension-tax-ytd">How do I find federal
         taxes withheld so far in <fg-show path="/taxYear"/>?</modal-link>
@@ -606,7 +657,7 @@
       question: Total self-employment work-related expenses <span condition="/selfEmploymentSources/*/notSpouses"
         operator="isTrue">you</span><span condition="/selfEmploymentSources/*/notSpouses"
         operator="isFalse">they</span> expect to deduct in <fg-show path="/taxYear"/>
-      hint: It's okay to estimate or leave this blank.
+      hint: It’s okay to estimate or leave this blank.
       modalLink: <modal-link for="modal-self-employment-deductions">What does it mean
         to deduct expenses?</modal-link>
   h3-941f47: Social Security income
@@ -659,7 +710,7 @@
                     <span condition="/socialSecuritySources/*/isInFuture" operator="isTrue">How much federal tax do you plan to withhold from <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">your</span><span condition="/socialSecuritySources/*/notSpouses" operator="isFalse">their</span> monthly Social Security benefit?</span>
       hint: If <span condition="/socialSecuritySources/*/notSpouses" operator="isTrue">you</span><span
         condition="/socialSecuritySources/*/notSpouses" operator="isFalse">they</span>
-        haven’t chosen to withhold federal taxes or if you're unsure, select 0%.
+        haven’t chosen to withhold federal taxes or if you’re unsure, select 0%.
       modalLink: <modal-link for="modal-fed-social-security-tax-withheld">How do I
         know if I have taxes withheld?</modal-link>
       options:
@@ -701,7 +752,7 @@
     this amount will help get the most accurate withholding estimate.
   fg-detail-b4c28b:
     summary: Interest income
-    p-374cf5: <modal-link for="modal-estimate-interest-income">What's interest income
+    p-39276b: <modal-link for="modal-estimate-interest-income">What’s interest income
       and how can I estimate it?</modal-link>
     /taxableInterestIncome:
       question: Interest income you<span condition="/isFilingStatusMFJ" operator="isTrue">
@@ -761,15 +812,15 @@
       question: Non-passive income from S-corporations or partnerships you <span condition="/isFilingStatusMFJ"
         operator="isTrue">and your spouse</span> expect to earn in <fg-show path="/taxYear"/>
   h3-95eb01: Other taxable income not already included above
-  p-a4536a: 'Estimate any other taxable income that you <span condition="/isFilingStatusMFJ"
-    operator="isTrue">and your spouse</span> think you''ll receive in <fg-show path="/taxYear"/>,
+  p-67f0cb: 'Estimate any other taxable income that you <span condition="/isFilingStatusMFJ"
+    operator="isTrue">and your spouse</span> think you’ll receive in <fg-show path="/taxYear"/>,
     including:'
   ul-0:
     li-6c1f6e: Taxable scholarships
     li-b9815d: Winnings from gambling
     li-98533d: Alimony from pre-2019 divorce decrees
-    li-479a5d: Court awards and damages (unless they're for physical injury or sickness)
-    li-55fa19: Fees for services you've provided
+    li-2ce899: Court awards and damages (unless they’re for physical injury or sickness)
+    li-bd02e0: Fees for services you’ve provided
   p-48332b: <a target="_blank" href="https://www.irs.gov/filing/taxable-income" class="usa-link
     usa-link--external">Learn more about other taxable income.<span class="usa-sr-only">
     (opens in a new tab)</span></a>
@@ -779,8 +830,8 @@
     hint: Enter one total amount for all other income.
   /otherIncomeWithholding:
     question: Federal taxes withheld from your <span condition="/isFilingStatusMFJ"
-      operator="isTrue">and your spouse's</span> other income so far in <fg-show path="/taxYear"/>
-    hint: If you don't know, leave this blank.
+      operator="isTrue">and your spouse’s</span> other income so far in <fg-show path="/taxYear"/>
+    hint: If you don’t know, leave this blank.
   h3-536be3: Estimated taxes paid
   p-67bec4: In addition to taxes already withheld from your income, estimated payments
     are made directly to the IRS, usually through an IRS Online Account or with Form
@@ -791,7 +842,7 @@
   /totalEstimatedTaxesPaid:
     question: Estimated tax payments you <span condition="/isFilingStatusMFJ" operator="isTrue">and
       your spouse</span> made so far in <fg-show path="/taxYear"/>
-    hint: Don't include taxes withheld from paychecks and other income.
+    hint: Don’t include taxes withheld from paychecks and other income.
   modal-pay-frequency:
     heading: Learn more about pay frequency
     p-f8e48f: Pay frequency is how often a person gets paid by an employer or pension.
@@ -804,6 +855,15 @@
       li-fdcbf1: '<strong>Once monthly</strong>: Paid one time per month'
     p-8ef9ed: If your pay frequency doesn’t match one of these, then choose the closest
       option and adjust your pay accordingly.
+  modal-job-bonus-pay:
+    heading: "\n        <span condition=\"/jobs/*/isInFuture\" operator=\"isTrue\"\
+      >What counts as bonus pay?</span>\n        <span condition=\"/jobs/*/isInFuture\"\
+      \ operator=\"isFalse\">How do I estimate future bonus pay?</span>\n      "
+    p-185c7d: Bonus pay is usually a one-time payment in addition to regular wages.
+    p-74fc7e: If you expect to receive a year-end or quarterly bonus from the employer,
+      include that amount here.
+    p-89cc04: It’s okay to enter a best guess of what you will receive or leave it
+      blank.
   modal-job-pay-dates:
     heading: Learn more about pay frequency
     p-8b4b93: |-
@@ -824,6 +884,30 @@
     p-654d7e: <strong>Where to find it</strong>
     p-22c78c: Check the paystub for the <strong>gross amount per pay period</strong>,
       which only includes the pay for the days you worked on this current paystub.
+  modal-no-tax-on-tips-en:
+    heading: How do I know if I’m eligible for the “no tax on tips” deduction?
+    p-71332d: 'To be eligible for the “no tax on tips” deduction, you must:'
+    ul-0:
+      li-830c05: have an occupation that’s recognized by the IRS as regularly receiving
+        tips
+      li-a567e2: have a Social Security number
+    p-d2cd93: If it’s hard to estimate, it’s okay to leave tips blank.
+    p-7abc41: <a href="https://www.irs.gov/businesses/small-businesses-self-employed/tips"
+      target="_blank" class="usa-link usa-link--external">Learn more about the no
+      tax on tips deduction.<span class="usa-sr-only"/></a>
+  modal-no-tax-on-overtime-en:
+    heading: How do I know if I’m eligible for the “no tax on overtime” deduction?
+    p-840df1: 'To be eligible for the “no tax on overtime” deduction, you must:'
+    ul-0:
+      li-89acc4: earn overtime by working more than 40 hours per week
+      li-b0b373: have an employer that’s required to pay you under the Fair Labor
+        Standards Act (FLSA)
+      li-a567e2: have a Social Security number
+    p-f57b74: Overtime pay that is not required by section 7 of the FLSA (e.g., due
+      to state law or union contract) is not deductible and should not be entered.
+    p-88d0b8: <a href="https://www.irs.gov/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025"
+      target="_blank" class="usa-link usa-link--external">Learn more about the no
+      tax on overtime deduction.<span class="usa-sr-only"/></a>
   modal-what-counts-social-security:
     heading: What counts as Social Security income?
     p-00bbe8: Social Security is benefit payments made to retirees, people with disabilities,
@@ -973,7 +1057,7 @@
       If the payer sends a Form W-2 with federal taxes withheld, then add this income
       in the <strong>Jobs with an employer (W-2)</strong> section instead.
   modal-self-employment-gross-total:
-    heading: What's total gross income and where do I find it?
+    heading: What’s total gross income and where do I find it?
     p-47ef44: <strong>What is it?</strong>
     p-7caa26: Total gross income is the total amount you expect to earn this year,
       before any taxes, deductions, or expenses are taken out.
@@ -983,14 +1067,14 @@
     p-807ad5: You can estimate gross total income by tracking how much you earn from
       self-employment. You may need to estimate your self-employment income for the
       entire year.
-    p-0651e4: <strong>How to check last year's tax return?</strong>
+    p-4ac7d7: <strong>How to check last year’s tax return?</strong>
     p-55c57e: If you were self-employed last year and expect your earnings to stay
       the same, you can find your gross income on line 7 of Schedule C.
   modal-self-employment-deductions:
     heading: What does it mean to deduct expenses?
-    p-90fb6d: |-
-      When you're self employed, a gig worker, or own and operate a business, you may be able to
-                deduct certain business expenses from your income so you'll pay less tax.
+    p-8ac763: |-
+      When you’re self employed, a gig worker, or own and operate a business, you may be able to
+                deduct certain business expenses from your income so you’ll pay less tax.
     p-643fbe: 'Business expenses could include:'
     ul-0:
       li-6a4179: Home office expenses
@@ -1002,11 +1086,11 @@
       li-761662: Legal and professional fees
       li-719fec: Taxes
       li-849c98: Travel and meals
-    p-359e1c: |-
-      These deductions are different from the personal deductions you'll make if you choose to
+    p-68386b: |-
+      These deductions are different from the personal deductions you’ll make if you choose to
                 itemize your deductions. You can deduct your business expenses here and still choose the
                 standard deduction later.
-    p-0651e4: <strong>How to check last year's tax return?</strong>
+    p-4ac7d7: <strong>How to check last year’s tax return?</strong>
     p-203379: |-
       If you were self-employed last year and expect your work-related expenses to stay the
                 same, you can find your deductible expenses on line 28 of Schedule C.
@@ -1030,7 +1114,7 @@
     ul-0:
       li-00bded: Check your unemployment statement for federal tax withholding
       li-68b85b: Call your unemployment office and ask about your withholding
-    p-b82dc7: If you didn't request to withhold taxes, select no.
+    p-2b258d: If you didn’t request to withhold taxes, select no.
   modal-what-counts-pre-tax-retirement:
     heading: What counts as a distribution from pre-tax retirement accounts?
     p-a7106a: Any withdrawal of pre-tax funds from a 401(k), 403(b), 457(b), or traditional
@@ -1045,17 +1129,17 @@
       li-f28c25: Other forms of retirement income, like pensions, annuities, Social
         Security, or other investment income. You’ll enter them in other sections.
   modal-estimate-interest-income:
-    heading: What's interest income and how can I estimate it?
+    heading: What’s interest income and how can I estimate it?
     p-cda131: Common types of interest income include interest earned from bank accounts
       or from lending money.
-    p-a2889a: To estimate your interest income, look at your monthly bank statements
-      to see how much you've been earning in interest each month. Multiply the monthly
+    p-56de4f: To estimate your interest income, look at your monthly bank statements
+      to see how much you’ve been earning in interest each month. Multiply the monthly
       average by 12 to get an estimate for the year.
-    p-5a5d76: When estimating interest income, it's better to guess a higher amount.
+    p-1a43cd: When estimating interest income, it’s better to guess a higher amount.
       If you underestimate, it can lead to not withholding enough federal tax throughout
       the year.
-    p-bc395c: <strong>How to check last year's tax return</strong>
-    p-f1a76a: 'If you earned interest income last year and think you''ll earn a similar
+    p-5258da: <strong>How to check last year’s tax return</strong>
+    p-8217dd: 'If you earned interest income last year and think you’ll earn a similar
       amount this year, check for an amount in:'
     ul-0:
       li-7fd107: Line 2b on Form 1040 of your <fg-show path="/lastTaxYear"/> federal
@@ -1097,7 +1181,7 @@
     p-6412ce: <strong>How to estimate gains and losses</strong>
     p-62a198: If you plan to sell any assets before the end of the year, include the
       estimated gains or losses in your total.
-    p-dff0b2: When estimating short- and long-term gains, it's better to guess a higher
+    p-5e1dd9: When estimating short- and long-term gains, it’s better to guess a higher
       amount. If you underestimate, it can lead to not withholding enough federal
       tax throughout the year.
   modal-rental-expenses-net-income:
@@ -1108,11 +1192,11 @@
     p-21afbd: <strong>How to estimate net rental income</strong>
     p-cd2d5f: First, add up all the money you expect to receive from tenants during
       the year. Next, subtract your rental expenses.
-    p-e79a7f: When estimating rental income, it's better to guess a higher amount.
+    p-a1b569: When estimating rental income, it’s better to guess a higher amount.
       If you underestimate, it can lead to not withholding enough federal tax throughout
       the year.
-    p-bc395c: <strong>How to check last year's tax return</strong>
-    p-ed014a: 'If you earned rental income last year and think you''ll earn a similar
+    p-5258da: <strong>How to check last year’s tax return</strong>
+    p-bfb65a: 'If you earned rental income last year and think you’ll earn a similar
       amount this year, check your <fg-show path="/lastTaxYear"/> forms:'
     ul-0:
       li-3cc72a: Schedule E (Form 1040), Part I, line 21, Columns A - C
@@ -1120,12 +1204,12 @@
     heading: How can I estimate royalty income?
     p-7d15b4: Check your licensing agreements or publisher statements for expected
       payment schedules or percentages.
-    p-53dd3a: If estimating future royalty income, it's better to guess a higher amount.
+    p-fe4365: If estimating future royalty income, it’s better to guess a higher amount.
       If you underestimate, it can lead to not withholding enough federal tax throughout
       the year.
-    p-bc395c: <strong>How to check last year's tax return</strong>
-    p-c92501: 'If you earned royalties last year and think you''ll earn a similar
-      amount this year, check your <fg-show path="/lastTaxYear"/> forms:'
+    p-5258da: <strong>How to check last year’s tax return</strong>
+    p-3adcf5: 'If you earned royalties last year and think you’ll earn a similar amount
+      this year, check your <fg-show path="/lastTaxYear"/> forms:'
     ul-0:
       li-90f9a8: Schedule E (Form 1040), Part I, line 23b
   modal-estimate-s-corp-partnership-income:
@@ -1133,13 +1217,13 @@
     p-ba76b7: You can use investor reports, profit/ loss statements, or other business
       data to predict annual earnings. Multiply those earnings by your ownership percentage
       or distributive share.
-    p-04160c: When estimating S-corporation or partnership income, it's better to
+    p-ac18cb: When estimating S-corporation or partnership income, it’s better to
       guess a higher amount. If you underestimate, it can lead to not withholding
       enough federal tax throughout the year.
-    p-e63f56: Don't include income previously entered under self-employment.
-    p-8b6f8b: <strong>How to check last year's return</strong>
-    p-7e4500: 'If you earned income from S-corporations or partnerships last year
-      and think you''ll earn a similar amount this year, check these <fg-show path="/lastTaxYear"/>
+    p-ebe3e4: Don’t include income previously entered under self-employment.
+    p-cc9218: <strong>How to check last year’s return</strong>
+    p-17e6c6: 'If you earned income from S-corporations or partnerships last year
+      and think you’ll earn a similar amount this year, check these <fg-show path="/lastTaxYear"/>
       forms:'
     ul-0:
       li-b8bcfa: Schedule E (Form 1040), Part II, Line 29a, Column h, for passive
@@ -1162,14 +1246,14 @@
       15</a> for help calculating withholding on high bonus pay, or consider consulting
       a tax professional.
   modal-job-check-bonus:
-    heading: How do I check if there's a bonus this pay period?
+    heading: How do I check if there’s a bonus this pay period?
     p-9a2f97: Bonus pay is usually a one-time payment in addition to your regular
       wages.
     p-76b2cb: To check if you earned a bonus for the <strong>current pay period:</strong>
     ol-0:
       li-5e0c98: Find the gross or total earnings for the pay period, which only includes
         the pay for the days you worked on this current paystub.
-      li-c46d32: Check if there's an amount labeled &quot;Bonus&quot; that's included
+      li-5a7657: Check if there’s an amount labeled &quot;Bonus&quot; that’s included
         in the gross or total earnings for the pay period.
     p-529826: <strong>Don’t include</strong> bonuses that appear in the year-to-date
       (YTD) amount. Only enter bonus pay from the current pay period. Don’t include

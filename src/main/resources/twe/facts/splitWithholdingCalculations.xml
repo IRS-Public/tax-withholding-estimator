@@ -1011,7 +1011,7 @@
       </Description>
       <Derived>
         <Multiply>
-          <Dependency path="../averagePayPerPayPeriodForWithholding"/>
+          <Dependency path="../effectivePayPerPayPeriod"/>
           <Dependency path="../payPeriodsWithW4Changes"/>
         </Multiply>
       </Derived>

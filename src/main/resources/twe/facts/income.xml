@@ -733,15 +733,21 @@ and car loan interest deduction
       </Derived>
     </Fact>
     <Fact path="/hasFutureJob">
-      <!-- TODO: Needs to be updated when we support jobs -->
       <Derived>
         <GreaterThan>
           <Left>
-            <CollectionSize>
-              <Filter path="/pensions">
-                <Dependency path="isInFuture"/>
-              </Filter>
-            </CollectionSize>
+            <Add>
+              <CollectionSize>
+                <Filter path="/jobs">
+                  <Dependency path="isInFuture"/>
+                </Filter>
+              </CollectionSize>
+              <CollectionSize>
+                <Filter path="/pensions">
+                  <Dependency path="isInFuture"/>
+                </Filter>
+              </CollectionSize>
+            </Add>
           </Left>
           <Right>
             <Int>0</Int>

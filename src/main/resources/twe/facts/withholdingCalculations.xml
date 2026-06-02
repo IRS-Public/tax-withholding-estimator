@@ -17,6 +17,17 @@
           </Case>
           <Case>
             <When>
+              <Dependency path="../isInFuture"/>
+            </When>
+            <Then>
+              <Multiply>
+                <Dependency path="../tentativeWithholdingAmount"/>
+                <Dependency path="../remainingPayPeriodsRational"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
               <True/>
             </When>
             <Then>
@@ -312,7 +323,7 @@
       <Description>The earnings if the job duration were all year.</Description>
       <Derived>
         <Multiply>
-          <Dependency path="../averagePayPerPayPeriodForWithholding"/>
+          <Dependency path="../effectivePayPerPayPeriod"/>
           <Dependency path="../payPeriodsPerYear"/>
         </Multiply>
       </Derived>
@@ -712,7 +723,7 @@
           <Dollar>0</Dollar>
           <Subtract>
             <Minuend>
-              <Dependency path="../averagePayPerPayPeriodForWithholding"/>
+              <Dependency path="../effectivePayPerPayPeriod"/>
             </Minuend>
             <Subtrahends>
               <Dependency path="../preTaxDeductionsPerPayPeriod"/>

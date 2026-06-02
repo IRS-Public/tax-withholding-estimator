@@ -35,6 +35,18 @@
         <Enum optionsPath="/filerAssignmentOption"/>
       </Writable>
     </Fact>
+    <Fact path="/jobs/*/isFilerAssignmentSelfOrIncomplete">
+      <Derived>
+        <Any>
+          <Dependency path="../isFilerAssignmentSelf"/>
+          <Not>
+            <IsComplete>
+              <Dependency path="../filerAssignment"/>
+            </IsComplete>
+          </Not>
+        </Any>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/isFilerAssignmentSelf">
       <Derived>
         <Equal>
@@ -453,6 +465,55 @@
         <Dollar>0</Dollar>
       </Placeholder>
     </Fact>
+    <Fact path="/jobs/*/effectivePayPerPayPeriod">
+    <Description>
+      The effective pay per pay period for this job. For future jobs, this is derived from
+      the user-entered expected salary or hourly rate since there is no pay history.
+      For current and past jobs, this uses averagePayPerPayPeriodForWithholding which is
+      based on actual pay stubs.
+    </Description>
+    <Derived>
+      <Switch>
+        <Case>
+          <When>
+            <All>
+              <Dependency path="../isInFuture"/>
+              <Dependency path="../isHourlyJob"/>
+            </All>
+          </When>
+          <Then>
+            <Multiply>
+              <Dependency path="../expectedFuturePayPerHour"/>
+              <Dependency path="../hoursPerPayPeriod"/>
+            </Multiply>
+          </Then>
+        </Case>
+        <Case>
+          <When>
+            <Dependency path="../isInFuture"/>
+          </When>
+          <Then>
+            <Divide>
+              <Dividend>
+                <Dependency path="../expectedFutureAnnualSalary"/>
+              </Dividend>
+              <Divisors>
+                <Dependency path="../payPeriodsPerYear"/>
+              </Divisors>
+            </Divide>
+          </Then>
+        </Case>
+        <Case>
+          <When>
+            <True/>
+          </When>
+          <Then>
+            <Dependency path="../averagePayPerPayPeriodForWithholding"/>
+          </Then>
+        </Case>
+      </Switch>
+    </Derived>
+  </Fact>
     <Fact path="/jobs/*/restOfYearIncome">
       <Description>This amount this job will pay for the rest of the year. Uses the same
         per-period basis as withholding (averagePayPerPayPeriodForWithholding) so W-4 job
@@ -473,7 +534,7 @@
             </When>
             <Then>
               <Multiply>
-                <Dependency path="../averagePayPerPayPeriodForWithholding"/>
+                <Dependency path="../effectivePayPerPayPeriod"></Dependency>
                 <Dependency path="../remainingPayPeriodsRational"/>
               </Multiply>
             </Then>
@@ -482,12 +543,28 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/yearToDateIncome">
+      <Override>
+        <Condition>
+          <Dependency path="../isInFuture"/>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
       <Writable>
         <Dollar/>
       </Writable>
     </Fact>
     <Fact path="/jobs/*/yearToDateWithholding">
       <Description>The year-to-date withholding from a specific job</Description>
+      <Override>
+        <Condition>
+          <Dependency path="../isInFuture"/>
+        </Condition>
+        <Default>
+          <Dollar>0</Dollar>
+        </Default>
+      </Override>
       <Writable>
         <Dollar/>
       </Writable>
@@ -593,6 +670,91 @@
       <Writable>
         <Enum optionsPath="/payFrequencyOptions"/>
       </Writable>
+    </Fact>
+    <Fact path="/jobs/*/hoursPerPayPeriod">
+      <Description>The number of hours the user is paid for in each pay period. This is only asked for future jobs, as it's used to calculate future income and withholding.</Description>
+      <Writable>
+        <Int/>
+      </Writable>
+       <Placeholder>
+        <Int>0</Int>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/expectedFutureAnnualSalary">
+      <Description>The amount the user expects to be paid annually from this job. This is only asked for future jobs, as it's used to calculate future income and withholding.</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/expectedFuturePayPerHour">
+      <Description>The amount the user expects to be paid per hour</Description>
+      <Writable>
+        <Dollar/>
+      </Writable>
+      <Placeholder>
+        <Dollar>0</Dollar>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/expectedFutureIncome">
+      <Description>The amount the user expects to be paid from this job for the entire year. This is used as a reference for the user and is not used in any calculations.</Description>
+      <Derived>
+        <Add>
+          <Switch>
+            <Case>
+              <When>
+                <Dependency path="../isHourlyJob"/>
+              </When>
+              <Then>
+                <Multiply>
+                  <Dependency path="../expectedFuturePayPerHour"/>
+                  <Dependency path="../hoursPerPayPeriod"/>
+                  <Dependency path="../remainingPayPeriodsInteger"/>
+                </Multiply>
+              </Then>
+            </Case>
+            <Case>
+              <When>
+                <True/>
+              </When>
+              <Then>
+                <Multiply>
+                  <Divide>
+                    <Dividend>
+                      <Dependency path="../expectedFutureAnnualSalary"/>
+                    </Dividend>
+                    <Divisors>
+                      <Dependency path="../payPeriodsPerYear"/>
+                    </Divisors>
+                  </Divide>
+                  <Dependency path="../remainingPayPeriodsInteger"></Dependency>
+                </Multiply>
+              </Then>
+            </Case>
+          </Switch>
+          <Dependency path="../totalFutureBonus"/>
+        </Add>
+      </Derived>
+    </Fact>
+    <Fact path="/jobs/*/eligibleForNoTaxOnTips">
+      <Description>Whether the user is eligible for the "no tax on tips" deduction</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+      <Placeholder>
+        <False/>
+      </Placeholder>
+    </Fact>
+    <Fact path="/jobs/*/eligibleForNoTaxOnOvertime">
+      <Description>Whether the user is eligible for the "no tax on overtime" deduction</Description>
+      <Writable>
+        <Boolean/>
+      </Writable>
+      <Placeholder>
+        <False/>
+      </Placeholder>
     </Fact>
     <Fact path="/jobs/*/mostRecentPayPeriodHasBonus">
       <Description>Whether the job had bonus pay in the most recent pay period</Description>
