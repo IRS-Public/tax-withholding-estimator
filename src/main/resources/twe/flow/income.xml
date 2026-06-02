@@ -109,7 +109,7 @@
               <input type="dollar"/>
             </fg-set>
             <fg-set path="/jobs/*/expectedFuturePayPerHour" if-true="/jobs/*/isHourlyJob">
-              <question>How much do you expect to be paid per hour?</question>
+              <question>How much do <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span><span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span> expect to be paid per hour?</question>
               <hint>Don’t include tips or overtime pay.</hint>
               <input type="dollar"/>
             </fg-set>

@@ -226,10 +226,9 @@
       hint: Enter the full amount. We’ll calculate the part-year portion for you.
         Don’t include tips or overtime pay.
     /jobs/*/expectedFuturePayPerHour:
-      question: |-
-        How much do <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
-                    <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
-                    expect to be paid per hour?
+      question: How much do <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete"
+        operator="isTrue">you</span><span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete"
+        operator="isFalse">they</span> expect to be paid per hour?
       hint: Don’t include tips or overtime pay.
     h5-bee04a: Dates and income
     p-0ae3e5: Use the most recent paystub from <fg-show path="/taxYear"/> to enter
