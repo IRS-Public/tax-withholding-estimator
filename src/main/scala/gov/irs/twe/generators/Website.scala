@@ -82,13 +82,18 @@ object Website {
         val title = s"$titlePrefix - $titleValue | $titleSuffix"
 
         val context = new Context()
+        val currentPageRoute = if (!page.route.endsWith("/")) {
+          page.route + "/"
+        } else {
+          page.route
+        }
         context.setVariable("exclude", page.exclude)
         context.setVariable("title", title)
         context.setVariable("stepTitle", titleValue)
         context.setVariable("stepIndex", (index - excludedPageLength) % flow.pages.length)
         context.setVariable("stepTotal", navPages.size)
         context.setVariable("pages", navPages.asJava) // th:each requires Java Iterables
-        context.setVariable("currentPageRoute", page.route)
+        context.setVariable("currentPageRoute", currentPageRoute)
         context.setVariable("flags", flags.asJava)
         context.setVariable("languageCode", languageCode)
 
