@@ -125,6 +125,14 @@ class FgSet extends HTMLElement {
           })
         }
         break
+      case 'single-checkbox':
+        for (const input of this.inputs) {
+          input.addEventListener('change', () => {
+            this.onChange()
+            this.clearValidationError()
+          })
+        }
+        break
       default:
         for (const input of this.inputs) {
           input.addEventListener('blur', () => this.onChange())
@@ -275,6 +283,7 @@ class FgSet extends HTMLElement {
   clear () {
     switch (this.inputType) {
       case 'boolean':
+      case 'single-checkbox':
       case 'enum': {
         const checkedRadio = this.querySelector('input:checked')
         if (checkedRadio) {
@@ -335,6 +344,12 @@ class FgSet extends HTMLElement {
         }
         break
       }
+      case 'single-checkbox': {
+        if (value !== '') {
+          this.querySelector('input[type="checkbox"]').checked = value === 'true'
+        }
+        break
+      }
       case 'multi-enum': {
         // MultiEnum stores Set of values - convert from Scala Set to JS Set
         const selectedValues = fact.hasValue ? fg.scalaSetToJsSet(fact.get.getValue()) : new Set()
@@ -390,6 +405,9 @@ class FgSet extends HTMLElement {
       case 'boolean':
       case 'enum': {
         return this.querySelector('input:checked')?.value
+      }
+      case 'single-checkbox': {
+        return this.querySelector('input[type="checkbox"]').checked ? 'true' : 'false'
       }
       case 'multi-enum': {
         // Collect all checked checkbox values into Set, convert to Scala Set, wrap in MultiEnum
@@ -454,6 +472,11 @@ class FgSet extends HTMLElement {
       case 'boolean':
       case 'enum': {
         const input = this.querySelector('input:checked')
+        if (input) input.checked = false
+        break
+      }
+      case 'single-checkbox': {
+        const input = this.querySelector('input[type="checkbox"]')
         if (input) input.checked = false
         break
       }

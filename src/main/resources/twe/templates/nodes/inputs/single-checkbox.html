@@ -1,0 +1,17 @@
+<div class="usa-checkbox">
+  <input class="usa-checkbox__input"
+    th:id="${path}"
+    type="checkbox"
+    value="true"
+    th:name="${path}"
+    th:checked="${formValue == 'true'}"
+    th:required="${not optional}"
+    aria-invalid="false"
+    th:attr="aria-describedby=${hintId}" />
+  <label class="usa-checkbox__label" th:for="${path}">
+    <span th:utext="#{${contentKey} + .question}" th:remove="tag"></span>
+    <span th:if="${!optional}" aria-hidden="true" class="usa-hint--required" th:text="#{components.fg-set.required}"></span>
+  </label>
+  <div th:replace="nodes/hint"></div>
+  <div th:replace="nodes/modal-link"></div>
+</div>

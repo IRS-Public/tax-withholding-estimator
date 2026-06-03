@@ -188,6 +188,17 @@
           </element>
         </oneOrMore>
       </element>
+      <element name="input">
+        <attribute name="type">
+          <value>single-checkbox</value>
+        </attribute>
+        <element name="option">
+          <attribute name="value">
+            <data type="token"/>
+          </attribute>
+          <text/>
+        </element>
+      </element>
     </choice>
   </define>
 

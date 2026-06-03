@@ -254,6 +254,13 @@
               <modal-link for="modal-estimate-tips">How can I estimate tips?</modal-link>
               <input type="dollar"/>
             </fg-set>
+            <div condition="/jobs/*/isInFuture" operator="isTrue" class="no-gap">
+              <fg-set path="/jobs/*/eligibleForNoTaxOnTips">
+                <question>I’m not eligible for the “no tax on tips” deduction</question>
+                <modal-link for="modal-no-tax-on-tips">How do I know if I'm eligible for the "no tax on tips" deduction?</modal-link>
+                <input type="single-checkbox"/>
+              </fg-set>
+            </div>
           </fg-detail>
           <fg-detail icon="chevron">
             <summary>Estimated overtime</summary>
@@ -269,6 +276,13 @@
               <modal-link for="modal-estimate-overtime">How can I estimate overtime?</modal-link>
               <input type="dollar"/>
             </fg-set>
+            <div condition="/jobs/*/isInFuture" operator="isTrue" class="no-gap">
+              <fg-set path="/jobs/*/eligibleForNoTaxOnOvertime">
+                <question>I’m not eligible for the “no tax on overtime” deduction</question>
+                <modal-link for="modal-no-tax-on-overtime">How do I know if I'm eligible for the "no tax on overtime" deduction?</modal-link>
+                <input type="single-checkbox"/>
+              </fg-set>
+            </div>
             <fg-set path="/jobs/*/overtimeCompensationRate">
               <question>What is the rate at which you get paid overtime?</question>
               <modal-link for="modal-estimate-overtime-rate">What if I get paid a different overtime rate?</modal-link>
@@ -873,7 +887,7 @@
         <p>Check the paystub for the <strong>gross amount per pay period</strong>, which only includes the pay for the days you worked on this current paystub.</p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-no-tax-on-tips-en">
+    <modal-dialog id="modal-no-tax-on-tips">
       <modal-heading>How do I know if I’m eligible for the “no tax on tips” deduction?</modal-heading>
       <modal-content>
         <p>To be eligible for the “no tax on tips” deduction, you must: </p>
@@ -885,7 +899,7 @@
         <p><a href="https://www.irs.gov/businesses/small-businesses-self-employed/tips" target="_blank" class="usa-link usa-link--external">Learn more about the no tax on tips deduction.<span class="usa-sr-only"/></a></p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-no-tax-on-overtime-en">
+    <modal-dialog id="modal-no-tax-on-overtime">
       <modal-heading>How do I know if I’m eligible for the “no tax on overtime” deduction?</modal-heading>
       <modal-content>
         <p>To be eligible for the “no tax on overtime” deduction, you must:</p>

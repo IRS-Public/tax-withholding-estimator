@@ -26,7 +26,7 @@ case class FgSet(
 ) extends FlowNode {
   override def html(templateEngine: TweTemplateEngine): String = {
     val usesFieldset =
-      input.typeString == "boolean" || input.typeString == "date" || input.typeString == "enum" || input.typeString == "multi-enum"
+      input.typeString == "boolean" || input.typeString == "single-checkbox" || input.typeString == "date" || input.typeString == "enum" || input.typeString == "multi-enum"
 
     val context = new Context()
     context.setVariable("path", this.path)
@@ -115,6 +115,7 @@ object FgSet extends FlowNodeParser {
       case Input.text(_)       => typeNode != "StringNode"
       case Input.int(_)        => typeNode != "IntNode"
       case Input.boolean(_, _) => typeNode != "BooleanNode"
+      case Input.checkbox(_)   => typeNode != "BooleanNode"
       case Input.dollar(_)     => typeNode != "DollarNode"
       case Input.date(_, _, _) => typeNode != "DayNode"
       // We could make this more strict

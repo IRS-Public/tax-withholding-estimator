@@ -70,3 +70,7 @@ h2 + fg-set {
 fg-set span[condition]:not(.hidden) {
   display: inline-block;
 }
+
+.no-gap {
+  margin-top: calc(var(--flow-spacing--offset) * -1);
+}

@@ -11,6 +11,7 @@ enum Input {
   case text(optional: Boolean = false)
   case int(optional: Boolean = false)
   case boolean(optional: Boolean = false, options: List[HtmlOption] = List.empty)
+  case checkbox(optional: Boolean = false)
   case enumInput(options: List[HtmlOption], optionsPath: String, optional: Boolean = false)
   case multiEnumInput(options: List[HtmlOption], optionsPath: String, optional: Boolean = false)
   case dollar(optional: Boolean = false)
@@ -20,6 +21,7 @@ enum Input {
     case Input.text(_)                 => "text"
     case Input.int(_)                  => "int"
     case Input.boolean(_, _)           => "boolean"
+    case Input.checkbox(_)             => "single-checkbox"
     case Input.enumInput(_, _, _)      => "enum"
     case Input.multiEnumInput(_, _, _) => "multi-enum"
     case Input.dollar(_)               => "dollar"
@@ -77,9 +79,10 @@ object Input {
     }
 
     inputNode \@ "type" match {
-      case "text"    => Input.text(isOptional)
-      case "int"     => Input.int(isOptional)
-      case "boolean" =>
+      case "text"            => Input.text(isOptional)
+      case "int"             => Input.int(isOptional)
+      case "single-checkbox" => Input.checkbox(isOptional)
+      case "boolean"         =>
         val options = (inputNode \ "option").map { node =>
           val name = node.mkString.strip
           val value = node \@ "value"

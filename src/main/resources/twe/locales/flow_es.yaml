@@ -258,6 +258,9 @@
         question: Total de propinas estimadas para el <fg-show path="/taxYear"/>
         hint: Puedes dejar esta casilla en blanco si no <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">tiene</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tienes</span> un número de Seguro Social.
         modalLink: <modal-link for="modal-estimate-tips">¿Cómo puedo estimar propinas?</modal-link>
+      /jobs/*/eligibleForNoTaxOnTips:
+        question: No soy elegible para la deducción “no impuestos sobre propinas”
+        modalLink: <modal-link for="modal-no-tax-on-tips">¿Cómo saber si soy elegible para la deducción de “no impuestos sobre propinas”?</modal-link>
     fg-detail-de7b9c:
       summary: Horas extra estimadas
       p-bc05b9: Las horas extra son un pago adicional que recibes por trabajar más de 40 horas por semana. Solo incluye el tiempo extra que tu empleador tiene requerido pagarte bajo la Ley de Normas Justas de Trabajo (FLSA).
@@ -266,6 +269,9 @@
         question: Total de pago estimado por horas extra en el <fg-show path="/taxYear"/>
         hint: Puedes dejar esta casilla en blanco si no <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">tiene</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tienes</span> un número de Seguro Social.
         modalLink: <modal-link for="modal-estimate-overtime">¿Cómo puedo estimar las horas extra?</modal-link>
+      /jobs/*/eligibleForNoTaxOnOvertime:
+        question: No soy elegible para la deducción “no impuestos sobre horas extra”
+        modalLink: <modal-link for="modal-no-tax-on-overtime">¿Cómo saber si soy elegible para la deducción de “no impuestos sobre horas extra”?</modal-link>
       /jobs/*/overtimeCompensationRate:
         question: ¿Cuánto te pagan por horas extra?
         modalLink: <modal-link for="modal-estimate-overtime-rate">¿Qué pasa si me pagan una tarifa por horas extra?</modal-link>
@@ -715,7 +721,7 @@
     p-a88bb0: Si hay un pago adicional como un bono, propinas o pago por horas extra, también se incluirá en la cantidad de ingreso bruto.
     p-654d7e: <strong>Dónde encontrarlo</strong>
     p-22c78c: Revisa el talón de cheque por el <strong>monto bruto por periodo de pago.</strong> Este sólo incluye el pago por los días que trabajaste por este cheque.
-  modal-no-tax-on-tips-en:
+  modal-no-tax-on-tips:
     heading: ¿Cómo saber si soy elegible para la deducción de “no impuestos sobre propinas”?
     p-71332d: 'Para ser elegible para la deducción de “no impuestos sobre propinas” debes:'
     ul-0:
@@ -723,7 +729,7 @@
       li-830c05: tener un número de Seguro Social
     p-d2cd93: Si es difícil estimar el monto, puedes dejar la casilla en blanco.
     p-7abc41: <a href="https://www.irs.gov/businesses/small-businesses-self-employed/tips" target="_blank" class="usa-link usa-link--external">Conoce más sobre la deducción de no impuestos sobre propinas.<span class="usa-sr-only"/></a>
-  modal-no-tax-on-overtime-en:
+  modal-no-tax-on-overtime:
     heading: ¿Cómo saber si soy elegible para la deducción de “no impuestos sobre horas extra”?
     p-840df1: 'Para ser elegible para la deducción de “no impuestos sobre horas extra”:'
     ul-0:

@@ -356,6 +356,10 @@
           operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf"
           operator="isTrue">you don’t</span> have a Social Security number.
         modalLink: <modal-link for="modal-estimate-tips">How can I estimate tips?</modal-link>
+      /jobs/*/eligibleForNoTaxOnTips:
+        question: I’m not eligible for the “no tax on tips” deduction
+        modalLink: <modal-link for="modal-no-tax-on-tips">How do I know if I'm eligible
+          for the &quot;no tax on tips&quot; deduction?</modal-link>
     fg-detail-de7b9c:
       summary: Estimated overtime
       p-bc05b9: Overtime is extra pay earned by working more than 40 hours per week.
@@ -369,6 +373,10 @@
           operator="isFalse">your spouse doesn’t</span><span condition="/jobs/*/isFilerAssignmentSelf"
           operator="isTrue">you don’t</span> have a Social Security number.
         modalLink: <modal-link for="modal-estimate-overtime">How can I estimate overtime?</modal-link>
+      /jobs/*/eligibleForNoTaxOnOvertime:
+        question: I’m not eligible for the “no tax on overtime” deduction
+        modalLink: <modal-link for="modal-no-tax-on-overtime">How do I know if I'm
+          eligible for the &quot;no tax on overtime&quot; deduction?</modal-link>
       /jobs/*/overtimeCompensationRate:
         question: What is the rate at which you get paid overtime?
         modalLink: <modal-link for="modal-estimate-overtime-rate">What if I get paid
@@ -883,7 +891,7 @@
     p-654d7e: <strong>Where to find it</strong>
     p-22c78c: Check the paystub for the <strong>gross amount per pay period</strong>,
       which only includes the pay for the days you worked on this current paystub.
-  modal-no-tax-on-tips-en:
+  modal-no-tax-on-tips:
     heading: How do I know if I’m eligible for the “no tax on tips” deduction?
     p-71332d: 'To be eligible for the “no tax on tips” deduction, you must:'
     ul-0:
@@ -894,7 +902,7 @@
     p-7abc41: <a href="https://www.irs.gov/businesses/small-businesses-self-employed/tips"
       target="_blank" class="usa-link usa-link--external">Learn more about the no
       tax on tips deduction.<span class="usa-sr-only"/></a>
-  modal-no-tax-on-overtime-en:
+  modal-no-tax-on-overtime:
     heading: How do I know if I’m eligible for the “no tax on overtime” deduction?
     p-840df1: 'To be eligible for the “no tax on overtime” deduction, you must:'
     ul-0:
