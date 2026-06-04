@@ -42,10 +42,8 @@
         </fg-set>
         <h5>Timing</h5>
         <fg-set path="/jobs/*/isAllYear">
-          <question> Do <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
-            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
-            <!-- isIncomplete default needed because this appears before filer selected -->
-            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">you</span> expect to have this job all year or only part of the year? </question>
+          <question> Do <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
+            <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span> expect to have this job all year or only part of the year?</question>
           <input type="boolean">
             <option value="true">All year (January 1-December 31, <fg-show path="/taxYear"/>)</option>
             <option value="false">Part of the year</option>
@@ -53,28 +51,24 @@
         </fg-set>
         <fg-set path="/jobs/*/writableStartDate" if-true="/jobs/*/flowAskPartYearDates">
           <question> What’s the first day in <fg-show path="/taxYear"/>
-            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
-            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
-            expect to have this job? </question>
+            <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
+            <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span> expect to have this job?</question>
           <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/writableEndDate" if-true="/jobs/*/flowAskPartYearDates">
           <question> What’s the last day in <fg-show path="/taxYear"/>
-            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
-            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
-            expect to have this job? </question>
+            <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
+            <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span> expect to have this job?</question>
           <hint>It’s okay to estimate.</hint>
           <input type="date"/>
         </fg-set>
         <fg-set path="/jobs/*/payFrequency" if-true="/jobs/*/isPastJobIncompleteOrFalse">
-          <question>How frequently
-            <span condition="/jobs/*/isInFuture" operator="isFalse">are</span>
+          <question>How frequently <span condition="/jobs/*/isInFuture" operator="isIncompleteOrFalse">are</span>
             <span condition="/jobs/*/isInFuture" operator="isTrue">do</span>
             <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
             <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
-            <span condition="/jobs/*/isInFuture" operator="isTrue">expect to be</span>
-            paid?</question>
+            <span condition="/jobs/*/isInFuture" operator="isTrue">expect to be</span> paid?</question>
           <modal-link for="modal-pay-frequency">Learn more about pay frequency.</modal-link>
           <input type="enum" options-path="/payFrequencyOptions">
             <option value="weekly">Weekly</option>
@@ -90,7 +84,7 @@
               <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
               expect to be paid?</question>
             <hint>It’s okay to estimate.</hint>
-            <input type="int"></input>
+            <input type="int"/>
           </fg-set>
         </div>
         <div condition="/jobs/*/flowInitialQuestionsComplete" operator="isFalse">
@@ -208,10 +202,7 @@
               <span condition="/jobs/*/isInFuture" operator="isTrue">It’s okay to estimate or leave this blank.</span>
               <span condition="/jobs/*/isInFuture" operator="isFalse">If you don’t know, leave this blank.</span>
             </hint>
-            <modal-link for="modal-estimate-future-bonus">
-              <span condition="/jobs/*/isInFuture" operator="isTrue">What counts as bonus pay?</span>
-              <span condition="/jobs/*/isInFuture" operator="isFalse">How do I estimate future bonus pay?</span>
-            </modal-link>
+            <modal-link for="modal-estimate-future-bonus">How do I estimate future bonus pay?</modal-link>
             <input type="dollar"/>
           </fg-set>
           <div condition="/jobs/*/isInFuture" operator="isTrue">
@@ -230,8 +221,13 @@
         </div>
         <div condition="/jobs/*/showTipAndOvertime" operator="isTrueAndComplete">
           <h5>Estimated tips and overtime</h5>
-          <p>For 2025 through 2028, there are new deductions for tips and overtime. If <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse meets</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you meet</span> the eligibility requirements, you may be able to deduct (subtract) qualified tips and qualified overtime pay from your income.</p>
-          <p>If this section doesn’t apply to <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse,</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you,</span> it’s okay to leave this blank.</p>
+          <div condition="/jobs/*/isInFuture" operator="isTrue">
+            <p>If <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span> expect tips or overtime pay from this job, enter the amounts here.</p>
+          </div>
+          <div condition="/jobs/*/isInFuture" operator="isFalse">
+            <p>For 2025 through 2028, there are new deductions for tips and overtime. If <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse meets</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you meet</span> the eligibility requirements, you may be able to deduct (subtract) qualified tips and qualified overtime pay from your income.</p>
+            <p>If this section doesn’t apply to <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse,</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you,</span> it’s okay to leave this blank.</p>
+          </div>
           <fg-detail icon="chevron">
             <summary>Estimated tips</summary>
             <p>
@@ -294,31 +290,36 @@
           </fg-detail>
         </div>
         <div condition="/jobs/*/flowInitialQuestionsComplete" operator="isTrueAndComplete">
-          <h5>Federal taxes</h5>
-          <p>Use the most recent paystub to enter the following information.</p>
-          <fg-set path="/jobs/*/amountWithheldLastPaycheck" if-false="/jobs/*/isPastJob">
-            <question>Federal taxes withheld (paid) for this pay period</question>
-            <hint>Don’t include state and local taxes, Medicare, or Social Security.</hint>
-            <input type="dollar"/>
-            <modal-link for="modal-fed-tax-pay-period">
-              How do I find federal taxes withheld per pay period?
-            </modal-link>
-          </fg-set>
-          <fg-set path="/jobs/*/yearToDateWithholding">
-            <question>Federal taxes withheld (paid) so far in <fg-show path="/taxYear"/></question>
-            <hint>
-              This might be labeled year-to-date or YTD on your paystub. Don’t include state and
-              local taxes, Medicare, or Social Security.
-            </hint>
-            <input type="dollar"/>
-            <modal-link for="modal-fed-tax-ytd"> How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>? </modal-link>
-          </fg-set>
-        </div>
-        <div condition="/jobs/*/flowInitialQuestionsComplete" operator="isTrueAndComplete">
+          <div condition="/jobs/*/isInFuture" operator="isFalse">
+            <h5>Federal taxes</h5>
+            <p>Use the most recent paystub to enter the following information.</p>
+            <fg-set path="/jobs/*/amountWithheldLastPaycheck" if-false="/jobs/*/isPastJob">
+              <question>Federal taxes withheld (paid) for this pay period</question>
+              <hint>Don’t include state and local taxes, Medicare, or Social Security.</hint>
+              <input type="dollar"/>
+              <modal-link for="modal-fed-tax-pay-period">
+                How do I find federal taxes withheld per pay period?
+              </modal-link>
+            </fg-set>
+            <fg-set path="/jobs/*/yearToDateWithholding">
+              <question>Federal taxes withheld (paid) so far in <fg-show path="/taxYear"/></question>
+              <hint>
+                This might be labeled year-to-date or YTD on your paystub. Don’t include state and
+                local taxes, Medicare, or Social Security.
+              </hint>
+              <input type="dollar"/>
+              <modal-link for="modal-fed-tax-ytd"> How do I find federal taxes withheld so far in <fg-show path="/taxYear"/>? </modal-link>
+            </fg-set>
+          </div>
           <h5>Contributions</h5>
-          <p> Check <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse’s</span>
-            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span> paystub for pre-tax contributions (or payroll deductions) to help pay for benefits. </p>
-          <p> These contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section. </p>
+          <div condition="/jobs/*/isInFuture" operator="isFalse">
+            <p> Check <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse’s</span>
+            <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span> paystub for pre-tax contributions (or payroll deductions) to help pay for benefits.</p>
+            <p> These contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section.</p>
+          </div>
+          <div condition="/jobs/*/isInFuture" operator="isTrue">
+            <p>Pre-tax contributions through this job can reduce the amount of taxes <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span> owe.</p>
+          </div>
           <fg-detail icon="chevron">
             <summary>Retirement Plans</summary>
             <p>Enter total contributions made to retirement plans.</p>
@@ -339,7 +340,7 @@
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
-            <fg-set path="/jobs/*/retirementPlanContributionsToDate">
+            <fg-set path="/jobs/*/retirementPlanContributionsToDate" if-false="/jobs/*/isInFuture">
               <question>Amount so far in <fg-show path="/taxYear"/></question>
               <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
               <input type="dollar"/>
@@ -367,7 +368,7 @@
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
-            <fg-set path="/jobs/*/healthInsuranceContributionsToDate">
+            <fg-set path="/jobs/*/healthInsuranceContributionsToDate" if-false="/jobs/*/isInFuture">
               <question>Amount so far in <fg-show path="/taxYear"/></question>
               <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
               <input type="dollar"/>
@@ -382,7 +383,7 @@
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
-            <fg-set path="/jobs/*/hsaOrFsaContributionsToDate">
+            <fg-set path="/jobs/*/hsaOrFsaContributionsToDate" if-false="/jobs/*/isInFuture">
               <question>Amount so far in <fg-show path="/taxYear"/></question>
               <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
               <input type="dollar"/>
@@ -415,7 +416,7 @@
               <question>Amount per pay period</question>
               <input type="dollar"/>
             </fg-set>
-            <fg-set path="/jobs/*/otherPreTaxContributionsToDate">
+            <fg-set path="/jobs/*/otherPreTaxContributionsToDate" if-false="/jobs/*/isInFuture">
               <question>Amount so far in <fg-show path="/taxYear"/></question>
               <hint>This might be labeled year-to-date or YTD on your paystub.</hint>
               <input type="dollar"/>
@@ -489,8 +490,8 @@
             <modal-link for="modal-pension-gross-ytd-end">How do I find the gross income so far in <fg-show path="/taxYear"/>?</modal-link>
             <input type="dollar"/>
           </fg-set>
-          <div condition="/jobs/*/flowInitialQuestionsComplete" operator="isTrueAndComplete">
-            <div condition="/jobs/*/isInFuture" operator="isFalse">
+          <div condition="/pensions/*/flowInitialQuestionsComplete" operator="isTrueAndComplete">
+            <div condition="/pensions/*/isInFuture" operator="isFalse">
               <h5>Federal taxes</h5>
               <p>Use the most recent pension or annuity statement to enter the following information.</p>
               <fg-set path="/pensions/*/averageWithholdingPerPayPeriod" if-true="/pensions/*/isCurrentJob">
@@ -849,15 +850,15 @@
         <p>If your pay frequency doesn’t match one of these, then choose the closest option and adjust your pay accordingly.</p>
       </modal-content>
     </modal-dialog>
-    <modal-dialog id="modal-job-bonus-pay">
-      <modal-heading>
-        <span condition="/jobs/*/isInFuture" operator="isTrue">What counts as bonus pay?</span>
-        <span condition="/jobs/*/isInFuture" operator="isFalse">How do I estimate future bonus pay?</span>
-      </modal-heading>
+    <modal-dialog id="modal-estimate-future-bonus">
+      <modal-heading>How do I estimate future bonus pay?</modal-heading>
       <modal-content>
         <p>Bonus pay is usually a one-time payment in addition to regular wages.</p>
         <p>If you expect to receive a year-end or quarterly bonus from the employer, include that amount here.</p>
         <p>It’s okay to enter a best guess of what you will receive or leave it blank.</p>
+        <p><strong>Don’t include</strong> any past bonus pay that you already received this year.</p>
+        <p>If you expect to earn $1 million or more in bonuses for <fg-show path="/taxYear"/>, the estimator can’t calculate your withholding accurately. This includes any bonuses you’ve already received this year.</p>
+        <p>Check <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication 15</a> for help calculating withholding on high bonus pay, or consider consulting a tax professional.</p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-job-pay-dates">
@@ -1229,17 +1230,6 @@
           <li>Schedule E (Form 1040), Part II, Line 29a, Column h, for passive income</li>
           <li>Schedule E (Form 1040), Part II, Line 29a, Column k, for non-passive income</li>
         </ul>
-      </modal-content>
-    </modal-dialog>
-    <modal-dialog id="modal-estimate-future-bonus">
-      <modal-heading>How do I estimate future bonus pay?</modal-heading>
-      <modal-content>
-        <p>Bonus pay is usually a one-time payment in addition to regular wages.</p>
-        <p>If you expect to receive a year-end or quarterly bonus from the employer, include that amount here.</p>
-        <p>It’s okay to enter your best guess of what you will receive. You can also leave future bonus pay blank.</p>
-        <p><strong>Don’t include</strong> any past bonus pay that you already received this year.</p>
-        <p>If you expect to earn $1 million or more in bonuses for <fg-show path="/taxYear"/>, the estimator can’t calculate your withholding accurately. This includes any bonuses you’ve already received this year.</p>
-        <p>Check <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication 15</a> for help calculating withholding on high bonus pay, or consider consulting a tax professional.</p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-job-check-bonus">

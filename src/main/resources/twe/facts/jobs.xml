@@ -466,54 +466,54 @@
       </Placeholder>
     </Fact>
     <Fact path="/jobs/*/effectivePayPerPayPeriod">
-    <Description>
-      The effective pay per pay period for this job. For future jobs, this is derived from
-      the user-entered expected salary or hourly rate since there is no pay history.
-      For current and past jobs, this uses averagePayPerPayPeriodForWithholding which is
-      based on actual pay stubs.
-    </Description>
-    <Derived>
-      <Switch>
-        <Case>
-          <When>
-            <All>
+      <Description>
+        The effective pay per pay period for this job. For future jobs, this is derived from
+        the user-entered expected salary or hourly rate since there is no pay history.
+        For current and past jobs, this uses averagePayPerPayPeriodForWithholding which is
+        based on actual pay stubs.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <All>
+                <Dependency path="../isInFuture"/>
+                <Dependency path="../isHourlyJob"/>
+              </All>
+            </When>
+            <Then>
+              <Multiply>
+                <Dependency path="../expectedFuturePayPerHour"/>
+                <Dependency path="../hoursPerPayPeriod"/>
+              </Multiply>
+            </Then>
+          </Case>
+          <Case>
+            <When>
               <Dependency path="../isInFuture"/>
-              <Dependency path="../isHourlyJob"/>
-            </All>
-          </When>
-          <Then>
-            <Multiply>
-              <Dependency path="../expectedFuturePayPerHour"/>
-              <Dependency path="../hoursPerPayPeriod"/>
-            </Multiply>
-          </Then>
-        </Case>
-        <Case>
-          <When>
-            <Dependency path="../isInFuture"/>
-          </When>
-          <Then>
-            <Divide>
-              <Dividend>
-                <Dependency path="../expectedFutureAnnualSalary"/>
-              </Dividend>
-              <Divisors>
-                <Dependency path="../payPeriodsPerYear"/>
-              </Divisors>
-            </Divide>
-          </Then>
-        </Case>
-        <Case>
-          <When>
-            <True/>
-          </When>
-          <Then>
-            <Dependency path="../averagePayPerPayPeriodForWithholding"/>
-          </Then>
-        </Case>
-      </Switch>
-    </Derived>
-  </Fact>
+            </When>
+            <Then>
+              <Divide>
+                <Dividend>
+                  <Dependency path="../expectedFutureAnnualSalary"/>
+                </Dividend>
+                <Divisors>
+                  <Dependency path="../payPeriodsPerYear"/>
+                </Divisors>
+              </Divide>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../averagePayPerPayPeriodForWithholding"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/restOfYearIncome">
       <Description>This amount this job will pay for the rest of the year. Uses the same
         per-period basis as withholding (averagePayPerPayPeriodForWithholding) so W-4 job
@@ -534,7 +534,7 @@
             </When>
             <Then>
               <Multiply>
-                <Dependency path="../effectivePayPerPayPeriod"></Dependency>
+                <Dependency path="../effectivePayPerPayPeriod"/>
                 <Dependency path="../remainingPayPeriodsRational"/>
               </Multiply>
             </Then>
@@ -676,7 +676,7 @@
       <Writable>
         <Int/>
       </Writable>
-       <Placeholder>
+      <Placeholder>
         <Int>0</Int>
       </Placeholder>
     </Fact>
@@ -729,7 +729,7 @@
                       <Dependency path="../payPeriodsPerYear"/>
                     </Divisors>
                   </Divide>
-                  <Dependency path="../remainingPayPeriodsInteger"></Dependency>
+                  <Dependency path="../remainingPayPeriodsInteger"/>
                 </Multiply>
               </Then>
             </Case>

@@ -165,10 +165,8 @@
     h5-d3b69e: Timing
     /jobs/*/isAllYear:
       question: |-
-        Do <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
-                    <!-- isIncomplete default needed because this appears before filer selected -->
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">you</span> expect to have this job all year or only part of the year?
+        Do <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span> expect to have this job all year or only part of the year?
       options:
         'true':
           name: All year (January 1-December 31, <fg-show path="/taxYear"/>)
@@ -177,26 +175,22 @@
     /jobs/*/writableStartDate:
       question: |-
         What’s the first day in <fg-show path="/taxYear"/>
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
-                    expect to have this job?
+                    <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span> expect to have this job?
       hint: It’s okay to estimate.
     /jobs/*/writableEndDate:
       question: |-
         What’s the last day in <fg-show path="/taxYear"/>
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span>
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span>
-                    expect to have this job?
+                    <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span> expect to have this job?
       hint: It’s okay to estimate.
     /jobs/*/payFrequency:
       question: |-
-        How frequently
-                    <span condition="/jobs/*/isInFuture" operator="isFalse">are</span>
+        How frequently <span condition="/jobs/*/isInFuture" operator="isIncompleteOrFalse">are</span>
                     <span condition="/jobs/*/isInFuture" operator="isTrue">do</span>
                     <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
                     <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
-                    <span condition="/jobs/*/isInFuture" operator="isTrue">expect to be</span>
-                    paid?
+                    <span condition="/jobs/*/isInFuture" operator="isTrue">expect to be</span> paid?
       modalLink: <modal-link for="modal-pay-frequency">Learn more about pay frequency.</modal-link>
       options:
         weekly:
@@ -315,11 +309,8 @@
       hint: |-
         <span condition="/jobs/*/isInFuture" operator="isTrue">It’s okay to estimate or leave this blank.</span>
                       <span condition="/jobs/*/isInFuture" operator="isFalse">If you don’t know, leave this blank.</span>
-      modalLink: |-
-        <modal-link for="modal-estimate-future-bonus">
-                      <span condition="/jobs/*/isInFuture" operator="isTrue">What counts as bonus pay?</span>
-                      <span condition="/jobs/*/isInFuture" operator="isFalse">How do I estimate future bonus pay?</span>
-                    </modal-link>
+      modalLink: <modal-link for="modal-estimate-future-bonus">How do I estimate future
+        bonus pay?</modal-link>
     p-07e933: '<strong>Estimated <fg-show path="/taxYear"/> income: <fg-show path="/jobs/*/expectedFutureIncome"/></strong>'
     p-372bcf: If this amount looks wrong, update your previous answers.
     /jobs/*/yearToDateIncome:
@@ -331,6 +322,9 @@
       modalLink: <modal-link for="modal-job-gross-ytd-end">How do I find the gross
         income so far in <fg-show path="/taxYear"/>?</modal-link>
     h5-64d83a: Estimated tips and overtime
+    p-541b67: If <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span><span
+      condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span> expect
+      tips or overtime pay from this job, enter the amounts here.
     p-902fc0: For 2025 through 2028, there are new deductions for tips and overtime.
       If <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse
       meets</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you
@@ -393,13 +387,13 @@
       hint: Don’t include state and local taxes, Medicare, or Social Security.
       modalLink: |-
         <modal-link for="modal-fed-tax-pay-period">
-                      How do I find federal taxes withheld per pay period?
-                    </modal-link>
+                        How do I find federal taxes withheld per pay period?
+                      </modal-link>
     /jobs/*/yearToDateWithholding:
       question: Federal taxes withheld (paid) so far in <fg-show path="/taxYear"/>
       hint: |-
         This might be labeled year-to-date or YTD on your paystub. Don’t include state and
-                      local taxes, Medicare, or Social Security.
+                        local taxes, Medicare, or Social Security.
       modalLink: <modal-link for="modal-fed-tax-ytd"> How do I find federal taxes
         withheld so far in <fg-show path="/taxYear"/>? </modal-link>
     h5-4504e1: Contributions
@@ -408,6 +402,9 @@
                   <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">your</span> paystub for pre-tax contributions (or payroll deductions) to help pay for benefits.
     p-de6d98: These contribution amounts can usually be found under a <strong>Deductions</strong>
       or <strong>Pre-Tax</strong> section.
+    p-a40a0f: Pre-tax contributions through this job can reduce the amount of taxes
+      <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span><span
+      condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span> owe.
     fg-detail-023b9b:
       summary: Retirement Plans
       p-456da9: Enter total contributions made to retirement plans.
@@ -862,15 +859,21 @@
       li-fdcbf1: '<strong>Once monthly</strong>: Paid one time per month'
     p-8ef9ed: If your pay frequency doesn’t match one of these, then choose the closest
       option and adjust your pay accordingly.
-  modal-job-bonus-pay:
-    heading: "\n        <span condition=\"/jobs/*/isInFuture\" operator=\"isTrue\"\
-      >What counts as bonus pay?</span>\n        <span condition=\"/jobs/*/isInFuture\"\
-      \ operator=\"isFalse\">How do I estimate future bonus pay?</span>\n      "
+  modal-estimate-future-bonus:
+    heading: How do I estimate future bonus pay?
     p-185c7d: Bonus pay is usually a one-time payment in addition to regular wages.
     p-74fc7e: If you expect to receive a year-end or quarterly bonus from the employer,
       include that amount here.
     p-89cc04: It’s okay to enter a best guess of what you will receive or leave it
       blank.
+    p-9b4c52: <strong>Don’t include</strong> any past bonus pay that you already received
+      this year.
+    p-1b848e: If you expect to earn $1 million or more in bonuses for <fg-show path="/taxYear"/>,
+      the estimator can’t calculate your withholding accurately. This includes any
+      bonuses you’ve already received this year.
+    p-74606c: Check <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication
+      15</a> for help calculating withholding on high bonus pay, or consider consulting
+      a tax professional.
   modal-job-pay-dates:
     heading: Learn more about pay frequency
     p-8b4b93: |-
@@ -1237,21 +1240,6 @@
         income
       li-f37c1e: Schedule E (Form 1040), Part II, Line 29a, Column k, for non-passive
         income
-  modal-estimate-future-bonus:
-    heading: How do I estimate future bonus pay?
-    p-185c7d: Bonus pay is usually a one-time payment in addition to regular wages.
-    p-74fc7e: If you expect to receive a year-end or quarterly bonus from the employer,
-      include that amount here.
-    p-c6a009: It’s okay to enter your best guess of what you will receive. You can
-      also leave future bonus pay blank.
-    p-9b4c52: <strong>Don’t include</strong> any past bonus pay that you already received
-      this year.
-    p-1b848e: If you expect to earn $1 million or more in bonuses for <fg-show path="/taxYear"/>,
-      the estimator can’t calculate your withholding accurately. This includes any
-      bonuses you’ve already received this year.
-    p-74606c: Check <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication
-      15</a> for help calculating withholding on high bonus pay, or consider consulting
-      a tax professional.
   modal-job-check-bonus:
     heading: How do I check if there’s a bonus this pay period?
     p-9a2f97: Bonus pay is usually a one-time payment in addition to your regular

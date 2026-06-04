@@ -128,19 +128,18 @@
           name: Salario (la paga es casi igual en cada periodo de pago)
     h5-d3b69e: Duración
     /jobs/*/isAllYear:
-      question: <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">¿Espera</span>
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">¿Esperas</span>
-                    <span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">¿Esperas</span> tener este trabajo todo el año o solo parte del año?
+      question: <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">¿Espera</span>
+                    <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">¿Esperas</span> tener este trabajo todo el año o solo parte del año?
       options:
         'true':
           name: Todo el año (1 de enero al 31 de diciembre del <fg-show path="/taxYear"/>)
         'false':
           name: Parte del año
     /jobs/*/writableStartDate:
-      question: ¿Cuál es el primer día del <fg-show path="/taxYear"/> en el que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">espera</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">esperas</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">esperas</span> tener este trabajo?
+      question: ¿Cuál es el primer día del <fg-show path="/taxYear"/> en el que <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">espera</span><span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">esperas</span> tener este trabajo?
       hint: Puedes estimar la fecha.
     /jobs/*/writableEndDate:
-      question: ¿Cuál es el último día del <fg-show path="/taxYear"/> que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">espera</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">esperas</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isIncomplete">esperas</span> tener este trabajo?
+      question: ¿Cuál es el último día del <fg-show path="/taxYear"/> que <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">espera</span><span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">esperas</span> tener este trabajo?
       hint: Puedes estimar la fecha.
     /jobs/*/payFrequency:
       question: ¿Con qué frecuencia <span condition="/jobs/*/isInFuture" operator="isFalse">le</span><span condition="/jobs/*/isInFuture" operator="isTrue">espera</span> <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">que te</span><span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">que le</span><span condition="/jobs/*/isInFuture" operator="isTrue"> paguen</span><span condition="/jobs/*/isInFuture" operator="isFalse"> pagan</span>?
@@ -232,7 +231,7 @@
     /jobs/*/totalFutureBonus:
       question: <span condition="/jobs/*/isInFuture" operator="isTrue">Bonos que <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">esperas</span><span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">espera</span> ganar en el <fg-show path="/taxYear"/></span><span condition="/jobs/*/isInFuture" operator="isFalse">Estima el monto de los bonos que <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">piensas</span><span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">piensa</span> que <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">recibirá</span><span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">recibirás</span> durante el resto del <fg-show path="/taxYear"/></span>
       hint: <span condition="/jobs/*/isInFuture" operator="isTrue">Puedes estimarlo o dejarlo en blanco.</span><span condition="/jobs/*/isInFuture" operator="isFalse">Si no lo sabes, puedes dejarlo en blanco.</span>
-      modalLink: <modal-link for="modal-estimate-future-bonus"><span condition="/jobs/*/isInFuture" operator="isTrue">¿Qué cuenta como bono?</span><span condition="/jobs/*/isInFuture" operator="isFalse">¿Cómo puedo estimar bonos futuros?</span></modal-link>
+      modalLink: <modal-link for="modal-estimate-future-bonus">¿Cómo puedo estimar bonos futuros?</modal-link>
     p-07e933: '<strong>Ingresos estimados del <fg-show path="/taxYear"/>: <fg-show path="/jobs/*/expectedFutureIncome"/></strong>'
     p-372bcf: Si el monto parece incorrecto, revisa las respuestas anteriores
     /jobs/*/yearToDateIncome:
@@ -240,6 +239,7 @@
       hint: Esto puede llamarse “year-to-date“ o “YTD“ en tu talón de cheque. Incluye bonos, propinas, y pago por tiempo extra.
       modalLink: <modal-link for="modal-job-gross-ytd-end">¿Cómo puedo encontrar el ingreso bruto en lo que va del <fg-show path="/taxYear"/>?</modal-link>
     h5-64d83a: Propinas y horas extra estimadas
+    p-541b67: Si <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">esperas</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">espera</span> recibir propinas o pago por horas extra en este trabajo, ingrésalo aquí.
     p-902fc0: Existen nuevas deducciones para propinas y horas extra desde el año 2025 al 2028. Si cumples con los requisitos para ser elegible, <span condition="/jobs/*/isFilerAssignmentSelf"
         operator="isFalse">podría</span><span condition="/jobs/*/isFilerAssignmentSelf"
         operator="isTrue">podrías</span> deducir (restar) de <span condition="/jobs/*/isFilerAssignmentSelf"
@@ -295,6 +295,7 @@
     h5-4504e1: Contribuciones
     p-1c3f63: Consulta <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span> talón de cheque para conocer las contribuciones pre-impuestos (también las llaman "payroll deductions") que ayudan a pagar por beneficios.
     p-de6d98: Estas contribuciones pueden encontrarse bajo las secciones de <strong>deducciones</strong> o <strong>pre-impuestos</strong> ("Deductions" o "Pre-Tax").
+    p-a40a0f: Algunas de las contribuciones que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">haces</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">hace</span> a través de <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> trabajo reducen el monto de impuestos que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">debes</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">debe</span> pagar.
     fg-detail-023b9b:
       summary: Planes de jubilación
       p-456da9: Ingresa el total de las contribuciones hechas a planes de jubilación.
@@ -703,12 +704,6 @@
       li-569d8d: <strong>Dos veces al mes:</strong> Siempre se le paga dos veces al mes o en ciertas fechas. Por ejemplo, los días 1 y 15 de cada mes.
       li-fdcbf1: <strong>Una vez al mes:</strong> Se le paga una vez por mes.
     p-8ef9ed: Si la frecuencia de tus pagos no coincide con alguna de estas opciones, elige la opción más parecida y ajusta el monto de tu pago según tu elección.
-  modal-job-bonus-pay:
-    heading: "<span condition=\"/jobs/*/isInFuture\" operator=\"isTrue\"\
-      >¿Qué cuenta como un bono?</span><span condition=\"/jobs/*/isInFuture\" operator=\"isFalse\">¿Qué cuenta como un bono y cómo puedo incluirlo?</span>"
-    p-185c7d: Usualmente, los bonos son un pago único y adicional a tu salario regular.
-    p-74fc7e: Si esperas recibir un bono de tu empleador a fin de año o fin de trimestre, incluye esa cantidad.
-    p-89cc04: Está bien incluir una idea del monto que recibirás. También puedes dejar la casilla de bonos futuros en blanco.
   modal-job-pay-dates:
     heading: ¿Dónde encuentro el período de pago y la fecha de pago?
     p-8b4b93: Puedes encontrar el periodo de pago y la fecha de pago en el talón de cheque, el documento que acompaña el cheque e incluye los detalles del pago.
@@ -938,7 +933,7 @@
     heading: ¿Cómo puedo estimar el monto de bonos futuros?
     p-185c7d: Usualmente, un bono es un pago único adicional a tu salario.
     p-74fc7e: Si esperas recibir un bono a fin de año o a fin de trimestre, incluye esta cantidad.
-    p-c6a009: Está bien incluir una idea de la cantidad que recibirás. También puedes dejar la casilla de bonos futuros en blanco.
+    p-89cc04: Está bien incluir una idea del monto que recibirás. También puedes dejar la casilla de bonos futuros en blanco.
     p-9b4c52: <strong>No incluyas</strong> pagos de bonos pasados que ya recibiste este año.
     p-1b848e: Si en el <fg-show path="/taxYear"/> esperas ganar $1 millón o más en bonos, el estimador no podrá hace un cálculo preciso para tu estimado. Esto incluye todo bono que ya recibiste este año.
     p-74606c: Revisa la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15sp#es_ES_2026_publink1000143523">Publicación 15</a> para ayuda con el cálculo de retenciones en bonos de monto alto, o considera consultar con un profesional de impuestos.
