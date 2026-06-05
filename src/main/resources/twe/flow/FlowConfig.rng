@@ -1,621 +1,299 @@
 <grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
 
+  <!--
+    Editor-assist schema only.
+    This file is intentionally permissive and is not the source of truth for
+    runtime flow validation. The Scala parser defines actual supported behavior.
+  -->
+
   <start>
-    <ref name="FlowConfigContent"/>
+    <ref name="FlowConfig"/>
   </start>
 
-  <define name="FlowConfigContent">
+  <!--
+    Root element. The flow index (index.xml) lists modules, while each module
+    file (about-you.xml, income.xml, etc.) defines a single page. Both share the
+    FlowConfig root, so it accepts a mix of <module> and <page> children.
+  -->
+  <define name="FlowConfig">
     <element name="FlowConfig">
       <oneOrMore>
-        <ref name="flowPageStructure"/>
+        <choice>
+          <ref name="module"/>
+          <ref name="page"/>
+        </choice>
       </oneOrMore>
     </element>
   </define>
 
-  <define name="flowPageStructure">
-    <oneOrMore>
-      <choice>
-        <element name="module">
-          <attribute name="src">
-            <data type="anyURI"/>
-          </attribute>
-        </element>
-
-        <element name="page">
-          <attribute name="title">
-            <text/>
-          </attribute>
-          <attribute name="route">
-            <data type="token"/>
-          </attribute>
-          <optional>
-            <attribute name="exclude-from-stepper">
-            </attribute>
-          </optional>
-          <optional>
-            <attribute name="html-src">
-            </attribute>
-          </optional>
-          <zeroOrMore>
-            <element name="section">
-              <ref name="FlowConfigModuleContent"/>
-            </element>
-          </zeroOrMore>
-          <zeroOrMore>
-            <element name="modal-dialog">
-              <attribute name="id">
-                <text/>
-              </attribute>
-              <element name="modal-heading">
-                <ref name="FlowConfigModuleInlineContent"/>
-              </element>
-              <element name="modal-content">
-                <oneOrMore>
-                  <choice>
-                    <ref name="HtmlBlockContent"/>
-                    <ref name="FlowConfigModuleInlineContent"/>
-                  </choice>
-                </oneOrMore>
-              </element>
-            </element>
-          </zeroOrMore>
-        </element>
-      </choice>
-    </oneOrMore>
-  </define>
-
-  <define name="fg-set-module">
-    <element name="fg-set">
-      <attribute name="path">
+  <define name="module">
+    <element name="module">
+      <attribute name="src">
         <data type="anyURI"/>
       </attribute>
-      <optional>
+    </element>
+  </define>
+
+  <define name="page">
+    <element name="page">
+      <attribute name="title">
+        <text/>
+      </attribute>
+      <attribute name="route">
+        <data type="token"/>
+      </attribute>
+      <zeroOrMore>
         <choice>
-          <attribute name="if-false">
-            <data type="anyURI"/>
-          </attribute>
-          <attribute name="if-true">
-            <data type="anyURI"/>
-          </attribute>
+          <element name="section">
+            <ref name="BlockContent"/>
+          </element>
+          <ref name="modal-dialog"/>
         </choice>
-      </optional>
-      <ref name="fg-set-content"/>
+      </zeroOrMore>
     </element>
   </define>
 
-  <define name="ContentKey">
-    <attribute name="content-key">
-      <text/>
-    </attribute>
-  </define>
-
-  <define name="fg-set-content">
+  <!--
+    The condition/operator pair gates whether a node is shown. When present, both
+    attributes appear together, so they are grouped as a single optional unit.
+  -->
+  <define name="conditionAttrs">
     <optional>
-      <attribute name="optional">
-        <value>true</value>
-      </attribute>
-    </optional>
-    <element name="question">
-      <ref name="FlowConfigModuleInlineContent"/>
-    </element>
-    <optional>
-      <element name="hint">
-        <ref name="FlowConfigModuleInlineContent"/>
-      </element>
-    </optional>
-    <optional>
-      <ref name="modal-link-module"/>
-    </optional>
-    <choice>
-      <element name="input">
-        <attribute name="type">
-          <choice>
-            <value>dollar</value>
-            <value>text</value>
-            <value>date</value>
-            <value>int</value>
-          </choice>
-        </attribute>
-      </element>
-      <element name="input">
-        <attribute name="type">
-          <value>boolean</value>
-        </attribute>
-        <zeroOrMore>
-          <element name="option">
-            <attribute name="value">
-              <choice>
-                <value>false</value>
-                <value>true</value>
-              </choice>
-            </attribute>
-            <ref name="FlowConfigModuleInlineContent"/>
-          </element>
-        </zeroOrMore>
-      </element>
-      <element name="input">
-        <attribute name="type">
-          <value>enum</value>
-        </attribute>
-        <attribute name="options-path">
-          <data type="anyURI"/>
-        </attribute>
-        <oneOrMore>
-          <element name="option">
-            <attribute name="value">
-              <data type="token"/>
-            </attribute>
-            <optional>
-              <attribute name="description-key">
-                <text/>
-              </attribute>
-            </optional>
-            <text/>
-          </element>
-        </oneOrMore>
-      </element>
-      <element name="input">
-        <attribute name="type">
-          <value>multi-enum</value>
-        </attribute>
-        <attribute name="options-path">
-          <data type="anyURI"/>
-        </attribute>
-        <oneOrMore>
-          <element name="option">
-            <attribute name="value">
-              <data type="token"/>
-            </attribute>
-            <optional>
-              <attribute name="description-key">
-                <text/>
-              </attribute>
-            </optional>
-            <text/>
-          </element>
-        </oneOrMore>
-      </element>
-      <element name="select">
-        <attribute name="options-path">
-          <data type="anyURI"/>
-        </attribute>
-        <oneOrMore>
-          <element name="option">
-            <attribute name="value">
-              <data type="token"/>
-            </attribute>
-            <text/>
-          </element>
-        </oneOrMore>
-      </element>
-      <element name="input">
-        <attribute name="type">
-          <value>single-checkbox</value>
-        </attribute>
-        <element name="option">
-          <attribute name="value">
-            <data type="token"/>
-          </attribute>
-          <text/>
-        </element>
-      </element>
-    </choice>
-  </define>
-
-  <define name="fg-collection-module">
-    <element name="fg-collection">
-      <attribute name="path">
-        <data type="anyURI"/>
-      </attribute>
-      <optional>
-        <attribute name="disallow-empty">
-          <choice>
-            <value>true</value>
-            <value>false</value>
-          </choice>
-        </attribute>
-      </optional>
-      <interleave>
-        <oneOrMore>
-          <ref name="fg-set-module"></ref>
-        </oneOrMore>
-        <zeroOrMore>
-          <ref name="fg-section-gate-module"/>
-        </zeroOrMore>
-        <zeroOrMore>
-          <ref name="HtmlBlockContent"/>
-        </zeroOrMore>
-      </interleave>
-    </element>
-  </define>
-
-  <define name="fg-section-gate-module">
-    <element name="fg-section-gate">
       <group>
         <attribute name="condition">
           <data type="anyURI"/>
         </attribute>
         <attribute name="operator">
-          <choice>
-            <value>isTrue</value>
-            <value>isFalse</value>
-            <value>isZero</value>
-            <value>isGreaterThanZero</value>
-            <value>isIncomplete</value>
-          </choice>
-        </attribute>
-        <attribute name="state">
-          <choice>
-            <value>pending</value>
-            <value>complete</value>
-          </choice>
+          <ref name="operatorValue"/>
         </attribute>
       </group>
-      <element name="heading">
-        <ref name="FlowConfigModuleInlineContent"/>
-      </element>
-      <element name="content">
-        <ref name="FlowConfigModuleInlineContent"/>
-      </element>
-    </element>
+    </optional>
   </define>
 
-  <define name="details-module">
-    <element name="details">
-      <attribute name="open">
-        <value>true</value>
-      </attribute>
-      <element name="summary">
-        <choice>
-          <element name="h1">
-            <ref name="FlowConfigModuleInlineContent"/>
-          </element>
-          <element name="h2">
-            <ref name="FlowConfigModuleInlineContent"/>
-          </element>
-          <ref name="FlowConfigModuleInlineContent"/>
-        </choice>
-      </element>
-      <optional>
-        <element name="div">
-          <attribute name="class">
-            <text/>
-          </attribute>
-          <ref name="HtmlBlockContent"/>
-        </element>
-      </optional>
-      <zeroOrMore>
-        <choice>
-          <ref name="fg-set-module"/>
-          <ref name="fg-collection-module"/>
-          <ref name="fg-section-gate-module"/>
-        </choice>
-      </zeroOrMore>
-    </element>
+  <define name="operatorValue">
+    <choice>
+      <value>isTrue</value>
+      <value>isFalse</value>
+      <value>isZero</value>
+      <value>isGreaterThanZero</value>
+      <value>isIncomplete</value>
+      <value>isIncompleteOrFalse</value>
+      <value>isTrueAndComplete</value>
+      <value>notHasValue</value>
+    </choice>
   </define>
 
-  <define name="fg-detail-module">
-    <element name="fg-detail">
-      <optional>
-        <attribute name="icon">
-          <text/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="heading-tag">
-          <text/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="open">
-          <text/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="condition">
-          <data type="anyURI"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="operator">
-          <choice>
-            <value>isTrue</value>
-            <value>isFalse</value>
-          </choice>
-        </attribute>
-      </optional>
-      <element name="summary">
-        <ref name="FlowConfigModuleInlineContent"/>
-      </element>
-      <zeroOrMore>
-        <choice>
-          <ref name="HtmlBlockContent"/>
-          <ref name="fg-set-module"/>
-          <ref name="fg-collection-module"/>
-          <ref name="fg-section-gate-module"/>
-        </choice>
-      </zeroOrMore>
-    </element>
-  </define>
-
-  <define name="fg-reset-module">
-    <element name="fg-reset">
-      <element name="button">
-        <attribute name="class">
-          <text/>
-        </attribute>
-        <attribute name="type">
-          <value>reset</value>
-        </attribute>
-        <text/>
-      </element>
-    </element>
-  </define>
-
-  <define name="fg-show-module">
-    <element name="fg-show">
-      <attribute name="path">
-        <data type="anyURI"/>
-      </attribute>
-    </element>
-  </define>
-
-  <define name="fg-alert-module">
-    <element name="fg-alert">
-      <attribute name="alert-type">
-        <choice>
-          <value>info</value>
-          <value>warning</value>
-          <value>success</value>
-          <value>error</value>
-          <value>emergency</value>
-        </choice>
-      </attribute>
-      <optional>
-        <attribute name="slim">
-          <value>true</value>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="icon">
-          <value>false</value>
-        </attribute>
-      </optional>
-      <optional>
-        <choice>
-          <attribute name="if-false">
-            <data type="anyURI"/>
-          </attribute>
-          <attribute name="if-true">
-            <data type="anyURI"/>
-          </attribute>
-        </choice>
-      </optional>
-
-      <element name="heading">
-        <ref name="FlowConfigModuleInlineContent"/>
-      </element>
-      <oneOrMore>
-        <element name="p">
-          <ref name="FlowConfigModuleInlineContent"/>
-        </element>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="modal-link-module">
-    <element name="modal-link">
-      <attribute name="for">
-        <data type="anyURI"/>
-      </attribute>
-      <ref name="FlowConfigModuleInlineContent"/>
-    </element>
-  </define>
-
-  <define name="HtmlBlockContent">
+  <!--
+    Block-level content shared by <section>, <div>, <fg-collection>, <fg-detail>
+    and modal content. Items may appear in any order and repeat.
+  -->
+  <define name="BlockContent">
     <zeroOrMore>
       <choice>
-        <element name="h1">
-          <ref name="FlowConfigModuleInlineContent"/>
-        </element>
-        <element name="h2">
-          <optional>
-            <group>
-              <attribute name="condition">
-                <data type="anyURI"/>
-              </attribute>
-              <attribute name="operator">
-                <choice>
-                  <value>isTrue</value>
-                  <value>isFalse</value>
-                  <value>isZero</value>
-                  <value>isGreaterThanZero</value>
-                  <value>isIncomplete</value>
-                </choice>
-              </attribute>
-            </group>
-          </optional>
-          <ref name="FlowConfigModuleInlineContent"/>
-        </element>
-        <element name="h3">
-          <optional>
-            <attribute name="class">
-              <text/>
-            </attribute>
-          </optional>
-          <optional>
-            <group>
-              <attribute name="condition">
-                <data type="anyURI"/>
-              </attribute>
-              <attribute name="operator">
-                <choice>
-                  <value>isTrue</value>
-                  <value>isFalse</value>
-                  <value>isZero</value>
-                  <value>isGreaterThanZero</value>
-                  <value>isIncomplete</value>
-                </choice>
-              </attribute>
-            </group>
-          </optional>
-          <ref name="FlowConfigModuleInlineContent"/>
-        </element>
-        <element name="h4">
-          <optional>
-            <attribute name="class">
-              <text/>
-            </attribute>
-          </optional>
-          <optional>
-            <group>
-              <attribute name="condition">
-                <data type="anyURI"/>
-              </attribute>
-              <attribute name="operator">
-                <choice>
-                  <value>isTrue</value>
-                  <value>isFalse</value>
-                  <value>isZero</value>
-                  <value>isGreaterThanZero</value>
-                  <value>isIncomplete</value>
-                </choice>
-              </attribute>
-            </group>
-          </optional>
-          <ref name="FlowConfigModuleInlineContent"/>
-        </element>
-        <element name="h5">
-          <optional>
-            <attribute name="class">
-              <text/>
-            </attribute>
-          </optional>
-          <optional>
-            <group>
-              <attribute name="condition">
-                <data type="anyURI"/>
-              </attribute>
-              <attribute name="operator">
-                <choice>
-                  <value>isTrue</value>
-                  <value>isFalse</value>
-                  <value>isZero</value>
-                  <value>isGreaterThanZero</value>
-                  <value>isIncomplete</value>
-                </choice>
-              </attribute>
-            </group>
-          </optional>
-          <ref name="FlowConfigModuleInlineContent"/>
-        </element>
-        <element name="p">
-          <optional>
-            <attribute name="class">
-              <text/>
-            </attribute>
-          </optional>
-          <optional>
-            <group>
-              <attribute name="condition">
-                <data type="anyURI"/>
-              </attribute>
-              <attribute name="operator">
-                <choice>
-                  <value>isTrue</value>
-                  <value>isFalse</value>
-                  <value>isZero</value>
-                  <value>isGreaterThanZero</value>
-                  <value>isIncomplete</value>
-                </choice>
-              </attribute>
-            </group>
-          </optional>
-          <ref name="FlowConfigModuleInlineContent"/>
-        </element>
-        <element name="ol">
-          <optional>
-            <attribute name="class">
-              <text/>
-            </attribute>
-          </optional>
-          <oneOrMore>
-            <element name="li">
-              <optional>
-                <attribute name="class">
-                  <text/>
-                </attribute>
-              </optional>
-              <mixed>
-                <zeroOrMore>
-                  <ref name="HtmlBlockContent"/>
-                </zeroOrMore>
-              </mixed>
-            </element>
-          </oneOrMore>
-        </element>
-        <element name="ul">
-          <optional>
-            <attribute name="class">
-              <text/>
-            </attribute>
-          </optional>
-          <optional>
-            <group>
-              <attribute name="condition">
-                <data type="anyURI"/>
-              </attribute>
-              <attribute name="operator">
-                <choice>
-                  <value>isTrue</value>
-                  <value>isFalse</value>
-                </choice>
-              </attribute>
-            </group>
-          </optional>
-          <oneOrMore>
-            <element name="li">
-              <optional>
-                <attribute name="class">
-                  <text/>
-                </attribute>
-              </optional>
-              <mixed>
-                <zeroOrMore>
-                  <ref name="HtmlBlockContent"/>
-                  <ref name="fg-show-module"/>
-                </zeroOrMore>
-              </mixed>
-            </element>
-          </oneOrMore>
-        </element>
-        <element name="table">
-          <attribute name="class">
-            <text/>
-          </attribute>
-          <ref name="TableContent"/>
-        </element>
-        <element name="button">
-          <attribute name="onclick">
-            <text/>
-          </attribute>
-          <attribute name="class">
-            <text/>
-          </attribute>
-          <attribute name="type">
-            <text/>
-          </attribute>
-          <ref name="FlowConfigModuleInlineContent"></ref>
-        </element>
+        <ref name="p"/>
+        <ref name="heading-elements"/>
+        <ref name="ul"/>
+        <ref name="ol"/>
+        <ref name="div"/>
+        <ref name="table"/>
+        <ref name="fg-set"/>
+        <ref name="fg-alert"/>
+        <ref name="fg-collection"/>
+        <ref name="fg-detail"/>
+        <ref name="fg-withholding-adjustments"/>
       </choice>
     </zeroOrMore>
   </define>
 
-  <define name="FlowConfigModuleInlineContent">
+  <define name="heading-elements">
+    <choice>
+      <ref name="h2"/>
+      <ref name="h3"/>
+      <ref name="h4"/>
+      <ref name="h5"/>
+    </choice>
+  </define>
+
+  <define name="HeadingAttributes">
+    <ref name="conditionAttrs"/>
+    <ref name="InlineContent"/>
+    <optional>
+      <attribute name="class">
+        <text/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="id">
+        <text/>
+      </attribute>
+    </optional>
+  </define>
+
+  <define name="h2">
+    <element name="h2">
+      <ref name="HeadingAttributes"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="h3">
+    <element name="h3">
+      <ref name="HeadingAttributes"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="h4">
+    <element name="h4">
+      <ref name="HeadingAttributes"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="h5">
+    <element name="h5">
+      <ref name="HeadingAttributes"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="p">
+    <element name="p">
+      <optional>
+        <attribute name="class">
+          <text/>
+        </attribute>
+      </optional>
+      <ref name="conditionAttrs"/>
+      <ref name="InlineContent"/>
+    </element>
+  </define>
+
+  <define name="div">
+    <element name="div">
+      <optional>
+        <attribute name="class">
+          <text/>
+        </attribute>
+      </optional>
+      <ref name="conditionAttrs"/>
+      <ref name="BlockContent"/>
+    </element>
+  </define>
+
+  <define name="ul">
+    <element name="ul">
+      <optional>
+        <attribute name="class">
+          <text/>
+        </attribute>
+      </optional>
+      <ref name="conditionAttrs"/>
+      <oneOrMore>
+        <ref name="li"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="ol">
+    <element name="ol">
+      <optional>
+        <attribute name="class">
+          <text/>
+        </attribute>
+      </optional>
+      <ref name="conditionAttrs"/>
+      <oneOrMore>
+        <ref name="li"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="li">
+    <element name="li">
+      <optional>
+        <attribute name="class">
+          <text/>
+        </attribute>
+      </optional>
+      <ref name="conditionAttrs"/>
+      <ref name="InlineContent"/>
+    </element>
+  </define>
+
+  <define name="table">
+    <element name="table">
+      <optional>
+        <attribute name="class">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <element name="caption">
+          <optional>
+            <attribute name="class">
+              <text/>
+            </attribute>
+          </optional>
+          <ref name="InlineContent"/>
+        </element>
+      </optional>
+      <optional>
+        <element name="thead">
+          <optional>
+            <attribute name="class">
+              <text/>
+            </attribute>
+          </optional>
+          <oneOrMore>
+            <ref name="tr"/>
+          </oneOrMore>
+        </element>
+      </optional>
+      <oneOrMore>
+        <element name="tbody">
+          <oneOrMore>
+            <ref name="tr"/>
+          </oneOrMore>
+        </element>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="tr">
+    <element name="tr">
+      <ref name="conditionAttrs"/>
+      <oneOrMore>
+        <choice>
+          <element name="th">
+            <optional>
+              <attribute name="scope">
+                <choice>
+                  <value>row</value>
+                  <value>col</value>
+                </choice>
+              </attribute>
+            </optional>
+            <ref name="InlineContent"/>
+          </element>
+          <element name="td">
+            <ref name="InlineContent"/>
+          </element>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <!--
+    Inline (phrasing) content: free text mixed with inline elements. Shared by
+    headings, paragraphs, list items, table cells, questions, hints, etc.
+  -->
+  <define name="InlineContent">
     <mixed>
       <zeroOrMore>
         <choice>
           <element name="strong">
-            <ref name="FlowConfigModuleInlineContent"/>
+            <ref name="InlineContent"/>
           </element>
           <element name="span">
             <optional>
@@ -623,23 +301,13 @@
                 <text/>
               </attribute>
             </optional>
-            <optional>
-              <group>
-                <attribute name="condition">
-                  <data type="anyURI"/>
-                </attribute>
-                <attribute name="operator">
-                  <choice>
-                    <value>isTrue</value>
-                    <value>isFalse</value>
-                  </choice>
-                </attribute>
-              </group>
-            </optional>
-            <ref name="FlowConfigModuleInlineContent"/>
+            <ref name="conditionAttrs"/>
+            <ref name="InlineContent"/>
           </element>
           <element name="a">
-            <attribute name="href"/>
+            <attribute name="href">
+              <text/>
+            </attribute>
             <optional>
               <attribute name="class">
                 <text/>
@@ -650,114 +318,207 @@
                 <value>_blank</value>
               </attribute>
             </optional>
-            <ref name="FlowConfigModuleInlineContent"/>
+            <ref name="InlineContent"/>
           </element>
-          <ref name="fg-show-module"/>
-          <element name="a">
-            <attribute name="href"></attribute>
-            <text/>
-          </element>
-          <ref name="modal-link-module"/>
+          <ref name="fg-show"/>
+          <ref name="modal-link"/>
         </choice>
       </zeroOrMore>
     </mixed>
   </define>
 
-  <define name="TableContent">
-    <optional>
-      <element name="caption">
-        <ref name="FlowConfigModuleInlineContent"/>
+  <!-- Renders the value at the given fact path inline. -->
+  <define name="fg-show">
+    <element name="fg-show">
+      <attribute name="path">
+        <data type="anyURI"/>
+      </attribute>
+    </element>
+  </define>
+
+  <define name="modal-link">
+    <element name="modal-link">
+      <attribute name="for">
+        <data type="anyURI"/>
+      </attribute>
+      <ref name="conditionAttrs"/>
+      <ref name="InlineContent"/>
+    </element>
+  </define>
+
+  <define name="modal-dialog">
+    <element name="modal-dialog">
+      <attribute name="id">
+        <text/>
+      </attribute>
+      <element name="modal-heading">
+        <ref name="InlineContent"/>
       </element>
-    </optional>
-    <choice>
-      <!-- Table with explicit sections -->
-      <group>
-        <optional>
-          <element name="thead">
-            <ref name="TableRowGroup"/>
-          </element>
-        </optional>
-        <optional>
-          <element name="tfoot">
-            <ref name="TableRowGroup"/>
-          </element>
-        </optional>
-        <zeroOrMore>
-          <element name="tbody">
-            <ref name="TableRowGroup"/>
-          </element>
-        </zeroOrMore>
-      </group>
-      <!-- Table with direct rows (implicit tbody) -->
-      <oneOrMore>
-        <element name="tr">
-          <ref name="TableRow"/>
-        </element>
-      </oneOrMore>
-    </choice>
-  </define>
-
-  <define name="TableRowGroup">
-    <oneOrMore>
-      <element name="tr">
-        <ref name="TableRow"/>
+      <element name="modal-content">
+        <ref name="BlockContent"/>
       </element>
-    </oneOrMore>
+    </element>
   </define>
 
-  <define name="TableRow">
-    <oneOrMore>
-      <choice>
-        <element name="th">
-          <optional>
-            <attribute name="scope">
-              <choice>
-                <value>row</value>
-                <value>col</value>
-              </choice>
-            </attribute>
-          </optional>
-          <ref name="TableCellContent"/>
-        </element>
-        <element name="td">
-          <optional>
-            <attribute name="scope">
-              <choice>
-                <value>row</value>
-                <value>col</value>
-              </choice>
-            </attribute>
-          </optional>
-          <ref name="TableCellContent"/>
-        </element>
-      </choice>
-    </oneOrMore>
-  </define>
-
-  <define name="TableCellContent">
-    <ref name="FlowConfigModuleInlineContent"/>
-  </define>
-
-  <define name="FlowConfigModuleContent">
-    <mixed>
-      <zeroOrMore>
+  <!--
+    A single fact question/answer. <if-true>/<if-false> gate visibility on a
+    boolean fact. Children (question, hint, modal-link, input) are interleaved
+    because authors place modal-link before or after the input.
+  -->
+  <define name="fg-set">
+    <element name="fg-set">
+      <attribute name="path">
+        <data type="anyURI"/>
+      </attribute>
+      <optional>
         <choice>
-          <!--
-            These FlowConfigModule XML elements are directly translated to their HTML equivalents by the flow code.
-            If we add more of the same in the future, those elements would go here.
-            These rules essentially say these can appear in any order and can be nested within each other.
-           -->
-          <ref name="HtmlBlockContent"/>
-          <ref name="fg-set-module"/>
-          <ref name="fg-alert-module"/>
-          <ref name="fg-collection-module"/>
-          <ref name="fg-reset-module"/>
-          <ref name="fg-section-gate-module"/>
-          <ref name="details-module"/>
-          <ref name="fg-detail-module"/>
+          <attribute name="if-true">
+            <data type="anyURI"/>
+          </attribute>
+          <attribute name="if-false">
+            <data type="anyURI"/>
+          </attribute>
         </choice>
+      </optional>
+      <optional>
+        <attribute name="optional">
+          <value>true</value>
+        </attribute>
+      </optional>
+      <interleave>
+        <element name="question">
+          <ref name="InlineContent"/>
+        </element>
+        <optional>
+          <element name="hint">
+            <optional>
+              <attribute name="id">
+                <text/>
+              </attribute>
+            </optional>
+            <ref name="conditionAttrs"/>
+            <ref name="InlineContent"/>
+          </element>
+        </optional>
+        <optional>
+          <ref name="modal-link"/>
+        </optional>
+        <ref name="input"/>
+      </interleave>
+    </element>
+  </define>
+
+  <define name="input">
+    <element name="input">
+      <attribute name="type">
+        <choice>
+          <value>boolean</value>
+          <value>date</value>
+          <value>dollar</value>
+          <value>enum</value>
+          <value>int</value>
+          <value>single-checkbox</value>
+        </choice>
+      </attribute>
+      <optional>
+        <attribute name="options-path">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="hintId">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="previous-years">
+          <data type="integer"/>
+        </attribute>
+      </optional>
+      <zeroOrMore>
+        <element name="option">
+          <attribute name="value">
+            <data type="token"/>
+          </attribute>
+          <ref name="InlineContent"/>
+        </element>
       </zeroOrMore>
-    </mixed>
+    </element>
+  </define>
+
+  <!-- Repeats its inner fg-sets for each item in the collection at @path. -->
+  <define name="fg-collection">
+    <element name="fg-collection">
+      <attribute name="path">
+        <data type="anyURI"/>
+      </attribute>
+      <ref name="BlockContent"/>
+    </element>
+  </define>
+
+  <!-- Collapsible disclosure: a summary followed by block content. -->
+  <define name="fg-detail">
+    <element name="fg-detail">
+      <optional>
+        <attribute name="class">
+          <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="icon">
+          <text/>
+        </attribute>
+      </optional>
+      <ref name="conditionAttrs"/>
+      <element name="summary">
+        <ref name="InlineContent"/>
+      </element>
+      <ref name="BlockContent"/>
+    </element>
+  </define>
+
+  <define name="fg-alert">
+    <element name="fg-alert">
+      <attribute name="alert-type">
+        <choice>
+          <value>info</value>
+          <value>warning</value>
+          <value>success</value>
+          <value>error</value>
+          <value>emergency</value>
+        </choice>
+      </attribute>
+      <ref name="conditionAttrs"/>
+      <element name="heading">
+        <ref name="InlineContent"/>
+      </element>
+      <oneOrMore>
+        <ref name="p"/>
+      </oneOrMore>
+    </element>
+  </define>
+
+  <!--
+    Renders withholding-adjustment guidance for a W-4 or W-4P form, gated on a
+    boolean fact, using the assignment collection at @path.
+  -->
+  <define name="fg-withholding-adjustments">
+    <element name="fg-withholding-adjustments">
+      <attribute name="form-type">
+        <choice>
+          <value>w-4</value>
+          <value>w-4p</value>
+        </choice>
+      </attribute>
+      <attribute name="path">
+        <data type="anyURI"/>
+      </attribute>
+      <optional>
+        <attribute name="if-true">
+          <data type="anyURI"/>
+        </attribute>
+      </optional>
+    </element>
   </define>
 
 </grammar>
