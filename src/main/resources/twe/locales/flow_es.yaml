@@ -295,7 +295,7 @@
     h5-4504e1: Contribuciones
     p-1c3f63: Consulta <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span> talón de cheque para conocer las contribuciones pre-impuestos (también las llaman "payroll deductions") que ayudan a pagar por beneficios.
     p-de6d98: Estas contribuciones pueden encontrarse bajo las secciones de <strong>deducciones</strong> o <strong>pre-impuestos</strong> ("Deductions" o "Pre-Tax").
-    p-a40a0f: Algunas de las contribuciones que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">haces</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">hace</span> a través de <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">su</span> trabajo reducen el monto de impuestos que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">debes</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">debe</span> pagar.
+    p-a40a0f: Las contribuciones pre-impuestos a través de este trabajo pueden reducir la cantidad de impuesto que <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">debes</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">debe</span>.
     fg-detail-023b9b:
       summary: Planes de jubilación
       p-456da9: Ingresa el total de las contribuciones hechas a planes de jubilación.
