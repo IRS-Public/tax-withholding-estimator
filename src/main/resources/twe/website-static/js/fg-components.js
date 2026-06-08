@@ -776,7 +776,13 @@ function checkCondition (condition, operator) {
   try {
     value = factGraph.get(condition)
   } catch (e) {
-    console.error(`Error attempting to fetch ${condition}, ignoring condition:\n`, e)
+    const errorMessage = e?.message || ''
+    const isAbstractCollectionPath = condition.includes('*')
+    const isMissingPathError = errorMessage.includes('was not found')
+
+    if (!isAbstractCollectionPath && !isMissingPathError) {
+      console.error(`Error attempting to fetch ${condition}, ignoring condition:\n`, e)
+    }
     return true
   }
 

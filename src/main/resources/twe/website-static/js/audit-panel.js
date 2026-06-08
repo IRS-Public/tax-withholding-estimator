@@ -1,6 +1,10 @@
 const parser = new DOMParser()
 const XML_SERIALIZER = new XMLSerializer()
+const addFactForm = document.querySelector('#add-fact-form')
 const factSelect = document.querySelector('#fact-select')
+const factCollectionIdGroup = document.querySelector('#fact-collection-id-group')
+const factCollectionIdInput = document.querySelector('#fact-collection-id')
+const factCollectionIdOptions = document.querySelector('#fact-collection-id-options')
 const openAuditPanelButton = document.querySelector('#show-audit-panel')
 const closeAuditPanelButton = document.querySelector('#close-audit-panel')
 const auditPanel = document.querySelector('#audit-panel')
@@ -11,9 +15,43 @@ const AUDIT_PANEL_DEFAULT_WIDTH = 38
 const AUDIT_PANEL_MIN_WIDTH = 320
 const AUDIT_PANEL_MAX_WIDTH_RATIO = 0.7
 const AUDIT_PANEL_KEYBOARD_STEP = 24
+const COLLECTION_PATH_SEGMENT = '/*/'
 
 let factDictionaryXml
 let factDictionaryXmlPromise
+
+function clearAuditPanelFieldError (input) {
+  const formGroup = input?.closest('.usa-form-group')
+  const label = formGroup?.querySelector('.usa-label')
+  const errorMessage = formGroup?.querySelector('.usa-error-message')
+  errorMessage?.remove()
+  input.classList.remove('usa-input--error')
+  input.setAttribute('aria-invalid', 'false')
+  label?.classList.remove('usa-label--error')
+  formGroup?.classList.remove('usa-form-group--error')
+  input.removeAttribute('aria-describedby')
+}
+
+function setAuditPanelFieldError (input, errorMessageId, errorText) {
+  const formGroup = input?.closest('.usa-form-group')
+  const label = formGroup?.querySelector('.usa-label')
+
+  if (!label) return
+
+  clearAuditPanelFieldError(input)
+
+  const errorMessage = document.createElement('span')
+  errorMessage.id = errorMessageId
+  errorMessage.className = 'usa-error-message'
+  errorMessage.innerText = errorText
+
+  label.after(errorMessage)
+  label.classList.add('usa-label--error')
+  input.classList.add('usa-input--error')
+  input.setAttribute('aria-describedby', errorMessageId)
+  input.setAttribute('aria-invalid', 'true')
+  formGroup.classList.add('usa-form-group--error')
+}
 
 function loadFactDictionaryXml () {
   if (!factDictionaryXmlPromise) {
@@ -95,9 +133,6 @@ function setAuditPanelStorage (key, value) {
 window.enableAuditMode = enable
 window.disableAuditMode = disable
 window.trackSelectedFact = trackSelectedFact
-window.pathSelectListener = (event) => {
-  if (event.key === 'Enter') trackSelectedFact()
-}
 
 class FactLink extends HTMLElement {
   connectedCallback () {
@@ -211,10 +246,20 @@ customElements.define('audited-fact', AuditedFact)
 
 function trackSelectedFact () {
   const factPath = factSelect.value
-  const collectionId = document.querySelector('#fact-collection-id').value
+  const collectionId = isCollectionFactPath(factPath) ? factCollectionIdInput.value : ''
   if (factPath) {
+    if (isCollectionFactPath(factPath) && !collectionId) {
+      setAuditPanelFieldError(
+        factCollectionIdInput,
+        'fact-collection-id-error',
+        'Select a collection ID before adding this fact.'
+      )
+      factCollectionIdInput.focus()
+      return
+    }
+
     trackFact(factPath, collectionId)
-    factSelect.value = ''
+    resetFactSelectionInputs()
   }
 }
 
@@ -257,6 +302,50 @@ function setFactOptions () {
   const paths = window.factGraph.paths().sort()
   const options = paths.map((path) => `<option path=${path}>${path}</option>`)
   document.querySelector('#fact-options').innerHTML = options
+}
+
+// If the selected fact is a collection fact, populate the collection ID options based on the current fact graph
+function setCollectionIdOptions () {
+  if (!window.factGraph || !factCollectionIdOptions) {
+    return
+  }
+
+  // Don't attempt to get collection IDs if the selected fact isn't a collection fact, since it would be confusing to show collection IDs that aren't relevant to the selected fact
+  if (!isCollectionFactPath(factSelect.value)) {
+    factCollectionIdOptions.innerHTML = ''
+    return
+  }
+
+  // Extract the collection path from the selected fact path by removing the "/*/" segment and anything after it
+  const collectionPath = factSelect.value.split(COLLECTION_PATH_SEGMENT)[0]
+  const collectionIds = window.factGraph.getCollectionIds(collectionPath).sort()
+  const options = collectionIds.map((collectionId) => `<option value="${collectionId}"></option>`)
+  factCollectionIdOptions.innerHTML = options.join('')
+}
+
+function isCollectionFactPath (path) {
+  return Boolean(path) && path.includes(COLLECTION_PATH_SEGMENT)
+}
+
+function updateCollectionIdFieldVisibility () {
+  const shouldShow = isCollectionFactPath(factSelect.value)
+  factCollectionIdGroup?.classList.toggle('hidden', !shouldShow)
+
+  if (!shouldShow) {
+    factCollectionIdInput.value = ''
+    factCollectionIdOptions.innerHTML = ''
+    factCollectionIdInput.setCustomValidity('')
+    clearAuditPanelFieldError(factCollectionIdInput)
+  }
+}
+
+function resetFactSelectionInputs () {
+  factSelect.value = ''
+  factCollectionIdInput.value = ''
+  factCollectionIdOptions.innerHTML = ''
+  factCollectionIdInput.setCustomValidity('')
+  clearAuditPanelFieldError(factCollectionIdInput)
+  factCollectionIdGroup?.classList.add('hidden')
 }
 
 function makeCollectionIdPath (abstractPath, id) {
@@ -462,6 +551,28 @@ function enableAuditMode () {
     setFactOptions()
   }
 
+  factSelect.addEventListener('input', updateCollectionIdFieldVisibility)
+  factSelect.addEventListener('change', updateCollectionIdFieldVisibility)
+  updateCollectionIdFieldVisibility()
+
+  if (factCollectionIdInput && factCollectionIdInput.dataset.collectionIdsInitialized !== 'true') {
+    factCollectionIdInput.addEventListener('focus', setCollectionIdOptions)
+    factCollectionIdInput.addEventListener('input', () => {
+      factCollectionIdInput.setCustomValidity('')
+      clearAuditPanelFieldError(factCollectionIdInput)
+    })
+    factCollectionIdInput.dataset.collectionIdsInitialized = 'true'
+  }
+
+  if (addFactForm && addFactForm.dataset.submitHandlerInitialized !== 'true') {
+    addFactForm.addEventListener('submit', (event) => {
+      event.preventDefault()
+      updateCollectionIdFieldVisibility()
+      trackSelectedFact()
+    })
+    addFactForm.dataset.submitHandlerInitialized = 'true'
+  }
+
   // Set up the show conditions toggle
   const conditionsCheckbox = document.querySelector('#show-conditions')
   conditionsCheckbox.addEventListener('change', () => {
@@ -521,33 +632,13 @@ export function disable () {
  */
 function loadFactGraphFromAuditPanel () {
   const textarea = document.querySelector('#load-fact-graph')
-  const formGroup = textarea.closest('.usa-form-group')
-  const label = formGroup.querySelector('.usa-label')
-  let errorMessage = formGroup.querySelector('#load-fact-graph-error')
 
   try {
     window.loadFactGraph(textarea.value)
-    if (errorMessage) {
-      errorMessage.remove()
-      textarea.classList.remove('usa-input--error')
-      textarea.removeAttribute('aria-describedby')
-      label.classList.remove('usa-label--error')
-      formGroup.classList.remove('usa-form-group--error')
-    }
+    clearAuditPanelFieldError(textarea)
   } catch (error) {
-    const errorMessageId = 'load-fact-graph-error'
-    if (!errorMessage) {
-      errorMessage = document.createElement('span')
-      errorMessage.id = errorMessageId
-      errorMessage.className = 'usa-error-message'
-      label.after(errorMessage)
-      errorMessage.innerText = 'Enter a valid JSON'
-      label.classList.add('usa-label--error')
-      textarea.classList.add('usa-input--error')
-      textarea.setAttribute('aria-describedby', errorMessageId)
-      formGroup.classList.add('usa-form-group--error')
-      textarea.focus()
-    }
+    setAuditPanelFieldError(textarea, 'load-fact-graph-error', 'Enter a valid JSON')
+    textarea.focus()
   }
 }
 window.loadFactGraphFromAuditPanel = loadFactGraphFromAuditPanel

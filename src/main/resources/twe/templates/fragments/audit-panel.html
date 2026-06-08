@@ -65,41 +65,43 @@
     <div class="audit-panel__section">
       <h2>Fact Graph Audit Panel</h2>
       <div id="audit-panel__fact-list"></div>
-      <div class="usa-form-group">
-        <label
-          class="usa-label twe-question"
-          th:for="fact-select"
-          th:text="#{audit.fact-select.question}">
-        </label>
-        <input
-          list="fact-options"
-          class="usa-input"
-          onkeydown="pathSelectListener(event)"
-          id="fact-select">
-        <datalist id="fact-options" aria-invalid="false"></datalist>
-      </div>
+      <form id="add-fact-form">
+        <div class="usa-form-group">
+          <label
+            class="usa-label twe-question"
+            th:for="fact-select"
+            th:text="#{audit.fact-select.question}">
+          </label>
+          <input
+            list="fact-options"
+            class="usa-input"
+            id="fact-select">
+          <datalist id="fact-options" aria-invalid="false"></datalist>
+        </div>
 
-      <div class="usa-form-group">
-        <label
-          class="usa-label twe-question"
-          th:for="fact-collection-id"
-          th:text="#{audit.collection-id-label}">
-        </label>
-        <input
-          th:id="fact-collection-id"
-          class="usa-input"
-          type="text"
-          autocomplete="off"
-          aria-invalid="false">
-      </div>
+        <div id="fact-collection-id-group" class="usa-form-group hidden">
+          <label
+            class="usa-label twe-question"
+            th:for="fact-collection-id"
+            th:text="#{audit.collection-id-label}">
+          </label>
+          <input
+            th:id="fact-collection-id"
+            list="fact-collection-id-options"
+            class="usa-input"
+            type="text"
+            autocomplete="off"
+            aria-invalid="false">
+          <datalist id="fact-collection-id-options" aria-invalid="false"></datalist>
+        </div>
 
-      <button
-          class="usa-button"
-          id="add-fact-button"
-          type="button"
-          onclick="trackSelectedFact()">
-        Add fact
-      </button>
+        <button
+            class="usa-button"
+            id="add-fact-button"
+            type="submit">
+          Add fact
+        </button>
+      </form>
     </div>
 
     <details>
