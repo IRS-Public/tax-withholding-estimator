@@ -31,6 +31,7 @@ import com.github.tototoshi.csv.*
 import gov.irs.factgraph.{ types, FactDefinition, Graph }
 import gov.irs.factgraph.compnodes.{ EnumNode, MultiEnumNode }
 import gov.irs.factgraph.types.{ Day, Dollar, Enum as FgEnum }
+import gov.irs.factgraph.types.Collection
 import gov.irs.twe.loadTweFactDictionary
 import scala.util.{ Failure, Success, Try }
 
@@ -251,7 +252,9 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
   val childKeys = (1 to 4).map(i => s"Child${i}Age")
   val ages = childKeys.flatMap(key => csv.get(key).map(_.toInt))
   val ctcCount = ages.count(age => age > 0 && age < 18)
+  val odcCount = ages.count(age => age >= 18)
   factGraph.set("/ctcEligibleDependents", ctcCount)
+  factGraph.set("/odcEligibleDependents", odcCount)
 
   // Set age facts
   factGraph.set("/primaryFilerAge25OrOlderForEitc", csv("User Age").toInt >= 25)
@@ -298,6 +301,18 @@ private def parseScenario(rows: List[List[String]], scenarioColumn: Int): Scenar
       factGraph.delete(s"/jobs/#$jobId")
     }
   })
+
+  // Leave payDates "blank" if applicable
+  val storedJobs = factGraph.get("/jobs").get.asInstanceOf[Collection]
+  storedJobs
+    .getItemsAsStrings()
+    .foreach(jobId => {
+      val payDateFactName = s"/jobs/#$jobId/mostRecentPayDate"
+      val payDate = factGraph.get(payDateFactName).get.toString
+      if (payDate == "1900-01-01") {
+        factGraph.delete(payDateFactName)
+      }
+    })
 
   // Remove self-employment sources that have no gross income
   ALL_SE_SOURCES.foreach(selfEmployId => {

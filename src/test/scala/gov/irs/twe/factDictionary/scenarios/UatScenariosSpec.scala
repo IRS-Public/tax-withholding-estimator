@@ -185,7 +185,6 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
   // pending updated spreadsheet with derivation for LLC
   test("MFJ, college student dependent + tuition payments") { td =>
     val scenario = td.scenario
-    scenario.graph.set("/odcEligibleDependents", 1)
     scenario.assertEquals("/incomeTotal", 104000)
     scenario.assertEquals("/agi", 104000)
     scenario.assertEquals("/taxableIncome", 71800)
@@ -1494,17 +1493,17 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 59146)
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 833, -35)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 799, -1)
 
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 663, -28)
+    scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 635)
 
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 947, -40)
+    scenario.assertOffset(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 908, -1)
   }
 
   // Column CS
@@ -1513,36 +1512,36 @@ class UatScenariosSpec extends funsuite.FixtureAnyFunSuite {
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_1_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 868, -40)
+    scenario.assertOffset(s"/jobs/#${JOB_1_ID}/w4Line4cWithSplitWithholdingStrategy", 838, -10)
 
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4aWithSplitWithholdingStrategy", 59146)
     scenario.assertEquals(s"/jobs/#${JOB_2_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 690, -31)
+    scenario.assertOffset(s"/jobs/#${JOB_2_ID}/w4Line4cWithSplitWithholdingStrategy", 667, -8)
 
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line3WithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#${JOB_3_ID}/w4Line4bWithSplitWithholdingStrategy", 0)
-    scenario.assertOffset(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 986, -45)
+    scenario.assertOffset(s"/jobs/#${JOB_3_ID}/w4Line4cWithSplitWithholdingStrategy", 952, -11)
   }
 
   // Column CT
   test("MFJ, multiple jobs, 2 jobs stop") { td =>
     val scenario = td.scenario
     // TODO: Should be 1459
-    scenario.assertOffset(s"/jobs/#$JOB_1_ID/w4Line3WithSplitWithholdingStrategy", 1278, 181)
+    scenario.assertOffset(s"/jobs/#$JOB_1_ID/w4Line3WithSplitWithholdingStrategy", 1994, -535)
     scenario.assertEquals(s"/jobs/#$JOB_1_ID/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#$JOB_1_ID/w4Line4bWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#$JOB_1_ID/w4Line4cWithSplitWithholdingStrategy", 0)
 
     // TODO: Should be 1160
-    scenario.assertOffset(s"/jobs/#$JOB_2_ID/w4Line3WithSplitWithholdingStrategy", 992, 168)
+    scenario.assertOffset(s"/jobs/#$JOB_2_ID/w4Line3WithSplitWithholdingStrategy", 1548, -388)
     scenario.assertEquals(s"/jobs/#$JOB_2_ID/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#$JOB_2_ID/w4Line4bWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#$JOB_2_ID/w4Line4cWithSplitWithholdingStrategy", 0)
 
     // TODO: Should be 765
-    scenario.assertOffset(s"/jobs/#$JOB_3_ID/w4Line3WithSplitWithholdingStrategy", 639, 126)
+    scenario.assertOffset(s"/jobs/#$JOB_3_ID/w4Line3WithSplitWithholdingStrategy", 997, -232)
     scenario.assertEquals(s"/jobs/#$JOB_3_ID/w4Line4aWithSplitWithholdingStrategy", 0)
     scenario.assertEquals(s"/jobs/#$JOB_3_ID/w4Line4bWithSplitWithholdingStrategy", 1650)
     scenario.assertEquals(s"/jobs/#$JOB_3_ID/w4Line4cWithSplitWithholdingStrategy", 0)
