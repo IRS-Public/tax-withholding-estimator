@@ -1215,22 +1215,6 @@
   h2-e64960: Deducciones adicionales
   p-9a1bd3: <span condition="/isFilingStatusMFJ" operator="isFalse">Puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">Pueden</span> estimar el monto de deducciones adicionales que <span condition="/isFilingStatusMFJ" operator="isFalse">piensas</span><span condition="/isFilingStatusMFJ" operator="isTrue">piensan</span> tomar este año.
   p-13d235: Ya sea que <span condition="/isFilingStatusMFJ" operator="isFalse">tomes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tomen</span> la deducción estándar o la detallada, estas deducciones pueden reducir aun más la cantidad de <span condition="/isFilingStatusMFJ" operator="isFalse">tus</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus</span> ingresos que estaría sujeta a impuestos.
-  h3-cf5852: Donaciones caritativas en efectivo
-  p-b36cd1: Si tomas la deducción estándar y haces una donación a una organización calificada en el <fg-show path="/taxYear"/>, puedes deducir donaciones en efectivo hasta <fg-show path="/actualNonItemizerCharitableContributionDeductionMax"/>.
-  p-d8609e: 'Las donaciones en efectivo incluyen pagos hechos en las siguientes formas:'
-  ul-0:
-    li-069b30: Efectivo
-    li-060bf2: Cheque
-    li-5fa5bb: Transferencia electrónica de fondos, o servicio de pago en línea
-    li-1e7cc9: Tarjeta de débito o crédito
-    li-95186c: Deducción en tu nómina
-    li-53c28e: Transferencia de una tarjeta de regalo que puede canjearse por efectivo
-  p-76b3ac: <strong>El estimador usará la deducción estándar</strong> porque es mayor que tu deducción detallada. Si agregaste donaciones caritativas en efectivo, vuelve a agregar esas mismas donaciones aquí.
-  p-795838: <a target="_blank" href="https://www.irs.gov/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance"
-    class="usa-link">Conoce más sobre las donaciones caritativas en efectivo.</a>
-  /nonItemizerCharitableContributionDeductionAmount:
-    question: Donaciones caritativas en efectivo que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
-    hint: (max <fg-show path="/actualNonItemizerCharitableContributionDeductionMax"/>)
   h3-88e0af: Deducción adicional para adultos mayores
   p-f250e6: Desde el 2025 hasta el 2028, los contribuyentes de 65 años o más podrán reclamar una deducción adicional de hasta <fg-show path="/maxSeniorDeductionAmount"/>.
   p-51dacf: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
@@ -1241,24 +1225,6 @@
   /secondaryTaxpayerElectsForSeniorDeduction:
     question: ¿Tu esposo(a) piensa tomar la deducción adicional para adultos mayores?
     hint: Elige “No” si no tiene un número de Seguro Social
-  h3-f830e5: Deducción de intereses de préstamos para automóviles
-  p-b98393: Si <span condition="/isFilingStatusMFJ" operator="isFalse">pagaste</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagaron</span> intereses por un préstamo de un automóvil en el <fg-show path="/taxYear"/>, <span condition="/isFilingStatusMFJ" operator="isFalse">podrías</span><span condition="/isFilingStatusMFJ" operator="isTrue">podrían</span> deducir hasta <fg-show path="/maxQPVLIDAmount"/> de los intereses que <span condition="/isFilingStatusMFJ" operator="isFalse">pagaste</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagaron</span>.
-  p-d7066d: 'Para calificar para la deducción, el interés debe pagarse en un préstamo que:'
-  ul-1:
-    li-de646c: Se originó en el 2025 o después
-    li-c01c71: Está respaldado por un gravamen en el auto (esto es un derecho legal del prestamista para asegurar el pago del préstamo)
-    li-2e73bf: Se usó para comprar un vehículo calificado para uso personal
-  p-9b605a: 'Un vehículo calificado es un auto, minivan, van, vehículo deportivo de utilidad, camioneta, o motocicleta que:'
-  ul-2:
-    li-13960a: Es nuevo (no usado)
-    li-1ac6c8: Tuvo su ensamblaje final en los Estados Unidos
-    li-14ccc7: Tiene un peso bruto menor a 14,000 libras
-    li-71d229: Se manufacturó para uso principalmente en calles públicas, carreteras y autopistas
-  p-62c99d: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
-    class="usa-link">Conoce más sobre los intereses de préstamos para autos calificados.</a>
-  p-43c67d: <a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Revisa si tu auto se ensambló en los Estados Unidos.</a>
-  /personalVehicleLoanInterestAmount:
-    question: Intereses del préstamo para un auto que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
   h3-8e5d10: Ingreso calificado de un negocio (QBI)
   p-2a6643: Si <span condition="/isFilingStatusMFJ" operator="isFalse">eres dueño</span><span condition="/isFilingStatusMFJ" operator="isTrue">son dueños</span> en una asociación, corporación S, o <span condition="/isFilingStatusMFJ" operator="isFalse">tienes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tienen</span> trabajo por cuenta propia, <span condition="/isFilingStatusMFJ" operator="isFalse">podrías</span><span condition="/isFilingStatusMFJ" operator="isTrue">podrían</span> tomar una deducción si <span condition="/isFilingStatusMFJ" operator="isFalse">tienes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tienen</span> QBI en el <fg-show path="/lastTaxYear"/>. Esta deducción puede reducirse o eliminarse para algunas empresas de servicios.
   p-c43979: <strong>Según <span condition="/isFilingStatusMFJ" operator="isFalse">tus</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus</span> respuestas, <span condition="/isFilingStatusMFJ" operator="isFalse">tu</span><span condition="/isFilingStatusMFJ" operator="isTrue">el</span> QBI es de <fg-show path="/derivedQualifiedBusinessIncomeDeduction"/>.</strong>
@@ -1281,12 +1247,80 @@
   /qBIDeductionOverrideAmount:
     question: Monto estimado de QBI para el <fg-show path="/taxYear"/>
     hint: Si tienes dudas, puedes ingresar $0.
+  fg-detail-cf5852:
+    summary: Donaciones caritativas en efectivo
+    p-b36cd1: Si tomas la deducción estándar y haces una donación a una organización calificada en el <fg-show path="/taxYear"/>, puedes deducir donaciones en efectivo hasta <fg-show path="/actualNonItemizerCharitableContributionDeductionMax"/>.
+    p-d8609e: 'Las donaciones en efectivo incluyen pagos hechos en las siguientes formas:'
+    ul-0:
+      li-069b30: Efectivo
+      li-060bf2: Cheque
+      li-5fa5bb: Transferencia electrónica de fondos, o servicio de pago en línea
+      li-1e7cc9: Tarjeta de débito o crédito
+      li-95186c: Deducción en tu nómina
+      li-53c28e: Transferencia de una tarjeta de regalo que puede canjearse por efectivo
+    p-76b3ac: <strong>El estimador usará la deducción estándar</strong> porque es mayor que tu deducción detallada. Si agregaste donaciones caritativas en efectivo, vuelve a agregar esas mismas donaciones aquí.
+    p-7603e2: <a target="_blank" href="https://www.irs.gov/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance"
+      class="usa-link">Conoce más sobre las donaciones caritativas en efectivo. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+    /nonItemizerCharitableContributionDeductionAmount:
+      question: Contribuciones caritativas que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
+      hint: (max <fg-show path="/actualNonItemizerCharitableContributionDeductionMax"/>)
+      modalLink: <modal-link for="modal-non-itemizer-charitable-contribution">¿Qué cuenta como una donación caritativa en efectivo?</modal-link>
+  fg-detail-f830e5:
+    summary: Deducción de intereses de préstamos para automóviles
+    p-b98393: Si <span condition="/isFilingStatusMFJ" operator="isFalse">pagaste</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagaron</span> intereses por un préstamo de un automóvil en el <fg-show path="/taxYear"/>, <span condition="/isFilingStatusMFJ" operator="isFalse">podrías</span><span condition="/isFilingStatusMFJ" operator="isTrue">podrían</span> deducir hasta <fg-show path="/maxQPVLIDAmount"/> de los intereses que <span condition="/isFilingStatusMFJ" operator="isFalse">pagaste</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagaron</span>.
+    p-d7066d: 'Para calificar para la deducción, el interés debe pagarse en un préstamo que:'
+    ul-0:
+      li-de646c: Se originó en el 2025 o después
+      li-c01c71: Está respaldado por un gravamen en el auto (esto es un derecho legal del prestamista para asegurar el pago del préstamo)
+      li-2e73bf: Se usó para comprar un vehículo calificado para uso personal
+    p-9b605a: 'Un vehículo calificado es un auto, minivan, van, vehículo deportivo de utilidad, camioneta, o motocicleta que:'
+    ul-1:
+      li-13960a: Es nuevo (no usado)
+      li-1ac6c8: Tuvo su ensamblaje final en los Estados Unidos
+      li-14ccc7: Tiene un peso bruto menor a 14,000 libras
+      li-71d229: Se manufacturó para uso principalmente en calles públicas, carreteras y autopistas
+    p-62c99d: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
+      class="usa-link">Conoce más sobre los intereses de préstamos para autos calificados.</a>
+    p-43c67d: <a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Revisa si tu auto se ensambló en los Estados Unidos.</a>
+    /personalVehicleLoanInterestAmount:
+      question: Interés que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/> por un préstamo automotriz
+      modalLink: <modal-link for="modal-personal-vehicle-loan-interest">¿Qué cuenta como el interés de un préstamo para automóviles</modal-link>
   modal-qbi-when:
     heading: ¿Cuándo debería ingresar un monto diferente?
     p-3c9516: Si no eres dueño o no te beneficias economicamente de un negocio o comercio, podrías querer ingresar $0 para la deducción por ingreso calificado de un negocio (QBI)
     p-51c6e8: Si tu ingreso bruto ajustado será mayor a <fg-show path="/qbiPhaseInThreshold"/>, podrías querer ingresar un monto diferente.
     p-92b07b: Calcula la deducción de tu QBI con el <a target="_blank" href="https://www.irs.gov/forms-pubs/about-form-8995">Formulario 8995-A</a>. También puedes usar la misma deducción para QBI que usaste el año pasado como estimado. La encontrarás en la línea 13a de tu Formulario 1040 del <fg-show path="/previousTaxYear"/>.
     p-24ae98: <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction" class="usa-link">Conoce más sobre el QBI. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+  modal-non-itemizer-charitable-contribution:
+    heading: ¿Qué cuenta como una donación caritativa en efectivo?
+    p-b36cd1: Si tomas la deducción estándar y haces una donación a una organización calificada en el <fg-show path="/taxYear"/>, puedes deducir donaciones en efectivo hasta <fg-show
+      path="/actualNonItemizerCharitableContributionDeductionMax"/>.
+    p-d8609e: "Las donaciones en efectivo incluyen pagos hechos en las siguientes formas:"
+    ul-0:
+      li-069b30: Efectivo
+      li-060bf2: Cheque
+      li-5fa5bb: Transferencia electrónica de fondos, o servicio de pago en línea
+      li-1e7cc9: Tarjeta de débito o crédito
+      li-95186c: Deducción en tu nómina
+      li-e75b1f: Transferencia de una tarjeta de regalo que puede canjearse por efectivo
+    p-58fcc2: <a target="_blank" href="https://www.irs.gov/es/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance">Conoce más sobre las donaciones caritativas en efectivo. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+  modal-personal-vehicle-loan-interest:
+    heading: ¿Qué cuenta como el interés de un préstamo para automóviles?
+    p-b98393: <span condition="/isFilingStatusMFJ" operator="isFalse">Si pagaste intereses por un préstamo de un automóvil en el <fg-show path="/taxYear"/>, podrías deducir hasta <fg-show path="/maxQPVLIDAmount"/> de los intereses que pagaste.</span><span condition="/isFilingStatusMFJ" operator="isTrue">Si pagaron intereses por un préstamo de un automóvil en el <fg-show path="/taxYear"/>, podrían deducir hasta <fg-show path="/maxQPVLIDAmount"/> de los intereses que pagaron</span>
+    p-d7066d: "Para calificar para la deducción, el interés debe pagarse en un préstamo que:"
+    ul-0:
+      li-ef047e: Se originó en el 2025 o después
+      li-c01c71: Está respaldado por un gravamen en el auto (esto es un derecho legal del prestamista para asegurar el pago del préstamo)
+      li-2e73bf: Se usó para comprar un vehículo calificado para uso personal
+    p-9b605a: "Un vehículo calificado es un auto, minivan, van, vehículo deportivo de utilidad, camioneta, o motocicleta que:"
+    ul-1:
+      li-13960a: Es nuevo (no usado)
+      li-1ac6c8: Tuvo su ensamblaje final en los Estados Unidos
+      li-3dc6c6: Tiene un peso bruto menor a 14,000 libras
+      li-0e459d: Se hizo para uso principalmente en calles públicas, carreteras y autopistas
+    p-ddc5a9: <a target="_blank" href="https://www.irs.gov/es/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
+      class="usa-link">Conoce más sobre los intereses de préstamos para autos calificados. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+    p-e834fb: <a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Revisa si tu auto se ensambló en los Estados Unidos. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
 /credits:
   title: Créditos
   h2-948a2e: Créditos

@@ -111,6 +111,7 @@
       <ref name="h3"/>
       <ref name="h4"/>
       <ref name="h5"/>
+      <ref name="h6"/>
     </choice>
   </define>
 
@@ -152,6 +153,13 @@
 
   <define name="h5">
     <element name="h5">
+      <ref name="HeadingAttributes"/>
+      <text/>
+    </element>
+  </define>
+
+  <define name="h6">
+    <element name="h6">
       <ref name="HeadingAttributes"/>
       <text/>
     </element>
@@ -462,6 +470,17 @@
       <optional>
         <attribute name="class">
           <text/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="heading-tag">
+          <choice>
+            <value>h2</value>
+            <value>h3</value>
+            <value>h4</value>
+            <value>h5</value>
+            <value>h6</value>
+          </choice>
         </attribute>
       </optional>
       <optional>

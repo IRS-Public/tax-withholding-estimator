@@ -70,4 +70,37 @@
   details.fg-detail--chevron[open] > summary {
     background-image: url("/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/usa-icons/expand_less.svg"), linear-gradient(transparent, transparent);
   }
+
+  details.fg-detail--as-section {
+    border-top: 2px solid var(--base-lighter);
+    margin-top: var(--flow-spacing--offset);
+    margin-bottom: calc(var(--flow-spacing--offset) * -1);
+
+    summary {
+      background-color: transparent;
+      background-position: right center;
+      padding: 0;
+    }
+
+    h3 {
+      font-weight: 600;
+      font-size: var(--font-size-8);
+      padding: var(--flow-spacing--offset) var(--units-205) var(--flow-spacing--offset) 0;
+      margin: 0;
+
+      @container app (min-width: 640px) {
+        font-size: var(--font-size-10);
+      }
+
+      @container app (min-width: 880px) {
+        font-size: var(--font-size-11);
+      }
+    }
+
+    .details-content {
+      border: none;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
