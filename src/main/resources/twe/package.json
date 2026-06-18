@@ -6,10 +6,10 @@
   },
   "type": "module",
   "devDependencies": {
-    "eslint": "^9.39.1",
-    "eslint-plugin-security": "^3.0.1",
-    "html-validate": "^10.4.0",
-    "neostandard": "^0.12.2"
+    "eslint": "^9.39.4",
+    "eslint-plugin-security": "^4.0.0",
+    "html-validate": "^10.17.0",
+    "neostandard": "^0.13.0"
   },
   "scripts": {
     "html-validate": "html-validate --config htmlvalidate.json",

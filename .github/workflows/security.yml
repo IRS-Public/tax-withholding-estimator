@@ -87,7 +87,7 @@ jobs:
     - name: Install Node (for ESLint and HTML-validate)
       uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 #v5.0.0
       with:
-        node-version: '22.11.0'
+        node-version: '22.16.0'
 
     - name: Install validators from npm
       working-directory: ${{ env.TWE_PATH }}
