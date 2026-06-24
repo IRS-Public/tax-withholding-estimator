@@ -993,30 +993,40 @@
     </Fact>
     <Fact path="/primaryFilerHasPensionsAvailableForExtraWithholding">
       <Derived>
-        <GreaterThan>
-          <Left>
-            <CollectionSize>
-              <Dependency path="/pensionsAvailableForExtraWithholdingAssignedToSelf"/>
-            </CollectionSize>
-          </Left>
-          <Right>
-            <Int>0</Int>
-          </Right>
-        </GreaterThan>
+        <All>
+          <IsComplete>
+            <Dependency path="/pensionsAvailableForExtraWithholdingAssignedToSelf"/>
+          </IsComplete>
+          <GreaterThan>
+            <Left>
+              <CollectionSize>
+                <Dependency path="/pensionsAvailableForExtraWithholdingAssignedToSelf"/>
+              </CollectionSize>
+            </Left>
+            <Right>
+              <Int>0</Int>
+            </Right>
+          </GreaterThan>
+        </All>
       </Derived>
     </Fact>
     <Fact path="/spouseHasPensionsAvailableForExtraWithholding">
       <Derived>
-        <GreaterThan>
-          <Left>
-            <CollectionSize>
-              <Dependency path="/pensionsAvailableForExtraWithholdingAssignedToSpouse"/>
-            </CollectionSize>
-          </Left>
-          <Right>
-            <Int>0</Int>
-          </Right>
-        </GreaterThan>
+        <All>
+          <IsComplete>
+            <Dependency path="/pensionsAvailableForExtraWithholdingAssignedToSpouse"/>
+          </IsComplete>
+          <GreaterThan>
+            <Left>
+              <CollectionSize>
+                <Dependency path="/pensionsAvailableForExtraWithholdingAssignedToSpouse"/>
+              </CollectionSize>
+            </Left>
+            <Right>
+              <Int>0</Int>
+            </Right>
+          </GreaterThan>
+        </All>
       </Derived>
     </Fact>
   </Facts>

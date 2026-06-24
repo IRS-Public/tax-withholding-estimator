@@ -1,6 +1,6 @@
 package gov.irs.twe.factDictionary
 
-import gov.irs.factgraph.types.{ Collection, CollectionItem, Day, Dollar, Enum }
+import gov.irs.factgraph.types.{ Collection, CollectionItem, Day, Dollar, Enum, WritableType }
 import gov.irs.factgraph.Path
 import java.util.UUID
 import org.scalatest.funsuite.AnyFunSuite
@@ -492,5 +492,50 @@ class WithholdingCalculationsSpec extends AnyFunSuite with TableDrivenPropertyCh
       graphWithNeither.get("/eligibleRemainingPayPeriodsGreaterThanZero").get == false,
       "should be false when no jobs or pensions are available",
     )
+  }
+
+  test(
+    "the W-4 recommendation gate resolves complete and true whether or not the optional pay date is answered",
+  ) {
+    // A single all-year monthly job, driven through the real pay-date cascade (conditionForPossibleW4Jobs
+    // is not set directly). /overrideDate pins "today" for deterministic remaining pay periods.
+    val baseFacts = Seq[(Path, WritableType)](
+      Path("/overrideDate") -> Day("2026-06-18"),
+      Path("/filingStatus") -> Enum("single", "/filingStatusOptions"),
+      Path("/primaryFilerAge65OrOlder") -> false,
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/primaryFilerIsClaimedOnAnotherReturn") -> false,
+      Path("/primaryFilerIsClaimingDependents") -> false,
+      Path("/wantsStandardDeduction") -> true,
+      jobs -> jobsCollection,
+      Path(s"/jobs/#$jobId/filerAssignment") -> Enum("self", "/filerAssignmentOption"),
+      Path(s"/jobs/#$jobId/isAllYear") -> true,
+      Path(s"/jobs/#$jobId/isHourlyJob") -> false,
+      Path(s"/jobs/#$jobId/payFrequency") -> monthly,
+      Path(s"/jobs/#$jobId/mostRecentPayPeriodEnd") -> Day("2026-06-01"),
+      Path(s"/jobs/#$jobId/amountLastPaycheck") -> Dollar(4000),
+      Path(s"/jobs/#$jobId/yearToDateIncome") -> Dollar(24000),
+      Path(s"/jobs/#$jobId/amountWithheldLastPaycheck") -> Dollar(500),
+      Path(s"/jobs/#$jobId/yearToDateWithholding") -> Dollar(3000),
+    )
+
+    // Optional pay date blank: the writable stays incomplete, but effectiveMostRecentPayDate falls
+    // back to the +7-day default (2026-06-01 -> 2026-06-08), so the gate still resolves.
+    val blank = makeGraphWith(factDictionary, baseFacts*)
+    assert(!blank.get(Path(s"/jobs/#$jobId/mostRecentPayDate")).complete)
+    val effective = blank.get(Path(s"/jobs/#$jobId/effectiveMostRecentPayDate"))
+    assert(effective.complete)
+    assert(effective.get == Day("2026-06-08"))
+    assert(effective.get == blank.get(Path(s"/jobs/#$jobId/defaultMostRecentPayDate")).get)
+    assert(blank.get("/primaryFilerHasJobsAvailableForExtraWithholding").get == true)
+    assert(blank.get("/eligibleRemainingPayPeriodsGreaterThanZero").get == true)
+
+    // Pay date answered: the same gate resolves end-to-end through the cascade.
+    val present = makeGraphWith(
+      factDictionary,
+      (baseFacts ++ Seq(Path(s"/jobs/#$jobId/mostRecentPayDate") -> Day("2026-06-01")))*,
+    )
+    assert(present.get("/primaryFilerHasJobsAvailableForExtraWithholding").get == true)
+    assert(present.get("/eligibleRemainingPayPeriodsGreaterThanZero").get == true)
   }
 }

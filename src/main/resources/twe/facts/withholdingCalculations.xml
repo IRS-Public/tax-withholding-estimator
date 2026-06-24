@@ -379,7 +379,7 @@
                       </Left>
                       <Right>
                         <AddPayrollMonths>
-                          <Dependency path="../mostRecentPayDate"/>
+                          <Dependency path="../effectiveMostRecentPayDate"/>
                           <Int>1</Int>
                         </AddPayrollMonths>
                       </Right>
@@ -427,7 +427,7 @@
                   </Left>
                   <Right>
                     <AddPayrollMonths>
-                      <Dependency path="../mostRecentPayDate"/>
+                      <Dependency path="../effectiveMostRecentPayDate"/>
                       <Int>1</Int>
                     </AddPayrollMonths>
                   </Right>
@@ -1599,21 +1599,10 @@
         changes made with the W-4.
       </Description>
       <Derived>
-        <GreaterThan>
-          <Left>
-            <Add>
-              <CollectionSize>
-                <Dependency path="/jobsAvailableForExtraWithholding"/>
-              </CollectionSize>
-              <CollectionSize>
-                <Dependency path="/pensionsAvailableForExtraWithholding"/>
-              </CollectionSize>
-            </Add>
-          </Left>
-          <Right>
-            <Int>0</Int>
-          </Right>
-        </GreaterThan>
+        <Any>
+          <Dependency path="/hasJobsAvailableForExtraWithholding"/>
+          <Dependency path="/hasPensionsAvailableForExtraWithholding"/>
+        </Any>
       </Derived>
     </Fact>
   </Facts>

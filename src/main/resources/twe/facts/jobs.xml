@@ -251,6 +251,37 @@
         <Dependency path="../defaultMostRecentPayDate"/>
       </Placeholder>
     </Fact>
+    <Fact path="/jobs/*/effectiveMostRecentPayDate">
+      <Description>
+        The most recent pay date used by the pay-period and withholding calculations: the user's
+        answer when they provided one, otherwise the +7-day default (defaultMostRecentPayDate). This
+        mirrors the value the mostRecentPayDate placeholder already feeds the math, but - unlike the
+        writable, which stays incomplete while blank - this fact is always complete (the final Switch
+        case is unconditional), so the jobs-available-for-extra-withholding gate can resolve.
+      </Description>
+      <Derived>
+        <Switch>
+          <Case>
+            <When>
+              <IsComplete>
+                <Dependency path="../mostRecentPayDate"/>
+              </IsComplete>
+            </When>
+            <Then>
+              <Dependency path="../mostRecentPayDate"/>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <True/>
+            </When>
+            <Then>
+              <Dependency path="../defaultMostRecentPayDate"/>
+            </Then>
+          </Case>
+        </Switch>
+      </Derived>
+    </Fact>
     <Fact path="/jobs/*/consistentPay">
       <Writable>
         <Boolean/>
@@ -1292,30 +1323,40 @@
     </Fact>
     <Fact path="/primaryFilerHasJobsAvailableForExtraWithholding">
       <Derived>
-        <GreaterThan>
-          <Left>
-            <CollectionSize>
-              <Dependency path="/jobsAvailableForExtraWithholdingAssignedToSelf"/>
-            </CollectionSize>
-          </Left>
-          <Right>
-            <Int>0</Int>
-          </Right>
-        </GreaterThan>
+        <All>
+          <IsComplete>
+            <Dependency path="/jobsAvailableForExtraWithholdingAssignedToSelf"/>
+          </IsComplete>
+          <GreaterThan>
+            <Left>
+              <CollectionSize>
+                <Dependency path="/jobsAvailableForExtraWithholdingAssignedToSelf"/>
+              </CollectionSize>
+            </Left>
+            <Right>
+              <Int>0</Int>
+            </Right>
+          </GreaterThan>
+        </All>
       </Derived>
     </Fact>
     <Fact path="/spouseHasJobsAvailableForExtraWithholding">
       <Derived>
-        <GreaterThan>
-          <Left>
-            <CollectionSize>
-              <Dependency path="/jobsAvailableForExtraWithholdingAssignedToSpouse"/>
-            </CollectionSize>
-          </Left>
-          <Right>
-            <Int>0</Int>
-          </Right>
-        </GreaterThan>
+        <All>
+          <IsComplete>
+            <Dependency path="/jobsAvailableForExtraWithholdingAssignedToSpouse"/>
+          </IsComplete>
+          <GreaterThan>
+            <Left>
+              <CollectionSize>
+                <Dependency path="/jobsAvailableForExtraWithholdingAssignedToSpouse"/>
+              </CollectionSize>
+            </Left>
+            <Right>
+              <Int>0</Int>
+            </Right>
+          </GreaterThan>
+        </All>
       </Derived>
     </Fact>
   </Facts>

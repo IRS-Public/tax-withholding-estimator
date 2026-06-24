@@ -117,7 +117,7 @@
             </When>
             <Then>
               <Add>
-                <Dependency path="../mostRecentPayDate/ordinal"/>
+                <Dependency path="../effectiveMostRecentPayDate/ordinal"/>
                 <Multiply>
                   <Dependency path="../tentativeRemainingPayPeriods"/>
                   <Dependency path="../payPeriodLength"/>
@@ -151,7 +151,7 @@
             <Dependency path="../mostRecentPayPeriodEnd/year"/>
           </Left>
           <Right>
-            <Dependency path="../mostRecentPayDate/year"/>
+            <Dependency path="../effectiveMostRecentPayDate/year"/>
           </Right>
         </LessThan>
       </Derived>
@@ -281,7 +281,7 @@
             <When>
               <GreaterThan>
                 <Left>
-                  <Dependency path="../mostRecentPayDate/day"/>
+                  <Dependency path="../effectiveMostRecentPayDate/day"/>
                 </Left>
                 <Right>
                   <Int>15</Int>
@@ -291,7 +291,7 @@
             <Then>
               <Subtract>
                 <Minuend>
-                  <Dependency path="../mostRecentPayDate"/>
+                  <Dependency path="../effectiveMostRecentPayDate"/>
                 </Minuend>
                 <Subtrahends>
                   <Days>15</Days>
@@ -304,7 +304,7 @@
               <True/>
             </When>
             <Then>
-              <Dependency path="../mostRecentPayDate"/>
+              <Dependency path="../effectiveMostRecentPayDate"/>
             </Then>
           </Case>
         </Switch>
@@ -318,7 +318,7 @@
             <When>
               <LessThanOrEqual>
                 <Left>
-                  <Dependency path="../mostRecentPayDate/day"/>
+                  <Dependency path="../effectiveMostRecentPayDate/day"/>
                 </Left>
                 <Right>
                   <Int>15</Int>
@@ -333,7 +333,7 @@
                     <All>
                       <Equal>
                         <Left>
-                          <Dependency path="../mostRecentPayDate/month"/>
+                          <Dependency path="../effectiveMostRecentPayDate/month"/>
                         </Left>
                         <Right>
                           <Int>2</Int>
@@ -342,7 +342,7 @@
                       <Any>
                         <Equal>
                           <Left>
-                            <Dependency path="../mostRecentPayDate/day"/>
+                            <Dependency path="../effectiveMostRecentPayDate/day"/>
                           </Left>
                           <Right>
                             <Int>14</Int>
@@ -350,7 +350,7 @@
                         </Equal>
                         <Equal>
                           <Left>
-                            <Dependency path="../mostRecentPayDate/day"/>
+                            <Dependency path="../effectiveMostRecentPayDate/day"/>
                           </Left>
                           <Right>
                             <Int>15</Int>
@@ -361,7 +361,7 @@
                   </When>
                   <Then>
                     <LastDayOfMonth>
-                      <Dependency path="../mostRecentPayDate"/>
+                      <Dependency path="../effectiveMostRecentPayDate"/>
                     </LastDayOfMonth>
                   </Then>
                 </Case>
@@ -371,7 +371,7 @@
                   </When>
                   <Then>
                     <Add>
-                      <Dependency path="../mostRecentPayDate"/>
+                      <Dependency path="../effectiveMostRecentPayDate"/>
                       <Days>15</Days>
                     </Add>
                   </Then>
@@ -384,7 +384,7 @@
               <True/>
             </When>
             <Then>
-              <Dependency path="../mostRecentPayDate"/>
+              <Dependency path="../effectiveMostRecentPayDate"/>
             </Then>
           </Case>
         </Switch>
@@ -397,7 +397,7 @@
             <When>
               <Equal>
                 <Left>
-                  <Dependency path="../mostRecentPayDate"/>
+                  <Dependency path="../effectiveMostRecentPayDate"/>
                 </Left>
                 <Right>
                   <Dependency path="../semimonthlyEarlierPayDate"/>
@@ -1249,7 +1249,7 @@
                     <Int>12</Int>
                   </Minuend>
                   <Subtrahends>
-                    <Dependency path="../mostRecentPayDate/month"/>
+                    <Dependency path="../effectiveMostRecentPayDate/month"/>
                   </Subtrahends>
                 </Subtract>
                 <Add>
@@ -1366,7 +1366,7 @@
                         <Int>12</Int>
                       </Minuend>
                       <Subtrahends>
-                        <Dependency path="../mostRecentPayDate/month"/>
+                        <Dependency path="../effectiveMostRecentPayDate/month"/>
                       </Subtrahends>
                     </Subtract>
                   </Multiply>
@@ -1375,7 +1375,7 @@
                     on the 1st instead of the 31st -->
                     <LessThanOrEqual>
                       <Left>
-                        <Dependency path="../mostRecentPayDate/day"/>
+                        <Dependency path="../effectiveMostRecentPayDate/day"/>
                       </Left>
                       <Right>
                         <Int>15</Int>
