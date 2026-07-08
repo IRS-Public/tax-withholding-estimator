@@ -423,8 +423,10 @@
       </Derived>
     </Fact>
     <Fact path="/jobs/*/effectiveEndDate">
-      <Description>The month in which the user last worked as far as income counting towards this
-        year is concerned, used for semi-monthly and monthly</Description>
+      <Description>
+        The month in which the user last worked as far as income counting towards this
+        year is concerned, used for semi-monthly and monthly
+      </Description>
       <Derived>
         <Switch>
           <Case>
@@ -565,17 +567,6 @@
         <Switch>
           <Case>
             <When>
-              <Any>
-                <Dependency path="../isPayFrequencyMonthly"/>
-                <Dependency path="../isPayFrequencySemiMonthly"/>
-              </Any>
-            </When>
-            <Then>
-              <Dependency path="../effectiveEndDate/ordinal"/>
-            </Then>
-          </Case>
-          <Case>
-            <When>
               <Dependency path="../isInFuture"/>
             </When>
             <Then>
@@ -586,6 +577,17 @@
                   <Dependency path="../payPeriodLength"/>
                 </Multiply>
               </Add>
+            </Then>
+          </Case>
+          <Case>
+            <When>
+              <Any>
+                <Dependency path="../isPayFrequencyMonthly"/>
+                <Dependency path="../isPayFrequencySemiMonthly"/>
+              </Any>
+            </When>
+            <Then>
+              <Dependency path="../effectiveEndDate/ordinal"/>
             </Then>
           </Case>
           <Case>
