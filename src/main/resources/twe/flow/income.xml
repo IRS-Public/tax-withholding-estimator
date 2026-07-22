@@ -82,7 +82,8 @@
             <question>How many hours do
               <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
               <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
-              expect to be paid?</question>
+                expect to work each week?
+            </question>
             <hint>It’s okay to estimate.</hint>
             <input type="int"/>
           </fg-set>

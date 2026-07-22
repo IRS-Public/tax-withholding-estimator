@@ -206,7 +206,7 @@
         How many hours do
                       <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">you</span>
                       <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">they</span>
-                      expect to be paid?
+                        expect to work each week?
       hint: It’s okay to estimate.
     h5-4f6501: Job Details
     p-216488: Once we know more about your income, we’ll ask you additional questions.

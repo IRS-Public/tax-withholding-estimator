@@ -163,7 +163,7 @@
         Cuántas horas
           <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isTrue">esperas</span>
           <span condition="/jobs/*/isFilerAssignmentSelfOrIncomplete" operator="isFalse">espera</span>
-          trabajar en cada periodo de pago?
+          esperas trabajar en cada semana?
       hint: Puedes estimar la cantidad.
     /jobs/*/expectedFutureAnnualSalary:
       question: |-

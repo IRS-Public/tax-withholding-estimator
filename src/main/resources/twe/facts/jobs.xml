@@ -730,7 +730,10 @@
       </Placeholder>
     </Fact>
     <Fact path="/jobs/*/expectedFutureIncome">
-      <Description>The amount the user expects to be paid from this job for the entire year. This is used as a reference for the user and is not used in any calculations.</Description>
+      <Description>
+        The amount the user expects to be paid from this job for the entire year. This is used as a
+        reference for the user and is not used in any calculations.
+      </Description>
       <Derived>
         <Add>
           <Switch>
