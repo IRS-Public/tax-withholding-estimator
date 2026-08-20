@@ -2148,7 +2148,7 @@
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-a99490: Review line 27 on Form 8863, which would have been attached to and submitted
       with your Form 1040 federal tax return.
-    p-3c2260: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/american-opportunity-tax-credit">Learn
+    p-cdec1c: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/education-credits-aotc-and-llc">Learn
       more about the AOTC.</a>
   modal-llc-who-can-claim:
     heading: Who can claim the Lifetime Learning Credit (LLC)?
@@ -2169,7 +2169,7 @@
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-9f907d: Review line 31 on Form 8863, which would have been attached to and submitted
       with your Form 1040 federal tax return.
-    p-e9c95e: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/llc">Learn
+    p-28b3b4: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/education-credits-aotc-and-llc">Learn
       more about the LLC.</a>
   modal-adoption-credit-who-can-claim:
     heading: Who can claim the adoption credit?

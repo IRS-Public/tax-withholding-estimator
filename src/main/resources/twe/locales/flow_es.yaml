@@ -1509,7 +1509,7 @@
     p-658bee: No puedes reclamar el Crédito de la oportunidad estadounidense y el Crédito vitalicio de educación para el mismo estudiante.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-a99490: Revisa la línea 27 en el Anexo 8863 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-3c2260: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/american-opportunity-tax-credit">Conoce más sobre el AOTC (en inglés).</a>
+    p-cdec1c: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/education-credits-aotc-and-llc">Conoce más sobre el AOTC (en inglés).</a>
   modal-llc-who-can-claim:
     heading: ¿Quién puede reclamar el crédito vitalicio de educación (LLC)?
     p-f5b472: "Para reclamar el LLC, tú, tu esposo(a) o tu dependiente deben:"
@@ -1521,7 +1521,7 @@
     p-839872: No puedes reclamar el Crédito de la oportunidad estadounidense y el LLC para el mismo estudiante.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-9f907d: Revisa la línea 31 en el Formulario 8863 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-e9c95e: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/llc">Conoce más sobre el LLC (en inglés).</a>
+    p-28b3b4: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/education-credits-aotc-and-llc">Conoce más sobre el LLC (en inglés).</a>
   modal-adoption-credit-who-can-claim:
     heading: ¿Quién puede reclamar el crédito por adopción?
     p-ab884c: "Para reclamar el crédito por adopción, tú o tu esposo(a) deben:"
