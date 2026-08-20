@@ -262,7 +262,7 @@
         <p>You need to submit a Form W-4 to each of your employers to help them withhold the right amount of taxes from your paychecks throughout the year.</p>
         <p>Withholding at the right rate ensures that you don’t withhold too much and get smaller paychecks, or withhold too little and end up owing a large amount, or even penalties, at the end of the year.</p>
         <p>
-          <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn more about Form W-4.</a>
+          <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn more about Form W-4.</a>
         </p>
       </modal-content>
     </modal-dialog>
@@ -272,7 +272,7 @@
         <p>You need to submit a Form W-4P to your pension or annuity providers to help them withhold the right amount of taxes from your payments throughout the year.</p>
         <p>Withholding at the right rate ensures that you don’t withhold too much and get smaller payments, or withhold too little and end up owing a large amount, or even penalties, at the end of the year.</p>
         <p>
-          <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn more about Form W-4P.</a>
+          <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn more about Form W-4P.</a>
         </p>
       </modal-content>
     </modal-dialog>
@@ -282,10 +282,10 @@
         <p>You need to submit a Form W-4 to each of your employers or a Form W-4P to your pension or annuity providers to help them withhold the right amount of taxes from your paycheck or pension payment throughout the year.</p>
         <p>Withholding at the right rate ensures that you don’t withhold too much and take home a smaller amount, or withhold too little and end up owing a large amount, or even penalties, at the end of the year.</p>
         <p>
-          <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn more about Form W-4.</a>
+          <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn more about Form W-4.</a>
         </p>
         <p>
-          <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn more about Form W-4P.</a>
+          <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn more about Form W-4P.</a>
         </p>
       </modal-content>
     </modal-dialog>

@@ -11,7 +11,7 @@
         <h3>Additional senior deduction</h3>
         <p>For 2025 through 2028, taxpayers who are age 65 and older can claim an additional deduction of up to <fg-show path="/maxSeniorDeductionAmount"/>.</p>
         <p>
-          <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" class="usa-link">Learn more about the additional senior deduction.</a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" class="usa-link">Learn more about the additional senior deduction.</a>
         </p>
         <fg-set path="/primaryTaxpayerElectsForSeniorDeduction" if-true="/couldPrimaryTaxpayerBeEligibleForSeniorDeduction">
           <question>Do you plan to take the additional senior deduction?</question>
@@ -56,7 +56,7 @@
           <li>Minus self-employment-related deductions (like self-employed health insurance premiums, contributions to self-employed retirement plans, and half of your self-employment tax)</li>
         </ol>
         <p>
-          <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction" class="usa-link">Learn more about qualified business income.</a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/qualified-business-income-deduction" class="usa-link">Learn more about qualified business income.</a>
         </p>
       </div>
       <fg-set path="/qBIDeductionOverrideAmount" if-true="/wantsQBIDeductionOverride">
@@ -85,7 +85,7 @@
             </div>
           </div>
           <p>
-            <a target="_blank" href="https://www.irs.gov/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance" class="usa-link">Learn more about cash charitable contributions. <span class="usa-sr-only">(opens in a
+            <a target="_blank" rel="noreferrer" href="https://www.irs.gov/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance" class="usa-link">Learn more about cash charitable contributions. <span class="usa-sr-only">(opens in a
       new tab)</span></a>
           </p>
           <fg-set path="/nonItemizerCharitableContributionDeductionAmount" if-true="/tentativelyEligibleForNonItemizerCharitableContributionDeduction">
@@ -113,10 +113,10 @@
           <li>Is manufactured primarily for use on public streets, roads, and highways</li>
         </ul>
         <p>
-          <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" class="usa-link">Learn more about qualified car loan interest.</a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" class="usa-link">Learn more about qualified car loan interest.</a>
         </p>
         <p>
-          <a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Check if your vehicle was assembled in the U.S.</a>
+          <a target="_blank" rel="noreferrer" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Check if your vehicle was assembled in the U.S.</a>
         </p>
 
 
@@ -140,12 +140,12 @@
         </p>
         <p>
           Calculate your QBI deduction using
-          <a target="_blank" href="https://www.irs.gov/forms-pubs/about-form-8995">Form 8995-A</a>.
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/forms-pubs/about-form-8995">Form 8995-A</a>.
           You can also use the QBI deduction you claimed last year as an estimate. You'll find it
           on line 13a of your <fg-show path="/previousTaxYear"/> Form 1040.
         </p>
         <p>
-          <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction" class="usa-link">Learn more about QBI. <span class="usa-sr-only">(opens in a new tab)</span></a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/qualified-business-income-deduction" class="usa-link">Learn more about QBI. <span class="usa-sr-only">(opens in a new tab)</span></a>
         </p>
       </modal-content>
     </modal-dialog>
@@ -166,7 +166,7 @@
           <li>Payroll deduction</li>
           <li>Transfer of a gift card redeemable for cash</li>
         </ul>
-        <p><a target="_blank" href="https://www.irs.gov/charities-and-other-non-profits/cash-donations">Learn more about cash charitable contributions. <span class="usa-sr-only">(opens in a new tab)</span></a></p>
+        <p><a target="_blank" rel="noreferrer" href="https://www.irs.gov/charities-and-other-non-profits/cash-donations">Learn more about cash charitable contributions. <span class="usa-sr-only">(opens in a new tab)</span></a></p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-personal-vehicle-loan-interest">
@@ -187,11 +187,11 @@
         <li>Is made primarily for use on public streets, roads, and highways</li>
       </ul>
       <p>
-        <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" class="usa-link">Learn more about qualified car loan interest. <span class="usa-sr-only">(opens in a
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" class="usa-link">Learn more about qualified car loan interest. <span class="usa-sr-only">(opens in a
       new tab)</span></a>
       </p>
       <p>
-        <a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Check if your vehicle was assembled in the U.S. <span class="usa-sr-only">(opens in a
+        <a target="_blank" rel="noreferrer" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Check if your vehicle was assembled in the U.S. <span class="usa-sr-only">(opens in a
       new tab)</span></a>
       </p>
       </modal-content>

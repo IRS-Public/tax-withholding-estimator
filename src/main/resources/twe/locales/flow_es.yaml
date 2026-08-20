@@ -51,7 +51,7 @@
       li-e9750c: Estudiantes menores de 24 años que viven con sus padres
       li-683f65: Parientes o miembros de tu hogar que reciben de ti más de la mitad de sus costos de vida y tienen un sueldo bruto menor de $5,050
     p-6b3acc: No puedes reclamar a tu esposo(a) como tu dependiente si presentan una declaración conjunta.
-    p-40e480: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/dependents">Conoce más sobre los dependientes.</a>
+    p-5c8fee: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/dependents">Conoce más sobre los dependientes.</a>
   modal-primary-claimed-as-dependent:
     heading: ¿Cómo puedo saber si soy dependiente de alguien?
     p-d3187d: Si dependiste económicamente de otra persona (aparte de tu esposo(a)) en el <fg-show path="/taxYear"/>, podrían tener derecho a reclamarte como dependiente en su declaración del impuesto federal.
@@ -60,7 +60,7 @@
       li-b17276: Tu relación a esa persona
       li-c82d5e: Cuánto te apoyaron económicamente y de otras formas
       li-5a5073: Si viviste con ellos y por cuánto tiempo
-    p-752de3: Revisa la tabla 5 de la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">Publicación 501 del IRS</a> para determinar si alguien puede reclamarte como dependiente.
+    p-f44654: Revisa la tabla 5 de la <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">Publicación 501 del IRS</a> para determinar si alguien puede reclamarte como dependiente.
     p-5a0201: Ten en cuenta que no eres dependiente de otra persona si pagaste por más de la mitad de tus costos de vida (o si lo hizo tu esposo(a)).
   modal-filing-status:
     heading: ¿Cuál estado civil debo usar?
@@ -87,7 +87,7 @@
       li-4ef74f: No te volviste a casar antes del <fg-show path="/taxYear"/>
       li-939762: Tienes un hijo(a) dependiente que vive contigo todo el año
       li-bad5a3: Pagas más de la mitad del costo de mantener tu hogar
-    p-b4bd3e: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/filing/filing-status">Conoce más sobre cada estado civil<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
+    p-896c59: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/filing/filing-status">Conoce más sobre cada estado civil<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
   modal-secondary-claimed-as-dependent:
     heading: ¿Cómo saber si mi esposo(a) puede ser un dependiente?
     p-94ceb2: No puedes reclamar a tu esposo(a) como dependiente, aun si dependió de ti económicamente.
@@ -97,7 +97,7 @@
       li-a00f03: La relación de tu esposo(a) con esa persona
       li-06b095: Cuánto apoyaron a tu esposo(a), tanto económicamente y de otras formas
       li-7b9e81: Si tu esposo(a) vivió con ellos y por cuánto tiempo
-    p-8725bb: Revisa la tabla 5 de la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">Publicación 501 del IRS</a> para determinar si alguien puede reclamarle como dependiente.
+    p-dc2eb0: Revisa la tabla 5 de la <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">Publicación 501 del IRS</a> para determinar si alguien puede reclamarle como dependiente.
     p-53afc1: Ten en cuenta que tu esposo(a) no califica como dependiente si pagó más de la mitad de sus propios costos de vida, o si los pagaste tú.
 /income:
   title: Ingresos y pagos de impuestos
@@ -107,7 +107,7 @@
   h3-39ed29: Trabajos con un empleador (W-2)
   fg-alert-eadda7:
     heading: <span condition="/isFilingStatusMFJ" operator="isFalse">Debes</span><span condition="/isFilingStatusMFJ" operator="isTrue">Tu o tu esposo(a) deben</span> tener por lo menos un trabajo, pensión o anualidad que regularmente retenga impuesto federal.
-    p-d4a8fe: Agrega un trabajo, pensión o anualidad para seguir usando el estimador. Si no tienes un trabajo, pensión o anualidad que retenga impuesto federal, podrías planificar pagar <a target="_blank"
+    p-488006: Agrega un trabajo, pensión o anualidad para seguir usando el estimador. Si no tienes un trabajo, pensión o anualidad que retenga impuesto federal, podrías planificar pagar <a target="_blank" rel="noreferrer"
       href="https://www.irs.gov/es/businesses/small-businesses-self-employed/estimated-taxes"
       class="usa-link">impuestos estimados. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   p-0ec9f9: <modal-link for="modal-what-counts-job">¿Qué cuenta como un trabajo?</modal-link>
@@ -251,9 +251,9 @@
     fg-detail-bbdbfc:
       summary: Propinas estimadas
       p-c3c8eb: Las propinas son pagos voluntarios en efectivo o crédito recibidos de clientes o arreglos para compartir propinas.
-      p-d353b7: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Conoce más sobre la deducción de propinas.</a>
-      p-9a0b89: Para ser elegible para la deducción de propinas, <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">tu esposo(a) debe</span>
-                      <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">debes</span> tener un <a target="_blank" href="https://www.irs.gov/forms-pubs/occupations-that-customarily-and-regularly-received-tips-on-or-before-december-31-2024">trabajo</a> que el IRS reconozca como un trabajo que recibe propinas regularmente.
+      p-b3f67a: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Conoce más sobre la deducción de propinas.</a>
+      p-344e34: Para ser elegible para la deducción de propinas, <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">tu esposo(a) debe</span>
+                      <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">debes</span> tener un <a target="_blank" rel="noreferrer" href="https://www.irs.gov/forms-pubs/occupations-that-customarily-and-regularly-received-tips-on-or-before-december-31-2024">trabajo</a> que el IRS reconozca como un trabajo que recibe propinas regularmente.
       /jobs/*/qualifiedTipIncome:
         question: Total de propinas estimadas para el <fg-show path="/taxYear"/>
         hint: Puedes dejar esta casilla en blanco si no <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">tiene</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tienes</span> un número de Seguro Social.
@@ -264,7 +264,7 @@
     fg-detail-de7b9c:
       summary: Horas extra estimadas
       p-bc05b9: Las horas extra son un pago adicional que recibes por trabajar más de 40 horas por semana. Solo incluye el tiempo extra que tu empleador tiene requerido pagarte bajo la Ley de Normas Justas de Trabajo (FLSA).
-      p-1c212b: <a target="_blank" href="https://www.irs.gov/es/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025">Conoce más sobre la deducción por horas extra.</a>
+      p-0ecf30: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025">Conoce más sobre la deducción por horas extra.</a>
       /jobs/*/overtimeCompensationTotal:
         question: Total de pago estimado por horas extra en el <fg-show path="/taxYear"/>
         hint: Puedes dejar esta casilla en blanco si no <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">tiene</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">tienes</span> un número de Seguro Social.
@@ -338,7 +338,7 @@
         operator="isTrue">su</span><span condition="/isFilingStatusMFJ"
         operator="isFalse">tu</span> Cuenta de ahorros para la salud (HSA) o Cuenta de gastos flexibles (FSA).
       p-e1e101: Usualmente, el monto de las contribuciones a las cuentas HSA y FSA pueden encontrarse en la sección de <strong>Deducciones</strong> o <strong>Pre-tax</strong> de un talón de cheque.
-      p-27a801: Conoce más sobre las contribuciones a las <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> y <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
+      p-73bb08: Conoce más sobre las contribuciones a las <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> y <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
       /jobs/*/hsaOrFsaContributionsPerPayPeriod:
         question: Cantidad por periodo de pago
       /jobs/*/hsaOrFsaContributionsToDate:
@@ -467,7 +467,7 @@
       p-cac8c1: Ingresa el monto de las contribuciones que <span condition="/pensions/*/isInFuture" operator="isFalse">hiciste</span><span
         condition="/pensions/*/isInFuture" operator="isTrue">esperas hacer</span> a una Cuenta de ahorro para la salud (HSA) o a una Cuenta de gastos flexibles (FSA).
       p-187adb: Usualmente, el monto de las contribuciones a las cuentas HSA y FSA pueden encontrarse en la sección de <strong>Deducciones</strong> o <strong>Pre-tax</strong> de un estado de cuenta.
-      p-27a801: Conoce más sobre las contribuciones a las <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> y <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
+      p-73bb08: Conoce más sobre las contribuciones a las <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> y <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
       /pensions/*/hsaOrFsaContributionsPerPayPeriod:
         question: Cantidad por periodo de pago
       /pensions/*/hsaOrFsaContributionsToDate:
@@ -674,7 +674,7 @@
     li-98533d: Pensión conyugal por decretos de divorcio pre-2019
     li-2ce899: Compensaciones y daños y perjuicios otorgados por una corte (a menos que sean por lesiones físicas o enfermedad)
     li-bd02e0: Honorarios por servicios que proporcionaste
-  p-48332b: <a target="_blank" href="https://www.irs.gov/es/filing/taxable-income" class="usa-link
+  p-a7b5c3: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/filing/taxable-income" class="usa-link
     usa-link--external">Conoce más sobre otros ingresos tributables.<span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /nonSpecificOtherIncome:
     question: Total de otros ingresos que <span condition="/isFilingStatusMFJ"
@@ -688,7 +688,7 @@
     hint: Si no estás seguro, deja la casilla en blanco.
   h3-536be3: Impuestos estimados pagados
   p-67bec4: Además del impuesto ya retenido de tus ingresos, los pagos estimados se hacen directamente al IRS, usualmente a través de tu cuenta en línea del IRS o con el Formulario 1040-ES.
-  p-8f958a: <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes"
+  p-684501: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes"
     class="usa-link usa-link--external">Conoce más sobre los pagos estimados.<span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /totalEstimatedTaxesPaid:
     question: Pagos de impuestos estimados que <span condition="/isFilingStatusMFJ"
@@ -723,7 +723,7 @@
       li-a567e2: tener un trabajo que el IRS reconozca como un trabajo que recibe propinas regularmente
       li-830c05: tener un número de Seguro Social
     p-d2cd93: Si es difícil estimar el monto, puedes dejar la casilla en blanco.
-    p-7abc41: <a href="https://www.irs.gov/businesses/small-businesses-self-employed/tips" target="_blank" class="usa-link usa-link--external">Conoce más sobre la deducción de no impuestos sobre propinas.<span class="usa-sr-only"/></a>
+    p-d0cea6: <a href="https://www.irs.gov/businesses/small-businesses-self-employed/tips" target="_blank" rel="noreferrer" class="usa-link usa-link--external">Conoce más sobre la deducción de no impuestos sobre propinas.<span class="usa-sr-only"/></a>
   modal-no-tax-on-overtime:
     heading: ¿Cómo saber si soy elegible para la deducción de “no impuestos sobre horas extra”?
     p-840df1: 'Para ser elegible para la deducción de “no impuestos sobre horas extra”:'
@@ -732,8 +732,8 @@
       li-89acc4: debes ganar paga por horas extra trabajando más de 40 horas a la semana
       li-a567e2: debes tener un número de Seguro Social
     p-f57b74: El pago por horas extra no se require bajo la sección 7 del FLSA (por ejemplo, por ley estatal o contrato de un sindicato), no es deducible y no debe ingresarse en el estimado.
-    p-88d0b8: <a href="https://www.irs.gov/es/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025"
-      target="_blank" class="usa-link usa-link--external">Conoce más sobre la deducción de no impuestos sobre horas extra.<span class="usa-sr-only"/></a>
+    p-41d2e2: <a href="https://www.irs.gov/es/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025"
+      target="_blank" rel="noreferrer" class="usa-link usa-link--external">Conoce más sobre la deducción de no impuestos sobre horas extra.<span class="usa-sr-only"/></a>
   modal-what-counts-social-security:
     heading: ¿Qué cuenta como ingresos de Seguro Social?
     p-00bbe8: Los ingresos de Seguro Social son pagos para jubilados, personas con discapacidades y sus familias a través de la Administración de Seguro Social (SSA). Para reportar estos ingresos a fin de año, la SSA enviará el Formulario SSA-1099.
@@ -743,7 +743,7 @@
     p-82e34c: El monto mensual del beneficio es el total que recibes del Seguro Social cada mes <strong>antes de</strong> descontar primas de Medicare, impuestos u otras deducciones.
     p-716710: 'Puedes estimar la cantidad, pero para encontrar la cantidad exacta:'
     ol-0:
-      li-ea5ad7: Ingresa a tu <a target="_blank" href="https://www.ssa.gov/myaccount/"
+      li-cc0b18: Ingresa a tu <a target="_blank" rel="noreferrer" href="https://www.ssa.gov/myaccount/"
         class="usa-link">cuenta de my Social Security<span class="usa-sr-only"/></a>
       li-5b74be: Navega a la sección de <strong>Beneficios y Pagos</strong> (Benefits and Payments)
       li-53a1fa: Encontrarás el total del beneficio mensual antes de deducciones en el resumen de <strong>Beneficios</strong>
@@ -754,7 +754,7 @@
     p-a147e9: Puedes solicitar que retengan el impuesto federal de tus ingresos por Seguro Social.
     p-88d383: 'Para revisar si retienen impuesto federal de tus ingresos por Seguro Social:'
     ol-0:
-      li-ea5ad7: Ingresa a tu <a target="_blank" href="https://www.ssa.gov/myaccount/"
+      li-cc0b18: Ingresa a tu <a target="_blank" rel="noreferrer" href="https://www.ssa.gov/myaccount/"
         class="usa-link">cuenta de my Social Security (en inglés)<span class="usa-sr-only"/></a>
       li-ae75a0: Elige <strong>Retención voluntaria de impuestos</strong> (Voluntary Tax Withholding) para conocer el porcentaje que se retiene
     p-2f6487: Si no solicitaste que te retengan impuestos, el porcentaje será 0%.
@@ -847,13 +847,13 @@
     p-68386b: Estas deducciones son diferentes a las deducciones personales que puedes hacer si eliges detallar tus deducciones. Puedes deducir tus gastos del negocio aquí y aun así elegir una deducción estándar después.
     p-4ac7d7: <strong>¿Cómo puedo revisar la declaración de impuestos del año pasado?</strong>
     p-203379: Si trabajaste por cuenta propia el año pasado y esperas que tus gastos del negocio sean iguales, puedes encontrar tus gastos deducibles en la línea 28 del Anexo C.
-    p-4ca1ce: <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Conoce más sobre los gastos del negocio</a>
+    p-772335: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Conoce más sobre los gastos del negocio</a>
   modal-what-counts-unemployment:
     heading: ¿Qué cuenta como ingresos por desempleo?
     p-5c629b: El ingreso por desempleo es un programa conjunto estatal y federal que proporciona beneficios monetarios para trabajadores elegibles.
     p-d575d4: Para recibir desempleo, debes haber perdido tu trabajo por motivos fuera de tu control y cumplir con otros requisitos.
     p-c2b99e: A fin de año debes recibir el Formulario 1099-G que indica el monto que recibiste en el año.
-    p-9e9dfa: <a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Conoce más sobre el ingreso por desempleo.</a>
+    p-989b8d: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Conoce más sobre el ingreso por desempleo.</a>
   modal-fed-unemployment-tax-withheld:
     heading: ¿Cómo puedo saber si me retuvieron impuestos?
     p-097607: Puedes elegir que retengan el 10% del impuesto federal de tus ingresos por desempleo. Para esto, envía el Formulario W-4V a la oficina de desempleo.
@@ -903,7 +903,7 @@
     p-5e1dd9: Cuando estimes ganancias a corto o largo plazo, es mejor estimar una cantidad mayor. Si calculas muy poco, podrías no retener suficiente impuesto federal a lo largo del año.
   modal-rental-expenses-net-income:
     heading: ¿Qué son gastos relacionados a rentas y cómo puedo estimar el ingreso neto por rentas?
-    p-8093b7: Los <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">gastos de alquiler (en inglés)<span class="usa-sr-only">(abre en una nueva pestaña)</span></a> incluyen costos de mantenimiento, seguro, impuestos e intereses.
+    p-b56244: Los <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">gastos de alquiler (en inglés)<span class="usa-sr-only">(abre en una nueva pestaña)</span></a> incluyen costos de mantenimiento, seguro, impuestos e intereses.
     p-21afbd: <strong>Cómo estimar ingresos netos por alquiler</strong>
     p-cd2d5f: Primero, suma todo el dinero que esperas recibir de tus inquilinos durante el año. Luego, resta tus gastos por alquiler.
     p-a1b569: Cuando calcules tus gastos por alquiler, es mejor estimar una cantidad mayor. Si calculas muy poco, podrías no retener suficiente impuesto federal a lo largo del año.
@@ -936,7 +936,7 @@
     p-89cc04: Está bien incluir una idea del monto que recibirás. También puedes dejar la casilla de bonos futuros en blanco.
     p-9b4c52: <strong>No incluyas</strong> pagos de bonos pasados que ya recibiste este año.
     p-1b848e: Si en el <fg-show path="/taxYear"/> esperas ganar $1 millón o más en bonos, el estimador no podrá hace un cálculo preciso para tu estimado. Esto incluye todo bono que ya recibiste este año.
-    p-74606c: Revisa la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15sp#es_ES_2026_publink1000143523">Publicación 15</a> para ayuda con el cálculo de retenciones en bonos de monto alto, o considera consultar con un profesional de impuestos.
+    p-e9e635: Revisa la <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p15sp#es_ES_2026_publink1000143523">Publicación 15</a> para ayuda con el cálculo de retenciones en bonos de monto alto, o considera consultar con un profesional de impuestos.
   modal-job-check-bonus:
     heading: ¿Cómo puedo revisar si recibí un bono en este periodo de pago?
     p-9a2f97: Usualmente, los bonos son un pago único y adicional a tu salario regular.
@@ -1005,7 +1005,7 @@
   h3-2c7735: Deducción del interés de un préstamo estudiantil
   p-29379e: Si eres legalmente responsable de pagar el interés en un préstamo estudiantil calificado, puedes deducir hasta <fg-show path="/maxStudentLoanDeduction"/> en pagos de interés. El préstamo debe ser para ti, tu esposo(a) o un dependiente.
   p-3519c2: Esto incluye pagos de interés prepagados, tanto requeridos como voluntarios.
-  p-cf7cae: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc456" class="usa-link">
+  p-b9602a: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/taxtopics/tc456" class="usa-link">
     Conoce más sobre el interés de un préstamo estudiantil. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /studentLoanInterestAmount:
     question: Interés de préstamo estudiantil que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
@@ -1018,14 +1018,14 @@
     li-0b8a3d: Cursos de desarrollo profesional
     li-c31915: Libros, útiles, equipo de computador (incluyendo programas y servicios relacionados)
     li-f3a059: Otros equipos y materiales suplementarios que uses en el salón de clase
-  p-b20cac: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc458" class="usa-link">Conoce más sobre gastos del educador. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+  p-5f541e: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/taxtopics/tc458" class="usa-link">Conoce más sobre gastos del educador. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /educatorExpenses/:
     question: Gastos del educador que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> deducir en el <fg-show path="/taxYear"/>
     hint: (máximo <fg-show path="/maxEducatorExpensesLimit"/>)
   h3-e640b9: Deducción por una cuenta IRA tradicional (pre-impuestos)
   p-3269b3: Si contribuyes a una cuenta de jubilación IRA tradicional (pre-impuestos) fuera de las contribuciones de tu nómina en el <fg-show path="/taxYear"/>, podrías reclamar una deducción.
   p-523de9: <strong>No incluyas</strong> cantidades que ya incluiste en uno de tus trabajos, contribuciones a cuentas IRA Roth, o contribuciones a otras cuentas de jubilación.
-  p-2bd31f: <a target="_blank" href="https://www.irs.gov/es/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits"
+  p-a0a52a: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits"
     class="usa-link">Conoce más sobre contribuciones a cuentas de jubilación IRA. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /deductionForTraditionalIRAContribution:
     question: Contribuciones a una cuenta de jubilación IRA tradicional que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
@@ -1044,25 +1044,25 @@
     li-765afa: Otros planes de jubilación calificados
   p-af5a4a: <strong>No incluyas</strong> contribuciones a cuentas individuales de jubilación (IRA).
   p-09dfdf: Debes usar reglas especiales para calcular las contribuciones a un plan de jubilación.
-  p-3248f2: <a target="_blank" href="https://www.irs.gov/es/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction"
+  p-f8eda7: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction"
     class="usa-link">Conoce más sobre las contribuciones a planes de jubilación para trabajadores por cuenta propia. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /selfEmploymentRetirementPlanContributions:
     question: Contribuciones a un plan de jubilación de ingresos por trabajo por cuenta propia que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
   h3-940849: Deducción por una Cuenta de ahorros para la salud (HSA)
   p-fc912f: Si <span condition="/isFilingStatusMFJ" operator="isFalse">contribuyes</span><span condition="/isFilingStatusMFJ" operator="isTrue">contribuyen</span> a una cuenta HSA fuera de las contribuciones de <span condition="/isFilingStatusMFJ" operator="isFalse">tu nómina</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus nóminas</span> en el <fg-show path="/taxYear"/>, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> reclamar una deducción.
   p-739bad: <strong>No incluyas</strong> cantidades que ya incluiste en uno de tus trabajos.
-  p-427dc4: <a target="_blank" href="https://www.irs.gov/forms-pubs/about-publication-969"
+  p-7df6ea: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/forms-pubs/about-publication-969"
     class="usa-link">Conoce más sobre las contribuciones a una cuenta HSA (en inglés). <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /hsaContributionAmount:
     question: Contribuciones a una cuenta HSA que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
   h3-5574f6: Deducción por pensión alimenticia
   p-e03d05: Puedes deducir la pensión alimenticia que le pagaste en el <fg-show path="/taxYear"/> a un esposo(a) o ex esposo(a) bajo un instrumento de divorcio o separación hecho antes del 2019.
-  p-0c3c0d: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc452" class="usa-link">Conoce más sobre la pensión alimenticia. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+  p-e8098d: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/taxtopics/tc452" class="usa-link">Conoce más sobre la pensión alimenticia. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /alimonyPaid:
     question: Pensión alimenticia que esperas pagar en el <fg-show path="/taxYear"/>
   h3-913117: Multa por retiro anticipado de ahorros
   p-5c9299: Si <span condition="/isFilingStatusMFJ" operator="isFalse">retiraste</span><span condition="/isFilingStatusMFJ" operator="isTrue">retiraron</span> fondos de un certificado de depósito u otra cuenta de interés diferido antes del tiempo acordado, <span condition="/isFilingStatusMFJ" operator="isFalse">tu</span><span condition="/isFilingStatusMFJ" operator="isTrue">su</span> institución financiera podría <span condition="/isFilingStatusMFJ" operator="isFalse">haberte</span><span condition="/isFilingStatusMFJ" operator="isTrue">haberles</span> cobrado una multa en el <fg-show path="/taxYear"/>. <span condition="/isFilingStatusMFJ" operator="isFalse">Puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">Pueden</span> deducir el monto de la multa.
-  p-0dd4e9: <a target="_blank" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-exceptions-to-tax-on-early-distributions"
+  p-c9429a: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-exceptions-to-tax-on-early-distributions"
     class="usa-link">Conoce más sobre las multas por retiro anticipado (en inglés). <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /penaltyForEarlySavingsWithdrawal:
     question: Monto de la multa que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
@@ -1071,7 +1071,7 @@
   ul-3:
     li-a1710a: <span condition="/isFilingStatusMFJ" operator="isFalse">Eres miembro</span><span condition="/isFilingStatusMFJ" operator="isTrue">Tú o tu esposo(a) son miembros</span> de las Fuerzas Armadas en deber activo y la mudanza fue a causa de una orden militar y un cambio de estación permanente, o
     li-b646ac: <span condition="/isFilingStatusMFJ" operator="isFalse">Eres empleado o te </span><span condition="/isFilingStatusMFJ" operator="isTrue">Tú o tu esposo(a) son empleados o les</span> han designado a la comunidad de inteligencia y la mudanza fue a causa de un cambio de asignación que requirió relocalización
-  p-b7904a: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc455" class="usa-link">Conoce más sobre los gastos de mudanza para la comunidad militar y de inteligencia. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+  p-e61457: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/taxtopics/tc455" class="usa-link">Conoce más sobre los gastos de mudanza para la comunidad militar y de inteligencia. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /movingExpensesForArmedServicesMembers:
     question: Gastos de mudanza que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
   h3-bcc8a5: Algunos gastos de negocios
@@ -1079,13 +1079,13 @@
   ul-4:
     li-a7cbed: Son comunes y aceptados en <span condition="/isFilingStatusMFJ" operator="isFalse">tu campo</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus campos</span> de trabajo, negocios o profesión
     li-e1fa4e: Son útiles y apropiados para <span condition="/isFilingStatusMFJ" operator="isFalse">tus</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus</span> negocios
-  p-30ab2e: <a target="_blank" href="https://www.irs.gov/instructions/i2106" class="usa-link">Conoce más sobre algunos gastos de negocios (en inglés). <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+  p-2f1a9e: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/instructions/i2106" class="usa-link">Conoce más sobre algunos gastos de negocios (en inglés). <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /businessCreditsForEligible:
     question: Gastos de negocio elegibles que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
   h3-5c4fd4: Deducción por seguro médico del trabajador por cuenta propia
   p-105416: <span condition="/isFilingStatusMFJ" operator="isFalse">Si trabajas</span><span condition="/isFilingStatusMFJ" operator="isTrue">Tú o tu esposo(a) trabajan</span> por cuenta propia y <span condition="/isFilingStatusMFJ" operator="isFalse">tienes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tienen</span> ganancias netas este año, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir las primas del <fg-show path="/taxYear"/> del seguro médico.
   p-082b2a: 'Las primas elegibles son: médicas, dentales, de visión y seguro de cuidado a largo plazo. La póliza puede ser para ti, tu esposo(a) o un dependiente. La póliza también puede cubrir a un hijo(a) si es menor de 27 años a fin del año, aun si no es tu dependiente.'
-  p-13dece: <a target="_blank" href="https://www.irs.gov/es/node/131041" class="usa-link">Conoce más sobre las deducciones por seguro médico para el trabajador por cuenta propia (en inglés). <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+  p-5ff7ff: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/node/131041" class="usa-link">Conoce más sobre las deducciones por seguro médico para el trabajador por cuenta propia (en inglés). <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   /selfEmploymentHealthInsuranceContributions:
     question: Primas de seguro médico que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
   modal-what-are-adjustments:
@@ -1122,18 +1122,18 @@
   ul-1:
     li-1c452e: Impuesto estatal y local sobre los ingresos
     li-2afba5: Impuesto estatal y local sobre las ventas
-  p-91100f: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc503" class="usa-link">Conoce más sobre los impuestos locales y estatales.</a>
+  p-f89816: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/taxtopics/tc503" class="usa-link">Conoce más sobre los impuestos locales y estatales.</a>
   /stateAndLocalTaxPayments:
     question: Impuestos locales y estatales que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
     hint: (máximo <fg-show path="/stateAndLocalTaxDeductionLimit"/>)
   h4-627030: Donaciones caritativas
   p-693a4b: Si <span condition="/isFilingStatusMFJ" operator="isFalse">haces</span><span condition="/isFilingStatusMFJ" operator="isTrue">hacen</span> una donación a una organización calificada, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducirla.
-  p-e1d782: <a target="_blank" href="https://www.irs.gov/es/charities-non-profits/charitable-organizations/charitable-contribution-deductions" class="usa-link">Conoce más sobre las donaciones caritativas.</a>
+  p-e77962: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/charities-non-profits/charitable-organizations/charitable-contribution-deductions" class="usa-link">Conoce más sobre las donaciones caritativas.</a>
   /cashCharitableContributions:
     question: Donaciones caritativas que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
   h4-0aecd8: Intereses hipotecarios calificados e intereses por inversiones
   p-ca41f8: Si <span condition="/isFilingStatusMFJ" operator="isFalse">pides</span><span condition="/isFilingStatusMFJ" operator="isTrue">piden</span> un préstamo para comprar una propiedad primaria, secundaria, o de inversión, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir los intereses y puntos que <span condition="/isFilingStatusMFJ" operator="isFalse">pagaste</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagaron</span> para ese préstamo.
-  p-94189b: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc505" class="usa-link">Conoce más sobre los intereses hipotecarios y por inversiones.</a>
+  p-9b3c6a: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/taxtopics/tc505" class="usa-link">Conoce más sobre los intereses hipotecarios y por inversiones.</a>
   /qualifiedMortgageInterestAndInvestmentInterestExpenses:
     question: Intereses calificados que <span condition="/isFilingStatusMFJ" operator="isFalse">piensas</span><span condition="/isFilingStatusMFJ" operator="isTrue">piensan</span> pagar en el <fg-show path="/taxYear"/>
   h4-b16091: Primas de seguro hipotecario
@@ -1148,7 +1148,7 @@
     question: Primas de seguro hipotecario que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
   h4-2ad5b3: Deducción por gastos médicos y dentales
   p-30a251: Si <span condition="/isFilingStatusMFJ" operator="isFalse">pagas</span><span condition="/isFilingStatusMFJ" operator="isTrue">pagan</span> de <span condition="/isFilingStatusMFJ" operator="isFalse">tu</span><span condition="/isFilingStatusMFJ" operator="isTrue">su</span> bolsillo (y el seguro médico no <span condition="/isFilingStatusMFJ" operator="isFalse">te</span><span condition="/isFilingStatusMFJ" operator="isTrue">les</span> reembolsa) por gastos médicos y dentales o primas, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir el monto total de <span condition="/isFilingStatusMFJ" operator="isFalse">tus</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus</span> gastos por encima de <fg-show path="/medicalAndDentalExpensesFloor"/>.
-  p-ebaf9f: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc502" class="usa-link">Conoce más sobre los gastos médicos y dentales.</a>
+  p-3442bd: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/taxtopics/tc502" class="usa-link">Conoce más sobre los gastos médicos y dentales.</a>
   /medicalAndDentalExpenses:
     question: Gastos médicos y dentales que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/>
     hint: No incluyas primas de seguro que ya agregaste en la sección de Ingresos o Ajustes.
@@ -1156,7 +1156,7 @@
   p-e1d1d9: Si <span condition="/isFilingStatusMFJ" operator="isFalse">sufres</span><span condition="/isFilingStatusMFJ" operator="isTrue">sufren</span> pérdidas por accidentes, desastres, o robos debido a un desastre declarado a nivel federal o estatal, <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducirlas.
   p-999102: También <span condition="/isFilingStatusMFJ" operator="isFalse">puedes</span><span condition="/isFilingStatusMFJ" operator="isTrue">pueden</span> deducir pérdidas por robo relacionadas a transacciones lucrativas, incluyendo estafas.
   p-10956c: Algunas pérdidas imprevistas requieren que restes $100 por evento y <fg-show path="/casualtyLossesAgiLimit"/> de tu deducción. Esto sería el 10% de <span condition="/isFilingStatusMFJ" operator="isFalse">tu</span><span condition="/isFilingStatusMFJ" operator="isTrue">su</span> ingreso bruto ajustado (AGI). Confirma cuáles reglas <span condition="/isFilingStatusMFJ" operator="isFalse">te</span><span condition="/isFilingStatusMFJ" operator="isTrue">les</span> aplican antes de ingresar una cantidad.
-  p-39aa78: <a target="_blank" href="https://www.irs.gov/es/taxtopics/tc515" class="usa-link">Conoce más sobre las pérdidas imprevistas.</a>
+  p-125fc7: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/taxtopics/tc515" class="usa-link">Conoce más sobre las pérdidas imprevistas.</a>
   /casualtyLossesTotal:
     question: Pérdidas imprevistas estimadas para el <fg-show path="/taxYear"/>
   h4-fcd750: Otras deducciones detalladas
@@ -1174,7 +1174,7 @@
     li-202051: Costos deducibles relacionados a cualquier acción que involucre un reclamo por discriminación
     li-5c9c06: Inversiones en una anualidad que no se recuperaron
     li-d57dd2: Una pérdida ordinaria relacionada a un instrumento de deuda de pago contingente, o un instrumento de deuda indexado a la inflación (p. ej., un título del Tesoro, protegido contra la inflación)
-  p-3c5570: <a target="_blank" href="https://www.irs.gov/publications/p529" class="usa-link">Conoce más sobre otras deducciones.</a>
+  p-b159ec: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p529" class="usa-link">Conoce más sobre otras deducciones.</a>
   /otherDeductionsTotal:
     question: Estimado de otras deducciones para el <fg-show path="/taxYear"/>
   h4-ab9771: 'Total de deducciones detalladas: <fg-show path="/itemizedDeductionTotal"/>'
@@ -1183,11 +1183,11 @@
     heading: ¿Qué es una deducción estándar y una deducción detallada?
     p-05b623: La deducción <strong>estándar</strong> y la <strong>detallada</strong> son formas de reducir el monto de tus ingresos sujetos a impuestos.
     p-612298: La deducción estándar es una cantidad fija que se resta de tus ingresos. Se calcula según tu estado civil al declarar impuestos y según si tú o tu esposo(a) tienen 65 o más, son ciegos, o alguien más puede reclamarlos como un dependiente en el año fiscal.
-    p-b8a25f: Detallar deducciones significa totalizar cada deducción del <a target="_blank" href="https://www.irs.gov/es/forms-pubs/about-schedule-a-form-1040" class="usa-link">Anexo A<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a> para la que calificas, artículo por artículo.
+    p-fb77d3: Detallar deducciones significa totalizar cada deducción del <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/forms-pubs/about-schedule-a-form-1040" class="usa-link">Anexo A<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a> para la que calificas, artículo por artículo.
     p-9d31c1: La mayoría de personas toman la deducción estándar, pero podrías querer intentar detallar tus deducciones si tienes una hipoteca, donaciones caritativas grandes o gastos médicos altos.
     p-a2eb42: Ahorrarás dinero al elegir la opción que se calcule como la mayor deducción.
     p-617b6e: No puedes tomar la deducción estándar si detallas tus deducciones.
-    p-531543: <a target="_blank" href="https://www.irs.gov/es/newsroom/tax-basics-understanding-the-difference-between-standard-and-itemized-deductions" class="usa-link">Conoce más sobre la deducción estándar y la detallada.<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
+    p-a6c367: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/newsroom/tax-basics-understanding-the-difference-between-standard-and-itemized-deductions" class="usa-link">Conoce más sobre la deducción estándar y la detallada.<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
   modal-standard-deduction-amount:
     heading: El monto de tu deducción estándar se basa en tus respuestas.
     p-0e3533: Tu deducción estándar es limitada porque otro contribuyente puede reclamarte como un dependiente.
@@ -1209,7 +1209,7 @@
       li-80f87f: Eres ciego(a)
       li-6a4489: Tu esposo(a) es ciego(a)
       li-e4bf17: Uno o ambos de ustedes es ciego(a)
-    p-722e90: <a target="_blank" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000221051" class="usa-link">Conoce más sobre la deducción estándar.<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
+    p-17150c: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000221051" class="usa-link">Conoce más sobre la deducción estándar.<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
 /additional-deductions:
   title: Deducciones adicionales
   h2-e64960: Deducciones adicionales
@@ -1217,7 +1217,7 @@
   p-13d235: Ya sea que <span condition="/isFilingStatusMFJ" operator="isFalse">tomes</span><span condition="/isFilingStatusMFJ" operator="isTrue">tomen</span> la deducción estándar o la detallada, estas deducciones pueden reducir aun más la cantidad de <span condition="/isFilingStatusMFJ" operator="isFalse">tus</span><span condition="/isFilingStatusMFJ" operator="isTrue">sus</span> ingresos que estaría sujeta a impuestos.
   h3-88e0af: Deducción adicional para adultos mayores
   p-f250e6: Desde el 2025 hasta el 2028, los contribuyentes de 65 años o más podrán reclamar una deducción adicional de hasta <fg-show path="/maxSeniorDeductionAmount"/>.
-  p-51dacf: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
+  p-662ff7: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
     class="usa-link">Conoce más sobre la deducción adicional para adultos mayores.</a>
   /primaryTaxpayerElectsForSeniorDeduction:
     question: ¿Piensas tomar la deducción adicional para adultos mayores?
@@ -1242,7 +1242,7 @@
     li-eb6dd8: Los ingresos de negocios que esperas en el <fg-show path="/taxYear"/>
     li-5b1108: Resta los gastos comunes del negocio (como renta, materiales, y beneficios de los empleados)
     li-afd842: Resta deducciones relacionas con el empleo por cuenta propia (como primas de seguro de salud para el trabajador por cuenta propia, contribuciones a planes de jubilación para el trabajador por cuenta propia, y la mitad de tu impuesto al trabajador por cuenta propia)
-  p-fb0f3c: <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction"
+  p-256ee1: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/qualified-business-income-deduction"
     class="usa-link">Conoce más sobre el ingreso calificado de un negocio.</a>
   /qBIDeductionOverrideAmount:
     question: Monto estimado de QBI para el <fg-show path="/taxYear"/>
@@ -1259,7 +1259,7 @@
       li-95186c: Deducción en tu nómina
       li-53c28e: Transferencia de una tarjeta de regalo que puede canjearse por efectivo
     p-76b3ac: <strong>El estimador usará la deducción estándar</strong> porque es mayor que tu deducción detallada. Si agregaste donaciones caritativas en efectivo, vuelve a agregar esas mismas donaciones aquí.
-    p-7603e2: <a target="_blank" href="https://www.irs.gov/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance"
+    p-558ace: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance"
       class="usa-link">Conoce más sobre las donaciones caritativas en efectivo. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
     /nonItemizerCharitableContributionDeductionAmount:
       question: Contribuciones caritativas que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> hacer en el <fg-show path="/taxYear"/>
@@ -1279,9 +1279,9 @@
       li-1ac6c8: Tuvo su ensamblaje final en los Estados Unidos
       li-14ccc7: Tiene un peso bruto menor a 14,000 libras
       li-71d229: Se manufacturó para uso principalmente en calles públicas, carreteras y autopistas
-    p-62c99d: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
+    p-4b2859: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
       class="usa-link">Conoce más sobre los intereses de préstamos para autos calificados.</a>
-    p-43c67d: <a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Revisa si tu auto se ensambló en los Estados Unidos.</a>
+    p-524929: <a target="_blank" rel="noreferrer" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Revisa si tu auto se ensambló en los Estados Unidos.</a>
     /personalVehicleLoanInterestAmount:
       question: Interés que <span condition="/isFilingStatusMFJ" operator="isFalse">esperas</span><span condition="/isFilingStatusMFJ" operator="isTrue">esperan</span> pagar en el <fg-show path="/taxYear"/> por un préstamo automotriz
       modalLink: <modal-link for="modal-personal-vehicle-loan-interest">¿Qué cuenta como el interés de un préstamo para automóviles</modal-link>
@@ -1289,8 +1289,8 @@
     heading: ¿Cuándo debería ingresar un monto diferente?
     p-3c9516: Si no eres dueño o no te beneficias economicamente de un negocio o comercio, podrías querer ingresar $0 para la deducción por ingreso calificado de un negocio (QBI)
     p-51c6e8: Si tu ingreso bruto ajustado será mayor a <fg-show path="/qbiPhaseInThreshold"/>, podrías querer ingresar un monto diferente.
-    p-92b07b: Calcula la deducción de tu QBI con el <a target="_blank" href="https://www.irs.gov/forms-pubs/about-form-8995">Formulario 8995-A</a>. También puedes usar la misma deducción para QBI que usaste el año pasado como estimado. La encontrarás en la línea 13a de tu Formulario 1040 del <fg-show path="/previousTaxYear"/>.
-    p-24ae98: <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction" class="usa-link">Conoce más sobre el QBI. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+    p-2fc10f: Calcula la deducción de tu QBI con el <a target="_blank" rel="noreferrer" href="https://www.irs.gov/forms-pubs/about-form-8995">Formulario 8995-A</a>. También puedes usar la misma deducción para QBI que usaste el año pasado como estimado. La encontrarás en la línea 13a de tu Formulario 1040 del <fg-show path="/previousTaxYear"/>.
+    p-5285cf: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/qualified-business-income-deduction" class="usa-link">Conoce más sobre el QBI. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   modal-non-itemizer-charitable-contribution:
     heading: ¿Qué cuenta como una donación caritativa en efectivo?
     p-b36cd1: Si tomas la deducción estándar y haces una donación a una organización calificada en el <fg-show path="/taxYear"/>, puedes deducir donaciones en efectivo hasta <fg-show
@@ -1303,7 +1303,7 @@
       li-1e7cc9: Tarjeta de débito o crédito
       li-95186c: Deducción en tu nómina
       li-e75b1f: Transferencia de una tarjeta de regalo que puede canjearse por efectivo
-    p-58fcc2: <a target="_blank" href="https://www.irs.gov/es/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance">Conoce más sobre las donaciones caritativas en efectivo. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+    p-f20251: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance">Conoce más sobre las donaciones caritativas en efectivo. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
   modal-personal-vehicle-loan-interest:
     heading: ¿Qué cuenta como el interés de un préstamo para automóviles?
     p-b98393: <span condition="/isFilingStatusMFJ" operator="isFalse">Si pagaste intereses por un préstamo de un automóvil en el <fg-show path="/taxYear"/>, podrías deducir hasta <fg-show path="/maxQPVLIDAmount"/> de los intereses que pagaste.</span><span condition="/isFilingStatusMFJ" operator="isTrue">Si pagaron intereses por un préstamo de un automóvil en el <fg-show path="/taxYear"/>, podrían deducir hasta <fg-show path="/maxQPVLIDAmount"/> de los intereses que pagaron</span>
@@ -1318,9 +1318,9 @@
       li-1ac6c8: Tuvo su ensamblaje final en los Estados Unidos
       li-3dc6c6: Tiene un peso bruto menor a 14,000 libras
       li-0e459d: Se hizo para uso principalmente en calles públicas, carreteras y autopistas
-    p-ddc5a9: <a target="_blank" href="https://www.irs.gov/es/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
+    p-d6fc3c: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/es/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
       class="usa-link">Conoce más sobre los intereses de préstamos para autos calificados. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
-    p-e834fb: <a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Revisa si tu auto se ensambló en los Estados Unidos. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
+    p-f358fb: <a target="_blank" rel="noreferrer" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Revisa si tu auto se ensambló en los Estados Unidos. <span class="usa-sr-only">(abre en una nueva pestaña)</span></a>
 /credits:
   title: Créditos
   h2-948a2e: Créditos
@@ -1424,21 +1424,21 @@
     p-c67be7: Puedes reclamar hasta <fg-show path="/maxCtcAmount"/> por hijo calificado.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-e97b0b: Revisa la línea 4 en el Anexo 8812 por un número mayor a 0. El Anexo 8812 se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-23670a: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/child-tax-credit">Conoce más sobre el CTC.</a>
+    p-1e7f2e: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/child-tax-credit">Conoce más sobre el CTC.</a>
   modal-odc-who-can-claim:
     heading: ¿Quién puede reclamar el crédito por otros dependientes (ODC)?
     p-25ea3f: "Para reclamar el ODC, debes tener un dependiente calificado que:"
     ul-0:
       li-ec8076: Pienses reclamar como dependiente en tu declaración de impuestos
       li-3f5be2: Tenga un ingreso bruto menor a <fg-show path="/odcDependentGrossIncomeThreshold"/>
-      li-271d52: Viva contigo en los Estados Unidos más de la mitad del año si es un niño(a), o todo el año si es un adulto, a menos que sea <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000220957">un tipo específico de pariente (en inglés)</a>
+      li-a1b2ed: Viva contigo en los Estados Unidos más de la mitad del año si es un niño(a), o todo el año si es un adulto, a menos que sea <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000220957">un tipo específico de pariente (en inglés)</a>
       li-3cdb99: Tenga un número de Seguro Social, número de Identificación Personal del Contribuyente (ITIN), o un número de Identificación del Contribuyente para Adopciones (ATIN)
       li-54fdde: No se mantenga a sí mismo y no piense presentar una declaración conjunta
       li-38e383: No mencionarás para reclamar el crédito por hijos
     p-b1ce93: Puedes reclamar hasta <fg-show path="/maxOdcAmount"/> por cada dependiente calificado de cualquier edad.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-a212c5: Revisa la línea 6 en el Anexo 8812 por un número mayor a 0. El Anexo 8812 se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-8e621a: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/newsroom/understanding-the-credit-for-other-dependents">Conoce más sobre el ODC.</a>
+    p-2fd27b: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/newsroom/understanding-the-credit-for-other-dependents">Conoce más sobre el ODC.</a>
   modal-cdcc-who-can-claim-and-eligible-expenses:
     heading: ¿Quién puede reclamar el crédito por el cuidado de hijos y dependientes (CDCC) y cuáles gastos son elegibles?
     p-999ac9: Para reclamar el CDCC, debes pagar por el cuidado de un niño(a) menor de 13 años, o para tu esposo(a) o un dependiente que viva contigo y no pueda cuidar de sí mismo.
@@ -1455,12 +1455,12 @@
       li-cc9c3b: Matrícula para escuelas privadas
       li-241e17: Comida, alojamiento, o vestimenta a menos que estén directamente relacionados al cuidado
       li-dc8f3c: Pagos a tu esposo(a), el padre del hijo(a), u otro dependiente por el cuidado
-    p-ee8680: Esta no es una lista completa. Revisa la <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203292">Publicación 503 (en inglés)</a> para conocer más sobre los gastos que califican.
+    p-8521e7: Esta no es una lista completa. Revisa la <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203292">Publicación 503 (en inglés)</a> para conocer más sobre los gastos que califican.
     p-ded29b: Puedes reclamar hasta <fg-show path="/cdccMaxClaimableExpenseWithOneQP"/> por una persona o <fg-show path="/cdccMaxClaimableExpenseWithTwoQP"/> por dos o más personas.
-    p-a01583: Si estás casado(a) y presentas una declaración separada, solo podrás reclamar este crédito si tú y tu esposo(a) están legalmente separados o viven separados y cumplen con <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203323">otros criterios (en inglés).</a>
+    p-37f3d1: Si estás casado(a) y presentas una declaración separada, solo podrás reclamar este crédito si tú y tu esposo(a) están legalmente separados o viven separados y cumplen con <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203323">otros criterios (en inglés).</a>
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-df5230: Revisa la línea 2 en el Anexo 3. El Anexo 3 se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-6173e1: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/taxtopics/tc602">Conoce más sobre el CDCC.</a>
+    p-ba4b01: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/taxtopics/tc602">Conoce más sobre el CDCC.</a>
   modal-eitc-who-can-claim:
     heading: ¿Quién puede reclamar el crédito por ingreso del trabajo (EITC)?
     p-787c0c: <strong>Si tienes hijos y quieres reclamar el EITC,</strong> debes ser un trabajador de ingresos bajos o moderados y tener un hijo calificado.
@@ -1472,7 +1472,7 @@
       li-15bfc0: Tener un número de Seguro Social válido para trabajar
       li-1b1f15: No presentar una declaración conjunta (excepto para reclamar un reembolso)
     p-76b6a9: Puedes reclamar hasta 3 hijos calificados.
-    p-d178a7: Si estás casado(a) y presentas una declaración por separado, sólo puedes reclamar este crédito si cumples con <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/earned-income-tax-credit/who-qualifies-for-the-earned-income-tax-credit-eitc#marriedfilingseparate">requisitos específicos para el EITC.</a>
+    p-9379df: Si estás casado(a) y presentas una declaración por separado, sólo puedes reclamar este crédito si cumples con <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/earned-income-tax-credit/who-qualifies-for-the-earned-income-tax-credit-eitc#marriedfilingseparate">requisitos específicos para el EITC.</a>
     p-9e7c3b: "<strong>Si no tienes hijos y quieres reclamar el EITC,</strong>  debes ser un trabajador con ingresos bajos o moderados que:"
     ul-1:
       li-e27492: Tenga al menos 25 años pero menos de 65 al 1 de enero del <fg-show path="/nextTaxYear"/>
@@ -1480,7 +1480,7 @@
       li-15bfc0: Tenga un número de Seguro Social válido para trabajar
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-cdce6e: Revisa la línea 27a en el Formulario 1040 de tu declaración del impuesto federal.
-    p-cda0a1: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/earned-income-tax-credit-eitc">Conoce más sobre el EITC.</a>
+    p-ec4fd9: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/earned-income-tax-credit-eitc">Conoce más sobre el EITC.</a>
   modal-retirement-savings-credit-who-can-claim:
     heading: ¿Quién puede reclamar el crédito del ahorrador y cómo puedo estimarlo?
     p-82bd3c: Para reclamar el crédito del ahorrador, debes hacer contribuciones a una IRA tradicional, Roth IRA, 401(k), 403(b), o un plan similar.
@@ -1493,7 +1493,7 @@
     p-d2238c: Si es difícil de estimar, puedes dejar este estimado de crédito en blanco.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-e930e0: Si esperas que el monto de ahorros para tu plan de jubilación sea parecido al del año pasado, puedes usar la misma cantidad. Revisa la línea 4 del Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-4f7230: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/taxtopics/tc610">Conoce más sobre el crédito del ahorrador.</a>
+    p-b7566d: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/taxtopics/tc610">Conoce más sobre el crédito del ahorrador.</a>
   modal-aotc-who-can-claim-and-eligible-expenses:
     heading: ¿Quién puede reclamar el crédito de la oportunidad estadounidense (AOTC) y qué tipos de gastos califican?
     p-a7fc1e: "Para reclamar el AOTC, tú, tu esposo(a) o tu dependiente debe:"
@@ -1504,36 +1504,36 @@
     ul-1:
       li-fb3acc: 100% de los primeros $2,000 en gastos
       li-1fae55: 25% de los siguientes $2,000 en gastos
-    p-1f5c56: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/qualified-ed-expenses">Los gastos educativos (en inglés)</a> incluyen matrículas, costos, libros, materiales y otros. Puedes reclamar gastos hechos por ti, tu esposo(a), tu dependiente o un tercero.
+    p-378fe5: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/qualified-ed-expenses">Los gastos educativos (en inglés)</a> incluyen matrículas, costos, libros, materiales y otros. Puedes reclamar gastos hechos por ti, tu esposo(a), tu dependiente o un tercero.
     p-26f710: Un estudiante no puede reclamar este crédito más de 4 veces.
     p-658bee: No puedes reclamar el Crédito de la oportunidad estadounidense y el Crédito vitalicio de educación para el mismo estudiante.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-a99490: Revisa la línea 27 en el Anexo 8863 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-9d7d7d: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/american-opportunity-tax-credit">Conoce más sobre el AOTC (en inglés).</a>
+    p-3c2260: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/american-opportunity-tax-credit">Conoce más sobre el AOTC (en inglés).</a>
   modal-llc-who-can-claim:
     heading: ¿Quién puede reclamar el crédito vitalicio de educación (LLC)?
     p-f5b472: "Para reclamar el LLC, tú, tu esposo(a) o tu dependiente deben:"
     ul-0:
       li-a144eb: Pagar matrícula o costos por cursos universitarios, certificaciones profesionales o capacitaciones de habilidades laborales
-      li-51b299: Inscribirse o tomar clases en <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/eligible-educational-institution">una institución educativa elegible (en inglés)</a>
+      li-28656d: Inscribirse o tomar clases en <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/eligible-educational-institution">una institución educativa elegible (en inglés)</a>
       li-cdf538: Inscribirse en uno o más cursos en un periodo académico del <fg-show path="/taxYear"/>
     p-52848c: Puedes reclamar hasta el 20% de los primeros $10,000 en gastos y un máximo de <fg-show path="/maxLlcAmountForTaxYear"/> por declaración de impuesto federal. Puedes reclamar gastos hechos por ti, tu esposo(a), tu dependiente o una tercera parte.
     p-839872: No puedes reclamar el Crédito de la oportunidad estadounidense y el LLC para el mismo estudiante.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-9f907d: Revisa la línea 31 en el Formulario 8863 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-5d0cbb: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/llc">Conoce más sobre el LLC (en inglés).</a>
+    p-e9c95e: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/llc">Conoce más sobre el LLC (en inglés).</a>
   modal-adoption-credit-who-can-claim:
     heading: ¿Quién puede reclamar el crédito por adopción?
     p-ab884c: "Para reclamar el crédito por adopción, tú o tu esposo(a) deben:"
     ul-0:
-      li-1221c2: Tener <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/adoption-credit#qualifiedexpenses">gastos de adopción calificados</a> como costos de adopción, costos judiciales, honorarios de un abogado, o viajes
+      li-f6f036: Tener <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/adoption-credit#qualifiedexpenses">gastos de adopción calificados</a> como costos de adopción, costos judiciales, honorarios de un abogado, o viajes
       li-7f01ec: Haber adoptado a un niño(a) menor de 18 años o una persona física o mentalmente incapaz de cuidar de sí misma
-    p-837b60: Puedes reclamar hasta <fg-show path="/maxAdoptionCreditPerChild"/> en gastos calificados por un hijo(a) adoptivo. <a target="_blank" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e531">Las fechas para reclamar gastos (en inglés)</a> dependen del tipo de adopción, estatus de la adopción y cuándo sucedieron los gastos.
+    p-4d7ec0: Puedes reclamar hasta <fg-show path="/maxAdoptionCreditPerChild"/> en gastos calificados por un hijo(a) adoptivo. <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e531">Las fechas para reclamar gastos (en inglés)</a> dependen del tipo de adopción, estatus de la adopción y cuándo sucedieron los gastos.
     p-c92b21: Este crédito es parcialmente reembolsable. Puede reducir tus impuestos y darte un reembolso de hasta <fg-show path="/maxRefundableAdoptionCreditAmount"/> si reduce la cantidad que debes a $0. Los montos no utilizados pueden usarse dentro de un periodo de 5 años.
-    p-0dfb21: Si estás casado(a) y presentas una declaración separada, sólo puedes reclamar este crédito si no vives con tu esposo(a) y cumples con <a target="_blank" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e498">criterios adicionales (en inglés).</a>
+    p-23cd3c: Si estás casado(a) y presentas una declaración separada, sólo puedes reclamar este crédito si no vives con tu esposo(a) y cumples con <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e498">criterios adicionales (en inglés).</a>
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-e45e2b: Revisa el Formulario 8839 (Gastos de adopción calificados) que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-5683ce: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8839">Conoce más sobre el crédito por adopción.</a>
+    p-9d2254: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8839">Conoce más sobre el crédito por adopción.</a>
   modal-credit-elderly-disabled-who-can-claim:
     heading: ¿Quién puede reclamar el crédito para adultos mayores o personas con una discapacidad?
     p-f6aeb3: "Podrías calificar si:"
@@ -1541,12 +1541,12 @@
       li-b9be11: Tienes 65 años o más para el 1 de enero del <fg-show path="/nextTaxYear"/>, o estás jubilado por una discapacidad total y permanente y recibes ingresos por discapacidad tributables
       li-80d712: Tu ingreso bruto ajustado (AGI) es generalmente menos de $17,500 (o $25,000 si estás casado y presentas una declaración conjunta)
       li-486ff8: Tus ingresos no sujetos a impuestos por Seguro Social, pensiones, anualidades o discapacidad es generalmente menos de $5,000 (o $7,500 si estás casado y presentas una declaración conjunta)
-    p-c6a647: Usa el <a target="_blank" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-schedule-r-form-1040">Anexo R</a> para calcular el monto del crédito.
+    p-de5085: Usa el <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-schedule-r-form-1040">Anexo R</a> para calcular el monto del crédito.
     p-cd18b6: Si presentas una declaración como Casado(a) que presenta una declaración por separado, sólo puedes reclamar este crédito si no viviste con tu esposo(a) en ningún momento del <fg-show path="/taxYear"/>.
-    p-be3be3: Si declaras impuestos como Cabeza de familia, sólo puedes reclamar este crédito si cumples con el <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p524#en_US_2023_publink100038676">criterio específico (en inglés).</a>
+    p-58f85a: Si declaras impuestos como Cabeza de familia, sólo puedes reclamar este crédito si cumples con el <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p524#en_US_2023_publink100038676">criterio específico (en inglés).</a>
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-efe4ff: Revisa la línea 6d en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-22e34a: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/credit-for-the-elderly-or-the-disabled">Conoce más sobre el crédito para adultos mayores o personas con una discapacidad.</a>
+    p-dffa65: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/credits-deductions/individuals/credit-for-the-elderly-or-the-disabled">Conoce más sobre el crédito para adultos mayores o personas con una discapacidad.</a>
   modal-foreign-tax-credit-who-can-claim:
     heading: ¿Quién puede reclamar el crédito por impuestos extranjeros?
     p-f75b59: "Para reclamar el crédito por impuestos extranjeros, tú o tu esposo(a) deben:"
@@ -1556,7 +1556,7 @@
     p-944458: Si piensas tomar la deducción detallada por impuestos extranjeros, no podrás reclamar este crédito.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-beb725: Revisa la línea 1 en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-913a55: <a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/international-taxpayers/foreign-tax-credit">Conoce más sobre el crédito por impuestos extranjeros (en inglés).</a>
+    p-6ed9ec: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/individuals/international-taxpayers/foreign-tax-credit">Conoce más sobre el crédito por impuestos extranjeros (en inglés).</a>
   modal-what-are-business-credits:
     heading: ¿Qué son créditos para negocios?
     p-e6c933: "Los créditos empresariales son un grupo de créditos tributarios que incluyen incentivos por actividades como:"
@@ -1567,7 +1567,7 @@
     p-97e52e: Para reclamar estos créditos, podrías tener que enviar el Formulario 3800.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-a0a8dd: Revisa la línea 6a en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-985345: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/businesses/small-businesses-self-employed/business-tax-credits">Conoce más sobre los créditos empresariales.</a>
+    p-5ed9c6: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/businesses/small-businesses-self-employed/business-tax-credits">Conoce más sobre los créditos empresariales.</a>
   modal-mortgage-interest-credit-who-can-claim:
     heading: ¿Quién puede reclamar el crédito de interés hipotecario?
     p-bcd520: "Para reclamar el crédito de interés hipotecario, tú y tu esposo(a) deben:"
@@ -1578,7 +1578,7 @@
     p-2bce1f: Este crédito está limitado a $2,000 por año.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-7b5370: Revisa la línea 6g en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-0ea3a2: <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p530#en_US_2023_publink100011906">Conoce más sobre el crédito de interés hipotecario (en inglés).</a>
+    p-2db849: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p530#en_US_2023_publink100011906">Conoce más sobre el crédito de interés hipotecario (en inglés).</a>
   modal-amt-who-can-claim:
     heading: ¿Quién puede reclamar el crédito por el impuesto mínimo alternativo (AMT)?
     p-a7cc79: "Para reclamar el AMT, tú o tu esposo(a) deben:"
@@ -1588,7 +1588,7 @@
     p-63fead: Puedes reclamar este crédito con el Formulario 8801.
     p-24b934: <strong>Cómo revisar si reclamaste este crédito el año pasado</strong>
     p-cb09e9: Revisa la línea 6b en el Anexo 3 que se hubiera adjuntado y enviado con el Formulario 1040 en tu declaración del impuesto federal.
-    p-dbd9a0: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8801">Conoce más sobre el AMT (en inglés).</a>
+    p-ee0ead: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8801">Conoce más sobre el AMT (en inglés).</a>
 /results:
   title: Resultado
   h2-dd9460: Resultado de tus retenciones
@@ -1724,18 +1724,18 @@
     heading: ¿Qué es un Formulario W-4?
     p-52482e: Necesitas enviar el Formulario W-4 a cada uno de tus empleadores para ayudarles a retener la cantidad correcta de impuestos de tus cheques a lo largo del año.
     p-14dbf9: Retener impuestos en la tasa correcta asegura que no retengas en exceso y recibas un pago menor en cada cheque, o que retengas muy poco y debas mucho dinero o tal vez multas a fin de año.
-    p-a2bc8b: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-form-w-4">Conoce más sobre el Formulario W-4.</a>
+    p-89ef48: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-form-w-4">Conoce más sobre el Formulario W-4.</a>
   modal-what-is-form-w-4p:
     heading: ¿Qué es un Formulario W-4P?
     p-f9b7ba: Necesitas enviar el Formulario W-4P a tu proveedor de pensión o anualidad para ayudarles a retener la cantidad correcta de impuestos de tus pagos de pensión a lo largo del año.
     p-7ca1e5: Retener impuestos en la tasa correcta asegura que no retengas en exceso y recibas un pago menor en cada cheque, o que retengas muy poco y debas mucho dinero o tal vez multas a fin de año.
-    p-d5bee2: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-form-w-4-p">Conoce más sobre el Formulario W-4P.</a>
+    p-1b4907: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-form-w-4-p">Conoce más sobre el Formulario W-4P.</a>
   modal-what-is-form-w-4-and-w-4p:
     heading: ¿Qué es un Formulario W-4 y W-4P?
     p-a06431: Necesitas enviar el Formulario W-4 a cada uno de tus empleadores, o el Formulario W-4P a tu proveedor de pensión o anualidad para ayudarles a retener la cantidad correcta de impuestos de tus cheques o pagos de pensión a lo largo del año.
     p-790f19: Retener impuestos en la tasa correcta asegura que no retengas en exceso y recibas un pago menor en cada cheque, o evitar que retengas muy poco y debas mucho dinero o tal vez multas a fin de año.
-    p-a2bc8b: <a target="_blank" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-form-w-4">Conoce más sobre el Formulario W-4.</a>
-    p-d5bee2: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Conoce más sobre el Formulario W-4P.</a>
+    p-89ef48: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/es/forms-pubs/about-form-w-4">Conoce más sobre el Formulario W-4.</a>
+    p-1b4907: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Conoce más sobre el Formulario W-4P.</a>
   modal-why-step-1-c:
     heading: ¿Por qué se recomienda esto?
     p-e46111: Este es el estado civil que elegiste en el paso 1 del estimador.

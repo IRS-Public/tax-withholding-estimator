@@ -62,7 +62,7 @@
       li-683f65: Relatives or members of your household who get more than half of
         their financial support from you and who have a gross income under $5,050
     p-6b3acc: You can’t claim your spouse as a dependent if you file jointly.
-    p-40e480: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/dependents">Learn
+    p-5c8fee: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/dependents">Learn
       more about dependents.</a>
   modal-primary-claimed-as-dependent:
     heading: How do I know if I’m someone’s dependent?
@@ -75,7 +75,8 @@
       li-b17276: Your relationship to that person
       li-c82d5e: How much they supported you, financially and in other ways
       li-5a5073: If you lived with them and for how long
-    p-752de3: Review Table 5 in <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">IRS
+    p-f44654: Review Table 5 in <a target="_blank" rel="noreferrer" class="usa-link"
+      href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">IRS
       Publication 501</a> to determine if someone else might be able to claim you.
     p-5a0201: Keep in mind that you aren’t someone else’s dependent if you paid for
       more than half of your own support (or if your spouse did).
@@ -110,7 +111,7 @@
       li-4ef74f: You didn't remarry before <fg-show path="/taxYear"/>
       li-939762: You have a dependent child who lives with you all year
       li-bad5a3: You pay more than half the cost of keeping up your home
-    p-b4bd3e: <a target="_blank" class="usa-link" href="https://www.irs.gov/filing/filing-status">Learn
+    p-896c59: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/filing/filing-status">Learn
       more about filing statuses<span class="usa-sr-only"> (opens in a new tab)</span>.</a>
   modal-secondary-claimed-as-dependent:
     heading: How do I know if my spouse could be a dependent?
@@ -125,7 +126,8 @@
       li-a00f03: Your spouse's relationship to that person
       li-06b095: How much they supported your spouse, financially and in other ways
       li-7b9e81: If your spouse lived with them and for how long
-    p-8725bb: Review Table 5 in <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">IRS
+    p-dc2eb0: Review Table 5 in <a target="_blank" rel="noreferrer" class="usa-link"
+      href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">IRS
       Publication 501</a> to determine if someone else might be able to claim your
       spouse.
     p-53afc1: Keep in mind that your spouse isn’t someone else’s dependent if your
@@ -143,8 +145,8 @@
     heading: You <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span>
       need to have at least one job, pension, or annuity that regularly withholds
       federal income taxes.
-    p-d4a8fe: |-
-      Add a job, pension, or annuity to continue using the estimator. If you don’t have a job, pension, or annuity that withholds federal income taxes, you may want to plan to  <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a
+    p-488006: |-
+      Add a job, pension, or annuity to continue using the estimator. If you don’t have a job, pension, or annuity that withholds federal income taxes, you may want to plan to  <a target="_blank" rel="noreferrer" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a
             new tab)</span></a>
   p-0ec9f9: <modal-link for="modal-what-counts-job">What counts as a job?</modal-link>
   collection/jobs:
@@ -338,11 +340,11 @@
       p-c3c8eb: |-
         Tips are voluntary cash or credit card payments received from customers or through
                       tip‑sharing arrangements.
-      p-d353b7: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Learn
+      p-b3f67a: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Learn
         more about the no tax on tips deduction.</a>
-      p-9a0b89: |-
+      p-344e34: |-
         To be eligible for the no tax on tips deduction, <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
-                      <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span> must have an <a target="_blank" href="https://www.irs.gov/forms-pubs/occupations-that-customarily-and-regularly-received-tips-on-or-before-december-31-2024">
+                      <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span> must have an <a target="_blank" rel="noreferrer" href="https://www.irs.gov/forms-pubs/occupations-that-customarily-and-regularly-received-tips-on-or-before-december-31-2024">
                         occupation</a> that’s recognized by the IRS as regularly receiving tips.
       /jobs/*/qualifiedTipIncome:
         question: Total estimated tips for <fg-show path="/taxYear"/>
@@ -359,7 +361,7 @@
       p-bc05b9: Overtime is extra pay earned by working more than 40 hours per week.
         Only include overtime that your employer is required to pay you under the
         Fair Labor Standards Act.
-      p-1c212b: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Learn
+      p-0ecf30: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Learn
         more about the no tax on overtime deduction</a>
       /jobs/*/overtimeCompensationTotal:
         question: Total estimated overtime pay for <fg-show path="/taxYear"/>
@@ -451,8 +453,9 @@
         Spending Account (FSA).
       p-e1e101: HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong>
         or <strong>Pre-Tax</strong> section on a paystub.
-      p-27a801: Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a>
-        and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
+      p-73bb08: Learn more about contributions to <a target="_blank" rel="noreferrer"
+        href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a>
+        and <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
       /jobs/*/hsaOrFsaContributionsPerPayPeriod:
         question: Amount per pay period
       /jobs/*/hsaOrFsaContributionsToDate:
@@ -604,8 +607,9 @@
         to a Health Savings Account (HSA) or Flexible Spending Account (FSA).
       p-187adb: HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong>
         or <strong>Pre-Tax</strong> section on a statement.
-      p-27a801: Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a>
-        and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
+      p-73bb08: Learn more about contributions to <a target="_blank" rel="noreferrer"
+        href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a>
+        and <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.
       /pensions/*/hsaOrFsaContributionsPerPayPeriod:
         question: Amount per pay period
       /pensions/*/hsaOrFsaContributionsToDate:
@@ -825,9 +829,9 @@
     li-98533d: Alimony from pre-2019 divorce decrees
     li-2ce899: Court awards and damages (unless they’re for physical injury or sickness)
     li-bd02e0: Fees for services you’ve provided
-  p-48332b: <a target="_blank" href="https://www.irs.gov/filing/taxable-income" class="usa-link
-    usa-link--external">Learn more about other taxable income.<span class="usa-sr-only">
-    (opens in a new tab)</span></a>
+  p-a7b5c3: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/filing/taxable-income"
+    class="usa-link usa-link--external">Learn more about other taxable income.<span
+    class="usa-sr-only"> (opens in a new tab)</span></a>
   /nonSpecificOtherIncome:
     question: Total amount of other income you <span condition="/isFilingStatusMFJ"
       operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/>
@@ -840,7 +844,7 @@
   p-67bec4: In addition to taxes already withheld from your income, estimated payments
     are made directly to the IRS, usually through an IRS Online Account or with Form
     1040-ES.
-  p-8f958a: <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes"
+  p-684501: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes"
     class="usa-link usa-link--external">Learn more about estimated taxes.<span class="usa-sr-only">
     (opens in a new tab)</span></a>
   /totalEstimatedTaxesPaid:
@@ -871,7 +875,7 @@
     p-1b848e: If you expect to earn $1 million or more in bonuses for <fg-show path="/taxYear"/>,
       the estimator can’t calculate your withholding accurately. This includes any
       bonuses you’ve already received this year.
-    p-74606c: Check <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication
+    p-e9e635: Check <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication
       15</a> for help calculating withholding on high bonus pay, or consider consulting
       a tax professional.
   modal-job-pay-dates:
@@ -902,9 +906,9 @@
         tips
       li-a567e2: have a Social Security number
     p-d2cd93: If it’s hard to estimate, it’s okay to leave tips blank.
-    p-7abc41: <a href="https://www.irs.gov/businesses/small-businesses-self-employed/tips"
-      target="_blank" class="usa-link usa-link--external">Learn more about the no
-      tax on tips deduction.<span class="usa-sr-only"/></a>
+    p-d0cea6: <a href="https://www.irs.gov/businesses/small-businesses-self-employed/tips"
+      target="_blank" rel="noreferrer" class="usa-link usa-link--external">Learn more
+      about the no tax on tips deduction.<span class="usa-sr-only"/></a>
   modal-no-tax-on-overtime:
     heading: How do I know if I’m eligible for the “no tax on overtime” deduction?
     p-840df1: 'To be eligible for the “no tax on overtime” deduction, you must:'
@@ -915,9 +919,9 @@
       li-a567e2: have a Social Security number
     p-f57b74: Overtime pay that is not required by section 7 of the FLSA (e.g., due
       to state law or union contract) is not deductible and should not be entered.
-    p-88d0b8: <a href="https://www.irs.gov/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025"
-      target="_blank" class="usa-link usa-link--external">Learn more about the no
-      tax on overtime deduction.<span class="usa-sr-only"/></a>
+    p-41d2e2: <a href="https://www.irs.gov/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025"
+      target="_blank" rel="noreferrer" class="usa-link usa-link--external">Learn more
+      about the no tax on overtime deduction.<span class="usa-sr-only"/></a>
   modal-what-counts-social-security:
     heading: What counts as Social Security income?
     p-00bbe8: Social Security is benefit payments made to retirees, people with disabilities,
@@ -932,7 +936,7 @@
       are taken out.
     p-716710: 'It’s okay to estimate. To find the exact amount:'
     ol-0:
-      li-ea5ad7: Log into <a target="_blank" href="https://www.ssa.gov/myaccount/"
+      li-cc0b18: Log into <a target="_blank" rel="noreferrer" href="https://www.ssa.gov/myaccount/"
         class="usa-link">my Social Security account<span class="usa-sr-only"/></a>
       li-5b74be: Scroll to the <strong>Benefits and Payments</strong> section
       li-53a1fa: Under <strong>Benefit Summary</strong>, use the total monthly benefit
@@ -947,7 +951,7 @@
       income.
     p-88d383: 'How to check if you have taxes withheld:'
     ol-0:
-      li-ea5ad7: Log into <a target="_blank" href="https://www.ssa.gov/myaccount/"
+      li-cc0b18: Log into <a target="_blank" rel="noreferrer" href="https://www.ssa.gov/myaccount/"
         class="usa-link">my Social Security account<span class="usa-sr-only"/></a>
       li-ae75a0: Select <strong>Voluntary Tax Withholding</strong> to check the percentage
         withheld
@@ -1104,7 +1108,7 @@
     p-203379: |-
       If you were self-employed last year and expect your work-related expenses to stay the
                 same, you can find your deductible expenses on line 28 of Schedule C.
-    p-4ca1ce: <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Learn
+    p-772335: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Learn
       more about business expenses</a>
   modal-what-counts-unemployment:
     heading: What counts as unemployment income?
@@ -1114,7 +1118,7 @@
       of your own and meet other requirements.
     p-c2b99e: At the end of the year, you should receive Form 1099-G showing the amount
       paid to you during the year.
-    p-9e9dfa: <a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Learn
+    p-989b8d: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Learn
       more about unemployment income.</a>
   modal-fed-unemployment-tax-withheld:
     heading: How do I know if I have taxes withheld?
@@ -1196,7 +1200,7 @@
       tax throughout the year.
   modal-rental-expenses-net-income:
     heading: What are rental expenses and how can I estimate net rental income?
-    p-8093b7: <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">Rental
+    p-b56244: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">Rental
       expenses<span class="usa-sr-only"> (opens in a new tab)</span></a> include maintenance
       costs, insurance, taxes, and interest.
     p-21afbd: <strong>How to estimate net rental income</strong>
@@ -1349,9 +1353,9 @@
     loan, you can deduct up to <fg-show path="/maxStudentLoanDeduction"/> in interest
     payments. The loan must be for you, your spouse, or your dependent.
   p-3519c2: This includes both required and voluntarily pre-paid interest payments.
-  p-cf7cae: <a target="_blank" href="https://www.irs.gov/taxtopics/tc456" class="usa-link">
-    Learn more about student loan interest. <span class="usa-sr-only">(opens in a
-    new tab)</span></a>
+  p-b9602a: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc456"
+    class="usa-link"> Learn more about student loan interest. <span class="usa-sr-only">(opens
+    in a new tab)</span></a>
   /studentLoanInterestAmount:
     question: |-
       Student loan interest <span condition="/isFilingStatusMFJ" operator="isFalse">you</span>
@@ -1368,8 +1372,9 @@
     li-c31915: Books, supplies, computer equipment (including related software and
       services)
     li-f3a059: Other equipment and supplementary materials that you use in the classroom
-  p-b20cac: <a target="_blank" href="https://www.irs.gov/taxtopics/tc458" class="usa-link">Learn
-    more about educator expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+  p-5f541e: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc458"
+    class="usa-link">Learn more about educator expenses.<span class="usa-sr-only">
+    (opens in a new tab)</span></a>
   /educatorExpenses/:
     question: Educator expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span
       condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span>
@@ -1383,7 +1388,7 @@
   p-523de9: <strong>Don’t include</strong> amounts that you already included on one
     of your jobs, contributions to Roth IRAs, or contributions to other retirement
     plans.
-  p-2bd31f: <a target="_blank" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits"
+  p-a0a52a: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits"
     class="usa-link">Learn more about IRA contributions.<span class="usa-sr-only">
     (opens in a new tab)</span></a>
   /deductionForTraditionalIRAContribution:
@@ -1411,7 +1416,7 @@
     contributions.
   p-09dfdf: You must use a special rule to calculate retirement plan contributions
     for yourself.
-  p-3248f2: <a target="_blank" href="https://www.irs.gov/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction"
+  p-f8eda7: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction"
     class="usa-link">Learn more about self-employed retirement contributions.<span
     class="usa-sr-only"> (opens in a new tab)</span></a>
   /selfEmploymentRetirementPlanContributions:
@@ -1425,7 +1430,7 @@
     you can claim a deduction.
   p-739bad: <strong>Don't include</strong> amounts that you already included on one
     of your jobs.
-  p-427dc4: <a target="_blank" href="https://www.irs.gov/forms-pubs/about-publication-969"
+  p-7df6ea: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/forms-pubs/about-publication-969"
     class="usa-link">Learn more about HSA contributions.<span class="usa-sr-only">
     (opens in a new tab)</span></a>
   /hsaContributionAmount:
@@ -1436,8 +1441,9 @@
   p-e03d05: If you're divorced or separated, you can deduct alimony paid in <fg-show
     path="/taxYear"/> to a spouse or a former spouse under a divorce or separation
     instrument made before 2019.
-  p-0c3c0d: <a target="_blank" href="https://www.irs.gov/taxtopics/tc452" class="usa-link">Learn
-    more about alimony.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+  p-e8098d: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc452"
+    class="usa-link">Learn more about alimony.<span class="usa-sr-only"> (opens in
+    a new tab)</span></a>
   /alimonyPaid:
     question: Alimony you expect to pay in <fg-show path="/taxYear"/>
   h3-913117: Penalty for early withdrawal of savings
@@ -1446,7 +1452,7 @@
     funds from a certificate of deposit or other deferred interest account before
     maturity, you may have been charged a penalty by your financial institution in
     <fg-show path="/taxYear"/>. You can deduct the penalty amount.
-  p-0dd4e9: <a target="_blank" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-exceptions-to-tax-on-early-distributions"
+  p-c9429a: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-exceptions-to-tax-on-early-distributions"
     class="usa-link">Learn more about penalties for early withdrawals.<span class="usa-sr-only">
     (opens in a new tab)</span></a>
   /penaltyForEarlySavingsWithdrawal:
@@ -1465,9 +1471,9 @@
       condition="/isFilingStatusMFJ" operator="isTrue">You or your spouse are</span>
       an employee or new appointee of the intelligence community and your move was
       due to a change in assignment which required relocation
-  p-b7904a: <a target="_blank" href="https://www.irs.gov/taxtopics/tc455" class="usa-link">Learn
-    more about military and intelligence community moving expenses.<span class="usa-sr-only">
-    (opens in a new tab)</span></a>
+  p-e61457: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc455"
+    class="usa-link">Learn more about military and intelligence community moving expenses.<span
+    class="usa-sr-only"> (opens in a new tab)</span></a>
   /movingExpensesForArmedServicesMembers:
     question: Moving expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span
       condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span>
@@ -1481,9 +1487,9 @@
   ul-4:
     li-a7cbed: Common and accepted in your field of trade, business, or profession
     li-e1fa4e: Helpful and appropriate for your business
-  p-30ab2e: <a target="_blank" href="https://www.irs.gov/instructions/i2106" class="usa-link">Learn
-    more about certain business expenses.<span class="usa-sr-only"> (opens in a new
-    tab)</span></a>
+  p-2f1a9e: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/instructions/i2106"
+    class="usa-link">Learn more about certain business expenses.<span class="usa-sr-only">
+    (opens in a new tab)</span></a>
   /businessCreditsForEligible:
     question: Eligible business expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span
       condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span>
@@ -1497,9 +1503,9 @@
     The policy can be for yourself, your spouse, and your dependents. The policy can
     also cover your child who is under the age of 27 at the end of the year, even
     if the child wasn't your dependent.
-  p-13dece: <a target="_blank" href="https://www.irs.gov/instructions/i7206" class="usa-link">Learn
-    more about self-employed health insurance.<span class="usa-sr-only"> (opens in
-    a new tab)</span></a>
+  p-5ff7ff: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/instructions/i7206"
+    class="usa-link">Learn more about self-employed health insurance.<span class="usa-sr-only">
+    (opens in a new tab)</span></a>
   /selfEmploymentHealthInsuranceContributions:
     question: Health insurance premiums <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span
       condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span>
@@ -1551,8 +1557,8 @@
   ul-1:
     li-1c452e: State and local income taxes
     li-2afba5: State and local general sales taxes
-  p-91100f: <a target="_blank" href="https://www.irs.gov/taxtopics/tc503" class="usa-link">Learn
-    more about state and local taxes.</a>
+  p-f89816: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc503"
+    class="usa-link">Learn more about state and local taxes.</a>
   /stateAndLocalTaxPayments:
     question: State and local taxes you <span condition="/isFilingStatusMFJ" operator="isTrue">and
       your spouse</span> expect to pay in <fg-show path="/taxYear"/>
@@ -1560,7 +1566,7 @@
   h4-627030: Gifts to charity
   p-693a4b: If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your
     spouse</span> donate to a qualifying organization, you can deduct those donations.
-  p-e1d782: <a target="_blank" href="https://www.irs.gov/charities-non-profits/charitable-organizations/charitable-contribution-deductions"
+  p-e77962: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/charities-non-profits/charitable-organizations/charitable-contribution-deductions"
     class="usa-link">Learn more about gifts to charity.</a>
   /cashCharitableContributions:
     question: Gifts to charity you <span condition="/isFilingStatusMFJ" operator="isTrue">and
@@ -1569,8 +1575,8 @@
   p-ca41f8: If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your
     spouse</span> borrow money to buy a main or second home or investment property,
     you may be able to deduct the interest and points you paid on that loan.
-  p-94189b: <a target="_blank" href="https://www.irs.gov/taxtopics/tc505" class="usa-link">Learn
-    more about mortgage interest and investment interest.</a>
+  p-9b3c6a: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc505"
+    class="usa-link">Learn more about mortgage interest and investment interest.</a>
   /qualifiedMortgageInterestAndInvestmentInterestExpenses:
     question: Qualified interest you <span condition="/isFilingStatusMFJ" operator="isTrue">and
       your spouse</span> expect to pay in <fg-show path="/taxYear"/>
@@ -1593,8 +1599,8 @@
     spouse</span> pay out-of-pocket (not reimbursed by insurance) for medical and
     dental expenses or premiums, you can deduct the amount of your total expenses
     over <fg-show path="/medicalAndDentalExpensesFloor"/>.
-  p-ebaf9f: <a target="_blank" href="https://www.irs.gov/taxtopics/tc502" class="usa-link">Learn
-    more about medical and dental expenses.</a>
+  p-3442bd: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc502"
+    class="usa-link">Learn more about medical and dental expenses.</a>
   /medicalAndDentalExpenses:
     question: Medical and dental expenses you <span condition="/isFilingStatusMFJ"
       operator="isTrue">and your spouse</span> expect to pay in <fg-show path="/taxYear"/>
@@ -1613,8 +1619,8 @@
               <fg-show path="/casualtyLossesAgiLimit"/>
               from your deduction. That's 10% of your adjusted gross income (AGI). Check which rules
               apply before entering an amount.
-  p-39aa78: <a target="_blank" href="https://www.irs.gov/taxtopics/tc515" class="usa-link">Learn
-    more about casualty losses.</a>
+  p-125fc7: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc515"
+    class="usa-link">Learn more about casualty losses.</a>
   /casualtyLossesTotal:
     question: Casualty losses you expect to deduct in <fg-show path="/taxYear"/>
   h4-fcd750: Other itemized deductions
@@ -1638,8 +1644,8 @@
     li-d57dd2: An ordinary loss attributable to a contingent payment debt instrument
       or an inflation-indexed debt instrument (for example, a Treasury Inflation-Protected
       Security)
-  p-3c5570: <a target="_blank" href="https://www.irs.gov/publications/p529" class="usa-link">Learn
-    more about other deductions.</a>
+  p-b159ec: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p529"
+    class="usa-link">Learn more about other deductions.</a>
   /otherDeductionsTotal:
     question: Estimated other deductions in <fg-show path="/taxYear"/>
   h4-ab9771: 'Itemized deductions total: <fg-show path="/itemizedDeductionTotal"/>'
@@ -1653,16 +1659,17 @@
       It is a set amount calculated based on filing status and if you or your spouse
       are 65 or older, blind, or can be claimed as a dependent by another taxpayer
       in the tax year.
-    p-b8a25f: Itemizing deductions means totaling each <a target="_blank" href="https://www.irs.gov/forms-pubs/about-schedule-a-form-1040"
-      class="usa-link">Schedule A<span class="usa-sr-only"> (opens in a new tab)</span></a>
-      deduction you qualify for, item by item.
+    p-fb77d3: Itemizing deductions means totaling each <a target="_blank" rel="noreferrer"
+      href="https://www.irs.gov/forms-pubs/about-schedule-a-form-1040" class="usa-link">Schedule
+      A<span class="usa-sr-only"> (opens in a new tab)</span></a> deduction you qualify
+      for, item by item.
     p-9d31c1: Most people take the standard deduction, but you may want to try itemizing
       deductions if you have a mortgage, large gifts to charity, or large medical
       expenses.
     p-a2eb42: You’ll save more money by choosing whichever is calculated as the larger
       deduction.
     p-617b6e: You can't take the standard deduction if you itemize your deductions.
-    p-531543: <a target="_blank" href="https://www.irs.gov/newsroom/tax-basics-understanding-the-difference-between-standard-and-itemized-deductions"
+    p-a6c367: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/tax-basics-understanding-the-difference-between-standard-and-itemized-deductions"
       class="usa-link">Learn more about the standard deduction and itemized deductions.<span
       class="usa-sr-only"> (opens in a new tab)</span></a>
   modal-standard-deduction-amount:
@@ -1690,7 +1697,7 @@
       li-80f87f: You are blind
       li-6a4489: Your spouse is blind
       li-e4bf17: You and your spouse are blind
-    p-722e90: <a target="_blank" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000221051"
+    p-17150c: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000221051"
       class="usa-link">Learn more about the standard deduction.<span class="usa-sr-only">
       (opens in a new tab)</span></a>
 /additional-deductions:
@@ -1703,7 +1710,7 @@
   h3-88e0af: Additional senior deduction
   p-f250e6: For 2025 through 2028, taxpayers who are age 65 and older can claim an
     additional deduction of up to <fg-show path="/maxSeniorDeductionAmount"/>.
-  p-51dacf: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
+  p-662ff7: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
     class="usa-link">Learn more about the additional senior deduction.</a>
   /primaryTaxpayerElectsForSeniorDeduction:
     question: Do you plan to take the additional senior deduction?
@@ -1741,7 +1748,7 @@
     li-afd842: Minus self-employment-related deductions (like self-employed health
       insurance premiums, contributions to self-employed retirement plans, and half
       of your self-employment tax)
-  p-fb0f3c: <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction"
+  p-256ee1: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/qualified-business-income-deduction"
     class="usa-link">Learn more about qualified business income.</a>
   /qBIDeductionOverrideAmount:
     question: Estimated QBI for you <span condition="/isFilingStatusMFJ" operator="isTrue">and
@@ -1763,8 +1770,8 @@
     p-76b3ac: <strong>The estimator is using the standard deduction</strong> because
       it's higher than your itemized deductions. If you entered any itemized cash
       charitable contributions, enter those same contributions here.
-    p-7603e2: |-
-      <a target="_blank" href="https://www.irs.gov/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance" class="usa-link">Learn more about cash charitable contributions. <span class="usa-sr-only">(opens in a
+    p-558ace: |-
+      <a target="_blank" rel="noreferrer" href="https://www.irs.gov/credits-deductions/individuals/deducting-charitable-contributions-at-a-glance" class="usa-link">Learn more about cash charitable contributions. <span class="usa-sr-only">(opens in a
             new tab)</span></a>
     /nonItemizerCharitableContributionDeductionAmount:
       question: Cash charitable contributions you <span condition="/isFilingStatusMFJ"
@@ -1791,10 +1798,10 @@
       li-1ac6c8: Went through final assembly in the U.S.
       li-14ccc7: Has a gross vehicle weight of less than 14,000 lbs.
       li-71d229: Is manufactured primarily for use on public streets, roads, and highways
-    p-62c99d: <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
+    p-4b2859: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors"
       class="usa-link">Learn more about qualified car loan interest.</a>
-    p-43c67d: <a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Check
-      if your vehicle was assembled in the U.S.</a>
+    p-524929: <a target="_blank" rel="noreferrer" href="https://vpic.nhtsa.dot.gov/decoder/"
+      class="usa-link">Check if your vehicle was assembled in the U.S.</a>
     /personalVehicleLoanInterestAmount:
       question: Car loan interest you <span condition="/isFilingStatusMFJ" operator="isTrue">and
         your spouse</span> expect to pay in <fg-show path="/taxYear"/>
@@ -1808,12 +1815,12 @@
     p-51c6e8: |-
       If your adjusted gross income will be greater than <fg-show path="/qbiPhaseInThreshold"/>
                 you may want to enter a different amount.
-    p-92b07b: |-
+    p-2fc10f: |-
       Calculate your QBI deduction using
-                <a target="_blank" href="https://www.irs.gov/forms-pubs/about-form-8995">Form 8995-A</a>.
+                <a target="_blank" rel="noreferrer" href="https://www.irs.gov/forms-pubs/about-form-8995">Form 8995-A</a>.
                 You can also use the QBI deduction you claimed last year as an estimate. You'll find it
                 on line 13a of your <fg-show path="/previousTaxYear"/> Form 1040.
-    p-24ae98: <a target="_blank" href="https://www.irs.gov/newsroom/qualified-business-income-deduction"
+    p-5285cf: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/qualified-business-income-deduction"
       class="usa-link">Learn more about QBI. <span class="usa-sr-only">(opens in a
       new tab)</span></a>
   modal-non-itemizer-charitable-contribution:
@@ -1829,7 +1836,7 @@
       li-1e7cc9: Debit or credit card
       li-95186c: Payroll deduction
       li-e75b1f: Transfer of a gift card redeemable for cash
-    p-58fcc2: <a target="_blank" href="https://www.irs.gov/charities-and-other-non-profits/cash-donations">Learn
+    p-f20251: <a target="_blank" rel="noreferrer" href="https://www.irs.gov/charities-and-other-non-profits/cash-donations">Learn
       more about cash charitable contributions. <span class="usa-sr-only">(opens in
       a new tab)</span></a>
   modal-personal-vehicle-loan-interest:
@@ -1851,11 +1858,11 @@
       li-1ac6c8: Went through final assembly in the U.S.
       li-3dc6c6: Has a gross vehicle weight under  14,000 lbs.
       li-0e459d: Is made primarily for use on public streets, roads, and highways
-    p-ddc5a9: |-
-      <a target="_blank" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" class="usa-link">Learn more about qualified car loan interest. <span class="usa-sr-only">(opens in a
+    p-d6fc3c: |-
+      <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors" class="usa-link">Learn more about qualified car loan interest. <span class="usa-sr-only">(opens in a
             new tab)</span></a>
-    p-e834fb: |-
-      <a target="_blank" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Check if your vehicle was assembled in the U.S. <span class="usa-sr-only">(opens in a
+    p-f358fb: |-
+      <a target="_blank" rel="noreferrer" href="https://vpic.nhtsa.dot.gov/decoder/" class="usa-link">Check if your vehicle was assembled in the U.S. <span class="usa-sr-only">(opens in a
             new tab)</span></a>
 /credits:
   title: Credits
@@ -2009,7 +2016,7 @@
     p-e97b0b: Review line 4 on Schedule 8812 for a number greater than 0. Schedule
       8812 would have been attached to and submitted with your Form 1040 federal tax
       return.
-    p-23670a: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/child-tax-credit">Learn
+    p-1e7f2e: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/child-tax-credit">Learn
       more about the CTC.</a>
   modal-odc-who-can-claim:
     heading: Who can claim the Credit for Other Dependents (ODC)?
@@ -2017,9 +2024,9 @@
     ul-0:
       li-ec8076: You plan to claim as a dependent on your tax return
       li-3f5be2: Has a gross income less than <fg-show path="/odcDependentGrossIncomeThreshold"/>
-      li-271d52: Lives with you in the U.S. more than half the year if they’re a child
-        or for all year if they’re an adult, unless they're a <a target="_blank" class="usa-link"
-        href="https://www.irs.gov/publications/p501#en_US_2024_publink1000220957">specific
+      li-a1b2ed: Lives with you in the U.S. more than half the year if they’re a child
+        or for all year if they’re an adult, unless they're a <a target="_blank" rel="noreferrer"
+        class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000220957">specific
         type of relative</a>
       li-3cdb99: Has a Social Security number, Individual Taxpayer Identification
         Number (ITIN), or Adoption Tax Identification Number (ATIN)
@@ -2031,7 +2038,7 @@
     p-a212c5: Review line 6 on Schedule 8812 for a number greater than 0. Schedule
       8812 would have been attached to and submitted with your Form 1040 federal tax
       return.
-    p-8e621a: <a target="_blank" class="usa-link" href="https://www.irs.gov/newsroom/understanding-the-credit-for-other-dependents">Learn
+    p-2fd27b: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/newsroom/understanding-the-credit-for-other-dependents">Learn
       more about the ODC.</a>
   modal-cdcc-who-can-claim-and-eligible-expenses:
     heading: Who can claim the Child and Dependent Care Credit (CDCC) and what expenses
@@ -2053,20 +2060,20 @@
       li-241e17: Food, lodging, or clothing unless directly tied to care
       li-dc8f3c: Payments to your spouse, the child’s parent, or another dependent
         for care
-    p-ee8680: This is not a complete list. Refer to <a target="_blank" class="usa-link"
-      href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203292">Publication
+    p-8521e7: This is not a complete list. Refer to <a target="_blank" rel="noreferrer"
+      class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203292">Publication
       503</a> to learn more about which expenses qualify.
     p-ded29b: You can claim up to <fg-show path="/cdccMaxClaimableExpenseWithOneQP"/>
       for one person or <fg-show path="/cdccMaxClaimableExpenseWithTwoQP"/> for two
       or more people.
-    p-a01583: If you’re married and filing separately from your spouse, you can only
+    p-37f3d1: If you’re married and filing separately from your spouse, you can only
       claim this credit if you and your spouse are legally separated or live apart
-      and meet <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203323">other
+      and meet <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p503#en_US_2023_publink1000203323">other
       criteria.</a>
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-df5230: Review line 2 on Schedule 3, which would have been attached to and submitted
       with your Form 1040 federal tax return.
-    p-6173e1: <a target="_blank" class="usa-link" href="https://www.irs.gov/taxtopics/tc602">Learn
+    p-ba4b01: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/taxtopics/tc602">Learn
       more about the CDCC.</a>
   modal-eitc-who-can-claim:
     heading: Who can claim the Earned Income Tax Credit (EITC)?
@@ -2083,8 +2090,9 @@
       li-15bfc0: Have a Social Security number valid for work
       li-1b1f15: Not file a joint return (except to claim a refund)
     p-76b6a9: You can claim up to 3 qualifying children.
-    p-d178a7: If you’re married and filing separately from your spouse, you can only
-      claim this credit if you meet <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit/who-qualifies-for-the-earned-income-tax-credit-eitc#marriedfilingseparate">specific
+    p-9379df: If you’re married and filing separately from your spouse, you can only
+      claim this credit if you meet <a target="_blank" rel="noreferrer" class="usa-link"
+      href="https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit/who-qualifies-for-the-earned-income-tax-credit-eitc#marriedfilingseparate">specific
       criteria.</a>
     p-9e7c3b: '<strong>To claim the EITC without children,</strong> you must be a
       low- to moderate-income worker who:'
@@ -2095,7 +2103,7 @@
       li-15bfc0: Have a Social Security number valid for work
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-cdce6e: Review line 27a on Form 1040 of your federal tax return.
-    p-cda0a1: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit-eitc">Learn
+    p-ec4fd9: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit-eitc">Learn
       more about the EITC.</a>
   modal-retirement-savings-credit-who-can-claim:
     heading: Who can claim the Retirement Savings Contribution Credit and how do I
@@ -2117,7 +2125,7 @@
     p-e930e0: If you expect to have similar retirement savings as last year, you can
       use your credit amount from last year. Review line 4 on Schedule 3, which would
       have been attached to and submitted with your Form 1040 federal tax return.
-    p-4f7230: <a target="_blank" class="usa-link" href="https://www.irs.gov/taxtopics/tc610">Learn
+    p-b7566d: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/taxtopics/tc610">Learn
       more about the retirement savings contribution credit.</a>
   modal-aotc-who-can-claim-and-eligible-expenses:
     heading: Who can claim the American Opportunity Tax Credit (AOTC) and what expenses
@@ -2131,7 +2139,7 @@
     ul-1:
       li-fb3acc: 100% of the first $2,000 in expenses
       li-1fae55: 25% of the next $2,000 in expenses
-    p-1f5c56: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/qualified-ed-expenses">Expenses</a>
+    p-378fe5: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/qualified-ed-expenses">Expenses</a>
       can include tuition, fees, books, supplies, and other items. You can claim expenses
       paid by you, your spouse, your dependent, or a third party.
     p-26f710: This credit can’t be claimed more than 4 times per student.
@@ -2140,7 +2148,7 @@
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-a99490: Review line 27 on Form 8863, which would have been attached to and submitted
       with your Form 1040 federal tax return.
-    p-9d7d7d: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/american-opportunity-tax-credit">Learn
+    p-3c2260: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/american-opportunity-tax-credit">Learn
       more about the AOTC.</a>
   modal-llc-who-can-claim:
     heading: Who can claim the Lifetime Learning Credit (LLC)?
@@ -2148,8 +2156,8 @@
     ul-0:
       li-a144eb: Pay tuition or fees for college courses, professional certifications,
         or job skill trainings
-      li-51b299: Enroll or take courses at an <a target="_blank" class="usa-link"
-        href="https://www.irs.gov/credits-deductions/individuals/eligible-educational-institution">eligible
+      li-28656d: Enroll or take courses at an <a target="_blank" rel="noreferrer"
+        class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/eligible-educational-institution">eligible
         educational institution</a>
       li-cdf538: Enroll in one or more courses for an academic period in <fg-show
         path="/taxYear"/>
@@ -2161,32 +2169,34 @@
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-9f907d: Review line 31 on Form 8863, which would have been attached to and submitted
       with your Form 1040 federal tax return.
-    p-5d0cbb: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/llc">Learn
+    p-e9c95e: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/llc">Learn
       more about the LLC.</a>
   modal-adoption-credit-who-can-claim:
     heading: Who can claim the adoption credit?
     p-ab884c: 'To claim the adoption credit, you or your spouse must:'
     ul-0:
-      li-1221c2: Have paid qualified <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/adoption-credit#qualifiedexpenses">adoption
+      li-f6f036: Have paid qualified <a target="_blank" rel="noreferrer" class="usa-link"
+        href="https://www.irs.gov/credits-deductions/individuals/adoption-credit#qualifiedexpenses">adoption
         expenses</a> such as adoption fees, court costs, attorney fees, or travel
       li-7f01ec: Adopt a child under 18, or who is physically or mentally unable to
         care for themselves
-    p-837b60: You can claim up to <fg-show path="/maxAdoptionCreditPerChild"/> in
-      qualified expenses per adopted child. <a target="_blank" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e531">When
+    p-4d7ec0: You can claim up to <fg-show path="/maxAdoptionCreditPerChild"/> in
+      qualified expenses per adopted child. <a target="_blank" rel="noreferrer" class="usa-link"
+      href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e531">When
       to claim expenses</a> depends on adoption type, adoption status, and when expenses
       were incurred.
     p-c92b21: This credit is partially refundable. It can reduce your taxes and give
       you a refund up to <fg-show path="/maxRefundableAdoptionCreditAmount"/> if it
       brings your tax owed to $0. Unused amounts can be carried forward for up to
       5 years.
-    p-0dfb21: If you’re married and filing separately from your spouse, you can only
+    p-23cd3c: If you’re married and filing separately from your spouse, you can only
       claim this credit if you lived apart from your spouse and meet <a target="_blank"
-      class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e498">other
+      rel="noreferrer" class="usa-link" href="https://www.irs.gov/instructions/i8839#en_US_2024_publink23077td0e498">other
       criteria.</a>
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-e45e2b: Review Form 8839 (Qualified Adoption Expenses), which would have been
       attached to and submitted with your Form 1040 federal tax return.
-    p-5683ce: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8839">Learn
+    p-9d2254: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8839">Learn
       more about the adoption credit.</a>
   modal-credit-elderly-disabled-who-can-claim:
     heading: Who can claim the elderly or disabled credit?
@@ -2199,17 +2209,17 @@
         if married filing jointly)
       li-486ff8: Your total nontaxable Social Security, pensions, annuities, or disability
         income is generally less than $5,000 ($7,500 if married filing jointly)
-    p-c6a647: Use <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-schedule-r-form-1040">Schedule
+    p-de5085: Use <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-schedule-r-form-1040">Schedule
       R</a> to calculate the credit amount.
     p-cd18b6: If you're filing as Married Filing Separately, you can only claim this
       credit if you didn't live with your spouse at any time during <fg-show path="/taxYear"/>.
-    p-be3be3: If you're filing as Head of Household, you can only claim this credit
-      if you meet <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p524#en_US_2023_publink100038676">specific
+    p-58f85a: If you're filing as Head of Household, you can only claim this credit
+      if you meet <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p524#en_US_2023_publink100038676">specific
       criteria.</a>
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-efe4ff: Review line 6d on Schedule 3, which would have been attached to and
       submitted with your Form 1040 federal tax return.
-    p-22e34a: <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/credit-for-the-elderly-or-the-disabled">Learn
+    p-dffa65: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/credit-for-the-elderly-or-the-disabled">Learn
       more about the Elderly or Disabled Credit.</a>
   modal-foreign-tax-credit-who-can-claim:
     heading: Who can claim the foreign tax credit?
@@ -2222,7 +2232,7 @@
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-beb725: Review line 1 on Schedule 3, which would have been attached to and submitted
       with your Form 1040 federal tax return.
-    p-913a55: <a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/international-taxpayers/foreign-tax-credit">Learn
+    p-6ed9ec: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/individuals/international-taxpayers/foreign-tax-credit">Learn
       more about the Foreign Tax Credit.</a>
   modal-what-are-business-credits:
     heading: What are business credits?
@@ -2236,7 +2246,7 @@
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-a0a8dd: Review line 6a on Schedule 3, which would have been attached to and
       submitted with your Form 1040 federal tax return.
-    p-985345: <a target="_blank" class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/business-tax-credits">Learn
+    p-5ed9c6: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/businesses/small-businesses-self-employed/business-tax-credits">Learn
       more about business tax credits.</a>
   modal-mortgage-interest-credit-who-can-claim:
     heading: Who can claim the mortgage interest credit?
@@ -2251,7 +2261,7 @@
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-7b5370: Review line 6g on Schedule 3, which would have been attached to and
       submitted with your Form 1040 federal tax return.
-    p-0ea3a2: <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p530#en_US_2023_publink100011906">Learn
+    p-2db849: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p530#en_US_2023_publink100011906">Learn
       more about the Mortgage Interest Credit.</a>
   modal-amt-who-can-claim:
     heading: Who can claim the Alternative Minimum Tax (AMT) Credit?
@@ -2263,7 +2273,7 @@
     p-24b934: <strong>How to check if you claimed this credit last year</strong>
     p-cb09e9: Review line 6b on Schedule 3, which would have been attached to and
       submitted with your Form 1040 federal tax return.
-    p-dbd9a0: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8801">Learn
+    p-ee0ead: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-8801">Learn
       more about the AMT.</a>
 /results:
   title: Results
@@ -2442,7 +2452,7 @@
     p-14dbf9: Withholding at the right rate ensures that you don’t withhold too much
       and get smaller paychecks, or withhold too little and end up owing a large amount,
       or even penalties, at the end of the year.
-    p-a2bc8b: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn
+    p-89ef48: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn
       more about Form W-4.</a>
   modal-what-is-form-w-4p:
     heading: What’s a Form W-4P?
@@ -2452,7 +2462,7 @@
     p-7ca1e5: Withholding at the right rate ensures that you don’t withhold too much
       and get smaller payments, or withhold too little and end up owing a large amount,
       or even penalties, at the end of the year.
-    p-d5bee2: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn
+    p-1b4907: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn
       more about Form W-4P.</a>
   modal-what-is-form-w-4-and-w-4p:
     heading: What’s a Form W-4 and W-4P?
@@ -2462,9 +2472,9 @@
     p-790f19: Withholding at the right rate ensures that you don’t withhold too much
       and take home a smaller amount, or withhold too little and end up owing a large
       amount, or even penalties, at the end of the year.
-    p-a2bc8b: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn
+    p-89ef48: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4">Learn
       more about Form W-4.</a>
-    p-d5bee2: <a target="_blank" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn
+    p-1b4907: <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/forms-pubs/about-form-w-4-p">Learn
       more about Form W-4P.</a>
   modal-why-step-1-c:
     heading: Why is this recommended?

@@ -44,7 +44,7 @@
           <li>State and local general sales taxes</li>
         </ul>
         <p>
-          <a target="_blank" href="https://www.irs.gov/taxtopics/tc503" class="usa-link">Learn more about state and local taxes.</a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc503" class="usa-link">Learn more about state and local taxes.</a>
         </p>
       </div>
       <fg-set path="/stateAndLocalTaxPayments" if-true="/wantsItemizedDeduction">
@@ -56,7 +56,7 @@
       <div condition="/wantsItemizedDeduction" operator="isTrue">
         <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> donate to a qualifying organization, you can deduct those donations.</p>
         <p>
-          <a target="_blank" href="https://www.irs.gov/charities-non-profits/charitable-organizations/charitable-contribution-deductions" class="usa-link">Learn more about gifts to charity.</a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/charities-non-profits/charitable-organizations/charitable-contribution-deductions" class="usa-link">Learn more about gifts to charity.</a>
         </p>
       </div>
       <fg-set path="/cashCharitableContributions" if-true="/wantsItemizedDeduction">
@@ -67,7 +67,7 @@
       <div condition="/wantsItemizedDeduction" operator="isTrue">
         <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> borrow money to buy a main or second home or investment property, you may be able to deduct the interest and points you paid on that loan.</p>
         <p>
-          <a target="_blank" href="https://www.irs.gov/taxtopics/tc505" class="usa-link">Learn more about mortgage interest and investment interest.</a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc505" class="usa-link">Learn more about mortgage interest and investment interest.</a>
         </p>
       </div>
       <fg-set path="/qualifiedMortgageInterestAndInvestmentInterestExpenses" if-true="/wantsItemizedDeduction">
@@ -93,7 +93,7 @@
       <div condition="/wantsItemizedDeduction" operator="isTrue">
         <p>If you <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> pay out-of-pocket (not reimbursed by insurance) for medical and dental expenses or premiums, you can deduct the amount of your total expenses over <fg-show path="/medicalAndDentalExpensesFloor"/>.</p>
         <p>
-          <a target="_blank" href="https://www.irs.gov/taxtopics/tc502" class="usa-link">Learn more about medical and dental expenses.</a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc502" class="usa-link">Learn more about medical and dental expenses.</a>
         </p>
       </div>
       <fg-set path="/medicalAndDentalExpenses" if-true="/wantsItemizedDeduction">
@@ -119,7 +119,7 @@
           apply before entering an amount.
         </p>
         <p>
-          <a target="_blank" href="https://www.irs.gov/taxtopics/tc515" class="usa-link">Learn more about casualty losses.</a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc515" class="usa-link">Learn more about casualty losses.</a>
         </p>
       </div>
       <fg-set path="/casualtyLossesTotal" if-true="/wantsItemizedDeduction">
@@ -144,7 +144,7 @@
           <li>An ordinary loss attributable to a contingent payment debt instrument or an inflation-indexed debt instrument (for example, a Treasury Inflation-Protected Security)</li>
         </ul>
         <p>
-          <a target="_blank" href="https://www.irs.gov/publications/p529" class="usa-link">Learn more about other deductions.</a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p529" class="usa-link">Learn more about other deductions.</a>
         </p>
       </div>
       <fg-set path="/otherDeductionsTotal" if-true="/wantsItemizedDeduction">
@@ -161,12 +161,12 @@
       <modal-content>
         <p>Both the <strong>standard deduction</strong> and <strong>itemized deductions</strong> are ways of reducing how much of your income gets taxed.</p>
         <p>The standard deduction is a fixed amount subtracted from your income. It is a set amount calculated based on filing status and if you or your spouse are 65 or older, blind, or can be claimed as a dependent by another taxpayer in the tax year.</p>
-        <p>Itemizing deductions means totaling each <a target="_blank" href="https://www.irs.gov/forms-pubs/about-schedule-a-form-1040" class="usa-link">Schedule A<span class="usa-sr-only"> (opens in a new tab)</span></a> deduction you qualify for, item by item.</p>
+        <p>Itemizing deductions means totaling each <a target="_blank" rel="noreferrer" href="https://www.irs.gov/forms-pubs/about-schedule-a-form-1040" class="usa-link">Schedule A<span class="usa-sr-only"> (opens in a new tab)</span></a> deduction you qualify for, item by item.</p>
         <p>Most people take the standard deduction, but you may want to try itemizing deductions if you have a mortgage, large gifts to charity, or large medical expenses.</p>
         <p>You’ll save more money by choosing whichever is calculated as the larger deduction.</p>
         <p>You can't take the standard deduction if you itemize your deductions.</p>
         <p>
-          <a target="_blank" href="https://www.irs.gov/newsroom/tax-basics-understanding-the-difference-between-standard-and-itemized-deductions" class="usa-link">Learn more about the standard deduction and itemized deductions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/newsroom/tax-basics-understanding-the-difference-between-standard-and-itemized-deductions" class="usa-link">Learn more about the standard deduction and itemized deductions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
         </p>
       </modal-content>
     </modal-dialog>
@@ -188,7 +188,7 @@
           <li condition="/primaryAndSecondaryFilersAreBlind" operator="isTrue">You and your spouse are blind</li>
         </ul>
         <p>
-          <a target="_blank" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000221051" class="usa-link">Learn more about the standard deduction.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+          <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000221051" class="usa-link">Learn more about the standard deduction.<span class="usa-sr-only"> (opens in a new tab)</span></a>
         </p>
       </modal-content>
     </modal-dialog>

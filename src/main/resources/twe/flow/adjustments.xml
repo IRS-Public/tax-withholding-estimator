@@ -16,7 +16,7 @@
         This includes both required and voluntarily pre-paid interest payments.
       </p>
       <p condition="/isEligibleForStudentLoanInterestDeduction" operator="isTrue">
-        <a target="_blank" href="https://www.irs.gov/taxtopics/tc456" class="usa-link"> Learn more about student loan interest. <span class="usa-sr-only">(opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc456" class="usa-link"> Learn more about student loan interest. <span class="usa-sr-only">(opens in a new tab)</span></a>
       </p>
       <fg-set path="/studentLoanInterestAmount" if-true="/isEligibleForStudentLoanInterestDeduction">
         <question> Student loan interest <span condition="/isFilingStatusMFJ" operator="isFalse">you</span>
@@ -35,7 +35,7 @@
         <li>Other equipment and supplementary materials that you use in the classroom</li>
       </ul>
       <p>
-        <a target="_blank" href="https://www.irs.gov/taxtopics/tc458" class="usa-link">Learn more about educator expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc458" class="usa-link">Learn more about educator expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/educatorExpenses/">
         <question>Educator expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
@@ -47,7 +47,7 @@
       <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> contribute to a traditional (pre-tax) IRA outside of your payroll contributions in <fg-show path="/taxYear"/>, you may be able to claim a deduction.</p>
       <p><strong>Don’t include</strong> amounts that you already included on one of your jobs, contributions to Roth IRAs, or contributions to other retirement plans.</p>
       <p>
-        <a target="_blank" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits" class="usa-link">Learn more about IRA contributions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-ira-contribution-limits" class="usa-link">Learn more about IRA contributions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/deductionForTraditionalIRAContribution">
         <question> Traditional (pre-tax) IRA contributions <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
@@ -72,7 +72,7 @@
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue"><strong>Don't include</strong> Individual Retirement Arrangement (IRA) contributions.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">You must use a special rule to calculate retirement plan contributions for yourself.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
-        <a target="_blank" href="https://www.irs.gov/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction" class="usa-link">Learn more about self-employed retirement contributions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/retirement-plans/self-employed-individuals-calculating-your-own-retirement-plan-contribution-and-deduction" class="usa-link">Learn more about self-employed retirement contributions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/selfEmploymentRetirementPlanContributions" if-true="/eitherTPHasSelfEmploymentIncome">
         <question>Self-employed retirement contributions <span condition="/isFilingStatusMFJ" operator="isFalse">your</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
@@ -83,7 +83,7 @@
       <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> contribute to an HSA outside of your payroll contributions in <fg-show path="/taxYear"/>, you can claim a deduction.</p>
       <p><strong>Don't include</strong> amounts that you already included on one of your jobs.</p>
       <p>
-        <a target="_blank" href="https://www.irs.gov/forms-pubs/about-publication-969" class="usa-link">Learn more about HSA contributions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/forms-pubs/about-publication-969" class="usa-link">Learn more about HSA contributions.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/hsaContributionAmount">
         <question>HSA contributions <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> expect to make in <fg-show path="/taxYear"/></question>
@@ -93,7 +93,7 @@
       <h3>Alimony paid deduction</h3>
       <p>If you're divorced or separated, you can deduct alimony paid in <fg-show path="/taxYear"/> to a spouse or a former spouse under a divorce or separation instrument made before 2019.</p>
       <p>
-        <a target="_blank" href="https://www.irs.gov/taxtopics/tc452" class="usa-link">Learn more about alimony.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc452" class="usa-link">Learn more about alimony.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/alimonyPaid">
         <question>Alimony you expect to pay in <fg-show path="/taxYear"/></question>
@@ -103,7 +103,7 @@
       <h3>Penalty for early withdrawal of savings</h3>
       <p>If <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse</span> withdrew funds from a certificate of deposit or other deferred interest account before maturity, you may have been charged a penalty by your financial institution in <fg-show path="/taxYear"/>. You can deduct the penalty amount.</p>
       <p>
-        <a target="_blank" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-exceptions-to-tax-on-early-distributions" class="usa-link">Learn more about penalties for early withdrawals.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/retirement-plans/plan-participant-employee/retirement-topics-exceptions-to-tax-on-early-distributions" class="usa-link">Learn more about penalties for early withdrawals.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/penaltyForEarlySavingsWithdrawal">
         <question>Penalty amount <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
@@ -119,7 +119,7 @@
           <span condition="/isFilingStatusMFJ" operator="isFalse">You're</span><span condition="/isFilingStatusMFJ" operator="isTrue">You or your spouse are</span> an employee or new appointee of the intelligence community and your move was due to a change in assignment which required relocation</li>
       </ul>
       <p>
-        <a target="_blank" href="https://www.irs.gov/taxtopics/tc455" class="usa-link">Learn more about military and intelligence community moving expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/taxtopics/tc455" class="usa-link">Learn more about military and intelligence community moving expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/movingExpensesForArmedServicesMembers">
         <question>Moving expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
@@ -133,7 +133,7 @@
         <li>Helpful and appropriate for your business</li>
       </ul>
       <p>
-        <a target="_blank" href="https://www.irs.gov/instructions/i2106" class="usa-link">Learn more about certain business expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/instructions/i2106" class="usa-link">Learn more about certain business expenses.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/businessCreditsForEligible">
         <question>Eligible business expenses <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>
@@ -144,7 +144,7 @@
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">If <span condition="/isFilingStatusMFJ" operator="isFalse">you're</span><span condition="/isFilingStatusMFJ" operator="isTrue">you or your spouse are</span> self employed and have a net profit for the year, you can deduct your <fg-show path="/taxYear"/> health insurance premiums.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">Eligible premiums are medical, dental, vision, and long-term care insurance. The policy can be for yourself, your spouse, and your dependents. The policy can also cover your child who is under the age of 27 at the end of the year, even if the child wasn't your dependent.</p>
       <p condition="/eitherTPHasSelfEmploymentIncome" operator="isTrue">
-        <a target="_blank" href="https://www.irs.gov/instructions/i7206" class="usa-link">Learn more about self-employed health insurance.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/instructions/i7206" class="usa-link">Learn more about self-employed health insurance.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/selfEmploymentHealthInsuranceContributions" if-true="/eitherTPHasSelfEmploymentIncome">
         <question>Health insurance premiums <span condition="/isFilingStatusMFJ" operator="isFalse">you</span><span condition="/isFilingStatusMFJ" operator="isTrue">you and your spouse</span> expect to pay in <fg-show path="/taxYear"/></question>

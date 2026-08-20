@@ -16,7 +16,7 @@
       <h3>Jobs with an employer (W-2)</h3>
       <fg-alert alert-type="error" condition="/declaredDoneAddingIncome" operator="isTrue">
         <heading>You <span condition="/isFilingStatusMFJ" operator="isTrue">or your spouse</span> need to have at least one job, pension, or annuity that regularly withholds federal income taxes.</heading>
-        <p class="usa-alert__text"> Add a job, pension, or annuity to continue using the estimator. If you don’t have a job, pension, or annuity that withholds federal income taxes, you may want to plan to  <a target="_blank"
+        <p class="usa-alert__text"> Add a job, pension, or annuity to continue using the estimator. If you don’t have a job, pension, or annuity that withholds federal income taxes, you may want to plan to  <a target="_blank" rel="noreferrer"
         href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes"
       class="usa-link">pay estimated taxes.<span class="usa-sr-only"> (opens in a
       new tab)</span></a>
@@ -237,12 +237,12 @@
             </p>
             <p>
               <a
-                target="_blank"
+                target="_blank" rel="noreferrer"
                 href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Learn more about the no tax on tips deduction.</a>
             </p>
             <p>To be eligible for the no tax on tips deduction, <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse</span>
               <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span> must have an <a
-                target="_blank"
+                target="_blank" rel="noreferrer"
                 href="https://www.irs.gov/forms-pubs/occupations-that-customarily-and-regularly-received-tips-on-or-before-december-31-2024">
                 occupation</a> that’s recognized by the IRS as regularly receiving tips. </p>
             <fg-set path="/jobs/*/qualifiedTipIncome">
@@ -264,7 +264,7 @@
             <p>Overtime is extra pay earned by working more than 40 hours per week. Only include overtime that your employer is required to pay you under the Fair Labor Standards Act.</p>
             <p>
               <a
-                target="_blank"
+                target="_blank" rel="noreferrer"
                 href="https://www.irs.gov/newsroom/one-big-beautiful-bill-act-tax-deductions-for-working-americans-and-seniors">Learn more about the no tax on overtime deduction</a>
             </p>
             <fg-set path="/jobs/*/overtimeCompensationTotal">
@@ -379,7 +379,7 @@
             <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
             <p>Enter total contributions to your <span condition="/isFilingStatusMFJ" operator="isTrue">spouse’s</span> Health Savings Account (HSA) or Flexible Spending Account (FSA).</p>
             <p> HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub. </p>
-            <p> Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>. </p>
+            <p> Learn more about contributions to <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> and <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>. </p>
             <fg-set path="/jobs/*/hsaOrFsaContributionsPerPayPeriod" if-false="/jobs/*/isPastJob">
               <question>Amount per pay period</question>
               <input type="dollar"/>
@@ -551,7 +551,7 @@
             <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
             <p>Enter contributions <span condition="/pensions/*/isInFuture" operator="isFalse">made</span><span condition="/pensions/*/isInFuture" operator="isTrue">you expect to make</span> to a Health Savings Account (HSA) or Flexible Spending Account (FSA).</p>
             <p condition="/pensions/*/isInFuture" operator="isFalse">HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
-            <p>Learn more about contributions to <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> and <a target="_blank" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.</p>
+            <p>Learn more about contributions to <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204045">HSAs</a> and <a target="_blank" rel="noreferrer" href="https://www.irs.gov/publications/p969#en_US_2024_publink1000204176">FSAs</a>.</p>
             <fg-set path="/pensions/*/hsaOrFsaContributionsPerPayPeriod" if-false="/pensions/*/isPastJob">
               <question>Amount per pay period</question>
               <input type="dollar"/>
@@ -811,7 +811,7 @@
         <li>Fees for services you’ve provided</li>
       </ul>
       <p>
-        <a target="_blank" href="https://www.irs.gov/filing/taxable-income" class="usa-link usa-link--external">Learn more about other taxable income.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/filing/taxable-income" class="usa-link usa-link--external">Learn more about other taxable income.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/nonSpecificOtherIncome">
         <question>Total amount of other income you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> expect to receive in <fg-show path="/taxYear"/></question>
@@ -827,7 +827,7 @@
       <h3>Estimated taxes paid</h3>
       <p>In addition to taxes already withheld from your income, estimated payments are made directly to the IRS, usually through an IRS Online Account or with Form 1040-ES.</p>
       <p>
-        <a target="_blank" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link usa-link--external">Learn more about estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
+        <a target="_blank" rel="noreferrer" href="https://www.irs.gov/businesses/small-businesses-self-employed/estimated-taxes" class="usa-link usa-link--external">Learn more about estimated taxes.<span class="usa-sr-only"> (opens in a new tab)</span></a>
       </p>
       <fg-set path="/totalEstimatedTaxesPaid">
         <question>Estimated tax payments you <span condition="/isFilingStatusMFJ" operator="isTrue">and your spouse</span> made so far in <fg-show path="/taxYear"/></question>
@@ -859,7 +859,7 @@
         <p>It’s okay to enter a best guess of what you will receive or leave it blank.</p>
         <p><strong>Don’t include</strong> any past bonus pay that you already received this year.</p>
         <p>If you expect to earn $1 million or more in bonuses for <fg-show path="/taxYear"/>, the estimator can’t calculate your withholding accurately. This includes any bonuses you’ve already received this year.</p>
-        <p>Check <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication 15</a> for help calculating withholding on high bonus pay, or consider consulting a tax professional.</p>
+        <p>Check <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p15#en_US_2026_publink1000202353">Publication 15</a> for help calculating withholding on high bonus pay, or consider consulting a tax professional.</p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-job-pay-dates">
@@ -898,7 +898,7 @@
           <li>have a Social Security number</li>
         </ul>
         <p>If it’s hard to estimate, it’s okay to leave tips blank.</p>
-        <p><a href="https://www.irs.gov/businesses/small-businesses-self-employed/tips" target="_blank" class="usa-link usa-link--external">Learn more about the no tax on tips deduction.<span class="usa-sr-only"/></a></p>
+        <p><a href="https://www.irs.gov/businesses/small-businesses-self-employed/tips" target="_blank" rel="noreferrer" class="usa-link usa-link--external">Learn more about the no tax on tips deduction.<span class="usa-sr-only"/></a></p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-no-tax-on-overtime">
@@ -911,7 +911,7 @@
           <li>have a Social Security number</li>
         </ul>
         <p>Overtime pay that is not required by section 7 of the FLSA (e.g., due to state law or union contract) is not deductible and should not be entered.</p>
-        <p><a href="https://www.irs.gov/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025" target="_blank" class="usa-link usa-link--external">Learn more about the no tax on overtime deduction.<span class="usa-sr-only"/></a></p>
+        <p><a href="https://www.irs.gov/forms-pubs/how-to-update-withholding-to-account-for-tax-law-changes-for-2025" target="_blank" rel="noreferrer" class="usa-link usa-link--external">Learn more about the no tax on overtime deduction.<span class="usa-sr-only"/></a></p>
       </modal-content>
     </modal-dialog>
     <modal-dialog id="modal-what-counts-social-security">
@@ -927,7 +927,7 @@
         <p>The monthly benefit amount is the total you receive from Social Security each month <strong>before</strong> any deductions, Medicare premiums, or taxes are taken out.</p>
         <p>It’s okay to estimate. To find the exact amount:</p>
         <ol>
-          <li>Log into <a target="_blank" href="https://www.ssa.gov/myaccount/" class="usa-link">my Social Security account<span class="usa-sr-only"/></a></li>
+          <li>Log into <a target="_blank" rel="noreferrer" href="https://www.ssa.gov/myaccount/" class="usa-link">my Social Security account<span class="usa-sr-only"/></a></li>
           <li>Scroll to the <strong>Benefits and Payments</strong> section</li>
           <li>Under <strong>Benefit Summary</strong>, use the total monthly benefit before deductions</li>
         </ol>
@@ -941,7 +941,7 @@
         <p>You can request to withhold federal taxes from your Social Security income.</p>
         <p>How to check if you have taxes withheld:</p>
         <ol>
-          <li>Log into <a target="_blank" href="https://www.ssa.gov/myaccount/" class="usa-link">my Social Security account<span class="usa-sr-only"/></a></li>
+          <li>Log into <a target="_blank" rel="noreferrer" href="https://www.ssa.gov/myaccount/" class="usa-link">my Social Security account<span class="usa-sr-only"/></a></li>
           <li>Select <strong>Voluntary Tax Withholding</strong> to check the percentage withheld</li>
         </ol>
         <p>If you didn’t request to withhold taxes, the percentage will be 0%.</p>
@@ -1089,7 +1089,7 @@
           same, you can find your deductible expenses on line 28 of Schedule C.
         </p>
         <p>
-          <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Learn more about business expenses</a>
+          <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p334#en_US_2024_publink1000313491">Learn more about business expenses</a>
         </p>
       </modal-content>
     </modal-dialog>
@@ -1100,7 +1100,7 @@
         <p>To receive unemployment, you must become unemployed through no fault of your own and meet other requirements.</p>
         <p>At the end of the year, you should receive Form 1099-G showing the amount paid to you during the year.</p>
         <p>
-          <a target="_blank" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Learn more about unemployment income.</a>
+          <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/individuals/employees/unemployment-compensation">Learn more about unemployment income.</a>
         </p>
       </modal-content>
     </modal-dialog>
@@ -1188,7 +1188,7 @@
     <modal-dialog id="modal-rental-expenses-net-income">
       <modal-heading>What are rental expenses and how can I estimate net rental income?</modal-heading>
       <modal-content>
-        <p><a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">Rental expenses<span class="usa-sr-only"> (opens in a new tab)</span></a> include maintenance costs, insurance, taxes, and interest.</p>
+        <p><a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p527#en_US_2024_publink1000218977">Rental expenses<span class="usa-sr-only"> (opens in a new tab)</span></a> include maintenance costs, insurance, taxes, and interest.</p>
         <p>
           <strong>How to estimate net rental income</strong>
         </p>

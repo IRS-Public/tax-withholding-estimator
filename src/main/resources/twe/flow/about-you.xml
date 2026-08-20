@@ -73,7 +73,7 @@
         </ul>
         <p>You can’t claim your spouse as a dependent if you file jointly.</p>
         <p>
-          <a target="_blank" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/dependents">Learn more about dependents.</a>
+          <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/credits-deductions/individuals/dependents">Learn more about dependents.</a>
         </p>
       </modal-content>
     </modal-dialog>
@@ -87,7 +87,7 @@
           <li>How much they supported you, financially and in other ways</li>
           <li>If you lived with them and for how long</li>
         </ul>
-        <p>Review Table 5 in <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">IRS Publication 501</a> to determine if someone else might be able to claim you.</p>
+        <p>Review Table 5 in <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">IRS Publication 501</a> to determine if someone else might be able to claim you.</p>
         <p>Keep in mind that you aren’t someone else’s dependent if you paid for more than half of your own support (or if your spouse did).</p>
       </modal-content>
     </modal-dialog>
@@ -133,7 +133,7 @@
           <li>You pay more than half the cost of keeping up your home</li>
         </ul>
         <p>
-          <a target="_blank" class="usa-link" href="https://www.irs.gov/filing/filing-status">Learn more about filing statuses<span class="usa-sr-only"> (opens in a new tab)</span>.</a>
+          <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/filing/filing-status">Learn more about filing statuses<span class="usa-sr-only"> (opens in a new tab)</span>.</a>
         </p>
       </modal-content>
     </modal-dialog>
@@ -148,7 +148,7 @@
           <li>How much they supported your spouse, financially and in other ways</li>
           <li>If your spouse lived with them and for how long</li>
         </ul>
-        <p>Review Table 5 in <a target="_blank" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">IRS Publication 501</a> to determine if someone else might be able to claim your spouse.</p>
+        <p>Review Table 5 in <a target="_blank" rel="noreferrer" class="usa-link" href="https://www.irs.gov/publications/p501#en_US_2024_publink1000196863">IRS Publication 501</a> to determine if someone else might be able to claim your spouse.</p>
         <p>Keep in mind that your spouse isn’t someone else’s dependent if your spouse paid for more than half of their own support (or if you did).</p>
       </modal-content>
     </modal-dialog>

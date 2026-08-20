@@ -60,7 +60,7 @@ layout:
   skip-to-main: Saltar al contenido principal
   identifier:
     agency-identifier: Identificador de la agencia
-    disclaimer: Un sitio web oficial del <a class="usa-link" target="_blank" href="https://irs.gov">IRS<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
+    disclaimer: Un sitio web oficial del <a class="usa-link" target="_blank" rel="noreferrer" href="https://irs.gov">IRS<span class="usa-sr-only"> (abre en una nueva pestaña)</span></a>
     about:
       text: Acerca del IRS
       link: https://www.irs.gov/es/about-irs
