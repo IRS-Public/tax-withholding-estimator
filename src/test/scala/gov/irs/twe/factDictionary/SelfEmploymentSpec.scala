@@ -162,6 +162,55 @@ class SelfEmploymentSpec extends AnyFunSuite with TableDrivenPropertyChecks {
     }
   }
 
+  test("test earned income: SE earnings count net of each filer's SE tax deduction") {
+    // Pub 596 Worksheet B line 1e: net SE earnings minus Schedule SE line 13
+    val dataTable = Table(
+      (
+        "status",
+        "netSelfEmploymentIncomeSelf",
+        "netSelfEmploymentIncomeSpouse",
+        "jobsIncomeSelf",
+        "jobsIncomeSpouse",
+        "expectedEarnedIncomeSelf",
+        "expectedEarnedIncomeSpouse",
+        "expectedEarnedIncomeTotal",
+      ),
+      // 20000 - 1413
+      (single, "20000", "0", "0", "0", "18587", "0", "18587"),
+      // 74000 + (15000 - 1060)
+      (single, "15000", "0", "74000", "0", "87940", "0", "87940"),
+      // below the Schedule SE $400 threshold, so no SE tax and no deduction
+      (single, "300", "0", "0", "0", "300", "0", "300"),
+      // (10000 - 707) + 54000 and (15000 - 1060) + 20000
+      (mfj, "10000", "15000", "54000", "20000", "63293", "33940", "97233"),
+    )
+
+    forAll(dataTable) {
+      (
+          status,
+          netSelfEmploymentIncomeSelf,
+          netSelfEmploymentIncomeSpouse,
+          jobsIncomeSelf,
+          jobsIncomeSpouse,
+          expectedEarnedIncomeSelf,
+          expectedEarnedIncomeSpouse,
+          expectedEarnedIncomeTotal,
+      ) =>
+        val graph = makeGraphWith(
+          factDictionary,
+          Path("/filingStatus") -> status,
+          Path("/netSelfEmploymentIncomeSelf") -> Dollar(netSelfEmploymentIncomeSelf),
+          Path("/netSelfEmploymentIncomeSpouse") -> Dollar(netSelfEmploymentIncomeSpouse),
+          Path("/jobsIncomeSelf") -> Dollar(jobsIncomeSelf),
+          Path("/jobsIncomeSpouse") -> Dollar(jobsIncomeSpouse),
+        )
+
+        assert(graph.get("/earnedIncomeSelf").value.contains(Dollar(expectedEarnedIncomeSelf)))
+        assert(graph.get("/earnedIncomeSpouse").value.contains(Dollar(expectedEarnedIncomeSpouse)))
+        assert(graph.get("/earnedIncomeTotal").value.contains(Dollar(expectedEarnedIncomeTotal)))
+    }
+  }
+
   test("test IRA deduction: applies correct limit") {
     val dataTable = Table(
       (

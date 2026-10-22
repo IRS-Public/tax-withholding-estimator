@@ -871,4 +871,31 @@ class CreditSpec extends AnyFunSuite with TableDrivenPropertyChecks {
         assert(actualEitc.value.contains(Dollar(expectedEitc)))
     }
   }
+
+  test("test EITC: self-employment earned income is reduced by the SE tax deduction") {
+    val graph = makeGraphWith(
+      factDictionary,
+      Path("/filingStatus") -> single,
+      Path("/agi") -> Dollar("7435"),
+      Path("/netSelfEmploymentIncomeSelf") -> Dollar("8000"),
+      Path("/netSelfEmploymentIncomeSpouse") -> Dollar("0"),
+      Path("/jobsIncomeSelf") -> Dollar("0"),
+      Path("/jobsIncomeSpouse") -> Dollar("0"),
+      Path("/eitcQualifyingChildren") -> 0,
+      Path("/primaryFilerAge65OrOlder") -> false,
+      Path("/secondaryFilerAge65OrOlder") -> false,
+      Path("/treatFilersAsDependents") -> false,
+      Path("/taxExemptInterestIncome") -> Dollar("0"),
+      Path("/taxableInterestIncome") -> Dollar("0"),
+      Path("/ordinaryDividendsIncome") -> Dollar("0"),
+      Path("/shortTermCapitalGainsIncome") -> Dollar("0"),
+      Path("/longTermCapitalGainsIncome") -> Dollar("0"),
+      Path("/primaryFilerIsBlind") -> false,
+      Path("/secondaryFilerIsBlind") -> false,
+      Path("/oB3Deductions") -> Dollar(0),
+    )
+
+    assert(graph.get("/earnedIncomeTotal").value.contains(Dollar("7435")))
+    assert(graph.get("/earnedIncomeCredit").value.contains(Dollar("568")))
+  }
 }

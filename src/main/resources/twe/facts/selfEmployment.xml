@@ -140,6 +140,34 @@
         </Switch>
       </Derived>
     </Fact>
+    <Fact path="/earnedSelfEmploymentIncomeSelf">
+      <Description>Self-employment earnings counted as earned income for self: net profit minus the
+        deductible half of SE tax. Publication 596 Worksheet B line 1e; IRC 32(c)(2)(A).</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/netSelfEmploymentIncomeSelf"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/scheduleSELine13Self"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
+    <Fact path="/earnedSelfEmploymentIncomeSpouse">
+      <Description>Self-employment earnings counted as earned income for spouse: net profit minus the
+        deductible half of SE tax. Publication 596 Worksheet B line 1e; IRC 32(c)(2)(A).</Description>
+      <Derived>
+        <Subtract>
+          <Minuend>
+            <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+          </Minuend>
+          <Subtrahends>
+            <Dependency path="/scheduleSELine13Spouse"/>
+          </Subtrahends>
+        </Subtract>
+      </Derived>
+    </Fact>
     <Fact path="/seIncomeThreshold">
       <TaxYear>2026</TaxYear>
       <Derived>

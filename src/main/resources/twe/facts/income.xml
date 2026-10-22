@@ -550,7 +550,7 @@ and car loan interest deduction
       </Description>
       <Derived>
         <Add>
-          <Dependency path="/netSelfEmploymentIncomeSelf"/>
+          <Dependency path="/earnedSelfEmploymentIncomeSelf"/>
           <Dependency path="/jobsIncomeSelf"/>
         </Add>
       </Derived>
@@ -564,7 +564,7 @@ and car loan interest deduction
             </When>
             <Then>
               <Add>
-                <Dependency path="/netSelfEmploymentIncomeSpouse"/>
+                <Dependency path="/earnedSelfEmploymentIncomeSpouse"/>
                 <Dependency path="/jobsIncomeSpouse"/>
               </Add>
             </Then>
