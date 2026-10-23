@@ -229,7 +229,7 @@
             <p>For 2025 through 2028, there are new deductions for tips and overtime. If <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse meets</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you meet</span> the eligibility requirements, you may be able to deduct (subtract) qualified tips and qualified overtime pay from your income.</p>
             <p>If this section doesn’t apply to <span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">your spouse,</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you,</span> it’s okay to leave this blank.</p>
           </div>
-          <fg-detail icon="chevron">
+          <fg-detail icon="chevron" heading-tag="h6">
             <summary>Estimated tips</summary>
             <p>
               Tips are voluntary cash or credit card payments received from customers or through
@@ -259,7 +259,7 @@
               </fg-set>
             </div>
           </fg-detail>
-          <fg-detail icon="chevron">
+          <fg-detail icon="chevron" heading-tag="h6">
             <summary>Estimated overtime</summary>
             <p>Overtime is extra pay earned by working more than 40 hours per week. Only include overtime that your employer is required to pay you under the Fair Labor Standards Act.</p>
             <p>
@@ -321,7 +321,7 @@
           <div condition="/jobs/*/isInFuture" operator="isTrue">
             <p>Pre-tax contributions through this job can reduce the amount of taxes <span condition="/jobs/*/isFilerAssignmentSelf" operator="isTrue">you</span><span condition="/jobs/*/isFilerAssignmentSelf" operator="isFalse">they</span> owe.</p>
           </div>
-          <fg-detail icon="chevron">
+          <fg-detail icon="chevron" heading-tag="h6">
             <summary>Retirement Plans</summary>
             <p>Enter total contributions made to retirement plans.</p>
             <p> Retirement contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub. </p>
@@ -347,7 +347,7 @@
               <input type="dollar"/>
             </fg-set>
           </fg-detail>
-          <fg-detail icon="chevron">
+          <fg-detail icon="chevron" heading-tag="h6">
             <summary>Health insurance</summary>
             <p>Enter the total contributions made to pay for health coverage.</p>
             <p> Health coverage contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub. </p>
@@ -375,7 +375,7 @@
               <input type="dollar"/>
             </fg-set>
           </fg-detail>
-          <fg-detail icon="chevron">
+          <fg-detail icon="chevron" heading-tag="h6">
             <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
             <p>Enter total contributions to your <span condition="/isFilingStatusMFJ" operator="isTrue">spouse’s</span> Health Savings Account (HSA) or Flexible Spending Account (FSA).</p>
             <p> HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub. </p>
@@ -390,7 +390,7 @@
               <input type="dollar"/>
             </fg-set>
           </fg-detail>
-          <fg-detail icon="chevron">
+          <fg-detail icon="chevron" heading-tag="h6">
             <summary>Other pre-tax benefits</summary>
             <p>Enter the total contributions made to pay for other pre-tax benefits.</p>
             <p>Benefits contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a paystub.</p>
@@ -519,7 +519,7 @@
               <li>HSA/FSA contributions</li>
             </ul>
           </div>
-          <fg-detail icon="chevron">
+          <fg-detail icon="chevron" heading-tag="h6">
             <summary>Health insurance</summary>
             <p>Enter the total contributions <span condition="/pensions/*/isInFuture" operator="isFalse">made</span><span condition="/pensions/*/isInFuture" operator="isTrue">you expect to make</span> to pay for health coverage.</p>
             <p condition="/pensions/*/isInFuture" operator="isFalse">Health coverage contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
@@ -547,7 +547,7 @@
               <input type="dollar"/>
             </fg-set>
           </fg-detail>
-          <fg-detail icon="chevron">
+          <fg-detail icon="chevron" heading-tag="h6">
             <summary>Health Savings Account (HSA) or Flexible Spending Account (FSA)</summary>
             <p>Enter contributions <span condition="/pensions/*/isInFuture" operator="isFalse">made</span><span condition="/pensions/*/isInFuture" operator="isTrue">you expect to make</span> to a Health Savings Account (HSA) or Flexible Spending Account (FSA).</p>
             <p condition="/pensions/*/isInFuture" operator="isFalse">HSA and FSA contribution amounts can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>
@@ -562,7 +562,7 @@
               <input type="dollar"/>
             </fg-set>
           </fg-detail>
-          <fg-detail icon="chevron">
+          <fg-detail icon="chevron" heading-tag="h6">
             <summary>Other pre-tax benefits</summary>
             <p>Enter contributions <span condition="/pensions/*/isInFuture" operator="isFalse">made</span><span condition="/pensions/*/isInFuture" operator="isTrue">you expect to make</span> to other pre-tax benefits.</p>
             <p condition="/pensions/*/isInFuture" operator="isFalse">Benefits contributions can usually be found under a <strong>Deductions</strong> or <strong>Pre-Tax</strong> section on a statement.</p>

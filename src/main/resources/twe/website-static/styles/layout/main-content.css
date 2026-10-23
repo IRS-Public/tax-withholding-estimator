@@ -56,7 +56,8 @@ main h1 {
 .flow h2,
 .flow h3:not(.usa-alert__heading, .fg-estimate__heading, details > summary > h3),
 .flow h4:not(.usa-alert__heading, details > summary > h4),
-.flow h5:not(.usa-alert__heading, details > summary > h5) {
+.flow h5:not(.usa-alert__heading, details > summary > h5),
+.flow h6:not(.usa-alert__heading, details > summary > h6) {
   font-family: var(--font-sans);
   font-weight: 600;
 }
@@ -104,7 +105,8 @@ main h1 {
 }
 
 .flow h4:not(.usa-alert__heading, details > summary > h4),
-.flow h5:not(.usa-alert__heading, details > summary > h5) {
+.flow h5:not(.usa-alert__heading, details > summary > h5),
+.flow h6:not(.usa-alert__heading, details > summary > h6) {
   font-size: var(--font-size-8);
 
   @container app (min-width: 640px) {
@@ -124,6 +126,7 @@ main h1 {
 .flow ol,
 .flow h3:not(.usa-alert__heading),
 .flow h4:not(.usa-alert__heading),
-.flow h5:not(.usa-alert__heading) {
+.flow h5:not(.usa-alert__heading),
+.flow h6:not(.usa-alert__heading) {
   max-width: 68ex;
 }
