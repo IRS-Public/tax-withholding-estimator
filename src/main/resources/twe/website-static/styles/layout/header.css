@@ -6,17 +6,42 @@
 
 .logo-banner .grid-container {
   align-items: center;
-  display: flex;
+  display: grid;
+  gap: var(--units-2);
+  grid-template-columns: 1fr auto;
   justify-content: space-between;
   width: 100%;
+
+  @container app (min-width: 640px) {
+    display: flex;
+  }
 }
 
-.logo-banner a {
+.logo-banner a,
+.logo-banner button {
   display: inline-block;
   &:focus {
     outline-color: white;
     outline-offset: var(--units-05);
   }
+}
+
+.header-actions {
+  display: contents;
+
+  @container app (min-width: 640px) {
+    align-items: center;
+    display: flex;
+    gap: var(--units-2);
+  }
+}
+
+.header-actions .usa-button {
+  margin: 0;
+}
+
+#save-resume-button {
+  grid-column: 1 / -1;
 }
 
 .logo-banner img {

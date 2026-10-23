@@ -120,6 +120,62 @@ class WebsiteSpec extends AnyFunSpec with BeforeAndAfterAll {
     }
   }
 
+  describe("save and resume dialog") {
+    val site = Website.generate(flow, basicDictionaryConfig, Map())
+
+    Seq(
+      ("en", "Save or resume", "Close this window"),
+      ("es", "Guardar o reanudar", "Cerrar esta ventana"),
+    ).foreach { case (languageCode, heading, closeLabel) =>
+      describe(s"in $languageCode") {
+        val document = Jsoup.parse(site.pages.find(_.languageCode == languageCode).get.content)
+
+        it("provides a header button associated with the dialog beside the language switcher") {
+          val trigger = document.select("header #save-resume-button")
+
+          trigger.size() shouldBe 1
+          trigger.first().tagName() shouldBe "button"
+          trigger.attr("type") shouldBe "button"
+          trigger.text() shouldBe heading
+          trigger.attr("aria-haspopup") shouldBe "dialog"
+          trigger.attr("aria-controls") shouldBe "modal-save-resume"
+          trigger.first().parent().select(".language-switcher").size() shouldBe 1
+        }
+
+        it("gives the native dialog an accessible name, description, and close control") {
+          val dialog = document.select("dialog#modal-save-resume.usa-modal--dialog")
+
+          dialog.size() shouldBe 1
+          dialog.hasAttr("open") shouldBe false
+          val headingId = dialog.attr("aria-labelledby")
+          val descriptionId = dialog.attr("aria-describedby")
+          headingId should not be empty
+          descriptionId should not be empty
+          dialog.select(s"[id=$headingId]").text() shouldBe heading
+          dialog.select(s"[id=$descriptionId]").text() should not be empty
+
+          val closeButton = dialog.select("button[data-close-modal]")
+          closeButton.size() shouldBe 1
+          closeButton.attr("type") shouldBe "button"
+          closeButton.attr("aria-label") shouldBe closeLabel
+        }
+
+        it("keeps save and resume controls in the dialog without the bottom accordion") {
+          val dialog = document.select("#modal-save-resume")
+
+          document.select("button[onclick='saveEstimateToFile()']").size() shouldBe 1
+          document.select("#resume-estimate-input").size() shouldBe 1
+          dialog.select("button[onclick='saveEstimateToFile()']").size() shouldBe 1
+          dialog.select("#resume-estimate-input[type=file]").size() shouldBe 1
+          dialog.select("label[for=resume-estimate-input]").text() should not be empty
+          dialog.select("#save-estimate-status[role=status]").size() shouldBe 1
+          dialog.select("#resume-estimate-status[role=status]").size() shouldBe 1
+          document.select(".save-resume.usa-accordion, #save-resume-content").isEmpty shouldBe true
+        }
+      }
+    }
+  }
+
   describe("WebsitePage") {
     val mockContent = "<html></html>"
     val rootFilePath = Path("/tmp/app/tax-withholding-estimator")

@@ -1,0 +1,38 @@
+<dialog id="modal-save-resume" class="save-resume usa-modal--dialog" closedby="any"
+        aria-labelledby="save-resume-heading" aria-describedby="save-resume-description">
+  <div class="usa-modal__content">
+    <div class="usa-modal__main">
+      <h2 id="save-resume-heading" class="usa-modal__heading" th:text="#{save-resume.heading}">Save or resume</h2>
+      <button type="button" class="usa-button usa-modal__close" th:aria-label="#{components.modal.close}" data-close-modal>
+        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img">
+          <use href="/app/tax-withholding-estimator/resources/vendor/uswds-3.13.0/img/sprite.svg#close"></use>
+        </svg>
+      </button>
+      <div class="usa-prose">
+        <p id="save-resume-description" th:text="#{save-resume.description}">
+          You can save your estimate to a file on this device and load it back later
+          to pick up where you left off. Your information stays on your device and is
+          not sent to the IRS.
+        </p>
+
+        <h3 th:text="#{save-resume.save.heading}">Save to a file</h3>
+        <button class="usa-button usa-button--outline" type="button" onclick="saveEstimateToFile()">
+          <span th:text="#{save-resume.save.button}">Save my estimate</span>
+        </button>
+        <span id="save-estimate-status" class="save-resume__status" role="status" aria-live="polite"
+              th:data-success="#{save-resume.save.success}" th:data-error="#{save-resume.save.error}"></span>
+
+        <h3 th:text="#{save-resume.resume.heading}">Resume a saved estimate</h3>
+        <p class="usa-hint" th:text="#{save-resume.resume.hint}">
+          Loading a saved file will replace your current estimate.
+        </p>
+        <label class="usa-sr-only" for="resume-estimate-input" th:text="#{save-resume.resume.label}">Choose a saved estimate file</label>
+        <input id="resume-estimate-input" class="usa-file-input" type="file" accept="application/json,.json"
+               onchange="resumeEstimateFromFile(event)"
+               th:data-confirm="#{save-resume.resume.confirm}">
+        <span id="resume-estimate-status" class="save-resume__status" role="status" aria-live="polite"
+              th:data-error="#{save-resume.resume.error}"></span>
+      </div>
+    </div>
+  </div>
+</dialog>

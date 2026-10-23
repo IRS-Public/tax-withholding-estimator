@@ -199,3 +199,18 @@ results:
         5-field: 'Paso 5: Firma aquí'
         5-recommendation: Firma y fecha
       time-sensitivity: Los cambios a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tus</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">sus</span> retenciones son de prioridad. Envía el formulario con <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> información a <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">tu</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">su</span> <span condition="/pensions/*/isInFuture" operator="isTrue">nuevo</span> proveedor de pensión o anualidad lo antes posible.
+
+save-resume:
+  heading: Guardar o reanudar
+  description: Puede guardar su estimación en un archivo en este dispositivo y volver a cargarla más tarde para continuar donde la dejó. Su información permanece en su dispositivo y no se envía al IRS.
+  save:
+    heading: Guardar en un archivo
+    button: Guardar mi estimación
+    success: Su estimación se guardó.
+    error: No se pudo guardar su estimación. Vuelva a intentarlo.
+  resume:
+    heading: Reanudar una estimación guardada
+    hint: Cargar un archivo guardado reemplazará su estimación actual.
+    label: Elija un archivo de estimación guardado
+    confirm: Cargar este archivo reemplazará su estimación actual. ¿Desea continuar?
+    error: Este archivo no es una estimación guardada válida.

@@ -213,3 +213,18 @@ results:
         5-field: 'Step 5: Sign Here'
         5-recommendation: Sign and enter the date
       time-sensitivity: Withholding updates are time sensitive. Submit your completed form to <span condition="/pensions/*/isFilerAssignmentSelf" operator="isTrue">your</span><span condition="/pensions/*/isFilerAssignmentSelf" operator="isFalse">their</span> <span condition="/pensions/*/isInFuture" operator="isTrue">new</span> pension or annuity provider as soon as possible.
+
+save-resume:
+  heading: Save or resume
+  description: You can save your estimate to a file on this device and load it back later to pick up where you left off. Your information stays on your device and is not sent to the IRS.
+  save:
+    heading: Save to a file
+    button: Save my estimate
+    success: Your estimate was saved.
+    error: Could not save your estimate. Please try again.
+  resume:
+    heading: Resume a saved estimate
+    hint: Loading a saved file will replace your current estimate.
+    label: Choose a saved estimate file
+    confirm: Loading this file will replace your current estimate. Continue?
+    error: This file is not a valid saved estimate.

@@ -17,9 +17,15 @@
             <a href="https://www.irs.gov" th:aria-label="#{layout.irs.domain}">
               <img src="/app/tax-withholding-estimator/resources/img/irs-logo.svg" alt="" />
             </a>
-            <div class="language-switcher">
-              <a th:if="${languageCode == 'en'}" th:href="'/' + 'app/tax-withholding-estimator/es' + ${currentPageRoute}" class="usa-button usa-button--inverse">Español</a>
-              <a th:if="${languageCode == 'es'}" th:href="'/' + 'app/tax-withholding-estimator' + ${currentPageRoute}" class="usa-button usa-button--inverse">English</a>
+            <div class="header-actions">
+              <div class="language-switcher">
+                <a th:if="${languageCode == 'en'}" th:href="'/' + 'app/tax-withholding-estimator/es' + ${currentPageRoute}" class="usa-button usa-button--inverse">Español</a>
+                <a th:if="${languageCode == 'es'}" th:href="'/' + 'app/tax-withholding-estimator' + ${currentPageRoute}" class="usa-button usa-button--inverse">English</a>
+              </div>
+              <button id="save-resume-button" type="button" class="usa-button usa-button--inverse"
+                      aria-haspopup="dialog" aria-controls="modal-save-resume" th:text="#{save-resume.heading}">
+                Save or resume
+              </button>
             </div>
           </div>
         </div>
@@ -124,6 +130,7 @@
       <div th:replace="~{errors}"></div>
     </div>
 
+    <div th:replace="fragments/save-resume"></div>
     <div th:replace="fragments/audit-panel"></div>
     <script type="module" th:if="${flags.auditMode}">
       // If configured, automatically enable Audit Mode on startup
@@ -131,5 +138,8 @@
       enable()
     </script>
 
+    <script type="module">
+      import '/app/tax-withholding-estimator/resources/js/save-resume.js'
+    </script>
   </body>
 </html>

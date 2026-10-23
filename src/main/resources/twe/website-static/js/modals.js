@@ -17,15 +17,20 @@ class ModalLink extends HTMLElement {
     if (!modal) {
       console.warn(`No modal found for ${this.modalId}`)
     } else {
-      const currentVerticalScroll = window.scrollY
-      modal.showModal()
-      document.body.classList.add('usa-js-modal--active')
-      window.scrollTo(0, currentVerticalScroll)
-      trapFocus(modal)
+      openModal(modal)
     }
   }
 }
 customElements.define('modal-link', ModalLink)
+
+export function openModal (modal) {
+  const currentVerticalScroll = window.scrollY
+  modal.showModal()
+  document.body.classList.add('usa-js-modal--active')
+  window.scrollTo(0, currentVerticalScroll)
+  const releaseFocus = trapFocus(modal)
+  modal.addEventListener('close', releaseFocus, { once: true })
+}
 
 // Trap focus utility function
 function trapFocus (element) {
